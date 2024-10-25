@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Sql;
 /// Contains the information necessary to perform a create database restore
 /// point operation.
 /// </summary>
-public partial class CreateDatabaseRestorePointDefinition : ProvisioningConstruct
+public partial class CreateDatabaseRestorePointDefinition : ProvisionableConstruct
 {
     /// <summary>
     /// The restore point label to apply.

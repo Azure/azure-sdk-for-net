@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Tenant.
 /// </summary>
-public partial class Tenant : Resource
+public partial class Tenant : ProvisionableResource
 {
     /// <summary>
     /// Country/region name of the address for the tenant.
@@ -83,10 +83,15 @@ public partial class Tenant : Resource
     /// <summary>
     /// Creates a new Tenant.
     /// </summary>
-    /// <param name="resourceName">Name of the Tenant.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the Tenant resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the Tenant.</param>
-    public Tenant(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
+    public Tenant(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
     {
         _country = BicepValue<string>.DefineProperty(this, "Country", ["country"], isOutput: true);
         _countryCode = BicepValue<string>.DefineProperty(this, "CountryCode", ["countryCode"], isOutput: true);
@@ -230,9 +235,9 @@ public partial class Tenant : Resource
     /// </param>
     /// <returns>A Tenant resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Tenant FromExpression(Expression expression)
+    public static Tenant FromExpression(BicepExpression expression)
     {
-        Tenant resource = new(expression.ToString());
+        Tenant resource = new(nameof(Tenant));
         resource.OverrideWithExpression(expression);
         return resource;
     }

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Actions which to take by the auto-heal module when a rule is triggered.
 /// </summary>
-public partial class AutoHealActions : ProvisioningConstruct
+public partial class AutoHealActions : ProvisionableConstruct
 {
     /// <summary>
     /// Predefined action to be taken.

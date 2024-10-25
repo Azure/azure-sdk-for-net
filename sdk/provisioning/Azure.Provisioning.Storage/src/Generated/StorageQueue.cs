@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageQueue.
 /// </summary>
-public partial class StorageQueue : Resource
+public partial class StorageQueue : ProvisionableResource
 {
     /// <summary>
     /// A queue name must be unique within a storage account and must be
@@ -64,10 +64,15 @@ public partial class StorageQueue : Resource
     /// <summary>
     /// Creates a new StorageQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StorageQueue resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
-    public StorageQueue(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion ?? "2024-01-01")
+    public StorageQueue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
@@ -196,11 +201,16 @@ public partial class StorageQueue : Resource
     /// <summary>
     /// Creates a reference to an existing StorageQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StorageQueue resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
     /// <returns>The existing StorageQueue resource.</returns>
-    public static StorageQueue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageQueue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this StorageQueue resource.

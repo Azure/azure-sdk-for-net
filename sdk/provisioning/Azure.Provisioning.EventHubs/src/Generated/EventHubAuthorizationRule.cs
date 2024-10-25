@@ -18,7 +18,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubAuthorizationRule.
 /// </summary>
-public partial class EventHubAuthorizationRule : Resource
+public partial class EventHubAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.
@@ -59,10 +59,15 @@ public partial class EventHubAuthorizationRule : Resource
     /// <summary>
     /// Creates a new EventHubAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubAuthorizationRule.</param>
-    public EventHubAuthorizationRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs/authorizationRules", resourceVersion ?? "2024-01-01")
+    public EventHubAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs/authorizationRules", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _rights = BicepList<EventHubsAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
@@ -77,11 +82,6 @@ public partial class EventHubAuthorizationRule : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -101,11 +101,16 @@ public partial class EventHubAuthorizationRule : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubAuthorizationRule.</param>
     /// <returns>The existing EventHubAuthorizationRule resource.</returns>
-    public static EventHubAuthorizationRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubAuthorizationRule resource.
@@ -121,5 +126,5 @@ public partial class EventHubAuthorizationRule : Resource
     /// <returns>The keys for this EventHubAuthorizationRule resource.</returns>
     public EventHubsAccessKeys GetKeys() =>
         EventHubsAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
 }

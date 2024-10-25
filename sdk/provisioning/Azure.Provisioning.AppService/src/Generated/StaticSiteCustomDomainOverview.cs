@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteCustomDomainOverview.
 /// </summary>
-public partial class StaticSiteCustomDomainOverview : Resource
+public partial class StaticSiteCustomDomainOverview : ProvisionableResource
 {
     /// <summary>
     /// The custom domain to create.
@@ -87,10 +87,15 @@ public partial class StaticSiteCustomDomainOverview : Resource
     /// <summary>
     /// Creates a new StaticSiteCustomDomainOverview.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteCustomDomainOverview.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteCustomDomainOverview
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteCustomDomainOverview.</param>
-    public StaticSiteCustomDomainOverview(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/customDomains", resourceVersion ?? "2024-04-01")
+    public StaticSiteCustomDomainOverview(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/customDomains", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -184,9 +189,14 @@ public partial class StaticSiteCustomDomainOverview : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteCustomDomainOverview.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteCustomDomainOverview.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteCustomDomainOverview
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteCustomDomainOverview.</param>
     /// <returns>The existing StaticSiteCustomDomainOverview resource.</returns>
-    public static StaticSiteCustomDomainOverview FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteCustomDomainOverview FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

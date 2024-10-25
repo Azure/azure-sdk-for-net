@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Desired managed outbound IPs for the cluster load balancer.
 /// </summary>
-public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : ProvisioningConstruct
+public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : ProvisionableConstruct
 {
     /// <summary>
     /// The desired number of IPv4 outbound IPs created/managed by Azure for

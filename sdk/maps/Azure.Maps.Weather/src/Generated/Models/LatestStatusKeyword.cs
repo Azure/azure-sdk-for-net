@@ -51,7 +51,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(LatestStatusKeyword left, LatestStatusKeyword right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LatestStatusKeyword"/> values are not the same. </summary>
         public static bool operator !=(LatestStatusKeyword left, LatestStatusKeyword right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LatestStatusKeyword"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LatestStatusKeyword"/>. </summary>
         public static implicit operator LatestStatusKeyword(string value) => new LatestStatusKeyword(value);
 
         /// <inheritdoc />

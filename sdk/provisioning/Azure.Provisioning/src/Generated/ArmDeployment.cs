@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ArmDeployment.
 /// </summary>
-public partial class ArmDeployment : Resource
+public partial class ArmDeployment : ProvisionableResource
 {
     /// <summary>
     /// The name of the deployment.
@@ -59,10 +59,15 @@ public partial class ArmDeployment : Resource
     /// <summary>
     /// Creates a new ArmDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the ArmDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ArmDeployment resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ArmDeployment.</param>
-    public ArmDeployment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/deployments", resourceVersion ?? "2023-07-01")
+    public ArmDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/deployments", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
@@ -226,11 +231,16 @@ public partial class ArmDeployment : Resource
     /// <summary>
     /// Creates a reference to an existing ArmDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the ArmDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ArmDeployment resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ArmDeployment.</param>
     /// <returns>The existing ArmDeployment resource.</returns>
-    public static ArmDeployment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ArmDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a new ArmDeployment resource from a Bicep expression that
@@ -241,9 +251,9 @@ public partial class ArmDeployment : Resource
     /// </param>
     /// <returns>A ArmDeployment resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ArmDeployment FromExpression(Expression expression)
+    public static ArmDeployment FromExpression(BicepExpression expression)
     {
-        ArmDeployment resource = new(expression.ToString());
+        ArmDeployment resource = new(nameof(ArmDeployment));
         resource.OverrideWithExpression(expression);
         return resource;
     }

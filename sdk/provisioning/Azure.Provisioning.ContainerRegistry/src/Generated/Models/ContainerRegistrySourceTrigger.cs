@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The properties of a source based trigger.
 /// </summary>
-public partial class ContainerRegistrySourceTrigger : ProvisioningConstruct
+public partial class ContainerRegistrySourceTrigger : ProvisionableConstruct
 {
     /// <summary>
     /// The properties that describes the source(code) for the task.

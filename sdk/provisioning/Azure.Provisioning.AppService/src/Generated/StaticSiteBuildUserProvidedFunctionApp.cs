@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBuildUserProvidedFunctionApp.
 /// </summary>
-public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
+public partial class StaticSiteBuildUserProvidedFunctionApp : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.
@@ -63,10 +63,15 @@ public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
     /// <summary>
     /// Creates a new StaticSiteBuildUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildUserProvidedFunctionApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// StaticSiteBuildUserProvidedFunctionApp resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildUserProvidedFunctionApp.</param>
-    public StaticSiteBuildUserProvidedFunctionApp(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/builds/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
+    public StaticSiteBuildUserProvidedFunctionApp(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/builds/userProvidedFunctionApps", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _functionAppRegion = BicepValue<string>.DefineProperty(this, "FunctionAppRegion", ["properties", "functionAppRegion"]);
@@ -137,9 +142,14 @@ public partial class StaticSiteBuildUserProvidedFunctionApp : Resource
     /// Creates a reference to an existing
     /// StaticSiteBuildUserProvidedFunctionApp.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBuildUserProvidedFunctionApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// StaticSiteBuildUserProvidedFunctionApp resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBuildUserProvidedFunctionApp.</param>
     /// <returns>The existing StaticSiteBuildUserProvidedFunctionApp resource.</returns>
-    public static StaticSiteBuildUserProvidedFunctionApp FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBuildUserProvidedFunctionApp FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

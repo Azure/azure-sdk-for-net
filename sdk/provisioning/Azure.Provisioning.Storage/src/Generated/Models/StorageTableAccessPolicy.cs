@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// Table Access Policy Properties Object.
 /// </summary>
-public partial class StorageTableAccessPolicy : ProvisioningConstruct
+public partial class StorageTableAccessPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// Start time of the access policy.

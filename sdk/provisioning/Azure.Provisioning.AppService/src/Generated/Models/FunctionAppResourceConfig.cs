@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Function app resource requirements.
 /// </summary>
-public partial class FunctionAppResourceConfig : ProvisioningConstruct
+public partial class FunctionAppResourceConfig : ProvisionableConstruct
 {
     /// <summary>
     /// Required CPU in cores, e.g. 0.5.

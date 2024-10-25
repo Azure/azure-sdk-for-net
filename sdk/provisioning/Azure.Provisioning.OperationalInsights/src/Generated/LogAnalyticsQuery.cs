@@ -15,7 +15,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// LogAnalyticsQuery.
 /// </summary>
-public partial class LogAnalyticsQuery : Resource
+public partial class LogAnalyticsQuery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -111,10 +111,15 @@ public partial class LogAnalyticsQuery : Resource
     /// <summary>
     /// Creates a new LogAnalyticsQuery.
     /// </summary>
-    /// <param name="resourceName">Name of the LogAnalyticsQuery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LogAnalyticsQuery resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQuery.</param>
-    public LogAnalyticsQuery(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/queryPacks/queries", resourceVersion ?? "2023-09-01")
+    public LogAnalyticsQuery(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/queryPacks/queries", resourceVersion ?? "2023-09-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _body = BicepValue<string>.DefineProperty(this, "Body", ["properties", "body"]);
@@ -150,9 +155,14 @@ public partial class LogAnalyticsQuery : Resource
     /// <summary>
     /// Creates a reference to an existing LogAnalyticsQuery.
     /// </summary>
-    /// <param name="resourceName">Name of the LogAnalyticsQuery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LogAnalyticsQuery resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogAnalyticsQuery.</param>
     /// <returns>The existing LogAnalyticsQuery resource.</returns>
-    public static LogAnalyticsQuery FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LogAnalyticsQuery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

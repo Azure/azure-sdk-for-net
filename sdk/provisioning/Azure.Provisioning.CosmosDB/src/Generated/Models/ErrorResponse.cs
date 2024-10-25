@@ -11,7 +11,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Error Response.
 /// </summary>
-public partial class ErrorResponse : ProvisioningConstruct
+public partial class ErrorResponse : ProvisionableConstruct
 {
     /// <summary>
     /// Error code.

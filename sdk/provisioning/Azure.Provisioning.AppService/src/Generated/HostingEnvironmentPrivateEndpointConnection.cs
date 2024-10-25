@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentPrivateEndpointConnection.
 /// </summary>
-public partial class HostingEnvironmentPrivateEndpointConnection : Resource
+public partial class HostingEnvironmentPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The System.String to use.
@@ -76,10 +76,16 @@ public partial class HostingEnvironmentPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new HostingEnvironmentPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the HostingEnvironmentPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// HostingEnvironmentPrivateEndpointConnection resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentPrivateEndpointConnection.</param>
-    public HostingEnvironmentPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion ?? "2024-04-01")
+    public HostingEnvironmentPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);
@@ -257,9 +263,15 @@ public partial class HostingEnvironmentPrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// HostingEnvironmentPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the HostingEnvironmentPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// HostingEnvironmentPrivateEndpointConnection resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentPrivateEndpointConnection.</param>
     /// <returns>The existing HostingEnvironmentPrivateEndpointConnection resource.</returns>
-    public static HostingEnvironmentPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static HostingEnvironmentPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

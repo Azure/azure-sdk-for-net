@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedCertificate.
 /// </summary>
-public partial class ContainerAppManagedCertificate : Resource
+public partial class ContainerAppManagedCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the Managed Certificate.
@@ -63,10 +63,15 @@ public partial class ContainerAppManagedCertificate : Resource
     /// <summary>
     /// Creates a new ContainerAppManagedCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerAppManagedCertificate
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedCertificate.</param>
-    public ContainerAppManagedCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2024-03-01")
+    public ContainerAppManagedCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -83,11 +88,6 @@ public partial class ContainerAppManagedCertificate : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
-        /// <summary>
         /// 2024-03-01.
         /// </summary>
         public static readonly string V2024_03_01 = "2024-03-01";
@@ -101,9 +101,14 @@ public partial class ContainerAppManagedCertificate : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppManagedCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerAppManagedCertificate
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedCertificate.</param>
     /// <returns>The existing ContainerAppManagedCertificate resource.</returns>
-    public static ContainerAppManagedCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

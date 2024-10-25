@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotExtension.
 /// </summary>
-public partial class WebSiteSlotExtension : Resource
+public partial class WebSiteSlotExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -172,10 +172,15 @@ public partial class WebSiteSlotExtension : Resource
     /// <summary>
     /// Creates a new WebSiteSlotExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotExtension.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotExtension resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotExtension.</param>
-    public WebSiteSlotExtension(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/siteextensions", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/siteextensions", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _authors = BicepList<string>.DefineProperty(this, "Authors", ["properties", "authors"], isOutput: true);
@@ -368,9 +373,14 @@ public partial class WebSiteSlotExtension : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotExtension.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotExtension resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotExtension.</param>
     /// <returns>The existing WebSiteSlotExtension resource.</returns>
-    public static WebSiteSlotExtension FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

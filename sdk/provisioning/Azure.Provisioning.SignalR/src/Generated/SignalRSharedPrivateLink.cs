@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRSharedPrivateLink.
 /// </summary>
-public partial class SignalRSharedPrivateLink : Resource
+public partial class SignalRSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.
@@ -76,10 +76,15 @@ public partial class SignalRSharedPrivateLink : Resource
     /// <summary>
     /// Creates a new SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
-    public SignalRSharedPrivateLink(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
+    public SignalRSharedPrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);
@@ -97,11 +102,6 @@ public partial class SignalRSharedPrivateLink : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -136,9 +136,14 @@ public partial class SignalRSharedPrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
     /// <returns>The existing SignalRSharedPrivateLink resource.</returns>
-    public static SignalRSharedPrivateLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

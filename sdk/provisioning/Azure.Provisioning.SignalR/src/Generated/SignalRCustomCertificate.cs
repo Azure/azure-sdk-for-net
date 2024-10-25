@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRCustomCertificate.
 /// </summary>
-public partial class SignalRCustomCertificate : Resource
+public partial class SignalRCustomCertificate : ProvisionableResource
 {
     /// <summary>
     /// Custom certificate name.
@@ -68,10 +68,15 @@ public partial class SignalRCustomCertificate : Resource
     /// <summary>
     /// Creates a new SignalRCustomCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
-    public SignalRCustomCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion ?? "2024-03-01")
+    public SignalRCustomCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/customCertificates", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _keyVaultBaseUri = BicepValue<Uri>.DefineProperty(this, "KeyVaultBaseUri", ["properties", "keyVaultBaseUri"], isRequired: true);
@@ -88,11 +93,6 @@ public partial class SignalRCustomCertificate : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -127,9 +127,14 @@ public partial class SignalRCustomCertificate : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRCustomCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomCertificate.</param>
     /// <returns>The existing SignalRCustomCertificate resource.</returns>
-    public static SignalRCustomCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRCustomCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

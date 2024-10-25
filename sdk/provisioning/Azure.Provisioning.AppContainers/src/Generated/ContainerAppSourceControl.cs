@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppSourceControl.
 /// </summary>
-public partial class ContainerAppSourceControl : Resource
+public partial class ContainerAppSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Name of the Container App SourceControl.
@@ -70,10 +70,15 @@ public partial class ContainerAppSourceControl : Resource
     /// <summary>
     /// Creates a new ContainerAppSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
-    public ContainerAppSourceControl(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
+    public ContainerAppSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/containerApps/sourcecontrols", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
@@ -90,11 +95,6 @@ public partial class ContainerAppSourceControl : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -119,9 +119,14 @@ public partial class ContainerAppSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerAppSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppSourceControl.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerAppSourceControl
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppSourceControl.</param>
     /// <returns>The existing ContainerAppSourceControl resource.</returns>
-    public static ContainerAppSourceControl FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

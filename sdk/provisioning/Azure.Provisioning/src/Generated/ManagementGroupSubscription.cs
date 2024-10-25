@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementGroupSubscription.
 /// </summary>
-public partial class ManagementGroupSubscription : Resource
+public partial class ManagementGroupSubscription : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource.
@@ -71,10 +71,15 @@ public partial class ManagementGroupSubscription : Resource
     /// <summary>
     /// Creates a new ManagementGroupSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroupSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroupSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupSubscription.</param>
-    public ManagementGroupSubscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Management/managementGroups/subscriptions", resourceVersion ?? "2023-04-01")
+    public ManagementGroupSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Management/managementGroups/subscriptions", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"], isOutput: true);
@@ -130,9 +135,14 @@ public partial class ManagementGroupSubscription : Resource
     /// <summary>
     /// Creates a reference to an existing ManagementGroupSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagementGroupSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagementGroupSubscription
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupSubscription.</param>
     /// <returns>The existing ManagementGroupSubscription resource.</returns>
-    public static ManagementGroupSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagementGroupSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

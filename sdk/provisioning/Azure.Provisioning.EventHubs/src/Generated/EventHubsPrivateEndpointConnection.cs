@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsPrivateEndpointConnection.
 /// </summary>
-public partial class EventHubsPrivateEndpointConnection : Resource
+public partial class EventHubsPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The PrivateEndpointConnection name.
@@ -68,10 +68,15 @@ public partial class EventHubsPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new EventHubsPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsPrivateEndpointConnection.</param>
-    public EventHubsPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
+    public EventHubsPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<EventHubsPrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -89,11 +94,6 @@ public partial class EventHubsPrivateEndpointConnection : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2024-01-01.
         /// </summary>
         public static readonly string V2024_01_01 = "2024-01-01";
@@ -107,9 +107,14 @@ public partial class EventHubsPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsPrivateEndpointConnection.</param>
     /// <returns>The existing EventHubsPrivateEndpointConnection resource.</returns>
-    public static EventHubsPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

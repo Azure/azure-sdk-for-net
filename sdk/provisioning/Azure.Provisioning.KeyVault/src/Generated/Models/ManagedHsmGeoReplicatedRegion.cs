@@ -11,7 +11,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// A region that this managed HSM Pool has been extended to.
 /// </summary>
-public partial class ManagedHsmGeoReplicatedRegion : ProvisioningConstruct
+public partial class ManagedHsmGeoReplicatedRegion : ProvisionableConstruct
 {
     /// <summary>
     /// Name of the geo replicated region.

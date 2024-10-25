@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if EXPERIMENTAL_PROVISIONING
+
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -71,7 +73,7 @@ public interface IClientCreator<TClient, TOptions> :
 public class ClientCreatorOutputResolver : InfrastructureResolver
 {
     /// <inheritdoc/>
-    public override IEnumerable<Provisionable> ResolveResources(ProvisioningContext context, IEnumerable<Provisionable> resources)
+    public override IEnumerable<Provisionable> ResolveResources(IEnumerable<Provisionable> resources, ProvisioningBuildOptions options)
     {
         foreach (Provisionable resource in resources)
         {
@@ -89,3 +91,5 @@ public class ClientCreatorOutputResolver : InfrastructureResolver
         }
     }
 }
+
+#endif

@@ -56,6 +56,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         {
 #if !AZURE_OPENAI_GA
             ServiceVersion.V2024_08_01_Preview => "2024-08-01-preview",
+            ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
 #endif
             ServiceVersion.V2024_06_01 => "2024-06-01",
             _ => throw new NotSupportedException()
@@ -69,6 +70,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
         V2024_06_01 = 0,
 #if !AZURE_OPENAI_GA
         V2024_08_01_Preview = 1,
+        V2024_10_01_Preview = 3,
 #endif
     }
 

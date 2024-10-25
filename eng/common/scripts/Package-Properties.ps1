@@ -1,6 +1,6 @@
-# Helper functions for retireving useful information from azure-sdk-for-* repo
+# Helper functions for retrieving useful information from azure-sdk-for-* repo
 . "${PSScriptRoot}\logging.ps1"
-
+. "${PSScriptRoot}\Helpers\Package-Helpers.ps1"
 class PackageProps
 {
     [string]$Name
@@ -17,8 +17,10 @@ class PackageProps
     [string]$ReleaseStatus
     # was this package purely included because other packages included it as an AdditionalValidationPackage?
     [boolean]$IncludedForValidation
-    # does this package include other packages that we should trigger validation for?
+    # does this package include other packages that we should trigger validation for or
+    # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
+    [HashTable]$ArtifactDetails
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -66,6 +68,8 @@ class PackageProps
         {
             $this.ChangeLogPath = $null
         }
+
+        $this.InitializeCIArtifacts()
     }
 
     hidden [void]Initialize(
@@ -78,6 +82,41 @@ class PackageProps
     {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
         $this.Group = $group
+    }
+
+    hidden [HashTable]ParseYmlForArtifact([string]$ymlPath) {
+
+        $content = LoadFrom-Yaml $ymlPath
+        if ($content) {
+            $artifacts = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "Artifacts")
+            $artifactForCurrentPackage = $null
+
+            if ($artifacts) {
+                $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
+            }
+
+            if ($artifactForCurrentPackage) {
+                return [HashTable]$artifactForCurrentPackage
+            }
+        }
+        return $null
+    }
+
+    [void]InitializeCIArtifacts(){
+        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+
+        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
+        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+
+        if (-not $this.ArtifactDetails) {
+            foreach($ciFile in $ciFiles) {
+                $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
+                if ($ciArtifactResult) {
+                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult
+                    break
+                }
+            }
+        }
     }
 }
 

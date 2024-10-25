@@ -14,20 +14,19 @@ namespace Azure.Provisioning.Sql
     {
         Default = 0,
     }
-    public partial class BackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class BackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public BackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public BackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> DiffBackupIntervalInHours { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.BackupShortTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.BackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum BlobAuditingPolicyName
@@ -52,28 +51,27 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
-    public partial class CreateDatabaseRestorePointDefinition : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class CreateDatabaseRestorePointDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CreateDatabaseRestorePointDefinition() { }
         public Azure.Provisioning.BicepValue<string> RestorePointLabel { get { throw null; } }
     }
-    public partial class DatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.Resource
+    public partial class DatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public DatabaseAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AdvancedThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.DatabaseAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.DatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class DatabaseIdentity : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class DatabaseIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DatabaseIdentity() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.DatabaseIdentityType> IdentityType { get { throw null; } set { } }
@@ -95,14 +93,14 @@ namespace Azure.Provisioning.Sql
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class DatabaseVulnerabilityAssessmentRuleBaselineItem : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class DatabaseVulnerabilityAssessmentRuleBaselineItem : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DatabaseVulnerabilityAssessmentRuleBaselineItem() { }
         public Azure.Provisioning.BicepList<string> Result { get { throw null; } set { } }
     }
-    public partial class DataMaskingPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class DataMaskingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DataMaskingPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public DataMaskingPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApplicationPrincipals { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.DataMaskingState> DataMaskingState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExemptPrincipals { get { throw null; } set { } }
@@ -113,13 +111,12 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.DataMaskingPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.DataMaskingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum DataMaskingState
@@ -127,9 +124,9 @@ namespace Azure.Provisioning.Sql
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class DistributedAvailabilityGroup : Azure.Provisioning.Primitives.Resource
+    public partial class DistributedAvailabilityGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DistributedAvailabilityGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public DistributedAvailabilityGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Guid> DistributedAvailabilityGroupId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LastHardenedLsn { get { throw null; } }
@@ -144,11 +141,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TargetDatabase { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TargetReplicaId { get { throw null; } }
-        public static Azure.Provisioning.Sql.DistributedAvailabilityGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.DistributedAvailabilityGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum DistributedAvailabilityGroupReplicationMode
@@ -161,9 +157,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="current")]
         Current = 0,
     }
-    public partial class ElasticPool : Azure.Provisioning.Primitives.Resource
+    public partial class ElasticPool : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ElasticPool(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ElasticPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAvailabilityZoneType> AvailabilityZone { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> HighAvailabilityReplicaCount { get { throw null; } set { } }
@@ -183,7 +179,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ElasticPoolState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ElasticPool FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ElasticPool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -192,7 +188,6 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_05_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ElasticPoolLicenseType
@@ -200,7 +195,7 @@ namespace Azure.Provisioning.Sql
         LicenseIncluded = 0,
         BasePrice = 1,
     }
-    public partial class ElasticPoolPerDatabaseSettings : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ElasticPoolPerDatabaseSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ElasticPoolPerDatabaseSettings() { }
         public Azure.Provisioning.BicepValue<double> MaxCapacity { get { throw null; } set { } }
@@ -212,9 +207,9 @@ namespace Azure.Provisioning.Sql
         Ready = 1,
         Disabled = 2,
     }
-    public partial class EncryptionProtector : Azure.Provisioning.Primitives.Resource
+    public partial class EncryptionProtector : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public EncryptionProtector(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public EncryptionProtector(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAutoRotationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
@@ -227,11 +222,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } }
-        public static Azure.Provisioning.Sql.EncryptionProtector FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.EncryptionProtector FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum EncryptionProtectorName
@@ -239,9 +233,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="current")]
         Current = 0,
     }
-    public partial class ExtendedDatabaseBlobAuditingPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ExtendedDatabaseBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ExtendedDatabaseBlobAuditingPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ExtendedDatabaseBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AuditActionsAndGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureMonitorTargetEnabled { get { throw null; } set { } }
@@ -257,19 +251,18 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> StorageAccountSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ExtendedDatabaseBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ExtendedDatabaseBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ExtendedServerBlobAuditingPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ExtendedServerBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ExtendedServerBlobAuditingPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ExtendedServerBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AuditActionsAndGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureMonitorTargetEnabled { get { throw null; } set { } }
@@ -286,11 +279,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> StorageAccountSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ExtendedServerBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ExtendedServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ExternalGovernanceStatus
@@ -298,9 +290,9 @@ namespace Azure.Provisioning.Sql
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class FailoverGroup : Azure.Provisioning.Primitives.Resource
+    public partial class FailoverGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FailoverGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FailoverGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> FailoverDatabases { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -313,22 +305,21 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> ReplicationState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.FailoverGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.FailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class FailoverGroupReadOnlyEndpoint : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class FailoverGroupReadOnlyEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public FailoverGroupReadOnlyEndpoint() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReadOnlyEndpointFailoverPolicy> FailoverPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetServer { get { throw null; } set { } }
     }
-    public partial class FailoverGroupReadWriteEndpoint : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class FailoverGroupReadWriteEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public FailoverGroupReadWriteEndpoint() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReadWriteEndpointFailoverPolicy> FailoverPolicy { get { throw null; } set { } }
@@ -344,9 +335,9 @@ namespace Azure.Provisioning.Sql
         AutoPause = 0,
         BillOverUsage = 1,
     }
-    public partial class GeoBackupPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class GeoBackupPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public GeoBackupPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public GeoBackupPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -355,13 +346,12 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.GeoBackupPolicyState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.GeoBackupPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.GeoBackupPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum GeoBackupPolicyName
@@ -378,9 +368,9 @@ namespace Azure.Provisioning.Sql
         Geo = 0,
         Standby = 1,
     }
-    public partial class InstanceFailoverGroup : Azure.Provisioning.Primitives.Resource
+    public partial class InstanceFailoverGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public InstanceFailoverGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public InstanceFailoverGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.ManagedInstancePairInfo> ManagedInstancePairs { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -391,14 +381,13 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> ReplicationState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.GeoSecondaryInstanceType> SecondaryType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.InstanceFailoverGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.InstanceFailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class InstanceFailoverGroupReadWriteEndpoint : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class InstanceFailoverGroupReadWriteEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public InstanceFailoverGroupReadWriteEndpoint() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReadWriteEndpointFailoverPolicy> FailoverPolicy { get { throw null; } set { } }
@@ -409,9 +398,9 @@ namespace Azure.Provisioning.Sql
         Primary = 0,
         Secondary = 1,
     }
-    public partial class InstancePool : Azure.Provisioning.Primitives.Resource
+    public partial class InstancePool : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public InstancePool(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public InstancePool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DnsZone { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.InstancePoolLicenseType> LicenseType { get { throw null; } set { } }
@@ -423,11 +412,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> VCores { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.InstancePool FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.InstancePool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum InstancePoolLicenseType
@@ -435,21 +423,20 @@ namespace Azure.Provisioning.Sql
         LicenseIncluded = 0,
         BasePrice = 1,
     }
-    public partial class IPv6FirewallRule : Azure.Provisioning.Primitives.Resource
+    public partial class IPv6FirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public IPv6FirewallRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public IPv6FirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> EndIPv6Address { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartIPv6Address { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.IPv6FirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.IPv6FirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum JobAgentState
@@ -481,14 +468,14 @@ namespace Azure.Provisioning.Sql
         Failed = 3,
         Canceled = 4,
     }
-    public partial class JobExecutionTarget : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class JobExecutionTarget : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public JobExecutionTarget() { }
         public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ServerName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobTargetType> TargetType { get { throw null; } }
     }
-    public partial class JobStepAction : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class JobStepAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public JobStepAction() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobStepActionType> ActionType { get { throw null; } set { } }
@@ -503,7 +490,7 @@ namespace Azure.Provisioning.Sql
     {
         TSql = 0,
     }
-    public partial class JobStepExecutionOptions : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class JobStepExecutionOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public JobStepExecutionOptions() { }
         public Azure.Provisioning.BicepValue<int> InitialRetryIntervalSeconds { get { throw null; } set { } }
@@ -512,7 +499,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<float> RetryIntervalBackoffMultiplier { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TimeoutSeconds { get { throw null; } set { } }
     }
-    public partial class JobStepOutput : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class JobStepOutput : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public JobStepOutput() { }
         public Azure.Provisioning.BicepValue<string> Credential { get { throw null; } set { } }
@@ -528,7 +515,7 @@ namespace Azure.Provisioning.Sql
     {
         SqlDatabase = 0,
     }
-    public partial class JobTarget : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class JobTarget : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public JobTarget() { }
         public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
@@ -552,20 +539,19 @@ namespace Azure.Provisioning.Sql
         SqlShardMap = 3,
         SqlServer = 4,
     }
-    public partial class LedgerDigestUpload : Azure.Provisioning.Primitives.Resource
+    public partial class LedgerDigestUpload : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public LedgerDigestUpload(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public LedgerDigestUpload(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DigestStorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.LedgerDigestUploadsState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.LedgerDigestUpload FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.LedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum LedgerDigestUploadsName
@@ -578,25 +564,24 @@ namespace Azure.Provisioning.Sql
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class LogicalDatabaseTransparentDataEncryption : Azure.Provisioning.Primitives.Resource
+    public partial class LogicalDatabaseTransparentDataEncryption : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public LogicalDatabaseTransparentDataEncryption(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public LogicalDatabaseTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.TransparentDataEncryptionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.LogicalDatabaseTransparentDataEncryption FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.LogicalDatabaseTransparentDataEncryption FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class LongTermRetentionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class LongTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public LongTermRetentionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public LongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlBackupStorageAccessTier> BackupStorageAccessTier { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> MakeBackupsImmutable { get { throw null; } set { } }
@@ -607,11 +592,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> WeeklyRetention { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> WeekOfYear { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> YearlyRetention { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.LongTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.LongTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum LongTermRetentionPolicyName
@@ -619,24 +603,23 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
-    public partial class ManagedBackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedBackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedBackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedBackupShortTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedBackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedDatabase : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabase(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> AllowAutoCompleteRestore { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.CatalogCollationType> CatalogCollation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Collation { get { throw null; } set { } }
@@ -665,26 +648,25 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Uri> StorageContainerUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedDatabase FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedDatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AdvancedThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedDatabaseAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2021_11_01;
         }
     }
     public enum ManagedDatabaseCreateMode
@@ -695,9 +677,9 @@ namespace Azure.Provisioning.Sql
         Recovery = 3,
         RestoreLongTermRetentionBackup = 4,
     }
-    public partial class ManagedDatabaseSecurityAlertPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabaseSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabaseSecurityAlertPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
@@ -710,16 +692,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageAccountAccessKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedDatabaseSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabaseSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedDatabaseSensitivityLabel : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabaseSensitivityLabel(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseSensitivityLabel(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } set { } }
@@ -733,7 +714,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> SchemaName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedDatabaseSensitivityLabel FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum ManagedDatabaseStatus
     {
@@ -752,9 +733,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="DbCopying")]
         DBCopying = 11,
     }
-    public partial class ManagedDatabaseVulnerabilityAssessment : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabaseVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabaseVulnerabilityAssessment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedDatabase? Parent { get { throw null; } set { } }
@@ -763,25 +744,24 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageContainerPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageContainerSasKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedDatabaseVulnerabilityAssessmentRuleBaseline(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedDatabaseVulnerabilityAssessmentRuleBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.DatabaseVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
-    public partial class ManagedInstance : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstance : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstance(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstance(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AdministratorLogin { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstanceExternalAdministrator> Administrators { get { throw null; } set { } }
@@ -818,18 +798,17 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TimezoneId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> VCores { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedInstance FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstance FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstanceAdministrator : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceAdministrator(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstanceAdministratorType> AdministratorType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Login { get { throw null; } set { } }
@@ -838,50 +817,48 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> Sid { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedInstanceAdministrator FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedInstanceAdministratorType
     {
         ActiveDirectory = 0,
     }
-    public partial class ManagedInstanceAdvancedThreatProtection : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceAdvancedThreatProtection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AdvancedThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2021_11_01;
         }
     }
-    public partial class ManagedInstanceAzureADOnlyAuthentication : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceAzureADOnlyAuthentication : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceAzureADOnlyAuthentication(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureADOnlyAuthenticationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceAzureADOnlyAuthentication FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstanceDtc : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceDtc : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceDtc(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceDtc(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> DtcEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DtcHostNameDnsSuffix { get { throw null; } }
         public Azure.Provisioning.BicepList<string> ExternalDnsSuffixSearchList { get { throw null; } set { } }
@@ -891,14 +868,13 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobExecutionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstanceDtcSecuritySettings> SecuritySettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceDtc FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceDtc FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstanceDtcSecuritySettings : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstanceDtcSecuritySettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstanceDtcSecuritySettings() { }
         public Azure.Provisioning.BicepValue<bool> IsXATransactionsEnabled { get { throw null; } set { } }
@@ -907,16 +883,16 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<int> XATransactionsDefaultTimeoutInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> XATransactionsMaximumTimeoutInSeconds { get { throw null; } set { } }
     }
-    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstanceDtcTransactionManagerCommunicationSettings() { }
         public Azure.Provisioning.BicepValue<bool> AllowInboundEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowOutboundEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Authentication { get { throw null; } set { } }
     }
-    public partial class ManagedInstanceEncryptionProtector : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceEncryptionProtector : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceEncryptionProtector(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceEncryptionProtector(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAutoRotationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
@@ -927,14 +903,13 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceEncryptionProtector FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceEncryptionProtector FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstanceExternalAdministrator : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstanceExternalAdministrator : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstanceExternalAdministrator() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAdministratorType> AdministratorType { get { throw null; } set { } }
@@ -944,9 +919,9 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> Sid { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
     }
-    public partial class ManagedInstanceKey : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceKey : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceKey(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceKey(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAutoRotationEnabled { get { throw null; } }
@@ -957,11 +932,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedInstanceKey FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceKey FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedInstanceLicenseType
@@ -969,9 +943,9 @@ namespace Azure.Provisioning.Sql
         LicenseIncluded = 0,
         BasePrice = 1,
     }
-    public partial class ManagedInstanceLongTermRetentionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceLongTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceLongTermRetentionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceLongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MonthlyRetention { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
@@ -980,11 +954,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> WeeklyRetention { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> WeekOfYear { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> YearlyRetention { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedInstanceLongTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceLongTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedInstanceLongTermRetentionPolicyName
@@ -992,21 +965,21 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
-    public partial class ManagedInstancePairInfo : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstancePairInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstancePairInfo() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PartnerManagedInstanceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrimaryManagedInstanceId { get { throw null; } set { } }
     }
-    public partial class ManagedInstancePecProperty : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstancePecProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstancePecProperty() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstancePrivateEndpointConnectionProperties> Properties { get { throw null; } }
     }
-    public partial class ManagedInstancePrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstancePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstancePrivateEndpointConnection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstancePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstancePrivateLinkServiceConnectionStateProperty> ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -1014,21 +987,20 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstancePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstancePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstancePrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstancePrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstancePrivateEndpointConnectionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstancePrivateLinkServiceConnectionStateProperty> PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
     }
-    public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedInstancePrivateLinkServiceConnectionStateProperty() { }
         public Azure.Provisioning.BicepValue<string> ActionsRequired { get { throw null; } }
@@ -1059,20 +1031,19 @@ namespace Azure.Provisioning.Sql
         Redirect = 1,
         Default = 2,
     }
-    public partial class ManagedInstanceServerConfigurationOption : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceServerConfigurationOption : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceServerConfigurationOption(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceServerConfigurationOption(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobExecutionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ServerConfigurationOptionValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceServerConfigurationOption FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceServerConfigurationOption FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedInstanceServerConfigurationOptionName
@@ -1080,9 +1051,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="allowPolybaseExport")]
         AllowPolybaseExport = 0,
     }
-    public partial class ManagedInstanceServerTrustCertificate : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceServerTrustCertificate : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceServerTrustCertificate(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceServerTrustCertificate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> CertificateName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -1090,16 +1061,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> PublicBlob { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceServerTrustCertificate FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceServerTrustCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedInstanceStartStopSchedule : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceStartStopSchedule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceStartStopSchedule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceStartStopSchedule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
@@ -1109,11 +1079,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.SqlScheduleItem> ScheduleList { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TimeZoneId { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.ManagedInstanceStartStopSchedule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceStartStopSchedule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedInstanceStartStopScheduleName
@@ -1121,9 +1090,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
-    public partial class ManagedInstanceVulnerabilityAssessment : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedInstanceVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedInstanceVulnerabilityAssessment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedInstanceVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
@@ -1132,26 +1101,25 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageContainerPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageContainerSasKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedInstanceVulnerabilityAssessment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedInstanceVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedLedgerDigestUpload : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedLedgerDigestUpload : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedLedgerDigestUpload(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedLedgerDigestUpload(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DigestStorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedLedgerDigestUploadsState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedLedgerDigestUpload FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedLedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2021_11_01;
         }
     }
     public enum ManagedLedgerDigestUploadsName
@@ -1164,23 +1132,23 @@ namespace Azure.Provisioning.Sql
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedRestorableDroppedDbBackupShortTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedRestorableDroppedDbBackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum ManagedServerCreateMode
     {
         Default = 0,
         PointInTimeRestore = 1,
     }
-    public partial class ManagedServerDnsAlias : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedServerDnsAlias : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedServerDnsAlias(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedServerDnsAlias(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AzureDnsRecord { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> CreateDnsRecord { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -1188,16 +1156,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PublicAzureDnsRecord { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedServerDnsAlias FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedServerDnsAlias FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class ManagedServerSecurityAlertPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedServerSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedServerSecurityAlertPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedServerSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
@@ -1210,11 +1177,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageAccountAccessKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedServerSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ManagedShortTermRetentionPolicyName
@@ -1222,45 +1188,43 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
-    public partial class ManagedTransparentDataEncryption : Azure.Provisioning.Primitives.Resource
+    public partial class ManagedTransparentDataEncryption : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedTransparentDataEncryption(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.TransparentDataEncryptionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ManagedTransparentDataEncryption FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ManagedTransparentDataEncryption FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class OutboundFirewallRule : Azure.Provisioning.Primitives.Resource
+    public partial class OutboundFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public OutboundFirewallRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public OutboundFirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.OutboundFirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.OutboundFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class PartnerRegionInfo : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class PartnerRegionInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PartnerRegionInfo() { }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.InstanceFailoverGroupReplicationRole> ReplicationRole { get { throw null; } }
     }
-    public partial class PartnerServerInfo : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class PartnerServerInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PartnerServerInfo() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
@@ -1315,20 +1279,19 @@ namespace Azure.Provisioning.Sql
         High = 3,
         Critical = 4,
     }
-    public partial class ServerAdvancedThreatProtection : Azure.Provisioning.Primitives.Resource
+    public partial class ServerAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServerAdvancedThreatProtection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServerAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AdvancedThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.ServerAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.ServerAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum ServerConnectionType
@@ -1337,7 +1300,7 @@ namespace Azure.Provisioning.Sql
         Redirect = 1,
         Proxy = 2,
     }
-    public partial class ServerExternalAdministrator : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServerExternalAdministrator : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServerExternalAdministrator() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAdministratorType> AdministratorType { get { throw null; } set { } }
@@ -1353,7 +1316,7 @@ namespace Azure.Provisioning.Sql
         Disabled = 1,
         SecuredByPerimeter = 2,
     }
-    public partial class ServerPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServerPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServerPrivateEndpointConnectionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlPrivateLinkServiceConnectionStateProperty> ConnectionState { get { throw null; } }
@@ -1366,7 +1329,7 @@ namespace Azure.Provisioning.Sql
         GlobalTransactions = 0,
         ServiceBroker = 1,
     }
-    public partial class ServerTrustGroupServerInfo : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ServerTrustGroupServerInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServerTrustGroupServerInfo() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServerId { get { throw null; } set { } }
@@ -1389,20 +1352,19 @@ namespace Azure.Provisioning.Sql
     {
         ActiveDirectory = 0,
     }
-    public partial class SqlAgentConfiguration : Azure.Provisioning.Primitives.Resource
+    public partial class SqlAgentConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlAgentConfiguration(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlAgentConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAgentConfigurationPropertiesState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlAgentConfiguration FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlAgentConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_06_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlAgentConfigurationPropertiesState
@@ -1461,9 +1423,9 @@ namespace Azure.Provisioning.Sql
         public static bool operator !=(Azure.Provisioning.Sql.SqlBuiltInRole left, Azure.Provisioning.Sql.SqlBuiltInRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SqlDatabase : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabase(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> AutoPauseDelay { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAvailabilityZoneType> AvailabilityZone { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.CatalogCollationType> CatalogCollation { get { throw null; } set { } }
@@ -1522,7 +1484,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseFreeLimit { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlDatabase FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1531,12 +1493,11 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlDatabaseBlobAuditingPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseBlobAuditingPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AuditActionsAndGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureMonitorTargetEnabled { get { throw null; } set { } }
@@ -1552,11 +1513,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> StorageAccountSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlDatabaseCreateMode
@@ -1572,7 +1532,7 @@ namespace Azure.Provisioning.Sql
         RestoreLongTermRetentionBackup = 8,
         OnlineSecondary = 9,
     }
-    public partial class SqlDatabaseKey : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlDatabaseKey : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlDatabaseKey() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
@@ -1584,9 +1544,9 @@ namespace Azure.Provisioning.Sql
     {
         AzureKeyVault = 0,
     }
-    public partial class SqlDatabaseSecurityAlertPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseSecurityAlertPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
@@ -1599,18 +1559,17 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageAccountAccessKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlDatabaseSensitivityLabel : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseSensitivityLabel(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseSensitivityLabel(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } set { } }
@@ -1624,28 +1583,28 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> SchemaName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseSensitivityLabel FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
-    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseSqlVulnerabilityAssessmentBaseline(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseSqlVulnerabilityAssessmentBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>>> Results { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaseline FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
-    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseSqlVulnerabilityAssessmentBaselineRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseSqlVulnerabilityAssessmentBaselineRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaseline? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>> Results { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum SqlDatabaseStatus
     {
@@ -1674,9 +1633,9 @@ namespace Azure.Provisioning.Sql
         Stopped = 22,
         Starting = 23,
     }
-    public partial class SqlDatabaseVulnerabilityAssessment : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseVulnerabilityAssessment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
@@ -1685,21 +1644,20 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageContainerPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageContainerSasKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.Resource
+    public partial class SqlDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlDatabaseVulnerabilityAssessmentRuleBaseline(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlDatabaseVulnerabilityAssessmentRuleBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.DatabaseVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum SqlDayOfWeek
     {
@@ -1711,15 +1669,15 @@ namespace Azure.Provisioning.Sql
         Friday = 5,
         Saturday = 6,
     }
-    public partial class SqlFirewallRule : Azure.Provisioning.Primitives.Resource
+    public partial class SqlFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlFirewallRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlFirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> EndIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartIPAddress { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1727,7 +1685,6 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlMinimalTlsVersion
@@ -1743,9 +1700,9 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
         Tls1_3 = 4,
     }
-    public partial class SqlPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class SqlPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlPrivateEndpointConnection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlPrivateLinkServiceConnectionStateProperty> ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -1754,13 +1711,12 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlPrivateEndpointProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlPrivateEndpointProvisioningState
@@ -1775,7 +1731,7 @@ namespace Azure.Provisioning.Sql
     {
         None = 0,
     }
-    public partial class SqlPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlPrivateLinkServiceConnectionStateProperty() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlPrivateLinkServiceConnectionActionsRequired> ActionsRequired { get { throw null; } }
@@ -1789,7 +1745,7 @@ namespace Azure.Provisioning.Sql
         Rejected = 2,
         Disconnected = 3,
     }
-    public partial class SqlScheduleItem : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlScheduleItem : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlScheduleItem() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlDayOfWeek> StartDay { get { throw null; } set { } }
@@ -1801,9 +1757,9 @@ namespace Azure.Provisioning.Sql
     {
         Default = 0,
     }
-    public partial class SqlServer : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServer(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServer(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AdministratorLogin { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerExternalAdministrator> Administrators { get { throw null; } set { } }
@@ -1827,9 +1783,9 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerWorkspaceFeature> WorkspaceFeature { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.Sql.SqlServer FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Sql.SqlBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServer FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -1837,12 +1793,11 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerAzureADAdministrator : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerAzureADAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerAzureADAdministrator(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerAzureADAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAdministratorType> AdministratorType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureADOnlyAuthenticationEnabled { get { throw null; } }
@@ -1851,35 +1806,33 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> Sid { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerAzureADAdministrator FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerAzureADAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerAzureADOnlyAuthentication : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerAzureADOnlyAuthentication : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerAzureADOnlyAuthentication(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureADOnlyAuthenticationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerAzureADOnlyAuthentication FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerBlobAuditingPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerBlobAuditingPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AuditActionsAndGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureMonitorTargetEnabled { get { throw null; } set { } }
@@ -1895,16 +1848,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> StorageAccountSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerCommunicationLink : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerCommunicationLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerCommunicationLink(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerCommunicationLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -1913,17 +1865,16 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> PartnerServer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerCommunicationLink FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerCommunicationLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
-            public static readonly string V2014_04_01_preview;
         }
     }
-    public partial class SqlServerConnectionPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerConnectionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerConnectionPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerConnectionPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerConnectionType> ConnectionType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
@@ -1931,18 +1882,17 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerConnectionPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerConnectionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerDatabaseRestorePoint : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerDatabaseRestorePoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerDatabaseRestorePoint(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerDatabaseRestorePoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EarliestRestoreOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
@@ -1952,19 +1902,18 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> RestorePointLabel { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.RestorePointType> RestorePointType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerDatabaseRestorePoint FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerDatabaseRestorePoint FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerDevOpsAuditingSetting : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerDevOpsAuditingSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerDevOpsAuditingSetting(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerDevOpsAuditingSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAzureMonitorTargetEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsManagedIdentityInUse { get { throw null; } set { } }
@@ -1975,31 +1924,29 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<System.Guid> StorageAccountSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerDevOpsAuditingSetting FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerDevOpsAuditingSetting FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerDnsAlias : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerDnsAlias : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerDnsAlias(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerDnsAlias(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AzureDnsRecord { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerDnsAlias FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerDnsAlias FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJob : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJob : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJob(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJob(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -2007,16 +1954,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlServerJobSchedule> Schedule { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> Version { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerJob FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJob FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJobAgent : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJobAgent : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJobAgent(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJobAgent(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DatabaseId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -2026,32 +1972,30 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobAgentState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerJobAgent FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJobAgent FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJobCredential : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJobCredential : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJobCredential(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJobCredential(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServerJobAgent? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerJobCredential FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJobCredential FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJobExecution : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJobExecution : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJobExecution(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJobExecution(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreateOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> CurrentAttempts { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CurrentAttemptStartOn { get { throw null; } }
@@ -2069,14 +2013,13 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StepName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobExecutionTarget> Target { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerJobExecution FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJobExecution FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJobSchedule : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlServerJobSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlServerJobSchedule() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
@@ -2090,9 +2033,9 @@ namespace Azure.Provisioning.Sql
         Once = 0,
         Recurring = 1,
     }
-    public partial class SqlServerJobStep : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJobStep : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJobStep(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJobStep(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobStepAction> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Credential { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.JobStepExecutionOptions> ExecutionOptions { get { throw null; } set { } }
@@ -2103,31 +2046,29 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<int> StepId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TargetGroup { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerJobStep FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJobStep FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerJobTargetGroup : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerJobTargetGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerJobTargetGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerJobTargetGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.JobTarget> Members { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServerJobAgent? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerJobTargetGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerJobTargetGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerKey : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerKey : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerKey(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerKey(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAutoRotationEnabled { get { throw null; } }
@@ -2140,11 +2081,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerKey FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerKey FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlServerKeyType
@@ -2158,15 +2098,15 @@ namespace Azure.Provisioning.Sql
         Group = 1,
         Application = 2,
     }
-    public partial class SqlServerPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlServerPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlServerPrivateEndpointConnection() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ServerPrivateEndpointConnectionProperties> Properties { get { throw null; } }
     }
-    public partial class SqlServerSecurityAlertPolicy : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
@@ -2179,75 +2119,79 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageAccountAccessKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerSqlVulnerabilityAssessment : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerSqlVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerSqlVulnerabilityAssessment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerSqlVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlVulnerabilityAssessmentState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
         }
     }
-    public partial class SqlServerSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerSqlVulnerabilityAssessmentBaseline(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerSqlVulnerabilityAssessmentBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>>> Results { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
         }
     }
-    public partial class SqlServerSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerSqlVulnerabilityAssessmentBaselineRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerSqlVulnerabilityAssessmentBaselineRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>> Results { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01_preview;
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+            public static readonly string V2021_11_01;
         }
     }
-    public partial class SqlServerTrustGroup : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerTrustGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerTrustGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerTrustGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.ServerTrustGroupServerInfo> GroupMembers { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerTrustGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerTrustGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServerVirtualNetworkRule : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerVirtualNetworkRule(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerVirtualNetworkRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -2255,11 +2199,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlServerVirtualNetworkRuleState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkSubnetId { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SqlServerVirtualNetworkRule FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerVirtualNetworkRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SqlServerVirtualNetworkRuleState
@@ -2271,9 +2214,9 @@ namespace Azure.Provisioning.Sql
         Deleting = 4,
         Unknown = 5,
     }
-    public partial class SqlServerVulnerabilityAssessment : Azure.Provisioning.Primitives.Resource
+    public partial class SqlServerVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SqlServerVulnerabilityAssessment(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SqlServerVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
@@ -2282,14 +2225,13 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> StorageContainerPath { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageContainerSasKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.SqlServerVulnerabilityAssessment FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SqlServicePrincipal : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlServicePrincipal : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlServicePrincipal() { }
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
@@ -2302,7 +2244,7 @@ namespace Azure.Provisioning.Sql
         None = 0,
         SystemAssigned = 1,
     }
-    public partial class SqlSku : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SqlSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SqlSku() { }
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
@@ -2321,9 +2263,9 @@ namespace Azure.Provisioning.Sql
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class SyncAgent : Azure.Provisioning.Primitives.Resource
+    public partial class SyncAgent : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SyncAgent(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SyncAgent(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsUpToDate { get { throw null; } }
@@ -2334,11 +2276,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SyncDatabaseId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
-        public static Azure.Provisioning.Sql.SyncAgent FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SyncAgent FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SyncAgentState
@@ -2358,9 +2299,9 @@ namespace Azure.Provisioning.Sql
         OneWayMemberToHub = 1,
         OneWayHubToMember = 2,
     }
-    public partial class SyncGroup : Azure.Provisioning.Primitives.Resource
+    public partial class SyncGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SyncGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SyncGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<int> ConflictLoggingRetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SyncConflictResolutionPolicy> ConflictResolutionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HubDatabasePassword { get { throw null; } set { } }
@@ -2378,28 +2319,27 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SyncGroupState> SyncState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> UsePrivateLinkConnection { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SyncGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SyncGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class SyncGroupSchema : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SyncGroupSchema : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SyncGroupSchema() { }
         public Azure.Provisioning.BicepValue<string> MasterSyncMemberName { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.SyncGroupSchemaTable> Tables { get { throw null; } set { } }
     }
-    public partial class SyncGroupSchemaTable : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SyncGroupSchemaTable : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SyncGroupSchemaTable() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.SyncGroupSchemaTableColumn> Columns { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> QuotedName { get { throw null; } set { } }
     }
-    public partial class SyncGroupSchemaTableColumn : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SyncGroupSchemaTableColumn : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SyncGroupSchemaTableColumn() { }
         public Azure.Provisioning.BicepValue<string> DataSize { get { throw null; } set { } }
@@ -2414,9 +2354,9 @@ namespace Azure.Provisioning.Sql
         Progressing = 3,
         Good = 4,
     }
-    public partial class SyncMember : Azure.Provisioning.Primitives.Resource
+    public partial class SyncMember : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SyncMember(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SyncMember(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SyncMemberDbType> DatabaseType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2433,11 +2373,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> UsePrivateLinkConnection { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserName { get { throw null; } set { } }
-        public static Azure.Provisioning.Sql.SyncMember FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.SyncMember FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
     public enum SyncMemberDbType
@@ -2488,16 +2427,16 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="master")]
         Master = 1,
     }
-    public partial class VulnerabilityAssessmentRecurringScansProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class VulnerabilityAssessmentRecurringScansProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VulnerabilityAssessmentRecurringScansProperties() { }
         public Azure.Provisioning.BicepList<string> Emails { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EmailSubscriptionAdmins { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
     }
-    public partial class WorkloadClassifier : Azure.Provisioning.Primitives.Resource
+    public partial class WorkloadClassifier : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WorkloadClassifier(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public WorkloadClassifier(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Context { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EndTime { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -2508,16 +2447,15 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Sql.WorkloadGroup? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartTime { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.WorkloadClassifier FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.WorkloadClassifier FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
-    public partial class WorkloadGroup : Azure.Provisioning.Primitives.Resource
+    public partial class WorkloadGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WorkloadGroup(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public WorkloadGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Importance { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxResourcePercent { get { throw null; } set { } }
@@ -2528,11 +2466,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> QueryExecutionTimeout { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Sql.WorkloadGroup FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Sql.WorkloadGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2024_05_01_preview;
         }
     }
 }

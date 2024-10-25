@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsDisasterRecovery.
 /// </summary>
-public partial class EventHubsDisasterRecovery : Resource
+public partial class EventHubsDisasterRecovery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -85,10 +85,15 @@ public partial class EventHubsDisasterRecovery : Resource
     /// <summary>
     /// Creates a new EventHubsDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
-    public EventHubsDisasterRecovery(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
+    public EventHubsDisasterRecovery(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
@@ -108,11 +113,6 @@ public partial class EventHubsDisasterRecovery : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2024-01-01.
         /// </summary>
         public static readonly string V2024_01_01 = "2024-01-01";
@@ -131,11 +131,16 @@ public partial class EventHubsDisasterRecovery : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsDisasterRecovery.</param>
     /// <returns>The existing EventHubsDisasterRecovery resource.</returns>
-    public static EventHubsDisasterRecovery FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsDisasterRecovery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubsDisasterRecovery resource.

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppConfiguration;
 /// <summary>
 /// AppConfigurationKeyValue.
 /// </summary>
-public partial class AppConfigurationKeyValue : Resource
+public partial class AppConfigurationKeyValue : ProvisionableResource
 {
     /// <summary>
     /// Identifier of key and label combination. Key and label are joined by $
@@ -103,10 +103,15 @@ public partial class AppConfigurationKeyValue : Resource
     /// <summary>
     /// Creates a new AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationKeyValue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
-    public AppConfigurationKeyValue(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
+    public AppConfigurationKeyValue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _contentType = BicepValue<string>.DefineProperty(this, "ContentType", ["properties", "contentType"]);
@@ -146,9 +151,14 @@ public partial class AppConfigurationKeyValue : Resource
     /// <summary>
     /// Creates a reference to an existing AppConfigurationKeyValue.
     /// </summary>
-    /// <param name="resourceName">Name of the AppConfigurationKeyValue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppConfigurationKeyValue resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationKeyValue.</param>
     /// <returns>The existing AppConfigurationKeyValue resource.</returns>
-    public static AppConfigurationKeyValue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppConfigurationKeyValue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

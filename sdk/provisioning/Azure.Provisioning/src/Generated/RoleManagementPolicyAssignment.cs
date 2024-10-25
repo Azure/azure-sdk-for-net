@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleManagementPolicyAssignment.
 /// </summary>
-public partial class RoleManagementPolicyAssignment : Resource
+public partial class RoleManagementPolicyAssignment : ProvisionableResource
 {
     /// <summary>
     /// The name of format {guid_guid} the role management policy assignment to
@@ -82,10 +82,15 @@ public partial class RoleManagementPolicyAssignment : Resource
     /// <summary>
     /// Creates a new RoleManagementPolicyAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleManagementPolicyAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleManagementPolicyAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleManagementPolicyAssignment.</param>
-    public RoleManagementPolicyAssignment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Authorization/roleManagementPolicyAssignments", resourceVersion ?? "2020-10-01")
+    public RoleManagementPolicyAssignment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleManagementPolicyAssignments", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _policyId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PolicyId", ["properties", "policyId"]);
@@ -103,11 +108,6 @@ public partial class RoleManagementPolicyAssignment : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2020-10-01-preview.
-        /// </summary>
-        public static readonly string V2020_10_01_preview = "2020-10-01-preview";
-
-        /// <summary>
         /// 2020-10-01.
         /// </summary>
         public static readonly string V2020_10_01 = "2020-10-01";
@@ -116,9 +116,14 @@ public partial class RoleManagementPolicyAssignment : Resource
     /// <summary>
     /// Creates a reference to an existing RoleManagementPolicyAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleManagementPolicyAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleManagementPolicyAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleManagementPolicyAssignment.</param>
     /// <returns>The existing RoleManagementPolicyAssignment resource.</returns>
-    public static RoleManagementPolicyAssignment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RoleManagementPolicyAssignment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

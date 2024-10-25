@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteHybridConnectionNamespaceRelay.
 /// </summary>
-public partial class SiteHybridConnectionNamespaceRelay : Resource
+public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
 {
     /// <summary>
     /// The namespace for this hybrid connection.
@@ -96,10 +96,15 @@ public partial class SiteHybridConnectionNamespaceRelay : Resource
     /// <summary>
     /// Creates a new SiteHybridConnectionNamespaceRelay.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteHybridConnectionNamespaceRelay.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteHybridConnectionNamespaceRelay
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteHybridConnectionNamespaceRelay.</param>
-    public SiteHybridConnectionNamespaceRelay(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion)
+    public SiteHybridConnectionNamespaceRelay(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _relayName = BicepValue<string>.DefineProperty(this, "RelayName", ["properties", "relayName"], isRequired: true);
@@ -118,9 +123,14 @@ public partial class SiteHybridConnectionNamespaceRelay : Resource
     /// <summary>
     /// Creates a reference to an existing SiteHybridConnectionNamespaceRelay.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteHybridConnectionNamespaceRelay.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteHybridConnectionNamespaceRelay
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteHybridConnectionNamespaceRelay.</param>
     /// <returns>The existing SiteHybridConnectionNamespaceRelay resource.</returns>
-    public static SiteHybridConnectionNamespaceRelay FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteHybridConnectionNamespaceRelay FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

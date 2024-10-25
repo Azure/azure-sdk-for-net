@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobService.
 /// </summary>
-public partial class BlobService : Resource
+public partial class BlobService : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 
@@ -111,10 +111,15 @@ public partial class BlobService : Resource
     /// <summary>
     /// Creates a new BlobService.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobService resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobService.</param>
-    public BlobService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2024-01-01")
+    public BlobService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
         _changeFeed = BicepValue<BlobServiceChangeFeed>.DefineProperty(this, "ChangeFeed", ["properties", "changeFeed"]);
@@ -251,9 +256,14 @@ public partial class BlobService : Resource
     /// <summary>
     /// Creates a reference to an existing BlobService.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobService resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobService.</param>
     /// <returns>The existing BlobService resource.</returns>
-    public static BlobService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static BlobService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

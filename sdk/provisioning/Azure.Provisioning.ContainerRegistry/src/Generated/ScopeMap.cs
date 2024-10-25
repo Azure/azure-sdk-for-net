@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ScopeMap.
 /// </summary>
-public partial class ScopeMap : Resource
+public partial class ScopeMap : ProvisionableResource
 {
     /// <summary>
     /// The name of the scope map.
@@ -78,10 +78,15 @@ public partial class ScopeMap : Resource
     /// <summary>
     /// Creates a new ScopeMap.
     /// </summary>
-    /// <param name="resourceName">Name of the ScopeMap.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ScopeMap resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ScopeMap.</param>
-    public ScopeMap(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01")
+    public ScopeMap(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _actions = BicepList<string>.DefineProperty(this, "Actions", ["properties", "actions"]);
@@ -100,11 +105,6 @@ public partial class ScopeMap : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
-        /// <summary>
         /// 2023-07-01.
         /// </summary>
         public static readonly string V2023_07_01 = "2023-07-01";
@@ -118,11 +118,16 @@ public partial class ScopeMap : Resource
     /// <summary>
     /// Creates a reference to an existing ScopeMap.
     /// </summary>
-    /// <param name="resourceName">Name of the ScopeMap.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ScopeMap resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ScopeMap.</param>
     /// <returns>The existing ScopeMap resource.</returns>
-    public static ScopeMap FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ScopeMap FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ScopeMap resource.

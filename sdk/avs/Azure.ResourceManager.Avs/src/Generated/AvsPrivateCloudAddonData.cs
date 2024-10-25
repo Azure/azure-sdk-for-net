@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// The properties of an addon resource
+        /// The resource-specific properties for this resource.
         /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
         /// </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// The properties of an addon resource
+        /// The resource-specific properties for this resource.
         /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
         /// </summary>

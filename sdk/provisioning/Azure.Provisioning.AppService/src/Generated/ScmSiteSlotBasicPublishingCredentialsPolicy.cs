@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// ScmSiteSlotBasicPublishingCredentialsPolicy.
 /// </summary>
-public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Resource
+public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -57,10 +57,16 @@ public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Resource
     /// <summary>
     /// Creates a new ScmSiteSlotBasicPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ScmSiteSlotBasicPublishingCredentialsPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ScmSiteSlotBasicPublishingCredentialsPolicy resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ScmSiteSlotBasicPublishingCredentialsPolicy.</param>
-    public ScmSiteSlotBasicPublishingCredentialsPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
+    public ScmSiteSlotBasicPublishingCredentialsPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);
@@ -235,9 +241,15 @@ public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Resource
     /// Creates a reference to an existing
     /// ScmSiteSlotBasicPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ScmSiteSlotBasicPublishingCredentialsPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ScmSiteSlotBasicPublishingCredentialsPolicy resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ScmSiteSlotBasicPublishingCredentialsPolicy.</param>
     /// <returns>The existing ScmSiteSlotBasicPublishingCredentialsPolicy resource.</returns>
-    public static ScmSiteSlotBasicPublishingCredentialsPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ScmSiteSlotBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

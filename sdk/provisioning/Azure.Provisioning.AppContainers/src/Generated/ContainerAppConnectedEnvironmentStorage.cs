@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironmentStorage.
 /// </summary>
-public partial class ContainerAppConnectedEnvironmentStorage : Resource
+public partial class ContainerAppConnectedEnvironmentStorage : ProvisionableResource
 {
     /// <summary>
     /// Name of the storage.
@@ -50,10 +50,15 @@ public partial class ContainerAppConnectedEnvironmentStorage : Resource
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentStorage.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentStorage.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentStorage resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentStorage.</param>
-    public ContainerAppConnectedEnvironmentStorage(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/connectedEnvironments/storages", resourceVersion ?? "2024-03-01")
+    public ContainerAppConnectedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/storages", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectedEnvironmentStorageAzureFile = BicepValue<ContainerAppAzureFileProperties>.DefineProperty(this, "ConnectedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
@@ -67,11 +72,6 @@ public partial class ContainerAppConnectedEnvironmentStorage : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -92,9 +92,14 @@ public partial class ContainerAppConnectedEnvironmentStorage : Resource
     /// Creates a reference to an existing
     /// ContainerAppConnectedEnvironmentStorage.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppConnectedEnvironmentStorage.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppConnectedEnvironmentStorage resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentStorage.</param>
     /// <returns>The existing ContainerAppConnectedEnvironmentStorage resource.</returns>
-    public static ContainerAppConnectedEnvironmentStorage FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironmentStorage FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AseV3NetworkingConfiguration.
 /// </summary>
-public partial class AseV3NetworkingConfiguration : Resource
+public partial class AseV3NetworkingConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -101,10 +101,15 @@ public partial class AseV3NetworkingConfiguration : Resource
     /// <summary>
     /// Creates a new AseV3NetworkingConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the AseV3NetworkingConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AseV3NetworkingConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AseV3NetworkingConfiguration.</param>
-    public AseV3NetworkingConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
+    public AseV3NetworkingConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _allowNewPrivateEndpointConnections = BicepValue<bool>.DefineProperty(this, "AllowNewPrivateEndpointConnections", ["properties", "allowNewPrivateEndpointConnections"]);
@@ -285,9 +290,14 @@ public partial class AseV3NetworkingConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing AseV3NetworkingConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the AseV3NetworkingConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AseV3NetworkingConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AseV3NetworkingConfiguration.</param>
     /// <returns>The existing AseV3NetworkingConfiguration resource.</returns>
-    public static AseV3NetworkingConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AseV3NetworkingConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

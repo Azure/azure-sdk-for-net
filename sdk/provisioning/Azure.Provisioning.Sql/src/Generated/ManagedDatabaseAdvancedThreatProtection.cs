@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedDatabaseAdvancedThreatProtection.
 /// </summary>
-public partial class ManagedDatabaseAdvancedThreatProtection : Resource
+public partial class ManagedDatabaseAdvancedThreatProtection : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -58,10 +58,15 @@ public partial class ManagedDatabaseAdvancedThreatProtection : Resource
     /// <summary>
     /// Creates a new ManagedDatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseAdvancedThreatProtection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ManagedDatabaseAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseAdvancedThreatProtection.</param>
-    public ManagedDatabaseAdvancedThreatProtection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2024-05-01-preview")
+    public ManagedDatabaseAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _state = BicepValue<AdvancedThreatProtectionState>.DefineProperty(this, "State", ["properties", "state"]);
@@ -77,18 +82,23 @@ public partial class ManagedDatabaseAdvancedThreatProtection : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
+        /// 2021-11-01.
         /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing
     /// ManagedDatabaseAdvancedThreatProtection.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedDatabaseAdvancedThreatProtection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ManagedDatabaseAdvancedThreatProtection resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseAdvancedThreatProtection.</param>
     /// <returns>The existing ManagedDatabaseAdvancedThreatProtection resource.</returns>
-    public static ManagedDatabaseAdvancedThreatProtection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedDatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

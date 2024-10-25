@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceKey.
 /// </summary>
-public partial class ManagedInstanceKey : Resource
+public partial class ManagedInstanceKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed instance key to be operated on (updated or
@@ -83,10 +83,15 @@ public partial class ManagedInstanceKey : Resource
     /// <summary>
     /// Creates a new ManagedInstanceKey.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceKey.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
-    public ManagedInstanceKey(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
@@ -106,11 +111,6 @@ public partial class ManagedInstanceKey : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -119,9 +119,14 @@ public partial class ManagedInstanceKey : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceKey.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceKey.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
     /// <returns>The existing ManagedInstanceKey resource.</returns>
-    public static ManagedInstanceKey FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

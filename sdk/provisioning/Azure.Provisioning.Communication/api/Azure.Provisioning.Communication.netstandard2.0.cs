@@ -1,8 +1,8 @@
 namespace Azure.Provisioning.Communication
 {
-    public partial class CommunicationDomain : Azure.Provisioning.Primitives.Resource
+    public partial class CommunicationDomain : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CommunicationDomain(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CommunicationDomain(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DataLocation { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.DomainManagement> DomainManagement { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FromSenderDomain { get { throw null; } }
@@ -17,17 +17,16 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.UserEngagementTracking> UserEngagementTracking { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.DomainPropertiesVerificationRecords> VerificationRecords { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.DomainPropertiesVerificationStates> VerificationStates { get { throw null; } }
-        public static Azure.Provisioning.Communication.CommunicationDomain FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Communication.CommunicationDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
-    public partial class CommunicationService : Azure.Provisioning.Primitives.Resource
+    public partial class CommunicationService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CommunicationService(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CommunicationService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DataLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -41,7 +40,7 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
-        public static Azure.Provisioning.Communication.CommunicationService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Communication.CommunicationService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.Communication.CommunicationServiceKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -50,10 +49,9 @@ namespace Azure.Provisioning.Communication
             public static readonly string V2020_08_20;
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
-    public partial class CommunicationServiceKeys : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class CommunicationServiceKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CommunicationServiceKeys() { }
         public Azure.Provisioning.BicepValue<string> PrimaryConnectionString { get { throw null; } }
@@ -61,7 +59,7 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Communication.CommunicationServiceKeys FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        public static Azure.Provisioning.Communication.CommunicationServiceKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
     }
     public enum CommunicationServiceProvisioningState
     {
@@ -93,7 +91,7 @@ namespace Azure.Provisioning.Communication
         CustomerManaged = 1,
         CustomerManagedInExchangeOnline = 2,
     }
-    public partial class DomainPropertiesVerificationRecords : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class DomainPropertiesVerificationRecords : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainPropertiesVerificationRecords() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.VerificationDnsRecord> Dkim { get { throw null; } }
@@ -102,7 +100,7 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.VerificationDnsRecord> Domain { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.VerificationDnsRecord> Spf { get { throw null; } }
     }
-    public partial class DomainPropertiesVerificationStates : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class DomainPropertiesVerificationStates : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainPropertiesVerificationStates() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.DomainVerificationStatusRecord> Dkim { get { throw null; } }
@@ -132,15 +130,15 @@ namespace Azure.Provisioning.Communication
         Verified = 4,
         CancellationRequested = 5,
     }
-    public partial class DomainVerificationStatusRecord : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class DomainVerificationStatusRecord : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainVerificationStatusRecord() { }
         public Azure.Provisioning.BicepValue<string> ErrorCode { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.DomainRecordVerificationStatus> Status { get { throw null; } }
     }
-    public partial class EmailService : Azure.Provisioning.Primitives.Resource
+    public partial class EmailService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public EmailService(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public EmailService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DataLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -148,12 +146,11 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.EmailServicesProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public static Azure.Provisioning.Communication.EmailService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Communication.EmailService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public enum EmailServicesProvisioningState
@@ -168,9 +165,9 @@ namespace Azure.Provisioning.Communication
         Deleting = 7,
         Moving = 8,
     }
-    public partial class SenderUsername : Azure.Provisioning.Primitives.Resource
+    public partial class SenderUsername : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SenderUsername(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SenderUsername(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DataLocation { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -179,12 +176,11 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Communication.CommunicationServiceProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
-        public static Azure.Provisioning.Communication.SenderUsername FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Communication.SenderUsername FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_03_31;
             public static readonly string V2023_04_01;
-            public static readonly string V2023_06_01_preview;
         }
     }
     public enum UserEngagementTracking
@@ -192,7 +188,7 @@ namespace Azure.Provisioning.Communication
         Disabled = 0,
         Enabled = 1,
     }
-    public partial class VerificationDnsRecord : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class VerificationDnsRecord : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VerificationDnsRecord() { }
         public Azure.Provisioning.BicepValue<string> DnsRecordType { get { throw null; } }

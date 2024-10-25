@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusTopic.
 /// </summary>
-public partial class ServiceBusTopic : Resource
+public partial class ServiceBusTopic : ProvisionableResource
 {
     /// <summary>
     /// The topic name.
@@ -164,15 +164,20 @@ public partial class ServiceBusTopic : Resource
     /// <summary>
     /// Creates a new ServiceBusTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusTopic resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopic.</param>
-    public ServiceBusTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics", resourceVersion ?? "2024-01-01")
+    public ServiceBusTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"]);
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"]);
+        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
+        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
         _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
         _enableExpress = BicepValue<bool>.DefineProperty(this, "EnableExpress", ["properties", "enableExpress"]);
         _enablePartitioning = BicepValue<bool>.DefineProperty(this, "EnablePartitioning", ["properties", "enablePartitioning"]);
@@ -217,11 +222,16 @@ public partial class ServiceBusTopic : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusTopic resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusTopic.</param>
     /// <returns>The existing ServiceBusTopic resource.</returns>
-    public static ServiceBusTopic FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusTopic resource.

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlTrigger.
 /// </summary>
-public partial class CosmosDBSqlTrigger : Resource
+public partial class CosmosDBSqlTrigger : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB trigger name.
@@ -76,10 +76,15 @@ public partial class CosmosDBSqlTrigger : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlTrigger.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlTrigger.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBSqlTrigger resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlTrigger.</param>
-    public CosmosDBSqlTrigger(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlTrigger(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -97,11 +102,6 @@ public partial class CosmosDBSqlTrigger : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -231,9 +231,14 @@ public partial class CosmosDBSqlTrigger : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlTrigger.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlTrigger.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBSqlTrigger resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlTrigger.</param>
     /// <returns>The existing CosmosDBSqlTrigger resource.</returns>
-    public static CosmosDBSqlTrigger FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlTrigger FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

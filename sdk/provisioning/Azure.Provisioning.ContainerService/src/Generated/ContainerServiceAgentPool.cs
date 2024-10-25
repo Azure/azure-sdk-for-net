@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServiceAgentPool.
 /// </summary>
-public partial class ContainerServiceAgentPool : Resource
+public partial class ContainerServiceAgentPool : ProvisionableResource
 {
     /// <summary>
     /// The name of the agent pool.
@@ -367,10 +367,15 @@ public partial class ContainerServiceAgentPool : Resource
     /// <summary>
     /// Creates a new ContainerServiceAgentPool.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceAgentPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerServiceAgentPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceAgentPool.</param>
-    public ContainerServiceAgentPool(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2024-08-01")
+    public ContainerServiceAgentPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _availabilityZones = BicepList<string>.DefineProperty(this, "AvailabilityZones", ["properties", "availabilityZones"]);
@@ -426,11 +431,6 @@ public partial class ContainerServiceAgentPool : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-08-01.
         /// </summary>
@@ -685,11 +685,16 @@ public partial class ContainerServiceAgentPool : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerServiceAgentPool.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServiceAgentPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerServiceAgentPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceAgentPool.</param>
     /// <returns>The existing ContainerServiceAgentPool resource.</returns>
-    public static ContainerServiceAgentPool FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServiceAgentPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerServiceAgentPool resource.

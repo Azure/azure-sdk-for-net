@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerConfiguration.
 /// </summary>
-public partial class PostgreSqlFlexibleServerConfiguration : Resource
+public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResource
 {
     /// <summary>
     /// The name of the server configuration.
@@ -110,10 +110,15 @@ public partial class PostgreSqlFlexibleServerConfiguration : Resource
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerConfiguration.</param>
-    public PostgreSqlFlexibleServerConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/configurations", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);
@@ -157,9 +162,14 @@ public partial class PostgreSqlFlexibleServerConfiguration : Resource
     /// Creates a reference to an existing
     /// PostgreSqlFlexibleServerConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerConfiguration resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerConfiguration.</param>
     /// <returns>The existing PostgreSqlFlexibleServerConfiguration resource.</returns>
-    public static PostgreSqlFlexibleServerConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

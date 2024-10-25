@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService;
 /// A class representing the CustomDnsSuffixConfiguration data model.
 /// Full view of the custom domain suffix configuration for ASEv3.
 /// </summary>
-public partial class CustomDnsSuffixConfigurationData : ProvisioningConstruct
+public partial class CustomDnsSuffixConfigurationData : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the provisioning state.

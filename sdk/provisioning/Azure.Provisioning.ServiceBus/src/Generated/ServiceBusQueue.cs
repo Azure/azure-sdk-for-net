@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusQueue.
 /// </summary>
-public partial class ServiceBusQueue : Resource
+public partial class ServiceBusQueue : ProvisionableResource
 {
     /// <summary>
     /// The queue name.
@@ -199,22 +199,27 @@ public partial class ServiceBusQueue : Resource
     /// <summary>
     /// Creates a new ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
-    public ServiceBusQueue(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
+    public ServiceBusQueue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/queues", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"]);
+        _autoDeleteOnIdle = BicepValue<TimeSpan>.DefineProperty(this, "AutoDeleteOnIdle", ["properties", "autoDeleteOnIdle"], format: "P");
         _deadLetteringOnMessageExpiration = BicepValue<bool>.DefineProperty(this, "DeadLetteringOnMessageExpiration", ["properties", "deadLetteringOnMessageExpiration"]);
-        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"]);
-        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"]);
+        _defaultMessageTimeToLive = BicepValue<TimeSpan>.DefineProperty(this, "DefaultMessageTimeToLive", ["properties", "defaultMessageTimeToLive"], format: "P");
+        _duplicateDetectionHistoryTimeWindow = BicepValue<TimeSpan>.DefineProperty(this, "DuplicateDetectionHistoryTimeWindow", ["properties", "duplicateDetectionHistoryTimeWindow"], format: "P");
         _enableBatchedOperations = BicepValue<bool>.DefineProperty(this, "EnableBatchedOperations", ["properties", "enableBatchedOperations"]);
         _enableExpress = BicepValue<bool>.DefineProperty(this, "EnableExpress", ["properties", "enableExpress"]);
         _enablePartitioning = BicepValue<bool>.DefineProperty(this, "EnablePartitioning", ["properties", "enablePartitioning"]);
         _forwardDeadLetteredMessagesTo = BicepValue<string>.DefineProperty(this, "ForwardDeadLetteredMessagesTo", ["properties", "forwardDeadLetteredMessagesTo"]);
         _forwardTo = BicepValue<string>.DefineProperty(this, "ForwardTo", ["properties", "forwardTo"]);
-        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"]);
+        _lockDuration = BicepValue<TimeSpan>.DefineProperty(this, "LockDuration", ["properties", "lockDuration"], format: "P");
         _maxDeliveryCount = BicepValue<int>.DefineProperty(this, "MaxDeliveryCount", ["properties", "maxDeliveryCount"]);
         _maxMessageSizeInKilobytes = BicepValue<long>.DefineProperty(this, "MaxMessageSizeInKilobytes", ["properties", "maxMessageSizeInKilobytes"]);
         _maxSizeInMegabytes = BicepValue<int>.DefineProperty(this, "MaxSizeInMegabytes", ["properties", "maxSizeInMegabytes"]);
@@ -257,11 +262,16 @@ public partial class ServiceBusQueue : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusQueue resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusQueue.</param>
     /// <returns>The existing ServiceBusQueue resource.</returns>
-    public static ServiceBusQueue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusQueue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusQueue resource.

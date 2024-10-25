@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ExtendedServerBlobAuditingPolicy.
 /// </summary>
-public partial class ExtendedServerBlobAuditingPolicy : Resource
+public partial class ExtendedServerBlobAuditingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -218,10 +218,15 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a new ExtendedServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ExtendedServerBlobAuditingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ExtendedServerBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ExtendedServerBlobAuditingPolicy.</param>
-    public ExtendedServerBlobAuditingPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
+    public ExtendedServerBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/extendedAuditingSettings", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
@@ -247,11 +252,6 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -260,9 +260,14 @@ public partial class ExtendedServerBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ExtendedServerBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the ExtendedServerBlobAuditingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ExtendedServerBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ExtendedServerBlobAuditingPolicy.</param>
     /// <returns>The existing ExtendedServerBlobAuditingPolicy resource.</returns>
-    public static ExtendedServerBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ExtendedServerBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

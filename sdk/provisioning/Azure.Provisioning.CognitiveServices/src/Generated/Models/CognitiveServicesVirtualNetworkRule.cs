@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// A rule governing the accessibility from a specific virtual network.
 /// </summary>
-public partial class CognitiveServicesVirtualNetworkRule : ProvisioningConstruct
+public partial class CognitiveServicesVirtualNetworkRule : ProvisionableConstruct
 {
     /// <summary>
     /// Full resource id of a vnet subnet, such as

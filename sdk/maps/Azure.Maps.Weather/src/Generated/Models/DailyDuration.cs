@@ -51,7 +51,7 @@ namespace Azure.Maps.Weather.Models
         public static bool operator ==(DailyDuration left, DailyDuration right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DailyDuration"/> values are not the same. </summary>
         public static bool operator !=(DailyDuration left, DailyDuration right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DailyDuration"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="DailyDuration"/>. </summary>
         public static implicit operator DailyDuration(int value) => new DailyDuration(value);
 
         /// <inheritdoc />

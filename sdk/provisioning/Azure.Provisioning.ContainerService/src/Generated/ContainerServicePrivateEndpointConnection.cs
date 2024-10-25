@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// ContainerServicePrivateEndpointConnection.
 /// </summary>
-public partial class ContainerServicePrivateEndpointConnection : Resource
+public partial class ContainerServicePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection.
@@ -63,10 +63,16 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new ContainerServicePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServicePrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerServicePrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
-    public ContainerServicePrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2024-08-01")
+    public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _connectionState = BicepValue<ContainerServicePrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -82,11 +88,6 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-08-01.
         /// </summary>
@@ -342,9 +343,15 @@ public partial class ContainerServicePrivateEndpointConnection : Resource
     /// Creates a reference to an existing
     /// ContainerServicePrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerServicePrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerServicePrivateEndpointConnection resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
     /// <returns>The existing ContainerServicePrivateEndpointConnection resource.</returns>
-    public static ContainerServicePrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerServicePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

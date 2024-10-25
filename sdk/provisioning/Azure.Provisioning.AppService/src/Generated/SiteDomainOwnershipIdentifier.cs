@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteDomainOwnershipIdentifier.
 /// </summary>
-public partial class SiteDomainOwnershipIdentifier : Resource
+public partial class SiteDomainOwnershipIdentifier : ProvisionableResource
 {
     /// <summary>
     /// Name of domain ownership identifier.
@@ -56,10 +56,15 @@ public partial class SiteDomainOwnershipIdentifier : Resource
     /// <summary>
     /// Creates a new SiteDomainOwnershipIdentifier.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteDomainOwnershipIdentifier.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteDomainOwnershipIdentifier
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteDomainOwnershipIdentifier.</param>
-    public SiteDomainOwnershipIdentifier(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/domainOwnershipIdentifiers", resourceVersion ?? "2024-04-01")
+    public SiteDomainOwnershipIdentifier(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/domainOwnershipIdentifiers", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -233,9 +238,14 @@ public partial class SiteDomainOwnershipIdentifier : Resource
     /// <summary>
     /// Creates a reference to an existing SiteDomainOwnershipIdentifier.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteDomainOwnershipIdentifier.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteDomainOwnershipIdentifier
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteDomainOwnershipIdentifier.</param>
     /// <returns>The existing SiteDomainOwnershipIdentifier resource.</returns>
-    public static SiteDomainOwnershipIdentifier FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteDomainOwnershipIdentifier FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

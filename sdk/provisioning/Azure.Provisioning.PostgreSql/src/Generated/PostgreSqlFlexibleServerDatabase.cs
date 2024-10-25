@@ -15,7 +15,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerDatabase.
 /// </summary>
-public partial class PostgreSqlFlexibleServerDatabase : Resource
+public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
@@ -56,10 +56,15 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
-    public PostgreSqlFlexibleServerDatabase(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);
@@ -93,9 +98,14 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
     /// <returns>The existing PostgreSqlFlexibleServerDatabase resource.</returns>
-    public static PostgreSqlFlexibleServerDatabase FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

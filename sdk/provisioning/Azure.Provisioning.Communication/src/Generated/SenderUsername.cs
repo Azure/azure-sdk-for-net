@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Communication;
 /// <summary>
 /// SenderUsername.
 /// </summary>
-public partial class SenderUsername : Resource
+public partial class SenderUsername : ProvisionableResource
 {
     /// <summary>
     /// The valid sender Username.
@@ -69,10 +69,15 @@ public partial class SenderUsername : Resource
     /// <summary>
     /// Creates a new SenderUsername.
     /// </summary>
-    /// <param name="resourceName">Name of the SenderUsername.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SenderUsername resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
-    public SenderUsername(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
+    public SenderUsername(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
@@ -90,11 +95,6 @@ public partial class SenderUsername : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-06-01-preview.
-        /// </summary>
-        public static readonly string V2023_06_01_preview = "2023-06-01-preview";
-
-        /// <summary>
         /// 2023-04-01.
         /// </summary>
         public static readonly string V2023_04_01 = "2023-04-01";
@@ -108,9 +108,14 @@ public partial class SenderUsername : Resource
     /// <summary>
     /// Creates a reference to an existing SenderUsername.
     /// </summary>
-    /// <param name="resourceName">Name of the SenderUsername.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SenderUsername resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
     /// <returns>The existing SenderUsername resource.</returns>
-    public static SenderUsername FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SenderUsername FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

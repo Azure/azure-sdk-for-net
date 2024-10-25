@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSitePrivateAccess.
 /// </summary>
-public partial class WebSitePrivateAccess : Resource
+public partial class WebSitePrivateAccess : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -63,10 +63,15 @@ public partial class WebSitePrivateAccess : Resource
     /// <summary>
     /// Creates a new WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
-    public WebSitePrivateAccess(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
+    public WebSitePrivateAccess(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);
@@ -241,9 +246,14 @@ public partial class WebSitePrivateAccess : Resource
     /// <summary>
     /// Creates a reference to an existing WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
     /// <returns>The existing WebSitePrivateAccess resource.</returns>
-    public static WebSitePrivateAccess FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSitePrivateAccess FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

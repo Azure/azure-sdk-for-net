@@ -15,7 +15,7 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// WebPubSubSharedPrivateLink.
 /// </summary>
-public partial class WebPubSubSharedPrivateLink : Resource
+public partial class WebPubSubSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.
@@ -76,10 +76,15 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// <summary>
     /// Creates a new WebPubSubSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebPubSubSharedPrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubSharedPrivateLink.</param>
-    public WebPubSubSharedPrivateLink(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
+    public WebPubSubSharedPrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);
@@ -97,11 +102,6 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -126,9 +126,14 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing WebPubSubSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebPubSubSharedPrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubSharedPrivateLink.</param>
     /// <returns>The existing WebPubSubSharedPrivateLink resource.</returns>
-    public static WebPubSubSharedPrivateLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebPubSubSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

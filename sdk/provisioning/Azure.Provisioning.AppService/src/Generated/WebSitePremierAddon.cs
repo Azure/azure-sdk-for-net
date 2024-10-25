@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSitePremierAddon.
 /// </summary>
-public partial class WebSitePremierAddon : Resource
+public partial class WebSitePremierAddon : ProvisionableResource
 {
     /// <summary>
     /// Add-on name.
@@ -93,10 +93,15 @@ public partial class WebSitePremierAddon : Resource
     /// <summary>
     /// Creates a new WebSitePremierAddon.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePremierAddon.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePremierAddon resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePremierAddon.</param>
-    public WebSitePremierAddon(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/premieraddons", resourceVersion ?? "2024-04-01")
+    public WebSitePremierAddon(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/premieraddons", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -231,9 +236,14 @@ public partial class WebSitePremierAddon : Resource
     /// <summary>
     /// Creates a reference to an existing WebSitePremierAddon.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePremierAddon.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePremierAddon resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePremierAddon.</param>
     /// <returns>The existing WebSitePremierAddon resource.</returns>
-    public static WebSitePremierAddon FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSitePremierAddon FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.CognitiveServices;
 /// <summary>
 /// The ServiceAccountThrottlingRule.
 /// </summary>
-public partial class ServiceAccountThrottlingRule : ProvisioningConstruct
+public partial class ServiceAccountThrottlingRule : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the key.

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// Properties of the destination info for event subscription supporting push.
 /// </summary>
-public partial class PushInfo : ProvisioningConstruct
+public partial class PushInfo : ProvisionableConstruct
 {
     /// <summary>
     /// The maximum delivery count of the events.

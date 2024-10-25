@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRCustomDomain.
 /// </summary>
-public partial class SignalRCustomDomain : Resource
+public partial class SignalRCustomDomain : ProvisionableResource
 {
     /// <summary>
     /// Custom domain name.
@@ -62,10 +62,15 @@ public partial class SignalRCustomDomain : Resource
     /// <summary>
     /// Creates a new SignalRCustomDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomDomain resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
-    public SignalRCustomDomain(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/signalR/customDomains", resourceVersion ?? "2024-03-01")
+    public SignalRCustomDomain(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/customDomains", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isRequired: true);
@@ -81,11 +86,6 @@ public partial class SignalRCustomDomain : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -115,9 +115,14 @@ public partial class SignalRCustomDomain : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRCustomDomain.
     /// </summary>
-    /// <param name="resourceName">Name of the SignalRCustomDomain.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SignalRCustomDomain resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SignalRCustomDomain.</param>
     /// <returns>The existing SignalRCustomDomain resource.</returns>
-    public static SignalRCustomDomain FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SignalRCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

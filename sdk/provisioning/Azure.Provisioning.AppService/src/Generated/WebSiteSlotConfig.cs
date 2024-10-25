@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotConfig.
 /// </summary>
-public partial class WebSiteSlotConfig : Resource
+public partial class WebSiteSlotConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -514,10 +514,15 @@ public partial class WebSiteSlotConfig : Resource
     /// <summary>
     /// Creates a new WebSiteSlotConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotConfig.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotConfig resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotConfig.</param>
-    public WebSiteSlotConfig(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/config", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _acrUserManagedIdentityId = BicepValue<string>.DefineProperty(this, "AcrUserManagedIdentityId", ["properties", "acrUserManagedIdentityID"]);
@@ -762,9 +767,14 @@ public partial class WebSiteSlotConfig : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotConfig.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotConfig.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotConfig resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotConfig.</param>
     /// <returns>The existing WebSiteSlotConfig resource.</returns>
-    public static WebSiteSlotConfig FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

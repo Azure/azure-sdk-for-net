@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// TopicEventSubscription.
 /// </summary>
-public partial class TopicEventSubscription : Resource
+public partial class TopicEventSubscription : ProvisionableResource
 {
     /// <summary>
     /// Name of the event subscription to be created. Event subscription names
@@ -150,10 +150,15 @@ public partial class TopicEventSubscription : Resource
     /// <summary>
     /// Creates a new TopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicEventSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicEventSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
-    public TopicEventSubscription(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+    public TopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _deadLetterDestination = BicepValue<DeadLetterDestination>.DefineProperty(this, "DeadLetterDestination", ["properties", "deadLetterDestination"]);
@@ -177,11 +182,6 @@ public partial class TopicEventSubscription : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>
@@ -216,9 +216,14 @@ public partial class TopicEventSubscription : Resource
     /// <summary>
     /// Creates a reference to an existing TopicEventSubscription.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicEventSubscription.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicEventSubscription resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicEventSubscription.</param>
     /// <returns>The existing TopicEventSubscription resource.</returns>
-    public static TopicEventSubscription FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TopicEventSubscription FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

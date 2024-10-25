@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// NamespaceTopic.
 /// </summary>
-public partial class NamespaceTopic : Resource
+public partial class NamespaceTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the namespace topic.
@@ -71,10 +71,15 @@ public partial class NamespaceTopic : Resource
     /// <summary>
     /// Creates a new NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
-    public NamespaceTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2024-06-01-preview")
+    public NamespaceTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _eventRetentionInDays = BicepValue<int>.DefineProperty(this, "EventRetentionInDays", ["properties", "eventRetentionInDays"]);
@@ -87,22 +92,16 @@ public partial class NamespaceTopic : Resource
     }
 
     /// <summary>
-    /// Supported NamespaceTopic resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-    }
-
-    /// <summary>
     /// Creates a reference to an existing NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
     /// <returns>The existing NamespaceTopic resource.</returns>
-    public static NamespaceTopic FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static NamespaceTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

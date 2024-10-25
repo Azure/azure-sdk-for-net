@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceCertificate.
 /// </summary>
-public partial class AppServiceCertificate : Resource
+public partial class AppServiceCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate.
@@ -81,10 +81,15 @@ public partial class AppServiceCertificate : Resource
     /// <summary>
     /// Creates a new AppServiceCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
-    public AppServiceCertificate(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-04-01")
+    public AppServiceCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -187,9 +192,14 @@ public partial class AppServiceCertificate : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceCertificate.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceCertificate.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
     /// <returns>The existing AppServiceCertificate resource.</returns>
-    public static AppServiceCertificate FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

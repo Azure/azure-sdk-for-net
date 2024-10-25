@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlDatabaseThroughputSetting.
 /// </summary>
-public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
+public partial class CosmosDBSqlDatabaseThroughputSetting : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -69,10 +69,15 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlDatabaseThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlDatabaseThroughputSetting.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// CosmosDBSqlDatabaseThroughputSetting resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlDatabaseThroughputSetting.</param>
-    public CosmosDBSqlDatabaseThroughputSetting(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlDatabaseThroughputSetting(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -89,11 +94,6 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -223,9 +223,14 @@ public partial class CosmosDBSqlDatabaseThroughputSetting : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlDatabaseThroughputSetting.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlDatabaseThroughputSetting.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// CosmosDBSqlDatabaseThroughputSetting resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlDatabaseThroughputSetting.</param>
     /// <returns>The existing CosmosDBSqlDatabaseThroughputSetting resource.</returns>
-    public static CosmosDBSqlDatabaseThroughputSetting FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlDatabaseThroughputSetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

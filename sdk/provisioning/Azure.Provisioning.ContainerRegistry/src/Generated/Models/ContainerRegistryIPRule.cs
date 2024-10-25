@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// IP rule with specific IP or IP range in CIDR format.
 /// </summary>
-public partial class ContainerRegistryIPRule : ProvisioningConstruct
+public partial class ContainerRegistryIPRule : ProvisionableConstruct
 {
     /// <summary>
     /// The action of IP ACL rule.

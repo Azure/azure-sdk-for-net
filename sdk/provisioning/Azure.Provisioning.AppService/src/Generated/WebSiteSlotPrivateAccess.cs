@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotPrivateAccess.
 /// </summary>
-public partial class WebSiteSlotPrivateAccess : Resource
+public partial class WebSiteSlotPrivateAccess : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -63,10 +63,15 @@ public partial class WebSiteSlotPrivateAccess : Resource
     /// <summary>
     /// Creates a new WebSiteSlotPrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotPrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPrivateAccess.</param>
-    public WebSiteSlotPrivateAccess(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/privateAccess", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotPrivateAccess(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/privateAccess", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);
@@ -241,9 +246,14 @@ public partial class WebSiteSlotPrivateAccess : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotPrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotPrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPrivateAccess.</param>
     /// <returns>The existing WebSiteSlotPrivateAccess resource.</returns>
-    public static WebSiteSlotPrivateAccess FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotPrivateAccess FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

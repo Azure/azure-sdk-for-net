@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// InstanceFailoverGroup.
 /// </summary>
-public partial class InstanceFailoverGroup : Resource
+public partial class InstanceFailoverGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the failover group.
@@ -82,10 +82,15 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a new InstanceFailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the InstanceFailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the InstanceFailoverGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
-    public InstanceFailoverGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
+    public InstanceFailoverGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/locations/instanceFailoverGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _managedInstancePairs = BicepList<ManagedInstancePairInfo>.DefineProperty(this, "ManagedInstancePairs", ["properties", "managedInstancePairs"]);
@@ -105,11 +110,6 @@ public partial class InstanceFailoverGroup : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -118,9 +118,14 @@ public partial class InstanceFailoverGroup : Resource
     /// <summary>
     /// Creates a reference to an existing InstanceFailoverGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the InstanceFailoverGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the InstanceFailoverGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the InstanceFailoverGroup.</param>
     /// <returns>The existing InstanceFailoverGroup resource.</returns>
-    public static InstanceFailoverGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static InstanceFailoverGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

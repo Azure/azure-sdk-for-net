@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceGroup.
 /// </summary>
-public partial class ResourceGroup : Resource
+public partial class ResourceGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource group to create or update. Can include
@@ -68,10 +68,15 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a new ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
-    public ResourceGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
+    public ResourceGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -87,11 +92,6 @@ public partial class ResourceGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-07-01-preview.
-        /// </summary>
-        public static readonly string V2023_07_01_preview = "2023-07-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>
@@ -306,11 +306,16 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a reference to an existing ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
     /// <returns>The existing ResourceGroup resource.</returns>
-    public static ResourceGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ResourceGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Creates a new ResourceGroup resource from a Bicep expression that
@@ -321,9 +326,9 @@ public partial class ResourceGroup : Resource
     /// </param>
     /// <returns>A ResourceGroup resource.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ResourceGroup FromExpression(Expression expression)
+    public static ResourceGroup FromExpression(BicepExpression expression)
     {
-        ResourceGroup resource = new(expression.ToString());
+        ResourceGroup resource = new(nameof(ResourceGroup));
         resource.OverrideWithExpression(expression);
         return resource;
     }

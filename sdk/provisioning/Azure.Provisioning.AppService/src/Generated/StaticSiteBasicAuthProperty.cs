@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBasicAuthProperty.
 /// </summary>
-public partial class StaticSiteBasicAuthProperty : Resource
+public partial class StaticSiteBasicAuthProperty : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -83,10 +83,15 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// <summary>
     /// Creates a new StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBasicAuthProperty.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
-    public StaticSiteBasicAuthProperty(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-04-01")
+    public StaticSiteBasicAuthProperty(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _applicableEnvironmentsMode = BicepValue<string>.DefineProperty(this, "ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
@@ -179,9 +184,14 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteBasicAuthProperty.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
     /// <returns>The existing StaticSiteBasicAuthProperty resource.</returns>
-    public static StaticSiteBasicAuthProperty FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBasicAuthProperty FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

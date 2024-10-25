@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// RoleEligibilityScheduleRequest.
 /// </summary>
-public partial class RoleEligibilityScheduleRequest : Resource
+public partial class RoleEligibilityScheduleRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the role eligibility to create. It can be any valid GUID.
@@ -163,15 +163,20 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a new RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleEligibilityScheduleRequest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
-    public RoleEligibilityScheduleRequest(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
+    public RoleEligibilityScheduleRequest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
         _conditionVersion = BicepValue<string>.DefineProperty(this, "ConditionVersion", ["properties", "conditionVersion"]);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"]);
+        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"], format: "P");
         _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "endDateTime"]);
         _expirationType = BicepValue<RoleManagementScheduleExpirationType>.DefineProperty(this, "ExpirationType", ["properties", "type"]);
         _justification = BicepValue<string>.DefineProperty(this, "Justification", ["properties", "justification"]);
@@ -199,11 +204,6 @@ public partial class RoleEligibilityScheduleRequest : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2022-04-01-preview.
-        /// </summary>
-        public static readonly string V2022_04_01_preview = "2022-04-01-preview";
-
-        /// <summary>
         /// 2020-10-01.
         /// </summary>
         public static readonly string V2020_10_01 = "2020-10-01";
@@ -212,9 +212,14 @@ public partial class RoleEligibilityScheduleRequest : Resource
     /// <summary>
     /// Creates a reference to an existing RoleEligibilityScheduleRequest.
     /// </summary>
-    /// <param name="resourceName">Name of the RoleEligibilityScheduleRequest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RoleEligibilityScheduleRequest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RoleEligibilityScheduleRequest.</param>
     /// <returns>The existing RoleEligibilityScheduleRequest resource.</returns>
-    public static RoleEligibilityScheduleRequest FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RoleEligibilityScheduleRequest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

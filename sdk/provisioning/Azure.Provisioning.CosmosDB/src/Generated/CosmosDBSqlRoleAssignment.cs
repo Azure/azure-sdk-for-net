@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBSqlRoleAssignment.
 /// </summary>
-public partial class CosmosDBSqlRoleAssignment : Resource
+public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -66,10 +66,15 @@ public partial class CosmosDBSqlRoleAssignment : Resource
     /// <summary>
     /// Creates a new CosmosDBSqlRoleAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlRoleAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBSqlRoleAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlRoleAssignment.</param>
-    public CosmosDBSqlRoleAssignment(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments", resourceVersion ?? "2024-08-15")
+    public CosmosDBSqlRoleAssignment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"]);
@@ -85,11 +90,6 @@ public partial class CosmosDBSqlRoleAssignment : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -219,9 +219,14 @@ public partial class CosmosDBSqlRoleAssignment : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBSqlRoleAssignment.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBSqlRoleAssignment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBSqlRoleAssignment
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBSqlRoleAssignment.</param>
     /// <returns>The existing CosmosDBSqlRoleAssignment resource.</returns>
-    public static CosmosDBSqlRoleAssignment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBSqlRoleAssignment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

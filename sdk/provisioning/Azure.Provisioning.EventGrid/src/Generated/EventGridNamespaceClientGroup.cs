@@ -15,7 +15,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespaceClientGroup.
 /// </summary>
-public partial class EventGridNamespaceClientGroup : Resource
+public partial class EventGridNamespaceClientGroup : ProvisionableResource
 {
     /// <summary>
     /// The client group name.
@@ -63,10 +63,15 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// <summary>
     /// Creates a new EventGridNamespaceClientGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridNamespaceClientGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventGridNamespaceClientGroup
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
-    public EventGridNamespaceClientGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespaceClientGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -82,18 +87,18 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventGridNamespaceClientGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventGridNamespaceClientGroup
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
     /// <returns>The existing EventGridNamespaceClientGroup resource.</returns>
-    public static EventGridNamespaceClientGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespaceClientGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

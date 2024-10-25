@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSourceControl.
 /// </summary>
-public partial class WebSiteSourceControl : Resource
+public partial class WebSiteSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -96,10 +96,15 @@ public partial class WebSiteSourceControl : Resource
     /// <summary>
     /// Creates a new WebSiteSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSourceControl.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSourceControl resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
-    public WebSiteSourceControl(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2024-04-01")
+    public WebSiteSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
@@ -279,9 +284,14 @@ public partial class WebSiteSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSourceControl.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSourceControl.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSourceControl resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
     /// <returns>The existing WebSiteSourceControl resource.</returns>
-    public static WebSiteSourceControl FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

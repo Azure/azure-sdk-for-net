@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceDtc.
 /// </summary>
-public partial class ManagedInstanceDtc : Resource
+public partial class ManagedInstanceDtc : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -75,10 +75,15 @@ public partial class ManagedInstanceDtc : Resource
     /// <summary>
     /// Creates a new ManagedInstanceDtc.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceDtc.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceDtc resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceDtc.</param>
-    public ManagedInstanceDtc(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/dtc", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceDtc(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/dtc", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _dtcEnabled = BicepValue<bool>.DefineProperty(this, "DtcEnabled", ["properties", "dtcEnabled"]);
@@ -97,11 +102,6 @@ public partial class ManagedInstanceDtc : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -110,9 +110,14 @@ public partial class ManagedInstanceDtc : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceDtc.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceDtc.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedInstanceDtc resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceDtc.</param>
     /// <returns>The existing ManagedInstanceDtc resource.</returns>
-    public static ManagedInstanceDtc FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceDtc FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsSchemaGroup.
 /// </summary>
-public partial class EventHubsSchemaGroup : Resource
+public partial class EventHubsSchemaGroup : ProvisionableResource
 {
     /// <summary>
     /// The Schema Group name.
@@ -88,10 +88,15 @@ public partial class EventHubsSchemaGroup : Resource
     /// <summary>
     /// Creates a new EventHubsSchemaGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsSchemaGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
-    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion ?? "2024-01-01")
+    public EventHubsSchemaGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _groupProperties = BicepDictionary<string>.DefineProperty(this, "GroupProperties", ["properties", "groupProperties"]);
@@ -111,11 +116,6 @@ public partial class EventHubsSchemaGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -145,9 +145,14 @@ public partial class EventHubsSchemaGroup : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsSchemaGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsSchemaGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
     /// <returns>The existing EventHubsSchemaGroup resource.</returns>
-    public static EventHubsSchemaGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsSchemaGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// Http logs to azure blob storage configuration.
 /// </summary>
-public partial class AppServiceBlobStorageHttpLogsConfig : ProvisioningConstruct
+public partial class AppServiceBlobStorageHttpLogsConfig : ProvisionableConstruct
 {
     /// <summary>
     /// SAS url to a azure blob container with read/write/list/delete

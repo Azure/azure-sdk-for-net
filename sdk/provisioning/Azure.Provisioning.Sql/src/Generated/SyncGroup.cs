@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncGroup.
 /// </summary>
-public partial class SyncGroup : Resource
+public partial class SyncGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync group.
@@ -125,10 +125,15 @@ public partial class SyncGroup : Resource
     /// <summary>
     /// Creates a new SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
-    public SyncGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01")
+    public SyncGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _conflictLoggingRetentionInDays = BicepValue<int>.DefineProperty(this, "ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);
@@ -155,11 +160,6 @@ public partial class SyncGroup : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -168,11 +168,16 @@ public partial class SyncGroup : Resource
     /// <summary>
     /// Creates a reference to an existing SyncGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the SyncGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SyncGroup resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SyncGroup.</param>
     /// <returns>The existing SyncGroup resource.</returns>
-    public static SyncGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SyncGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SyncGroup resource.

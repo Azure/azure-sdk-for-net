@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerFirewallRule.
 /// </summary>
-public partial class PostgreSqlFlexibleServerFirewallRule : Resource
+public partial class PostgreSqlFlexibleServerFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the server firewall rule.
@@ -57,10 +57,15 @@ public partial class PostgreSqlFlexibleServerFirewallRule : Resource
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerFirewallRule resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerFirewallRule.</param>
-    public PostgreSqlFlexibleServerFirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerFirewallRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules", resourceVersion ?? "2024-08-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<IPAddress>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
@@ -94,9 +99,14 @@ public partial class PostgreSqlFlexibleServerFirewallRule : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlFlexibleServerFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlFlexibleServerFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// PostgreSqlFlexibleServerFirewallRule resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerFirewallRule.</param>
     /// <returns>The existing PostgreSqlFlexibleServerFirewallRule resource.</returns>
-    public static PostgreSqlFlexibleServerFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

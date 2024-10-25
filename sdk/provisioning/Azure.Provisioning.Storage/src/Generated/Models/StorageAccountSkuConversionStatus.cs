@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Storage;
 /// This defines the sku conversion status object for asynchronous sku
 /// conversions.
 /// </summary>
-public partial class StorageAccountSkuConversionStatus : ProvisioningConstruct
+public partial class StorageAccountSkuConversionStatus : ProvisionableConstruct
 {
     /// <summary>
     /// This property indicates the current sku conversion status.

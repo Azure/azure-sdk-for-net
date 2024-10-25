@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBService.
 /// </summary>
-public partial class CosmosDBService : Resource
+public partial class CosmosDBService : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB service name.
@@ -79,10 +79,15 @@ public partial class CosmosDBService : Resource
     /// <summary>
     /// Creates a new CosmosDBService.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBService resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
-    public CosmosDBService(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
+    public CosmosDBService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _instanceCount = BicepValue<int>.DefineProperty(this, "InstanceCount", ["properties", "instanceCount"]);
@@ -99,11 +104,6 @@ public partial class CosmosDBService : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -233,9 +233,14 @@ public partial class CosmosDBService : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBService.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBService.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBService resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
     /// <returns>The existing CosmosDBService resource.</returns>
-    public static CosmosDBService FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -12,7 +12,7 @@ namespace Azure.Provisioning.AppContainers;
 /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet
 /// supported.
 /// </summary>
-public partial class ContainerAppTcpSocketRequestInfo : ProvisioningConstruct
+public partial class ContainerAppTcpSocketRequestInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Optional: Host name to connect to, defaults to the pod IP.

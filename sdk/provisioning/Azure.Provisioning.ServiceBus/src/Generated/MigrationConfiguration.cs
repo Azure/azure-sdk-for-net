@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// MigrationConfiguration.
 /// </summary>
-public partial class MigrationConfiguration : Resource
+public partial class MigrationConfiguration : ProvisionableResource
 {
     private readonly BicepValue<string> _name;
 
@@ -83,10 +83,15 @@ public partial class MigrationConfiguration : Resource
     /// <summary>
     /// Creates a new MigrationConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the MigrationConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MigrationConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MigrationConfiguration.</param>
-    public MigrationConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01")
+    public MigrationConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/migrationConfigurations", resourceVersion ?? "2024-01-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _postMigrationName = BicepValue<string>.DefineProperty(this, "PostMigrationName", ["properties", "postMigrationName"]);
@@ -124,9 +129,14 @@ public partial class MigrationConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing MigrationConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the MigrationConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MigrationConfiguration resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MigrationConfiguration.</param>
     /// <returns>The existing MigrationConfiguration resource.</returns>
-    public static MigrationConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static MigrationConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

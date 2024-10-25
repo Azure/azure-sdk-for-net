@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSite.
 /// </summary>
-public partial class WebSite : Resource
+public partial class WebSite : ProvisionableResource
 {
     /// <summary>
     /// Unique name of the app to create or update. To create or update a
@@ -422,10 +422,15 @@ public partial class WebSite : Resource
     /// <summary>
     /// Creates a new WebSite.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSite.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSite resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSite.</param>
-    public WebSite(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites", resourceVersion ?? "2024-04-01")
+    public WebSite(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -653,11 +658,16 @@ public partial class WebSite : Resource
     /// <summary>
     /// Creates a reference to an existing WebSite.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSite.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSite resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSite.</param>
     /// <returns>The existing WebSite resource.</returns>
-    public static WebSite FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSite FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this WebSite resource.

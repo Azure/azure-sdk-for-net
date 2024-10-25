@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// TopicSpace.
 /// </summary>
-public partial class TopicSpace : Resource
+public partial class TopicSpace : ProvisionableResource
 {
     /// <summary>
     /// The topic space name.
@@ -68,10 +68,15 @@ public partial class TopicSpace : Resource
     /// <summary>
     /// Creates a new TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
-    public TopicSpace(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion ?? "2024-06-01-preview")
+    public TopicSpace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topicSpaces", resourceVersion)
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
@@ -83,22 +88,16 @@ public partial class TopicSpace : Resource
     }
 
     /// <summary>
-    /// Supported TopicSpace resource versions.
-    /// </summary>
-    public static class ResourceVersions
-    {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-    }
-
-    /// <summary>
     /// Creates a reference to an existing TopicSpace.
     /// </summary>
-    /// <param name="resourceName">Name of the TopicSpace.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TopicSpace resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TopicSpace.</param>
     /// <returns>The existing TopicSpace resource.</returns>
-    public static TopicSpace FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TopicSpace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

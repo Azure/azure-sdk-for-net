@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// The content trust policy for a container registry.
 /// </summary>
-public partial class ContainerRegistryTrustPolicy : ProvisioningConstruct
+public partial class ContainerRegistryTrustPolicy : ProvisionableConstruct
 {
     /// <summary>
     /// The type of trust policy.

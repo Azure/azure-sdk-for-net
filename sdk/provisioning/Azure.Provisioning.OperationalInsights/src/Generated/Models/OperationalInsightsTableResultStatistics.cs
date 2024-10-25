@@ -11,7 +11,7 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// Search job execution statistics.
 /// </summary>
-public partial class OperationalInsightsTableResultStatistics : ProvisioningConstruct
+public partial class OperationalInsightsTableResultStatistics : ProvisionableConstruct
 {
     /// <summary>
     /// Search job completion percentage.

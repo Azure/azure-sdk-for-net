@@ -17,7 +17,7 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// KeyVaultSecret.
 /// </summary>
-public partial class KeyVaultSecret : Resource
+public partial class KeyVaultSecret : ProvisionableResource
 {
     /// <summary>
     /// Name of the secret. The value you provide may be copied globally for
@@ -66,10 +66,15 @@ public partial class KeyVaultSecret : Resource
     /// <summary>
     /// Creates a new KeyVaultSecret.
     /// </summary>
-    /// <param name="resourceName">Name of the KeyVaultSecret.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the KeyVaultSecret resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultSecret.</param>
-    public KeyVaultSecret(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2023-07-01")
+    public KeyVaultSecret(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2023-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SecretProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
@@ -85,11 +90,6 @@ public partial class KeyVaultSecret : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>
@@ -144,11 +144,16 @@ public partial class KeyVaultSecret : Resource
     /// <summary>
     /// Creates a reference to an existing KeyVaultSecret.
     /// </summary>
-    /// <param name="resourceName">Name of the KeyVaultSecret.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the KeyVaultSecret resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultSecret.</param>
     /// <returns>The existing KeyVaultSecret resource.</returns>
-    public static KeyVaultSecret FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static KeyVaultSecret FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this KeyVaultSecret resource.

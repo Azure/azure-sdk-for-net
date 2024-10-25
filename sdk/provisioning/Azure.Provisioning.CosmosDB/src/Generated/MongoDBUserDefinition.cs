@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBUserDefinition.
 /// </summary>
-public partial class MongoDBUserDefinition : Resource
+public partial class MongoDBUserDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -84,10 +84,15 @@ public partial class MongoDBUserDefinition : Resource
     /// <summary>
     /// Creates a new MongoDBUserDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBUserDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MongoDBUserDefinition resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBUserDefinition.</param>
-    public MongoDBUserDefinition(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion ?? "2024-08-15")
+    public MongoDBUserDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion ?? "2024-08-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _customData = BicepValue<string>.DefineProperty(this, "CustomData", ["properties", "customData"]);
@@ -106,11 +111,6 @@ public partial class MongoDBUserDefinition : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -240,9 +240,14 @@ public partial class MongoDBUserDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBUserDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBUserDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MongoDBUserDefinition resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBUserDefinition.</param>
     /// <returns>The existing MongoDBUserDefinition resource.</returns>
-    public static MongoDBUserDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBUserDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

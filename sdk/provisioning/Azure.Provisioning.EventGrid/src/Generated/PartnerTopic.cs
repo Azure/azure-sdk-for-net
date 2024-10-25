@@ -16,7 +16,7 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerTopic.
 /// </summary>
-public partial class PartnerTopic : Resource
+public partial class PartnerTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner topic.
@@ -112,10 +112,15 @@ public partial class PartnerTopic : Resource
     /// <summary>
     /// Creates a new PartnerTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PartnerTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerTopic.</param>
-    public PartnerTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2022-06-15")
+    public PartnerTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2022-06-15")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -139,11 +144,6 @@ public partial class PartnerTopic : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
-        /// <summary>
         /// 2022-06-15.
         /// </summary>
         public static readonly string V2022_06_15 = "2022-06-15";
@@ -152,9 +152,14 @@ public partial class PartnerTopic : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the PartnerTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PartnerTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PartnerTopic.</param>
     /// <returns>The existing PartnerTopic resource.</returns>
-    public static PartnerTopic FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PartnerTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

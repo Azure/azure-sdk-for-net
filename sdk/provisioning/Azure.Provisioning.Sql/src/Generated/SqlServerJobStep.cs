@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobStep.
 /// </summary>
-public partial class SqlServerJobStep : Resource
+public partial class SqlServerJobStep : ProvisionableResource
 {
     /// <summary>
     /// The name of the job step.
@@ -84,10 +84,15 @@ public partial class SqlServerJobStep : Resource
     /// <summary>
     /// Creates a new SqlServerJobStep.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobStep.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJobStep resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobStep.</param>
-    public SqlServerJobStep(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01")
+    public SqlServerJobStep(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _action = BicepValue<JobStepAction>.DefineProperty(this, "Action", ["properties", "action"]);
@@ -107,11 +112,6 @@ public partial class SqlServerJobStep : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
@@ -120,9 +120,14 @@ public partial class SqlServerJobStep : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerJobStep.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobStep.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJobStep resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobStep.</param>
     /// <returns>The existing SqlServerJobStep resource.</returns>
-    public static SqlServerJobStep FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerJobStep FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisCacheAccessPolicy.
 /// </summary>
-public partial class RedisCacheAccessPolicy : Resource
+public partial class RedisCacheAccessPolicy : ProvisionableResource
 {
     /// <summary>
     /// The name of the access policy that is being added to the Redis cache.
@@ -63,10 +63,15 @@ public partial class RedisCacheAccessPolicy : Resource
     /// <summary>
     /// Creates a new RedisCacheAccessPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisCacheAccessPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisCacheAccessPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicy.</param>
-    public RedisCacheAccessPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Cache/redis/accessPolicies", resourceVersion ?? "2024-03-01")
+    public RedisCacheAccessPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Cache/redis/accessPolicies", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _permissions = BicepValue<string>.DefineProperty(this, "Permissions", ["properties", "permissions"]);
@@ -82,11 +87,6 @@ public partial class RedisCacheAccessPolicy : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -171,9 +171,14 @@ public partial class RedisCacheAccessPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing RedisCacheAccessPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisCacheAccessPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisCacheAccessPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicy.</param>
     /// <returns>The existing RedisCacheAccessPolicy resource.</returns>
-    public static RedisCacheAccessPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RedisCacheAccessPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

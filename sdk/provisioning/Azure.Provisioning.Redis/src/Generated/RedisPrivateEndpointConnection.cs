@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Redis;
 /// <summary>
 /// RedisPrivateEndpointConnection.
 /// </summary>
-public partial class RedisPrivateEndpointConnection : Resource
+public partial class RedisPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection associated with the Azure
@@ -64,10 +64,15 @@ public partial class RedisPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new RedisPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisPrivateEndpointConnection.</param>
-    public RedisPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Cache/redis/privateEndpointConnections", resourceVersion ?? "2024-03-01")
+    public RedisPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Cache/redis/privateEndpointConnections", resourceVersion ?? "2024-03-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _redisPrivateLinkServiceConnectionState = BicepValue<RedisPrivateLinkServiceConnectionState>.DefineProperty(this, "RedisPrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
@@ -83,11 +88,6 @@ public partial class RedisPrivateEndpointConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -137,9 +137,14 @@ public partial class RedisPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing RedisPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the RedisPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the RedisPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the RedisPrivateEndpointConnection.</param>
     /// <returns>The existing RedisPrivateEndpointConnection resource.</returns>
-    public static RedisPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static RedisPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Roles;
 /// <summary>
 /// FederatedIdentityCredential.
 /// </summary>
-public partial class FederatedIdentityCredential : Resource
+public partial class FederatedIdentityCredential : ProvisionableResource
 {
     /// <summary>
     /// The name of the federated identity credential resource.
@@ -63,10 +63,15 @@ public partial class FederatedIdentityCredential : Resource
     /// <summary>
     /// Creates a new FederatedIdentityCredential.
     /// </summary>
-    /// <param name="resourceName">Name of the FederatedIdentityCredential.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FederatedIdentityCredential
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
-    public FederatedIdentityCredential(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
+    public FederatedIdentityCredential(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _audiences = BicepList<string>.DefineProperty(this, "Audiences", ["properties", "audiences"]);
@@ -101,9 +106,14 @@ public partial class FederatedIdentityCredential : Resource
     /// <summary>
     /// Creates a reference to an existing FederatedIdentityCredential.
     /// </summary>
-    /// <param name="resourceName">Name of the FederatedIdentityCredential.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FederatedIdentityCredential
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
     /// <returns>The existing FederatedIdentityCredential resource.</returns>
-    public static FederatedIdentityCredential FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FederatedIdentityCredential FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

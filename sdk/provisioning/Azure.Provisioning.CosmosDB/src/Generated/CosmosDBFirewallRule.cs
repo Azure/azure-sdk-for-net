@@ -15,7 +15,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBFirewallRule.
 /// </summary>
-public partial class CosmosDBFirewallRule : Resource
+public partial class CosmosDBFirewallRule : ProvisionableResource
 {
     /// <summary>
     /// The name of the mongo cluster firewall rule.
@@ -64,10 +64,15 @@ public partial class CosmosDBFirewallRule : Resource
     /// <summary>
     /// Creates a new CosmosDBFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBFirewallRule resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBFirewallRule.</param>
-    public CosmosDBFirewallRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/mongoClusters/firewallRules", resourceVersion ?? "2024-07-01")
+    public CosmosDBFirewallRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/mongoClusters/firewallRules", resourceVersion ?? "2024-07-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
@@ -92,9 +97,14 @@ public partial class CosmosDBFirewallRule : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBFirewallRule.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBFirewallRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBFirewallRule resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBFirewallRule.</param>
     /// <returns>The existing CosmosDBFirewallRule resource.</returns>
-    public static CosmosDBFirewallRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

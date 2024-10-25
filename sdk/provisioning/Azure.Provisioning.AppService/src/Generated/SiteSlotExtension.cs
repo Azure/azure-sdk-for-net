@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotExtension.
 /// </summary>
-public partial class SiteSlotExtension : Resource
+public partial class SiteSlotExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -129,10 +129,15 @@ public partial class SiteSlotExtension : Resource
     /// <summary>
     /// Creates a new SiteSlotExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotExtension.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotExtension resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotExtension.</param>
-    public SiteSlotExtension(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/extensions", resourceVersion ?? "2024-04-01")
+    public SiteSlotExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/extensions", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);
@@ -317,9 +322,14 @@ public partial class SiteSlotExtension : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotExtension.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotExtension.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotExtension resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotExtension.</param>
     /// <returns>The existing SiteSlotExtension resource.</returns>
-    public static SiteSlotExtension FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

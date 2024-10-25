@@ -1,6 +1,6 @@
 namespace Azure.Provisioning.Search
 {
-    public partial class SearchAadAuthDataPlaneAuthOptions : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchAadAuthDataPlaneAuthOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchAadAuthDataPlaneAuthOptions() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchAadAuthFailureMode> AadAuthFailureMode { get { throw null; } set { } }
@@ -48,7 +48,7 @@ namespace Azure.Provisioning.Search
         Compliant = 0,
         NonCompliant = 1,
     }
-    public partial class SearchEncryptionWithCmk : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchEncryptionWithCmk : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchEncryptionWithCmk() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchEncryptionComplianceStatus> EncryptionComplianceStatus { get { throw null; } }
@@ -60,20 +60,20 @@ namespace Azure.Provisioning.Search
         Disabled = 1,
         Enabled = 2,
     }
-    public partial class SearchManagementRequestOptions : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchManagementRequestOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchManagementRequestOptions() { }
         public Azure.Provisioning.BicepValue<System.Guid> ClientRequestId { get { throw null; } set { } }
     }
-    public partial class SearchPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class SearchPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SearchPrivateEndpointConnection(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SearchPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Search.SearchService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePrivateEndpointConnectionProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Search.SearchPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Search.SearchPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_07_31_Preview;
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2024_06_01_Preview;
         }
     }
-    public partial class SearchPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchPrivateEndpointConnectionData() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -117,9 +117,9 @@ namespace Azure.Provisioning.Search
         [System.Runtime.Serialization.DataMemberAttribute(Name="standard")]
         Standard = 2,
     }
-    public partial class SearchService : Azure.Provisioning.Primitives.Resource
+    public partial class SearchService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SearchService(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SearchService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchAadAuthDataPlaneAuthOptions> AuthOptions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchEncryptionWithCmk> EncryptionWithCmk { get { throw null; } set { } }
@@ -144,9 +144,9 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepValue<string> StatusDetails { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Search.SearchBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Search.SearchBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.Search.SearchService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Search.SearchBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Search.SearchBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        public static Azure.Provisioning.Search.SearchService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -173,18 +173,18 @@ namespace Azure.Provisioning.Search
         [System.Runtime.Serialization.DataMemberAttribute(Name="highDensity")]
         HighDensity = 1,
     }
-    public partial class SearchServiceIPRule : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchServiceIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceIPRule() { }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
     }
-    public partial class SearchServiceNetworkRuleSet : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchServiceNetworkRuleSet : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkRuleSet() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchBypass> Bypass { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceIPRule> IPRules { get { throw null; } set { } }
     }
-    public partial class SearchServicePrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchServicePrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServicePrivateEndpointConnectionProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServicePrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
@@ -192,7 +192,7 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchPrivateLinkServiceConnectionProvisioningState> ProvisioningState { get { throw null; } set { } }
     }
-    public partial class SearchServicePrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SearchServicePrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServicePrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<string> ActionsRequired { get { throw null; } set { } }
@@ -266,15 +266,15 @@ namespace Azure.Provisioning.Search
         [System.Runtime.Serialization.DataMemberAttribute(Name="error")]
         Error = 5,
     }
-    public partial class SharedSearchServicePrivateLink : Azure.Provisioning.Primitives.Resource
+    public partial class SharedSearchServicePrivateLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SharedSearchServicePrivateLink(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public SharedSearchServicePrivateLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Search.SearchService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SharedSearchServicePrivateLinkResourceProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.Search.SharedSearchServicePrivateLink FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Search.SharedSearchServicePrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2014_07_31_Preview;
@@ -292,7 +292,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2024_06_01_Preview;
         }
     }
-    public partial class SharedSearchServicePrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SharedSearchServicePrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SharedSearchServicePrivateLinkResourceData() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -300,7 +300,7 @@ namespace Azure.Provisioning.Search
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SharedSearchServicePrivateLinkResourceProperties> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
     }
-    public partial class SharedSearchServicePrivateLinkResourceProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class SharedSearchServicePrivateLinkResourceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SharedSearchServicePrivateLinkResourceProperties() { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }

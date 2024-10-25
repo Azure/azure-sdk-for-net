@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SearchPrivateEndpointConnection.
 /// </summary>
-public partial class SearchPrivateEndpointConnection : Resource
+public partial class SearchPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection to the Azure AI Search
@@ -52,10 +52,15 @@ public partial class SearchPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a new SearchPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SearchPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SearchPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SearchPrivateEndpointConnection.</param>
-    public SearchPrivateEndpointConnection(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion ?? "2023-11-01")
+    public SearchPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion ?? "2023-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _properties = BicepValue<SearchServicePrivateEndpointConnectionProperties>.DefineProperty(this, "Properties", ["properties"]);
@@ -138,9 +143,14 @@ public partial class SearchPrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing SearchPrivateEndpointConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the SearchPrivateEndpointConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SearchPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SearchPrivateEndpointConnection.</param>
     /// <returns>The existing SearchPrivateEndpointConnection resource.</returns>
-    public static SearchPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SearchPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedLedgerDigestUpload.
 /// </summary>
-public partial class ManagedLedgerDigestUpload : Resource
+public partial class ManagedLedgerDigestUpload : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
@@ -57,10 +57,15 @@ public partial class ManagedLedgerDigestUpload : Resource
     /// <summary>
     /// Creates a new ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedLedgerDigestUpload.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedLedgerDigestUpload
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
-    public ManagedLedgerDigestUpload(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2024-05-01-preview")
+    public ManagedLedgerDigestUpload(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
         _digestStorageEndpoint = BicepValue<string>.DefineProperty(this, "DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
@@ -76,17 +81,22 @@ public partial class ManagedLedgerDigestUpload : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-05-01-preview.
+        /// 2021-11-01.
         /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing ManagedLedgerDigestUpload.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedLedgerDigestUpload.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedLedgerDigestUpload
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
     /// <returns>The existing ManagedLedgerDigestUpload resource.</returns>
-    public static ManagedLedgerDigestUpload FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedLedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

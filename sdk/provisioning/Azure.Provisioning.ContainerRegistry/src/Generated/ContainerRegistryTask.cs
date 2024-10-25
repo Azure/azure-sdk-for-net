@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryTask.
 /// </summary>
-public partial class ContainerRegistryTask : Resource
+public partial class ContainerRegistryTask : ProvisionableResource
 {
     /// <summary>
     /// The name of the container registry task.
@@ -148,10 +148,15 @@ public partial class ContainerRegistryTask : Resource
     /// <summary>
     /// Creates a new ContainerRegistryTask.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryTask.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryTask resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTask.</param>
-    public ContainerRegistryTask(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/tasks", resourceVersion ?? "2019-04-01")
+    public ContainerRegistryTask(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/tasks", resourceVersion ?? "2019-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
@@ -180,11 +185,6 @@ public partial class ContainerRegistryTask : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2019-06-01-preview.
-        /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
-
-        /// <summary>
         /// 2019-04-01.
         /// </summary>
         public static readonly string V2019_04_01 = "2019-04-01";
@@ -198,11 +198,16 @@ public partial class ContainerRegistryTask : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryTask.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryTask.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryTask resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTask.</param>
     /// <returns>The existing ContainerRegistryTask resource.</returns>
-    public static ContainerRegistryTask FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryTask FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryTask resource.

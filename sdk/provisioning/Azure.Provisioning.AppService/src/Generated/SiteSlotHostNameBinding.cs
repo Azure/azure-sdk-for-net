@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotHostNameBinding.
 /// </summary>
-public partial class SiteSlotHostNameBinding : Resource
+public partial class SiteSlotHostNameBinding : ProvisionableResource
 {
     /// <summary>
     /// Hostname in the hostname binding.
@@ -104,10 +104,15 @@ public partial class SiteSlotHostNameBinding : Resource
     /// <summary>
     /// Creates a new SiteSlotHostNameBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotHostNameBinding.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotHostNameBinding resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotHostNameBinding.</param>
-    public SiteSlotHostNameBinding(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/hostNameBindings", resourceVersion ?? "2024-04-01")
+    public SiteSlotHostNameBinding(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/hostNameBindings", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _azureResourceName = BicepValue<string>.DefineProperty(this, "AzureResourceName", ["properties", "azureResourceName"]);
@@ -254,9 +259,14 @@ public partial class SiteSlotHostNameBinding : Resource
     /// <summary>
     /// Creates a reference to an existing SiteSlotHostNameBinding.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotHostNameBinding.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotHostNameBinding resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotHostNameBinding.</param>
     /// <returns>The existing SiteSlotHostNameBinding resource.</returns>
-    public static SiteSlotHostNameBinding FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotHostNameBinding FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

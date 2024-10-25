@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotVirtualNetworkConnectionGateway.
 /// </summary>
-public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
+public partial class SiteSlotVirtualNetworkConnectionGateway : ProvisionableResource
 {
     /// <summary>
     /// Name of the gateway. Currently, the only supported string is
@@ -63,10 +63,15 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
     /// <summary>
     /// Creates a new SiteSlotVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotVirtualNetworkConnectionGateway.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// SiteSlotVirtualNetworkConnectionGateway resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnectionGateway.</param>
-    public SiteSlotVirtualNetworkConnectionGateway(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
+    public SiteSlotVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
     {
         _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
         _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
@@ -242,9 +247,14 @@ public partial class SiteSlotVirtualNetworkConnectionGateway : Resource
     /// Creates a reference to an existing
     /// SiteSlotVirtualNetworkConnectionGateway.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotVirtualNetworkConnectionGateway.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// SiteSlotVirtualNetworkConnectionGateway resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotVirtualNetworkConnectionGateway.</param>
     /// <returns>The existing SiteSlotVirtualNetworkConnectionGateway resource.</returns>
-    public static SiteSlotVirtualNetworkConnectionGateway FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
