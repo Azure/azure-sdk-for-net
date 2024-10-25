@@ -26,10 +26,8 @@ namespace System.ClientModel
     public partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
-        protected ClientResult(System.ClientModel.Primitives.ServiceMessage response) { }
         public static System.ClientModel.ClientResult<T?> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.ServiceMessage response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
     }
@@ -43,7 +41,7 @@ namespace System.ClientModel
     }
     public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.ServiceMessage)) { }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
@@ -84,12 +82,6 @@ namespace System.ClientModel.Primitives
     {
         Default = 0,
         NoThrow = 1,
-    }
-    public abstract partial class ClientMessage
-    {
-        protected ClientMessage() { }
-        public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
-        protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
     }
     public sealed partial class ClientPipeline
     {
@@ -235,9 +227,11 @@ namespace System.ClientModel.Primitives
         PerTry = 1,
         BeforeTransport = 2,
     }
-    public abstract partial class PipelineRequest : System.ClientModel.Primitives.ClientMessage, System.IDisposable
+    public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
+        public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
+        protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
         protected abstract System.ClientModel.Primitives.PipelineRequestHeaders HeadersCore { get; }
         public string Method { get { throw null; } set { } }
@@ -257,12 +251,15 @@ namespace System.ClientModel.Primitives
         public abstract bool TryGetValue(string name, out string? value);
         public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class PipelineResponse : System.ClientModel.Primitives.ServiceMessage, System.IDisposable
+    public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
+        public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders HeadersCore { get; }
+        public virtual bool IsError { get { throw null; } }
+        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract System.BinaryData BufferContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -302,13 +299,6 @@ namespace System.ClientModel.Primitives
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
     }
-    public abstract partial class ServiceMessage
-    {
-        protected ServiceMessage() { }
-        public abstract System.BinaryData Content { get; }
-        public virtual bool IsError { get { throw null; } }
-        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
-    }
 }
 namespace System.ClientModel.Primitives.TwoWayCommunications
 {
@@ -323,10 +313,11 @@ namespace System.ClientModel.Primitives.TwoWayCommunications
         public void Send(System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelineClientMessage message) { }
         public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelineClientMessage message) { throw null; }
     }
-    public abstract partial class TwoWayPipelineClientMessage : System.ClientModel.Primitives.ClientMessage
+    public abstract partial class TwoWayPipelineClientMessage
     {
         protected TwoWayPipelineClientMessage() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.BinaryData? Content { get { throw null; } set { } }
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
@@ -346,9 +337,10 @@ namespace System.ClientModel.Primitives.TwoWayCommunications
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelineClientMessage clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelineServiceMessage serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.TwoWayCommunications.TwoWayPipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
-    public abstract partial class TwoWayPipelineServiceMessage : System.ClientModel.Primitives.ServiceMessage
+    public abstract partial class TwoWayPipelineServiceMessage
     {
         protected TwoWayPipelineServiceMessage() { }
+        public System.BinaryData? Content { get { throw null; } set { } }
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }

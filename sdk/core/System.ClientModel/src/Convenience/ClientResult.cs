@@ -11,20 +11,7 @@ namespace System.ClientModel;
 /// </summary>
 public class ClientResult
 {
-    private readonly ServiceMessage _response;
-
-    /// <summary>
-    /// Creates a new instance of <see cref="ClientResult"/> from a service
-    /// response.
-    /// </summary>
-    /// <param name="response">The <see cref="ServiceMessage"/> received
-    /// from the service.</param>
-    protected ClientResult(ServiceMessage response)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-
-        _response = response;
-    }
+    private readonly PipelineResponse _response;
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult"/> from a service
@@ -44,22 +31,9 @@ public class ClientResult
     /// </summary>
     /// <returns>The <see cref="PipelineResponse"/> received from the service.
     /// </returns>
-    public PipelineResponse GetRawResponse() => _response as PipelineResponse ??
-        throw new NotSupportedException();
+    public PipelineResponse GetRawResponse() => _response;
 
     #region Factory methods for ClientResult and subtypes
-
-    /// <summary>
-    /// TBD
-    /// </summary>
-    /// <param name="response"></param>
-    /// <returns></returns>
-    public static ClientResult FromResponse(ServiceMessage response)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-
-        return new ClientResult(response);
-    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult"/> that holds the

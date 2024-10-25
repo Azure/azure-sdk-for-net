@@ -14,8 +14,6 @@ public partial class WebSocketTwoWayPipelineTransport
 {
     private sealed class WebSocketTransportServiceMessage : WebSocketServiceMessage
     {
-        public override BinaryData Content => throw new NotImplementedException();
-
         public override string ContentType => throw new NotImplementedException();
 
         public override bool IsLastFragment => throw new NotImplementedException();

@@ -7,7 +7,7 @@ using System.Threading;
 namespace System.ClientModel.Primitives.TwoWayCommunications;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class TwoWayPipelineClientMessage : ClientMessage
+public abstract class TwoWayPipelineClientMessage
 {
     protected TwoWayPipelineClientMessage() { }
 
@@ -15,6 +15,7 @@ public abstract class TwoWayPipelineClientMessage : ClientMessage
     private ArrayBackedPropertyBag<ulong, object> PropertyBag => _propertyBag ??= new();
 
     // TODO: Do we need to support the WS text/binary switch for Content?
+    public BinaryData? Content { get; set; }
 
     // TODO: settable here? Or better to use a RequestOptions.Apply paradigm?
     public CancellationToken CancellationToken { get; set; }

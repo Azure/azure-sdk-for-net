@@ -11,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// <see cref="ClientPipeline.CreateMessage"/> is used to create an instance of
 /// <see cref="PipelineRequest"/> for a given pipeline.
 /// </summary>
-public abstract class PipelineRequest : ClientMessage, IDisposable
+public abstract class PipelineRequest : IDisposable
 {
     /// <summary>
     /// Gets or sets the HTTP method used by the HTTP request.
@@ -52,6 +52,21 @@ public abstract class PipelineRequest : ClientMessage, IDisposable
     /// <see cref="Headers"/> collection.
     /// </summary>
     protected abstract PipelineRequestHeaders HeadersCore { get; }
+
+    /// <summary>
+    /// Gets or sets the contents of the HTTP request.
+    /// </summary>
+    public BinaryContent? Content
+    {
+        get => ContentCore;
+        set => ContentCore = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the derived-type's value of the request's
+    /// <see cref="Content"/>.
+    /// </summary>
+    protected abstract BinaryContent? ContentCore { get; set; }
 
     /// <inheritdoc/>
     public abstract void Dispose();

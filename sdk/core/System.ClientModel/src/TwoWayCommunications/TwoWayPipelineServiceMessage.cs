@@ -13,7 +13,7 @@ using System.Text;
 namespace System.ClientModel.Primitives.TwoWayCommunications;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class TwoWayPipelineServiceMessage : ServiceMessage
+public abstract class TwoWayPipelineServiceMessage
 {
     protected TwoWayPipelineServiceMessage() { }
 
@@ -21,7 +21,7 @@ public abstract class TwoWayPipelineServiceMessage : ServiceMessage
     private ArrayBackedPropertyBag<ulong, object> PropertyBag => _propertyBag ??= new();
 
     // TODO: Do we need to support the WS text/binary switch here?
-    //public BinaryData? Content { get; set; }
+    public BinaryData? Content { get; set; }
 
     // TODO: would it make sense to have CancellationToken on this message at all?
     // TODO: what governs cancellation when a response is received?
