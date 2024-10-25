@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class PostgreSqlMigrationSubStateDetails : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationSubStateDetails>
+    public partial class PostgreSqlMigrationSubStateDetails : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationSubStateDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationSubStateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +40,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 writer.WritePropertyName("currentSubState"u8);
                 writer.WriteStringValue(CurrentSubState.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(DbDetails))
+            {
+                writer.WritePropertyName("dbDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in DbDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ValidationDetails))
+            {
+                writer.WritePropertyName("validationDetails"u8);
+                writer.WriteObjectValue(ValidationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,6 +95,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationSubState? currentSubState = default;
+            IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default;
+            ValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +110,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     currentSubState = new PostgreSqlMigrationSubState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("dbDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, DbMigrationStatus> dictionary = new Dictionary<string, DbMigrationStatus>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, DbMigrationStatus.DeserializeDbMigrationStatus(property0.Value, options));
+                    }
+                    dbDetails = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("validationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationDetails = ValidationDetails.DeserializeValidationDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, serializedAdditionalRawData);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails ?? new ChangeTrackingDictionary<string, DbMigrationStatus>(), validationDetails, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -123,6 +165,45 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     builder.Append("  currentSubState: ");
                     builder.AppendLine($"'{CurrentSubState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DbDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dbDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DbDetails))
+                {
+                    if (DbDetails.Any())
+                    {
+                        builder.Append("  dbDetails: ");
+                        builder.AppendLine("{");
+                        foreach (var item in DbDetails)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  dbDetails: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  validationDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationDetails))
+                {
+                    builder.Append("  validationDetails: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ValidationDetails, options, 2, false, "  validationDetails: ");
                 }
             }
 

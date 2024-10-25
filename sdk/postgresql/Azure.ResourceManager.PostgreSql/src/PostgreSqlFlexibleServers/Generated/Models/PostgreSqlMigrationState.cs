@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
+        private const string ValidationFailedValue = "ValidationFailed";
+        private const string CleaningUpValue = "CleaningUp";
 
         /// <summary> InProgress. </summary>
         public static PostgreSqlMigrationState InProgress { get; } = new PostgreSqlMigrationState(InProgressValue);
@@ -38,6 +40,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlMigrationState Failed { get; } = new PostgreSqlMigrationState(FailedValue);
         /// <summary> Succeeded. </summary>
         public static PostgreSqlMigrationState Succeeded { get; } = new PostgreSqlMigrationState(SucceededValue);
+        /// <summary> ValidationFailed. </summary>
+        public static PostgreSqlMigrationState ValidationFailed { get; } = new PostgreSqlMigrationState(ValidationFailedValue);
+        /// <summary> CleaningUp. </summary>
+        public static PostgreSqlMigrationState CleaningUp { get; } = new PostgreSqlMigrationState(CleaningUpValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are not the same. </summary>
