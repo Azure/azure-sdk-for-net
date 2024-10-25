@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Status of customer managed encryption key. </summary>
+    /// <summary> Whether encryption is enabled or disabled. </summary>
     public readonly partial struct AvsEncryptionState : IEquatable<AvsEncryptionState>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static AvsEncryptionState Enabled { get; } = new AvsEncryptionState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static AvsEncryptionState Disabled { get; } = new AvsEncryptionState(DisabledValue);
         /// <summary> Determines if two <see cref="AvsEncryptionState"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionState left, AvsEncryptionState right) => left.Equals(right);

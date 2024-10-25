@@ -153,9 +153,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.65.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.65.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.65.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.66.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.66.1" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.66.1" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
@@ -243,7 +243,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241010.1" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241022.3" />
   </ItemGroup>
 
   <!--
@@ -313,6 +313,7 @@
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageReference Update="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
     <PackageReference Update="Microsoft.Azure.Storage.File" Version="11.2.2" />
     <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />

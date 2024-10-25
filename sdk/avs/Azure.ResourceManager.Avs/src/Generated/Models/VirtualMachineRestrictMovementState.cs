@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </summary>
+    /// <summary> Virtual Machine Restrict Movement state. </summary>
     public readonly partial struct VirtualMachineRestrictMovementState : IEquatable<VirtualMachineRestrictMovementState>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> is enabled. </summary>
         public static VirtualMachineRestrictMovementState Enabled { get; } = new VirtualMachineRestrictMovementState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> is disabled. </summary>
         public static VirtualMachineRestrictMovementState Disabled { get; } = new VirtualMachineRestrictMovementState(DisabledValue);
         /// <summary> Determines if two <see cref="VirtualMachineRestrictMovementState"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineRestrictMovementState left, VirtualMachineRestrictMovementState right) => left.Equals(right);
