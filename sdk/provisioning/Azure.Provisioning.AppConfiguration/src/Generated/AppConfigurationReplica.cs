@@ -21,44 +21,68 @@ public partial class AppConfigurationReplica : ProvisionableResource
     /// <summary>
     /// The name of the replica.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The location of the replica.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The URI of the replica where the replica API will be available.
     /// </summary>
-    public BicepValue<string> Endpoint { get => _endpoint; }
-    private readonly BicepValue<string> _endpoint;
+    public BicepValue<string> Endpoint 
+    {
+        get { Initialize(); return _endpoint!; }
+    }
+    private BicepValue<string>? _endpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the replica.
     /// </summary>
-    public BicepValue<AppConfigurationReplicaProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<AppConfigurationReplicaProvisioningState> _provisioningState;
+    public BicepValue<AppConfigurationReplicaProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<AppConfigurationReplicaProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppConfigurationStore.
     /// </summary>
-    public AppConfigurationStore? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppConfigurationStore> _parent;
+    public AppConfigurationStore? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppConfigurationStore>? _parent;
 
     /// <summary>
     /// Creates a new AppConfigurationReplica.
@@ -73,13 +97,20 @@ public partial class AppConfigurationReplica : ProvisionableResource
     public AppConfigurationReplica(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2024-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"]);
-        _endpoint = BicepValue<string>.DefineProperty(this, "Endpoint", ["properties", "endpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<AppConfigurationReplicaProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppConfigurationStore>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppConfigurationReplica.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["properties", "endpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<AppConfigurationReplicaProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppConfigurationStore>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

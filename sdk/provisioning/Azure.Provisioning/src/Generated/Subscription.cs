@@ -24,57 +24,84 @@ public partial class Subscription : ProvisionableResource
     /// combinations of Legacy, RoleBased, Bypassed, Direct and Management.
     /// For example, &apos;Legacy, RoleBased&apos;.
     /// </summary>
-    public BicepValue<string> AuthorizationSource { get => _authorizationSource; }
-    private readonly BicepValue<string> _authorizationSource;
+    public BicepValue<string> AuthorizationSource 
+    {
+        get { Initialize(); return _authorizationSource!; }
+    }
+    private BicepValue<string>? _authorizationSource;
 
     /// <summary>
     /// The subscription display name.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// The ARM resource identifier.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// An array containing the tenants managing the subscription.
     /// </summary>
-    public BicepList<ManagedByTenant> ManagedByTenants { get => _managedByTenants; }
-    private readonly BicepList<ManagedByTenant> _managedByTenants;
+    public BicepList<ManagedByTenant> ManagedByTenants 
+    {
+        get { Initialize(); return _managedByTenants!; }
+    }
+    private BicepList<ManagedByTenant>? _managedByTenants;
 
     /// <summary>
     /// The subscription state. Possible values are Enabled, Warned, PastDue,
     /// Disabled, and Deleted.
     /// </summary>
-    public BicepValue<SubscriptionState> State { get => _state; }
-    private readonly BicepValue<SubscriptionState> _state;
+    public BicepValue<SubscriptionState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<SubscriptionState>? _state;
 
     /// <summary>
     /// The subscription ID.
     /// </summary>
-    public BicepValue<string> SubscriptionId { get => _subscriptionId; }
-    private readonly BicepValue<string> _subscriptionId;
+    public BicepValue<string> SubscriptionId 
+    {
+        get { Initialize(); return _subscriptionId!; }
+    }
+    private BicepValue<string>? _subscriptionId;
 
     /// <summary>
     /// The subscription policies.
     /// </summary>
-    public BicepValue<SubscriptionPolicies> SubscriptionPolicies { get => _subscriptionPolicies; }
-    private readonly BicepValue<SubscriptionPolicies> _subscriptionPolicies;
+    public SubscriptionPolicies SubscriptionPolicies 
+    {
+        get { Initialize(); return _subscriptionPolicies!; }
+    }
+    private SubscriptionPolicies? _subscriptionPolicies;
 
     /// <summary>
     /// The tags attached to the subscription.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The subscription tenant ID.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// Creates a new Subscription.
@@ -89,15 +116,22 @@ public partial class Subscription : ProvisionableResource
     public Subscription(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Resources/subscriptions", resourceVersion ?? "2019-10-01")
     {
-        _authorizationSource = BicepValue<string>.DefineProperty(this, "AuthorizationSource", ["authorizationSource"], isOutput: true);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _managedByTenants = BicepList<ManagedByTenant>.DefineProperty(this, "ManagedByTenants", ["managedByTenants"], isOutput: true);
-        _state = BicepValue<SubscriptionState>.DefineProperty(this, "State", ["state"], isOutput: true);
-        _subscriptionId = BicepValue<string>.DefineProperty(this, "SubscriptionId", ["subscriptionId"], isOutput: true);
-        _subscriptionPolicies = BicepValue<SubscriptionPolicies>.DefineProperty(this, "SubscriptionPolicies", ["subscriptionPolicies"], isOutput: true);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"], isOutput: true);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["tenantId"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of Subscription.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _authorizationSource = DefineProperty<string>("AuthorizationSource", ["authorizationSource"], isOutput: true);
+        _displayName = DefineProperty<string>("DisplayName", ["displayName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _managedByTenants = DefineListProperty<ManagedByTenant>("ManagedByTenants", ["managedByTenants"], isOutput: true);
+        _state = DefineProperty<SubscriptionState>("State", ["state"], isOutput: true);
+        _subscriptionId = DefineProperty<string>("SubscriptionId", ["subscriptionId"], isOutput: true);
+        _subscriptionPolicies = DefineModelProperty<SubscriptionPolicies>("SubscriptionPolicies", ["subscriptionPolicies"], isOutput: true);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"], isOutput: true);
+        _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
     }
 
     /// <summary>

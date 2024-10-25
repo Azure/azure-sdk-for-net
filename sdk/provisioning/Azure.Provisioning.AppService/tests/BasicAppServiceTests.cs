@@ -8,6 +8,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.AppService.Tests;
@@ -81,12 +82,12 @@ public class BasicAppServiceTests(bool async)
                                     new AppServiceNameValuePair
                                     {
                                         Name = "AzureWebJobsStorage",
-                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Value!.Value}")
+                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
                                     },
                                     new AppServiceNameValuePair
                                     {
                                         Name = "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Value!.Value}")
+                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
                                     },
                                     new AppServiceNameValuePair
                                     {

@@ -22,81 +22,126 @@ public partial class AseV3NetworkingConfiguration : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Property to enable and disable new private endpoint connection creation
     /// on ASE.
     /// </summary>
-    public BicepValue<bool> AllowNewPrivateEndpointConnections { get => _allowNewPrivateEndpointConnections; set => _allowNewPrivateEndpointConnections.Assign(value); }
-    private readonly BicepValue<bool> _allowNewPrivateEndpointConnections;
+    public BicepValue<bool> AllowNewPrivateEndpointConnections 
+    {
+        get { Initialize(); return _allowNewPrivateEndpointConnections!; }
+        set { Initialize(); _allowNewPrivateEndpointConnections!.Assign(value); }
+    }
+    private BicepValue<bool>? _allowNewPrivateEndpointConnections;
 
     /// <summary>
     /// Customer provided Inbound IP Address. Only able to be set on Ase create.
     /// </summary>
-    public BicepValue<string> InboundIPAddressOverride { get => _inboundIPAddressOverride; set => _inboundIPAddressOverride.Assign(value); }
-    private readonly BicepValue<string> _inboundIPAddressOverride;
+    public BicepValue<string> InboundIPAddressOverride 
+    {
+        get { Initialize(); return _inboundIPAddressOverride!; }
+        set { Initialize(); _inboundIPAddressOverride!.Assign(value); }
+    }
+    private BicepValue<string>? _inboundIPAddressOverride;
 
     /// <summary>
     /// Property to enable and disable FTP on ASEV3.
     /// </summary>
-    public BicepValue<bool> IsFtpEnabled { get => _isFtpEnabled; set => _isFtpEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isFtpEnabled;
+    public BicepValue<bool> IsFtpEnabled 
+    {
+        get { Initialize(); return _isFtpEnabled!; }
+        set { Initialize(); _isFtpEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isFtpEnabled;
 
     /// <summary>
     /// Property to enable and disable Remote Debug on ASEV3.
     /// </summary>
-    public BicepValue<bool> IsRemoteDebugEnabled { get => _isRemoteDebugEnabled; set => _isRemoteDebugEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isRemoteDebugEnabled;
+    public BicepValue<bool> IsRemoteDebugEnabled 
+    {
+        get { Initialize(); return _isRemoteDebugEnabled!; }
+        set { Initialize(); _isRemoteDebugEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isRemoteDebugEnabled;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the external inbound ip addresses.
     /// </summary>
-    public BicepList<IPAddress> ExternalInboundIPAddresses { get => _externalInboundIPAddresses; }
-    private readonly BicepList<IPAddress> _externalInboundIPAddresses;
+    public BicepList<IPAddress> ExternalInboundIPAddresses 
+    {
+        get { Initialize(); return _externalInboundIPAddresses!; }
+    }
+    private BicepList<IPAddress>? _externalInboundIPAddresses;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the internal inbound ip addresses.
     /// </summary>
-    public BicepList<IPAddress> InternalInboundIPAddresses { get => _internalInboundIPAddresses; }
-    private readonly BicepList<IPAddress> _internalInboundIPAddresses;
+    public BicepList<IPAddress> InternalInboundIPAddresses 
+    {
+        get { Initialize(); return _internalInboundIPAddresses!; }
+    }
+    private BicepList<IPAddress>? _internalInboundIPAddresses;
 
     /// <summary>
     /// Gets the linux outbound ip addresses.
     /// </summary>
-    public BicepList<IPAddress> LinuxOutboundIPAddresses { get => _linuxOutboundIPAddresses; }
-    private readonly BicepList<IPAddress> _linuxOutboundIPAddresses;
+    public BicepList<IPAddress> LinuxOutboundIPAddresses 
+    {
+        get { Initialize(); return _linuxOutboundIPAddresses!; }
+    }
+    private BicepList<IPAddress>? _linuxOutboundIPAddresses;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets the windows outbound ip addresses.
     /// </summary>
-    public BicepList<IPAddress> WindowsOutboundIPAddresses { get => _windowsOutboundIPAddresses; }
-    private readonly BicepList<IPAddress> _windowsOutboundIPAddresses;
+    public BicepList<IPAddress> WindowsOutboundIPAddresses 
+    {
+        get { Initialize(); return _windowsOutboundIPAddresses!; }
+    }
+    private BicepList<IPAddress>? _windowsOutboundIPAddresses;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppServiceEnvironment.
     /// </summary>
-    public AppServiceEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppServiceEnvironment> _parent;
+    public AppServiceEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppServiceEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new AseV3NetworkingConfiguration.
@@ -111,19 +156,26 @@ public partial class AseV3NetworkingConfiguration : ProvisionableResource
     public AseV3NetworkingConfiguration(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _allowNewPrivateEndpointConnections = BicepValue<bool>.DefineProperty(this, "AllowNewPrivateEndpointConnections", ["properties", "allowNewPrivateEndpointConnections"]);
-        _inboundIPAddressOverride = BicepValue<string>.DefineProperty(this, "InboundIPAddressOverride", ["properties", "inboundIpAddressOverride"]);
-        _isFtpEnabled = BicepValue<bool>.DefineProperty(this, "IsFtpEnabled", ["properties", "ftpEnabled"]);
-        _isRemoteDebugEnabled = BicepValue<bool>.DefineProperty(this, "IsRemoteDebugEnabled", ["properties", "remoteDebugEnabled"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _externalInboundIPAddresses = BicepList<IPAddress>.DefineProperty(this, "ExternalInboundIPAddresses", ["properties", "externalInboundIpAddresses"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _internalInboundIPAddresses = BicepList<IPAddress>.DefineProperty(this, "InternalInboundIPAddresses", ["properties", "internalInboundIpAddresses"], isOutput: true);
-        _linuxOutboundIPAddresses = BicepList<IPAddress>.DefineProperty(this, "LinuxOutboundIPAddresses", ["properties", "linuxOutboundIpAddresses"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _windowsOutboundIPAddresses = BicepList<IPAddress>.DefineProperty(this, "WindowsOutboundIPAddresses", ["properties", "windowsOutboundIpAddresses"], isOutput: true);
-        _parent = ResourceReference<AppServiceEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AseV3NetworkingConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _allowNewPrivateEndpointConnections = DefineProperty<bool>("AllowNewPrivateEndpointConnections", ["properties", "allowNewPrivateEndpointConnections"]);
+        _inboundIPAddressOverride = DefineProperty<string>("InboundIPAddressOverride", ["properties", "inboundIpAddressOverride"]);
+        _isFtpEnabled = DefineProperty<bool>("IsFtpEnabled", ["properties", "ftpEnabled"]);
+        _isRemoteDebugEnabled = DefineProperty<bool>("IsRemoteDebugEnabled", ["properties", "remoteDebugEnabled"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _externalInboundIPAddresses = DefineListProperty<IPAddress>("ExternalInboundIPAddresses", ["properties", "externalInboundIpAddresses"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _internalInboundIPAddresses = DefineListProperty<IPAddress>("InternalInboundIPAddresses", ["properties", "internalInboundIpAddresses"], isOutput: true);
+        _linuxOutboundIPAddresses = DefineListProperty<IPAddress>("LinuxOutboundIPAddresses", ["properties", "linuxOutboundIpAddresses"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _windowsOutboundIPAddresses = DefineListProperty<IPAddress>("WindowsOutboundIPAddresses", ["properties", "windowsOutboundIpAddresses"], isOutput: true);
+        _parent = DefineResource<AppServiceEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -21,153 +21,229 @@ public partial class WebSiteExtension : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// List of authors.
     /// </summary>
-    public BicepList<string> Authors { get => _authors; }
-    private readonly BicepList<string> _authors;
+    public BicepList<string> Authors 
+    {
+        get { Initialize(); return _authors!; }
+    }
+    private BicepList<string>? _authors;
 
     /// <summary>
     /// Site Extension comment.
     /// </summary>
-    public BicepValue<string> Comment { get => _comment; }
-    private readonly BicepValue<string> _comment;
+    public BicepValue<string> Comment 
+    {
+        get { Initialize(); return _comment!; }
+    }
+    private BicepValue<string>? _comment;
 
     /// <summary>
     /// Detailed description.
     /// </summary>
-    public BicepValue<string> Description { get => _description; }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Count of downloads.
     /// </summary>
-    public BicepValue<int> DownloadCount { get => _downloadCount; }
-    private readonly BicepValue<int> _downloadCount;
+    public BicepValue<int> DownloadCount 
+    {
+        get { Initialize(); return _downloadCount!; }
+    }
+    private BicepValue<int>? _downloadCount;
 
     /// <summary>
     /// Site extension ID.
     /// </summary>
-    public BicepValue<string> ExtensionId { get => _extensionId; }
-    private readonly BicepValue<string> _extensionId;
+    public BicepValue<string> ExtensionId 
+    {
+        get { Initialize(); return _extensionId!; }
+    }
+    private BicepValue<string>? _extensionId;
 
     /// <summary>
     /// Site extension type.
     /// </summary>
-    public BicepValue<SiteExtensionType> ExtensionType { get => _extensionType; }
-    private readonly BicepValue<SiteExtensionType> _extensionType;
+    public BicepValue<SiteExtensionType> ExtensionType 
+    {
+        get { Initialize(); return _extensionType!; }
+    }
+    private BicepValue<SiteExtensionType>? _extensionType;
 
     /// <summary>
     /// Extension URL.
     /// </summary>
-    public BicepValue<Uri> ExtensionUri { get => _extensionUri; }
-    private readonly BicepValue<Uri> _extensionUri;
+    public BicepValue<Uri> ExtensionUri 
+    {
+        get { Initialize(); return _extensionUri!; }
+    }
+    private BicepValue<Uri>? _extensionUri;
 
     /// <summary>
     /// Feed URL.
     /// </summary>
-    public BicepValue<Uri> FeedUri { get => _feedUri; }
-    private readonly BicepValue<Uri> _feedUri;
+    public BicepValue<Uri> FeedUri 
+    {
+        get { Initialize(); return _feedUri!; }
+    }
+    private BicepValue<Uri>? _feedUri;
 
     /// <summary>
     /// Icon URL.
     /// </summary>
-    public BicepValue<Uri> IconUri { get => _iconUri; }
-    private readonly BicepValue<Uri> _iconUri;
+    public BicepValue<Uri> IconUri 
+    {
+        get { Initialize(); return _iconUri!; }
+    }
+    private BicepValue<Uri>? _iconUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Installed timestamp.
     /// </summary>
-    public BicepValue<DateTimeOffset> InstalledOn { get => _installedOn; }
-    private readonly BicepValue<DateTimeOffset> _installedOn;
+    public BicepValue<DateTimeOffset> InstalledOn 
+    {
+        get { Initialize(); return _installedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _installedOn;
 
     /// <summary>
     /// Installer command line parameters.
     /// </summary>
-    public BicepValue<string> InstallerCommandLineParams { get => _installerCommandLineParams; }
-    private readonly BicepValue<string> _installerCommandLineParams;
+    public BicepValue<string> InstallerCommandLineParams 
+    {
+        get { Initialize(); return _installerCommandLineParams!; }
+    }
+    private BicepValue<string>? _installerCommandLineParams;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// License URL.
     /// </summary>
-    public BicepValue<Uri> LicenseUri { get => _licenseUri; }
-    private readonly BicepValue<Uri> _licenseUri;
+    public BicepValue<Uri> LicenseUri 
+    {
+        get { Initialize(); return _licenseUri!; }
+    }
+    private BicepValue<Uri>? _licenseUri;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest
     /// version; &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
-    public BicepValue<bool> LocalIsLatestVersion { get => _localIsLatestVersion; }
-    private readonly BicepValue<bool> _localIsLatestVersion;
+    public BicepValue<bool> LocalIsLatestVersion 
+    {
+        get { Initialize(); return _localIsLatestVersion!; }
+    }
+    private BicepValue<bool>? _localIsLatestVersion;
 
     /// <summary>
     /// Local path.
     /// </summary>
-    public BicepValue<string> LocalPath { get => _localPath; }
-    private readonly BicepValue<string> _localPath;
+    public BicepValue<string> LocalPath 
+    {
+        get { Initialize(); return _localPath!; }
+    }
+    private BicepValue<string>? _localPath;
 
     /// <summary>
     /// Project URL.
     /// </summary>
-    public BicepValue<Uri> ProjectUri { get => _projectUri; }
-    private readonly BicepValue<Uri> _projectUri;
+    public BicepValue<Uri> ProjectUri 
+    {
+        get { Initialize(); return _projectUri!; }
+    }
+    private BicepValue<Uri>? _projectUri;
 
     /// <summary>
     /// Provisioning state.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Published timestamp.
     /// </summary>
-    public BicepValue<DateTimeOffset> PublishedOn { get => _publishedOn; }
-    private readonly BicepValue<DateTimeOffset> _publishedOn;
+    public BicepValue<DateTimeOffset> PublishedOn 
+    {
+        get { Initialize(); return _publishedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _publishedOn;
 
     /// <summary>
     /// Summary description.
     /// </summary>
-    public BicepValue<string> Summary { get => _summary; }
-    private readonly BicepValue<string> _summary;
+    public BicepValue<string> Summary 
+    {
+        get { Initialize(); return _summary!; }
+    }
+    private BicepValue<string>? _summary;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets the title.
     /// </summary>
-    public BicepValue<string> Title { get => _title; }
-    private readonly BicepValue<string> _title;
+    public BicepValue<string> Title 
+    {
+        get { Initialize(); return _title!; }
+    }
+    private BicepValue<string>? _title;
 
     /// <summary>
     /// Version information.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new WebSiteExtension.
@@ -182,31 +258,38 @@ public partial class WebSiteExtension : ProvisionableResource
     public WebSiteExtension(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/sites/siteextensions", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _authors = BicepList<string>.DefineProperty(this, "Authors", ["properties", "authors"], isOutput: true);
-        _comment = BicepValue<string>.DefineProperty(this, "Comment", ["properties", "comment"], isOutput: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"], isOutput: true);
-        _downloadCount = BicepValue<int>.DefineProperty(this, "DownloadCount", ["properties", "download_count"], isOutput: true);
-        _extensionId = BicepValue<string>.DefineProperty(this, "ExtensionId", ["properties", "extension_id"], isOutput: true);
-        _extensionType = BicepValue<SiteExtensionType>.DefineProperty(this, "ExtensionType", ["properties", "extension_type"], isOutput: true);
-        _extensionUri = BicepValue<Uri>.DefineProperty(this, "ExtensionUri", ["properties", "extension_url"], isOutput: true);
-        _feedUri = BicepValue<Uri>.DefineProperty(this, "FeedUri", ["properties", "feed_url"], isOutput: true);
-        _iconUri = BicepValue<Uri>.DefineProperty(this, "IconUri", ["properties", "icon_url"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _installedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "InstalledOn", ["properties", "installed_date_time"], isOutput: true);
-        _installerCommandLineParams = BicepValue<string>.DefineProperty(this, "InstallerCommandLineParams", ["properties", "installer_command_line_params"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _licenseUri = BicepValue<Uri>.DefineProperty(this, "LicenseUri", ["properties", "license_url"], isOutput: true);
-        _localIsLatestVersion = BicepValue<bool>.DefineProperty(this, "LocalIsLatestVersion", ["properties", "local_is_latest_version"], isOutput: true);
-        _localPath = BicepValue<string>.DefineProperty(this, "LocalPath", ["properties", "local_path"], isOutput: true);
-        _projectUri = BicepValue<Uri>.DefineProperty(this, "ProjectUri", ["properties", "project_url"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publishedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "PublishedOn", ["properties", "published_date_time"], isOutput: true);
-        _summary = BicepValue<string>.DefineProperty(this, "Summary", ["properties", "summary"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _title = BicepValue<string>.DefineProperty(this, "Title", ["properties", "title"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSiteExtension.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _authors = DefineListProperty<string>("Authors", ["properties", "authors"], isOutput: true);
+        _comment = DefineProperty<string>("Comment", ["properties", "comment"], isOutput: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"], isOutput: true);
+        _downloadCount = DefineProperty<int>("DownloadCount", ["properties", "download_count"], isOutput: true);
+        _extensionId = DefineProperty<string>("ExtensionId", ["properties", "extension_id"], isOutput: true);
+        _extensionType = DefineProperty<SiteExtensionType>("ExtensionType", ["properties", "extension_type"], isOutput: true);
+        _extensionUri = DefineProperty<Uri>("ExtensionUri", ["properties", "extension_url"], isOutput: true);
+        _feedUri = DefineProperty<Uri>("FeedUri", ["properties", "feed_url"], isOutput: true);
+        _iconUri = DefineProperty<Uri>("IconUri", ["properties", "icon_url"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _installedOn = DefineProperty<DateTimeOffset>("InstalledOn", ["properties", "installed_date_time"], isOutput: true);
+        _installerCommandLineParams = DefineProperty<string>("InstallerCommandLineParams", ["properties", "installer_command_line_params"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _licenseUri = DefineProperty<Uri>("LicenseUri", ["properties", "license_url"], isOutput: true);
+        _localIsLatestVersion = DefineProperty<bool>("LocalIsLatestVersion", ["properties", "local_is_latest_version"], isOutput: true);
+        _localPath = DefineProperty<string>("LocalPath", ["properties", "local_path"], isOutput: true);
+        _projectUri = DefineProperty<Uri>("ProjectUri", ["properties", "project_url"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _publishedOn = DefineProperty<DateTimeOffset>("PublishedOn", ["properties", "published_date_time"], isOutput: true);
+        _summary = DefineProperty<string>("Summary", ["properties", "summary"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _title = DefineProperty<string>("Title", ["properties", "title"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

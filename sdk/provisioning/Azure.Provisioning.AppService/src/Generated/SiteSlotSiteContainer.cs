@@ -21,105 +21,169 @@ public partial class SiteSlotSiteContainer : ProvisionableResource
     /// <summary>
     /// Site Container Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Auth Type.
     /// </summary>
-    public BicepValue<SiteContainerAuthType> AuthType { get => _authType; set => _authType.Assign(value); }
-    private readonly BicepValue<SiteContainerAuthType> _authType;
+    public BicepValue<SiteContainerAuthType> AuthType 
+    {
+        get { Initialize(); return _authType!; }
+        set { Initialize(); _authType!.Assign(value); }
+    }
+    private BicepValue<SiteContainerAuthType>? _authType;
 
     /// <summary>
     /// List of environment variables.
     /// </summary>
-    public BicepList<WebAppEnvironmentVariable> EnvironmentVariables { get => _environmentVariables; set => _environmentVariables.Assign(value); }
-    private readonly BicepList<WebAppEnvironmentVariable> _environmentVariables;
+    public BicepList<WebAppEnvironmentVariable> EnvironmentVariables 
+    {
+        get { Initialize(); return _environmentVariables!; }
+        set { Initialize(); _environmentVariables!.Assign(value); }
+    }
+    private BicepList<WebAppEnvironmentVariable>? _environmentVariables;
 
     /// <summary>
     /// Image Name.
     /// </summary>
-    public BicepValue<string> Image { get => _image; set => _image.Assign(value); }
-    private readonly BicepValue<string> _image;
+    public BicepValue<string> Image 
+    {
+        get { Initialize(); return _image!; }
+        set { Initialize(); _image!.Assign(value); }
+    }
+    private BicepValue<string>? _image;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the container is the main site
     /// container; &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
-    public BicepValue<bool> IsMain { get => _isMain; set => _isMain.Assign(value); }
-    private readonly BicepValue<bool> _isMain;
+    public BicepValue<bool> IsMain 
+    {
+        get { Initialize(); return _isMain!; }
+        set { Initialize(); _isMain!.Assign(value); }
+    }
+    private BicepValue<bool>? _isMain;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Password Secret.
     /// </summary>
-    public BicepValue<string> PasswordSecret { get => _passwordSecret; set => _passwordSecret.Assign(value); }
-    private readonly BicepValue<string> _passwordSecret;
+    public BicepValue<string> PasswordSecret 
+    {
+        get { Initialize(); return _passwordSecret!; }
+        set { Initialize(); _passwordSecret!.Assign(value); }
+    }
+    private BicepValue<string>? _passwordSecret;
 
     /// <summary>
     /// StartUp Command.
     /// </summary>
-    public BicepValue<string> StartUpCommand { get => _startUpCommand; set => _startUpCommand.Assign(value); }
-    private readonly BicepValue<string> _startUpCommand;
+    public BicepValue<string> StartUpCommand 
+    {
+        get { Initialize(); return _startUpCommand!; }
+        set { Initialize(); _startUpCommand!.Assign(value); }
+    }
+    private BicepValue<string>? _startUpCommand;
 
     /// <summary>
     /// Target Port.
     /// </summary>
-    public BicepValue<string> TargetPort { get => _targetPort; set => _targetPort.Assign(value); }
-    private readonly BicepValue<string> _targetPort;
+    public BicepValue<string> TargetPort 
+    {
+        get { Initialize(); return _targetPort!; }
+        set { Initialize(); _targetPort!.Assign(value); }
+    }
+    private BicepValue<string>? _targetPort;
 
     /// <summary>
     /// UserManagedIdentity ClientId.
     /// </summary>
-    public BicepValue<string> UserManagedIdentityClientId { get => _userManagedIdentityClientId; set => _userManagedIdentityClientId.Assign(value); }
-    private readonly BicepValue<string> _userManagedIdentityClientId;
+    public BicepValue<string> UserManagedIdentityClientId 
+    {
+        get { Initialize(); return _userManagedIdentityClientId!; }
+        set { Initialize(); _userManagedIdentityClientId!.Assign(value); }
+    }
+    private BicepValue<string>? _userManagedIdentityClientId;
 
     /// <summary>
     /// User Name.
     /// </summary>
-    public BicepValue<string> UserName { get => _userName; set => _userName.Assign(value); }
-    private readonly BicepValue<string> _userName;
+    public BicepValue<string> UserName 
+    {
+        get { Initialize(); return _userName!; }
+        set { Initialize(); _userName!.Assign(value); }
+    }
+    private BicepValue<string>? _userName;
 
     /// <summary>
     /// List of volume mounts.
     /// </summary>
-    public BicepList<SiteContainerVolumeMount> VolumeMounts { get => _volumeMounts; set => _volumeMounts.Assign(value); }
-    private readonly BicepList<SiteContainerVolumeMount> _volumeMounts;
+    public BicepList<SiteContainerVolumeMount> VolumeMounts 
+    {
+        get { Initialize(); return _volumeMounts!; }
+        set { Initialize(); _volumeMounts!.Assign(value); }
+    }
+    private BicepList<SiteContainerVolumeMount>? _volumeMounts;
 
     /// <summary>
     /// Created Time.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Last Modified Time.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new SiteSlotSiteContainer.
@@ -134,23 +198,30 @@ public partial class SiteSlotSiteContainer : ProvisionableResource
     public SiteSlotSiteContainer(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/sites/slots/sitecontainers", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _authType = BicepValue<SiteContainerAuthType>.DefineProperty(this, "AuthType", ["properties", "authType"]);
-        _environmentVariables = BicepList<WebAppEnvironmentVariable>.DefineProperty(this, "EnvironmentVariables", ["properties", "environmentVariables"]);
-        _image = BicepValue<string>.DefineProperty(this, "Image", ["properties", "image"]);
-        _isMain = BicepValue<bool>.DefineProperty(this, "IsMain", ["properties", "isMain"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _passwordSecret = BicepValue<string>.DefineProperty(this, "PasswordSecret", ["properties", "passwordSecret"]);
-        _startUpCommand = BicepValue<string>.DefineProperty(this, "StartUpCommand", ["properties", "startUpCommand"]);
-        _targetPort = BicepValue<string>.DefineProperty(this, "TargetPort", ["properties", "targetPort"]);
-        _userManagedIdentityClientId = BicepValue<string>.DefineProperty(this, "UserManagedIdentityClientId", ["properties", "userManagedIdentityClientId"]);
-        _userName = BicepValue<string>.DefineProperty(this, "UserName", ["properties", "userName"]);
-        _volumeMounts = BicepList<SiteContainerVolumeMount>.DefineProperty(this, "VolumeMounts", ["properties", "volumeMounts"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteSlotSiteContainer.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _authType = DefineProperty<SiteContainerAuthType>("AuthType", ["properties", "authType"]);
+        _environmentVariables = DefineListProperty<WebAppEnvironmentVariable>("EnvironmentVariables", ["properties", "environmentVariables"]);
+        _image = DefineProperty<string>("Image", ["properties", "image"]);
+        _isMain = DefineProperty<bool>("IsMain", ["properties", "isMain"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _passwordSecret = DefineProperty<string>("PasswordSecret", ["properties", "passwordSecret"]);
+        _startUpCommand = DefineProperty<string>("StartUpCommand", ["properties", "startUpCommand"]);
+        _targetPort = DefineProperty<string>("TargetPort", ["properties", "targetPort"]);
+        _userManagedIdentityClientId = DefineProperty<string>("UserManagedIdentityClientId", ["properties", "userManagedIdentityClientId"]);
+        _userName = DefineProperty<string>("UserName", ["properties", "userName"]);
+        _volumeMounts = DefineListProperty<SiteContainerVolumeMount>("VolumeMounts", ["properties", "volumeMounts"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -47,11 +47,34 @@ public class Property(TypeModel parent, ModelBase propertyType, PropertyInfo? ar
                     DictionaryModel d => $"BicepDictionary<{d.ElementType.GetTypeReference()}>",
                     ListModel l when IsCollection(l.ElementType) => $"BicepList<{GetBicepType(l.ElementType)}>",
                     ListModel l => $"BicepList<{l.ElementType.GetTypeReference()}>",
+                    SimpleModel m => m.GetTypeReference(),
+                    Resource m => m.GetTypeReference(),
                     _ => $"BicepValue<{type.GetTypeReference()}>",
                 };
             static bool IsCollection(ModelBase type) =>
                 type is DictionaryModel || type is ListModel;
+        }
+    }
 
+    public string BicepPropertyTypeReference
+    {
+        get
+        {
+            return GetBicepType(PropertyType);
+            static string GetBicepType(ModelBase? type) =>
+                type switch
+                {
+                    null => "object",
+                    DictionaryModel d when d.ElementType is DictionaryModel => $"BicepDictionary<{GetBicepType(d.ElementType)}>",
+                    DictionaryModel d when d.ElementType is ListModel => $"BicepList<{GetBicepType(d.ElementType)}>",
+                    DictionaryModel d => d.ElementType.GetTypeReference(),
+                    ListModel l when l.ElementType is DictionaryModel => $"BicepDictionary<{GetBicepType(l.ElementType)}>",
+                    ListModel l when l.ElementType is ListModel => $"BicepList<{GetBicepType(l.ElementType)}>",
+                    ListModel l => l.ElementType.GetTypeReference(),
+                    SimpleModel m => m.GetTypeReference(),
+                    Resource m => m.GetTypeReference(),
+                    _ => type.GetTypeReference(),
+                };
         }
     }
 

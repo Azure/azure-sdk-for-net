@@ -97,6 +97,7 @@ public class BasicKeyVaultTests(bool async)
 
                 infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = kv.Name });
                 infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = kv.Id });
+                infra.Add(new ProvisioningOutput("vaultUri", typeof(string)) { Value = kv.Properties.VaultUri });
 
                 return infra;
             })
@@ -160,6 +161,8 @@ public class BasicKeyVaultTests(bool async)
             output name string = kv.name
 
             output resourceId string = kv.id
+
+            output vaultUri string = kv.properties.vaultUri
             """)
         .Lint()
         .ValidateAndDeployAsync();
