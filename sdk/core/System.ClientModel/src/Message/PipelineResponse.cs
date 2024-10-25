@@ -13,6 +13,11 @@ namespace System.ClientModel.Primitives;
 public abstract class PipelineResponse : ServiceMessage, IDisposable
 {
     /// <summary>
+    /// Gets the status code of the response.
+    /// </summary>
+    public abstract int Status { get; }
+
+    /// <summary>
     /// Gets the reason phrase that accompanies the status code on the HTTP
     /// response.
     /// </summary>

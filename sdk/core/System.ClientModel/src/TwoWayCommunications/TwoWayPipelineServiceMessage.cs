@@ -10,7 +10,7 @@ using System.Text;
 // If the sendable message and the recievable message could be the same message
 // type, policy.Process changes to policy.ProcessSend and policy.ProcessReceive
 
-namespace System.ClientModel.Primitives.TwoWayPipeline;
+namespace System.ClientModel.Primitives.TwoWayCommunications;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public abstract class TwoWayPipelineServiceMessage : ServiceMessage
