@@ -8,7 +8,7 @@
     <VersionPrefix>2.1.0</VersionPrefix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -59,7 +59,9 @@
   <Choose>
     <When Condition="'$(ExternalOpenAISource)' != ''">
       <ItemGroup>
-        <ProjectReference Include="$(ExternalOpenAISource)" />
+        <ProjectReference Include="$(ExternalOpenAISource)">
+          <Aliases>OpenAI,global</Aliases>
+        </ProjectReference>
       </ItemGroup>
       <PropertyGroup>
         <NoWarn>$(NoWarn);NU5104</NoWarn>
@@ -67,13 +69,17 @@
     </When>
     <When Condition="'$(ExternalOpenAILibrary)' != ''">
       <ItemGroup>
-        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)" />
+        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)">
+          <Aliases>OpenAI,global</Aliases>
+        </Reference>
         <PackageReference Include="System.ClientModel" VersionOverride="$(SystemClientModelVersion)" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="OpenAI" />
+        <PackageReference Include="OpenAI">
+          <Aliases>OpenAI,global</Aliases>
+        </PackageReference>
       </ItemGroup>
     </Otherwise>
   </Choose>

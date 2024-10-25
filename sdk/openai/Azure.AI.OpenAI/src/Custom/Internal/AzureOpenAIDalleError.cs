@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias OpenAI;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
+using OpenAI::System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 

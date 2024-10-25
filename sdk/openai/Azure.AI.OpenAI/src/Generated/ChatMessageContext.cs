@@ -47,7 +47,9 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>
         internal ChatMessageContext()
         {
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             Citations = new ChangeTrackingList<ChatCitation>();
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>

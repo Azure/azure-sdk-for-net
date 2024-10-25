@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias OpenAI;
+
 global using OpenAI;
 global using OpenAI.Assistants;
 global using OpenAI.Audio;
@@ -18,7 +20,7 @@ global using OpenAI.VectorStores;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+using OpenAI::System.Diagnostics.CodeAnalysis;
 using Azure.AI.OpenAI.Audio;
 using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Embeddings;

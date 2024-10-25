@@ -9,7 +9,9 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     [PersistableModelProxy(typeof(InternalUnknownAzureChatDataSourceVectorizationSource))]
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public partial class DataSourceVectorizer : IJsonModel<DataSourceVectorizer>
     {
         void IJsonModel<DataSourceVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -72,6 +74,7 @@ namespace Azure.AI.OpenAI.Chat
             {
                 switch (discriminator.GetString())
                 {
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
                     case "deployment_name": return InternalAzureChatDataSourceDeploymentNameVectorizationSource.DeserializeInternalAzureChatDataSourceDeploymentNameVectorizationSource(element, options);
                     case "endpoint": return InternalAzureChatDataSourceEndpointVectorizationSource.DeserializeInternalAzureChatDataSourceEndpointVectorizationSource(element, options);
                     case "integrated": return InternalAzureChatDataSourceIntegratedVectorizationSource.DeserializeInternalAzureChatDataSourceIntegratedVectorizationSource(element, options);
@@ -79,6 +82,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
             }
             return InternalUnknownAzureChatDataSourceVectorizationSource.DeserializeInternalUnknownAzureChatDataSourceVectorizationSource(element, options);
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         BinaryData IPersistableModel<DataSourceVectorizer>.Write(ModelReaderWriterOptions options)

@@ -17,8 +17,10 @@ namespace Azure.AI.OpenAI
         /// generation or violations of system-imposed restrictions.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jailbreak"/> is null. </exception>
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal RequestImageContentFilterResult(ContentFilterDetectionResult jailbreak)
         {
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             Argument.AssertNotNull(jailbreak, nameof(jailbreak));
 
             Jailbreak = jailbreak;
@@ -56,7 +58,9 @@ namespace Azure.AI.OpenAI
         /// system vulnerabilities to elicit unauthorized behavior from the LLM. This could lead to inappropriate content
         /// generation or violations of system-imposed restrictions.
         /// </param>
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal RequestImageContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult violence, ContentFilterSeverityResult hate, ContentFilterSeverityResult selfHarm, IDictionary<string, BinaryData> serializedAdditionalRawData, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, ContentFilterDetectionResult jailbreak) : base(sexual, violence, hate, selfHarm, serializedAdditionalRawData)
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Profanity = profanity;
             CustomBlocklists = customBlocklists;
@@ -72,6 +76,7 @@ namespace Azure.AI.OpenAI
         /// A detection result that identifies whether crude, vulgar, or otherwise objection language is present in the
         /// content.
         /// </summary>
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         public ContentFilterDetectionResult Profanity { get; }
         /// <summary> A collection of binary filtering outcomes for configured custom blocklists. </summary>
         public ContentFilterBlocklistResult CustomBlocklists { get; }
@@ -81,5 +86,6 @@ namespace Azure.AI.OpenAI
         /// generation or violations of system-imposed restrictions.
         /// </summary>
         public ContentFilterDetectionResult Jailbreak { get; }
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     }
 }

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias OpenAI;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
+using OpenAI::System.Diagnostics.CodeAnalysis;
 
 #if !AZURE_OPENAI_GA
 

@@ -76,7 +76,9 @@ namespace Azure.AI.OpenAI
         /// <param name="protectedMaterialText"> A detection result that describes a match against text protected under copyright or other status. </param>
         /// <param name="protectedMaterialCode"> A detection result that describes a match against licensed code or other protected source material. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForPromptContentFilterResultsError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Sexual = sexual;
             Hate = hate;
@@ -95,6 +97,7 @@ namespace Azure.AI.OpenAI
         /// portrayed in erotic or affectionate terms, pregnancy, physical sexual acts, including those portrayed as an
         /// assault or a forced sexual violent act against one's will, prostitution, pornography, and abuse.
         /// </summary>
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         public ContentFilterSeverityResult Sexual { get; }
         /// <summary>
         /// A content filter category that can refer to any content that attacks or uses pejorative or discriminatory
@@ -125,5 +128,6 @@ namespace Azure.AI.OpenAI
         public ContentFilterDetectionResult ProtectedMaterialText { get; }
         /// <summary> A detection result that describes a match against licensed code or other protected source material. </summary>
         public ContentFilterProtectedMaterialResult ProtectedMaterialCode { get; }
+#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     }
 }
