@@ -4,7 +4,7 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Primitives.TwoWayPipeline;
+namespace System.ClientModel.Primitives.TwoWayCommunication;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class TwoWayResult<T> : TwoWayResult

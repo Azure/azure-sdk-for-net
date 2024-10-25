@@ -7,13 +7,16 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayPipeline;
+namespace System.ClientModel.Primitives.TwoWayCommunication;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public partial class WebSocketTwoWayPipelineTransport
 {
-    private sealed class WebSocketTransportClientMessage : WebSocketClientMessage
+    private sealed class WebSocketTransportServiceMessage : WebSocketServiceMessage
     {
+        public override string ContentType => throw new NotImplementedException();
+
+        public override bool IsLastFragment => throw new NotImplementedException();
     }
 }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

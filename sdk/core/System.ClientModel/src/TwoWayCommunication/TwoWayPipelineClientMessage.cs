@@ -1,30 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Internal;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 
-// TODO: Do the message types need to be different?
-// If the sendable message and the recievable message could be the same message
-// type, policy.Process changes to policy.ProcessSend and policy.ProcessReceive
-
-namespace System.ClientModel.Primitives.TwoWayPipeline;
+namespace System.ClientModel.Primitives.TwoWayCommunication;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public abstract class TwoWayPipelineServiceMessage
+public abstract class TwoWayPipelineClientMessage
 {
-    protected TwoWayPipelineServiceMessage() { }
+    protected TwoWayPipelineClientMessage() { }
 
     private ArrayBackedPropertyBag<ulong, object>? _propertyBag;
     private ArrayBackedPropertyBag<ulong, object> PropertyBag => _propertyBag ??= new();
 
-    // TODO: Do we need to support the WS text/binary switch here?
+    // TODO: Do we need to support the WS text/binary switch for Content?
     public BinaryData? Content { get; set; }
 
-    // TODO: would it make sense to have CancellationToken on this message at all?
-    // TODO: what governs cancellation when a response is received?
+    // TODO: settable here? Or better to use a RequestOptions.Apply paradigm?
+    public CancellationToken CancellationToken { get; set; }
 
     public void SetProperty(Type key, object? value) =>
         PropertyBag.Set((ulong)key.TypeHandle.Value, value);
