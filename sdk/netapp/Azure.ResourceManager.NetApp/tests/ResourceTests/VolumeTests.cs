@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //ClusterPeerCommandResult result = lro.Value;
             //Assert.NotNull(result);
 
-            RequestFailedException peerException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
+            InvalidOperationException peerException = Assert.ThrowsAsync<InvalidOperationException>(async () => { await volumeResource2.PeerExternalClusterAsync(WaitUntil.Completed, peerClusterRequest); });
             //Assert.AreEqual(409, peerException.Status);
 
             RequestFailedException authorizeException = Assert.ThrowsAsync<RequestFailedException>(async () => { await volumeResource2.AuthorizeExternalReplicationAsync(WaitUntil.Completed); });
