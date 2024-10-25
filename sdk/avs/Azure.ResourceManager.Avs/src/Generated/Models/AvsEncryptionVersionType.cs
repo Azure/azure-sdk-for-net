@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Property of the key if user provided or auto detected. </summary>
+    /// <summary> Whether the encryption version is fixed or auto-detected. </summary>
     public readonly partial struct AvsEncryptionVersionType : IEquatable<AvsEncryptionVersionType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string FixedValue = "Fixed";
         private const string AutoDetectedValue = "AutoDetected";
 
-        /// <summary> Fixed. </summary>
+        /// <summary> is fixed. </summary>
         public static AvsEncryptionVersionType Fixed { get; } = new AvsEncryptionVersionType(FixedValue);
-        /// <summary> AutoDetected. </summary>
+        /// <summary> is auto-detected. </summary>
         public static AvsEncryptionVersionType AutoDetected { get; } = new AvsEncryptionVersionType(AutoDetectedValue);
         /// <summary> Determines if two <see cref="AvsEncryptionVersionType"/> values are the same. </summary>
         public static bool operator ==(AvsEncryptionVersionType left, AvsEncryptionVersionType right) => left.Equals(right);

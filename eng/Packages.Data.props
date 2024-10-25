@@ -243,7 +243,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241010.1" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241022.3" />
   </ItemGroup>
 
   <!--
@@ -313,6 +313,7 @@
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageReference Update="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
     <PackageReference Update="Microsoft.Azure.Storage.File" Version="11.2.2" />
     <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />

@@ -20,10 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.EventGrid\src\Azure.Provisioning.EventGrid.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.ServiceBus\src\Azure.Provisioning.ServiceBus.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
-    <ProjectReference Include="..\..\Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj" />
-    <ProjectReference Include="..\..\Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj" />
   </ItemGroup>
+
 </Project>

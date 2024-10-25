@@ -32,11 +32,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="soqlQuery"> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </param>
         /// <param name="query"> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="includeDeletedObjects"> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SalesforceV2Source(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
+        /// <param name="pageSize"> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </param>
+        internal SalesforceV2Source(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> queryTimeout, BinaryData additionalColumns, DataFactoryElement<string> soqlQuery, DataFactoryElement<string> query, DataFactoryElement<bool> includeDeletedObjects, DataFactoryElement<int> pageSize) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             SoqlQuery = soqlQuery;
             Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
+            PageSize = pageSize;
             CopySourceType = copySourceType ?? "SalesforceV2Source";
         }
 
@@ -46,5 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> IncludeDeletedObjects { get; set; }
+        /// <summary> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </summary>
+        public DataFactoryElement<int> PageSize { get; set; }
     }
 }

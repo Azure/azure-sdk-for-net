@@ -36,10 +36,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         internal int PassedTestCount { get; set; } = 0;
         internal int FailedTestCount { get; set; } = 0;
         internal int SkippedTestCount { get; set; } = 0;
+        internal int TotalArtifactCount { get; set; } = 0;
+        internal int TotalArtifactSizeInBytes { get; set; } = 0;
         internal List<TestResults> TestResults { get; set; } = new List<TestResults>();
         internal ConcurrentDictionary<string, RawTestResult?> RawTestResultsMap { get; set; } = new();
         internal bool FatalTestExecution { get; set; } = false;
         internal TestRunShardDto? _testRunShard;
+        internal TestResultsUri? _testResultsSasUri;
 
         public TestProcessor(CloudRunMetadata cloudRunMetadata, CIInfo cIInfo, ILogger? logger = null, IDataProcessor? dataProcessor = null, ICloudRunErrorParser? cloudRunErrorParser = null, IServiceClient? serviceClient = null, IConsoleWriter? consoleWriter = null, IBlobService? blobService = null)
         {
@@ -96,15 +99,22 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 TestResult testResultSource = e.Result;
                 TestResults? testResult = _dataProcessor.GetTestCaseResultData(testResultSource);
                 RawTestResult rawResult = DataProcessor.GetRawResultObject(testResultSource);
-                RawTestResultsMap.TryAdd(testResult.TestExecutionId, rawResult);
 
                 // TODO - Send error to blob
                 _cloudRunErrorParser.HandleScalableRunErrorMessage(testResultSource.ErrorMessage);
                 _cloudRunErrorParser.HandleScalableRunErrorMessage(testResultSource.ErrorStackTrace);
-                if (!_cloudRunMetadata.EnableResultPublish)
+                if (!_cloudRunMetadata.EnableResultPublish || FatalTestExecution)
                 {
                     return;
                 }
+
+                // TODO move rawResult upload here same as JS
+                RawTestResultsMap.TryAdd(testResult.TestExecutionId, rawResult);
+
+                // Upload Attachments
+                UploadAttachment(e, testResult.TestExecutionId);
+
+                // Update Test Count
                 if (testResult != null)
                 {
                     TotalTestCount++;
@@ -146,7 +156,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
                 try
                 {
-                    TestResultsUri? sasUri = _serviceClient.GetTestRunResultsUri();
+                    TestResultsUri? sasUri = CheckAndRenewSasUri();
                     if (!string.IsNullOrEmpty(sasUri?.Uri))
                     {
                         foreach (TestResults testResult in TestResults)
@@ -154,12 +164,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                             if (RawTestResultsMap.TryGetValue(testResult.TestExecutionId!, out RawTestResult? rawResult) && rawResult != null)
                             {
                                 // Renew the SAS URI if needed
-                                var reporterUtils = new ReporterUtils();
-                                if (sasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(sasUri.Uri))
-                                {
-                                    sasUri = _serviceClient.GetTestRunResultsUri(); // Create new SAS URI
-                                    _logger.Info($"Fetched SAS URI with validity: {sasUri?.ExpiresAt} and access: {sasUri?.AccessLevel}.");
-                                }
+                                sasUri = CheckAndRenewSasUri();
                                 if (sasUri == null)
                                 {
                                     _logger.Warning("SAS URI is empty");
@@ -192,6 +197,60 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         }
 
         #region Test Processor Helper Methods
+
+        private void UploadAttachment(TestResultEventArgs e, string testExecutionId)
+        {
+            _testResultsSasUri = CheckAndRenewSasUri();
+            if (e.Result.Attachments != null)
+            {
+                foreach (var attachmentSet in e.Result.Attachments)
+                {
+                    foreach (var attachmentData in attachmentSet.Attachments)
+                    {
+                        var filePath = attachmentData.Uri.LocalPath;
+                        _logger.Info($"Uploading attachment: {filePath}");
+                        if (!File.Exists( filePath ))
+                        {
+                            _logger.Error($"Attachment file not found: {filePath}");
+                            continue;
+                        }
+                        try
+                        {
+                            // get file size
+                            var fileSize = new FileInfo(filePath).Length;
+                            var cloudFileName = ReporterUtils.GetCloudFileName(filePath, testExecutionId);
+                            if (cloudFileName != null) {
+                                UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
+                                TotalArtifactCount++;
+                                TotalArtifactSizeInBytes = TotalArtifactSizeInBytes + (int)fileSize;
+                            }
+                            else
+                            {
+                                _logger.Error($"Attachment file Upload Failed: {filePath}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            var error = $"Cannot Upload '{filePath}' file: {ex.Message}";
+
+                            _logger.Error(error);
+                        }
+                    }
+                }
+            }
+        }
+
+        private TestResultsUri? CheckAndRenewSasUri()
+        {
+            var reporterUtils = new ReporterUtils();
+            if (_testResultsSasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(_testResultsSasUri.Uri))
+            {
+                _testResultsSasUri = _serviceClient.GetTestRunResultsUri();
+                _logger.Info($"Fetched SAS URI with validity: {_testResultsSasUri?.ExpiresAt} and access: {_testResultsSasUri?.AccessLevel}.");
+            }
+            return _testResultsSasUri;
+        }
+
         private void EndTestRun(TestRunCompleteEventArgs e)
         {
             if (_cloudRunMetadata.EnableResultPublish && !FatalTestExecution)
@@ -219,6 +278,16 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
              _blobService.UploadBufferAsync(uri, buffer, fileRelativePath);
         }
 
+
+        private void UploadBlobFile(string uri, string fileRelativePath, string filePath)
+        {
+            string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
+            BlobClient blobClient = new(new Uri(cloudFilePath));
+            // Upload filePath to Blob
+            blobClient.Upload(filePath, overwrite: true);
+            _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
+        }
+
         private TestRunShardDto GetTestRunEndShard(TestRunCompleteEventArgs e)
         {
             DateTime testRunEndedOn = DateTime.UtcNow;
@@ -239,7 +308,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testRunShard.Summary.StartTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.EndTime = testRunEndedOn.ToString("yyyy-MM-ddTHH:mm:ssZ");
             testRunShard.Summary.TotalTime = durationInMs;
-            testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = 0, SizeTotalAttachments = 0 };
+            testRunShard.Summary.UploadMetadata = new UploadMetadata() { NumTestResults = TotalTestCount, NumTotalAttachments = TotalArtifactCount, SizeTotalAttachments = TotalArtifactSizeInBytes };
             testRunShard.UploadCompleted = true;
             return testRunShard;
         }
