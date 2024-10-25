@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Primitives.TwoWayCommunications;
+namespace System.ClientModel.Primitives.TwoWayPipeline;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public sealed class TwoWayPipeline
