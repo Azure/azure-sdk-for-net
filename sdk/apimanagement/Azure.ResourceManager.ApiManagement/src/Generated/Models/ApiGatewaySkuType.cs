@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiGatewaySkuType left, ApiGatewaySkuType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiGatewaySkuType"/> values are not the same. </summary>
         public static bool operator !=(ApiGatewaySkuType left, ApiGatewaySkuType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiGatewaySkuType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiGatewaySkuType"/>. </summary>
         public static implicit operator ApiGatewaySkuType(string value) => new ApiGatewaySkuType(value);
 
         /// <inheritdoc />

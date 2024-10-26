@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(BackendType left, BackendType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendType"/> values are not the same. </summary>
         public static bool operator !=(BackendType left, BackendType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackendType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendType"/>. </summary>
         public static implicit operator BackendType(string value) => new BackendType(value);
 
         /// <inheritdoc />

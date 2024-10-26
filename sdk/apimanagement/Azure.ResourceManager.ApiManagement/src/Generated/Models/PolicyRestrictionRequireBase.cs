@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PolicyRestrictionRequireBase left, PolicyRestrictionRequireBase right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyRestrictionRequireBase"/> values are not the same. </summary>
         public static bool operator !=(PolicyRestrictionRequireBase left, PolicyRestrictionRequireBase right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyRestrictionRequireBase"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyRestrictionRequireBase"/>. </summary>
         public static implicit operator PolicyRestrictionRequireBase(string value) => new PolicyRestrictionRequireBase(value);
 
         /// <inheritdoc />

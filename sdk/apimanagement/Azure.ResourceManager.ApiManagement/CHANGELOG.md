@@ -13,16 +13,6 @@
     - Added Workspace Api diagnostics Operations
     - Added OperationStatus Operations which follow the Azure-AsyncOperation flow
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
