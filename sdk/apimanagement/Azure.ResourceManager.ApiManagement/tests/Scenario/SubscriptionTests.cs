@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SubscriptionTests : ApiManagementManagementTestBase
     {
         public SubscriptionTests(bool isAsync)
-                       : base(isAsync) //, RecordedTestMode.Record)
+                       : base(isAsync, RecordedTestMode.Record) //, RecordedTestMode.Record)
         {
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var listResponse = await collection.GetAllAsync().ToEnumerableAsync();
 
             Assert.NotNull(listResponse);
-            Assert.AreEqual(listResponse.Count, 1);
+            Assert.AreEqual(3, listResponse.Count);
 
             // get first subscription
             var firstSubscription = listResponse.FirstOrDefault();

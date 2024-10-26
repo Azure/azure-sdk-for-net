@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
     public class GatewayResourceTests : ApiManagementManagementTestBase
     {
         public GatewayResourceTests(bool isAsync)
-                    : base(isAsync) //, RecordedTestMode.Record)
+                    : base(isAsync, RecordedTestMode.Record)
         {
         }
 
