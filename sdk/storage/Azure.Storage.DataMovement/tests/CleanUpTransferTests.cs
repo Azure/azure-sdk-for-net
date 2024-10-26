@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void AssertBaseSource(Mock<StorageResourceItem> source)
         {
-            source.Verify(b => b.Uri, Times.Exactly(6));
+            source.Verify(b => b.Uri, Times.Exactly(8));
             source.Verify(b => b.ProviderId, Times.Once());
             source.Verify(b => b.ResourceId, Times.Once());
             source.Verify(b => b.Length, Times.Once());
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(5));
+            destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(5));
+            destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));

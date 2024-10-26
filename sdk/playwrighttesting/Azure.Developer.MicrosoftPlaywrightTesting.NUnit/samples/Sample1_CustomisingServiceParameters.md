@@ -15,17 +15,15 @@ This guide explains the different options available to you in the Azure.Develope
         <!-- The below parameters are optional -->
         <Parameter name="Os" value="linux" />
         <Parameter name="RunId" value="sample-run-id" />
-        <Parameter name="ExposeNetwork" value="<loopback>" />
-        <Parameter name="ServiceAuth" value="EntraId" />
+        <Parameter name="ServiceAuthType" value="EntraId" />
         <Parameter name="UseCloudHostedBrowsers" value="true" />
         <Parameter name="AzureTokenCredentialType" value="DefaultAzureCredential" />
-        <Parameter name="ManagedIdentityClientId" value="77bfc267-86cb-4eeb-9e4a-747a217a318c" />
         <Parameter name="EnableGitHubSummary" value="false" />
     </TestRunParameters>
     <!-- Enable Reporting feature -->
     <LoggerRunSettings>
         <Loggers>
-            <Logger friendlyName="ms-playwright-service" enabled="true" />
+            <Logger friendlyName="microsoft-playwright-testing" enabled="true" />
         </Loggers>
     </LoggerRunSettings>
 </RunSettings>
@@ -79,7 +77,7 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit
 3. **`ExposeNetwork`**:
     - **Description**: This settings exposes network available on the connecting client to the browser being connected to.
 
-4. **`ServiceAuth`**
+4. **`ServiceAuthType`**
     - **Description**: This setting allows you to specify the default authentication mechanism to be used for sending requests to the service.
     - **Available Options**:
         - `ServiceAuthType.EntraId` for Microsoft Entra ID authentication.

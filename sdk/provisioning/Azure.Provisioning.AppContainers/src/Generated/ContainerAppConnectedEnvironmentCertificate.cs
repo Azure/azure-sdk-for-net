@@ -16,54 +16,80 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppConnectedEnvironmentCertificate.
 /// </summary>
-public partial class ContainerAppConnectedEnvironmentCertificate : Resource
+public partial class ContainerAppConnectedEnvironmentCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the Certificate.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Certificate resource specific properties.
     /// </summary>
-    public BicepValue<ContainerAppCertificateProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<ContainerAppCertificateProperties> _properties;
+    public ContainerAppCertificateProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private ContainerAppCertificateProperties? _properties;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerAppConnectedEnvironment.
     /// </summary>
-    public ContainerAppConnectedEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerAppConnectedEnvironment> _parent;
+    public ContainerAppConnectedEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerAppConnectedEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironmentCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppConnectedEnvironmentCertificate resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -71,16 +97,24 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentCertificate.</param>
-    public ContainerAppConnectedEnvironmentCertificate(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2024-03-01")
+    public ContainerAppConnectedEnvironmentCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/connectedEnvironments/certificates", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _properties = BicepValue<ContainerAppCertificateProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerAppConnectedEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerAppConnectedEnvironmentCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _properties = DefineModelProperty<ContainerAppCertificateProperties>("Properties", ["properties"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerAppConnectedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -88,11 +122,6 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -113,7 +142,7 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// Creates a reference to an existing
     /// ContainerAppConnectedEnvironmentCertificate.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ContainerAppConnectedEnvironmentCertificate resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
@@ -122,6 +151,6 @@ public partial class ContainerAppConnectedEnvironmentCertificate : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppConnectedEnvironmentCertificate.</param>
     /// <returns>The existing ContainerAppConnectedEnvironmentCertificate resource.</returns>
-    public static ContainerAppConnectedEnvironmentCertificate FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppConnectedEnvironmentCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

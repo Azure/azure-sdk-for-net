@@ -14,113 +14,170 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteDeployment.
 /// </summary>
-public partial class SiteDeployment : Resource
+public partial class SiteDeployment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Who authored the deployment.
     /// </summary>
-    public BicepValue<string> Author { get => _author; set => _author.Assign(value); }
-    private readonly BicepValue<string> _author;
+    public BicepValue<string> Author 
+    {
+        get { Initialize(); return _author!; }
+        set { Initialize(); _author!.Assign(value); }
+    }
+    private BicepValue<string>? _author;
 
     /// <summary>
     /// Author email.
     /// </summary>
-    public BicepValue<string> AuthorEmail { get => _authorEmail; set => _authorEmail.Assign(value); }
-    private readonly BicepValue<string> _authorEmail;
+    public BicepValue<string> AuthorEmail 
+    {
+        get { Initialize(); return _authorEmail!; }
+        set { Initialize(); _authorEmail!.Assign(value); }
+    }
+    private BicepValue<string>? _authorEmail;
 
     /// <summary>
     /// Who performed the deployment.
     /// </summary>
-    public BicepValue<string> Deployer { get => _deployer; set => _deployer.Assign(value); }
-    private readonly BicepValue<string> _deployer;
+    public BicepValue<string> Deployer 
+    {
+        get { Initialize(); return _deployer!; }
+        set { Initialize(); _deployer!.Assign(value); }
+    }
+    private BicepValue<string>? _deployer;
 
     /// <summary>
     /// Details on deployment.
     /// </summary>
-    public BicepValue<string> Details { get => _details; set => _details.Assign(value); }
-    private readonly BicepValue<string> _details;
+    public BicepValue<string> Details 
+    {
+        get { Initialize(); return _details!; }
+        set { Initialize(); _details!.Assign(value); }
+    }
+    private BicepValue<string>? _details;
 
     /// <summary>
     /// End time.
     /// </summary>
-    public BicepValue<DateTimeOffset> EndOn { get => _endOn; set => _endOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _endOn;
+    public BicepValue<DateTimeOffset> EndOn 
+    {
+        get { Initialize(); return _endOn!; }
+        set { Initialize(); _endOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _endOn;
 
     /// <summary>
     /// True if deployment is currently active, false if completed and null if
     /// not started.
     /// </summary>
-    public BicepValue<bool> IsActive { get => _isActive; set => _isActive.Assign(value); }
-    private readonly BicepValue<bool> _isActive;
+    public BicepValue<bool> IsActive 
+    {
+        get { Initialize(); return _isActive!; }
+        set { Initialize(); _isActive!.Assign(value); }
+    }
+    private BicepValue<bool>? _isActive;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Details about deployment status.
     /// </summary>
-    public BicepValue<string> Message { get => _message; set => _message.Assign(value); }
-    private readonly BicepValue<string> _message;
+    public BicepValue<string> Message 
+    {
+        get { Initialize(); return _message!; }
+        set { Initialize(); _message!.Assign(value); }
+    }
+    private BicepValue<string>? _message;
 
     /// <summary>
     /// Start time.
     /// </summary>
-    public BicepValue<DateTimeOffset> StartOn { get => _startOn; set => _startOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _startOn;
+    public BicepValue<DateTimeOffset> StartOn 
+    {
+        get { Initialize(); return _startOn!; }
+        set { Initialize(); _startOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
     /// Deployment status.
     /// </summary>
-    public BicepValue<int> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<int> _status;
+    public BicepValue<int> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<int>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new SiteDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteDeployment resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteDeployment.</param>
-    public SiteDeployment(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/deployments", resourceVersion ?? "2024-04-01")
+    public SiteDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/deployments", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);
-        _authorEmail = BicepValue<string>.DefineProperty(this, "AuthorEmail", ["properties", "author_email"]);
-        _deployer = BicepValue<string>.DefineProperty(this, "Deployer", ["properties", "deployer"]);
-        _details = BicepValue<string>.DefineProperty(this, "Details", ["properties", "details"]);
-        _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "end_time"]);
-        _isActive = BicepValue<bool>.DefineProperty(this, "IsActive", ["properties", "active"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _message = BicepValue<string>.DefineProperty(this, "Message", ["properties", "message"]);
-        _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["properties", "start_time"]);
-        _status = BicepValue<int>.DefineProperty(this, "Status", ["properties", "status"]);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteDeployment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _author = DefineProperty<string>("Author", ["properties", "author"]);
+        _authorEmail = DefineProperty<string>("AuthorEmail", ["properties", "author_email"]);
+        _deployer = DefineProperty<string>("Deployer", ["properties", "deployer"]);
+        _details = DefineProperty<string>("Details", ["properties", "details"]);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["properties", "end_time"]);
+        _isActive = DefineProperty<bool>("IsActive", ["properties", "active"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _message = DefineProperty<string>("Message", ["properties", "message"]);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "start_time"]);
+        _status = DefineProperty<int>("Status", ["properties", "status"]);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -287,7 +344,7 @@ public partial class SiteDeployment : Resource
     /// <summary>
     /// Creates a reference to an existing SiteDeployment.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteDeployment resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -295,6 +352,6 @@ public partial class SiteDeployment : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteDeployment.</param>
     /// <returns>The existing SiteDeployment resource.</returns>
-    public static SiteDeployment FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

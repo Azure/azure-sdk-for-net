@@ -16,93 +16,136 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteBasicAuthProperty.
 /// </summary>
-public partial class StaticSiteBasicAuthProperty : Resource
+public partial class StaticSiteBasicAuthProperty : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// State indicating if basic auth is enabled and for what environments it
     /// is active.
     /// </summary>
-    public BicepValue<string> ApplicableEnvironmentsMode { get => _applicableEnvironmentsMode; set => _applicableEnvironmentsMode.Assign(value); }
-    private readonly BicepValue<string> _applicableEnvironmentsMode;
+    public BicepValue<string> ApplicableEnvironmentsMode 
+    {
+        get { Initialize(); return _applicableEnvironmentsMode!; }
+        set { Initialize(); _applicableEnvironmentsMode!.Assign(value); }
+    }
+    private BicepValue<string>? _applicableEnvironmentsMode;
 
     /// <summary>
     /// The list of enabled environments for Basic Auth if
     /// ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
     /// </summary>
-    public BicepList<string> Environments { get => _environments; set => _environments.Assign(value); }
-    private readonly BicepList<string> _environments;
+    public BicepList<string> Environments 
+    {
+        get { Initialize(); return _environments!; }
+        set { Initialize(); _environments!.Assign(value); }
+    }
+    private BicepList<string>? _environments;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The password for basic auth.
     /// </summary>
-    public BicepValue<string> Password { get => _password; set => _password.Assign(value); }
-    private readonly BicepValue<string> _password;
+    public BicepValue<string> Password 
+    {
+        get { Initialize(); return _password!; }
+        set { Initialize(); _password!.Assign(value); }
+    }
+    private BicepValue<string>? _password;
 
     /// <summary>
     /// Url to the secret in Key Vault.
     /// </summary>
-    public BicepValue<Uri> SecretUri { get => _secretUri; set => _secretUri.Assign(value); }
-    private readonly BicepValue<Uri> _secretUri;
+    public BicepValue<Uri> SecretUri 
+    {
+        get { Initialize(); return _secretUri!; }
+        set { Initialize(); _secretUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _secretUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// State indicating if basic auth has a secret and what type it is.
     /// </summary>
-    public BicepValue<string> SecretState { get => _secretState; }
-    private readonly BicepValue<string> _secretState;
+    public BicepValue<string> SecretState 
+    {
+        get { Initialize(); return _secretState!; }
+    }
+    private BicepValue<string>? _secretState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
-    public StaticSiteBasicAuthProperty(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-04-01")
+    public StaticSiteBasicAuthProperty(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _applicableEnvironmentsMode = BicepValue<string>.DefineProperty(this, "ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
-        _environments = BicepList<string>.DefineProperty(this, "Environments", ["properties", "environments"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _password = BicepValue<string>.DefineProperty(this, "Password", ["properties", "password"]);
-        _secretUri = BicepValue<Uri>.DefineProperty(this, "SecretUri", ["properties", "secretUrl"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _secretState = BicepValue<string>.DefineProperty(this, "SecretState", ["properties", "secretState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StaticSiteBasicAuthProperty.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _applicableEnvironmentsMode = DefineProperty<string>("ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
+        _environments = DefineListProperty<string>("Environments", ["properties", "environments"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _password = DefineProperty<string>("Password", ["properties", "password"]);
+        _secretUri = DefineProperty<Uri>("SecretUri", ["properties", "secretUrl"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _secretState = DefineProperty<string>("SecretState", ["properties", "secretState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -184,7 +227,7 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteBasicAuthProperty.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSiteBasicAuthProperty
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -192,6 +235,6 @@ public partial class StaticSiteBasicAuthProperty : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
     /// <returns>The existing StaticSiteBasicAuthProperty resource.</returns>
-    public static StaticSiteBasicAuthProperty FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteBasicAuthProperty FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

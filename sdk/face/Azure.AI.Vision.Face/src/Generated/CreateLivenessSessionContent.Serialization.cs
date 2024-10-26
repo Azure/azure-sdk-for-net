@@ -38,6 +38,16 @@ namespace Azure.AI.Vision.Face
                 writer.WritePropertyName("deviceCorrelationIdSetInClient"u8);
                 writer.WriteBooleanValue(DeviceCorrelationIdSetInClient.Value);
             }
+            if (Optional.IsDefined(EnableSessionImage))
+            {
+                writer.WritePropertyName("enableSessionImage"u8);
+                writer.WriteBooleanValue(EnableSessionImage.Value);
+            }
+            if (Optional.IsDefined(LivenessSingleModalModel))
+            {
+                writer.WritePropertyName("livenessSingleModalModel"u8);
+                writer.WriteStringValue(LivenessSingleModalModel.Value.ToString());
+            }
             if (Optional.IsDefined(DeviceCorrelationId))
             {
                 writer.WritePropertyName("deviceCorrelationId"u8);
@@ -89,6 +99,8 @@ namespace Azure.AI.Vision.Face
             LivenessOperationMode livenessOperationMode = default;
             bool? sendResultsToClient = default;
             bool? deviceCorrelationIdSetInClient = default;
+            bool? enableSessionImage = default;
+            LivenessModel? livenessSingleModalModel = default;
             string deviceCorrelationId = default;
             int? authTokenTimeToLiveInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,6 +130,24 @@ namespace Azure.AI.Vision.Face
                     deviceCorrelationIdSetInClient = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableSessionImage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableSessionImage = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("livenessSingleModalModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    livenessSingleModalModel = new LivenessModel(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("deviceCorrelationId"u8))
                 {
                     deviceCorrelationId = property.Value.GetString();
@@ -142,6 +172,8 @@ namespace Azure.AI.Vision.Face
                 livenessOperationMode,
                 sendResultsToClient,
                 deviceCorrelationIdSetInClient,
+                enableSessionImage,
+                livenessSingleModalModel,
                 deviceCorrelationId,
                 authTokenTimeToLiveInSeconds,
                 serializedAdditionalRawData);

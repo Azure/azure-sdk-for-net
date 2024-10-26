@@ -15,72 +15,104 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StoragePrivateEndpointConnection.
 /// </summary>
-public partial class StoragePrivateEndpointConnection : Resource
+public partial class StoragePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// The name of the private endpoint connection associated with the Azure
     /// resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A collection of information about the state of the connection between
     /// service consumer and provider.
     /// </summary>
-    public BicepValue<StoragePrivateLinkServiceConnectionState> ConnectionState { get => _connectionState; set => _connectionState.Assign(value); }
-    private readonly BicepValue<StoragePrivateLinkServiceConnectionState> _connectionState;
+    public StoragePrivateLinkServiceConnectionState ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private StoragePrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// The provisioning state of the private endpoint connection resource.
     /// </summary>
-    public BicepValue<StoragePrivateEndpointConnectionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<StoragePrivateEndpointConnectionProvisioningState> _provisioningState;
+    public BicepValue<StoragePrivateEndpointConnectionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<StoragePrivateEndpointConnectionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Creates a new StoragePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StoragePrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StoragePrivateEndpointConnection.</param>
-    public StoragePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion ?? "2024-01-01")
+    public StoragePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/privateEndpointConnections", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionState = BicepValue<StoragePrivateLinkServiceConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
-        _provisioningState = BicepValue<StoragePrivateEndpointConnectionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StoragePrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<StoragePrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<StoragePrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -212,7 +244,7 @@ public partial class StoragePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StoragePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StoragePrivateEndpointConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -220,6 +252,6 @@ public partial class StoragePrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StoragePrivateEndpointConnection.</param>
     /// <returns>The existing StoragePrivateEndpointConnection resource.</returns>
-    public static StoragePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StoragePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

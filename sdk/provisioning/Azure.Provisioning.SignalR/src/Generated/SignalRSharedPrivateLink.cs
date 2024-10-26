@@ -15,86 +15,125 @@ namespace Azure.Provisioning.SignalR;
 /// <summary>
 /// SignalRSharedPrivateLink.
 /// </summary>
-public partial class SignalRSharedPrivateLink : Resource
+public partial class SignalRSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The group id from the provider of resource the shared private link
     /// resource is for.
     /// </summary>
-    public BicepValue<string> GroupId { get => _groupId; set => _groupId.Assign(value); }
-    private readonly BicepValue<string> _groupId;
+    public BicepValue<string> GroupId 
+    {
+        get { Initialize(); return _groupId!; }
+        set { Initialize(); _groupId!.Assign(value); }
+    }
+    private BicepValue<string>? _groupId;
 
     /// <summary>
     /// The resource id of the resource the shared private link resource is for.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateLinkResourceId { get => _privateLinkResourceId; set => _privateLinkResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _privateLinkResourceId;
+    public BicepValue<ResourceIdentifier> PrivateLinkResourceId 
+    {
+        get { Initialize(); return _privateLinkResourceId!; }
+        set { Initialize(); _privateLinkResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateLinkResourceId;
 
     /// <summary>
     /// The request message for requesting approval of the shared private link
     /// resource.
     /// </summary>
-    public BicepValue<string> RequestMessage { get => _requestMessage; set => _requestMessage.Assign(value); }
-    private readonly BicepValue<string> _requestMessage;
+    public BicepValue<string> RequestMessage 
+    {
+        get { Initialize(); return _requestMessage!; }
+        set { Initialize(); _requestMessage!.Assign(value); }
+    }
+    private BicepValue<string>? _requestMessage;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<SignalRProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<SignalRProvisioningState> _provisioningState;
+    public BicepValue<SignalRProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<SignalRProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Status of the shared private link resource.
     /// </summary>
-    public BicepValue<SignalRSharedPrivateLinkResourceStatus> Status { get => _status; }
-    private readonly BicepValue<SignalRSharedPrivateLinkResourceStatus> _status;
+    public BicepValue<SignalRSharedPrivateLinkResourceStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<SignalRSharedPrivateLinkResourceStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SignalRService.
     /// </summary>
-    public SignalRService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SignalRService> _parent;
+    public SignalRService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SignalRService>? _parent;
 
     /// <summary>
     /// Creates a new SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
-    public SignalRSharedPrivateLink(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
+    public SignalRSharedPrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/signalR/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);
-        _privateLinkResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateLinkResourceId", ["properties", "privateLinkResourceId"]);
-        _requestMessage = BicepValue<string>.DefineProperty(this, "RequestMessage", ["properties", "requestMessage"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _status = BicepValue<SignalRSharedPrivateLinkResourceStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SignalRSharedPrivateLink.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"]);
+        _privateLinkResourceId = DefineProperty<ResourceIdentifier>("PrivateLinkResourceId", ["properties", "privateLinkResourceId"]);
+        _requestMessage = DefineProperty<string>("RequestMessage", ["properties", "requestMessage"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<SignalRProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _status = DefineProperty<SignalRSharedPrivateLinkResourceStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SignalRService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -102,11 +141,6 @@ public partial class SignalRSharedPrivateLink : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -141,7 +175,7 @@ public partial class SignalRSharedPrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing SignalRSharedPrivateLink.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SignalRSharedPrivateLink resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -149,6 +183,6 @@ public partial class SignalRSharedPrivateLink : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SignalRSharedPrivateLink.</param>
     /// <returns>The existing SignalRSharedPrivateLink resource.</returns>
-    public static SignalRSharedPrivateLink FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SignalRSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -15,77 +15,113 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAdministrator.
 /// </summary>
-public partial class ManagedInstanceAdministrator : Resource
+public partial class ManagedInstanceAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Type of the managed instance administrator.
     /// </summary>
-    public BicepValue<ManagedInstanceAdministratorType> AdministratorType { get => _administratorType; set => _administratorType.Assign(value); }
-    private readonly BicepValue<ManagedInstanceAdministratorType> _administratorType;
+    public BicepValue<ManagedInstanceAdministratorType> AdministratorType 
+    {
+        get { Initialize(); return _administratorType!; }
+        set { Initialize(); _administratorType!.Assign(value); }
+    }
+    private BicepValue<ManagedInstanceAdministratorType>? _administratorType;
 
     /// <summary>
     /// Login name of the managed instance administrator.
     /// </summary>
-    public BicepValue<string> Login { get => _login; set => _login.Assign(value); }
-    private readonly BicepValue<string> _login;
+    public BicepValue<string> Login 
+    {
+        get { Initialize(); return _login!; }
+        set { Initialize(); _login!.Assign(value); }
+    }
+    private BicepValue<string>? _login;
 
     /// <summary>
     /// SID (object ID) of the managed instance administrator.
     /// </summary>
-    public BicepValue<Guid> Sid { get => _sid; set => _sid.Assign(value); }
-    private readonly BicepValue<Guid> _sid;
+    public BicepValue<Guid> Sid 
+    {
+        get { Initialize(); return _sid!; }
+        set { Initialize(); _sid!.Assign(value); }
+    }
+    private BicepValue<Guid>? _sid;
 
     /// <summary>
     /// Tenant ID of the managed instance administrator.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; set => _tenantId.Assign(value); }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+        set { Initialize(); _tenantId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceAdministrator
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdministrator.</param>
-    public ManagedInstanceAdministrator(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/administrators", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _administratorType = BicepValue<ManagedInstanceAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
-        _login = BicepValue<string>.DefineProperty(this, "Login", ["properties", "login"]);
-        _sid = BicepValue<Guid>.DefineProperty(this, "Sid", ["properties", "sid"]);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["properties", "tenantId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagedInstanceAdministrator.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _administratorType = DefineProperty<ManagedInstanceAdministratorType>("AdministratorType", ["properties", "administratorType"]);
+        _login = DefineProperty<string>("Login", ["properties", "login"]);
+        _sid = DefineProperty<Guid>("Sid", ["properties", "sid"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -93,11 +129,6 @@ public partial class ManagedInstanceAdministrator : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -107,7 +138,7 @@ public partial class ManagedInstanceAdministrator : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceAdministrator
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -115,6 +146,6 @@ public partial class ManagedInstanceAdministrator : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAdministrator.</param>
     /// <returns>The existing ManagedInstanceAdministrator resource.</returns>
-    public static ManagedInstanceAdministrator FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

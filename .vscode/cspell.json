@@ -184,6 +184,12 @@
       ]
     },
     {
+      "filename": "**/sdk/ai/**/*.cs",
+      "words": [
+        "Ubinary"
+      ]
+    },
+    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "Dmts"
@@ -240,7 +246,8 @@
         "nsxt",
         "vcenter",
         "vcsa",
-        "vmotion"
+        "vmotion",
+        "Iscsi"
       ]
     },
     {
@@ -253,6 +260,12 @@
         "Adou",
         "Drtm",
         "Hvci"
+      ]
+    },
+	  {
+      "filename": "**/sdk/computefleet/**/*.cs",
+      "words": [
+        "Rdma"
       ]
     },
     {

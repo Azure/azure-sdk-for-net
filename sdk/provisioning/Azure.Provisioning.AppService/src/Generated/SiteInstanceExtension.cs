@@ -16,57 +16,88 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteInstanceExtension.
 /// </summary>
-public partial class SiteInstanceExtension : Resource
+public partial class SiteInstanceExtension : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// SQL Connection String.
     /// </summary>
-    public BicepValue<string> ConnectionString { get => _connectionString; set => _connectionString.Assign(value); }
-    private readonly BicepValue<string> _connectionString;
+    public BicepValue<string> ConnectionString 
+    {
+        get { Initialize(); return _connectionString!; }
+        set { Initialize(); _connectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _connectionString;
 
     /// <summary>
     /// Database Type.
     /// </summary>
-    public BicepValue<string> DBType { get => _dBType; set => _dBType.Assign(value); }
-    private readonly BicepValue<string> _dBType;
+    public BicepValue<string> DBType 
+    {
+        get { Initialize(); return _dBType!; }
+        set { Initialize(); _dBType!.Assign(value); }
+    }
+    private BicepValue<string>? _dBType;
 
     /// <summary>
     /// Sets the AppOffline rule while the MSDeploy operation executes.
     /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
     /// </summary>
-    public BicepValue<bool> IsAppOffline { get => _isAppOffline; set => _isAppOffline.Assign(value); }
-    private readonly BicepValue<bool> _isAppOffline;
+    public BicepValue<bool> IsAppOffline 
+    {
+        get { Initialize(); return _isAppOffline!; }
+        set { Initialize(); _isAppOffline!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAppOffline;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Package URI.
     /// </summary>
-    public BicepValue<Uri> PackageUri { get => _packageUri; set => _packageUri.Assign(value); }
-    private readonly BicepValue<Uri> _packageUri;
+    public BicepValue<Uri> PackageUri 
+    {
+        get { Initialize(); return _packageUri!; }
+        set { Initialize(); _packageUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _packageUri;
 
     /// <summary>
     /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
     /// </summary>
-    public BicepDictionary<string> SetParameters { get => _setParameters; set => _setParameters.Assign(value); }
-    private readonly BicepDictionary<string> _setParameters;
+    public BicepDictionary<string> SetParameters 
+    {
+        get { Initialize(); return _setParameters!; }
+        set { Initialize(); _setParameters!.Assign(value); }
+    }
+    private BicepDictionary<string>? _setParameters;
 
     /// <summary>
     /// URI of MSDeploy Parameters file. Must not be set if SetParameters is
     /// used.
     /// </summary>
-    public BicepValue<Uri> SetParametersXmlFileUri { get => _setParametersXmlFileUri; set => _setParametersXmlFileUri.Assign(value); }
-    private readonly BicepValue<Uri> _setParametersXmlFileUri;
+    public BicepValue<Uri> SetParametersXmlFileUri 
+    {
+        get { Initialize(); return _setParametersXmlFileUri!; }
+        set { Initialize(); _setParametersXmlFileUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _setParametersXmlFileUri;
 
     /// <summary>
     /// Controls whether the MSDeploy operation skips the App_Data directory.
@@ -75,86 +106,118 @@ public partial class SiteInstanceExtension : Resource
     /// and any App_Data directory in the source will be ignored.
     /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
     /// </summary>
-    public BicepValue<bool> SkipAppData { get => _skipAppData; set => _skipAppData.Assign(value); }
-    private readonly BicepValue<bool> _skipAppData;
+    public BicepValue<bool> SkipAppData 
+    {
+        get { Initialize(); return _skipAppData!; }
+        set { Initialize(); _skipAppData!.Assign(value); }
+    }
+    private BicepValue<bool>? _skipAppData;
 
     /// <summary>
     /// Username of deployer.
     /// </summary>
-    public BicepValue<string> Deployer { get => _deployer; }
-    private readonly BicepValue<string> _deployer;
+    public BicepValue<string> Deployer 
+    {
+        get { Initialize(); return _deployer!; }
+    }
+    private BicepValue<string>? _deployer;
 
     /// <summary>
     /// End time of deploy operation.
     /// </summary>
-    public BicepValue<DateTimeOffset> EndOn { get => _endOn; }
-    private readonly BicepValue<DateTimeOffset> _endOn;
+    public BicepValue<DateTimeOffset> EndOn 
+    {
+        get { Initialize(); return _endOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _endOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Whether the deployment operation has completed.
     /// </summary>
-    public BicepValue<bool> IsComplete { get => _isComplete; }
-    private readonly BicepValue<bool> _isComplete;
+    public BicepValue<bool> IsComplete 
+    {
+        get { Initialize(); return _isComplete!; }
+    }
+    private BicepValue<bool>? _isComplete;
 
     /// <summary>
     /// Provisioning state.
     /// </summary>
-    public BicepValue<MSDeployProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<MSDeployProvisioningState> _provisioningState;
+    public BicepValue<MSDeployProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<MSDeployProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Start time of deploy operation.
     /// </summary>
-    public BicepValue<DateTimeOffset> StartOn { get => _startOn; }
-    private readonly BicepValue<DateTimeOffset> _startOn;
+    public BicepValue<DateTimeOffset> StartOn 
+    {
+        get { Initialize(); return _startOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new SiteInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteInstanceExtension resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
-    public SiteInstanceExtension(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/instances/extensions", resourceVersion)
+    public SiteInstanceExtension(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/instances/extensions", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);
-        _dBType = BicepValue<string>.DefineProperty(this, "DBType", ["properties", "dbType"]);
-        _isAppOffline = BicepValue<bool>.DefineProperty(this, "IsAppOffline", ["properties", "appOffline"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _packageUri = BicepValue<Uri>.DefineProperty(this, "PackageUri", ["properties", "packageUri"]);
-        _setParameters = BicepDictionary<string>.DefineProperty(this, "SetParameters", ["properties", "setParameters"]);
-        _setParametersXmlFileUri = BicepValue<Uri>.DefineProperty(this, "SetParametersXmlFileUri", ["properties", "setParametersXmlFileUri"]);
-        _skipAppData = BicepValue<bool>.DefineProperty(this, "SkipAppData", ["properties", "skipAppData"]);
-        _deployer = BicepValue<string>.DefineProperty(this, "Deployer", ["properties", "deployer"], isOutput: true);
-        _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "endTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isComplete = BicepValue<bool>.DefineProperty(this, "IsComplete", ["properties", "complete"], isOutput: true);
-        _provisioningState = BicepValue<MSDeployProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["properties", "startTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteInstanceExtension.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _connectionString = DefineProperty<string>("ConnectionString", ["properties", "connectionString"]);
+        _dBType = DefineProperty<string>("DBType", ["properties", "dbType"]);
+        _isAppOffline = DefineProperty<bool>("IsAppOffline", ["properties", "appOffline"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _packageUri = DefineProperty<Uri>("PackageUri", ["properties", "packageUri"]);
+        _setParameters = DefineDictionaryProperty<string>("SetParameters", ["properties", "setParameters"]);
+        _setParametersXmlFileUri = DefineProperty<Uri>("SetParametersXmlFileUri", ["properties", "setParametersXmlFileUri"]);
+        _skipAppData = DefineProperty<bool>("SkipAppData", ["properties", "skipAppData"]);
+        _deployer = DefineProperty<string>("Deployer", ["properties", "deployer"], isOutput: true);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["properties", "endTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isComplete = DefineProperty<bool>("IsComplete", ["properties", "complete"], isOutput: true);
+        _provisioningState = DefineProperty<MSDeployProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "startTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing SiteInstanceExtension.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteInstanceExtension resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -162,6 +225,6 @@ public partial class SiteInstanceExtension : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
     /// <returns>The existing SiteInstanceExtension resource.</returns>
-    public static SiteInstanceExtension FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteInstanceExtension FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

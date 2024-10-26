@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("privateKeyPassphrase"u8);
                 JsonSerializer.Serialize(writer, PrivateKeyPassphrase);
             }
+            if (Optional.IsDefined(Host))
+            {
+                writer.WritePropertyName("host"u8);
+                JsonSerializer.Serialize(writer, Host);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> scope = default;
             DataFactorySecret privateKey = default;
             DataFactorySecret privateKeyPassphrase = default;
+            DataFactoryElement<string> host = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -316,6 +322,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("host"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -347,6 +362,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 scope,
                 privateKey,
                 privateKeyPassphrase,
+                host,
                 encryptedCredential);
         }
 

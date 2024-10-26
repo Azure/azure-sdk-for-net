@@ -15,64 +15,93 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// ScmSiteBasicPublishingCredentialsPolicy.
 /// </summary>
-public partial class ScmSiteBasicPublishingCredentialsPolicy : Resource
+public partial class ScmSiteBasicPublishingCredentialsPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method;
     /// otherwise, &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> Allow { get => _allow; set => _allow.Assign(value); }
-    private readonly BicepValue<bool> _allow;
+    public BicepValue<bool> Allow 
+    {
+        get { Initialize(); return _allow!; }
+        set { Initialize(); _allow!.Assign(value); }
+    }
+    private BicepValue<bool>? _allow;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new ScmSiteBasicPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ScmSiteBasicPublishingCredentialsPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ScmSiteBasicPublishingCredentialsPolicy.</param>
-    public ScmSiteBasicPublishingCredentialsPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
+    public ScmSiteBasicPublishingCredentialsPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _allow = BicepValue<bool>.DefineProperty(this, "Allow", ["properties", "allow"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ScmSiteBasicPublishingCredentialsPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _allow = DefineProperty<bool>("Allow", ["properties", "allow"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -240,7 +269,7 @@ public partial class ScmSiteBasicPublishingCredentialsPolicy : Resource
     /// Creates a reference to an existing
     /// ScmSiteBasicPublishingCredentialsPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// ScmSiteBasicPublishingCredentialsPolicy resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -248,6 +277,6 @@ public partial class ScmSiteBasicPublishingCredentialsPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ScmSiteBasicPublishingCredentialsPolicy.</param>
     /// <returns>The existing ScmSiteBasicPublishingCredentialsPolicy resource.</returns>
-    public static ScmSiteBasicPublishingCredentialsPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ScmSiteBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

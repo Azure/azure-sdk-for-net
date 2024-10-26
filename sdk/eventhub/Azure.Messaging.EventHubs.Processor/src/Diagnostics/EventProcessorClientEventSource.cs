@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
@@ -235,6 +236,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -278,6 +280,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
@@ -327,6 +330,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
