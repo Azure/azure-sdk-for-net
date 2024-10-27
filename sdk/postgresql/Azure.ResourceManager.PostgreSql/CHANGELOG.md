@@ -1,5 +1,29 @@
 # Release History
 
+## 1.2.0 (2023-10-25)
+
+This release uses GA api version 2024-11-01 for PostgreSQL flexible server.
+
+### Features Added
+
+- Storage auto growth
+- IOPS scaling
+- Backup - Long Term Retention
+- Backup - On-demand
+- Geo-redundant backup encryption key - Revive Dropped
+- Server Logs
+- Migrations
+- Migration Pre-validation
+- Migration Roles
+- Private endpoint Migration
+- Private Endpoints
+- Read replicas - Switchover
+- Read replicas - Virtual Endpoints
+- Azure Defender / Threat Protection APIs
+- PG 16 support
+- PremiumV2_LRS storage type support
+- Location capabilities updates
+
 ## 1.2.0-beta.7 (Unreleased)
 
 ### Features Added
