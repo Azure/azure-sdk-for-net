@@ -578,10 +578,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @abranj1219 @ninallam @NiveditJain @christothes
+/sdk/loadtestservice/                                              @abranj1219 @ninallam @christothes
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @abranj1219 @ninallam @NiveditJain
+# ServiceOwners:                                                   @abranj1219 @ninallam
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
