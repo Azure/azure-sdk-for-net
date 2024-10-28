@@ -479,7 +479,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject()
+        public void Example_EnvironmentType_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -496,7 +496,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Async()
+        public async Task Example_EnvironmentType_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -513,7 +513,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience()
+        public void Example_EnvironmentType_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -526,7 +526,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience_Async()
+        public async Task Example_EnvironmentType_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

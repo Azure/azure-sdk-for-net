@@ -20,50 +20,79 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The monthly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> MonthlyRetention { get => _monthlyRetention; set => _monthlyRetention.Assign(value); }
-    private readonly BicepValue<string> _monthlyRetention;
+    public BicepValue<string> MonthlyRetention 
+    {
+        get { Initialize(); return _monthlyRetention!; }
+        set { Initialize(); _monthlyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _monthlyRetention;
 
     /// <summary>
     /// The weekly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> WeeklyRetention { get => _weeklyRetention; set => _weeklyRetention.Assign(value); }
-    private readonly BicepValue<string> _weeklyRetention;
+    public BicepValue<string> WeeklyRetention 
+    {
+        get { Initialize(); return _weeklyRetention!; }
+        set { Initialize(); _weeklyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _weeklyRetention;
 
     /// <summary>
     /// The week of year to take the yearly backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<int> WeekOfYear { get => _weekOfYear; set => _weekOfYear.Assign(value); }
-    private readonly BicepValue<int> _weekOfYear;
+    public BicepValue<int> WeekOfYear 
+    {
+        get { Initialize(); return _weekOfYear!; }
+        set { Initialize(); _weekOfYear!.Assign(value); }
+    }
+    private BicepValue<int>? _weekOfYear;
 
     /// <summary>
     /// The yearly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> YearlyRetention { get => _yearlyRetention; set => _yearlyRetention.Assign(value); }
-    private readonly BicepValue<string> _yearlyRetention;
+    public BicepValue<string> YearlyRetention 
+    {
+        get { Initialize(); return _yearlyRetention!; }
+        set { Initialize(); _yearlyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _yearlyRetention;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedDatabase.
     /// </summary>
-    public ManagedDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedDatabase> _parent;
+    public ManagedDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceLongTermRetentionPolicy.
@@ -78,14 +107,22 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     public ManagedInstanceLongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _monthlyRetention = BicepValue<string>.DefineProperty(this, "MonthlyRetention", ["properties", "monthlyRetention"]);
-        _weeklyRetention = BicepValue<string>.DefineProperty(this, "WeeklyRetention", ["properties", "weeklyRetention"]);
-        _weekOfYear = BicepValue<int>.DefineProperty(this, "WeekOfYear", ["properties", "weekOfYear"]);
-        _yearlyRetention = BicepValue<string>.DefineProperty(this, "YearlyRetention", ["properties", "yearlyRetention"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceLongTermRetentionPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
+        _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);
+        _weekOfYear = DefineProperty<int>("WeekOfYear", ["properties", "weekOfYear"]);
+        _yearlyRetention = DefineProperty<string>("YearlyRetention", ["properties", "yearlyRetention"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

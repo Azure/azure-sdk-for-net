@@ -22,82 +22,134 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// <summary>
     /// The name of the server.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The administrator&apos;s login name of a server. Can only be specified
     /// when the server is being created (and is required for creation).
     /// </summary>
-    public BicepValue<string> AdministratorLogin { get => _administratorLogin; set => _administratorLogin.Assign(value); }
-    private readonly BicepValue<string> _administratorLogin;
+    public BicepValue<string> AdministratorLogin 
+    {
+        get { Initialize(); return _administratorLogin!; }
+        set { Initialize(); _administratorLogin!.Assign(value); }
+    }
+    private BicepValue<string>? _administratorLogin;
 
     /// <summary>
     /// The administrator login password (required for server creation).
     /// </summary>
-    public BicepValue<string> AdministratorLoginPassword { get => _administratorLoginPassword; set => _administratorLoginPassword.Assign(value); }
-    private readonly BicepValue<string> _administratorLoginPassword;
+    public BicepValue<string> AdministratorLoginPassword 
+    {
+        get { Initialize(); return _administratorLoginPassword!; }
+        set { Initialize(); _administratorLoginPassword!.Assign(value); }
+    }
+    private BicepValue<string>? _administratorLoginPassword;
 
     /// <summary>
     /// AuthConfig properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerAuthConfig> AuthConfig { get => _authConfig; set => _authConfig.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerAuthConfig> _authConfig;
+    public PostgreSqlFlexibleServerAuthConfig AuthConfig 
+    {
+        get { Initialize(); return _authConfig!; }
+        set { Initialize(); AssignOrReplace(ref _authConfig, value); }
+    }
+    private PostgreSqlFlexibleServerAuthConfig? _authConfig;
 
     /// <summary>
     /// availability zone information of the server.
     /// </summary>
-    public BicepValue<string> AvailabilityZone { get => _availabilityZone; set => _availabilityZone.Assign(value); }
-    private readonly BicepValue<string> _availabilityZone;
+    public BicepValue<string> AvailabilityZone 
+    {
+        get { Initialize(); return _availabilityZone!; }
+        set { Initialize(); _availabilityZone!.Assign(value); }
+    }
+    private BicepValue<string>? _availabilityZone;
 
     /// <summary>
     /// Backup properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerBackupProperties> Backup { get => _backup; set => _backup.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerBackupProperties> _backup;
+    public PostgreSqlFlexibleServerBackupProperties Backup 
+    {
+        get { Initialize(); return _backup!; }
+        set { Initialize(); AssignOrReplace(ref _backup, value); }
+    }
+    private PostgreSqlFlexibleServerBackupProperties? _backup;
 
     /// <summary>
     /// The mode to create a new PostgreSQL server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerCreateMode> CreateMode { get => _createMode; set => _createMode.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerCreateMode> _createMode;
+    public BicepValue<PostgreSqlFlexibleServerCreateMode> CreateMode 
+    {
+        get { Initialize(); return _createMode!; }
+        set { Initialize(); _createMode!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServerCreateMode>? _createMode;
 
     /// <summary>
     /// Data encryption properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerDataEncryption> DataEncryption { get => _dataEncryption; set => _dataEncryption.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerDataEncryption> _dataEncryption;
+    public PostgreSqlFlexibleServerDataEncryption DataEncryption 
+    {
+        get { Initialize(); return _dataEncryption!; }
+        set { Initialize(); AssignOrReplace(ref _dataEncryption, value); }
+    }
+    private PostgreSqlFlexibleServerDataEncryption? _dataEncryption;
 
     /// <summary>
     /// High availability properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerHighAvailability> HighAvailability { get => _highAvailability; set => _highAvailability.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerHighAvailability> _highAvailability;
+    public PostgreSqlFlexibleServerHighAvailability HighAvailability 
+    {
+        get { Initialize(); return _highAvailability!; }
+        set { Initialize(); AssignOrReplace(ref _highAvailability, value); }
+    }
+    private PostgreSqlFlexibleServerHighAvailability? _highAvailability;
 
     /// <summary>
     /// Describes the identity of the application.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerUserAssignedIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerUserAssignedIdentity> _identity;
+    public PostgreSqlFlexibleServerUserAssignedIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private PostgreSqlFlexibleServerUserAssignedIdentity? _identity;
 
     /// <summary>
     /// Maintenance window properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerMaintenanceWindow> MaintenanceWindow { get => _maintenanceWindow; set => _maintenanceWindow.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerMaintenanceWindow> _maintenanceWindow;
+    public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow 
+    {
+        get { Initialize(); return _maintenanceWindow!; }
+        set { Initialize(); AssignOrReplace(ref _maintenanceWindow, value); }
+    }
+    private PostgreSqlFlexibleServerMaintenanceWindow? _maintenanceWindow;
 
     /// <summary>
     /// Network properties of a server. This Network property is required to be
     /// passed only in case you want the server to be Private access server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerNetwork> Network { get => _network; set => _network.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerNetwork> _network;
+    public PostgreSqlFlexibleServerNetwork Network 
+    {
+        get { Initialize(); return _network!; }
+        set { Initialize(); AssignOrReplace(ref _network, value); }
+    }
+    private PostgreSqlFlexibleServerNetwork? _network;
 
     /// <summary>
     /// Restore point creation time (ISO8601 format), specifying the time to
@@ -105,26 +157,42 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or
     /// &apos;ReviveDropped&apos;.
     /// </summary>
-    public BicepValue<DateTimeOffset> PointInTimeUtc { get => _pointInTimeUtc; set => _pointInTimeUtc.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _pointInTimeUtc;
+    public BicepValue<DateTimeOffset> PointInTimeUtc 
+    {
+        get { Initialize(); return _pointInTimeUtc!; }
+        set { Initialize(); _pointInTimeUtc!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _pointInTimeUtc;
 
     /// <summary>
     /// Replicas allowed for a server.
     /// </summary>
-    public BicepValue<int> ReplicaCapacity { get => _replicaCapacity; set => _replicaCapacity.Assign(value); }
-    private readonly BicepValue<int> _replicaCapacity;
+    public BicepValue<int> ReplicaCapacity 
+    {
+        get { Initialize(); return _replicaCapacity!; }
+        set { Initialize(); _replicaCapacity!.Assign(value); }
+    }
+    private BicepValue<int>? _replicaCapacity;
 
     /// <summary>
     /// Replication role of the server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerReplicationRole> ReplicationRole { get => _replicationRole; set => _replicationRole.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerReplicationRole> _replicationRole;
+    public BicepValue<PostgreSqlFlexibleServerReplicationRole> ReplicationRole 
+    {
+        get { Initialize(); return _replicationRole!; }
+        set { Initialize(); _replicationRole!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServerReplicationRole>? _replicationRole;
 
     /// <summary>
     /// The SKU (pricing tier) of the server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerSku> _sku;
+    public PostgreSqlFlexibleServerSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private PostgreSqlFlexibleServerSku? _sku;
 
     /// <summary>
     /// The source server resource ID to restore from. It&apos;s required when
@@ -133,62 +201,97 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// &apos;ReviveDropped&apos;. This property is returned only for Replica
     /// server.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceServerResourceId { get => _sourceServerResourceId; set => _sourceServerResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceServerResourceId;
+    public BicepValue<ResourceIdentifier> SourceServerResourceId 
+    {
+        get { Initialize(); return _sourceServerResourceId!; }
+        set { Initialize(); _sourceServerResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceServerResourceId;
 
     /// <summary>
     /// Storage properties of a server.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerStorage> Storage { get => _storage; set => _storage.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerStorage> _storage;
+    public PostgreSqlFlexibleServerStorage Storage 
+    {
+        get { Initialize(); return _storage!; }
+        set { Initialize(); AssignOrReplace(ref _storage, value); }
+    }
+    private PostgreSqlFlexibleServerStorage? _storage;
 
     /// <summary>
     /// Max storage allowed for a server.
     /// </summary>
-    public BicepValue<int> StorageSizeInGB { get => _storageSizeInGB; set => _storageSizeInGB.Assign(value); }
-    private readonly BicepValue<int> _storageSizeInGB;
+    public BicepValue<int> StorageSizeInGB 
+    {
+        get { Initialize(); return _storageSizeInGB!; }
+        set { Initialize(); _storageSizeInGB!.Assign(value); }
+    }
+    private BicepValue<int>? _storageSizeInGB;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// PostgreSQL Server version.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerVersion> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerVersion> _version;
+    public BicepValue<PostgreSqlFlexibleServerVersion> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServerVersion>? _version;
 
     /// <summary>
     /// The fully qualified domain name of a server.
     /// </summary>
-    public BicepValue<string> FullyQualifiedDomainName { get => _fullyQualifiedDomainName; }
-    private readonly BicepValue<string> _fullyQualifiedDomainName;
+    public BicepValue<string> FullyQualifiedDomainName 
+    {
+        get { Initialize(); return _fullyQualifiedDomainName!; }
+    }
+    private BicepValue<string>? _fullyQualifiedDomainName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The minor version of the server.
     /// </summary>
-    public BicepValue<string> MinorVersion { get => _minorVersion; }
-    private readonly BicepValue<string> _minorVersion;
+    public BicepValue<string> MinorVersion 
+    {
+        get { Initialize(); return _minorVersion!; }
+    }
+    private BicepValue<string>? _minorVersion;
 
     /// <summary>
     /// A state of a server that is visible to user.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerState> State { get => _state; }
-    private readonly BicepValue<PostgreSqlFlexibleServerState> _state;
+    public BicepValue<PostgreSqlFlexibleServerState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<PostgreSqlFlexibleServerState>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServer.
@@ -203,33 +306,40 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     public PostgreSqlFlexibleServer(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _administratorLogin = BicepValue<string>.DefineProperty(this, "AdministratorLogin", ["properties", "administratorLogin"]);
-        _administratorLoginPassword = BicepValue<string>.DefineProperty(this, "AdministratorLoginPassword", ["properties", "administratorLoginPassword"]);
-        _authConfig = BicepValue<PostgreSqlFlexibleServerAuthConfig>.DefineProperty(this, "AuthConfig", ["properties", "authConfig"]);
-        _availabilityZone = BicepValue<string>.DefineProperty(this, "AvailabilityZone", ["properties", "availabilityZone"]);
-        _backup = BicepValue<PostgreSqlFlexibleServerBackupProperties>.DefineProperty(this, "Backup", ["properties", "backup"]);
-        _createMode = BicepValue<PostgreSqlFlexibleServerCreateMode>.DefineProperty(this, "CreateMode", ["properties", "createMode"]);
-        _dataEncryption = BicepValue<PostgreSqlFlexibleServerDataEncryption>.DefineProperty(this, "DataEncryption", ["properties", "dataEncryption"]);
-        _highAvailability = BicepValue<PostgreSqlFlexibleServerHighAvailability>.DefineProperty(this, "HighAvailability", ["properties", "highAvailability"]);
-        _identity = BicepValue<PostgreSqlFlexibleServerUserAssignedIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _maintenanceWindow = BicepValue<PostgreSqlFlexibleServerMaintenanceWindow>.DefineProperty(this, "MaintenanceWindow", ["properties", "maintenanceWindow"]);
-        _network = BicepValue<PostgreSqlFlexibleServerNetwork>.DefineProperty(this, "Network", ["properties", "network"]);
-        _pointInTimeUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "PointInTimeUtc", ["properties", "pointInTimeUTC"]);
-        _replicaCapacity = BicepValue<int>.DefineProperty(this, "ReplicaCapacity", ["properties", "replicaCapacity"]);
-        _replicationRole = BicepValue<PostgreSqlFlexibleServerReplicationRole>.DefineProperty(this, "ReplicationRole", ["properties", "replicationRole"]);
-        _sku = BicepValue<PostgreSqlFlexibleServerSku>.DefineProperty(this, "Sku", ["sku"]);
-        _sourceServerResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceServerResourceId", ["properties", "sourceServerResourceId"]);
-        _storage = BicepValue<PostgreSqlFlexibleServerStorage>.DefineProperty(this, "Storage", ["properties", "storage"]);
-        _storageSizeInGB = BicepValue<int>.DefineProperty(this, "StorageSizeInGB", ["properties", "storage", "storageSizeGB"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _version = BicepValue<PostgreSqlFlexibleServerVersion>.DefineProperty(this, "Version", ["properties", "version"]);
-        _fullyQualifiedDomainName = BicepValue<string>.DefineProperty(this, "FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _minorVersion = BicepValue<string>.DefineProperty(this, "MinorVersion", ["properties", "minorVersion"], isOutput: true);
-        _state = BicepValue<PostgreSqlFlexibleServerState>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlFlexibleServer.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _administratorLogin = DefineProperty<string>("AdministratorLogin", ["properties", "administratorLogin"]);
+        _administratorLoginPassword = DefineProperty<string>("AdministratorLoginPassword", ["properties", "administratorLoginPassword"]);
+        _authConfig = DefineModelProperty<PostgreSqlFlexibleServerAuthConfig>("AuthConfig", ["properties", "authConfig"]);
+        _availabilityZone = DefineProperty<string>("AvailabilityZone", ["properties", "availabilityZone"]);
+        _backup = DefineModelProperty<PostgreSqlFlexibleServerBackupProperties>("Backup", ["properties", "backup"]);
+        _createMode = DefineProperty<PostgreSqlFlexibleServerCreateMode>("CreateMode", ["properties", "createMode"]);
+        _dataEncryption = DefineModelProperty<PostgreSqlFlexibleServerDataEncryption>("DataEncryption", ["properties", "dataEncryption"]);
+        _highAvailability = DefineModelProperty<PostgreSqlFlexibleServerHighAvailability>("HighAvailability", ["properties", "highAvailability"]);
+        _identity = DefineModelProperty<PostgreSqlFlexibleServerUserAssignedIdentity>("Identity", ["identity"]);
+        _maintenanceWindow = DefineModelProperty<PostgreSqlFlexibleServerMaintenanceWindow>("MaintenanceWindow", ["properties", "maintenanceWindow"]);
+        _network = DefineModelProperty<PostgreSqlFlexibleServerNetwork>("Network", ["properties", "network"]);
+        _pointInTimeUtc = DefineProperty<DateTimeOffset>("PointInTimeUtc", ["properties", "pointInTimeUTC"]);
+        _replicaCapacity = DefineProperty<int>("ReplicaCapacity", ["properties", "replicaCapacity"]);
+        _replicationRole = DefineProperty<PostgreSqlFlexibleServerReplicationRole>("ReplicationRole", ["properties", "replicationRole"]);
+        _sku = DefineModelProperty<PostgreSqlFlexibleServerSku>("Sku", ["sku"]);
+        _sourceServerResourceId = DefineProperty<ResourceIdentifier>("SourceServerResourceId", ["properties", "sourceServerResourceId"]);
+        _storage = DefineModelProperty<PostgreSqlFlexibleServerStorage>("Storage", ["properties", "storage"]);
+        _storageSizeInGB = DefineProperty<int>("StorageSizeInGB", ["properties", "storage", "storageSizeGB"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _version = DefineProperty<PostgreSqlFlexibleServerVersion>("Version", ["properties", "version"]);
+        _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _minorVersion = DefineProperty<string>("MinorVersion", ["properties", "minorVersion"], isOutput: true);
+        _state = DefineProperty<PostgreSqlFlexibleServerState>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

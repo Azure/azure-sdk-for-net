@@ -38,7 +38,7 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ChatChoice>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

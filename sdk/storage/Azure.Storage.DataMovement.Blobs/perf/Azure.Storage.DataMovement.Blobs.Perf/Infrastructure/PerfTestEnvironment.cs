@@ -25,19 +25,19 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         /// The name of the Blob storage account to test against.
         /// </summary>
         /// <value>The Blob storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
-        public string BlobStorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
+        public string StorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
 
         /// <summary>
         /// The Blob storage endpoint.
         /// </summary>
-        public Uri BlobStorageEndpoint { get; }
+        public Uri StorageEndpoint { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerfTestEnvironment"/> class.
         /// </summary>
         public PerfTestEnvironment()
         {
-            BlobStorageEndpoint = new Uri($"https://{BlobStorageAccountName}.blob.{StorageEndpointSuffix}");
+            StorageEndpoint = new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}");
         }
     }
 }

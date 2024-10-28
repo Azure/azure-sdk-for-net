@@ -47,20 +47,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
+        public NetAppReplicationObject()
         {
-            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
-
-            RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
+        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
         /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -74,16 +69,11 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeRegion = remoteVolumeRegion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/> for deserialization. </summary>
-        internal NetAppReplicationObject()
-        {
-        }
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
         public NetAppEndpointType? EndpointType { get; set; }
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
-        /// <summary> The resource ID of the remote volume. </summary>
+        /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
         /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
         public RemotePath RemotePath { get; set; }

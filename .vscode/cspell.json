@@ -184,6 +184,12 @@
       ]
     },
     {
+      "filename": "**/sdk/ai/**/*.cs",
+      "words": [
+        "Ubinary"
+      ]
+    },
+    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "Dmts"

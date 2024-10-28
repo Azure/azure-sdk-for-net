@@ -355,7 +355,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             testProcessor.TestCaseResultHandler(sender, new TestResultEventArgs(testResult));
 
             Assert.AreEqual(0, testProcessor.TestResults.Count);
-            Assert.IsTrue(testProcessor.RawTestResultsMap.Keys.Count == 1);
+            Assert.IsTrue(testProcessor.RawTestResultsMap.Keys.Count == 0);
             Assert.IsTrue(testProcessor.PassedTestCount == 0);
             Assert.IsTrue(testProcessor.FailedTestCount == 0);
             Assert.IsTrue(testProcessor.SkippedTestCount == 0);
