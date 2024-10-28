@@ -39,9 +39,9 @@ namespace Azure.Generator.Providers
         public override HttpResponseApi Response()
             => new AzureResponseProvider(Original.Property(nameof(HttpMessage.Response)));
 
-        public override ValueExpression ResponseClassifier()
-            => Original.Property(nameof(HttpMessage.ResponseClassifier));
-
         public override HttpMessageApi ToExpression() => this;
+
+        public override MethodBodyStatement Assign(StatusCodeClassifierApi statusCodeClassifier)
+            => MethodBodyStatement.Empty;
     }
 }
