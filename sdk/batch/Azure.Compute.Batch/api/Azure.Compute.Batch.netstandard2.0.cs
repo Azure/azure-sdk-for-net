@@ -231,14 +231,10 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response CreateTaskCollection(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Compute.Batch.BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, Azure.Compute.Batch.BatchTaskGroup taskCollection, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateTaskCollectionAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeallocateNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeallocateNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeDeallocateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeallocateNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteJob(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteJob(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? recursive = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? recursive = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteNodeUser(string poolId, string nodeId, string userName, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
@@ -353,10 +349,10 @@ namespace Azure.Compute.Batch
         public virtual Azure.Pageable<Azure.Compute.Batch.BatchPool> GetPools(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), string filter = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetPoolsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, string filter, System.Collections.Generic.IEnumerable<string> select, System.Collections.Generic.IEnumerable<string> expand, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPool> GetPoolsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), string filter = null, System.Collections.Generic.IEnumerable<string> select = null, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? startTime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? startTime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? starttime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? starttime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, System.DateTimeOffset? ocpdate, int? maxresults, System.DateTimeOffset? starttime, System.DateTimeOffset? endtime, string filter, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Compute.Batch.BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), int? maxresults = default(int?), System.DateTimeOffset? starttime = default(System.DateTimeOffset?), System.DateTimeOffset? endtime = default(System.DateTimeOffset?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds, System.DateTimeOffset? ocpdate, System.Collections.Generic.IEnumerable<string> select, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.Compute.Batch.BatchSubtask> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> select = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds, System.DateTimeOffset? ocpdate, System.Collections.Generic.IEnumerable<string> select, Azure.RequestContext context) { throw null; }
@@ -393,10 +389,6 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response RebootNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RebootNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeRebootContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RebootNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response ReimageNode(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeReimageContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ReimageNode(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ReimageNodeAsync(string poolId, string nodeId, Azure.Compute.Batch.BatchNodeReimageContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ReimageNodeAsync(string poolId, string nodeId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveNodes(string poolId, Azure.Compute.Batch.BatchNodeRemoveContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RemoveNodes(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveNodesAsync(string poolId, Azure.Compute.Batch.BatchNodeRemoveContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -425,16 +417,14 @@ namespace Azure.Compute.Batch
         public virtual Azure.Response ResizePool(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResizePoolAsync(string poolId, Azure.Compute.Batch.BatchPoolResizeContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResizePoolAsync(string poolId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response StartNode(string poolId, string nodeId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> StartNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response StopPoolResize(string poolId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopPoolResizeAsync(string poolId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response TerminateJob(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response TerminateJob(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), bool? force = default(bool?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response TerminateJob(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response TerminateJob(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Compute.Batch.BatchJobTerminateContent parameters = null, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobAsync(string jobId, Azure.Core.RequestContent content, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response TerminateTask(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TerminateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateJob(string jobId, Azure.Compute.Batch.BatchJobUpdateContent job, int? timeOutInSeconds = default(int?), System.DateTimeOffset? ocpdate = default(System.DateTimeOffset?), Azure.RequestConditions requestConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -456,10 +446,10 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchClientOptions : Azure.Core.ClientOptions
     {
-        public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2024_07_01_20_0) { }
+        public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2024_02_01_19_0) { }
         public enum ServiceVersion
         {
-            V2024_07_01_20_0 = 1,
+            V2024_02_01_19_0 = 1,
         }
     }
     public partial class BatchError : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchError>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchError>
@@ -653,8 +643,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>
     {
-        public BatchJobNetworkConfiguration(string subnetId, bool skipWithdrawFromVNet) { }
-        public bool SkipWithdrawFromVNet { get { throw null; } set { } }
+        public BatchJobNetworkConfiguration(string subnetId) { }
         public string SubnetId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1020,7 +1009,6 @@ namespace Azure.Compute.Batch
         public Azure.Compute.Batch.BatchJobConstraints Constraints { get { throw null; } set { } }
         public int? MaxParallelTasks { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
-        public Azure.Compute.Batch.BatchJobNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
         public Azure.Compute.Batch.OnAllBatchTasksComplete? OnAllTasksComplete { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchPoolInfo PoolInfo { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
@@ -1098,8 +1086,6 @@ namespace Azure.Compute.Batch
     {
         internal BatchNodeCounts() { }
         public int Creating { get { throw null; } }
-        public int Deallocated { get { throw null; } }
-        public int Deallocating { get { throw null; } }
         public int Idle { get { throw null; } }
         public int LeavingPool { get { throw null; } }
         public int Offline { get { throw null; } }
@@ -1120,37 +1106,6 @@ namespace Azure.Compute.Batch
         Azure.Compute.Batch.BatchNodeCounts System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeCounts>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BatchNodeDeallocateContent : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>
-    {
-        public BatchNodeDeallocateContent() { }
-        public Azure.Compute.Batch.BatchNodeDeallocateOption? NodeDeallocateOption { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.BatchNodeDeallocateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.BatchNodeDeallocateContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeDeallocateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BatchNodeDeallocateOption : System.IEquatable<Azure.Compute.Batch.BatchNodeDeallocateOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BatchNodeDeallocateOption(string value) { throw null; }
-        public static Azure.Compute.Batch.BatchNodeDeallocateOption Requeue { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeDeallocateOption RetainedData { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeDeallocateOption TaskCompletion { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeDeallocateOption Terminate { get { throw null; } }
-        public bool Equals(Azure.Compute.Batch.BatchNodeDeallocateOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Compute.Batch.BatchNodeDeallocateOption left, Azure.Compute.Batch.BatchNodeDeallocateOption right) { throw null; }
-        public static implicit operator Azure.Compute.Batch.BatchNodeDeallocateOption (string value) { throw null; }
-        public static bool operator !=(Azure.Compute.Batch.BatchNodeDeallocateOption left, Azure.Compute.Batch.BatchNodeDeallocateOption right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchNodeDeallocationOption : System.IEquatable<Azure.Compute.Batch.BatchNodeDeallocationOption>
@@ -1345,37 +1300,6 @@ namespace Azure.Compute.Batch
         public static bool operator !=(Azure.Compute.Batch.BatchNodeRebootOption left, Azure.Compute.Batch.BatchNodeRebootOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BatchNodeReimageContent : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>
-    {
-        public BatchNodeReimageContent() { }
-        public Azure.Compute.Batch.BatchNodeReimageOption? NodeReimageOption { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.BatchNodeReimageContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeReimageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.BatchNodeReimageContent System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeReimageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BatchNodeReimageOption : System.IEquatable<Azure.Compute.Batch.BatchNodeReimageOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BatchNodeReimageOption(string value) { throw null; }
-        public static Azure.Compute.Batch.BatchNodeReimageOption Requeue { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeReimageOption RetainedData { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeReimageOption TaskCompletion { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeReimageOption Terminate { get { throw null; } }
-        public bool Equals(Azure.Compute.Batch.BatchNodeReimageOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Compute.Batch.BatchNodeReimageOption left, Azure.Compute.Batch.BatchNodeReimageOption right) { throw null; }
-        public static implicit operator Azure.Compute.Batch.BatchNodeReimageOption (string value) { throw null; }
-        public static bool operator !=(Azure.Compute.Batch.BatchNodeReimageOption left, Azure.Compute.Batch.BatchNodeReimageOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class BatchNodeRemoteLoginSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchNodeRemoteLoginSettings>
     {
         internal BatchNodeRemoteLoginSettings() { }
@@ -1408,8 +1332,6 @@ namespace Azure.Compute.Batch
         private readonly int _dummyPrimitive;
         public BatchNodeState(string value) { throw null; }
         public static Azure.Compute.Batch.BatchNodeState Creating { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeState Deallocated { get { throw null; } }
-        public static Azure.Compute.Batch.BatchNodeState Deallocating { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState Idle { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState LeavingPool { get { throw null; } }
         public static Azure.Compute.Batch.BatchNodeState Offline { get { throw null; } }
@@ -1779,20 +1701,9 @@ namespace Azure.Compute.Batch
     {
         public BatchPoolUpdateContent() { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get { throw null; } }
-        public string DisplayName { get { throw null; } set { } }
-        public bool? EnableInterNodeCommunication { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.MetadataItem> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Compute.Batch.MountConfiguration> MountConfiguration { get { throw null; } }
-        public Azure.Compute.Batch.NetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> ResourceTags { get { throw null; } }
         public Azure.Compute.Batch.BatchStartTask StartTask { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
-        public Azure.Compute.Batch.BatchTaskSchedulingPolicy TaskSchedulingPolicy { get { throw null; } set { } }
-        public int? TaskSlotsPerNode { get { throw null; } set { } }
-        public Azure.Compute.Batch.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Compute.Batch.UserAccount> UserAccounts { get { throw null; } }
-        public Azure.Compute.Batch.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
-        public string VmSize { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPoolUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2051,7 +1962,6 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskContainerSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerSettings>
     {
         public BatchTaskContainerSettings(string imageName) { }
-        public System.Collections.Generic.IList<Azure.Compute.Batch.ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get { throw null; } }
         public string ContainerRunOptions { get { throw null; } set { } }
         public string ImageName { get { throw null; } set { } }
         public Azure.Compute.Batch.ContainerRegistryReference Registry { get { throw null; } set { } }
@@ -2342,7 +2252,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchJobStatistics BatchJobStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, long numSucceededTasks = (long)0, long numFailedTasks = (long)0, long numTaskRetries = (long)0, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
         public static Azure.Compute.Batch.BatchNode BatchNode(string id = null, string url = null, Azure.Compute.Batch.BatchNodeState? state = default(Azure.Compute.Batch.BatchNodeState?), Azure.Compute.Batch.SchedulingState? schedulingState = default(Azure.Compute.Batch.SchedulingState?), System.DateTimeOffset? stateTransitionTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastBootTime = default(System.DateTimeOffset?), System.DateTimeOffset? allocationTime = default(System.DateTimeOffset?), string ipAddress = null, string affinityId = null, string vmSize = null, int? totalTasksRun = default(int?), int? runningTasksCount = default(int?), int? runningTaskSlotsCount = default(int?), int? totalTasksSucceeded = default(int?), System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchTaskInfo> recentTasks = null, Azure.Compute.Batch.BatchStartTask startTask = null, Azure.Compute.Batch.BatchStartTaskInfo startTaskInfo = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchNodeError> errors = null, bool? isDedicated = default(bool?), Azure.Compute.Batch.BatchNodeEndpointConfiguration endpointConfiguration = null, Azure.Compute.Batch.BatchNodeAgentInfo nodeAgentInfo = null, Azure.Compute.Batch.VirtualMachineInfo virtualMachineInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeAgentInfo BatchNodeAgentInfo(string version = null, System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.Compute.Batch.BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int deallocated = 0, int deallocating = 0, int total = 0, int upgradingOs = 0) { throw null; }
+        public static Azure.Compute.Batch.BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int total = 0, int upgradingOs = 0) { throw null; }
         public static Azure.Compute.Batch.BatchNodeEndpointConfiguration BatchNodeEndpointConfiguration(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.InboundEndpoint> inboundEndpoints = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeError BatchNodeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.NameValuePair> errorDetails = null) { throw null; }
         public static Azure.Compute.Batch.BatchNodeFile BatchNodeFile(string name = null, string url = null, bool? isDirectory = default(bool?), Azure.Compute.Batch.FileProperties properties = null) { throw null; }
@@ -2373,8 +2283,8 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.BatchTaskInfo BatchTaskInfo(string taskUrl = null, string jobId = null, string taskId = null, int? subtaskId = default(int?), Azure.Compute.Batch.BatchTaskState taskState = default(Azure.Compute.Batch.BatchTaskState), Azure.Compute.Batch.BatchTaskExecutionInfo executionInfo = null) { throw null; }
         public static Azure.Compute.Batch.BatchTaskSlotCounts BatchTaskSlotCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0) { throw null; }
         public static Azure.Compute.Batch.BatchTaskStatistics BatchTaskStatistics(string url = null, System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdateTime = default(System.DateTimeOffset), System.TimeSpan userCpuTime = default(System.TimeSpan), System.TimeSpan kernelCpuTime = default(System.TimeSpan), System.TimeSpan wallClockTime = default(System.TimeSpan), long readIOps = (long)0, long writeIOps = (long)0, float readIOGiB = 0f, float writeIOGiB = 0f, System.TimeSpan waitTime = default(System.TimeSpan)) { throw null; }
-        public static Azure.Compute.Batch.FileProperties FileProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModified = default(System.DateTimeOffset), string contentLength = null, string contentType = null, string fileMode = null) { throw null; }
-        public static Azure.Compute.Batch.ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null, string sharedGalleryImageId = null, string communityGalleryImageId = null) { throw null; }
+        public static Azure.Compute.Batch.FileProperties FileProperties(System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModified = default(System.DateTimeOffset), long contentLength = (long)0, string contentType = null, string fileMode = null) { throw null; }
+        public static Azure.Compute.Batch.ImageReference ImageReference(string publisher = null, string offer = null, string sku = null, string version = null, string virtualMachineImageId = null, string exactVersion = null) { throw null; }
         public static Azure.Compute.Batch.InboundEndpoint InboundEndpoint(string name = null, Azure.Compute.Batch.InboundEndpointProtocol protocol = default(Azure.Compute.Batch.InboundEndpointProtocol), string publicIpAddress = null, string publicFQDN = null, int frontendPort = 0, int backendPort = 0) { throw null; }
         public static Azure.Compute.Batch.InstanceViewStatus InstanceViewStatus(string code = null, string displayStatus = null, Azure.Compute.Batch.StatusLevelTypes? level = default(Azure.Compute.Batch.StatusLevelTypes?), string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Compute.Batch.NameValuePair NameValuePair(string name = null, string value = null) { throw null; }
@@ -2398,40 +2308,6 @@ namespace Azure.Compute.Batch
         Azure.Compute.Batch.ContainerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ContainerHostBatchBindMountEntry : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>
-    {
-        public ContainerHostBatchBindMountEntry() { }
-        public bool? IsReadOnly { get { throw null; } set { } }
-        public Azure.Compute.Batch.ContainerHostDataPath? Source { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.ContainerHostBatchBindMountEntry System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.ContainerHostBatchBindMountEntry System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerHostBatchBindMountEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerHostDataPath : System.IEquatable<Azure.Compute.Batch.ContainerHostDataPath>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerHostDataPath(string value) { throw null; }
-        public static Azure.Compute.Batch.ContainerHostDataPath Applications { get { throw null; } }
-        public static Azure.Compute.Batch.ContainerHostDataPath JobPrep { get { throw null; } }
-        public static Azure.Compute.Batch.ContainerHostDataPath Shared { get { throw null; } }
-        public static Azure.Compute.Batch.ContainerHostDataPath Startup { get { throw null; } }
-        public static Azure.Compute.Batch.ContainerHostDataPath Task { get { throw null; } }
-        public static Azure.Compute.Batch.ContainerHostDataPath VfsMounts { get { throw null; } }
-        public bool Equals(Azure.Compute.Batch.ContainerHostDataPath other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Compute.Batch.ContainerHostDataPath left, Azure.Compute.Batch.ContainerHostDataPath right) { throw null; }
-        public static implicit operator Azure.Compute.Batch.ContainerHostDataPath (string value) { throw null; }
-        public static bool operator !=(Azure.Compute.Batch.ContainerHostDataPath left, Azure.Compute.Batch.ContainerHostDataPath right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ContainerRegistryReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ContainerRegistryReference>
     {
@@ -2712,7 +2588,7 @@ namespace Azure.Compute.Batch
     public partial class FileProperties : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.FileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.FileProperties>
     {
         internal FileProperties() { }
-        public string ContentLength { get { throw null; } }
+        public long ContentLength { get { throw null; } }
         public string ContentType { get { throw null; } }
         public System.DateTimeOffset? CreationTime { get { throw null; } }
         public string FileMode { get { throw null; } }
@@ -2739,11 +2615,9 @@ namespace Azure.Compute.Batch
     public partial class ImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ImageReference>
     {
         public ImageReference() { }
-        public string CommunityGalleryImageId { get { throw null; } set { } }
         public string ExactVersion { get { throw null; } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
-        public string SharedGalleryImageId { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public string VirtualMachineImageId { get { throw null; } set { } }
@@ -2889,9 +2763,8 @@ namespace Azure.Compute.Batch
     }
     public partial class ManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ManagedDisk>
     {
-        public ManagedDisk() { }
-        public Azure.Compute.Batch.VMDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
-        public Azure.Compute.Batch.StorageAccountType? StorageAccountType { get { throw null; } set { } }
+        public ManagedDisk(Azure.Compute.Batch.StorageAccountType storageAccountType) { }
+        public Azure.Compute.Batch.StorageAccountType StorageAccountType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.ManagedDisk System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ManagedDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3236,24 +3109,6 @@ namespace Azure.Compute.Batch
         public static bool operator !=(Azure.Compute.Batch.SchedulingState left, Azure.Compute.Batch.SchedulingState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecurityEncryptionTypes : System.IEquatable<Azure.Compute.Batch.SecurityEncryptionTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityEncryptionTypes(string value) { throw null; }
-        public static Azure.Compute.Batch.SecurityEncryptionTypes NonPersistedTPM { get { throw null; } }
-        public static Azure.Compute.Batch.SecurityEncryptionTypes VMGuestStateOnly { get { throw null; } }
-        public bool Equals(Azure.Compute.Batch.SecurityEncryptionTypes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Compute.Batch.SecurityEncryptionTypes left, Azure.Compute.Batch.SecurityEncryptionTypes right) { throw null; }
-        public static implicit operator Azure.Compute.Batch.SecurityEncryptionTypes (string value) { throw null; }
-        public static bool operator !=(Azure.Compute.Batch.SecurityEncryptionTypes left, Azure.Compute.Batch.SecurityEncryptionTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.SecurityProfile>
     {
         public SecurityProfile(bool encryptionAtHost, Azure.Compute.Batch.SecurityTypes securityType, Azure.Compute.Batch.UefiSettings uefiSettings) { }
@@ -3273,7 +3128,6 @@ namespace Azure.Compute.Batch
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SecurityTypes(string value) { throw null; }
-        public static Azure.Compute.Batch.SecurityTypes ConfidentialVM { get { throw null; } }
         public static Azure.Compute.Batch.SecurityTypes TrustedLaunch { get { throw null; } }
         public bool Equals(Azure.Compute.Batch.SecurityTypes other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -3477,17 +3331,6 @@ namespace Azure.Compute.Batch
         Azure.Compute.Batch.VirtualMachineInfo System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VMDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>
-    {
-        public VMDiskSecurityProfile() { }
-        public Azure.Compute.Batch.SecurityEncryptionTypes? SecurityEncryptionType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.VMDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Compute.Batch.VMDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMExtension : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VMExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VMExtension>
     {
