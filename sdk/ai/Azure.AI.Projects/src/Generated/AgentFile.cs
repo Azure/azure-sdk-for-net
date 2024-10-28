@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Represents an agent that can call the model and use tools. </summary>
-    public partial class OpenAIFile
+    public partial class AgentFile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentFile"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
         /// <param name="filename"> The name of the file. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="purpose"> The intended purpose of a file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="filename"/> is null. </exception>
-        internal OpenAIFile(string id, int size, string filename, DateTimeOffset createdAt, OpenAIFilePurpose purpose)
+        internal AgentFile(string id, int size, string filename, DateTimeOffset createdAt, AgentFilePurpose purpose)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(filename, nameof(filename));
@@ -64,7 +64,7 @@ namespace Azure.AI.Projects
             Purpose = purpose;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentFile"/>. </summary>
         /// <param name="object"> The object type, which is always 'file'. </param>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="size"> The size of the file, in bytes. </param>
@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> The state of the file. This field is available in Azure OpenAI only. </param>
         /// <param name="statusDetails"> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIFile(string @object, string id, int size, string filename, DateTimeOffset createdAt, OpenAIFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentFile(string @object, string id, int size, string filename, DateTimeOffset createdAt, AgentFilePurpose purpose, FileState? status, string statusDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Id = id;
@@ -87,8 +87,8 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIFile"/> for deserialization. </summary>
-        internal OpenAIFile()
+        /// <summary> Initializes a new instance of <see cref="AgentFile"/> for deserialization. </summary>
+        internal AgentFile()
         {
         }
 
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
         /// <summary> The intended purpose of a file. </summary>
-        public OpenAIFilePurpose Purpose { get; }
+        public AgentFilePurpose Purpose { get; }
         /// <summary> The state of the file. This field is available in Azure OpenAI only. </summary>
         public FileState? Status { get; }
         /// <summary> The error message with details in case processing of this file failed. This field is available in Azure OpenAI only. </summary>

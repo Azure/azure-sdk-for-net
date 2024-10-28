@@ -18,18 +18,18 @@ public partial class Sample_Agent_FileSearch
     public async Task FilesSearchExample()
     {
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
-        AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
+        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:UploadAgentFilesToUse
         // Upload a file and wait for it to be processed
         File.WriteAllText(
             path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        Response<OpenAIFile> uploadAgentFileResponse = await client.UploadFileAsync(
+        Response<AgentFile> uploadAgentFileResponse = await client.UploadFileAsync(
             filePath: "sample_file_for_upload.txt",
-            purpose: OpenAIFilePurpose.Agents);
+            purpose: AgentFilePurpose.Agents);
 
-        OpenAIFile uploadedAgentFile = uploadAgentFileResponse.Value;
+        AgentFile uploadedAgentFile = uploadAgentFileResponse.Value;
         #endregion
 
         #region Snippet:CreateVectorStore

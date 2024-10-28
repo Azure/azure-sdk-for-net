@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class OpenAIPageableListOfVectorStore : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfVectorStore>
+    public partial class AgentPageableListOfVectorStore : IUtf8JsonSerializable, IJsonModel<AgentPageableListOfVectorStore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOfVectorStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPageableListOfVectorStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OpenAIPageableListOfVectorStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPageableListOfVectorStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStore)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPageableListOfVectorStore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        OpenAIPageableListOfVectorStore IJsonModel<OpenAIPageableListOfVectorStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AgentPageableListOfVectorStore IJsonModel<AgentPageableListOfVectorStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStore)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPageableListOfVectorStore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAIPageableListOfVectorStore(document.RootElement, options);
+            return DeserializeAgentPageableListOfVectorStore(document.RootElement, options);
         }
 
-        internal static OpenAIPageableListOfVectorStore DeserializeOpenAIPageableListOfVectorStore(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AgentPageableListOfVectorStore DeserializeAgentPageableListOfVectorStore(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            OpenAIPageableListOfVectorStoreObject @object = default;
+            AgentPageableListOfVectorStoreObject @object = default;
             IReadOnlyList<VectorStore> data = default;
             string firstId = default;
             string lastId = default;
@@ -90,7 +90,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfVectorStoreObject(property.Value.GetString());
+                    @object = new AgentPageableListOfVectorStoreObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenAIPageableListOfVectorStore(
+            return new AgentPageableListOfVectorStore(
                 @object,
                 data,
                 firstId,
@@ -133,43 +133,43 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OpenAIPageableListOfVectorStore>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AgentPageableListOfVectorStore>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStore)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPageableListOfVectorStore)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OpenAIPageableListOfVectorStore IPersistableModel<OpenAIPageableListOfVectorStore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AgentPageableListOfVectorStore IPersistableModel<AgentPageableListOfVectorStore>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStore>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOpenAIPageableListOfVectorStore(document.RootElement, options);
+                        return DeserializeAgentPageableListOfVectorStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStore)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPageableListOfVectorStore)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OpenAIPageableListOfVectorStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPageableListOfVectorStore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OpenAIPageableListOfVectorStore FromResponse(Response response)
+        internal static AgentPageableListOfVectorStore FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOpenAIPageableListOfVectorStore(document.RootElement);
+            return DeserializeAgentPageableListOfVectorStore(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

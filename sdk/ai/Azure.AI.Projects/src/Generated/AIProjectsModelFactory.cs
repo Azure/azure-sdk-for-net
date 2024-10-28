@@ -290,18 +290,18 @@ namespace Azure.AI.Projects
             return new FileContentResponse(content, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Projects.OpenAIPageableListOfVectorStore"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Projects.AgentPageableListOfVectorStore"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Projects.OpenAIPageableListOfVectorStore"/> instance for mocking. </returns>
-        public static OpenAIPageableListOfVectorStore OpenAIPageableListOfVectorStore(OpenAIPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        /// <returns> A new <see cref="Projects.AgentPageableListOfVectorStore"/> instance for mocking. </returns>
+        public static AgentPageableListOfVectorStore AgentPageableListOfVectorStore(AgentPageableListOfVectorStoreObject @object = default, IEnumerable<VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStore>();
 
-            return new OpenAIPageableListOfVectorStore(
+            return new AgentPageableListOfVectorStore(
                 @object,
                 data?.ToList(),
                 firstId,
@@ -378,18 +378,18 @@ namespace Azure.AI.Projects
             return new VectorStoreDeletionStatus(id, deleted, @object, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Projects.OpenAIPageableListOfVectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Projects.AgentPageableListOfVectorStoreFile"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Projects.OpenAIPageableListOfVectorStoreFile"/> instance for mocking. </returns>
-        public static OpenAIPageableListOfVectorStoreFile OpenAIPageableListOfVectorStoreFile(OpenAIPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
+        /// <returns> A new <see cref="Projects.AgentPageableListOfVectorStoreFile"/> instance for mocking. </returns>
+        public static AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(AgentPageableListOfVectorStoreFileObject @object = default, IEnumerable<VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = default)
         {
             data ??= new List<VectorStoreFile>();
 
-            return new OpenAIPageableListOfVectorStoreFile(
+            return new AgentPageableListOfVectorStoreFile(
                 @object,
                 data?.ToList(),
                 firstId,

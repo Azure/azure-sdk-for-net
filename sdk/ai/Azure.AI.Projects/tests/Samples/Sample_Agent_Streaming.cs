@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Tests
         public async Task Streaming()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
-            AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
+            AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
             Response<Agent> agentResponse = await client.CreateAgentAsync(
                 model: "gpt-4-1106-preview",

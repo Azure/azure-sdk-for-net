@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The possible values denoting the intended usage of a file. </summary>
-    public readonly partial struct OpenAIFilePurpose : IEquatable<OpenAIFilePurpose>
+    public readonly partial struct AgentFilePurpose : IEquatable<AgentFilePurpose>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIFilePurpose"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentFilePurpose"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OpenAIFilePurpose(string value)
+        public AgentFilePurpose(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -31,31 +31,31 @@ namespace Azure.AI.Projects
         private const string VisionValue = "vision";
 
         /// <summary> Indicates a file is used for fine tuning input. </summary>
-        public static OpenAIFilePurpose FineTune { get; } = new OpenAIFilePurpose(FineTuneValue);
+        public static AgentFilePurpose FineTune { get; } = new AgentFilePurpose(FineTuneValue);
         /// <summary> Indicates a file is used for fine tuning results. </summary>
-        public static OpenAIFilePurpose FineTuneResults { get; } = new OpenAIFilePurpose(FineTuneResultsValue);
+        public static AgentFilePurpose FineTuneResults { get; } = new AgentFilePurpose(FineTuneResultsValue);
         /// <summary> Indicates a file is used as input to agents. </summary>
-        public static OpenAIFilePurpose Agents { get; } = new OpenAIFilePurpose(AgentsValue);
+        public static AgentFilePurpose Agents { get; } = new AgentFilePurpose(AgentsValue);
         /// <summary> Indicates a file is used as output by agents. </summary>
-        public static OpenAIFilePurpose AgentsOutput { get; } = new OpenAIFilePurpose(AgentsOutputValue);
+        public static AgentFilePurpose AgentsOutput { get; } = new AgentFilePurpose(AgentsOutputValue);
         /// <summary> Indicates a file is used as input to . </summary>
-        public static OpenAIFilePurpose Batch { get; } = new OpenAIFilePurpose(BatchValue);
+        public static AgentFilePurpose Batch { get; } = new AgentFilePurpose(BatchValue);
         /// <summary> Indicates a file is used as output by a vector store batch operation. </summary>
-        public static OpenAIFilePurpose BatchOutput { get; } = new OpenAIFilePurpose(BatchOutputValue);
+        public static AgentFilePurpose BatchOutput { get; } = new AgentFilePurpose(BatchOutputValue);
         /// <summary> Indicates a file is used as input to a vision operation. </summary>
-        public static OpenAIFilePurpose Vision { get; } = new OpenAIFilePurpose(VisionValue);
-        /// <summary> Determines if two <see cref="OpenAIFilePurpose"/> values are the same. </summary>
-        public static bool operator ==(OpenAIFilePurpose left, OpenAIFilePurpose right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="OpenAIFilePurpose"/> values are not the same. </summary>
-        public static bool operator !=(OpenAIFilePurpose left, OpenAIFilePurpose right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenAIFilePurpose"/>. </summary>
-        public static implicit operator OpenAIFilePurpose(string value) => new OpenAIFilePurpose(value);
+        public static AgentFilePurpose Vision { get; } = new AgentFilePurpose(VisionValue);
+        /// <summary> Determines if two <see cref="AgentFilePurpose"/> values are the same. </summary>
+        public static bool operator ==(AgentFilePurpose left, AgentFilePurpose right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AgentFilePurpose"/> values are not the same. </summary>
+        public static bool operator !=(AgentFilePurpose left, AgentFilePurpose right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentFilePurpose"/>. </summary>
+        public static implicit operator AgentFilePurpose(string value) => new AgentFilePurpose(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OpenAIFilePurpose other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentFilePurpose other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(OpenAIFilePurpose other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentFilePurpose other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

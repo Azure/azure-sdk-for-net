@@ -33,7 +33,7 @@ creating, running, and using assistants and threads.
 To get started, create an `AssistantsClient`:
 ```C# Snippet:OverviewCreateClient
 var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
-AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
+AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 ```
 
 > **NOTE**: The Assistants API should always be used from a trusted device. Because the same authentication mechanism for running threads also allows changing persistent resources like Assistant instructions, a malicious user could extract an API key and modify Assistant behavior for other customers.
@@ -135,11 +135,11 @@ purpose of 'assistants' to make a file ID available:
 File.WriteAllText(
     path: "sample_file_for_upload.txt",
     contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-Response<OpenAIFile> uploadAgentFileResponse = await client.UploadFileAsync(
+Response<AgentFile> uploadAgentFileResponse = await client.UploadFileAsync(
     filePath: "sample_file_for_upload.txt",
-    purpose: OpenAIFilePurpose.Agents);
+    purpose: AgentFilePurpose.Agents);
 
-OpenAIFile uploadedAgentFile = uploadAgentFileResponse.Value;
+AgentFile uploadedAgentFile = uploadAgentFileResponse.Value;
 ```
 
 Once uploaded, the file ID can then be provided to create a vector store for it

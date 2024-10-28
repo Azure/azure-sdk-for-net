@@ -18,14 +18,14 @@ namespace Azure.AI.Projects
 {
     /// <summary> The Agents sub-client. </summary>
     [CodeGenClient("Agents")]
-    public partial class AgentClient
+    public partial class AgentsClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
-        public AgentClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AIProjectClientOptions())
+        public AgentsClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AIProjectClientOptions())
         {
         }
 
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> is an empty string. </exception>
-        public AgentClient(string connectionString, TokenCredential credential, AIProjectClientOptions options)
+        public AgentsClient(string connectionString, TokenCredential credential, AIProjectClientOptions options)
              : this(new Uri(ClientHelper.ParseConnectionString(connectionString, "endpoint")),
                   ClientHelper.ParseConnectionString(connectionString, "subscriptionId"),
                   ClientHelper.ParseConnectionString(connectionString, "resourceGroupName"),
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AgentClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AIProjectClientOptions())
+        public AgentsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AIProjectClientOptions())
         {
         }
 
@@ -68,7 +68,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AgentClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
+        public AgentsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -337,9 +337,9 @@ namespace Azure.AI.Projects
         /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OpenAIFile> UploadFile(
+        public virtual Response<AgentFile> UploadFile(
             string filePath,
-            OpenAIFilePurpose purpose,
+            AgentFilePurpose purpose,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -354,9 +354,9 @@ namespace Azure.AI.Projects
         /// <param name="filePath"> The local file path. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(
+        public virtual async Task<Response<AgentFile>> UploadFileAsync(
             string filePath,
-            OpenAIFilePurpose purpose,
+            AgentFilePurpose purpose,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -371,7 +371,7 @@ namespace Azure.AI.Projects
         /// <param name="filename"> The name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentFile>> UploadFileAsync(Stream data, AgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
@@ -380,7 +380,7 @@ namespace Azure.AI.Projects
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -389,7 +389,7 @@ namespace Azure.AI.Projects
         /// <param name="filename"> The name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
+        public virtual Response<AgentFile> UploadFile(Stream data, AgentFilePurpose purpose, string filename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
@@ -398,7 +398,7 @@ namespace Azure.AI.Projects
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(OpenAIFile.FromResponse(response), response);
+            return Response.FromValue(AgentFile.FromResponse(response), response);
         }
 
         /*
@@ -493,7 +493,7 @@ namespace Azure.AI.Projects
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
         /// <param name="purpose"> Limits files in the response to those with the specified purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<OpenAIFile>> GetFiles(OpenAIFilePurpose? purpose = null, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<AgentFile>> GetFiles(AgentFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.GetFiles");
             scope.Start();
@@ -504,8 +504,8 @@ namespace Azure.AI.Projects
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
         /// <param name="purpose"> Limits files in the response to those with the specified purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<OpenAIFile>>> GetFilesAsync(
-            OpenAIFilePurpose? purpose = null,
+        public virtual async Task<Response<IReadOnlyList<AgentFile>>> GetFilesAsync(
+            AgentFilePurpose? purpose = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("Agents.GetFiles");

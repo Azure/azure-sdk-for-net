@@ -21,13 +21,160 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AgentClient
+    public partial class AgentFile : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentFile>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentFile>
     {
-        protected AgentClient() { }
-        public AgentClient(string connectionString, Azure.Core.TokenCredential credential) { }
-        public AgentClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
-        public AgentClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
-        public AgentClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        internal AgentFile() { }
+        public System.DateTimeOffset CreatedAt { get { throw null; } }
+        public string Filename { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.Projects.AgentFilePurpose Purpose { get { throw null; } }
+        public int Size { get { throw null; } }
+        public Azure.AI.Projects.FileState? Status { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
+        Azure.AI.Projects.AgentFile System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentFilePurpose : System.IEquatable<Azure.AI.Projects.AgentFilePurpose>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentFilePurpose(string value) { throw null; }
+        public static Azure.AI.Projects.AgentFilePurpose Agents { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose AgentsOutput { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose Batch { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose BatchOutput { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose FineTune { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose FineTuneResults { get { throw null; } }
+        public static Azure.AI.Projects.AgentFilePurpose Vision { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentFilePurpose other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentFilePurpose left, Azure.AI.Projects.AgentFilePurpose right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentFilePurpose (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentFilePurpose left, Azure.AI.Projects.AgentFilePurpose right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentPageableListOfVectorStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStore>
+    {
+        internal AgentPageableListOfVectorStore() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.VectorStore> Data { get { throw null; } }
+        public string FirstId { get { throw null; } }
+        public bool HasMore { get { throw null; } }
+        public string LastId { get { throw null; } }
+        public Azure.AI.Projects.AgentPageableListOfVectorStoreObject Object { get { throw null; } }
+        Azure.AI.Projects.AgentPageableListOfVectorStore System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentPageableListOfVectorStore System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentPageableListOfVectorStoreFile : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>
+    {
+        internal AgentPageableListOfVectorStoreFile() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.VectorStoreFile> Data { get { throw null; } }
+        public string FirstId { get { throw null; } }
+        public bool HasMore { get { throw null; } }
+        public string LastId { get { throw null; } }
+        public Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject Object { get { throw null; } }
+        Azure.AI.Projects.AgentPageableListOfVectorStoreFile System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentPageableListOfVectorStoreFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentPageableListOfVectorStoreFileObject : System.IEquatable<Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentPageableListOfVectorStoreFileObject(string value) { throw null; }
+        public static Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject List { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject left, Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject left, Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentPageableListOfVectorStoreObject : System.IEquatable<Azure.AI.Projects.AgentPageableListOfVectorStoreObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentPageableListOfVectorStoreObject(string value) { throw null; }
+        public static Azure.AI.Projects.AgentPageableListOfVectorStoreObject List { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentPageableListOfVectorStoreObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentPageableListOfVectorStoreObject left, Azure.AI.Projects.AgentPageableListOfVectorStoreObject right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentPageableListOfVectorStoreObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentPageableListOfVectorStoreObject left, Azure.AI.Projects.AgentPageableListOfVectorStoreObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentsApiResponseFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>
+    {
+        public AgentsApiResponseFormat() { }
+        public Azure.AI.Projects.ApiResponseFormat? Type { get { throw null; } set { } }
+        Azure.AI.Projects.AgentsApiResponseFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.AgentsApiResponseFormat System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentsApiResponseFormatMode : System.IEquatable<Azure.AI.Projects.AgentsApiResponseFormatMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentsApiResponseFormatMode(string value) { throw null; }
+        public static Azure.AI.Projects.AgentsApiResponseFormatMode Auto { get { throw null; } }
+        public static Azure.AI.Projects.AgentsApiResponseFormatMode None { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentsApiResponseFormatMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentsApiResponseFormatMode left, Azure.AI.Projects.AgentsApiResponseFormatMode right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentsApiResponseFormatMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentsApiResponseFormatMode left, Azure.AI.Projects.AgentsApiResponseFormatMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentsApiToolChoiceOptionMode : System.IEquatable<Azure.AI.Projects.AgentsApiToolChoiceOptionMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentsApiToolChoiceOptionMode(string value) { throw null; }
+        public static Azure.AI.Projects.AgentsApiToolChoiceOptionMode Auto { get { throw null; } }
+        public static Azure.AI.Projects.AgentsApiToolChoiceOptionMode None { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AgentsApiToolChoiceOptionMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AgentsApiToolChoiceOptionMode left, Azure.AI.Projects.AgentsApiToolChoiceOptionMode right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AgentsApiToolChoiceOptionMode (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AgentsApiToolChoiceOptionMode left, Azure.AI.Projects.AgentsApiToolChoiceOptionMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentsClient
+    {
+        protected AgentsClient() { }
+        public AgentsClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public AgentsClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        public AgentsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public AgentsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CancelRun(string threadId, string runId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.ThreadRun> CancelRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -94,15 +241,15 @@ namespace Azure.AI.Projects
         public virtual Azure.Response<Azure.AI.Projects.PageableList<Azure.AI.Projects.Agent>> GetAgents(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PageableList<Azure.AI.Projects.Agent>>> GetAgentsAsync(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetFile(string fileId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIFile> GetFile(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentFile> GetFile(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetFileAsync(string fileId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIFile>> GetFileAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentFile>> GetFileAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetFileContent(string fileId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.FileContentResponse> GetFileContent(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetFileContentAsync(string fileId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.FileContentResponse>> GetFileContentAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.OpenAIFile>> GetFiles(Azure.AI.Projects.OpenAIFilePurpose? purpose = default(Azure.AI.Projects.OpenAIFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.OpenAIFile>>> GetFilesAsync(Azure.AI.Projects.OpenAIFilePurpose? purpose = default(Azure.AI.Projects.OpenAIFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.AgentFile>> GetFiles(Azure.AI.Projects.AgentFilePurpose? purpose = default(Azure.AI.Projects.AgentFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.AgentFile>>> GetFilesAsync(Azure.AI.Projects.AgentFilePurpose? purpose = default(Azure.AI.Projects.AgentFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetMessage(string threadId, string messageId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.ThreadMessage> GetMessage(string threadId, string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMessageAsync(string threadId, string messageId, Azure.RequestContext context) { throw null; }
@@ -139,17 +286,17 @@ namespace Azure.AI.Projects
         public virtual Azure.Response<Azure.AI.Projects.VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile> GetVectorStoreFiles(string vectorStoreId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStoreFile> GetVectorStoreFiles(string vectorStoreId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetVectorStoreFiles(string vectorStoreId, string filter, int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>> GetVectorStoreFilesAsync(string vectorStoreId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStoreFile>> GetVectorStoreFilesAsync(string vectorStoreId, Azure.AI.Projects.VectorStoreFileStatusFilter? filter = default(Azure.AI.Projects.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreFilesAsync(string vectorStoreId, string filter, int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStore> GetVectorStores(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStore> GetVectorStores(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetVectorStores(int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIPageableListOfVectorStore>> GetVectorStoresAsync(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentPageableListOfVectorStore>> GetVectorStoresAsync(int? limit = default(int?), Azure.AI.Projects.ListSortOrder? order = default(Azure.AI.Projects.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoresAsync(int? limit, string order, string after, string before, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response ModifyVectorStore(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.VectorStore> ModifyVectorStore(string vectorStoreId, string name = null, Azure.AI.Projects.VectorStoreExpirationPolicy expiresAfter = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,57 +325,11 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentThread>> UpdateThreadAsync(string threadId, Azure.AI.Projects.ToolResources toolResources = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateThreadAsync(string threadId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UploadFile(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIFile> UploadFile(System.IO.Stream data, Azure.AI.Projects.OpenAIFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.OpenAIFile> UploadFile(string filePath, Azure.AI.Projects.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentFile> UploadFile(System.IO.Stream data, Azure.AI.Projects.AgentFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.AgentFile> UploadFile(string filePath, Azure.AI.Projects.AgentFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadFileAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIFile>> UploadFileAsync(System.IO.Stream data, Azure.AI.Projects.OpenAIFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.OpenAIFile>> UploadFileAsync(string filePath, Azure.AI.Projects.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AgentsApiResponseFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>
-    {
-        public AgentsApiResponseFormat() { }
-        public Azure.AI.Projects.ApiResponseFormat? Type { get { throw null; } set { } }
-        Azure.AI.Projects.AgentsApiResponseFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsApiResponseFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.AgentsApiResponseFormat System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsApiResponseFormat>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentsApiResponseFormatMode : System.IEquatable<Azure.AI.Projects.AgentsApiResponseFormatMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentsApiResponseFormatMode(string value) { throw null; }
-        public static Azure.AI.Projects.AgentsApiResponseFormatMode Auto { get { throw null; } }
-        public static Azure.AI.Projects.AgentsApiResponseFormatMode None { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.AgentsApiResponseFormatMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.AgentsApiResponseFormatMode left, Azure.AI.Projects.AgentsApiResponseFormatMode right) { throw null; }
-        public static implicit operator Azure.AI.Projects.AgentsApiResponseFormatMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.AgentsApiResponseFormatMode left, Azure.AI.Projects.AgentsApiResponseFormatMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentsApiToolChoiceOptionMode : System.IEquatable<Azure.AI.Projects.AgentsApiToolChoiceOptionMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentsApiToolChoiceOptionMode(string value) { throw null; }
-        public static Azure.AI.Projects.AgentsApiToolChoiceOptionMode Auto { get { throw null; } }
-        public static Azure.AI.Projects.AgentsApiToolChoiceOptionMode None { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.AgentsApiToolChoiceOptionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.AgentsApiToolChoiceOptionMode left, Azure.AI.Projects.AgentsApiToolChoiceOptionMode right) { throw null; }
-        public static implicit operator Azure.AI.Projects.AgentsApiToolChoiceOptionMode (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.AgentsApiToolChoiceOptionMode left, Azure.AI.Projects.AgentsApiToolChoiceOptionMode right) { throw null; }
-        public override string ToString() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentFile>> UploadFileAsync(System.IO.Stream data, Azure.AI.Projects.AgentFilePurpose purpose, string filename, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.AgentFile>> UploadFileAsync(string filePath, Azure.AI.Projects.AgentFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AgentsNamedToolChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AgentsNamedToolChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AgentsNamedToolChoice>
     {
@@ -332,12 +433,12 @@ namespace Azure.AI.Projects
     public static partial class AIClientModelFactory
     {
         public static Azure.AI.Projects.Agent Agent(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string name = null, string description = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDefinition> tools = null, Azure.AI.Projects.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.Projects.AgentFile AgentFile(string id = null, int size = 0, string filename = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.AgentFilePurpose purpose = default(Azure.AI.Projects.AgentFilePurpose)) { throw null; }
         public static Azure.AI.Projects.AgentThread AgentThread(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.ToolResources toolResources = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Projects.MessageTextFileCitationAnnotation MessageFileCitationTextAnnotation(string text, string fileId, string quote) { throw null; }
         public static Azure.AI.Projects.MessageTextFilePathAnnotation MessageFilePathTextAnnotation(string text, string fileId) { throw null; }
         public static Azure.AI.Projects.MessageImageFileContent MessageImageFileContent(string fileId) { throw null; }
         public static Azure.AI.Projects.MessageTextContent MessageTextContent(string text, System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageTextAnnotation> annotations) { throw null; }
-        public static Azure.AI.Projects.OpenAIFile OpenAIFile(string id = null, int size = 0, string filename = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.OpenAIFilePurpose purpose = default(Azure.AI.Projects.OpenAIFilePurpose)) { throw null; }
         public static Azure.AI.Projects.PageableList<T> PageableList<T>(System.Collections.Generic.IReadOnlyList<T> data, string firstId, string lastId, bool hasMore) { throw null; }
         public static Azure.AI.Projects.RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments) { throw null; }
         public static Azure.AI.Projects.RunStep RunStep(string id = null, Azure.AI.Projects.RunStepType type = default(Azure.AI.Projects.RunStepType), string agentId = null, string threadId = null, string runId = null, Azure.AI.Projects.RunStepStatus status = default(Azure.AI.Projects.RunStepStatus), Azure.AI.Projects.RunStepDetails stepDetails = null, Azure.AI.Projects.RunStepError lastError = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiredAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), Azure.AI.Projects.RunStepCompletionUsage usage = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
@@ -355,9 +456,9 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
         public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Projects.AgentClient GetAgentClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Projects.ConnectionClient GetConnectionClient(string apiVersion = "2024-07-01-preview") { throw null; }
-        public virtual Azure.AI.Projects.EvaluationClient GetEvaluationClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Projects.AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Projects.ConnectionsClient GetConnectionsClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(string apiVersion = "2024-07-01-preview") { throw null; }
     }
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
     {
@@ -369,6 +470,8 @@ namespace Azure.AI.Projects
     }
     public static partial class AIProjectsModelFactory
     {
+        public static Azure.AI.Projects.AgentPageableListOfVectorStore AgentPageableListOfVectorStore(Azure.AI.Projects.AgentPageableListOfVectorStoreObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
+        public static Azure.AI.Projects.AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.Evaluation Evaluation(string id = null, Azure.AI.Projects.InputData data = null, string displayName = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string status = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null) { throw null; }
         public static Azure.AI.Projects.EvaluationSchedule EvaluationSchedule(string name = null, Azure.AI.Projects.ApplicationInsightsConfiguration data = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string provisioningStatus = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null, Azure.AI.Projects.Trigger trigger = null, Azure.AI.Projects.SamplingStrategy samplingStrategy = null) { throw null; }
         public static Azure.AI.Projects.FileContentResponse FileContentResponse(System.BinaryData content = null) { throw null; }
@@ -384,8 +487,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.MessageDeltaTextFileCitationAnnotationObject MessageDeltaTextFileCitationAnnotationObject(string fileId = null, string quote = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaTextFilePathAnnotation MessageDeltaTextFilePathAnnotation(int index = 0, Azure.AI.Projects.MessageDeltaTextFilePathAnnotationObject filePath = null, int? startIndex = default(int?), int? endIndex = default(int?), string text = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaTextFilePathAnnotationObject MessageDeltaTextFilePathAnnotationObject(string fileId = null) { throw null; }
-        public static Azure.AI.Projects.OpenAIPageableListOfVectorStore OpenAIPageableListOfVectorStore(Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject @object = default(Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
-        public static Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile OpenAIPageableListOfVectorStoreFile(Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject @object = default(Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.RequiredToolCall RequiredToolCall(string type = null, string id = null) { throw null; }
         public static Azure.AI.Projects.RunCompletionUsage RunCompletionUsage(long completionTokens = (long)0, long promptTokens = (long)0, long totalTokens = (long)0) { throw null; }
         public static Azure.AI.Projects.RunError RunError(string code = null, string message = null) { throw null; }
@@ -514,15 +615,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CodeInterpreterToolResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CodeInterpreterToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectionClient
-    {
-        protected ConnectionClient() { }
-        public ConnectionClient(string connectionString, Azure.Core.TokenCredential credential) { }
-        public ConnectionClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
-        public ConnectionClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
-        public ConnectionClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-    }
     public partial class ConnectionListResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ConnectionListResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionListResource>
     {
         public ConnectionListResource() { }
@@ -542,6 +634,15 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.ConnectionResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ConnectionResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectionsClient
+    {
+        protected ConnectionsClient() { }
+        public ConnectionsClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public ConnectionsClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        public ConnectionsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public ConnectionsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
     public enum ConnectionType
     {
@@ -622,13 +723,32 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EvaluationClient
+    public partial class EvaluationSchedule : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>
     {
-        protected EvaluationClient() { }
-        public EvaluationClient(string connectionString, Azure.Core.TokenCredential credential) { }
-        public EvaluationClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
-        public EvaluationClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
-        public EvaluationClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        public EvaluationSchedule(Azure.AI.Projects.ApplicationInsightsConfiguration data, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators, Azure.AI.Projects.Trigger trigger, Azure.AI.Projects.SamplingStrategy samplingStrategy) { }
+        public Azure.AI.Projects.ApplicationInsightsConfiguration Data { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> Evaluators { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
+        public string ProvisioningStatus { get { throw null; } }
+        public Azure.AI.Projects.SamplingStrategy SamplingStrategy { get { throw null; } set { } }
+        public Azure.AI.Projects.SystemData SystemData { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.AI.Projects.Trigger Trigger { get { throw null; } set { } }
+        Azure.AI.Projects.EvaluationSchedule System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.EvaluationSchedule System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EvaluationsClient
+    {
+        protected EvaluationsClient() { }
+        public EvaluationsClient(string connectionString, Azure.Core.TokenCredential credential) { }
+        public EvaluationsClient(string connectionString, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
+        public EvaluationsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential) { }
+        public EvaluationsClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Projects.Evaluation> Create(Azure.AI.Projects.Evaluation evaluation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -658,25 +778,6 @@ namespace Azure.AI.Projects
         public virtual Azure.AsyncPageable<Azure.AI.Projects.EvaluationSchedule> GetSchedulesAsync(int? maxCount = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
-    public partial class EvaluationSchedule : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>
-    {
-        public EvaluationSchedule(Azure.AI.Projects.ApplicationInsightsConfiguration data, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators, Azure.AI.Projects.Trigger trigger, Azure.AI.Projects.SamplingStrategy samplingStrategy) { }
-        public Azure.AI.Projects.ApplicationInsightsConfiguration Data { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> Evaluators { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        public string ProvisioningStatus { get { throw null; } }
-        public Azure.AI.Projects.SamplingStrategy SamplingStrategy { get { throw null; } set { } }
-        public Azure.AI.Projects.SystemData SystemData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.AI.Projects.Trigger Trigger { get { throw null; } set { } }
-        Azure.AI.Projects.EvaluationSchedule System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.EvaluationSchedule System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EvaluatorConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluatorConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluatorConfiguration>
     {
@@ -1199,107 +1300,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.MicrosoftFabricToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MicrosoftFabricToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OpenAIFile : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIFile>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIFile>
-    {
-        internal OpenAIFile() { }
-        public System.DateTimeOffset CreatedAt { get { throw null; } }
-        public string Filename { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.AI.Projects.OpenAIFilePurpose Purpose { get { throw null; } }
-        public int Size { get { throw null; } }
-        public Azure.AI.Projects.FileState? Status { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-        Azure.AI.Projects.OpenAIFile System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAIFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenAIFilePurpose : System.IEquatable<Azure.AI.Projects.OpenAIFilePurpose>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OpenAIFilePurpose(string value) { throw null; }
-        public static Azure.AI.Projects.OpenAIFilePurpose Agents { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose AgentsOutput { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose Batch { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose BatchOutput { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose FineTune { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose FineTuneResults { get { throw null; } }
-        public static Azure.AI.Projects.OpenAIFilePurpose Vision { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OpenAIFilePurpose other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OpenAIFilePurpose left, Azure.AI.Projects.OpenAIFilePurpose right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenAIFilePurpose (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OpenAIFilePurpose left, Azure.AI.Projects.OpenAIFilePurpose right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OpenAIPageableListOfVectorStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>
-    {
-        internal OpenAIPageableListOfVectorStore() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.VectorStore> Data { get { throw null; } }
-        public string FirstId { get { throw null; } }
-        public bool HasMore { get { throw null; } }
-        public string LastId { get { throw null; } }
-        public Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject Object { get { throw null; } }
-        Azure.AI.Projects.OpenAIPageableListOfVectorStore System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAIPageableListOfVectorStore System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OpenAIPageableListOfVectorStoreFile : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>
-    {
-        internal OpenAIPageableListOfVectorStoreFile() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.VectorStoreFile> Data { get { throw null; } }
-        public string FirstId { get { throw null; } }
-        public bool HasMore { get { throw null; } }
-        public string LastId { get { throw null; } }
-        public Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject Object { get { throw null; } }
-        Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenAIPageableListOfVectorStoreFileObject : System.IEquatable<Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OpenAIPageableListOfVectorStoreFileObject(string value) { throw null; }
-        public static Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject List { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject left, Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject left, Azure.AI.Projects.OpenAIPageableListOfVectorStoreFileObject right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenAIPageableListOfVectorStoreObject : System.IEquatable<Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OpenAIPageableListOfVectorStoreObject(string value) { throw null; }
-        public static Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject List { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject left, Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject right) { throw null; }
-        public static implicit operator Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject left, Azure.AI.Projects.OpenAIPageableListOfVectorStoreObject right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class PageableList<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {

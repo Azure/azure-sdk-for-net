@@ -17,7 +17,8 @@ namespace Azure.AI.Projects;
  */
 
 [CodeGenSerialization(nameof(Size), DeserializationValueHook = nameof(DeserializeNullableSize))]
-public partial class OpenAIFile
+[CodeGenModel("OpenAIFile")]
+public partial class AgentFile
 {
     /*
     * CUSTOM CODE DESCRIPTION: This change allows us to complete the customization of hiding an unnecessary "Object" discriminator.

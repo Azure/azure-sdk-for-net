@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class OpenAIPageableListOfVectorStoreFile : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfVectorStoreFile>
+    public partial class AgentPageableListOfVectorStoreFile : IUtf8JsonSerializable, IJsonModel<AgentPageableListOfVectorStoreFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOfVectorStoreFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPageableListOfVectorStoreFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OpenAIPageableListOfVectorStoreFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentPageableListOfVectorStoreFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStoreFile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPageableListOfVectorStoreFile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        OpenAIPageableListOfVectorStoreFile IJsonModel<OpenAIPageableListOfVectorStoreFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AgentPageableListOfVectorStoreFile IJsonModel<AgentPageableListOfVectorStoreFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStoreFile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPageableListOfVectorStoreFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAIPageableListOfVectorStoreFile(document.RootElement, options);
+            return DeserializeAgentPageableListOfVectorStoreFile(document.RootElement, options);
         }
 
-        internal static OpenAIPageableListOfVectorStoreFile DeserializeOpenAIPageableListOfVectorStoreFile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AgentPageableListOfVectorStoreFile DeserializeAgentPageableListOfVectorStoreFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            OpenAIPageableListOfVectorStoreFileObject @object = default;
+            AgentPageableListOfVectorStoreFileObject @object = default;
             IReadOnlyList<VectorStoreFile> data = default;
             string firstId = default;
             string lastId = default;
@@ -90,7 +90,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("object"u8))
                 {
-                    @object = new OpenAIPageableListOfVectorStoreFileObject(property.Value.GetString());
+                    @object = new AgentPageableListOfVectorStoreFileObject(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("data"u8))
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenAIPageableListOfVectorStoreFile(
+            return new AgentPageableListOfVectorStoreFile(
                 @object,
                 data,
                 firstId,
@@ -133,43 +133,43 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OpenAIPageableListOfVectorStoreFile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AgentPageableListOfVectorStoreFile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStoreFile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPageableListOfVectorStoreFile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OpenAIPageableListOfVectorStoreFile IPersistableModel<OpenAIPageableListOfVectorStoreFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AgentPageableListOfVectorStoreFile IPersistableModel<AgentPageableListOfVectorStoreFile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPageableListOfVectorStoreFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOpenAIPageableListOfVectorStoreFile(document.RootElement, options);
+                        return DeserializeAgentPageableListOfVectorStoreFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIPageableListOfVectorStoreFile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPageableListOfVectorStoreFile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OpenAIPageableListOfVectorStoreFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentPageableListOfVectorStoreFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OpenAIPageableListOfVectorStoreFile FromResponse(Response response)
+        internal static AgentPageableListOfVectorStoreFile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOpenAIPageableListOfVectorStoreFile(document.RootElement);
+            return DeserializeAgentPageableListOfVectorStoreFile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

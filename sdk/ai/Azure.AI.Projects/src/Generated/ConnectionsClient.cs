@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Projects
 {
     // Data plane generated sub-client.
-    /// <summary> The Connection sub-client. </summary>
-    public partial class ConnectionClient
+    /// <summary> The Connections sub-client. </summary>
+    public partial class ConnectionsClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -33,12 +33,12 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ConnectionClient for mocking. </summary>
-        protected ConnectionClient()
+        /// <summary> Initializes a new instance of ConnectionsClient for mocking. </summary>
+        protected ConnectionsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionClient. </summary>
+        /// <summary> Initializes a new instance of ConnectionsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects
         /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
         /// <param name="projectName"> The Azure AI Studio project name. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ConnectionClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
+        internal ConnectionsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetConnectionsAsync(string category, bool? includeAll, string target, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetConnections");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetConnections");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetConnections(string category, bool? includeAll, string target, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetConnections");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetConnections");
             scope.Start();
             try
             {
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetConnection");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetConnection");
             scope.Start();
             try
             {
@@ -249,7 +249,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetConnection");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetConnection");
             scope.Start();
             try
             {
@@ -324,7 +324,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetSecrets");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetSecrets");
             scope.Start();
             try
             {
@@ -365,7 +365,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConnectionClient.GetSecrets");
+            using var scope = ClientDiagnostics.CreateScope("ConnectionsClient.GetSecrets");
             scope.Start();
             try
             {

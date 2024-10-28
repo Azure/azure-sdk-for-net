@@ -18,7 +18,7 @@ public partial class Sample_Agent_Functions
     public async Task FunctionCallingExample()
     {
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
-        AgentClient client = new AgentClient(connectionString, new DefaultAzureCredential());
+        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:FunctionsDefineFunctionTools
         // Example of a function that defines no parameters

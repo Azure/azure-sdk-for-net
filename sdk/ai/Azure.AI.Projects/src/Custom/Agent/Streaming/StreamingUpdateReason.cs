@@ -20,7 +20,7 @@ public enum StreamingUpdateReason
     /// Indicates that an update was generated as part of a <c>thread.created</c> event.
     /// </summary>
     /// <remarks> This reason is typically only associated with calls to
-    /// <see cref="AgentClient.CreateThreadAndRun(string, AgentThreadCreationOptions, string, string, System.Collections.Generic.IEnumerable{ToolDefinition}, UpdateToolResourcesOptions, bool?, float?, float?, int?, int?, TruncationObject, System.BinaryData, System.BinaryData, System.Collections.Generic.IReadOnlyDictionary{string, string}, System.Threading.CancellationToken)"/>,
+    /// <see cref="AgentsClient.CreateThreadAndRun(string, AgentThreadCreationOptions, string, string, System.Collections.Generic.IEnumerable{ToolDefinition}, UpdateToolResourcesOptions, bool?, float?, float?, int?, int?, TruncationObject, System.BinaryData, System.BinaryData, System.Collections.Generic.IReadOnlyDictionary{string, string}, System.Threading.CancellationToken)"/>,
     /// as other run-related methods operate on a thread that has previously been created.
     /// </remarks>
     ThreadCreated,

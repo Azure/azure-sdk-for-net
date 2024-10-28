@@ -73,34 +73,34 @@ namespace Azure.AI.Projects
             _projectName = projectName;
         }
 
-        /// <summary> Initializes a new instance of AgentClient. </summary>
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual AgentClient GetAgentClient(string apiVersion = "2024-07-01-preview")
+        public virtual AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new AgentClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new AgentsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of ConnectionClient. </summary>
+        /// <summary> Initializes a new instance of ConnectionsClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ConnectionClient GetConnectionClient(string apiVersion = "2024-07-01-preview")
+        public virtual ConnectionsClient GetConnectionsClient(string apiVersion = "2024-07-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new ConnectionClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new ConnectionsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of EvaluationClient. </summary>
+        /// <summary> Initializes a new instance of EvaluationsClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual EvaluationClient GetEvaluationClient(string apiVersion = "2024-07-01-preview")
+        public virtual EvaluationsClient GetEvaluationsClient(string apiVersion = "2024-07-01-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new EvaluationClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new EvaluationsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
     }
 }

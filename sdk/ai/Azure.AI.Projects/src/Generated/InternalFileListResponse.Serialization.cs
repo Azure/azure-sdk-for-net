@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             InternalFileListResponseObject @object = default;
-            IReadOnlyList<OpenAIFile> data = default;
+            IReadOnlyList<AgentFile> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,10 +86,10 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    List<OpenAIFile> array = new List<OpenAIFile>();
+                    List<AgentFile> array = new List<AgentFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAIFile.DeserializeOpenAIFile(item, options));
+                        array.Add(AgentFile.DeserializeAgentFile(item, options));
                     }
                     data = array;
                     continue;

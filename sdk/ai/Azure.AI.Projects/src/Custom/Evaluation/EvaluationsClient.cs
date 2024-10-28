@@ -9,16 +9,16 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The Endpoints sub-client. </summary>
-    [CodeGenClient("Connections")]
-    public partial class ConnectionClient
+    /// <summary> The Evaluations sub-client. </summary>
+    [CodeGenClient("Evaluations")]
+    public partial class EvaluationsClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
-        public ConnectionClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AIProjectClientOptions())
+        public EvaluationsClient(string connectionString, TokenCredential credential) : this(connectionString, credential, new AIProjectClientOptions())
         {
         }
 
@@ -30,11 +30,11 @@ namespace Azure.AI.Projects
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> is an empty string. </exception>
-        public ConnectionClient(string connectionString, TokenCredential credential, AIProjectClientOptions options)
+        public EvaluationsClient(string connectionString, TokenCredential credential, AIProjectClientOptions options)
              : this(new Uri(ClientHelper.ParseConnectionString(connectionString, "endpoint")),
                   ClientHelper.ParseConnectionString(connectionString, "subscriptionId"),
-                  ClientHelper.ParseConnectionString(connectionString, "ResourceGroupName"),
-                  ClientHelper.ParseConnectionString(connectionString, "ProjectName"),
+                  ClientHelper.ParseConnectionString(connectionString, "resourceGroupName"),
+                  ClientHelper.ParseConnectionString(connectionString, "projectName"),
                   credential,
                   options)
         {
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ConnectionClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AIProjectClientOptions())
+        public EvaluationsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AIProjectClientOptions())
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ConnectionClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
+        public EvaluationsClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential, AIProjectClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class OpenAIFile : IUtf8JsonSerializable, IJsonModel<OpenAIFile>
+    public partial class AgentFile : IUtf8JsonSerializable, IJsonModel<AgentFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OpenAIFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIFile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentFile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        OpenAIFile IJsonModel<OpenAIFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AgentFile IJsonModel<AgentFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAIFile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAIFile(document.RootElement, options);
+            return DeserializeAgentFile(document.RootElement, options);
         }
 
-        internal static OpenAIFile DeserializeOpenAIFile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AgentFile DeserializeAgentFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
             int bytes = default;
             string filename = default;
             DateTimeOffset createdAt = default;
-            OpenAIFilePurpose purpose = default;
+            AgentFilePurpose purpose = default;
             FileState? status = default;
             string statusDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,7 +125,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("purpose"u8))
                 {
-                    purpose = new OpenAIFilePurpose(property.Value.GetString());
+                    purpose = new AgentFilePurpose(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenAIFile(
+            return new AgentFile(
                 @object,
                 id,
                 bytes,
@@ -160,43 +160,43 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OpenAIFile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AgentFile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIFile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentFile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OpenAIFile IPersistableModel<OpenAIFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AgentFile IPersistableModel<AgentFile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OpenAIFile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AgentFile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOpenAIFile(document.RootElement, options);
+                        return DeserializeAgentFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAIFile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentFile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OpenAIFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OpenAIFile FromResponse(Response response)
+        internal static AgentFile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOpenAIFile(document.RootElement);
+            return DeserializeAgentFile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

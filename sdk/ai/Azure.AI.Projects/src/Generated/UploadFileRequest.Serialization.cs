@@ -82,7 +82,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             Stream file = default;
-            OpenAIFilePurpose purpose = default;
+            AgentFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("purpose"u8))
                 {
-                    purpose = new OpenAIFilePurpose(property.Value.GetString());
+                    purpose = new AgentFilePurpose(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filename"u8))

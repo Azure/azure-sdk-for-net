@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class OpenAIPageableListOfVectorStoreFile
+    public partial class AgentPageableListOfVectorStore
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfVectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPageableListOfVectorStore"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="firstId"/> or <paramref name="lastId"/> is null. </exception>
-        internal OpenAIPageableListOfVectorStoreFile(IEnumerable<VectorStoreFile> data, string firstId, string lastId, bool hasMore)
+        internal AgentPageableListOfVectorStore(IEnumerable<VectorStore> data, string firstId, string lastId, bool hasMore)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(firstId, nameof(firstId));
@@ -64,14 +64,14 @@ namespace Azure.AI.Projects
             HasMore = hasMore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfVectorStoreFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPageableListOfVectorStore"/>. </summary>
         /// <param name="object"> The object type, which is always list. </param>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIPageableListOfVectorStoreFile(OpenAIPageableListOfVectorStoreFileObject @object, IReadOnlyList<VectorStoreFile> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPageableListOfVectorStore(AgentPageableListOfVectorStoreObject @object, IReadOnlyList<VectorStore> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Object = @object;
             Data = data;
@@ -81,16 +81,16 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAIPageableListOfVectorStoreFile"/> for deserialization. </summary>
-        internal OpenAIPageableListOfVectorStoreFile()
+        /// <summary> Initializes a new instance of <see cref="AgentPageableListOfVectorStore"/> for deserialization. </summary>
+        internal AgentPageableListOfVectorStore()
         {
         }
 
         /// <summary> The object type, which is always list. </summary>
-        public OpenAIPageableListOfVectorStoreFileObject Object { get; } = OpenAIPageableListOfVectorStoreFileObject.List;
+        public AgentPageableListOfVectorStoreObject Object { get; } = AgentPageableListOfVectorStoreObject.List;
 
         /// <summary> The requested list of items. </summary>
-        public IReadOnlyList<VectorStoreFile> Data { get; }
+        public IReadOnlyList<VectorStore> Data { get; }
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }
         /// <summary> The last ID represented in this list. </summary>

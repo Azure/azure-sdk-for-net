@@ -136,19 +136,19 @@ public static partial class AIClientModelFactory
         return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Azure.AI.Projects.OpenAIFile"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Projects.AgentFile"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="size"> The size of the file, in bytes. </param>
     /// <param name="filename"> The name of the file. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="purpose"> The intended purpose of a file. </param>
-    /// <returns> A new <see cref="Azure.AI.Projects.OpenAIFile"/> instance for mocking. </returns>
-    public static OpenAIFile OpenAIFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, OpenAIFilePurpose purpose = default)
+    /// <returns> A new <see cref="Projects.AgentFile"/> instance for mocking. </returns>
+    public static AgentFile AgentFile(string id = null, int size = default, string filename = null, DateTimeOffset createdAt = default, AgentFilePurpose purpose = default)
     {
-        return new OpenAIFile(id, size, filename, createdAt, purpose);
+        return new AgentFile(id, size, filename, createdAt, purpose);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Azure.AI.Projects.RunStep"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Projects.RunStep"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
     /// <param name="agentId"> The ID of the agent associated with the run step. </param>
@@ -164,7 +164,7 @@ public static partial class AIClientModelFactory
     /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
     /// <param name="usage"> Usage statistics related to the run step. </param>
     /// <param name="metadata"> A set of key/value pairs that can be attached to an object, used for storing additional information. </param>
-    /// <returns> A new <see cref="Azure.AI.Projects.RunStep"/> instance for mocking. </returns>
+    /// <returns> A new <see cref="Projects.RunStep"/> instance for mocking. </returns>
     public static RunStep RunStep(string id = null, RunStepType type = default, string agentId = null, string threadId = null, string runId = null, RunStepStatus status = default, RunStepDetails stepDetails = null, RunStepError lastError = null, DateTimeOffset createdAt = default, DateTimeOffset? expiredAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, RunStepCompletionUsage usage = null, IReadOnlyDictionary<string, string> metadata = null)
     {
         metadata ??= new Dictionary<string, string>();
