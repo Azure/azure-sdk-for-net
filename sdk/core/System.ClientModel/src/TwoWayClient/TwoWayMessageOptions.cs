@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Threading;
 
 namespace System.ClientModel.Primitives.TwoWayClient;
@@ -45,6 +46,15 @@ public class TwoWayMessageOptions
         {
             throw new InvalidOperationException("Cannot change a TwoWayMessageOptions instance after it has been passed to a client method.");
         }
+    }
+
+    protected internal void Apply(TwoWayPipelineClientMessage message)
+    {
+        Argument.AssertNotNull(message, nameof(message));
+
+        Freeze();
+
+        message.CancellationToken = CancellationToken;
     }
 }
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

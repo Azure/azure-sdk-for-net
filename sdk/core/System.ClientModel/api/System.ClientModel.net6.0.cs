@@ -312,12 +312,15 @@ namespace System.ClientModel.Primitives.TwoWayClient
         protected virtual void Dispose(bool disposing) { }
         public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.TwoWayClient.TwoWayResult> GetResponses(System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions options) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.TwoWayClient.TwoWayResult> GetResponsesAsync(System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions options) { throw null; }
+        protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions? options = null) { }
+        protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.TwoWayClient.TwoWayMessageOptions? options = null) { throw null; }
     }
     public partial class TwoWayMessageOptions
     {
         public TwoWayMessageOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool? IsLastFragment { get { throw null; } set { } }
+        protected internal void Apply(System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineClientMessage message) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
     }
@@ -333,11 +336,13 @@ namespace System.ClientModel.Primitives.TwoWayClient
         public void Send(System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineClientMessage message) { }
         public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineClientMessage message) { throw null; }
     }
-    public abstract partial class TwoWayPipelineClientMessage
+    public abstract partial class TwoWayPipelineClientMessage : System.IDisposable
     {
         protected TwoWayPipelineClientMessage() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.BinaryData? Content { get { throw null; } set { } }
+        public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type key, object? value) { }
         public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }

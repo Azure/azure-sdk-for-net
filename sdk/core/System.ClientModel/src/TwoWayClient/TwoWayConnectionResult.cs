@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives.TwoWayClient;
 
@@ -39,6 +40,31 @@ public class TwoWayConnectionResult : IDisposable /*TODO: IAsyncDisposable? */
     public virtual IEnumerable<TwoWayResult> GetResponses(TwoWayMessageOptions options)
     {
         throw new NotImplementedException();
+    }
+
+    // effectively the base-layer protocol message
+    // only difference between this and Pipeline.Send is that TwoWayMessageOptions
+    // can mutate the pipeline before sending.
+    // Intention is that client authors will layer protocol methods around this
+    // as a convenience to them, but open question whether we would expose this
+    // to end users instead of protocol methods.  We probably still want named
+    // protocol methods to provide discoverable convenience overloads.
+    protected async Task SendAsync(BinaryContent content, TwoWayMessageOptions? options = default)
+    {
+        using TwoWayPipelineClientMessage message = Pipeline.CreateMessage();
+        message.Content = content;
+
+        options?.Apply(message);
+        await Pipeline.SendAsync(message).ConfigureAwait(false);
+    }
+
+    protected void Send(BinaryContent content, TwoWayMessageOptions? options = default)
+    {
+        using TwoWayPipelineClientMessage message = Pipeline.CreateMessage();
+        message.Content = content;
+
+        options?.Apply(message);
+        Pipeline.Send(message);
     }
 
     public void Dispose()
