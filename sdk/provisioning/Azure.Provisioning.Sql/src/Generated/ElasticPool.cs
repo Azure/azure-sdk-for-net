@@ -22,76 +22,120 @@ public partial class ElasticPool : ProvisionableResource
     /// <summary>
     /// The name of the elastic pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Specifies the availability zone the pool&apos;s primary replica is
     /// pinned to.
     /// </summary>
-    public BicepValue<SqlAvailabilityZoneType> AvailabilityZone { get => _availabilityZone; set => _availabilityZone.Assign(value); }
-    private readonly BicepValue<SqlAvailabilityZoneType> _availabilityZone;
+    public BicepValue<SqlAvailabilityZoneType> AvailabilityZone 
+    {
+        get { Initialize(); return _availabilityZone!; }
+        set { Initialize(); _availabilityZone!.Assign(value); }
+    }
+    private BicepValue<SqlAvailabilityZoneType>? _availabilityZone;
 
     /// <summary>
     /// The number of secondary replicas associated with the elastic pool that
     /// are used to provide high availability. Applicable only to Hyperscale
     /// elastic pools.
     /// </summary>
-    public BicepValue<int> HighAvailabilityReplicaCount { get => _highAvailabilityReplicaCount; set => _highAvailabilityReplicaCount.Assign(value); }
-    private readonly BicepValue<int> _highAvailabilityReplicaCount;
+    public BicepValue<int> HighAvailabilityReplicaCount 
+    {
+        get { Initialize(); return _highAvailabilityReplicaCount!; }
+        set { Initialize(); _highAvailabilityReplicaCount!.Assign(value); }
+    }
+    private BicepValue<int>? _highAvailabilityReplicaCount;
 
     /// <summary>
     /// Whether or not this elastic pool is zone redundant, which means the
     /// replicas of this elastic pool will be spread across multiple
     /// availability zones.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// The license type to apply for this elastic pool.
     /// </summary>
-    public BicepValue<ElasticPoolLicenseType> LicenseType { get => _licenseType; set => _licenseType.Assign(value); }
-    private readonly BicepValue<ElasticPoolLicenseType> _licenseType;
+    public BicepValue<ElasticPoolLicenseType> LicenseType 
+    {
+        get { Initialize(); return _licenseType!; }
+        set { Initialize(); _licenseType!.Assign(value); }
+    }
+    private BicepValue<ElasticPoolLicenseType>? _licenseType;
 
     /// <summary>
     /// Maintenance configuration id assigned to the elastic pool. This
     /// configuration defines the period when the maintenance updates will
     /// will occur.
     /// </summary>
-    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId { get => _maintenanceConfigurationId; set => _maintenanceConfigurationId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _maintenanceConfigurationId;
+    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId 
+    {
+        get { Initialize(); return _maintenanceConfigurationId!; }
+        set { Initialize(); _maintenanceConfigurationId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _maintenanceConfigurationId;
 
     /// <summary>
     /// The storage limit for the database elastic pool in bytes.
     /// </summary>
-    public BicepValue<long> MaxSizeBytes { get => _maxSizeBytes; set => _maxSizeBytes.Assign(value); }
-    private readonly BicepValue<long> _maxSizeBytes;
+    public BicepValue<long> MaxSizeBytes 
+    {
+        get { Initialize(); return _maxSizeBytes!; }
+        set { Initialize(); _maxSizeBytes!.Assign(value); }
+    }
+    private BicepValue<long>? _maxSizeBytes;
 
     /// <summary>
     /// Minimal capacity that serverless pool will not shrink below, if not
     /// paused.
     /// </summary>
-    public BicepValue<double> MinCapacity { get => _minCapacity; set => _minCapacity.Assign(value); }
-    private readonly BicepValue<double> _minCapacity;
+    public BicepValue<double> MinCapacity 
+    {
+        get { Initialize(); return _minCapacity!; }
+        set { Initialize(); _minCapacity!.Assign(value); }
+    }
+    private BicepValue<double>? _minCapacity;
 
     /// <summary>
     /// The per database settings for the elastic pool.
     /// </summary>
-    public BicepValue<ElasticPoolPerDatabaseSettings> PerDatabaseSettings { get => _perDatabaseSettings; set => _perDatabaseSettings.Assign(value); }
-    private readonly BicepValue<ElasticPoolPerDatabaseSettings> _perDatabaseSettings;
+    public ElasticPoolPerDatabaseSettings PerDatabaseSettings 
+    {
+        get { Initialize(); return _perDatabaseSettings!; }
+        set { Initialize(); AssignOrReplace(ref _perDatabaseSettings, value); }
+    }
+    private ElasticPoolPerDatabaseSettings? _perDatabaseSettings;
 
     /// <summary>
     /// Type of enclave requested on the elastic pool.
     /// </summary>
-    public BicepValue<SqlAlwaysEncryptedEnclaveType> PreferredEnclaveType { get => _preferredEnclaveType; set => _preferredEnclaveType.Assign(value); }
-    private readonly BicepValue<SqlAlwaysEncryptedEnclaveType> _preferredEnclaveType;
+    public BicepValue<SqlAlwaysEncryptedEnclaveType> PreferredEnclaveType 
+    {
+        get { Initialize(); return _preferredEnclaveType!; }
+        set { Initialize(); _preferredEnclaveType!.Assign(value); }
+    }
+    private BicepValue<SqlAlwaysEncryptedEnclaveType>? _preferredEnclaveType;
 
     /// <summary>
     /// The elastic pool SKU.                           The list of SKUs may
@@ -102,51 +146,78 @@ public partial class ElasticPool : ProvisionableResource
     /// ```azurecli              az sql elastic-pool
     /// list-editions -l &lt;location&gt; -o table              ````
     /// </summary>
-    public BicepValue<SqlSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<SqlSku> _sku;
+    public SqlSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private SqlSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The creation date of the elastic pool (ISO8601 format).
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Kind of elastic pool. This is metadata used for the Azure portal
     /// experience.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The state of the elastic pool.
     /// </summary>
-    public BicepValue<ElasticPoolState> State { get => _state; }
-    private readonly BicepValue<ElasticPoolState> _state;
+    public BicepValue<ElasticPoolState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<ElasticPoolState>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new ElasticPool.
@@ -161,25 +232,32 @@ public partial class ElasticPool : ProvisionableResource
     public ElasticPool(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/elasticPools", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _availabilityZone = BicepValue<SqlAvailabilityZoneType>.DefineProperty(this, "AvailabilityZone", ["properties", "availabilityZone"]);
-        _highAvailabilityReplicaCount = BicepValue<int>.DefineProperty(this, "HighAvailabilityReplicaCount", ["properties", "highAvailabilityReplicaCount"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _licenseType = BicepValue<ElasticPoolLicenseType>.DefineProperty(this, "LicenseType", ["properties", "licenseType"]);
-        _maintenanceConfigurationId = BicepValue<ResourceIdentifier>.DefineProperty(this, "MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
-        _maxSizeBytes = BicepValue<long>.DefineProperty(this, "MaxSizeBytes", ["properties", "maxSizeBytes"]);
-        _minCapacity = BicepValue<double>.DefineProperty(this, "MinCapacity", ["properties", "minCapacity"]);
-        _perDatabaseSettings = BicepValue<ElasticPoolPerDatabaseSettings>.DefineProperty(this, "PerDatabaseSettings", ["properties", "perDatabaseSettings"]);
-        _preferredEnclaveType = BicepValue<SqlAlwaysEncryptedEnclaveType>.DefineProperty(this, "PreferredEnclaveType", ["properties", "preferredEnclaveType"]);
-        _sku = BicepValue<SqlSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _state = BicepValue<ElasticPoolState>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ElasticPool.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _availabilityZone = DefineProperty<SqlAvailabilityZoneType>("AvailabilityZone", ["properties", "availabilityZone"]);
+        _highAvailabilityReplicaCount = DefineProperty<int>("HighAvailabilityReplicaCount", ["properties", "highAvailabilityReplicaCount"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _licenseType = DefineProperty<ElasticPoolLicenseType>("LicenseType", ["properties", "licenseType"]);
+        _maintenanceConfigurationId = DefineProperty<ResourceIdentifier>("MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
+        _maxSizeBytes = DefineProperty<long>("MaxSizeBytes", ["properties", "maxSizeBytes"]);
+        _minCapacity = DefineProperty<double>("MinCapacity", ["properties", "minCapacity"]);
+        _perDatabaseSettings = DefineModelProperty<ElasticPoolPerDatabaseSettings>("PerDatabaseSettings", ["properties", "perDatabaseSettings"]);
+        _preferredEnclaveType = DefineProperty<SqlAlwaysEncryptedEnclaveType>("PreferredEnclaveType", ["properties", "preferredEnclaveType"]);
+        _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _state = DefineProperty<ElasticPoolState>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -187,11 +265,6 @@ public partial class ElasticPool : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

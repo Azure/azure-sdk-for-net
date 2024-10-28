@@ -22,14 +22,22 @@ public partial class ContainerRegistryReplication : ProvisionableResource
     /// <summary>
     /// The name of the replication.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Specifies whether the replication&apos;s regional endpoint is enabled.
@@ -37,52 +45,80 @@ public partial class ContainerRegistryReplication : ProvisionableResource
     /// is disabled, however its data will continue to be synced with other
     /// replications.
     /// </summary>
-    public BicepValue<bool> IsRegionEndpointEnabled { get => _isRegionEndpointEnabled; set => _isRegionEndpointEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isRegionEndpointEnabled;
+    public BicepValue<bool> IsRegionEndpointEnabled 
+    {
+        get { Initialize(); return _isRegionEndpointEnabled!; }
+        set { Initialize(); _isRegionEndpointEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isRegionEndpointEnabled;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Whether or not zone redundancy is enabled for this container registry
     /// replication.
     /// </summary>
-    public BicepValue<ContainerRegistryZoneRedundancy> ZoneRedundancy { get => _zoneRedundancy; set => _zoneRedundancy.Assign(value); }
-    private readonly BicepValue<ContainerRegistryZoneRedundancy> _zoneRedundancy;
+    public BicepValue<ContainerRegistryZoneRedundancy> ZoneRedundancy 
+    {
+        get { Initialize(); return _zoneRedundancy!; }
+        set { Initialize(); _zoneRedundancy!.Assign(value); }
+    }
+    private BicepValue<ContainerRegistryZoneRedundancy>? _zoneRedundancy;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the replication at the time the operation was
     /// called.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The status of the replication at the time the operation was called.
     /// </summary>
-    public BicepValue<ContainerRegistryResourceStatus> Status { get => _status; }
-    private readonly BicepValue<ContainerRegistryResourceStatus> _status;
+    public ContainerRegistryResourceStatus Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private ContainerRegistryResourceStatus? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryReplication.
@@ -97,16 +133,23 @@ public partial class ContainerRegistryReplication : ProvisionableResource
     public ContainerRegistryReplication(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/replications", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _isRegionEndpointEnabled = BicepValue<bool>.DefineProperty(this, "IsRegionEndpointEnabled", ["properties", "regionEndpointEnabled"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _zoneRedundancy = BicepValue<ContainerRegistryZoneRedundancy>.DefineProperty(this, "ZoneRedundancy", ["properties", "zoneRedundancy"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _status = BicepValue<ContainerRegistryResourceStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryReplication.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _isRegionEndpointEnabled = DefineProperty<bool>("IsRegionEndpointEnabled", ["properties", "regionEndpointEnabled"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _zoneRedundancy = DefineProperty<ContainerRegistryZoneRedundancy>("ZoneRedundancy", ["properties", "zoneRedundancy"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _status = DefineModelProperty<ContainerRegistryResourceStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -114,11 +157,6 @@ public partial class ContainerRegistryReplication : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>

@@ -26,46 +26,74 @@ public partial class RedisResource : ProvisionableResource
     /// <summary>
     /// The name of the Redis cache.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The SKU of the Redis cache to deploy.
     /// </summary>
-    public BicepValue<RedisSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<RedisSku> _sku;
+    public RedisSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private RedisSku? _sku;
 
     /// <summary>
     /// Specifies whether the non-ssl Redis server port (6379) is enabled.
     /// </summary>
-    public BicepValue<bool> EnableNonSslPort { get => _enableNonSslPort; set => _enableNonSslPort.Assign(value); }
-    private readonly BicepValue<bool> _enableNonSslPort;
+    public BicepValue<bool> EnableNonSslPort 
+    {
+        get { Initialize(); return _enableNonSslPort!; }
+        set { Initialize(); _enableNonSslPort!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableNonSslPort;
 
     /// <summary>
     /// The identity of the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Authentication to Redis through access keys is disabled when set as
     /// true. Default value is false.
     /// </summary>
-    public BicepValue<bool> IsAccessKeyAuthenticationDisabled { get => _isAccessKeyAuthenticationDisabled; set => _isAccessKeyAuthenticationDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isAccessKeyAuthenticationDisabled;
+    public BicepValue<bool> IsAccessKeyAuthenticationDisabled 
+    {
+        get { Initialize(); return _isAccessKeyAuthenticationDisabled!; }
+        set { Initialize(); _isAccessKeyAuthenticationDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAccessKeyAuthenticationDisabled;
 
     /// <summary>
     /// Optional: requires clients to use a specified TLS version (or higher)
     /// to connect (e,g, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;).
     /// </summary>
-    public BicepValue<RedisTlsVersion> MinimumTlsVersion { get => _minimumTlsVersion; set => _minimumTlsVersion.Assign(value); }
-    private readonly BicepValue<RedisTlsVersion> _minimumTlsVersion;
+    public BicepValue<RedisTlsVersion> MinimumTlsVersion 
+    {
+        get { Initialize(); return _minimumTlsVersion!; }
+        set { Initialize(); _minimumTlsVersion!.Assign(value); }
+    }
+    private BicepValue<RedisTlsVersion>? _minimumTlsVersion;
 
     /// <summary>
     /// Whether or not public endpoint access is allowed for this cache.  Value
@@ -73,8 +101,12 @@ public partial class RedisResource : ProvisionableResource
     /// &apos;Disabled&apos;. If &apos;Disabled&apos;, private endpoints are
     /// the exclusive access method. Default value is &apos;Enabled&apos;.
     /// </summary>
-    public BicepValue<RedisPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<RedisPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<RedisPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<RedisPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// All Redis Settings. Few possible keys:
@@ -82,8 +114,12 @@ public partial class RedisResource : ProvisionableResource
     /// maxmemory-policy,notify-keyspace-events, aof-backup-enabled,
     /// aof-storage-connection-string-0, aof-storage-connection-string-1 etc.
     /// </summary>
-    public BicepValue<RedisCommonConfiguration> RedisConfiguration { get => _redisConfiguration; set => _redisConfiguration.Assign(value); }
-    private readonly BicepValue<RedisCommonConfiguration> _redisConfiguration;
+    public RedisCommonConfiguration RedisConfiguration 
+    {
+        get { Initialize(); return _redisConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _redisConfiguration, value); }
+    }
+    private RedisCommonConfiguration? _redisConfiguration;
 
     /// <summary>
     /// Redis version. This should be in the form &apos;major[.minor]&apos;
@@ -92,54 +128,86 @@ public partial class RedisResource : ProvisionableResource
     /// Supported versions: 4.0, 6.0 (latest). Default value is
     /// &apos;latest&apos;.
     /// </summary>
-    public BicepValue<string> RedisVersion { get => _redisVersion; set => _redisVersion.Assign(value); }
-    private readonly BicepValue<string> _redisVersion;
+    public BicepValue<string> RedisVersion 
+    {
+        get { Initialize(); return _redisVersion!; }
+        set { Initialize(); _redisVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _redisVersion;
 
     /// <summary>
     /// The number of replicas to be created per primary.
     /// </summary>
-    public BicepValue<int> ReplicasPerMaster { get => _replicasPerMaster; set => _replicasPerMaster.Assign(value); }
-    private readonly BicepValue<int> _replicasPerMaster;
+    public BicepValue<int> ReplicasPerMaster 
+    {
+        get { Initialize(); return _replicasPerMaster!; }
+        set { Initialize(); _replicasPerMaster!.Assign(value); }
+    }
+    private BicepValue<int>? _replicasPerMaster;
 
     /// <summary>
     /// The number of replicas to be created per primary.
     /// </summary>
-    public BicepValue<int> ReplicasPerPrimary { get => _replicasPerPrimary; set => _replicasPerPrimary.Assign(value); }
-    private readonly BicepValue<int> _replicasPerPrimary;
+    public BicepValue<int> ReplicasPerPrimary 
+    {
+        get { Initialize(); return _replicasPerPrimary!; }
+        set { Initialize(); _replicasPerPrimary!.Assign(value); }
+    }
+    private BicepValue<int>? _replicasPerPrimary;
 
     /// <summary>
     /// The number of shards to be created on a Premium Cluster Cache.
     /// </summary>
-    public BicepValue<int> ShardCount { get => _shardCount; set => _shardCount.Assign(value); }
-    private readonly BicepValue<int> _shardCount;
+    public BicepValue<int> ShardCount 
+    {
+        get { Initialize(); return _shardCount!; }
+        set { Initialize(); _shardCount!.Assign(value); }
+    }
+    private BicepValue<int>? _shardCount;
 
     /// <summary>
     /// Static IP address. Optionally, may be specified when deploying a Redis
     /// cache inside an existing Azure Virtual Network; auto assigned by
     /// default.
     /// </summary>
-    public BicepValue<IPAddress> StaticIP { get => _staticIP; set => _staticIP.Assign(value); }
-    private readonly BicepValue<IPAddress> _staticIP;
+    public BicepValue<IPAddress> StaticIP 
+    {
+        get { Initialize(); return _staticIP!; }
+        set { Initialize(); _staticIP!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _staticIP;
 
     /// <summary>
     /// The full resource ID of a subnet in a virtual network to deploy the
     /// Redis cache in. Example format:
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SubnetId { get => _subnetId; set => _subnetId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _subnetId;
+    public BicepValue<ResourceIdentifier> SubnetId 
+    {
+        get { Initialize(); return _subnetId!; }
+        set { Initialize(); _subnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _subnetId;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// A dictionary of tenant settings.
     /// </summary>
-    public BicepDictionary<string> TenantSettings { get => _tenantSettings; set => _tenantSettings.Assign(value); }
-    private readonly BicepDictionary<string> _tenantSettings;
+    public BicepDictionary<string> TenantSettings 
+    {
+        get { Initialize(); return _tenantSettings!; }
+        set { Initialize(); _tenantSettings!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tenantSettings;
 
     /// <summary>
     /// Optional: Specifies the update channel for the monthly Redis updates
@@ -147,77 +215,115 @@ public partial class RedisResource : ProvisionableResource
     /// channel get latest Redis updates at least 4 weeks ahead of
     /// &apos;Stable&apos; channel caches. Default value is &apos;Stable&apos;.
     /// </summary>
-    public BicepValue<UpdateChannel> UpdateChannel { get => _updateChannel; set => _updateChannel.Assign(value); }
-    private readonly BicepValue<UpdateChannel> _updateChannel;
+    public BicepValue<UpdateChannel> UpdateChannel 
+    {
+        get { Initialize(); return _updateChannel!; }
+        set { Initialize(); _updateChannel!.Assign(value); }
+    }
+    private BicepValue<UpdateChannel>? _updateChannel;
 
     /// <summary>
     /// A list of availability zones denoting where the resource needs to come
     /// from.
     /// </summary>
-    public BicepList<string> Zones { get => _zones; set => _zones.Assign(value); }
-    private readonly BicepList<string> _zones;
+    public BicepList<string> Zones 
+    {
+        get { Initialize(); return _zones!; }
+        set { Initialize(); _zones!.Assign(value); }
+    }
+    private BicepList<string>? _zones;
 
     /// <summary>
     /// The keys of the Redis cache - not set if this object is not the
     /// response to Create or Update redis cache.
     /// </summary>
-    public BicepValue<RedisAccessKeys> AccessKeys { get => _accessKeys; }
-    private readonly BicepValue<RedisAccessKeys> _accessKeys;
+    public RedisAccessKeys AccessKeys 
+    {
+        get { Initialize(); return _accessKeys!; }
+    }
+    private RedisAccessKeys? _accessKeys;
 
     /// <summary>
     /// Redis host name.
     /// </summary>
-    public BicepValue<string> HostName { get => _hostName; }
-    private readonly BicepValue<string> _hostName;
+    public BicepValue<string> HostName 
+    {
+        get { Initialize(); return _hostName!; }
+    }
+    private BicepValue<string>? _hostName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// List of the Redis instances associated with the cache.
     /// </summary>
-    public BicepList<RedisInstanceDetails> Instances { get => _instances; }
-    private readonly BicepList<RedisInstanceDetails> _instances;
+    public BicepList<RedisInstanceDetails> Instances 
+    {
+        get { Initialize(); return _instances!; }
+    }
+    private BicepList<RedisInstanceDetails>? _instances;
 
     /// <summary>
     /// List of the linked servers associated with the cache.
     /// </summary>
-    public BicepList<SubResource> LinkedServers { get => _linkedServers; }
-    private readonly BicepList<SubResource> _linkedServers;
+    public BicepList<SubResource> LinkedServers 
+    {
+        get { Initialize(); return _linkedServers!; }
+    }
+    private BicepList<SubResource>? _linkedServers;
 
     /// <summary>
     /// Redis non-SSL port.
     /// </summary>
-    public BicepValue<int> Port { get => _port; }
-    private readonly BicepValue<int> _port;
+    public BicepValue<int> Port 
+    {
+        get { Initialize(); return _port!; }
+    }
+    private BicepValue<int>? _port;
 
     /// <summary>
     /// List of private endpoint connection associated with the specified redis
     /// cache.
     /// </summary>
-    public BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<RedisPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<RedisPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// Redis instance provisioning status.
     /// </summary>
-    public BicepValue<RedisProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<RedisProvisioningState> _provisioningState;
+    public BicepValue<RedisProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<RedisProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Redis SSL port.
     /// </summary>
-    public BicepValue<int> SslPort { get => _sslPort; }
-    private readonly BicepValue<int> _sslPort;
+    public BicepValue<int> SslPort 
+    {
+        get { Initialize(); return _sslPort!; }
+    }
+    private BicepValue<int>? _sslPort;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new RedisResource.
@@ -232,35 +338,42 @@ public partial class RedisResource : ProvisionableResource
     public RedisResource(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _sku = BicepValue<RedisSku>.DefineProperty(this, "Sku", ["properties", "sku"], isRequired: true);
-        _enableNonSslPort = BicepValue<bool>.DefineProperty(this, "EnableNonSslPort", ["properties", "enableNonSslPort"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isAccessKeyAuthenticationDisabled = BicepValue<bool>.DefineProperty(this, "IsAccessKeyAuthenticationDisabled", ["properties", "disableAccessKeyAuthentication"]);
-        _minimumTlsVersion = BicepValue<RedisTlsVersion>.DefineProperty(this, "MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
-        _publicNetworkAccess = BicepValue<RedisPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _redisConfiguration = BicepValue<RedisCommonConfiguration>.DefineProperty(this, "RedisConfiguration", ["properties", "redisConfiguration"]);
-        _redisVersion = BicepValue<string>.DefineProperty(this, "RedisVersion", ["properties", "redisVersion"]);
-        _replicasPerMaster = BicepValue<int>.DefineProperty(this, "ReplicasPerMaster", ["properties", "replicasPerMaster"]);
-        _replicasPerPrimary = BicepValue<int>.DefineProperty(this, "ReplicasPerPrimary", ["properties", "replicasPerPrimary"]);
-        _shardCount = BicepValue<int>.DefineProperty(this, "ShardCount", ["properties", "shardCount"]);
-        _staticIP = BicepValue<IPAddress>.DefineProperty(this, "StaticIP", ["properties", "staticIP"]);
-        _subnetId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SubnetId", ["properties", "subnetId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _tenantSettings = BicepDictionary<string>.DefineProperty(this, "TenantSettings", ["properties", "tenantSettings"]);
-        _updateChannel = BicepValue<UpdateChannel>.DefineProperty(this, "UpdateChannel", ["properties", "updateChannel"]);
-        _zones = BicepList<string>.DefineProperty(this, "Zones", ["zones"]);
-        _accessKeys = BicepValue<RedisAccessKeys>.DefineProperty(this, "AccessKeys", ["properties", "accessKeys"], isOutput: true);
-        _hostName = BicepValue<string>.DefineProperty(this, "HostName", ["properties", "hostName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _instances = BicepList<RedisInstanceDetails>.DefineProperty(this, "Instances", ["properties", "instances"], isOutput: true);
-        _linkedServers = BicepList<SubResource>.DefineProperty(this, "LinkedServers", ["properties", "linkedServers"], isOutput: true);
-        _port = BicepValue<int>.DefineProperty(this, "Port", ["properties", "port"], isOutput: true);
-        _privateEndpointConnections = BicepList<RedisPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<RedisProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _sslPort = BicepValue<int>.DefineProperty(this, "SslPort", ["properties", "sslPort"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of RedisResource.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _sku = DefineModelProperty<RedisSku>("Sku", ["properties", "sku"], isRequired: true);
+        _enableNonSslPort = DefineProperty<bool>("EnableNonSslPort", ["properties", "enableNonSslPort"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isAccessKeyAuthenticationDisabled = DefineProperty<bool>("IsAccessKeyAuthenticationDisabled", ["properties", "disableAccessKeyAuthentication"]);
+        _minimumTlsVersion = DefineProperty<RedisTlsVersion>("MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
+        _publicNetworkAccess = DefineProperty<RedisPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _redisConfiguration = DefineModelProperty<RedisCommonConfiguration>("RedisConfiguration", ["properties", "redisConfiguration"]);
+        _redisVersion = DefineProperty<string>("RedisVersion", ["properties", "redisVersion"]);
+        _replicasPerMaster = DefineProperty<int>("ReplicasPerMaster", ["properties", "replicasPerMaster"]);
+        _replicasPerPrimary = DefineProperty<int>("ReplicasPerPrimary", ["properties", "replicasPerPrimary"]);
+        _shardCount = DefineProperty<int>("ShardCount", ["properties", "shardCount"]);
+        _staticIP = DefineProperty<IPAddress>("StaticIP", ["properties", "staticIP"]);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnetId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _tenantSettings = DefineDictionaryProperty<string>("TenantSettings", ["properties", "tenantSettings"]);
+        _updateChannel = DefineProperty<UpdateChannel>("UpdateChannel", ["properties", "updateChannel"]);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
+        _accessKeys = DefineModelProperty<RedisAccessKeys>("AccessKeys", ["properties", "accessKeys"], isOutput: true);
+        _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _instances = DefineListProperty<RedisInstanceDetails>("Instances", ["properties", "instances"], isOutput: true);
+        _linkedServers = DefineListProperty<SubResource>("LinkedServers", ["properties", "linkedServers"], isOutput: true);
+        _port = DefineProperty<int>("Port", ["properties", "port"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<RedisPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<RedisProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _sslPort = DefineProperty<int>("SslPort", ["properties", "sslPort"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -268,11 +381,6 @@ public partial class RedisResource : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -380,9 +488,12 @@ public partial class RedisResource : ProvisionableResource
     /// Get access keys for this RedisResource resource.
     /// </summary>
     /// <returns>The keys for this RedisResource resource.</returns>
-    public RedisAccessKeys GetKeys() =>
-        RedisAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public RedisAccessKeys GetKeys()
+    {
+        RedisAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

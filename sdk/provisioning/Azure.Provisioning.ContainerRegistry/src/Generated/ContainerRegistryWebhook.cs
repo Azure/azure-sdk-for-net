@@ -22,27 +22,43 @@ public partial class ContainerRegistryWebhook : ProvisionableResource
     /// <summary>
     /// The name of the webhook.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The location of the webhook. This cannot be changed after the resource
     /// is created.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The list of actions that trigger the webhook to post notifications.
     /// </summary>
-    public BicepList<ContainerRegistryWebhookAction> Actions { get => _actions; set => _actions.Assign(value); }
-    private readonly BicepList<ContainerRegistryWebhookAction> _actions;
+    public BicepList<ContainerRegistryWebhookAction> Actions 
+    {
+        get { Initialize(); return _actions!; }
+        set { Initialize(); _actions!.Assign(value); }
+    }
+    private BicepList<ContainerRegistryWebhookAction>? _actions;
 
     /// <summary>
     /// Custom headers that will be added to the webhook notifications.
     /// </summary>
-    public BicepDictionary<string> CustomHeaders { get => _customHeaders; set => _customHeaders.Assign(value); }
-    private readonly BicepDictionary<string> _customHeaders;
+    public BicepDictionary<string> CustomHeaders 
+    {
+        get { Initialize(); return _customHeaders!; }
+        set { Initialize(); _customHeaders!.Assign(value); }
+    }
+    private BicepDictionary<string>? _customHeaders;
 
     /// <summary>
     /// The scope of repositories where the event can be triggered. For
@@ -51,51 +67,80 @@ public partial class ContainerRegistryWebhook : ProvisionableResource
     /// &apos;foo:bar&apos; only. &apos;foo&apos; is equivalent to
     /// &apos;foo:latest&apos;. Empty means all events.
     /// </summary>
-    public BicepValue<string> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<string> _scope;
+    public BicepValue<string> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<string>? _scope;
 
     /// <summary>
     /// The service URI for the webhook to post notifications.
     /// </summary>
-    public BicepValue<Uri> ServiceUri { get => _serviceUri; set => _serviceUri.Assign(value); }
-    private readonly BicepValue<Uri> _serviceUri;
+    public BicepValue<Uri> ServiceUri 
+    {
+        get { Initialize(); return _serviceUri!; }
+        set { Initialize(); _serviceUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _serviceUri;
 
     /// <summary>
     /// The status of the webhook at the time the operation was called.
     /// </summary>
-    public BicepValue<ContainerRegistryWebhookStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<ContainerRegistryWebhookStatus> _status;
+    public BicepValue<ContainerRegistryWebhookStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<ContainerRegistryWebhookStatus>? _status;
 
     /// <summary>
     /// The tags for the webhook.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the webhook at the time the operation was
     /// called.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryWebhook.
@@ -110,18 +155,25 @@ public partial class ContainerRegistryWebhook : ProvisionableResource
     public ContainerRegistryWebhook(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/webhooks", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _actions = BicepList<ContainerRegistryWebhookAction>.DefineProperty(this, "Actions", ["properties", "actions"]);
-        _customHeaders = BicepDictionary<string>.DefineProperty(this, "CustomHeaders", ["properties", "customHeaders"]);
-        _scope = BicepValue<string>.DefineProperty(this, "Scope", ["properties", "scope"]);
-        _serviceUri = BicepValue<Uri>.DefineProperty(this, "ServiceUri", ["properties", "serviceUri"]);
-        _status = BicepValue<ContainerRegistryWebhookStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryWebhook.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _actions = DefineListProperty<ContainerRegistryWebhookAction>("Actions", ["properties", "actions"]);
+        _customHeaders = DefineDictionaryProperty<string>("CustomHeaders", ["properties", "customHeaders"]);
+        _scope = DefineProperty<string>("Scope", ["properties", "scope"]);
+        _serviceUri = DefineProperty<Uri>("ServiceUri", ["properties", "serviceUri"]);
+        _status = DefineProperty<ContainerRegistryWebhookStatus>("Status", ["properties", "status"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -129,11 +181,6 @@ public partial class ContainerRegistryWebhook : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>

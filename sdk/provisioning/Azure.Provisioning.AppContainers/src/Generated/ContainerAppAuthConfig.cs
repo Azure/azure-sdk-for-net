@@ -21,69 +21,107 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// <summary>
     /// Name of the Container App AuthConfig.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The configuration settings of the secrets references of encryption key
     /// and signing key for ContainerApp Service Authentication/Authorization.
     /// </summary>
-    public BicepValue<EncryptionSettings> EncryptionSettings { get => _encryptionSettings; set => _encryptionSettings.Assign(value); }
-    private readonly BicepValue<EncryptionSettings> _encryptionSettings;
+    public EncryptionSettings EncryptionSettings 
+    {
+        get { Initialize(); return _encryptionSettings!; }
+        set { Initialize(); AssignOrReplace(ref _encryptionSettings, value); }
+    }
+    private EncryptionSettings? _encryptionSettings;
 
     /// <summary>
     /// The configuration settings that determines the validation flow of users
     /// using  Service Authentication/Authorization.
     /// </summary>
-    public BicepValue<ContainerAppGlobalValidation> GlobalValidation { get => _globalValidation; set => _globalValidation.Assign(value); }
-    private readonly BicepValue<ContainerAppGlobalValidation> _globalValidation;
+    public ContainerAppGlobalValidation GlobalValidation 
+    {
+        get { Initialize(); return _globalValidation!; }
+        set { Initialize(); AssignOrReplace(ref _globalValidation, value); }
+    }
+    private ContainerAppGlobalValidation? _globalValidation;
 
     /// <summary>
     /// The configuration settings of the HTTP requests for authentication and
     /// authorization requests made against ContainerApp Service
     /// Authentication/Authorization.
     /// </summary>
-    public BicepValue<ContainerAppHttpSettings> HttpSettings { get => _httpSettings; set => _httpSettings.Assign(value); }
-    private readonly BicepValue<ContainerAppHttpSettings> _httpSettings;
+    public ContainerAppHttpSettings HttpSettings 
+    {
+        get { Initialize(); return _httpSettings!; }
+        set { Initialize(); AssignOrReplace(ref _httpSettings, value); }
+    }
+    private ContainerAppHttpSettings? _httpSettings;
 
     /// <summary>
     /// The configuration settings of each of the identity providers used to
     /// configure ContainerApp Service Authentication/Authorization.
     /// </summary>
-    public BicepValue<ContainerAppIdentityProvidersConfiguration> IdentityProviders { get => _identityProviders; set => _identityProviders.Assign(value); }
-    private readonly BicepValue<ContainerAppIdentityProvidersConfiguration> _identityProviders;
+    public ContainerAppIdentityProvidersConfiguration IdentityProviders 
+    {
+        get { Initialize(); return _identityProviders!; }
+        set { Initialize(); AssignOrReplace(ref _identityProviders, value); }
+    }
+    private ContainerAppIdentityProvidersConfiguration? _identityProviders;
 
     /// <summary>
     /// The configuration settings of the login flow of users using
     /// ContainerApp Service Authentication/Authorization.
     /// </summary>
-    public BicepValue<ContainerAppLogin> Login { get => _login; set => _login.Assign(value); }
-    private readonly BicepValue<ContainerAppLogin> _login;
+    public ContainerAppLogin Login 
+    {
+        get { Initialize(); return _login!; }
+        set { Initialize(); AssignOrReplace(ref _login, value); }
+    }
+    private ContainerAppLogin? _login;
 
     /// <summary>
     /// The configuration settings of the platform of ContainerApp Service
     /// Authentication/Authorization.
     /// </summary>
-    public BicepValue<ContainerAppAuthPlatform> Platform { get => _platform; set => _platform.Assign(value); }
-    private readonly BicepValue<ContainerAppAuthPlatform> _platform;
+    public ContainerAppAuthPlatform Platform 
+    {
+        get { Initialize(); return _platform!; }
+        set { Initialize(); AssignOrReplace(ref _platform, value); }
+    }
+    private ContainerAppAuthPlatform? _platform;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerApp.
     /// </summary>
-    public ContainerApp? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerApp> _parent;
+    public ContainerApp? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerApp>? _parent;
 
     /// <summary>
     /// Creates a new ContainerAppAuthConfig.
@@ -98,16 +136,23 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     public ContainerAppAuthConfig(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _encryptionSettings = BicepValue<EncryptionSettings>.DefineProperty(this, "EncryptionSettings", ["properties", "encryptionSettings"]);
-        _globalValidation = BicepValue<ContainerAppGlobalValidation>.DefineProperty(this, "GlobalValidation", ["properties", "globalValidation"]);
-        _httpSettings = BicepValue<ContainerAppHttpSettings>.DefineProperty(this, "HttpSettings", ["properties", "httpSettings"]);
-        _identityProviders = BicepValue<ContainerAppIdentityProvidersConfiguration>.DefineProperty(this, "IdentityProviders", ["properties", "identityProviders"]);
-        _login = BicepValue<ContainerAppLogin>.DefineProperty(this, "Login", ["properties", "login"]);
-        _platform = BicepValue<ContainerAppAuthPlatform>.DefineProperty(this, "Platform", ["properties", "platform"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerApp>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerAppAuthConfig.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _encryptionSettings = DefineModelProperty<EncryptionSettings>("EncryptionSettings", ["properties", "encryptionSettings"]);
+        _globalValidation = DefineModelProperty<ContainerAppGlobalValidation>("GlobalValidation", ["properties", "globalValidation"]);
+        _httpSettings = DefineModelProperty<ContainerAppHttpSettings>("HttpSettings", ["properties", "httpSettings"]);
+        _identityProviders = DefineModelProperty<ContainerAppIdentityProvidersConfiguration>("IdentityProviders", ["properties", "identityProviders"]);
+        _login = DefineModelProperty<ContainerAppLogin>("Login", ["properties", "login"]);
+        _platform = DefineModelProperty<ContainerAppAuthPlatform>("Platform", ["properties", "platform"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerApp>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -115,11 +160,6 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

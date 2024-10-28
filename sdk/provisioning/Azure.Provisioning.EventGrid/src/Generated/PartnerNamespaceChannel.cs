@@ -21,30 +21,46 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// <summary>
     /// Name of the channel.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The type of the event channel which represents the direction flow of
     /// events.
     /// </summary>
-    public BicepValue<PartnerNamespaceChannelType> ChannelType { get => _channelType; set => _channelType.Assign(value); }
-    private readonly BicepValue<PartnerNamespaceChannelType> _channelType;
+    public BicepValue<PartnerNamespaceChannelType> ChannelType 
+    {
+        get { Initialize(); return _channelType!; }
+        set { Initialize(); _channelType!.Assign(value); }
+    }
+    private BicepValue<PartnerNamespaceChannelType>? _channelType;
 
     /// <summary>
     /// Expiration time of the channel. If this timer expires while the
     /// corresponding partner topic is never activated,             the
     /// channel and corresponding partner topic are deleted.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOnIfNotActivated { get => _expireOnIfNotActivated; set => _expireOnIfNotActivated.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _expireOnIfNotActivated;
+    public BicepValue<DateTimeOffset> ExpireOnIfNotActivated 
+    {
+        get { Initialize(); return _expireOnIfNotActivated!; }
+        set { Initialize(); _expireOnIfNotActivated!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _expireOnIfNotActivated;
 
     /// <summary>
     /// Context or helpful message that can be used during the approval process
     /// by the subscriber.
     /// </summary>
-    public BicepValue<string> MessageForActivation { get => _messageForActivation; set => _messageForActivation.Assign(value); }
-    private readonly BicepValue<string> _messageForActivation;
+    public BicepValue<string> MessageForActivation 
+    {
+        get { Initialize(); return _messageForActivation!; }
+        set { Initialize(); _messageForActivation!.Assign(value); }
+    }
+    private BicepValue<string>? _messageForActivation;
 
     /// <summary>
     /// This property should be populated when channelType is
@@ -57,46 +73,72 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// available derived classes include
     /// Azure.ResourceManager.EventGrid.Models.WebhookPartnerDestinationInfo.
     /// </summary>
-    public BicepValue<PartnerDestinationInfo> PartnerDestinationInfo { get => _partnerDestinationInfo; set => _partnerDestinationInfo.Assign(value); }
-    private readonly BicepValue<PartnerDestinationInfo> _partnerDestinationInfo;
+    public PartnerDestinationInfo PartnerDestinationInfo 
+    {
+        get { Initialize(); return _partnerDestinationInfo!; }
+        set { Initialize(); AssignOrReplace(ref _partnerDestinationInfo, value); }
+    }
+    private PartnerDestinationInfo? _partnerDestinationInfo;
 
     /// <summary>
     /// This property should be populated when channelType is PartnerTopic and
     /// represents information about the partner topic resource corresponding
     /// to the channel.
     /// </summary>
-    public BicepValue<PartnerTopicInfo> PartnerTopicInfo { get => _partnerTopicInfo; set => _partnerTopicInfo.Assign(value); }
-    private readonly BicepValue<PartnerTopicInfo> _partnerTopicInfo;
+    public PartnerTopicInfo PartnerTopicInfo 
+    {
+        get { Initialize(); return _partnerTopicInfo!; }
+        set { Initialize(); AssignOrReplace(ref _partnerTopicInfo, value); }
+    }
+    private PartnerTopicInfo? _partnerTopicInfo;
 
     /// <summary>
     /// Provisioning state of the channel.
     /// </summary>
-    public BicepValue<PartnerNamespaceChannelProvisioningState> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<PartnerNamespaceChannelProvisioningState> _provisioningState;
+    public BicepValue<PartnerNamespaceChannelProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<PartnerNamespaceChannelProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The readiness state of the corresponding partner topic.
     /// </summary>
-    public BicepValue<PartnerTopicReadinessState> ReadinessState { get => _readinessState; set => _readinessState.Assign(value); }
-    private readonly BicepValue<PartnerTopicReadinessState> _readinessState;
+    public BicepValue<PartnerTopicReadinessState> ReadinessState 
+    {
+        get { Initialize(); return _readinessState!; }
+        set { Initialize(); _readinessState!.Assign(value); }
+    }
+    private BicepValue<PartnerTopicReadinessState>? _readinessState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PartnerNamespace.
     /// </summary>
-    public PartnerNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PartnerNamespace> _parent;
+    public PartnerNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PartnerNamespace>? _parent;
 
     /// <summary>
     /// Creates a new PartnerNamespaceChannel.
@@ -111,17 +153,24 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     public PartnerNamespaceChannel(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/channels", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _channelType = BicepValue<PartnerNamespaceChannelType>.DefineProperty(this, "ChannelType", ["properties", "channelType"]);
-        _expireOnIfNotActivated = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOnIfNotActivated", ["properties", "expirationTimeIfNotActivatedUtc"]);
-        _messageForActivation = BicepValue<string>.DefineProperty(this, "MessageForActivation", ["properties", "messageForActivation"]);
-        _partnerDestinationInfo = BicepValue<PartnerDestinationInfo>.DefineProperty(this, "PartnerDestinationInfo", ["properties", "partnerDestinationInfo"]);
-        _partnerTopicInfo = BicepValue<PartnerTopicInfo>.DefineProperty(this, "PartnerTopicInfo", ["properties", "partnerTopicInfo"]);
-        _provisioningState = BicepValue<PartnerNamespaceChannelProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _readinessState = BicepValue<PartnerTopicReadinessState>.DefineProperty(this, "ReadinessState", ["properties", "readinessState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PartnerNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PartnerNamespaceChannel.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _channelType = DefineProperty<PartnerNamespaceChannelType>("ChannelType", ["properties", "channelType"]);
+        _expireOnIfNotActivated = DefineProperty<DateTimeOffset>("ExpireOnIfNotActivated", ["properties", "expirationTimeIfNotActivatedUtc"]);
+        _messageForActivation = DefineProperty<string>("MessageForActivation", ["properties", "messageForActivation"]);
+        _partnerDestinationInfo = DefineModelProperty<PartnerDestinationInfo>("PartnerDestinationInfo", ["properties", "partnerDestinationInfo"]);
+        _partnerTopicInfo = DefineModelProperty<PartnerTopicInfo>("PartnerTopicInfo", ["properties", "partnerTopicInfo"]);
+        _provisioningState = DefineProperty<PartnerNamespaceChannelProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
+        _readinessState = DefineProperty<PartnerTopicReadinessState>("ReadinessState", ["properties", "readinessState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PartnerNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -129,11 +178,6 @@ public partial class PartnerNamespaceChannel : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>

@@ -20,14 +20,21 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The state of the data masking policy.
     /// </summary>
-    public BicepValue<DataMaskingState> DataMaskingState { get => _dataMaskingState; set => _dataMaskingState.Assign(value); }
-    private readonly BicepValue<DataMaskingState> _dataMaskingState;
+    public BicepValue<DataMaskingState> DataMaskingState 
+    {
+        get { Initialize(); return _dataMaskingState!; }
+        set { Initialize(); _dataMaskingState!.Assign(value); }
+    }
+    private BicepValue<DataMaskingState>? _dataMaskingState;
 
     /// <summary>
     /// The list of the exempt principals. Specifies the semicolon-separated
@@ -35,51 +42,77 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// apply. The specified users receive data results without masking for
     /// all of the database queries.
     /// </summary>
-    public BicepValue<string> ExemptPrincipals { get => _exemptPrincipals; set => _exemptPrincipals.Assign(value); }
-    private readonly BicepValue<string> _exemptPrincipals;
+    public BicepValue<string> ExemptPrincipals 
+    {
+        get { Initialize(); return _exemptPrincipals!; }
+        set { Initialize(); _exemptPrincipals!.Assign(value); }
+    }
+    private BicepValue<string>? _exemptPrincipals;
 
     /// <summary>
     /// The list of the application principals. This is a legacy parameter and
     /// is no longer used.
     /// </summary>
-    public BicepValue<string> ApplicationPrincipals { get => _applicationPrincipals; }
-    private readonly BicepValue<string> _applicationPrincipals;
+    public BicepValue<string> ApplicationPrincipals 
+    {
+        get { Initialize(); return _applicationPrincipals!; }
+    }
+    private BicepValue<string>? _applicationPrincipals;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The kind of data masking policy. Metadata, used for Azure portal.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The location of the data masking policy.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The masking level. This is a legacy parameter and is no longer used.
     /// </summary>
-    public BicepValue<string> MaskingLevel { get => _maskingLevel; }
-    private readonly BicepValue<string> _maskingLevel;
+    public BicepValue<string> MaskingLevel 
+    {
+        get { Initialize(); return _maskingLevel!; }
+    }
+    private BicepValue<string>? _maskingLevel;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new DataMaskingPolicy.
@@ -94,16 +127,23 @@ public partial class DataMaskingPolicy : ProvisionableResource
     public DataMaskingPolicy(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _dataMaskingState = BicepValue<DataMaskingState>.DefineProperty(this, "DataMaskingState", ["properties", "dataMaskingState"]);
-        _exemptPrincipals = BicepValue<string>.DefineProperty(this, "ExemptPrincipals", ["properties", "exemptPrincipals"]);
-        _applicationPrincipals = BicepValue<string>.DefineProperty(this, "ApplicationPrincipals", ["properties", "applicationPrincipals"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _maskingLevel = BicepValue<string>.DefineProperty(this, "MaskingLevel", ["properties", "maskingLevel"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of DataMaskingPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _dataMaskingState = DefineProperty<DataMaskingState>("DataMaskingState", ["properties", "dataMaskingState"]);
+        _exemptPrincipals = DefineProperty<string>("ExemptPrincipals", ["properties", "exemptPrincipals"]);
+        _applicationPrincipals = DefineProperty<string>("ApplicationPrincipals", ["properties", "applicationPrincipals"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _maskingLevel = DefineProperty<string>("MaskingLevel", ["properties", "maskingLevel"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -111,11 +151,6 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

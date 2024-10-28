@@ -20,8 +20,12 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     /// <summary>
     /// The name of the role eligibility to create. It can be any valid GUID.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The conditions on the role assignment. This limits the resources it can
@@ -29,136 +33,215 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
     /// StringEqualsIgnoreCase &apos;foo_storage_container&apos;.
     /// </summary>
-    public BicepValue<string> Condition { get => _condition; set => _condition.Assign(value); }
-    private readonly BicepValue<string> _condition;
+    public BicepValue<string> Condition 
+    {
+        get { Initialize(); return _condition!; }
+        set { Initialize(); _condition!.Assign(value); }
+    }
+    private BicepValue<string>? _condition;
 
     /// <summary>
     /// Version of the condition. Currently accepted value is &apos;2.0&apos;.
     /// </summary>
-    public BicepValue<string> ConditionVersion { get => _conditionVersion; set => _conditionVersion.Assign(value); }
-    private readonly BicepValue<string> _conditionVersion;
+    public BicepValue<string> ConditionVersion 
+    {
+        get { Initialize(); return _conditionVersion!; }
+        set { Initialize(); _conditionVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _conditionVersion;
 
     /// <summary>
     /// Duration of the role eligibility schedule in TimeSpan.
     /// </summary>
-    public BicepValue<TimeSpan> Duration { get => _duration; set => _duration.Assign(value); }
-    private readonly BicepValue<TimeSpan> _duration;
+    public BicepValue<TimeSpan> Duration 
+    {
+        get { Initialize(); return _duration!; }
+        set { Initialize(); _duration!.Assign(value); }
+    }
+    private BicepValue<TimeSpan>? _duration;
 
     /// <summary>
     /// End DateTime of the role eligibility schedule.
     /// </summary>
-    public BicepValue<DateTimeOffset> EndOn { get => _endOn; set => _endOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _endOn;
+    public BicepValue<DateTimeOffset> EndOn 
+    {
+        get { Initialize(); return _endOn!; }
+        set { Initialize(); _endOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _endOn;
 
     /// <summary>
     /// Type of the role eligibility schedule expiration.
     /// </summary>
-    public BicepValue<RoleManagementScheduleExpirationType> ExpirationType { get => _expirationType; set => _expirationType.Assign(value); }
-    private readonly BicepValue<RoleManagementScheduleExpirationType> _expirationType;
+    public BicepValue<RoleManagementScheduleExpirationType> ExpirationType 
+    {
+        get { Initialize(); return _expirationType!; }
+        set { Initialize(); _expirationType!.Assign(value); }
+    }
+    private BicepValue<RoleManagementScheduleExpirationType>? _expirationType;
 
     /// <summary>
     /// Justification for the role eligibility.
     /// </summary>
-    public BicepValue<string> Justification { get => _justification; set => _justification.Assign(value); }
-    private readonly BicepValue<string> _justification;
+    public BicepValue<string> Justification 
+    {
+        get { Initialize(); return _justification!; }
+        set { Initialize(); _justification!.Assign(value); }
+    }
+    private BicepValue<string>? _justification;
 
     /// <summary>
     /// The principal ID.
     /// </summary>
-    public BicepValue<Guid> PrincipalId { get => _principalId; set => _principalId.Assign(value); }
-    private readonly BicepValue<Guid> _principalId;
+    public BicepValue<Guid> PrincipalId 
+    {
+        get { Initialize(); return _principalId!; }
+        set { Initialize(); _principalId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _principalId;
 
     /// <summary>
     /// The type of the role assignment schedule request. Eg: SelfActivate,
     /// AdminAssign etc.
     /// </summary>
-    public BicepValue<RoleManagementScheduleRequestType> RequestType { get => _requestType; set => _requestType.Assign(value); }
-    private readonly BicepValue<RoleManagementScheduleRequestType> _requestType;
+    public BicepValue<RoleManagementScheduleRequestType> RequestType 
+    {
+        get { Initialize(); return _requestType!; }
+        set { Initialize(); _requestType!.Assign(value); }
+    }
+    private BicepValue<RoleManagementScheduleRequestType>? _requestType;
 
     /// <summary>
     /// The role definition ID.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RoleDefinitionId { get => _roleDefinitionId; set => _roleDefinitionId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _roleDefinitionId;
+    public BicepValue<ResourceIdentifier> RoleDefinitionId 
+    {
+        get { Initialize(); return _roleDefinitionId!; }
+        set { Initialize(); _roleDefinitionId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _roleDefinitionId;
 
     /// <summary>
     /// Start DateTime of the role eligibility schedule.
     /// </summary>
-    public BicepValue<DateTimeOffset> StartOn { get => _startOn; set => _startOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _startOn;
+    public BicepValue<DateTimeOffset> StartOn 
+    {
+        get { Initialize(); return _startOn!; }
+        set { Initialize(); _startOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
     /// The resultant role eligibility schedule id or the role eligibility
     /// schedule id being updated.
     /// </summary>
-    public BicepValue<ResourceIdentifier> TargetRoleEligibilityScheduleId { get => _targetRoleEligibilityScheduleId; set => _targetRoleEligibilityScheduleId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _targetRoleEligibilityScheduleId;
+    public BicepValue<ResourceIdentifier> TargetRoleEligibilityScheduleId 
+    {
+        get { Initialize(); return _targetRoleEligibilityScheduleId!; }
+        set { Initialize(); _targetRoleEligibilityScheduleId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _targetRoleEligibilityScheduleId;
 
     /// <summary>
     /// The role eligibility schedule instance id being updated.
     /// </summary>
-    public BicepValue<ResourceIdentifier> TargetRoleEligibilityScheduleInstanceId { get => _targetRoleEligibilityScheduleInstanceId; set => _targetRoleEligibilityScheduleInstanceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _targetRoleEligibilityScheduleInstanceId;
+    public BicepValue<ResourceIdentifier> TargetRoleEligibilityScheduleInstanceId 
+    {
+        get { Initialize(); return _targetRoleEligibilityScheduleInstanceId!; }
+        set { Initialize(); _targetRoleEligibilityScheduleInstanceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _targetRoleEligibilityScheduleInstanceId;
 
     /// <summary>
     /// Ticket Info of the role eligibility.
     /// </summary>
-    public BicepValue<RoleEligibilityScheduleRequestPropertiesTicketInfo> TicketInfo { get => _ticketInfo; set => _ticketInfo.Assign(value); }
-    private readonly BicepValue<RoleEligibilityScheduleRequestPropertiesTicketInfo> _ticketInfo;
+    public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo 
+    {
+        get { Initialize(); return _ticketInfo!; }
+        set { Initialize(); AssignOrReplace(ref _ticketInfo, value); }
+    }
+    private RoleEligibilityScheduleRequestPropertiesTicketInfo? _ticketInfo;
 
     /// <summary>
     /// The approvalId of the role eligibility schedule request.
     /// </summary>
-    public BicepValue<string> ApprovalId { get => _approvalId; }
-    private readonly BicepValue<string> _approvalId;
+    public BicepValue<string> ApprovalId 
+    {
+        get { Initialize(); return _approvalId!; }
+    }
+    private BicepValue<string>? _approvalId;
 
     /// <summary>
     /// DateTime when role eligibility schedule request was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Additional properties of principal, scope and role definition.
     /// </summary>
-    public BicepValue<RoleManagementExpandedProperties> ExpandedProperties { get => _expandedProperties; }
-    private readonly BicepValue<RoleManagementExpandedProperties> _expandedProperties;
+    public RoleManagementExpandedProperties ExpandedProperties 
+    {
+        get { Initialize(); return _expandedProperties!; }
+    }
+    private RoleManagementExpandedProperties? _expandedProperties;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The principal type of the assigned principal ID.
     /// </summary>
-    public BicepValue<RoleManagementPrincipalType> PrincipalType { get => _principalType; }
-    private readonly BicepValue<RoleManagementPrincipalType> _principalType;
+    public BicepValue<RoleManagementPrincipalType> PrincipalType 
+    {
+        get { Initialize(); return _principalType!; }
+    }
+    private BicepValue<RoleManagementPrincipalType>? _principalType;
 
     /// <summary>
     /// Id of the user who created this request.
     /// </summary>
-    public BicepValue<Guid> RequestorId { get => _requestorId; }
-    private readonly BicepValue<Guid> _requestorId;
+    public BicepValue<Guid> RequestorId 
+    {
+        get { Initialize(); return _requestorId!; }
+    }
+    private BicepValue<Guid>? _requestorId;
 
     /// <summary>
     /// The role eligibility schedule request scope.
     /// </summary>
-    public BicepValue<string> Scope { get => _scope; }
-    private readonly BicepValue<string> _scope;
+    public BicepValue<string> Scope 
+    {
+        get { Initialize(); return _scope!; }
+    }
+    private BicepValue<string>? _scope;
 
     /// <summary>
     /// The status of the role eligibility schedule request.
     /// </summary>
-    public BicepValue<RoleManagementScheduleStatus> Status { get => _status; }
-    private readonly BicepValue<RoleManagementScheduleStatus> _status;
+    public BicepValue<RoleManagementScheduleStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<RoleManagementScheduleStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new RoleEligibilityScheduleRequest.
@@ -173,29 +256,37 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     public RoleEligibilityScheduleRequest(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Authorization/roleEligibilityScheduleRequests", resourceVersion ?? "2020-10-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _condition = BicepValue<string>.DefineProperty(this, "Condition", ["properties", "condition"]);
-        _conditionVersion = BicepValue<string>.DefineProperty(this, "ConditionVersion", ["properties", "conditionVersion"]);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"]);
-        _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "endDateTime"]);
-        _expirationType = BicepValue<RoleManagementScheduleExpirationType>.DefineProperty(this, "ExpirationType", ["properties", "type"]);
-        _justification = BicepValue<string>.DefineProperty(this, "Justification", ["properties", "justification"]);
-        _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"]);
-        _requestType = BicepValue<RoleManagementScheduleRequestType>.DefineProperty(this, "RequestType", ["properties", "requestType"]);
-        _roleDefinitionId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RoleDefinitionId", ["properties", "roleDefinitionId"]);
-        _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["properties", "startDateTime"]);
-        _targetRoleEligibilityScheduleId = BicepValue<ResourceIdentifier>.DefineProperty(this, "TargetRoleEligibilityScheduleId", ["properties", "targetRoleEligibilityScheduleId"]);
-        _targetRoleEligibilityScheduleInstanceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "TargetRoleEligibilityScheduleInstanceId", ["properties", "targetRoleEligibilityScheduleInstanceId"]);
-        _ticketInfo = BicepValue<RoleEligibilityScheduleRequestPropertiesTicketInfo>.DefineProperty(this, "TicketInfo", ["properties", "ticketInfo"]);
-        _approvalId = BicepValue<string>.DefineProperty(this, "ApprovalId", ["properties", "approvalId"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _expandedProperties = BicepValue<RoleManagementExpandedProperties>.DefineProperty(this, "ExpandedProperties", ["properties", "expandedProperties"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _principalType = BicepValue<RoleManagementPrincipalType>.DefineProperty(this, "PrincipalType", ["properties", "principalType"], isOutput: true);
-        _requestorId = BicepValue<Guid>.DefineProperty(this, "RequestorId", ["properties", "requestorId"], isOutput: true);
-        _scope = BicepValue<string>.DefineProperty(this, "Scope", ["properties", "scope"], isOutput: true);
-        _status = BicepValue<RoleManagementScheduleStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// RoleEligibilityScheduleRequest.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _condition = DefineProperty<string>("Condition", ["properties", "condition"]);
+        _conditionVersion = DefineProperty<string>("ConditionVersion", ["properties", "conditionVersion"]);
+        _duration = DefineProperty<TimeSpan>("Duration", ["properties", "duration"], format: "P");
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["properties", "endDateTime"]);
+        _expirationType = DefineProperty<RoleManagementScheduleExpirationType>("ExpirationType", ["properties", "type"]);
+        _justification = DefineProperty<string>("Justification", ["properties", "justification"]);
+        _principalId = DefineProperty<Guid>("PrincipalId", ["properties", "principalId"]);
+        _requestType = DefineProperty<RoleManagementScheduleRequestType>("RequestType", ["properties", "requestType"]);
+        _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"]);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "startDateTime"]);
+        _targetRoleEligibilityScheduleId = DefineProperty<ResourceIdentifier>("TargetRoleEligibilityScheduleId", ["properties", "targetRoleEligibilityScheduleId"]);
+        _targetRoleEligibilityScheduleInstanceId = DefineProperty<ResourceIdentifier>("TargetRoleEligibilityScheduleInstanceId", ["properties", "targetRoleEligibilityScheduleInstanceId"]);
+        _ticketInfo = DefineModelProperty<RoleEligibilityScheduleRequestPropertiesTicketInfo>("TicketInfo", ["properties", "ticketInfo"]);
+        _approvalId = DefineProperty<string>("ApprovalId", ["properties", "approvalId"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _expandedProperties = DefineModelProperty<RoleManagementExpandedProperties>("ExpandedProperties", ["properties", "expandedProperties"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _principalType = DefineProperty<RoleManagementPrincipalType>("PrincipalType", ["properties", "principalType"], isOutput: true);
+        _requestorId = DefineProperty<Guid>("RequestorId", ["properties", "requestorId"], isOutput: true);
+        _scope = DefineProperty<string>("Scope", ["properties", "scope"], isOutput: true);
+        _status = DefineProperty<RoleManagementScheduleStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -203,11 +294,6 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2022-04-01-preview.
-        /// </summary>
-        public static readonly string V2022_04_01_preview = "2022-04-01-preview";
-
         /// <summary>
         /// 2020-10-01.
         /// </summary>

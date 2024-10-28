@@ -21,57 +21,91 @@ public partial class GremlinDatabase : ProvisionableResource
     /// <summary>
     /// Cosmos DB database name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The standard JSON format of a Gremlin database.
     /// </summary>
-    public BicepValue<GremlinDatabaseResourceInfo> Resource { get => _resource; set => _resource.Assign(value); }
-    private readonly BicepValue<GremlinDatabaseResourceInfo> _resource;
+    public GremlinDatabaseResourceInfo Resource 
+    {
+        get { Initialize(); return _resource!; }
+        set { Initialize(); AssignOrReplace(ref _resource, value); }
+    }
+    private GremlinDatabaseResourceInfo? _resource;
 
     /// <summary>
     /// Identity for the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// A key-value pair of options to be applied for the request. This
     /// corresponds to the headers sent with the request.
     /// </summary>
-    public BicepValue<CosmosDBCreateUpdateConfig> Options { get => _options; set => _options.Assign(value); }
-    private readonly BicepValue<CosmosDBCreateUpdateConfig> _options;
+    public CosmosDBCreateUpdateConfig Options 
+    {
+        get { Initialize(); return _options!; }
+        set { Initialize(); AssignOrReplace(ref _options, value); }
+    }
+    private CosmosDBCreateUpdateConfig? _options;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new GremlinDatabase.
@@ -86,15 +120,22 @@ public partial class GremlinDatabase : ProvisionableResource
     public GremlinDatabase(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _resource = BicepValue<GremlinDatabaseResourceInfo>.DefineProperty(this, "Resource", ["properties", "resource"], isRequired: true);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _options = BicepValue<CosmosDBCreateUpdateConfig>.DefineProperty(this, "Options", ["properties", "options"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of GremlinDatabase.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _resource = DefineModelProperty<GremlinDatabaseResourceInfo>("Resource", ["properties", "resource"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _options = DefineModelProperty<CosmosDBCreateUpdateConfig>("Options", ["properties", "options"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -102,11 +143,6 @@ public partial class GremlinDatabase : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>

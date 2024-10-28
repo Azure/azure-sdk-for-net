@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
     ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
     ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
     ///  Never - No client-driven data is pulled from cool tier to standard storage.
+    /// Serialized Name: CoolAccessRetrievalPolicy
     /// </summary>
     public readonly partial struct CoolAccessRetrievalPolicy : IEquatable<CoolAccessRetrievalPolicy>
     {
@@ -31,11 +32,20 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string OnReadValue = "OnRead";
         private const string NeverValue = "Never";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: CoolAccessRetrievalPolicy.Default
+        /// </summary>
         public static CoolAccessRetrievalPolicy Default { get; } = new CoolAccessRetrievalPolicy(DefaultValue);
-        /// <summary> OnRead. </summary>
+        /// <summary>
+        /// OnRead
+        /// Serialized Name: CoolAccessRetrievalPolicy.OnRead
+        /// </summary>
         public static CoolAccessRetrievalPolicy OnRead { get; } = new CoolAccessRetrievalPolicy(OnReadValue);
-        /// <summary> Never. </summary>
+        /// <summary>
+        /// Never
+        /// Serialized Name: CoolAccessRetrievalPolicy.Never
+        /// </summary>
         public static CoolAccessRetrievalPolicy Never { get; } = new CoolAccessRetrievalPolicy(NeverValue);
         /// <summary> Determines if two <see cref="CoolAccessRetrievalPolicy"/> values are the same. </summary>
         public static bool operator ==(CoolAccessRetrievalPolicy left, CoolAccessRetrievalPolicy right) => left.Equals(right);

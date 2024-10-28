@@ -27,9 +27,9 @@ public class Infrastructure(string bicepName = "main") : Provisionable
 
     /// <summary>
     /// Optional target scope for the infrastructure.  If left empty, then
-    /// <c>resourcegroup</c> is assumed.
+    /// <see cref="DeploymentScope.ResourceGroup"/> is assumed.
     /// </summary>
-    public string? TargetScope { get; set; }
+    public DeploymentScope? TargetScope { get; set; }
 
     // Placeholder until we get module splitting handled
     private Infrastructure? _parent = null;
@@ -52,7 +52,7 @@ public class Infrastructure(string bicepName = "main") : Provisionable
             construct.ParentInfrastructure != this)
         {
             // Don't parent expression references
-            if (construct.ExpressionOverride is not null) { return; }
+            if (((IBicepValue)construct).Kind == BicepValueKind.Expression) { return; }
 
             // Remove it from any existing Infrastructure first
             construct.ParentInfrastructure?.Remove(this);
@@ -226,9 +226,6 @@ public class Infrastructure(string bicepName = "main") : Provisionable
 
     /// <inheritdoc/>
     protected internal override IEnumerable<BicepStatement> Compile() =>
-        // TODO: For now I'm letting this through in case someone calls Compile
-        // before Build while debugging.  We could also make it a little less
-        // friendly and more predictable by throwing here.
         CompileInternal(options: null);
 
     /// <summary>
@@ -264,7 +261,16 @@ public class Infrastructure(string bicepName = "main") : Provisionable
         List<BicepStatement> statements = [];
         if (TargetScope is not null)
         {
-            statements.Add(new TargetScopeStatement(TargetScope));
+            statements.Add(
+                new TargetScopeStatement(
+                    TargetScope switch
+                    {
+                        DeploymentScope.ResourceGroup => "resourceGroup",
+                        DeploymentScope.Subscription => "subscription",
+                        DeploymentScope.ManagementGroup => "managementGroup",
+                        DeploymentScope.Tenant => "tenant",
+                        _ => throw new InvalidOperationException($"Unknown deployment scope: {TargetScope}")
+                    }));
         }
 
         IEnumerable<Provisionable> resources = GetProvisionableResources();

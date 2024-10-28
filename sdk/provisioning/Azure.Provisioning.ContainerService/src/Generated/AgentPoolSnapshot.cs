@@ -21,83 +21,127 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// <summary>
     /// The name of the managed cluster resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// This is the ARM ID of the source object to be used to create the target
     /// object.
     /// </summary>
-    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId { get => _creationDataSourceResourceId; set => _creationDataSourceResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _creationDataSourceResourceId;
+    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
+    {
+        get { Initialize(); return _creationDataSourceResourceId!; }
+        set { Initialize(); _creationDataSourceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
 
     /// <summary>
     /// The type of a snapshot. The default is NodePool.
     /// </summary>
-    public BicepValue<SnapshotType> SnapshotType { get => _snapshotType; set => _snapshotType.Assign(value); }
-    private readonly BicepValue<SnapshotType> _snapshotType;
+    public BicepValue<SnapshotType> SnapshotType 
+    {
+        get { Initialize(); return _snapshotType!; }
+        set { Initialize(); _snapshotType!.Assign(value); }
+    }
+    private BicepValue<SnapshotType>? _snapshotType;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Whether to use a FIPS-enabled OS.
     /// </summary>
-    public BicepValue<bool> EnableFips { get => _enableFips; }
-    private readonly BicepValue<bool> _enableFips;
+    public BicepValue<bool> EnableFips 
+    {
+        get { Initialize(); return _enableFips!; }
+    }
+    private BicepValue<bool>? _enableFips;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The version of Kubernetes.
     /// </summary>
-    public BicepValue<string> KubernetesVersion { get => _kubernetesVersion; }
-    private readonly BicepValue<string> _kubernetesVersion;
+    public BicepValue<string> KubernetesVersion 
+    {
+        get { Initialize(); return _kubernetesVersion!; }
+    }
+    private BicepValue<string>? _kubernetesVersion;
 
     /// <summary>
     /// The version of node image.
     /// </summary>
-    public BicepValue<string> NodeImageVersion { get => _nodeImageVersion; }
-    private readonly BicepValue<string> _nodeImageVersion;
+    public BicepValue<string> NodeImageVersion 
+    {
+        get { Initialize(); return _nodeImageVersion!; }
+    }
+    private BicepValue<string>? _nodeImageVersion;
 
     /// <summary>
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
     /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24
     /// or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
     /// </summary>
-    public BicepValue<ContainerServiceOSSku> OSSku { get => _oSSku; }
-    private readonly BicepValue<ContainerServiceOSSku> _oSSku;
+    public BicepValue<ContainerServiceOSSku> OSSku 
+    {
+        get { Initialize(); return _oSSku!; }
+    }
+    private BicepValue<ContainerServiceOSSku>? _oSSku;
 
     /// <summary>
     /// The operating system type. The default is Linux.
     /// </summary>
-    public BicepValue<ContainerServiceOSType> OSType { get => _oSType; }
-    private readonly BicepValue<ContainerServiceOSType> _oSType;
+    public BicepValue<ContainerServiceOSType> OSType 
+    {
+        get { Initialize(); return _oSType!; }
+    }
+    private BicepValue<ContainerServiceOSType>? _oSType;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The size of the VM.
     /// </summary>
-    public BicepValue<string> VmSize { get => _vmSize; }
-    private readonly BicepValue<string> _vmSize;
+    public BicepValue<string> VmSize 
+    {
+        get { Initialize(); return _vmSize!; }
+    }
+    private BicepValue<string>? _vmSize;
 
     /// <summary>
     /// Creates a new AgentPoolSnapshot.
@@ -112,19 +156,26 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     public AgentPoolSnapshot(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _creationDataSourceResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
-        _snapshotType = BicepValue<SnapshotType>.DefineProperty(this, "SnapshotType", ["properties", "snapshotType"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _enableFips = BicepValue<bool>.DefineProperty(this, "EnableFips", ["properties", "enableFIPS"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kubernetesVersion = BicepValue<string>.DefineProperty(this, "KubernetesVersion", ["properties", "kubernetesVersion"], isOutput: true);
-        _nodeImageVersion = BicepValue<string>.DefineProperty(this, "NodeImageVersion", ["properties", "nodeImageVersion"], isOutput: true);
-        _oSSku = BicepValue<ContainerServiceOSSku>.DefineProperty(this, "OSSku", ["properties", "osSku"], isOutput: true);
-        _oSType = BicepValue<ContainerServiceOSType>.DefineProperty(this, "OSType", ["properties", "osType"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _vmSize = BicepValue<string>.DefineProperty(this, "VmSize", ["properties", "vmSize"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AgentPoolSnapshot.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
+        _snapshotType = DefineProperty<SnapshotType>("SnapshotType", ["properties", "snapshotType"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _enableFips = DefineProperty<bool>("EnableFips", ["properties", "enableFIPS"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kubernetesVersion = DefineProperty<string>("KubernetesVersion", ["properties", "kubernetesVersion"], isOutput: true);
+        _nodeImageVersion = DefineProperty<string>("NodeImageVersion", ["properties", "nodeImageVersion"], isOutput: true);
+        _oSSku = DefineProperty<ContainerServiceOSSku>("OSSku", ["properties", "osSku"], isOutput: true);
+        _oSType = DefineProperty<ContainerServiceOSType>("OSType", ["properties", "osType"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _vmSize = DefineProperty<string>("VmSize", ["properties", "vmSize"], isOutput: true);
     }
 
     /// <summary>
@@ -132,11 +183,6 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-08-01.
         /// </summary>

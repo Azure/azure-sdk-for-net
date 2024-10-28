@@ -20,41 +20,62 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The differential backup interval in hours. This is how many interval
     /// hours between each differential backup will be supported. This is only
     /// applicable to live databases but not dropped databases.
     /// </summary>
-    public BicepValue<int> DiffBackupIntervalInHours { get => _diffBackupIntervalInHours; set => _diffBackupIntervalInHours.Assign(value); }
-    private readonly BicepValue<int> _diffBackupIntervalInHours;
+    public BicepValue<int> DiffBackupIntervalInHours 
+    {
+        get { Initialize(); return _diffBackupIntervalInHours!; }
+        set { Initialize(); _diffBackupIntervalInHours!.Assign(value); }
+    }
+    private BicepValue<int>? _diffBackupIntervalInHours;
 
     /// <summary>
     /// The backup retention period in days. This is how many days
     /// Point-in-Time Restore will be supported.
     /// </summary>
-    public BicepValue<int> RetentionDays { get => _retentionDays; set => _retentionDays.Assign(value); }
-    private readonly BicepValue<int> _retentionDays;
+    public BicepValue<int> RetentionDays 
+    {
+        get { Initialize(); return _retentionDays!; }
+        set { Initialize(); _retentionDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionDays;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new BackupShortTermRetentionPolicy.
@@ -69,12 +90,20 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     public BackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _diffBackupIntervalInHours = BicepValue<int>.DefineProperty(this, "DiffBackupIntervalInHours", ["properties", "diffBackupIntervalInHours"]);
-        _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// BackupShortTermRetentionPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _diffBackupIntervalInHours = DefineProperty<int>("DiffBackupIntervalInHours", ["properties", "diffBackupIntervalInHours"]);
+        _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -82,11 +111,6 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

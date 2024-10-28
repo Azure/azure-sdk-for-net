@@ -25,128 +25,198 @@ public partial class ConnectedCluster : ProvisionableResource
     /// <summary>
     /// The name of the Kubernetes cluster on which get is called.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Base64 encoded public certificate used by the agent to do the initial
     /// handshake to the backend services in Azure.
     /// </summary>
-    public BicepValue<string> AgentPublicKeyCertificate { get => _agentPublicKeyCertificate; set => _agentPublicKeyCertificate.Assign(value); }
-    private readonly BicepValue<string> _agentPublicKeyCertificate;
+    public BicepValue<string> AgentPublicKeyCertificate 
+    {
+        get { Initialize(); return _agentPublicKeyCertificate!; }
+        set { Initialize(); _agentPublicKeyCertificate!.Assign(value); }
+    }
+    private BicepValue<string>? _agentPublicKeyCertificate;
 
     /// <summary>
     /// The identity of the connected cluster. Current supported identity
     /// types: None, SystemAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The Kubernetes distribution running on this connected cluster.
     /// </summary>
-    public BicepValue<string> Distribution { get => _distribution; set => _distribution.Assign(value); }
-    private readonly BicepValue<string> _distribution;
+    public BicepValue<string> Distribution 
+    {
+        get { Initialize(); return _distribution!; }
+        set { Initialize(); _distribution!.Assign(value); }
+    }
+    private BicepValue<string>? _distribution;
 
     /// <summary>
     /// The infrastructure on which the Kubernetes cluster represented by this
     /// connected cluster is running on.
     /// </summary>
-    public BicepValue<string> Infrastructure { get => _infrastructure; set => _infrastructure.Assign(value); }
-    private readonly BicepValue<string> _infrastructure;
+    public BicepValue<string> Infrastructure 
+    {
+        get { Initialize(); return _infrastructure!; }
+        set { Initialize(); _infrastructure!.Assign(value); }
+    }
+    private BicepValue<string>? _infrastructure;
 
     /// <summary>
     /// The resource id of the private link scope this connected cluster is
     /// assigned to, if any.
     /// </summary>
-    public BicepValue<string> PrivateLinkScopeResourceId { get => _privateLinkScopeResourceId; set => _privateLinkScopeResourceId.Assign(value); }
-    private readonly BicepValue<string> _privateLinkScopeResourceId;
+    public BicepValue<string> PrivateLinkScopeResourceId 
+    {
+        get { Initialize(); return _privateLinkScopeResourceId!; }
+        set { Initialize(); _privateLinkScopeResourceId!.Assign(value); }
+    }
+    private BicepValue<string>? _privateLinkScopeResourceId;
 
     /// <summary>
     /// Property which describes the state of private link on a connected
     /// cluster resource.
     /// </summary>
-    public BicepValue<PrivateLinkState> PrivateLinkState { get => _privateLinkState; set => _privateLinkState.Assign(value); }
-    private readonly BicepValue<PrivateLinkState> _privateLinkState;
+    public BicepValue<PrivateLinkState> PrivateLinkState 
+    {
+        get { Initialize(); return _privateLinkState!; }
+        set { Initialize(); _privateLinkState!.Assign(value); }
+    }
+    private BicepValue<PrivateLinkState>? _privateLinkState;
 
     /// <summary>
     /// Provisioning state of the connected cluster resource.
     /// </summary>
-    public BicepValue<ProvisioningState> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<ProvisioningState> _provisioningState;
+    public BicepValue<ProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<ProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Version of the agent running on the connected cluster resource.
     /// </summary>
-    public BicepValue<string> AgentVersion { get => _agentVersion; }
-    private readonly BicepValue<string> _agentVersion;
+    public BicepValue<string> AgentVersion 
+    {
+        get { Initialize(); return _agentVersion!; }
+    }
+    private BicepValue<string>? _agentVersion;
 
     /// <summary>
     /// Represents the connectivity status of the connected cluster.
     /// </summary>
-    public BicepValue<ConnectivityStatus> ConnectivityStatus { get => _connectivityStatus; }
-    private readonly BicepValue<ConnectivityStatus> _connectivityStatus;
+    public BicepValue<ConnectivityStatus> ConnectivityStatus 
+    {
+        get { Initialize(); return _connectivityStatus!; }
+    }
+    private BicepValue<ConnectivityStatus>? _connectivityStatus;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The Kubernetes version of the connected cluster resource.
     /// </summary>
-    public BicepValue<string> KubernetesVersion { get => _kubernetesVersion; }
-    private readonly BicepValue<string> _kubernetesVersion;
+    public BicepValue<string> KubernetesVersion 
+    {
+        get { Initialize(); return _kubernetesVersion!; }
+    }
+    private BicepValue<string>? _kubernetesVersion;
 
     /// <summary>
     /// Time representing the last instance when heart beat was received from
     /// the cluster.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastConnectivityOn { get => _lastConnectivityOn; }
-    private readonly BicepValue<DateTimeOffset> _lastConnectivityOn;
+    public BicepValue<DateTimeOffset> LastConnectivityOn 
+    {
+        get { Initialize(); return _lastConnectivityOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastConnectivityOn;
 
     /// <summary>
     /// Expiration time of the managed identity certificate.
     /// </summary>
-    public BicepValue<DateTimeOffset> ManagedIdentityCertificateExpirationOn { get => _managedIdentityCertificateExpirationOn; }
-    private readonly BicepValue<DateTimeOffset> _managedIdentityCertificateExpirationOn;
+    public BicepValue<DateTimeOffset> ManagedIdentityCertificateExpirationOn 
+    {
+        get { Initialize(); return _managedIdentityCertificateExpirationOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _managedIdentityCertificateExpirationOn;
 
     /// <summary>
     /// Connected cluster offering.
     /// </summary>
-    public BicepValue<string> Offering { get => _offering; }
-    private readonly BicepValue<string> _offering;
+    public BicepValue<string> Offering 
+    {
+        get { Initialize(); return _offering!; }
+    }
+    private BicepValue<string>? _offering;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Number of CPU cores present in the connected cluster resource.
     /// </summary>
-    public BicepValue<int> TotalCoreCount { get => _totalCoreCount; }
-    private readonly BicepValue<int> _totalCoreCount;
+    public BicepValue<int> TotalCoreCount 
+    {
+        get { Initialize(); return _totalCoreCount!; }
+    }
+    private BicepValue<int>? _totalCoreCount;
 
     /// <summary>
     /// Number of nodes present in the connected cluster resource.
     /// </summary>
-    public BicepValue<int> TotalNodeCount { get => _totalNodeCount; }
-    private readonly BicepValue<int> _totalNodeCount;
+    public BicepValue<int> TotalNodeCount 
+    {
+        get { Initialize(); return _totalNodeCount!; }
+    }
+    private BicepValue<int>? _totalNodeCount;
 
     /// <summary>
     /// Creates a new ConnectedCluster.
@@ -161,26 +231,33 @@ public partial class ConnectedCluster : ProvisionableResource
     public ConnectedCluster(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _agentPublicKeyCertificate = BicepValue<string>.DefineProperty(this, "AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _distribution = BicepValue<string>.DefineProperty(this, "Distribution", ["properties", "distribution"]);
-        _infrastructure = BicepValue<string>.DefineProperty(this, "Infrastructure", ["properties", "infrastructure"]);
-        _privateLinkScopeResourceId = BicepValue<string>.DefineProperty(this, "PrivateLinkScopeResourceId", ["properties", "privateLinkScopeResourceId"]);
-        _privateLinkState = BicepValue<PrivateLinkState>.DefineProperty(this, "PrivateLinkState", ["properties", "privateLinkState"]);
-        _provisioningState = BicepValue<ProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _agentVersion = BicepValue<string>.DefineProperty(this, "AgentVersion", ["properties", "agentVersion"], isOutput: true);
-        _connectivityStatus = BicepValue<ConnectivityStatus>.DefineProperty(this, "ConnectivityStatus", ["properties", "connectivityStatus"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kubernetesVersion = BicepValue<string>.DefineProperty(this, "KubernetesVersion", ["properties", "kubernetesVersion"], isOutput: true);
-        _lastConnectivityOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastConnectivityOn", ["properties", "lastConnectivityTime"], isOutput: true);
-        _managedIdentityCertificateExpirationOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ManagedIdentityCertificateExpirationOn", ["properties", "managedIdentityCertificateExpirationTime"], isOutput: true);
-        _offering = BicepValue<string>.DefineProperty(this, "Offering", ["properties", "offering"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _totalCoreCount = BicepValue<int>.DefineProperty(this, "TotalCoreCount", ["properties", "totalCoreCount"], isOutput: true);
-        _totalNodeCount = BicepValue<int>.DefineProperty(this, "TotalNodeCount", ["properties", "totalNodeCount"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ConnectedCluster.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _agentPublicKeyCertificate = DefineProperty<string>("AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _distribution = DefineProperty<string>("Distribution", ["properties", "distribution"]);
+        _infrastructure = DefineProperty<string>("Infrastructure", ["properties", "infrastructure"]);
+        _privateLinkScopeResourceId = DefineProperty<string>("PrivateLinkScopeResourceId", ["properties", "privateLinkScopeResourceId"]);
+        _privateLinkState = DefineProperty<PrivateLinkState>("PrivateLinkState", ["properties", "privateLinkState"]);
+        _provisioningState = DefineProperty<ProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _agentVersion = DefineProperty<string>("AgentVersion", ["properties", "agentVersion"], isOutput: true);
+        _connectivityStatus = DefineProperty<ConnectivityStatus>("ConnectivityStatus", ["properties", "connectivityStatus"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kubernetesVersion = DefineProperty<string>("KubernetesVersion", ["properties", "kubernetesVersion"], isOutput: true);
+        _lastConnectivityOn = DefineProperty<DateTimeOffset>("LastConnectivityOn", ["properties", "lastConnectivityTime"], isOutput: true);
+        _managedIdentityCertificateExpirationOn = DefineProperty<DateTimeOffset>("ManagedIdentityCertificateExpirationOn", ["properties", "managedIdentityCertificateExpirationTime"], isOutput: true);
+        _offering = DefineProperty<string>("Offering", ["properties", "offering"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _totalCoreCount = DefineProperty<int>("TotalCoreCount", ["properties", "totalCoreCount"], isOutput: true);
+        _totalNodeCount = DefineProperty<int>("TotalNodeCount", ["properties", "totalNodeCount"], isOutput: true);
     }
 
     /// <summary>
@@ -188,11 +265,6 @@ public partial class ConnectedCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-07-15-preview.
-        /// </summary>
-        public static readonly string V2024_07_15_preview = "2024-07-15-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>

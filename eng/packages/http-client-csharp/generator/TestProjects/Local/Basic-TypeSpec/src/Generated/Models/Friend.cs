@@ -14,7 +14,7 @@ namespace BasicTypeSpec.Models
     public partial class Friend
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal Friend(string name)
         {
@@ -28,6 +28,6 @@ namespace BasicTypeSpec.Models
         }
 
         /// <summary> name of the NotFriend. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

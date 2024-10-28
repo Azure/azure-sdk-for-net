@@ -20,60 +20,93 @@ public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     /// <summary>
     /// The permission binding name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The name of the client group resource that the permission is bound to.
     /// The client group needs to be a resource under the same
     /// namespace the permission binding is a part of.
     /// </summary>
-    public BicepValue<string> ClientGroupName { get => _clientGroupName; set => _clientGroupName.Assign(value); }
-    private readonly BicepValue<string> _clientGroupName;
+    public BicepValue<string> ClientGroupName 
+    {
+        get { Initialize(); return _clientGroupName!; }
+        set { Initialize(); _clientGroupName!.Assign(value); }
+    }
+    private BicepValue<string>? _clientGroupName;
 
     /// <summary>
     /// Description for the Permission Binding resource.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The allowed permission.
     /// </summary>
-    public BicepValue<PermissionType> Permission { get => _permission; set => _permission.Assign(value); }
-    private readonly BicepValue<PermissionType> _permission;
+    public BicepValue<PermissionType> Permission 
+    {
+        get { Initialize(); return _permission!; }
+        set { Initialize(); _permission!.Assign(value); }
+    }
+    private BicepValue<PermissionType>? _permission;
 
     /// <summary>
     /// The name of the Topic Space resource that the permission is bound to.
     /// The Topic space needs to be a resource under the same
     /// namespace the permission binding is a part of.
     /// </summary>
-    public BicepValue<string> TopicSpaceName { get => _topicSpaceName; set => _topicSpaceName.Assign(value); }
-    private readonly BicepValue<string> _topicSpaceName;
+    public BicepValue<string> TopicSpaceName 
+    {
+        get { Initialize(); return _topicSpaceName!; }
+        set { Initialize(); _topicSpaceName!.Assign(value); }
+    }
+    private BicepValue<string>? _topicSpaceName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the PermissionBinding resource.
     /// </summary>
-    public BicepValue<PermissionBindingProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<PermissionBindingProvisioningState> _provisioningState;
+    public BicepValue<PermissionBindingProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<PermissionBindingProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventGridNamespacePermissionBinding.
@@ -86,17 +119,25 @@ public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespacePermissionBinding.</param>
     public EventGridNamespacePermissionBinding(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/permissionBindings", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _clientGroupName = BicepValue<string>.DefineProperty(this, "ClientGroupName", ["properties", "clientGroupName"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _permission = BicepValue<PermissionType>.DefineProperty(this, "Permission", ["properties", "permission"]);
-        _topicSpaceName = BicepValue<string>.DefineProperty(this, "TopicSpaceName", ["properties", "topicSpaceName"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<PermissionBindingProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// EventGridNamespacePermissionBinding.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _clientGroupName = DefineProperty<string>("ClientGroupName", ["properties", "clientGroupName"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _permission = DefineProperty<PermissionType>("Permission", ["properties", "permission"]);
+        _topicSpaceName = DefineProperty<string>("TopicSpaceName", ["properties", "topicSpaceName"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<PermissionBindingProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -104,12 +145,7 @@ public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing EventGridNamespacePermissionBinding.
     /// </summary>

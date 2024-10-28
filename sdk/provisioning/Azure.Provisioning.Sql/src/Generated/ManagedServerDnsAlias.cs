@@ -20,44 +20,68 @@ public partial class ManagedServerDnsAlias : ProvisionableResource
     /// <summary>
     /// The System.String to use.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Whether or not DNS record should be created for this alias.
     /// </summary>
-    public BicepValue<bool> CreateDnsRecord { get => _createDnsRecord; set => _createDnsRecord.Assign(value); }
-    private readonly BicepValue<bool> _createDnsRecord;
+    public BicepValue<bool> CreateDnsRecord 
+    {
+        get { Initialize(); return _createDnsRecord!; }
+        set { Initialize(); _createDnsRecord!.Assign(value); }
+    }
+    private BicepValue<bool>? _createDnsRecord;
 
     /// <summary>
     /// The fully qualified DNS record for managed server alias.
     /// </summary>
-    public BicepValue<string> AzureDnsRecord { get => _azureDnsRecord; }
-    private readonly BicepValue<string> _azureDnsRecord;
+    public BicepValue<string> AzureDnsRecord 
+    {
+        get { Initialize(); return _azureDnsRecord!; }
+    }
+    private BicepValue<string>? _azureDnsRecord;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The fully qualified public DNS record for managed server alias.
     /// </summary>
-    public BicepValue<string> PublicAzureDnsRecord { get => _publicAzureDnsRecord; }
-    private readonly BicepValue<string> _publicAzureDnsRecord;
+    public BicepValue<string> PublicAzureDnsRecord 
+    {
+        get { Initialize(); return _publicAzureDnsRecord!; }
+    }
+    private BicepValue<string>? _publicAzureDnsRecord;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedServerDnsAlias.
@@ -72,13 +96,20 @@ public partial class ManagedServerDnsAlias : ProvisionableResource
     public ManagedServerDnsAlias(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/managedInstances/dnsAliases", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _createDnsRecord = BicepValue<bool>.DefineProperty(this, "CreateDnsRecord", ["createDnsRecord"]);
-        _azureDnsRecord = BicepValue<string>.DefineProperty(this, "AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _publicAzureDnsRecord = BicepValue<string>.DefineProperty(this, "PublicAzureDnsRecord", ["properties", "publicAzureDnsRecord"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagedServerDnsAlias.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _createDnsRecord = DefineProperty<bool>("CreateDnsRecord", ["createDnsRecord"]);
+        _azureDnsRecord = DefineProperty<string>("AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _publicAzureDnsRecord = DefineProperty<string>("PublicAzureDnsRecord", ["properties", "publicAzureDnsRecord"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -86,11 +117,6 @@ public partial class ManagedServerDnsAlias : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

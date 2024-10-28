@@ -766,6 +766,7 @@ namespace Azure.Communication.CallAutomation
         internal DialogSensitivityUpdate() { }
         public string DialogId { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
+        public bool? SensitiveMask { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogSensitivityUpdate Deserialize(string content) { throw null; }
     }
     public partial class DialogStarted : Azure.Communication.CallAutomation.CallAutomationEventBase

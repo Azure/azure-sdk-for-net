@@ -20,8 +20,11 @@ public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The unique identifier for the associated AAD principal in the AAD graph
@@ -29,39 +32,61 @@ public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
     /// ID for the principal is inferred using the tenant associated with the
     /// subscription.
     /// </summary>
-    public BicepValue<Guid> PrincipalId { get => _principalId; set => _principalId.Assign(value); }
-    private readonly BicepValue<Guid> _principalId;
+    public BicepValue<Guid> PrincipalId 
+    {
+        get { Initialize(); return _principalId!; }
+        set { Initialize(); _principalId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _principalId;
 
     /// <summary>
     /// The unique identifier for the associated Role Definition.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RoleDefinitionId { get => _roleDefinitionId; set => _roleDefinitionId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _roleDefinitionId;
+    public BicepValue<ResourceIdentifier> RoleDefinitionId 
+    {
+        get { Initialize(); return _roleDefinitionId!; }
+        set { Initialize(); _roleDefinitionId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _roleDefinitionId;
 
     /// <summary>
     /// The data plane resource path for which access is being granted through
     /// this Role Assignment.
     /// </summary>
-    public BicepValue<string> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<string> _scope;
+    public BicepValue<string> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<string>? _scope;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new CosmosDBSqlRoleAssignment.
@@ -76,13 +101,20 @@ public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
     public CosmosDBSqlRoleAssignment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _principalId = BicepValue<Guid>.DefineProperty(this, "PrincipalId", ["properties", "principalId"]);
-        _roleDefinitionId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RoleDefinitionId", ["properties", "roleDefinitionId"]);
-        _scope = BicepValue<string>.DefineProperty(this, "Scope", ["properties", "scope"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CosmosDBSqlRoleAssignment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _principalId = DefineProperty<Guid>("PrincipalId", ["properties", "principalId"]);
+        _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"]);
+        _scope = DefineProperty<string>("Scope", ["properties", "scope"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -90,11 +122,6 @@ public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>

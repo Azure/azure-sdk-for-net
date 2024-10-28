@@ -20,56 +20,87 @@ public partial class CaCertificate : ProvisionableResource
     /// <summary>
     /// The CA certificate name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Description for the CA Certificate resource.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Base64 encoded PEM (Privacy Enhanced Mail) format certificate data.
     /// </summary>
-    public BicepValue<string> EncodedCertificate { get => _encodedCertificate; set => _encodedCertificate.Assign(value); }
-    private readonly BicepValue<string> _encodedCertificate;
+    public BicepValue<string> EncodedCertificate 
+    {
+        get { Initialize(); return _encodedCertificate!; }
+        set { Initialize(); _encodedCertificate!.Assign(value); }
+    }
+    private BicepValue<string>? _encodedCertificate;
 
     /// <summary>
     /// Certificate expiry time in UTC. This is a read-only field.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpiryTimeInUtc { get => _expiryTimeInUtc; }
-    private readonly BicepValue<DateTimeOffset> _expiryTimeInUtc;
+    public BicepValue<DateTimeOffset> ExpiryTimeInUtc 
+    {
+        get { Initialize(); return _expiryTimeInUtc!; }
+    }
+    private BicepValue<DateTimeOffset>? _expiryTimeInUtc;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Certificate issue time in UTC. This is a read-only field.
     /// </summary>
-    public BicepValue<DateTimeOffset> IssueTimeInUtc { get => _issueTimeInUtc; }
-    private readonly BicepValue<DateTimeOffset> _issueTimeInUtc;
+    public BicepValue<DateTimeOffset> IssueTimeInUtc 
+    {
+        get { Initialize(); return _issueTimeInUtc!; }
+    }
+    private BicepValue<DateTimeOffset>? _issueTimeInUtc;
 
     /// <summary>
     /// Provisioning state of the CA Certificate resource.
     /// </summary>
-    public BicepValue<CaCertificateProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<CaCertificateProvisioningState> _provisioningState;
+    public BicepValue<CaCertificateProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<CaCertificateProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new CaCertificate.
@@ -82,17 +113,24 @@ public partial class CaCertificate : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CaCertificate.</param>
     public CaCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _encodedCertificate = BicepValue<string>.DefineProperty(this, "EncodedCertificate", ["properties", "encodedCertificate"]);
-        _expiryTimeInUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpiryTimeInUtc", ["properties", "expiryTimeInUtc"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _issueTimeInUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "IssueTimeInUtc", ["properties", "issueTimeInUtc"], isOutput: true);
-        _provisioningState = BicepValue<CaCertificateProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CaCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _encodedCertificate = DefineProperty<string>("EncodedCertificate", ["properties", "encodedCertificate"]);
+        _expiryTimeInUtc = DefineProperty<DateTimeOffset>("ExpiryTimeInUtc", ["properties", "expiryTimeInUtc"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _issueTimeInUtc = DefineProperty<DateTimeOffset>("IssueTimeInUtc", ["properties", "issueTimeInUtc"], isOutput: true);
+        _provisioningState = DefineProperty<CaCertificateProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -100,12 +138,7 @@ public partial class CaCertificate : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing CaCertificate.
     /// </summary>

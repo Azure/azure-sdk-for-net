@@ -21,44 +21,69 @@ public partial class PartnerConfiguration : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The details of authorized partners.
     /// </summary>
-    public BicepValue<PartnerAuthorization> PartnerAuthorization { get => _partnerAuthorization; set => _partnerAuthorization.Assign(value); }
-    private readonly BicepValue<PartnerAuthorization> _partnerAuthorization;
+    public PartnerAuthorization PartnerAuthorization 
+    {
+        get { Initialize(); return _partnerAuthorization!; }
+        set { Initialize(); AssignOrReplace(ref _partnerAuthorization, value); }
+    }
+    private PartnerAuthorization? _partnerAuthorization;
 
     /// <summary>
     /// Provisioning state of the partner configuration.
     /// </summary>
-    public BicepValue<PartnerConfigurationProvisioningState> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<PartnerConfigurationProvisioningState> _provisioningState;
+    public BicepValue<PartnerConfigurationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<PartnerConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PartnerConfiguration.
@@ -73,13 +98,20 @@ public partial class PartnerConfiguration : ProvisionableResource
     public PartnerConfiguration(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventGrid/partnerConfigurations", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _partnerAuthorization = BicepValue<PartnerAuthorization>.DefineProperty(this, "PartnerAuthorization", ["properties", "partnerAuthorization"]);
-        _provisioningState = BicepValue<PartnerConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PartnerConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _partnerAuthorization = DefineModelProperty<PartnerAuthorization>("PartnerAuthorization", ["properties", "partnerAuthorization"]);
+        _provisioningState = DefineProperty<PartnerConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -87,11 +119,6 @@ public partial class PartnerConfiguration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>

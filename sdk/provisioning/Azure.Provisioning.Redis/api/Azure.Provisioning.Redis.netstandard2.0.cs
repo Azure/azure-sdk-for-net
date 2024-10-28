@@ -28,8 +28,7 @@ namespace Azure.Provisioning.Redis
         public RedisAccessKeys() { }
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.Redis.RedisAccessKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
+        protected override void DefineProvisionableProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisBuiltInRole : System.IEquatable<Azure.Provisioning.Redis.RedisBuiltInRole>
@@ -58,8 +57,9 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.Redis.RedisResource? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permissions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.AccessPolicyProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.AccessPolicyType> TypePropertiesType { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisCacheAccessPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -79,7 +79,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisCacheAccessPolicyAssignment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -92,7 +91,8 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> ObjectIdAlias { get { throw null; } set { } }
         public Azure.Provisioning.Redis.RedisResource? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.AccessPolicyAssignmentProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisCacheAccessPolicyAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -112,7 +112,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisCommonConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -138,6 +137,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> RdbStorageConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageSubscriptionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ZonalConfiguration { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisDayOfWeek
     {
@@ -159,7 +159,8 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Redis.RedisResource? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StartIP { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -181,7 +182,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisInstanceDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -193,6 +193,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<int> ShardId { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> SslPort { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Zone { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisLinkedServerRole
     {
@@ -211,7 +212,8 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> PrimaryHostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisLinkedServerRole> ServerRole { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisLinkedServerWithProperty FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -231,7 +233,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisPatchSchedule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -242,7 +243,8 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Redis.RedisResource? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisPatchScheduleSetting> ScheduleEntries { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisPatchSchedule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -262,7 +264,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public enum RedisPatchScheduleDefaultName
@@ -276,6 +277,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisDayOfWeek> DayOfWeek { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> MaintenanceWindow { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> StartHourUtc { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class RedisPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -284,9 +286,10 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Redis.RedisResource? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPrivateLinkServiceConnectionState> RedisPrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.Redis.RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPrivateEndpointConnectionProvisioningState> RedisProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -299,7 +302,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -308,9 +310,10 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPrivateLinkServiceConnectionState> RedisPrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.Redis.RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPrivateEndpointConnectionProvisioningState> RedisProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisPrivateEndpointConnectionProvisioningState
     {
@@ -331,6 +334,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> ActionsRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPrivateEndpointServiceConnectionStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisProvisioningState
     {
@@ -356,11 +360,11 @@ namespace Azure.Provisioning.Redis
     public partial class RedisResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public RedisResource(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisAccessKeys> AccessKeys { get { throw null; } }
+        public Azure.Provisioning.Redis.RedisAccessKeys AccessKeys { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> EnableNonSslPort { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisInstanceDetails> Instances { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAccessKeyAuthenticationDisabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> LinkedServers { get { throw null; } }
@@ -371,22 +375,23 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisCommonConfiguration> RedisConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Redis.RedisCommonConfiguration RedisConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RedisVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicasPerMaster { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicasPerPrimary { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ShardCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisSku> Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Redis.RedisSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SslPort { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StaticIP { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> TenantSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.UpdateChannel> UpdateChannel { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Redis.RedisBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Redis.RedisBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Redis.RedisResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.Redis.RedisAccessKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -409,7 +414,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class RedisSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -418,6 +422,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisSkuFamily> Family { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisSkuName> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum RedisSkuFamily
     {

@@ -22,38 +22,60 @@ public partial class PostgreSqlFirewallRule : ProvisionableResource
     /// <summary>
     /// The name of the server firewall rule.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The end IP address of the server firewall rule. Must be IPv4 format.
     /// </summary>
-    public BicepValue<IPAddress> EndIPAddress { get => _endIPAddress; set => _endIPAddress.Assign(value); }
-    private readonly BicepValue<IPAddress> _endIPAddress;
+    public BicepValue<IPAddress> EndIPAddress 
+    {
+        get { Initialize(); return _endIPAddress!; }
+        set { Initialize(); _endIPAddress!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _endIPAddress;
 
     /// <summary>
     /// The start IP address of the server firewall rule. Must be IPv4 format.
     /// </summary>
-    public BicepValue<IPAddress> StartIPAddress { get => _startIPAddress; set => _startIPAddress.Assign(value); }
-    private readonly BicepValue<IPAddress> _startIPAddress;
+    public BicepValue<IPAddress> StartIPAddress 
+    {
+        get { Initialize(); return _startIPAddress!; }
+        set { Initialize(); _startIPAddress!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _startIPAddress;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlServer.
     /// </summary>
-    public PostgreSqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlServer> _parent;
+    public PostgreSqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlFirewallRule.
@@ -68,12 +90,19 @@ public partial class PostgreSqlFirewallRule : ProvisionableResource
     public PostgreSqlFirewallRule(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/firewallRules", resourceVersion ?? "2017-12-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIPAddress = BicepValue<IPAddress>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
-        _startIPAddress = BicepValue<IPAddress>.DefineProperty(this, "StartIPAddress", ["properties", "startIpAddress"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlFirewallRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _endIPAddress = DefineProperty<IPAddress>("EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
+        _startIPAddress = DefineProperty<IPAddress>("StartIPAddress", ["properties", "startIpAddress"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -81,11 +110,6 @@ public partial class PostgreSqlFirewallRule : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2017-12-01-preview.
-        /// </summary>
-        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
-
         /// <summary>
         /// 2017-12-01.
         /// </summary>

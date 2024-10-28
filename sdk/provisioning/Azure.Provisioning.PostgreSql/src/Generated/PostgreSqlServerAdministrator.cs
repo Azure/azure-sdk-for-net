@@ -20,50 +20,79 @@ public partial class PostgreSqlServerAdministrator : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The type of administrator.
     /// </summary>
-    public BicepValue<PostgreSqlAdministratorType> AdministratorType { get => _administratorType; set => _administratorType.Assign(value); }
-    private readonly BicepValue<PostgreSqlAdministratorType> _administratorType;
+    public BicepValue<PostgreSqlAdministratorType> AdministratorType 
+    {
+        get { Initialize(); return _administratorType!; }
+        set { Initialize(); _administratorType!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlAdministratorType>? _administratorType;
 
     /// <summary>
     /// The server administrator login account name.
     /// </summary>
-    public BicepValue<string> LoginAccountName { get => _loginAccountName; set => _loginAccountName.Assign(value); }
-    private readonly BicepValue<string> _loginAccountName;
+    public BicepValue<string> LoginAccountName 
+    {
+        get { Initialize(); return _loginAccountName!; }
+        set { Initialize(); _loginAccountName!.Assign(value); }
+    }
+    private BicepValue<string>? _loginAccountName;
 
     /// <summary>
     /// The server administrator Sid (Secure ID).
     /// </summary>
-    public BicepValue<Guid> SecureId { get => _secureId; set => _secureId.Assign(value); }
-    private readonly BicepValue<Guid> _secureId;
+    public BicepValue<Guid> SecureId 
+    {
+        get { Initialize(); return _secureId!; }
+        set { Initialize(); _secureId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _secureId;
 
     /// <summary>
     /// The server Active Directory Administrator tenant id.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; set => _tenantId.Assign(value); }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+        set { Initialize(); _tenantId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlServer.
     /// </summary>
-    public PostgreSqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlServer> _parent;
+    public PostgreSqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlServerAdministrator.
@@ -78,14 +107,22 @@ public partial class PostgreSqlServerAdministrator : ProvisionableResource
     public PostgreSqlServerAdministrator(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/administrators", resourceVersion ?? "2017-12-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _administratorType = BicepValue<PostgreSqlAdministratorType>.DefineProperty(this, "AdministratorType", ["properties", "administratorType"]);
-        _loginAccountName = BicepValue<string>.DefineProperty(this, "LoginAccountName", ["properties", "login"]);
-        _secureId = BicepValue<Guid>.DefineProperty(this, "SecureId", ["properties", "sid"]);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["properties", "tenantId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// PostgreSqlServerAdministrator.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _administratorType = DefineProperty<PostgreSqlAdministratorType>("AdministratorType", ["properties", "administratorType"]);
+        _loginAccountName = DefineProperty<string>("LoginAccountName", ["properties", "login"]);
+        _secureId = DefineProperty<Guid>("SecureId", ["properties", "sid"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -93,11 +130,6 @@ public partial class PostgreSqlServerAdministrator : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2017-12-01-preview.
-        /// </summary>
-        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
-
         /// <summary>
         /// 2017-12-01.
         /// </summary>

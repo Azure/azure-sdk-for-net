@@ -21,39 +21,59 @@ public partial class BlobInventoryPolicy : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The storage account blob inventory policy object. It is composed of
     /// policy rules.
     /// </summary>
-    public BicepValue<BlobInventoryPolicySchema> PolicySchema { get => _policySchema; set => _policySchema.Assign(value); }
-    private readonly BicepValue<BlobInventoryPolicySchema> _policySchema;
+    public BlobInventoryPolicySchema PolicySchema 
+    {
+        get { Initialize(); return _policySchema!; }
+        set { Initialize(); AssignOrReplace(ref _policySchema, value); }
+    }
+    private BlobInventoryPolicySchema? _policySchema;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Returns the last modified date and time of the blob inventory policy.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Creates a new BlobInventoryPolicy.
@@ -68,12 +88,19 @@ public partial class BlobInventoryPolicy : ProvisionableResource
     public BlobInventoryPolicy(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/inventoryPolicies", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _policySchema = BicepValue<BlobInventoryPolicySchema>.DefineProperty(this, "PolicySchema", ["properties", "policy"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of BlobInventoryPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _policySchema = DefineModelProperty<BlobInventoryPolicySchema>("PolicySchema", ["properties", "policy"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

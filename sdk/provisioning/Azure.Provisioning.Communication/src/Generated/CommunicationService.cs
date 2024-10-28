@@ -23,82 +23,127 @@ public partial class CommunicationService : ProvisionableResource
     /// <summary>
     /// The name of the CommunicationService resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The location where the communication service stores its data at rest.
     /// </summary>
-    public BicepValue<string> DataLocation { get => _dataLocation; set => _dataLocation.Assign(value); }
-    private readonly BicepValue<string> _dataLocation;
+    public BicepValue<string> DataLocation 
+    {
+        get { Initialize(); return _dataLocation!; }
+        set { Initialize(); _dataLocation!.Assign(value); }
+    }
+    private BicepValue<string>? _dataLocation;
 
     /// <summary>
     /// Managed service identity (system assigned and/or user assigned
     /// identities).
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// List of email Domain resource Ids.
     /// </summary>
-    public BicepList<string> LinkedDomains { get => _linkedDomains; set => _linkedDomains.Assign(value); }
-    private readonly BicepList<string> _linkedDomains;
+    public BicepList<string> LinkedDomains 
+    {
+        get { Initialize(); return _linkedDomains!; }
+        set { Initialize(); _linkedDomains!.Assign(value); }
+    }
+    private BicepList<string>? _linkedDomains;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// FQDN of the CommunicationService instance.
     /// </summary>
-    public BicepValue<string> HostName { get => _hostName; }
-    private readonly BicepValue<string> _hostName;
+    public BicepValue<string> HostName 
+    {
+        get { Initialize(); return _hostName!; }
+    }
+    private BicepValue<string>? _hostName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The immutable resource Id of the communication service.
     /// </summary>
-    public BicepValue<Guid> ImmutableResourceId { get => _immutableResourceId; }
-    private readonly BicepValue<Guid> _immutableResourceId;
+    public BicepValue<Guid> ImmutableResourceId 
+    {
+        get { Initialize(); return _immutableResourceId!; }
+    }
+    private BicepValue<Guid>? _immutableResourceId;
 
     /// <summary>
     /// Resource ID of an Azure Notification Hub linked to this resource.
     /// </summary>
-    public BicepValue<ResourceIdentifier> NotificationHubId { get => _notificationHubId; }
-    private readonly BicepValue<ResourceIdentifier> _notificationHubId;
+    public BicepValue<ResourceIdentifier> NotificationHubId 
+    {
+        get { Initialize(); return _notificationHubId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _notificationHubId;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<CommunicationServicesProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<CommunicationServicesProvisioningState> _provisioningState;
+    public BicepValue<CommunicationServicesProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<CommunicationServicesProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Version of the CommunicationService resource. Probably you need the
     /// same or higher version of client SDKs.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Creates a new CommunicationService.
@@ -113,19 +158,26 @@ public partial class CommunicationService : ProvisionableResource
     public CommunicationService(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2023-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _dataLocation = BicepValue<string>.DefineProperty(this, "DataLocation", ["properties", "dataLocation"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _linkedDomains = BicepList<string>.DefineProperty(this, "LinkedDomains", ["properties", "linkedDomains"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _hostName = BicepValue<string>.DefineProperty(this, "HostName", ["properties", "hostName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _immutableResourceId = BicepValue<Guid>.DefineProperty(this, "ImmutableResourceId", ["properties", "immutableResourceId"], isOutput: true);
-        _notificationHubId = BicepValue<ResourceIdentifier>.DefineProperty(this, "NotificationHubId", ["properties", "notificationHubId"], isOutput: true);
-        _provisioningState = BicepValue<CommunicationServicesProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CommunicationService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _dataLocation = DefineProperty<string>("DataLocation", ["properties", "dataLocation"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _linkedDomains = DefineListProperty<string>("LinkedDomains", ["properties", "linkedDomains"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _immutableResourceId = DefineProperty<Guid>("ImmutableResourceId", ["properties", "immutableResourceId"], isOutput: true);
+        _notificationHubId = DefineProperty<ResourceIdentifier>("NotificationHubId", ["properties", "notificationHubId"], isOutput: true);
+        _provisioningState = DefineProperty<CommunicationServicesProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
     }
 
     /// <summary>
@@ -133,11 +185,6 @@ public partial class CommunicationService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-06-01-preview.
-        /// </summary>
-        public static readonly string V2023_06_01_preview = "2023-06-01-preview";
-
         /// <summary>
         /// 2023-04-01.
         /// </summary>
@@ -180,7 +227,10 @@ public partial class CommunicationService : ProvisionableResource
     /// Get access keys for this CommunicationService resource.
     /// </summary>
     /// <returns>The keys for this CommunicationService resource.</returns>
-    public CommunicationServiceKeys GetKeys() =>
-        CommunicationServiceKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public CommunicationServiceKeys GetKeys()
+    {
+        CommunicationServiceKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

@@ -20,56 +20,84 @@ public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The earliest time to which this database can be restored.
     /// </summary>
-    public BicepValue<DateTimeOffset> EarliestRestoreOn { get => _earliestRestoreOn; }
-    private readonly BicepValue<DateTimeOffset> _earliestRestoreOn;
+    public BicepValue<DateTimeOffset> EarliestRestoreOn 
+    {
+        get { Initialize(); return _earliestRestoreOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _earliestRestoreOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Resource location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The time the backup was taken.
     /// </summary>
-    public BicepValue<DateTimeOffset> RestorePointCreatedOn { get => _restorePointCreatedOn; }
-    private readonly BicepValue<DateTimeOffset> _restorePointCreatedOn;
+    public BicepValue<DateTimeOffset> RestorePointCreatedOn 
+    {
+        get { Initialize(); return _restorePointCreatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _restorePointCreatedOn;
 
     /// <summary>
     /// The label of restore point for backup request by user.
     /// </summary>
-    public BicepValue<string> RestorePointLabel { get => _restorePointLabel; }
-    private readonly BicepValue<string> _restorePointLabel;
+    public BicepValue<string> RestorePointLabel 
+    {
+        get { Initialize(); return _restorePointLabel!; }
+    }
+    private BicepValue<string>? _restorePointLabel;
 
     /// <summary>
     /// The type of restore point.
     /// </summary>
-    public BicepValue<RestorePointType> RestorePointType { get => _restorePointType; }
-    private readonly BicepValue<RestorePointType> _restorePointType;
+    public BicepValue<RestorePointType> RestorePointType 
+    {
+        get { Initialize(); return _restorePointType!; }
+    }
+    private BicepValue<RestorePointType>? _restorePointType;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerDatabaseRestorePoint.
@@ -84,15 +112,23 @@ public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
     public SqlServerDatabaseRestorePoint(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/databases/restorePoints", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _restorePointCreatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "RestorePointCreatedOn", ["properties", "restorePointCreationDate"], isOutput: true);
-        _restorePointLabel = BicepValue<string>.DefineProperty(this, "RestorePointLabel", ["properties", "restorePointLabel"], isOutput: true);
-        _restorePointType = BicepValue<RestorePointType>.DefineProperty(this, "RestorePointType", ["properties", "restorePointType"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// SqlServerDatabaseRestorePoint.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _earliestRestoreOn = DefineProperty<DateTimeOffset>("EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _restorePointCreatedOn = DefineProperty<DateTimeOffset>("RestorePointCreatedOn", ["properties", "restorePointCreationDate"], isOutput: true);
+        _restorePointLabel = DefineProperty<string>("RestorePointLabel", ["properties", "restorePointLabel"], isOutput: true);
+        _restorePointType = DefineProperty<RestorePointType>("RestorePointType", ["properties", "restorePointType"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -100,11 +136,6 @@ public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

@@ -20,44 +20,69 @@ public partial class SignalRCustomDomain : ProvisionableResource
     /// <summary>
     /// Custom domain name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The custom domain name.
     /// </summary>
-    public BicepValue<string> DomainName { get => _domainName; set => _domainName.Assign(value); }
-    private readonly BicepValue<string> _domainName;
+    public BicepValue<string> DomainName 
+    {
+        get { Initialize(); return _domainName!; }
+        set { Initialize(); _domainName!.Assign(value); }
+    }
+    private BicepValue<string>? _domainName;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> CustomCertificateId { get => _customCertificateId; set => _customCertificateId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _customCertificateId;
+    public BicepValue<ResourceIdentifier> CustomCertificateId 
+    {
+        get { Initialize(); return _customCertificateId!; }
+        set { Initialize(); _customCertificateId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _customCertificateId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<SignalRProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<SignalRProvisioningState> _provisioningState;
+    public BicepValue<SignalRProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<SignalRProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SignalRService.
     /// </summary>
-    public SignalRService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SignalRService> _parent;
+    public SignalRService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SignalRService>? _parent;
 
     /// <summary>
     /// Creates a new SignalRCustomDomain.
@@ -72,13 +97,20 @@ public partial class SignalRCustomDomain : ProvisionableResource
     public SignalRCustomDomain(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.SignalRService/signalR/customDomains", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isRequired: true);
-        _customCertificateId = BicepValue<ResourceIdentifier>.DefineProperty(this, "CustomCertificateId", ["properties", "customCertificate", "id"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<SignalRProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SignalRService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SignalRCustomDomain.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _domainName = DefineProperty<string>("DomainName", ["properties", "domainName"], isRequired: true);
+        _customCertificateId = DefineProperty<ResourceIdentifier>("CustomCertificateId", ["properties", "customCertificate", "id"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<SignalRProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SignalRService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -86,11 +118,6 @@ public partial class SignalRCustomDomain : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

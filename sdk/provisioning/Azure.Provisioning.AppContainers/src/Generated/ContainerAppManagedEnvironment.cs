@@ -25,42 +25,66 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     /// <summary>
     /// Name of the Environment.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Cluster configuration which enables the log daemon to export
     /// app logs to a destination. Currently only
     /// &quot;log-analytics&quot; is             supported
     /// </summary>
-    public BicepValue<ContainerAppLogsConfiguration> AppLogsConfiguration { get => _appLogsConfiguration; set => _appLogsConfiguration.Assign(value); }
-    private readonly BicepValue<ContainerAppLogsConfiguration> _appLogsConfiguration;
+    public ContainerAppLogsConfiguration AppLogsConfiguration 
+    {
+        get { Initialize(); return _appLogsConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _appLogsConfiguration, value); }
+    }
+    private ContainerAppLogsConfiguration? _appLogsConfiguration;
 
     /// <summary>
     /// Custom domain configuration for the environment.
     /// </summary>
-    public BicepValue<ContainerAppCustomDomainConfiguration> CustomDomainConfiguration { get => _customDomainConfiguration; set => _customDomainConfiguration.Assign(value); }
-    private readonly BicepValue<ContainerAppCustomDomainConfiguration> _customDomainConfiguration;
+    public ContainerAppCustomDomainConfiguration CustomDomainConfiguration 
+    {
+        get { Initialize(); return _customDomainConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _customDomainConfiguration, value); }
+    }
+    private ContainerAppCustomDomainConfiguration? _customDomainConfiguration;
 
     /// <summary>
     /// Application Insights connection string used by Dapr to export Service
     /// to Service communication telemetry.
     /// </summary>
-    public BicepValue<string> DaprAIConnectionString { get => _daprAIConnectionString; set => _daprAIConnectionString.Assign(value); }
-    private readonly BicepValue<string> _daprAIConnectionString;
+    public BicepValue<string> DaprAIConnectionString 
+    {
+        get { Initialize(); return _daprAIConnectionString!; }
+        set { Initialize(); _daprAIConnectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _daprAIConnectionString;
 
     /// <summary>
     /// Azure Monitor instrumentation key used by Dapr to export Service to
     /// Service communication telemetry.
     /// </summary>
-    public BicepValue<string> DaprAIInstrumentationKey { get => _daprAIInstrumentationKey; set => _daprAIInstrumentationKey.Assign(value); }
-    private readonly BicepValue<string> _daprAIInstrumentationKey;
+    public BicepValue<string> DaprAIInstrumentationKey 
+    {
+        get { Initialize(); return _daprAIInstrumentationKey!; }
+        set { Initialize(); _daprAIInstrumentationKey!.Assign(value); }
+    }
+    private BicepValue<string>? _daprAIInstrumentationKey;
 
     /// <summary>
     /// Name of the platform-managed resource group created for the Managed
@@ -68,104 +92,163 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     /// provided, this resource group will be created in the same subscription
     /// as the subnet.
     /// </summary>
-    public BicepValue<string> InfrastructureResourceGroup { get => _infrastructureResourceGroup; set => _infrastructureResourceGroup.Assign(value); }
-    private readonly BicepValue<string> _infrastructureResourceGroup;
+    public BicepValue<string> InfrastructureResourceGroup 
+    {
+        get { Initialize(); return _infrastructureResourceGroup!; }
+        set { Initialize(); _infrastructureResourceGroup!.Assign(value); }
+    }
+    private BicepValue<string>? _infrastructureResourceGroup;
 
     /// <summary>
     /// Boolean indicating whether the peer traffic encryption is enabled.
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// Boolean indicating whether the mutual TLS authentication is enabled.
     /// </summary>
-    public BicepValue<bool> IsMtlsEnabled { get => _isMtlsEnabled; set => _isMtlsEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isMtlsEnabled;
+    public BicepValue<bool> IsMtlsEnabled 
+    {
+        get { Initialize(); return _isMtlsEnabled!; }
+        set { Initialize(); _isMtlsEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isMtlsEnabled;
 
     /// <summary>
     /// Whether or not this Managed Environment is zone-redundant.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// Kind of the Environment.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Vnet configuration for the environment.
     /// </summary>
-    public BicepValue<ContainerAppVnetConfiguration> VnetConfiguration { get => _vnetConfiguration; set => _vnetConfiguration.Assign(value); }
-    private readonly BicepValue<ContainerAppVnetConfiguration> _vnetConfiguration;
+    public ContainerAppVnetConfiguration VnetConfiguration 
+    {
+        get { Initialize(); return _vnetConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _vnetConfiguration, value); }
+    }
+    private ContainerAppVnetConfiguration? _vnetConfiguration;
 
     /// <summary>
     /// Workload profiles configured for the Managed Environment.
     /// </summary>
-    public BicepList<ContainerAppWorkloadProfile> WorkloadProfiles { get => _workloadProfiles; set => _workloadProfiles.Assign(value); }
-    private readonly BicepList<ContainerAppWorkloadProfile> _workloadProfiles;
+    public BicepList<ContainerAppWorkloadProfile> WorkloadProfiles 
+    {
+        get { Initialize(); return _workloadProfiles!; }
+        set { Initialize(); _workloadProfiles!.Assign(value); }
+    }
+    private BicepList<ContainerAppWorkloadProfile>? _workloadProfiles;
 
     /// <summary>
     /// The version of Dapr.
     /// </summary>
-    public BicepValue<string> DaprVersion { get => _daprVersion; }
-    private readonly BicepValue<string> _daprVersion;
+    public BicepValue<string> DaprVersion 
+    {
+        get { Initialize(); return _daprVersion!; }
+    }
+    private BicepValue<string>? _daprVersion;
 
     /// <summary>
     /// Default Domain Name for the cluster.
     /// </summary>
-    public BicepValue<string> DefaultDomain { get => _defaultDomain; }
-    private readonly BicepValue<string> _defaultDomain;
+    public BicepValue<string> DefaultDomain 
+    {
+        get { Initialize(); return _defaultDomain!; }
+    }
+    private BicepValue<string>? _defaultDomain;
 
     /// <summary>
     /// Any errors that occurred during deployment or deployment validation.
     /// </summary>
-    public BicepValue<string> DeploymentErrors { get => _deploymentErrors; }
-    private readonly BicepValue<string> _deploymentErrors;
+    public BicepValue<string> DeploymentErrors 
+    {
+        get { Initialize(); return _deploymentErrors!; }
+    }
+    private BicepValue<string>? _deploymentErrors;
 
     /// <summary>
     /// The endpoint of the eventstream of the Environment.
     /// </summary>
-    public BicepValue<string> EventStreamEndpoint { get => _eventStreamEndpoint; }
-    private readonly BicepValue<string> _eventStreamEndpoint;
+    public BicepValue<string> EventStreamEndpoint 
+    {
+        get { Initialize(); return _eventStreamEndpoint!; }
+    }
+    private BicepValue<string>? _eventStreamEndpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The version of Keda.
     /// </summary>
-    public BicepValue<string> KedaVersion { get => _kedaVersion; }
-    private readonly BicepValue<string> _kedaVersion;
+    public BicepValue<string> KedaVersion 
+    {
+        get { Initialize(); return _kedaVersion!; }
+    }
+    private BicepValue<string>? _kedaVersion;
 
     /// <summary>
     /// Provisioning state of the Environment.
     /// </summary>
-    public BicepValue<ContainerAppEnvironmentProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerAppEnvironmentProvisioningState> _provisioningState;
+    public BicepValue<ContainerAppEnvironmentProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerAppEnvironmentProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Static IP of the Environment.
     /// </summary>
-    public BicepValue<IPAddress> StaticIP { get => _staticIP; }
-    private readonly BicepValue<IPAddress> _staticIP;
+    public BicepValue<IPAddress> StaticIP 
+    {
+        get { Initialize(); return _staticIP!; }
+    }
+    private BicepValue<IPAddress>? _staticIP;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironment.
@@ -180,29 +263,37 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     public ContainerAppManagedEnvironment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _appLogsConfiguration = BicepValue<ContainerAppLogsConfiguration>.DefineProperty(this, "AppLogsConfiguration", ["properties", "appLogsConfiguration"]);
-        _customDomainConfiguration = BicepValue<ContainerAppCustomDomainConfiguration>.DefineProperty(this, "CustomDomainConfiguration", ["properties", "customDomainConfiguration"]);
-        _daprAIConnectionString = BicepValue<string>.DefineProperty(this, "DaprAIConnectionString", ["properties", "daprAIConnectionString"]);
-        _daprAIInstrumentationKey = BicepValue<string>.DefineProperty(this, "DaprAIInstrumentationKey", ["properties", "daprAIInstrumentationKey"]);
-        _infrastructureResourceGroup = BicepValue<string>.DefineProperty(this, "InfrastructureResourceGroup", ["properties", "infrastructureResourceGroup"]);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "peerTrafficConfiguration", "encryption", "enabled"]);
-        _isMtlsEnabled = BicepValue<bool>.DefineProperty(this, "IsMtlsEnabled", ["properties", "peerAuthentication", "mtls", "enabled"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _vnetConfiguration = BicepValue<ContainerAppVnetConfiguration>.DefineProperty(this, "VnetConfiguration", ["properties", "vnetConfiguration"]);
-        _workloadProfiles = BicepList<ContainerAppWorkloadProfile>.DefineProperty(this, "WorkloadProfiles", ["properties", "workloadProfiles"]);
-        _daprVersion = BicepValue<string>.DefineProperty(this, "DaprVersion", ["properties", "daprConfiguration", "version"], isOutput: true);
-        _defaultDomain = BicepValue<string>.DefineProperty(this, "DefaultDomain", ["properties", "defaultDomain"], isOutput: true);
-        _deploymentErrors = BicepValue<string>.DefineProperty(this, "DeploymentErrors", ["properties", "deploymentErrors"], isOutput: true);
-        _eventStreamEndpoint = BicepValue<string>.DefineProperty(this, "EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kedaVersion = BicepValue<string>.DefineProperty(this, "KedaVersion", ["properties", "kedaConfiguration", "version"], isOutput: true);
-        _provisioningState = BicepValue<ContainerAppEnvironmentProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _staticIP = BicepValue<IPAddress>.DefineProperty(this, "StaticIP", ["properties", "staticIp"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerAppManagedEnvironment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _appLogsConfiguration = DefineModelProperty<ContainerAppLogsConfiguration>("AppLogsConfiguration", ["properties", "appLogsConfiguration"]);
+        _customDomainConfiguration = DefineModelProperty<ContainerAppCustomDomainConfiguration>("CustomDomainConfiguration", ["properties", "customDomainConfiguration"]);
+        _daprAIConnectionString = DefineProperty<string>("DaprAIConnectionString", ["properties", "daprAIConnectionString"]);
+        _daprAIInstrumentationKey = DefineProperty<string>("DaprAIInstrumentationKey", ["properties", "daprAIInstrumentationKey"]);
+        _infrastructureResourceGroup = DefineProperty<string>("InfrastructureResourceGroup", ["properties", "infrastructureResourceGroup"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "peerTrafficConfiguration", "encryption", "enabled"]);
+        _isMtlsEnabled = DefineProperty<bool>("IsMtlsEnabled", ["properties", "peerAuthentication", "mtls", "enabled"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _vnetConfiguration = DefineModelProperty<ContainerAppVnetConfiguration>("VnetConfiguration", ["properties", "vnetConfiguration"]);
+        _workloadProfiles = DefineListProperty<ContainerAppWorkloadProfile>("WorkloadProfiles", ["properties", "workloadProfiles"]);
+        _daprVersion = DefineProperty<string>("DaprVersion", ["properties", "daprConfiguration", "version"], isOutput: true);
+        _defaultDomain = DefineProperty<string>("DefaultDomain", ["properties", "defaultDomain"], isOutput: true);
+        _deploymentErrors = DefineProperty<string>("DeploymentErrors", ["properties", "deploymentErrors"], isOutput: true);
+        _eventStreamEndpoint = DefineProperty<string>("EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kedaVersion = DefineProperty<string>("KedaVersion", ["properties", "kedaConfiguration", "version"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerAppEnvironmentProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _staticIP = DefineProperty<IPAddress>("StaticIP", ["properties", "staticIp"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -210,11 +301,6 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

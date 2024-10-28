@@ -21,8 +21,11 @@ public partial class CosmosDBSqlRoleDefinition : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A set of fully qualified Scopes at or below which Role Assignments may
@@ -32,45 +35,71 @@ public partial class CosmosDBSqlRoleDefinition : ProvisionableResource
     /// than Database account are not enforceable as assignable Scopes. Note
     /// that resources referenced in assignable Scopes need not exist.
     /// </summary>
-    public BicepList<string> AssignableScopes { get => _assignableScopes; set => _assignableScopes.Assign(value); }
-    private readonly BicepList<string> _assignableScopes;
+    public BicepList<string> AssignableScopes 
+    {
+        get { Initialize(); return _assignableScopes!; }
+        set { Initialize(); _assignableScopes!.Assign(value); }
+    }
+    private BicepList<string>? _assignableScopes;
 
     /// <summary>
     /// The set of operations allowed through this Role Definition.
     /// </summary>
-    public BicepList<CosmosDBSqlRolePermission> Permissions { get => _permissions; set => _permissions.Assign(value); }
-    private readonly BicepList<CosmosDBSqlRolePermission> _permissions;
+    public BicepList<CosmosDBSqlRolePermission> Permissions 
+    {
+        get { Initialize(); return _permissions!; }
+        set { Initialize(); _permissions!.Assign(value); }
+    }
+    private BicepList<CosmosDBSqlRolePermission>? _permissions;
 
     /// <summary>
     /// Indicates whether the Role Definition was built-in or user created.
     /// </summary>
-    public BicepValue<CosmosDBSqlRoleDefinitionType> RoleDefinitionType { get => _roleDefinitionType; set => _roleDefinitionType.Assign(value); }
-    private readonly BicepValue<CosmosDBSqlRoleDefinitionType> _roleDefinitionType;
+    public BicepValue<CosmosDBSqlRoleDefinitionType> RoleDefinitionType 
+    {
+        get { Initialize(); return _roleDefinitionType!; }
+        set { Initialize(); _roleDefinitionType!.Assign(value); }
+    }
+    private BicepValue<CosmosDBSqlRoleDefinitionType>? _roleDefinitionType;
 
     /// <summary>
     /// A user-friendly name for the Role Definition. Must be unique for the
     /// database account.
     /// </summary>
-    public BicepValue<string> RoleName { get => _roleName; set => _roleName.Assign(value); }
-    private readonly BicepValue<string> _roleName;
+    public BicepValue<string> RoleName 
+    {
+        get { Initialize(); return _roleName!; }
+        set { Initialize(); _roleName!.Assign(value); }
+    }
+    private BicepValue<string>? _roleName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new CosmosDBSqlRoleDefinition.
@@ -85,14 +114,21 @@ public partial class CosmosDBSqlRoleDefinition : ProvisionableResource
     public CosmosDBSqlRoleDefinition(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _assignableScopes = BicepList<string>.DefineProperty(this, "AssignableScopes", ["properties", "assignableScopes"]);
-        _permissions = BicepList<CosmosDBSqlRolePermission>.DefineProperty(this, "Permissions", ["properties", "permissions"]);
-        _roleDefinitionType = BicepValue<CosmosDBSqlRoleDefinitionType>.DefineProperty(this, "RoleDefinitionType", ["properties", "type"]);
-        _roleName = BicepValue<string>.DefineProperty(this, "RoleName", ["properties", "roleName"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CosmosDBSqlRoleDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _assignableScopes = DefineListProperty<string>("AssignableScopes", ["properties", "assignableScopes"]);
+        _permissions = DefineListProperty<CosmosDBSqlRolePermission>("Permissions", ["properties", "permissions"]);
+        _roleDefinitionType = DefineProperty<CosmosDBSqlRoleDefinitionType>("RoleDefinitionType", ["properties", "type"]);
+        _roleName = DefineProperty<string>("RoleName", ["properties", "roleName"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -100,11 +136,6 @@ public partial class CosmosDBSqlRoleDefinition : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>

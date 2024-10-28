@@ -41,7 +41,8 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRCustomCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -51,7 +52,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRCustomDomain : Azure.Provisioning.Primitives.ProvisionableResource
@@ -63,7 +63,8 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRCustomDomain FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -72,7 +73,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRFeature : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -81,6 +81,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRFeatureFlag> Flag { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SignalRFeatureFlag
     {
@@ -96,26 +97,28 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.SignalR.SignalRKeys FromExpression(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRLiveTraceCategory : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRLiveTraceCategory() { }
         public Azure.Provisioning.BicepValue<string> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRLiveTraceConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRLiveTraceConfiguration() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRLiveTraceCategory> Categories { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Enabled { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRNetworkAcl : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRNetworkAcl() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRRequestType> Allow { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRRequestType> Deny { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SignalRNetworkAclAction
     {
@@ -127,24 +130,27 @@ namespace Azure.Provisioning.SignalR
         public SignalRNetworkAcls() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRNetworkAclAction> DefaultAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRPrivateEndpointAcl> PrivateEndpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRNetworkAcl> PublicNetwork { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRNetworkAcl PublicNetwork { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRPrivateEndpointAcl : Azure.Provisioning.SignalR.SignalRNetworkAcl
     {
         public SignalRPrivateEndpointAcl() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SignalRPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -154,19 +160,19 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRPrivateEndpointConnectionData() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -174,6 +180,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> ActionsRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.PrivateLinkServiceConnectionStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SignalRProvisioningState
     {
@@ -200,6 +207,7 @@ namespace Azure.Provisioning.SignalR
         public SignalRResourceLogCategory() { }
         public Azure.Provisioning.BicepValue<string> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRResourceSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -209,6 +217,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Size { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRSkuTier> Tier { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class SignalRService : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -221,13 +230,13 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HostNamePrefix { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsClientCertEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRServiceKind> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRLiveTraceConfiguration> LiveTraceConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRLiveTraceConfiguration LiveTraceConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRNetworkAcls> NetworkACLs { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRNetworkAcls NetworkACLs { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PublicNetworkAccess { get { throw null; } set { } }
@@ -235,13 +244,14 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRResourceLogCategory> ResourceLogCategories { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ServerPort { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRResourceSku> Sku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.SignalR.SignalRResourceSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRUpstreamTemplate> UpstreamTemplates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.SignalR.SignalRKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -254,7 +264,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public enum SignalRServiceKind
@@ -273,7 +282,8 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
@@ -283,7 +293,6 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2022_02_01;
             public static readonly string V2023_02_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
     public partial class SignalRSharedPrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -296,7 +305,8 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SignalRSharedPrivateLinkResourceStatus
     {
@@ -318,6 +328,7 @@ namespace Azure.Provisioning.SignalR
         public SignalRUpstreamAuthSettings() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRUpstreamAuthType> AuthType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentityResource { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum SignalRUpstreamAuthType
     {
@@ -327,10 +338,11 @@ namespace Azure.Provisioning.SignalR
     public partial class SignalRUpstreamTemplate : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRUpstreamTemplate() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRUpstreamAuthSettings> Auth { get { throw null; } set { } }
+        public Azure.Provisioning.SignalR.SignalRUpstreamAuthSettings Auth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CategoryPattern { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventPattern { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HubPattern { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UrlTemplate { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
 }

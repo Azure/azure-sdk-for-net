@@ -20,62 +20,95 @@ public partial class SyncAgent : ProvisionableResource
     /// <summary>
     /// The name of the sync agent.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// ARM resource id of the sync database in the sync agent.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SyncDatabaseId { get => _syncDatabaseId; set => _syncDatabaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _syncDatabaseId;
+    public BicepValue<ResourceIdentifier> SyncDatabaseId 
+    {
+        get { Initialize(); return _syncDatabaseId!; }
+        set { Initialize(); _syncDatabaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _syncDatabaseId;
 
     /// <summary>
     /// Expiration time of the sync agent version.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOn { get => _expireOn; }
-    private readonly BicepValue<DateTimeOffset> _expireOn;
+    public BicepValue<DateTimeOffset> ExpireOn 
+    {
+        get { Initialize(); return _expireOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _expireOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// If the sync agent version is up to date.
     /// </summary>
-    public BicepValue<bool> IsUpToDate { get => _isUpToDate; }
-    private readonly BicepValue<bool> _isUpToDate;
+    public BicepValue<bool> IsUpToDate 
+    {
+        get { Initialize(); return _isUpToDate!; }
+    }
+    private BicepValue<bool>? _isUpToDate;
 
     /// <summary>
     /// Last alive time of the sync agent.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastAliveOn { get => _lastAliveOn; }
-    private readonly BicepValue<DateTimeOffset> _lastAliveOn;
+    public BicepValue<DateTimeOffset> LastAliveOn 
+    {
+        get { Initialize(); return _lastAliveOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastAliveOn;
 
     /// <summary>
     /// State of the sync agent.
     /// </summary>
-    public BicepValue<SyncAgentState> State { get => _state; }
-    private readonly BicepValue<SyncAgentState> _state;
+    public BicepValue<SyncAgentState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<SyncAgentState>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Version of the sync agent.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SyncAgent.
@@ -90,16 +123,23 @@ public partial class SyncAgent : ProvisionableResource
     public SyncAgent(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/syncAgents", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _syncDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncDatabaseId", ["properties", "syncDatabaseId"]);
-        _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expiryTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isUpToDate = BicepValue<bool>.DefineProperty(this, "IsUpToDate", ["properties", "isUpToDate"], isOutput: true);
-        _lastAliveOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastAliveOn", ["properties", "lastAliveTime"], isOutput: true);
-        _state = BicepValue<SyncAgentState>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SyncAgent.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _syncDatabaseId = DefineProperty<ResourceIdentifier>("SyncDatabaseId", ["properties", "syncDatabaseId"]);
+        _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["properties", "expiryTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isUpToDate = DefineProperty<bool>("IsUpToDate", ["properties", "isUpToDate"], isOutput: true);
+        _lastAliveOn = DefineProperty<DateTimeOffset>("LastAliveOn", ["properties", "lastAliveTime"], isOutput: true);
+        _state = DefineProperty<SyncAgentState>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -107,11 +147,6 @@ public partial class SyncAgent : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

@@ -21,32 +21,50 @@ public partial class SqlServerTrustGroup : ProvisionableResource
     /// <summary>
     /// The name of the server trust group.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Group members information for the server trust group.
     /// </summary>
-    public BicepList<ServerTrustGroupServerInfo> GroupMembers { get => _groupMembers; set => _groupMembers.Assign(value); }
-    private readonly BicepList<ServerTrustGroupServerInfo> _groupMembers;
+    public BicepList<ServerTrustGroupServerInfo> GroupMembers 
+    {
+        get { Initialize(); return _groupMembers!; }
+        set { Initialize(); _groupMembers!.Assign(value); }
+    }
+    private BicepList<ServerTrustGroupServerInfo>? _groupMembers;
 
     /// <summary>
     /// Trust scope of the server trust group.
     /// </summary>
-    public BicepList<ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get => _trustScopes; set => _trustScopes.Assign(value); }
-    private readonly BicepList<ServerTrustGroupPropertiesTrustScopesItem> _trustScopes;
+    public BicepList<ServerTrustGroupPropertiesTrustScopesItem> TrustScopes 
+    {
+        get { Initialize(); return _trustScopes!; }
+        set { Initialize(); _trustScopes!.Assign(value); }
+    }
+    private BicepList<ServerTrustGroupPropertiesTrustScopesItem>? _trustScopes;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new SqlServerTrustGroup.
@@ -61,11 +79,18 @@ public partial class SqlServerTrustGroup : ProvisionableResource
     public SqlServerTrustGroup(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/locations/serverTrustGroups", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _groupMembers = BicepList<ServerTrustGroupServerInfo>.DefineProperty(this, "GroupMembers", ["properties", "groupMembers"]);
-        _trustScopes = BicepList<ServerTrustGroupPropertiesTrustScopesItem>.DefineProperty(this, "TrustScopes", ["properties", "trustScopes"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerTrustGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _groupMembers = DefineListProperty<ServerTrustGroupServerInfo>("GroupMembers", ["properties", "groupMembers"]);
+        _trustScopes = DefineListProperty<ServerTrustGroupPropertiesTrustScopesItem>("TrustScopes", ["properties", "trustScopes"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -73,11 +98,6 @@ public partial class SqlServerTrustGroup : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

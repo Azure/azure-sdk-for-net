@@ -21,20 +21,31 @@ public partial class EventHubsNetworkRuleSet : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Default Action for Network Rule Set.
     /// </summary>
-    public BicepValue<EventHubsNetworkRuleSetDefaultAction> DefaultAction { get => _defaultAction; set => _defaultAction.Assign(value); }
-    private readonly BicepValue<EventHubsNetworkRuleSetDefaultAction> _defaultAction;
+    public BicepValue<EventHubsNetworkRuleSetDefaultAction> DefaultAction 
+    {
+        get { Initialize(); return _defaultAction!; }
+        set { Initialize(); _defaultAction!.Assign(value); }
+    }
+    private BicepValue<EventHubsNetworkRuleSetDefaultAction>? _defaultAction;
 
     /// <summary>
     /// List of IpRules.
     /// </summary>
-    public BicepList<EventHubsNetworkRuleSetIPRules> IPRules { get => _iPRules; set => _iPRules.Assign(value); }
-    private readonly BicepList<EventHubsNetworkRuleSetIPRules> _iPRules;
+    public BicepList<EventHubsNetworkRuleSetIPRules> IPRules 
+    {
+        get { Initialize(); return _iPRules!; }
+        set { Initialize(); _iPRules!.Assign(value); }
+    }
+    private BicepList<EventHubsNetworkRuleSetIPRules>? _iPRules;
 
     /// <summary>
     /// This determines if traffic is allowed over public network. By default
@@ -42,44 +53,69 @@ public partial class EventHubsNetworkRuleSet : ProvisionableResource
     /// Outbound communication is controlled by the network security perimeter
     /// and profile&apos;s access rules.
     /// </summary>
-    public BicepValue<EventHubsPublicNetworkAccessFlag> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<EventHubsPublicNetworkAccessFlag> _publicNetworkAccess;
+    public BicepValue<EventHubsPublicNetworkAccessFlag> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<EventHubsPublicNetworkAccessFlag>? _publicNetworkAccess;
 
     /// <summary>
     /// Value that indicates whether Trusted Service Access is Enabled or not.
     /// </summary>
-    public BicepValue<bool> TrustedServiceAccessEnabled { get => _trustedServiceAccessEnabled; set => _trustedServiceAccessEnabled.Assign(value); }
-    private readonly BicepValue<bool> _trustedServiceAccessEnabled;
+    public BicepValue<bool> TrustedServiceAccessEnabled 
+    {
+        get { Initialize(); return _trustedServiceAccessEnabled!; }
+        set { Initialize(); _trustedServiceAccessEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _trustedServiceAccessEnabled;
 
     /// <summary>
     /// List VirtualNetwork Rules.
     /// </summary>
-    public BicepList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get => _virtualNetworkRules; set => _virtualNetworkRules.Assign(value); }
-    private readonly BicepList<EventHubsNetworkRuleSetVirtualNetworkRules> _virtualNetworkRules;
+    public BicepList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules 
+    {
+        get { Initialize(); return _virtualNetworkRules!; }
+        set { Initialize(); _virtualNetworkRules!.Assign(value); }
+    }
+    private BicepList<EventHubsNetworkRuleSetVirtualNetworkRules>? _virtualNetworkRules;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventHubsNamespace.
     /// </summary>
-    public EventHubsNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventHubsNamespace> _parent;
+    public EventHubsNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventHubsNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventHubsNetworkRuleSet.
@@ -94,16 +130,23 @@ public partial class EventHubsNetworkRuleSet : ProvisionableResource
     public EventHubsNetworkRuleSet(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventHub/namespaces/networkRuleSets", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _defaultAction = BicepValue<EventHubsNetworkRuleSetDefaultAction>.DefineProperty(this, "DefaultAction", ["properties", "defaultAction"]);
-        _iPRules = BicepList<EventHubsNetworkRuleSetIPRules>.DefineProperty(this, "IPRules", ["properties", "ipRules"]);
-        _publicNetworkAccess = BicepValue<EventHubsPublicNetworkAccessFlag>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _trustedServiceAccessEnabled = BicepValue<bool>.DefineProperty(this, "TrustedServiceAccessEnabled", ["properties", "trustedServiceAccessEnabled"]);
-        _virtualNetworkRules = BicepList<EventHubsNetworkRuleSetVirtualNetworkRules>.DefineProperty(this, "VirtualNetworkRules", ["properties", "virtualNetworkRules"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventHubsNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventHubsNetworkRuleSet.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _defaultAction = DefineProperty<EventHubsNetworkRuleSetDefaultAction>("DefaultAction", ["properties", "defaultAction"]);
+        _iPRules = DefineListProperty<EventHubsNetworkRuleSetIPRules>("IPRules", ["properties", "ipRules"]);
+        _publicNetworkAccess = DefineProperty<EventHubsPublicNetworkAccessFlag>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _trustedServiceAccessEnabled = DefineProperty<bool>("TrustedServiceAccessEnabled", ["properties", "trustedServiceAccessEnabled"]);
+        _virtualNetworkRules = DefineListProperty<EventHubsNetworkRuleSetVirtualNetworkRules>("VirtualNetworkRules", ["properties", "virtualNetworkRules"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventHubsNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -111,11 +154,6 @@ public partial class EventHubsNetworkRuleSet : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>

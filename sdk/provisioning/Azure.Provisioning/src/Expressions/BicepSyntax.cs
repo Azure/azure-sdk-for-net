@@ -49,7 +49,7 @@ internal static class BicepSyntax
     public static FunctionCallExpression Call(BicepExpression func, params BicepExpression[] args) => new(func, args);
     public static FunctionCallExpression Call(string func, params BicepExpression[] args) => Call(Var(func), args);
 
-    public static InterpolatedStringExpression Interpolate(string format, params BicepExpression[] values) => new(format, values);
+    public static InterpolatedStringExpression Interpolate(params BicepExpression[] values) => new(values);
 
     public static MemberExpression Get(this BicepExpression value, string name) => new(value, name);
     public static IndexExpression Index(this BicepExpression value, BicepExpression index) => new(value, index);

@@ -21,32 +21,50 @@ public partial class WebPubSubHub : ProvisionableResource
     /// <summary>
     /// The hub name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Properties of a hub.
     /// </summary>
-    public BicepValue<WebPubSubHubProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<WebPubSubHubProperties> _properties;
+    public WebPubSubHubProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private WebPubSubHubProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebPubSubService.
     /// </summary>
-    public WebPubSubService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebPubSubService> _parent;
+    public WebPubSubService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebPubSubService>? _parent;
 
     /// <summary>
     /// Creates a new WebPubSubHub.
@@ -61,11 +79,18 @@ public partial class WebPubSubHub : ProvisionableResource
     public WebPubSubHub(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.SignalRService/webPubSub/hubs", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _properties = BicepValue<WebPubSubHubProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebPubSubService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebPubSubHub.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _properties = DefineModelProperty<WebPubSubHubProperties>("Properties", ["properties"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebPubSubService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -73,11 +98,6 @@ public partial class WebPubSubHub : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

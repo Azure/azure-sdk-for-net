@@ -22,38 +22,60 @@ public partial class RedisFirewallRule : ProvisionableResource
     /// <summary>
     /// The name of the firewall rule.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// highest IP address included in the range.
     /// </summary>
-    public BicepValue<IPAddress> EndIP { get => _endIP; set => _endIP.Assign(value); }
-    private readonly BicepValue<IPAddress> _endIP;
+    public BicepValue<IPAddress> EndIP 
+    {
+        get { Initialize(); return _endIP!; }
+        set { Initialize(); _endIP!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _endIP;
 
     /// <summary>
     /// lowest IP address included in the range.
     /// </summary>
-    public BicepValue<IPAddress> StartIP { get => _startIP; set => _startIP.Assign(value); }
-    private readonly BicepValue<IPAddress> _startIP;
+    public BicepValue<IPAddress> StartIP 
+    {
+        get { Initialize(); return _startIP!; }
+        set { Initialize(); _startIP!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _startIP;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent RedisResource.
     /// </summary>
-    public RedisResource? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<RedisResource> _parent;
+    public RedisResource? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<RedisResource>? _parent;
 
     /// <summary>
     /// Creates a new RedisFirewallRule.
@@ -68,12 +90,19 @@ public partial class RedisFirewallRule : ProvisionableResource
     public RedisFirewallRule(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Cache/redis/firewallRules", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIP = BicepValue<IPAddress>.DefineProperty(this, "EndIP", ["properties", "endIP"], isRequired: true);
-        _startIP = BicepValue<IPAddress>.DefineProperty(this, "StartIP", ["properties", "startIP"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<RedisResource>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of RedisFirewallRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _endIP = DefineProperty<IPAddress>("EndIP", ["properties", "endIP"], isRequired: true);
+        _startIP = DefineProperty<IPAddress>("StartIP", ["properties", "startIP"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<RedisResource>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -81,11 +110,6 @@ public partial class RedisFirewallRule : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

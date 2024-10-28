@@ -20,51 +20,80 @@ public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
     /// <summary>
     /// Cosmos DB global database account in a Throughput Pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The location of  global database account in the throughputPool.
     /// </summary>
-    public BicepValue<AzureLocation> AccountLocation { get => _accountLocation; set => _accountLocation.Assign(value); }
-    private readonly BicepValue<AzureLocation> _accountLocation;
+    public BicepValue<AzureLocation> AccountLocation 
+    {
+        get { Initialize(); return _accountLocation!; }
+        set { Initialize(); _accountLocation!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _accountLocation;
 
     /// <summary>
     /// The resource identifier of global database account in the
     /// throughputPool.
     /// </summary>
-    public BicepValue<ResourceIdentifier> AccountResourceIdentifier { get => _accountResourceIdentifier; set => _accountResourceIdentifier.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _accountResourceIdentifier;
+    public BicepValue<ResourceIdentifier> AccountResourceIdentifier 
+    {
+        get { Initialize(); return _accountResourceIdentifier!; }
+        set { Initialize(); _accountResourceIdentifier!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _accountResourceIdentifier;
 
     /// <summary>
     /// A provisioning state of the ThroughputPool Account.
     /// </summary>
-    public BicepValue<CosmosDBStatus> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<CosmosDBStatus> _provisioningState;
+    public BicepValue<CosmosDBStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<CosmosDBStatus>? _provisioningState;
 
     /// <summary>
     /// The instance id of global database account in the throughputPool.
     /// </summary>
-    public BicepValue<string> AccountInstanceId { get => _accountInstanceId; }
-    private readonly BicepValue<string> _accountInstanceId;
+    public BicepValue<string> AccountInstanceId 
+    {
+        get { Initialize(); return _accountInstanceId!; }
+    }
+    private BicepValue<string>? _accountInstanceId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBThroughputPool.
     /// </summary>
-    public CosmosDBThroughputPool? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBThroughputPool> _parent;
+    public CosmosDBThroughputPool? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBThroughputPool>? _parent;
 
     /// <summary>
     /// Creates a new CosmosDBThroughputPoolAccount.
@@ -77,16 +106,24 @@ public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPoolAccount.</param>
     public CosmosDBThroughputPoolAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion ?? "2024-02-15-preview")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _accountLocation = BicepValue<AzureLocation>.DefineProperty(this, "AccountLocation", ["properties", "accountLocation"]);
-        _accountResourceIdentifier = BicepValue<ResourceIdentifier>.DefineProperty(this, "AccountResourceIdentifier", ["properties", "accountResourceIdentifier"]);
-        _provisioningState = BicepValue<CosmosDBStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _accountInstanceId = BicepValue<string>.DefineProperty(this, "AccountInstanceId", ["properties", "accountInstanceId"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBThroughputPool>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// CosmosDBThroughputPoolAccount.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _accountLocation = DefineProperty<AzureLocation>("AccountLocation", ["properties", "accountLocation"]);
+        _accountResourceIdentifier = DefineProperty<ResourceIdentifier>("AccountResourceIdentifier", ["properties", "accountResourceIdentifier"]);
+        _provisioningState = DefineProperty<CosmosDBStatus>("ProvisioningState", ["properties", "provisioningState"]);
+        _accountInstanceId = DefineProperty<string>("AccountInstanceId", ["properties", "accountInstanceId"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBThroughputPool>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -94,12 +131,7 @@ public partial class CosmosDBThroughputPoolAccount : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-02-15-preview.
-        /// </summary>
-        public static readonly string V2024_02_15_preview = "2024-02-15-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPoolAccount.
     /// </summary>

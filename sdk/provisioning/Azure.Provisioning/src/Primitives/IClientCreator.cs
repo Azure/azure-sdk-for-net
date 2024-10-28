@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if EXPERIMENTAL_PROVISIONING
+
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -89,3 +91,5 @@ public class ClientCreatorOutputResolver : InfrastructureResolver
         }
     }
 }
+
+#endif

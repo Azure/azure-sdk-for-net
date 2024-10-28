@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Placement policy hosts opt-in Azure Hybrid Benefit type. </summary>
+    /// <summary> Azure Hybrid Benefit type. </summary>
     public readonly partial struct AzureHybridBenefitType : IEquatable<AzureHybridBenefitType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SqlHostValue = "SqlHost";
         private const string NoneValue = "None";
 
-        /// <summary> SqlHost. </summary>
+        /// <summary> is SqlHost. </summary>
         public static AzureHybridBenefitType SqlHost { get; } = new AzureHybridBenefitType(SqlHostValue);
-        /// <summary> None. </summary>
+        /// <summary> is None. </summary>
         public static AzureHybridBenefitType None { get; } = new AzureHybridBenefitType(NoneValue);
         /// <summary> Determines if two <see cref="AzureHybridBenefitType"/> values are the same. </summary>
         public static bool operator ==(AzureHybridBenefitType left, AzureHybridBenefitType right) => left.Equals(right);

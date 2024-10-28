@@ -15,17 +15,15 @@ This guide explains the different options available to you in the Azure.Develope
         <!-- The below parameters are optional -->
         <Parameter name="Os" value="linux" />
         <Parameter name="RunId" value="sample-run-id" />
-        <Parameter name="ExposeNetwork" value="<loopback>" />
         <Parameter name="ServiceAuthType" value="EntraId" />
         <Parameter name="UseCloudHostedBrowsers" value="true" />
         <Parameter name="AzureTokenCredentialType" value="DefaultAzureCredential" />
-        <Parameter name="ManagedIdentityClientId" value="77bfc267-86cb-4eeb-9e4a-747a217a318c" />
         <Parameter name="EnableGitHubSummary" value="false" />
     </TestRunParameters>
     <!-- Enable Reporting feature -->
     <LoggerRunSettings>
         <Loggers>
-            <Logger friendlyName="ms-playwright-service" enabled="true" />
+            <Logger friendlyName="microsoft-playwright-testing" enabled="true" />
         </Loggers>
     </LoggerRunSettings>
 </RunSettings>

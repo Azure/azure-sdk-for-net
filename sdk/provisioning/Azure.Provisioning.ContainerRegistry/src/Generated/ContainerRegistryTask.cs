@@ -22,65 +22,105 @@ public partial class ContainerRegistryTask : ProvisionableResource
     /// <summary>
     /// The name of the container registry task.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The CPU configuration in terms of number of cores required for the run.
     /// </summary>
-    public BicepValue<int> AgentCpu { get => _agentCpu; set => _agentCpu.Assign(value); }
-    private readonly BicepValue<int> _agentCpu;
+    public BicepValue<int> AgentCpu 
+    {
+        get { Initialize(); return _agentCpu!; }
+        set { Initialize(); _agentCpu!.Assign(value); }
+    }
+    private BicepValue<int>? _agentCpu;
 
     /// <summary>
     /// The dedicated agent pool for the task.
     /// </summary>
-    public BicepValue<string> AgentPoolName { get => _agentPoolName; set => _agentPoolName.Assign(value); }
-    private readonly BicepValue<string> _agentPoolName;
+    public BicepValue<string> AgentPoolName 
+    {
+        get { Initialize(); return _agentPoolName!; }
+        set { Initialize(); _agentPoolName!.Assign(value); }
+    }
+    private BicepValue<string>? _agentPoolName;
 
     /// <summary>
     /// The properties that describes a set of credentials that will be used
     /// when this run is invoked.
     /// </summary>
-    public BicepValue<ContainerRegistryCredentials> Credentials { get => _credentials; set => _credentials.Assign(value); }
-    private readonly BicepValue<ContainerRegistryCredentials> _credentials;
+    public ContainerRegistryCredentials Credentials 
+    {
+        get { Initialize(); return _credentials!; }
+        set { Initialize(); AssignOrReplace(ref _credentials, value); }
+    }
+    private ContainerRegistryCredentials? _credentials;
 
     /// <summary>
     /// Identity for the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The value of this property indicates whether the task resource is
     /// system task or not.
     /// </summary>
-    public BicepValue<bool> IsSystemTask { get => _isSystemTask; set => _isSystemTask.Assign(value); }
-    private readonly BicepValue<bool> _isSystemTask;
+    public BicepValue<bool> IsSystemTask 
+    {
+        get { Initialize(); return _isSystemTask!; }
+        set { Initialize(); _isSystemTask!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSystemTask;
 
     /// <summary>
     /// The template that describes the repository and tag information for run
     /// log artifact.
     /// </summary>
-    public BicepValue<string> LogTemplate { get => _logTemplate; set => _logTemplate.Assign(value); }
-    private readonly BicepValue<string> _logTemplate;
+    public BicepValue<string> LogTemplate 
+    {
+        get { Initialize(); return _logTemplate!; }
+        set { Initialize(); _logTemplate!.Assign(value); }
+    }
+    private BicepValue<string>? _logTemplate;
 
     /// <summary>
     /// The platform properties against which the run has to happen.
     /// </summary>
-    public BicepValue<ContainerRegistryPlatformProperties> Platform { get => _platform; set => _platform.Assign(value); }
-    private readonly BicepValue<ContainerRegistryPlatformProperties> _platform;
+    public ContainerRegistryPlatformProperties Platform 
+    {
+        get { Initialize(); return _platform!; }
+        set { Initialize(); AssignOrReplace(ref _platform, value); }
+    }
+    private ContainerRegistryPlatformProperties? _platform;
 
     /// <summary>
     /// The current status of task.
     /// </summary>
-    public BicepValue<ContainerRegistryTaskStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<ContainerRegistryTaskStatus> _status;
+    public BicepValue<ContainerRegistryTaskStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<ContainerRegistryTaskStatus>? _status;
 
     /// <summary>
     /// The properties of a task step.             Please note
@@ -94,56 +134,88 @@ public partial class ContainerRegistryTask : ProvisionableResource
     /// and
     /// Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStep.
     /// </summary>
-    public BicepValue<ContainerRegistryTaskStepProperties> Step { get => _step; set => _step.Assign(value); }
-    private readonly BicepValue<ContainerRegistryTaskStepProperties> _step;
+    public ContainerRegistryTaskStepProperties Step 
+    {
+        get { Initialize(); return _step!; }
+        set { Initialize(); AssignOrReplace(ref _step, value); }
+    }
+    private ContainerRegistryTaskStepProperties? _step;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Run timeout in seconds.
     /// </summary>
-    public BicepValue<int> TimeoutInSeconds { get => _timeoutInSeconds; set => _timeoutInSeconds.Assign(value); }
-    private readonly BicepValue<int> _timeoutInSeconds;
+    public BicepValue<int> TimeoutInSeconds 
+    {
+        get { Initialize(); return _timeoutInSeconds!; }
+        set { Initialize(); _timeoutInSeconds!.Assign(value); }
+    }
+    private BicepValue<int>? _timeoutInSeconds;
 
     /// <summary>
     /// The properties that describe all triggers for the task.
     /// </summary>
-    public BicepValue<ContainerRegistryTriggerProperties> Trigger { get => _trigger; set => _trigger.Assign(value); }
-    private readonly BicepValue<ContainerRegistryTriggerProperties> _trigger;
+    public ContainerRegistryTriggerProperties Trigger 
+    {
+        get { Initialize(); return _trigger!; }
+        set { Initialize(); AssignOrReplace(ref _trigger, value); }
+    }
+    private ContainerRegistryTriggerProperties? _trigger;
 
     /// <summary>
     /// The creation date of task.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the task.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryTask.
@@ -158,25 +230,32 @@ public partial class ContainerRegistryTask : ProvisionableResource
     public ContainerRegistryTask(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/tasks", resourceVersion ?? "2019-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _agentCpu = BicepValue<int>.DefineProperty(this, "AgentCpu", ["properties", "agentConfiguration", "cpu"]);
-        _agentPoolName = BicepValue<string>.DefineProperty(this, "AgentPoolName", ["properties", "agentPoolName"]);
-        _credentials = BicepValue<ContainerRegistryCredentials>.DefineProperty(this, "Credentials", ["properties", "credentials"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isSystemTask = BicepValue<bool>.DefineProperty(this, "IsSystemTask", ["properties", "isSystemTask"]);
-        _logTemplate = BicepValue<string>.DefineProperty(this, "LogTemplate", ["properties", "logTemplate"]);
-        _platform = BicepValue<ContainerRegistryPlatformProperties>.DefineProperty(this, "Platform", ["properties", "platform"]);
-        _status = BicepValue<ContainerRegistryTaskStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _step = BicepValue<ContainerRegistryTaskStepProperties>.DefineProperty(this, "Step", ["properties", "step"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _timeoutInSeconds = BicepValue<int>.DefineProperty(this, "TimeoutInSeconds", ["properties", "timeout"]);
-        _trigger = BicepValue<ContainerRegistryTriggerProperties>.DefineProperty(this, "Trigger", ["properties", "trigger"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryTask.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _agentCpu = DefineProperty<int>("AgentCpu", ["properties", "agentConfiguration", "cpu"]);
+        _agentPoolName = DefineProperty<string>("AgentPoolName", ["properties", "agentPoolName"]);
+        _credentials = DefineModelProperty<ContainerRegistryCredentials>("Credentials", ["properties", "credentials"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isSystemTask = DefineProperty<bool>("IsSystemTask", ["properties", "isSystemTask"]);
+        _logTemplate = DefineProperty<string>("LogTemplate", ["properties", "logTemplate"]);
+        _platform = DefineModelProperty<ContainerRegistryPlatformProperties>("Platform", ["properties", "platform"]);
+        _status = DefineProperty<ContainerRegistryTaskStatus>("Status", ["properties", "status"]);
+        _step = DefineModelProperty<ContainerRegistryTaskStepProperties>("Step", ["properties", "step"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _timeoutInSeconds = DefineProperty<int>("TimeoutInSeconds", ["properties", "timeout"]);
+        _trigger = DefineModelProperty<ContainerRegistryTriggerProperties>("Trigger", ["properties", "trigger"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -184,11 +263,6 @@ public partial class ContainerRegistryTask : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2019-06-01-preview.
-        /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
-
         /// <summary>
         /// 2019-04-01.
         /// </summary>

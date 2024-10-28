@@ -22,62 +22,99 @@ public partial class StorageInsight : ProvisionableResource
     /// <summary>
     /// Name of the storageInsightsConfigs resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The names of the blob containers that the workspace should read.
     /// </summary>
-    public BicepList<string> Containers { get => _containers; set => _containers.Assign(value); }
-    private readonly BicepList<string> _containers;
+    public BicepList<string> Containers 
+    {
+        get { Initialize(); return _containers!; }
+        set { Initialize(); _containers!.Assign(value); }
+    }
+    private BicepList<string>? _containers;
 
     /// <summary>
     /// The ETag of the storage insight.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// The storage account connection details.
     /// </summary>
-    public BicepValue<OperationalInsightsStorageAccount> StorageAccount { get => _storageAccount; set => _storageAccount.Assign(value); }
-    private readonly BicepValue<OperationalInsightsStorageAccount> _storageAccount;
+    public OperationalInsightsStorageAccount StorageAccount 
+    {
+        get { Initialize(); return _storageAccount!; }
+        set { Initialize(); AssignOrReplace(ref _storageAccount, value); }
+    }
+    private OperationalInsightsStorageAccount? _storageAccount;
 
     /// <summary>
     /// The names of the Azure tables that the workspace should read.
     /// </summary>
-    public BicepList<string> Tables { get => _tables; set => _tables.Assign(value); }
-    private readonly BicepList<string> _tables;
+    public BicepList<string> Tables 
+    {
+        get { Initialize(); return _tables!; }
+        set { Initialize(); _tables!.Assign(value); }
+    }
+    private BicepList<string>? _tables;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The status of the storage insight.
     /// </summary>
-    public BicepValue<StorageInsightStatus> Status { get => _status; }
-    private readonly BicepValue<StorageInsightStatus> _status;
+    public StorageInsightStatus Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private StorageInsightStatus? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new StorageInsight.
@@ -92,16 +129,23 @@ public partial class StorageInsight : ProvisionableResource
     public StorageInsight(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/storageInsightConfigs", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _containers = BicepList<string>.DefineProperty(this, "Containers", ["properties", "containers"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["eTag"]);
-        _storageAccount = BicepValue<OperationalInsightsStorageAccount>.DefineProperty(this, "StorageAccount", ["properties", "storageAccount"]);
-        _tables = BicepList<string>.DefineProperty(this, "Tables", ["properties", "tables"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _status = BicepValue<StorageInsightStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StorageInsight.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _containers = DefineListProperty<string>("Containers", ["properties", "containers"]);
+        _eTag = DefineProperty<ETag>("ETag", ["eTag"]);
+        _storageAccount = DefineModelProperty<OperationalInsightsStorageAccount>("StorageAccount", ["properties", "storageAccount"]);
+        _tables = DefineListProperty<string>("Tables", ["properties", "tables"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _status = DefineModelProperty<StorageInsightStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

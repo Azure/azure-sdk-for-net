@@ -25,55 +25,87 @@ public partial class WebPubSubService : ProvisionableResource
     /// <summary>
     /// The name of the resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// A class represent managed identities used for request and response.
     /// Current supported identity types: None, SystemAssigned, UserAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// DisableLocalAuth             Enable or disable aad auth
     /// When set as true, connection with AuthType=aad won&apos;t
     /// work.
     /// </summary>
-    public BicepValue<bool> IsAadAuthDisabled { get => _isAadAuthDisabled; set => _isAadAuthDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isAadAuthDisabled;
+    public BicepValue<bool> IsAadAuthDisabled 
+    {
+        get { Initialize(); return _isAadAuthDisabled!; }
+        set { Initialize(); _isAadAuthDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAadAuthDisabled;
 
     /// <summary>
     /// Request client certificate during TLS handshake if enabled.
     /// </summary>
-    public BicepValue<bool> IsClientCertEnabled { get => _isClientCertEnabled; set => _isClientCertEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isClientCertEnabled;
+    public BicepValue<bool> IsClientCertEnabled 
+    {
+        get { Initialize(); return _isClientCertEnabled!; }
+        set { Initialize(); _isClientCertEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isClientCertEnabled;
 
     /// <summary>
     /// DisableLocalAuth             Enable or disable local auth with
     /// AccessKey             When set as true, connection with AccessKey=xxx
     /// won&apos;t work.
     /// </summary>
-    public BicepValue<bool> IsLocalAuthDisabled { get => _isLocalAuthDisabled; set => _isLocalAuthDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isLocalAuthDisabled;
+    public BicepValue<bool> IsLocalAuthDisabled 
+    {
+        get { Initialize(); return _isLocalAuthDisabled!; }
+        set { Initialize(); _isLocalAuthDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLocalAuthDisabled;
 
     /// <summary>
     /// Live trace configuration of a Microsoft.SignalRService resource.
     /// </summary>
-    public BicepValue<LiveTraceConfiguration> LiveTraceConfiguration { get => _liveTraceConfiguration; set => _liveTraceConfiguration.Assign(value); }
-    private readonly BicepValue<LiveTraceConfiguration> _liveTraceConfiguration;
+    public LiveTraceConfiguration LiveTraceConfiguration 
+    {
+        get { Initialize(); return _liveTraceConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _liveTraceConfiguration, value); }
+    }
+    private LiveTraceConfiguration? _liveTraceConfiguration;
 
     /// <summary>
     /// Network ACLs for the resource.
     /// </summary>
-    public BicepValue<WebPubSubNetworkAcls> NetworkAcls { get => _networkAcls; set => _networkAcls.Assign(value); }
-    private readonly BicepValue<WebPubSubNetworkAcls> _networkAcls;
+    public WebPubSubNetworkAcls NetworkAcls 
+    {
+        get { Initialize(); return _networkAcls!; }
+        set { Initialize(); AssignOrReplace(ref _networkAcls, value); }
+    }
+    private WebPubSubNetworkAcls? _networkAcls;
 
     /// <summary>
     /// Enable or disable public network access. Default to
@@ -81,95 +113,144 @@ public partial class WebPubSubService : ProvisionableResource
     /// still apply.             When it&apos;s Disabled, public network
     /// access is always disabled no matter what you set in network ACLs.
     /// </summary>
-    public BicepValue<string> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<string> _publicNetworkAccess;
+    public BicepValue<string> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<string>? _publicNetworkAccess;
 
     /// <summary>
     /// Gets or sets the list of category configurations.
     /// </summary>
-    public BicepList<ResourceLogCategory> ResourceLogCategories { get => _resourceLogCategories; set => _resourceLogCategories.Assign(value); }
-    private readonly BicepList<ResourceLogCategory> _resourceLogCategories;
+    public BicepList<ResourceLogCategory> ResourceLogCategories 
+    {
+        get { Initialize(); return _resourceLogCategories!; }
+        set { Initialize(); _resourceLogCategories!.Assign(value); }
+    }
+    private BicepList<ResourceLogCategory>? _resourceLogCategories;
 
     /// <summary>
     /// The billing information of the resource.
     /// </summary>
-    public BicepValue<BillingInfoSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<BillingInfoSku> _sku;
+    public BillingInfoSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private BillingInfoSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The publicly accessible IP of the resource.
     /// </summary>
-    public BicepValue<string> ExternalIP { get => _externalIP; }
-    private readonly BicepValue<string> _externalIP;
+    public BicepValue<string> ExternalIP 
+    {
+        get { Initialize(); return _externalIP!; }
+    }
+    private BicepValue<string>? _externalIP;
 
     /// <summary>
     /// FQDN of the service instance.
     /// </summary>
-    public BicepValue<string> HostName { get => _hostName; }
-    private readonly BicepValue<string> _hostName;
+    public BicepValue<string> HostName 
+    {
+        get { Initialize(); return _hostName!; }
+    }
+    private BicepValue<string>? _hostName;
 
     /// <summary>
     /// Deprecated.
     /// </summary>
-    public BicepValue<string> HostNamePrefix { get => _hostNamePrefix; }
-    private readonly BicepValue<string> _hostNamePrefix;
+    public BicepValue<string> HostNamePrefix 
+    {
+        get { Initialize(); return _hostNamePrefix!; }
+    }
+    private BicepValue<string>? _hostNamePrefix;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Private endpoint connections to the resource.
     /// </summary>
-    public BicepList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<WebPubSubPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<WebPubSubPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<WebPubSubProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<WebPubSubProvisioningState> _provisioningState;
+    public BicepValue<WebPubSubProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<WebPubSubProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The publicly accessible port of the resource which is designed for
     /// browser/client side usage.
     /// </summary>
-    public BicepValue<int> PublicPort { get => _publicPort; }
-    private readonly BicepValue<int> _publicPort;
+    public BicepValue<int> PublicPort 
+    {
+        get { Initialize(); return _publicPort!; }
+    }
+    private BicepValue<int>? _publicPort;
 
     /// <summary>
     /// The publicly accessible port of the resource which is designed for
     /// customer server side usage.
     /// </summary>
-    public BicepValue<int> ServerPort { get => _serverPort; }
-    private readonly BicepValue<int> _serverPort;
+    public BicepValue<int> ServerPort 
+    {
+        get { Initialize(); return _serverPort!; }
+    }
+    private BicepValue<int>? _serverPort;
 
     /// <summary>
     /// The list of shared private link resources.
     /// </summary>
-    public BicepList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get => _sharedPrivateLinkResources; }
-    private readonly BicepList<WebPubSubSharedPrivateLinkData> _sharedPrivateLinkResources;
+    public BicepList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources 
+    {
+        get { Initialize(); return _sharedPrivateLinkResources!; }
+    }
+    private BicepList<WebPubSubSharedPrivateLinkData>? _sharedPrivateLinkResources;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Version of the resource. Probably you need the same or higher version
     /// of client SDKs.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Creates a new WebPubSubService.
@@ -184,29 +265,36 @@ public partial class WebPubSubService : ProvisionableResource
     public WebPubSubService(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.SignalRService/webPubSub", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isAadAuthDisabled = BicepValue<bool>.DefineProperty(this, "IsAadAuthDisabled", ["properties", "disableAadAuth"]);
-        _isClientCertEnabled = BicepValue<bool>.DefineProperty(this, "IsClientCertEnabled", ["properties", "tls", "clientCertEnabled"]);
-        _isLocalAuthDisabled = BicepValue<bool>.DefineProperty(this, "IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
-        _liveTraceConfiguration = BicepValue<LiveTraceConfiguration>.DefineProperty(this, "LiveTraceConfiguration", ["properties", "liveTraceConfiguration"]);
-        _networkAcls = BicepValue<WebPubSubNetworkAcls>.DefineProperty(this, "NetworkAcls", ["properties", "networkACLs"]);
-        _publicNetworkAccess = BicepValue<string>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _resourceLogCategories = BicepList<ResourceLogCategory>.DefineProperty(this, "ResourceLogCategories", ["properties", "resourceLogConfiguration", "categories"]);
-        _sku = BicepValue<BillingInfoSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _externalIP = BicepValue<string>.DefineProperty(this, "ExternalIP", ["properties", "externalIP"], isOutput: true);
-        _hostName = BicepValue<string>.DefineProperty(this, "HostName", ["properties", "hostName"], isOutput: true);
-        _hostNamePrefix = BicepValue<string>.DefineProperty(this, "HostNamePrefix", ["properties", "hostNamePrefix"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointConnections = BicepList<WebPubSubPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _provisioningState = BicepValue<WebPubSubProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publicPort = BicepValue<int>.DefineProperty(this, "PublicPort", ["properties", "publicPort"], isOutput: true);
-        _serverPort = BicepValue<int>.DefineProperty(this, "ServerPort", ["properties", "serverPort"], isOutput: true);
-        _sharedPrivateLinkResources = BicepList<WebPubSubSharedPrivateLinkData>.DefineProperty(this, "SharedPrivateLinkResources", ["properties", "sharedPrivateLinkResources"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebPubSubService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isAadAuthDisabled = DefineProperty<bool>("IsAadAuthDisabled", ["properties", "disableAadAuth"]);
+        _isClientCertEnabled = DefineProperty<bool>("IsClientCertEnabled", ["properties", "tls", "clientCertEnabled"]);
+        _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
+        _liveTraceConfiguration = DefineModelProperty<LiveTraceConfiguration>("LiveTraceConfiguration", ["properties", "liveTraceConfiguration"]);
+        _networkAcls = DefineModelProperty<WebPubSubNetworkAcls>("NetworkAcls", ["properties", "networkACLs"]);
+        _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _resourceLogCategories = DefineListProperty<ResourceLogCategory>("ResourceLogCategories", ["properties", "resourceLogConfiguration", "categories"]);
+        _sku = DefineModelProperty<BillingInfoSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _externalIP = DefineProperty<string>("ExternalIP", ["properties", "externalIP"], isOutput: true);
+        _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
+        _hostNamePrefix = DefineProperty<string>("HostNamePrefix", ["properties", "hostNamePrefix"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<WebPubSubPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<WebPubSubProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _publicPort = DefineProperty<int>("PublicPort", ["properties", "publicPort"], isOutput: true);
+        _serverPort = DefineProperty<int>("ServerPort", ["properties", "serverPort"], isOutput: true);
+        _sharedPrivateLinkResources = DefineListProperty<WebPubSubSharedPrivateLinkData>("SharedPrivateLinkResources", ["properties", "sharedPrivateLinkResources"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
     }
 
     /// <summary>
@@ -214,11 +302,6 @@ public partial class WebPubSubService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -266,9 +349,12 @@ public partial class WebPubSubService : ProvisionableResource
     /// Get access keys for this WebPubSubService resource.
     /// </summary>
     /// <returns>The keys for this WebPubSubService resource.</returns>
-    public WebPubSubKeys GetKeys() =>
-        WebPubSubKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys")));
+    public WebPubSubKeys GetKeys()
+    {
+        WebPubSubKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 
     /// <summary>
     /// Creates a role assignment for a user-assigned identity that grants

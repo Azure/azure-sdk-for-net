@@ -20,65 +20,100 @@ public partial class RedisLinkedServerWithProperty : ProvisionableResource
     /// <summary>
     /// The name of the linked server that is being added to the Redis cache.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Fully qualified resourceId of the linked redis cache.
     /// </summary>
-    public BicepValue<ResourceIdentifier> LinkedRedisCacheId { get => _linkedRedisCacheId; set => _linkedRedisCacheId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _linkedRedisCacheId;
+    public BicepValue<ResourceIdentifier> LinkedRedisCacheId 
+    {
+        get { Initialize(); return _linkedRedisCacheId!; }
+        set { Initialize(); _linkedRedisCacheId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _linkedRedisCacheId;
 
     /// <summary>
     /// Location of the linked redis cache.
     /// </summary>
-    public BicepValue<AzureLocation> LinkedRedisCacheLocation { get => _linkedRedisCacheLocation; set => _linkedRedisCacheLocation.Assign(value); }
-    private readonly BicepValue<AzureLocation> _linkedRedisCacheLocation;
+    public BicepValue<AzureLocation> LinkedRedisCacheLocation 
+    {
+        get { Initialize(); return _linkedRedisCacheLocation!; }
+        set { Initialize(); _linkedRedisCacheLocation!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _linkedRedisCacheLocation;
 
     /// <summary>
     /// Role of the linked server.
     /// </summary>
-    public BicepValue<RedisLinkedServerRole> ServerRole { get => _serverRole; set => _serverRole.Assign(value); }
-    private readonly BicepValue<RedisLinkedServerRole> _serverRole;
+    public BicepValue<RedisLinkedServerRole> ServerRole 
+    {
+        get { Initialize(); return _serverRole!; }
+        set { Initialize(); _serverRole!.Assign(value); }
+    }
+    private BicepValue<RedisLinkedServerRole>? _serverRole;
 
     /// <summary>
     /// The unchanging DNS name which will always point to current geo-primary
     /// cache among the linked redis caches for seamless Geo Failover
     /// experience.
     /// </summary>
-    public BicepValue<string> GeoReplicatedPrimaryHostName { get => _geoReplicatedPrimaryHostName; }
-    private readonly BicepValue<string> _geoReplicatedPrimaryHostName;
+    public BicepValue<string> GeoReplicatedPrimaryHostName 
+    {
+        get { Initialize(); return _geoReplicatedPrimaryHostName!; }
+    }
+    private BicepValue<string>? _geoReplicatedPrimaryHostName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The changing DNS name that resolves to the current geo-primary cache
     /// among the linked redis caches before or after the Geo Failover.
     /// </summary>
-    public BicepValue<string> PrimaryHostName { get => _primaryHostName; }
-    private readonly BicepValue<string> _primaryHostName;
+    public BicepValue<string> PrimaryHostName 
+    {
+        get { Initialize(); return _primaryHostName!; }
+    }
+    private BicepValue<string>? _primaryHostName;
 
     /// <summary>
     /// Terminal state of the link between primary and secondary redis cache.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent RedisResource.
     /// </summary>
-    public RedisResource? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<RedisResource> _parent;
+    public RedisResource? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<RedisResource>? _parent;
 
     /// <summary>
     /// Creates a new RedisLinkedServerWithProperty.
@@ -93,16 +128,24 @@ public partial class RedisLinkedServerWithProperty : ProvisionableResource
     public RedisLinkedServerWithProperty(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Cache/redis/linkedServers", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _linkedRedisCacheId = BicepValue<ResourceIdentifier>.DefineProperty(this, "LinkedRedisCacheId", ["properties", "linkedRedisCacheId"], isRequired: true);
-        _linkedRedisCacheLocation = BicepValue<AzureLocation>.DefineProperty(this, "LinkedRedisCacheLocation", ["properties", "linkedRedisCacheLocation"], isRequired: true);
-        _serverRole = BicepValue<RedisLinkedServerRole>.DefineProperty(this, "ServerRole", ["properties", "serverRole"], isRequired: true);
-        _geoReplicatedPrimaryHostName = BicepValue<string>.DefineProperty(this, "GeoReplicatedPrimaryHostName", ["properties", "geoReplicatedPrimaryHostName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _primaryHostName = BicepValue<string>.DefineProperty(this, "PrimaryHostName", ["properties", "primaryHostName"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<RedisResource>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// RedisLinkedServerWithProperty.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _linkedRedisCacheId = DefineProperty<ResourceIdentifier>("LinkedRedisCacheId", ["properties", "linkedRedisCacheId"], isRequired: true);
+        _linkedRedisCacheLocation = DefineProperty<AzureLocation>("LinkedRedisCacheLocation", ["properties", "linkedRedisCacheLocation"], isRequired: true);
+        _serverRole = DefineProperty<RedisLinkedServerRole>("ServerRole", ["properties", "serverRole"], isRequired: true);
+        _geoReplicatedPrimaryHostName = DefineProperty<string>("GeoReplicatedPrimaryHostName", ["properties", "geoReplicatedPrimaryHostName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _primaryHostName = DefineProperty<string>("PrimaryHostName", ["properties", "primaryHostName"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<RedisResource>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -110,11 +153,6 @@ public partial class RedisLinkedServerWithProperty : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

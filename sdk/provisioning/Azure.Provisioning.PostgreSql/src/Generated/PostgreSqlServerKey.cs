@@ -21,50 +21,78 @@ public partial class PostgreSqlServerKey : ProvisionableResource
     /// The name of the PostgreSQL Server key to be operated on (updated or
     /// created).
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The key type like &apos;AzureKeyVault&apos;.
     /// </summary>
-    public BicepValue<PostgreSqlServerKeyType> ServerKeyType { get => _serverKeyType; set => _serverKeyType.Assign(value); }
-    private readonly BicepValue<PostgreSqlServerKeyType> _serverKeyType;
+    public BicepValue<PostgreSqlServerKeyType> ServerKeyType 
+    {
+        get { Initialize(); return _serverKeyType!; }
+        set { Initialize(); _serverKeyType!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlServerKeyType>? _serverKeyType;
 
     /// <summary>
     /// The URI of the key.
     /// </summary>
-    public BicepValue<Uri> Uri { get => _uri; set => _uri.Assign(value); }
-    private readonly BicepValue<Uri> _uri;
+    public BicepValue<Uri> Uri 
+    {
+        get { Initialize(); return _uri!; }
+        set { Initialize(); _uri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _uri;
 
     /// <summary>
     /// The key creation date.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Kind of encryption protector used to protect the key.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlServer.
     /// </summary>
-    public PostgreSqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlServer> _parent;
+    public PostgreSqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlServerKey.
@@ -79,14 +107,21 @@ public partial class PostgreSqlServerKey : ProvisionableResource
     public PostgreSqlServerKey(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/keys", resourceVersion ?? "2020-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _serverKeyType = BicepValue<PostgreSqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
-        _uri = BicepValue<Uri>.DefineProperty(this, "Uri", ["properties", "uri"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlServerKey.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _serverKeyType = DefineProperty<PostgreSqlServerKeyType>("ServerKeyType", ["properties", "serverKeyType"]);
+        _uri = DefineProperty<Uri>("Uri", ["properties", "uri"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -94,11 +129,6 @@ public partial class PostgreSqlServerKey : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2020-01-01-privatepreview.
-        /// </summary>
-        public static readonly string V2020_01_01_privatepreview = "2020-01-01-privatepreview";
-
         /// <summary>
         /// 2020-01-01.
         /// </summary>

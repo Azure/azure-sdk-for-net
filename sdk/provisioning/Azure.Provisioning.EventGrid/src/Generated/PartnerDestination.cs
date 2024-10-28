@@ -21,76 +21,121 @@ public partial class PartnerDestination : ProvisionableResource
     /// <summary>
     /// Name of the partner destination.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Activation state of the partner destination.
     /// </summary>
-    public BicepValue<PartnerDestinationActivationState> ActivationState { get => _activationState; set => _activationState.Assign(value); }
-    private readonly BicepValue<PartnerDestinationActivationState> _activationState;
+    public BicepValue<PartnerDestinationActivationState> ActivationState 
+    {
+        get { Initialize(); return _activationState!; }
+        set { Initialize(); _activationState!.Assign(value); }
+    }
+    private BicepValue<PartnerDestinationActivationState>? _activationState;
 
     /// <summary>
     /// Endpoint Base URL of the partner destination.
     /// </summary>
-    public BicepValue<Uri> EndpointBaseUri { get => _endpointBaseUri; set => _endpointBaseUri.Assign(value); }
-    private readonly BicepValue<Uri> _endpointBaseUri;
+    public BicepValue<Uri> EndpointBaseUri 
+    {
+        get { Initialize(); return _endpointBaseUri!; }
+        set { Initialize(); _endpointBaseUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _endpointBaseUri;
 
     /// <summary>
     /// Endpoint context associated with this partner destination.
     /// </summary>
-    public BicepValue<string> EndpointServiceContext { get => _endpointServiceContext; set => _endpointServiceContext.Assign(value); }
-    private readonly BicepValue<string> _endpointServiceContext;
+    public BicepValue<string> EndpointServiceContext 
+    {
+        get { Initialize(); return _endpointServiceContext!; }
+        set { Initialize(); _endpointServiceContext!.Assign(value); }
+    }
+    private BicepValue<string>? _endpointServiceContext;
 
     /// <summary>
     /// Expiration time of the partner destination. If this timer expires and
     /// the partner destination was never activated,             the partner
     /// destination and corresponding channel are deleted.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpirationTimeIfNotActivatedUtc { get => _expirationTimeIfNotActivatedUtc; set => _expirationTimeIfNotActivatedUtc.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _expirationTimeIfNotActivatedUtc;
+    public BicepValue<DateTimeOffset> ExpirationTimeIfNotActivatedUtc 
+    {
+        get { Initialize(); return _expirationTimeIfNotActivatedUtc!; }
+        set { Initialize(); _expirationTimeIfNotActivatedUtc!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _expirationTimeIfNotActivatedUtc;
 
     /// <summary>
     /// Context or helpful message that can be used during the approval process.
     /// </summary>
-    public BicepValue<string> MessageForActivation { get => _messageForActivation; set => _messageForActivation.Assign(value); }
-    private readonly BicepValue<string> _messageForActivation;
+    public BicepValue<string> MessageForActivation 
+    {
+        get { Initialize(); return _messageForActivation!; }
+        set { Initialize(); _messageForActivation!.Assign(value); }
+    }
+    private BicepValue<string>? _messageForActivation;
 
     /// <summary>
     /// The immutable Id of the corresponding partner registration.
     /// </summary>
-    public BicepValue<Guid> PartnerRegistrationImmutableId { get => _partnerRegistrationImmutableId; set => _partnerRegistrationImmutableId.Assign(value); }
-    private readonly BicepValue<Guid> _partnerRegistrationImmutableId;
+    public BicepValue<Guid> PartnerRegistrationImmutableId 
+    {
+        get { Initialize(); return _partnerRegistrationImmutableId!; }
+        set { Initialize(); _partnerRegistrationImmutableId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _partnerRegistrationImmutableId;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the partner destination.
     /// </summary>
-    public BicepValue<PartnerDestinationProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<PartnerDestinationProvisioningState> _provisioningState;
+    public BicepValue<PartnerDestinationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<PartnerDestinationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PartnerDestination.
@@ -103,31 +148,27 @@ public partial class PartnerDestination : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerDestination.</param>
     public PartnerDestination(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion ?? "2024-06-01-preview")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerDestinations", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _activationState = BicepValue<PartnerDestinationActivationState>.DefineProperty(this, "ActivationState", ["properties", "activationState"]);
-        _endpointBaseUri = BicepValue<Uri>.DefineProperty(this, "EndpointBaseUri", ["properties", "endpointBaseUrl"]);
-        _endpointServiceContext = BicepValue<string>.DefineProperty(this, "EndpointServiceContext", ["properties", "endpointServiceContext"]);
-        _expirationTimeIfNotActivatedUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpirationTimeIfNotActivatedUtc", ["properties", "expirationTimeIfNotActivatedUtc"]);
-        _messageForActivation = BicepValue<string>.DefineProperty(this, "MessageForActivation", ["properties", "messageForActivation"]);
-        _partnerRegistrationImmutableId = BicepValue<Guid>.DefineProperty(this, "PartnerRegistrationImmutableId", ["properties", "partnerRegistrationImmutableId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<PartnerDestinationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported PartnerDestination resource versions.
+    /// Define all the provisionable properties of PartnerDestination.
     /// </summary>
-    public static class ResourceVersions
+    protected override void DefineProvisionableProperties()
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _activationState = DefineProperty<PartnerDestinationActivationState>("ActivationState", ["properties", "activationState"]);
+        _endpointBaseUri = DefineProperty<Uri>("EndpointBaseUri", ["properties", "endpointBaseUrl"]);
+        _endpointServiceContext = DefineProperty<string>("EndpointServiceContext", ["properties", "endpointServiceContext"]);
+        _expirationTimeIfNotActivatedUtc = DefineProperty<DateTimeOffset>("ExpirationTimeIfNotActivatedUtc", ["properties", "expirationTimeIfNotActivatedUtc"]);
+        _messageForActivation = DefineProperty<string>("MessageForActivation", ["properties", "messageForActivation"]);
+        _partnerRegistrationImmutableId = DefineProperty<Guid>("PartnerRegistrationImmutableId", ["properties", "partnerRegistrationImmutableId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<PartnerDestinationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
