@@ -42,14 +42,50 @@ public readonly struct StorageServices
         return container;
     }
 
-    public string UploadJson(object json, string? name = default)
+    public string UploadJson(object json, string? name = default, bool overwrite = false)
     {
+        bool doOverwrite = false;
         BlobContainerClient container = GetDefaultContainer();
 
         if (name == default)
             name = $"b{Guid.NewGuid()}";
 
-        container.UploadBlob(name, BinaryData.FromObjectAsJson(json));
+        try
+        {
+            container.UploadBlob(name, BinaryData.FromObjectAsJson(json));
+        }
+        catch (RequestFailedException e) when (overwrite && e.Status == 409 && e.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+        {
+            doOverwrite = true;
+        }
+        if (doOverwrite)
+        {
+            container.GetBlobClient(name).Upload(BinaryData.FromObjectAsJson(json), overwrite: true);
+        }
+
+        return name;
+    }
+
+    public string UploadBlob(Stream fileStream, string? name = default, bool overwrite = false)
+    {
+        bool doOverwrite = false;
+        BlobContainerClient container = GetDefaultContainer();
+
+        if (name == default)
+            name = $"b{Guid.NewGuid()}";
+        try
+        {
+            container.UploadBlob(name, BinaryData.FromStream(fileStream));
+        }
+        catch (RequestFailedException e) when (overwrite && e.Status == 409 && e.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+        {
+            doOverwrite = true;
+        }
+        if (doOverwrite)
+        {
+            fileStream.Position = 0;
+            container.GetBlobClient(name).Upload(fileStream, overwrite: true);
+        }
 
         return name;
     }
