@@ -104,6 +104,60 @@ namespace Azure.ResourceManager.PostgreSql.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateUpdateGetDeleteNonPremiumSSD()
+        {
+            // Create
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            PostgreSqlFlexibleServerCollection serverCollection = rg.GetPostgreSqlFlexibleServers();
+            string serverName = Recording.GenerateAssetName("pgflexserverssdv2");
+            var data = new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = "16",
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, 3000, 125, StorageType.PremiumV2LRS, null),
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    BackupRetentionDays = 7
+                },
+                Network = new PostgreSqlFlexibleServerNetwork(),
+                HighAvailability = new PostgreSqlFlexibleServerHighAvailability() { Mode = PostgreSqlFlexibleServerHighAvailabilityMode.Disabled },
+            };
+            var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
+            PostgreSqlFlexibleServerResource server = lro.Value;
+            Assert.AreEqual(serverName, server.Data.Name);
+            Assert.AreEqual(StorageType.PremiumV2LRS, server.Data.Storage.StorageType);
+            // Update
+            var newStorageSize = 256;
+            var newIops = 3500;
+            var newThroughput = 425;
+            lro = await server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
+            {
+                Storage = new PostgreSqlFlexibleServerStorage()
+                {
+                    StorageType = StorageType.PremiumV2LRS,
+                    StorageSizeInGB = newStorageSize,
+                    Iops = newIops,
+                    Throughput = newThroughput
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update
+            });
+            PostgreSqlFlexibleServerResource serverFromUpdate = lro.Value;
+            Assert.AreEqual(serverName, serverFromUpdate.Data.Name);
+            Assert.AreEqual(newStorageSize, serverFromUpdate.Data.Storage.StorageSizeInGB);
+            Assert.AreEqual(newThroughput, serverFromUpdate.Data.Storage.Throughput);
+            Assert.AreEqual(newIops, serverFromUpdate.Data.Storage.Iops);
+            // Get
+            PostgreSqlFlexibleServerResource serverFromGet = await serverFromUpdate.GetAsync();
+            Assert.AreEqual(serverName, serverFromGet.Data.Name);
+            // Delete
+            await serverFromGet.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task Restore()
         {
             var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
