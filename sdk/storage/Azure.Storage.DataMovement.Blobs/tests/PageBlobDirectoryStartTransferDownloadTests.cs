@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
@@ -39,5 +40,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await pageBlobClient.UploadPagesAsync(contents, 0, cancellationToken: cancellationToken);
             }
         }
+
+        protected override BlobType GetBlobType()
+            => BlobType.Page;
     }
 }

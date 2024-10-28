@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test.Shared;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
@@ -37,11 +38,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         protected abstract Task CreateBlobClientAsync(BlobContainerClient container, string blobName, Stream contents, CancellationToken cancellationToken = default);
 
+        protected abstract BlobType GetBlobType();
+
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
             => await ClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetStorageResourceContainer(BlobContainerClient container, string directoryPath)
-            => new BlobStorageResourceContainer(container, new() { BlobDirectoryPrefix = directoryPath });
+            => new BlobStorageResourceContainer(container, new() { BlobType = new(GetBlobType()), BlobDirectoryPrefix = directoryPath });
 
         protected override TransferValidator.ListFilesAsync GetSourceLister(BlobContainerClient container, string prefix)
             => TransferValidator.GetBlobLister(container, prefix);

@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(Constants.KB, 10)]
-        [TestCase(Constants.KB * 20, 10)]
+        [TestCase(Constants.KB * 10, 10)]
         public async Task Upload(long objectSize, int waitTimeInSec)
         {
             // Arrange

@@ -36,8 +36,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         protected override BlobType GetBlobType()
-        {
-            return BlobType.Page;
-        }
+            => BlobType.Page;
     }
 }
