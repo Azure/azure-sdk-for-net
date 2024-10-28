@@ -3,29 +3,40 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Update Dialog Options bag
+    /// The Dialog Options.
     /// </summary>
-    public class UpdateDialogOptions
+    public class StartDialog
     {
         /// <summary>
-        /// Creates a new instance of the UpdateDialogOptions.
+        /// Creates a new instance of the DialogOptions.
+        /// </summary>
+        /// <param name="dialog"></param>
+        public StartDialog(BaseDialog dialog)
+        {
+            DialogId = Guid.NewGuid().ToString();
+            Dialog = dialog;
+        }
+        /// <summary>
+        /// Creates a new instance of the DialogOptions.
         /// </summary>
         /// <param name="dialogId"></param>
         /// <param name="dialog"></param>
-        public UpdateDialogOptions(string dialogId, DialogUpdateBase dialog)
+        public StartDialog(string dialogId, BaseDialog dialog)
         {
             DialogId = dialogId;
             Dialog = dialog;
         }
+
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
         /// <summary> Determines the type of the dialog. </summary>
-        public DialogUpdateBase Dialog { get; }
+        public BaseDialog Dialog { get; }
+        /// <summary> The value of the operation callback URI. </summary>
+        public string OperationCallbackUri { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

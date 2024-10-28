@@ -86,15 +86,6 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.RecordingStorage != null)
-                {
-                    // This is required only when blob storage in use
-                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
-                    {
-                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
-                    }
-                }
-
                 return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -145,15 +136,6 @@ namespace Azure.Communication.CallAutomation
                             newChannelAffinity.Channel = c.Channel;
                         }
                         request.ChannelAffinity.Add(newChannelAffinity);
-                    }
-                }
-
-                if (options.RecordingStorage != null)
-                {
-                    // This is required only when blob storage in use
-                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
-                    {
-                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
                     }
                 }
 

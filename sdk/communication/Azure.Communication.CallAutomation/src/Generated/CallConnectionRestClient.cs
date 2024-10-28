@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-03-preview")
+        public CallConnectionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-01-22-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -634,92 +634,6 @@ namespace Azure.Communication.CallAutomation
                         MuteParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = MuteParticipantResult.DeserializeMuteParticipantResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUnmuteRequest(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/callConnections/", false);
-            uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:unmute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unmuteParticipantsRequestInternal);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Unmute participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteParticipantsRequestInternal"> The participants to be unmuted from the call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequestInternal"/> is null. </exception>
-        public async Task<Response<UnmuteParticipantResult>> UnmuteAsync(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (unmuteParticipantsRequestInternal == null)
-            {
-                throw new ArgumentNullException(nameof(unmuteParticipantsRequestInternal));
-            }
-
-            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantsRequestInternal);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UnmuteParticipantResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Unmute participants from the call using identifier. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="unmuteParticipantsRequestInternal"> The participants to be unmuted from the call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequestInternal"/> is null. </exception>
-        public Response<UnmuteParticipantResult> Unmute(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequestInternal, CancellationToken cancellationToken = default)
-        {
-            if (callConnectionId == null)
-            {
-                throw new ArgumentNullException(nameof(callConnectionId));
-            }
-            if (unmuteParticipantsRequestInternal == null)
-            {
-                throw new ArgumentNullException(nameof(unmuteParticipantsRequestInternal));
-            }
-
-            using var message = CreateUnmuteRequest(callConnectionId, unmuteParticipantsRequestInternal);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UnmuteParticipantResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnmuteParticipantResult.DeserializeUnmuteParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

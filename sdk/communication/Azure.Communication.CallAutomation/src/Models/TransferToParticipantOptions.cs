@@ -67,10 +67,5 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public Uri OperationCallbackUri { get; set; }
-
-        /// <summary>
-        /// The phone number that will be used as the transferor(Contoso) caller id when transfering a call a pstn target.
-        /// </summary>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
     }
 }

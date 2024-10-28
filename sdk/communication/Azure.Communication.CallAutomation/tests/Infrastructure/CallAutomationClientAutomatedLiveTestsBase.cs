@@ -105,11 +105,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             CallAutomationClient callAutomationClient;
             if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
             {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+                callAutomationClient = new CallAutomationClient(new Uri("https://uswc-02.sdf.pma.teams.microsoft.com:6448"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
             }
             else
             {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+                callAutomationClient = new CallAutomationClient(new Uri("https://uswc-02.sdf.pma.teams.microsoft.com:6448"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
             }
 
             return InstrumentClient(callAutomationClient);

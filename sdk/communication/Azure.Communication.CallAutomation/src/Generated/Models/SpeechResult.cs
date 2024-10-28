@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The speech recognition status as a result. </summary>
+    /// <summary> The speech status as a result. </summary>
     public partial class SpeechResult
     {
         /// <summary> Initializes a new instance of <see cref="SpeechResult"/>. </summary>

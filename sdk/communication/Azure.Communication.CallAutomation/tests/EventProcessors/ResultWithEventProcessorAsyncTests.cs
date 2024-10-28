@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callAutomationClient.CreateCall(new CreateCallOptions(CreateMockInvite(), new Uri(CallBackUri)));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
-            SendAndProcessEvent(handler, new CreateCallFailed(new CreateCallFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
+            SendAndProcessEvent(handler, new CreateCallFailed(new CreateCallFailedInternal(CallConnectionId, ServerCallId, CorelationId, null, null)));
 
             CreateCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -86,7 +86,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new AnswerFailed(new AnswerFailedInternal("mismatchedOperationId", null, CallConnectionId, ServerCallId, CorelationId)));
+            SendAndProcessEvent(handler, new AnswerFailed(new AnswerFailedInternal(CallConnectionId, ServerCallId, CorelationId, null, null)));
 
             AnswerCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -145,7 +145,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var transferTarget = new CommunicationIdentifierModel();
             transferTarget.CommunicationUser = new CommunicationUserIdentifierModel(TargetUser);
             transferTarget.RawId = TargetUser;
-            var internalEvent = new CallTransferAcceptedInternal(response.Value.OperationContext, null, transferTarget, transferee, CallConnectionId, ServerCallId, CorelationId);
+            var internalEvent = new CallTransferAcceptedInternal(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, transferTarget, transferee);
 
             // Create and send event to event processor
             SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
@@ -177,7 +177,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallTransferFailed(response.Value.OperationContext, null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CallTransferFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
 
             TransferCallToParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -257,7 +257,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayCompleted(new ResultInformation() { }, OperationContext, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new PlayCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }));
 
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -283,7 +283,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayFailed(OperationContext, new ResultInformation() { }, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new PlayFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }));
 
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -309,7 +309,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayCanceled(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new PlayCanceled(CallConnectionId, ServerCallId, CorelationId, null));
 
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -334,7 +334,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new RecognizeCanceled(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new RecognizeCanceled(CallConnectionId, ServerCallId, CorelationId, null));
 
             CancelAllMediaOperationsEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -385,7 +385,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new RecognizeFailed(OperationContext, new ResultInformation(), CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new RecognizeFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
 
             StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -520,7 +520,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };
@@ -558,7 +558,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
             var dialogContext = new Dictionary<string, object>();
-            var startDialogOptions = new StartDialogOptions(new PowerVirtualAgentsDialog("botAppId", dialogContext))
+            var startDialogOptions = new StartDialog(new PowerVirtualAgentsDialog("botAppId", dialogContext))
             {
                 OperationContext = OperationContext
             };
@@ -636,7 +636,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 ServerCallId,
                 CorelationId,
                 invitationId,
-                callInvite.Target,
                 OperationContext));
 
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();

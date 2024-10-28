@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(CallRejectReason left, CallRejectReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallRejectReason"/> values are not the same. </summary>
         public static bool operator !=(CallRejectReason left, CallRejectReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CallRejectReason"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CallRejectReason"/>. </summary>
         public static implicit operator CallRejectReason(string value) => new CallRejectReason(value);
 
         /// <inheritdoc />

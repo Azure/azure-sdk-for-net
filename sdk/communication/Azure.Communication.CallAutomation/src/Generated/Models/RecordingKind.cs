@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(RecordingKind left, RecordingKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingKind"/> values are not the same. </summary>
         public static bool operator !=(RecordingKind left, RecordingKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecordingKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RecordingKind"/>. </summary>
         public static implicit operator RecordingKind(string value) => new RecordingKind(value);
 
         /// <inheritdoc />

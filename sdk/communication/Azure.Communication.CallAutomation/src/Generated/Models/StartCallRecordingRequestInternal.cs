@@ -43,9 +43,8 @@ namespace Azure.Communication.CallAutomation
         /// Channel-Participant mapping details can be found in the metadata of the recording.
         /// ///
         /// </param>
-        /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
-        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, RecordingStorageInternal externalStorage, bool? pauseOnStart)
+        /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which could be resumed. </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart)
         {
             CallLocator = callLocator;
             RecordingStateCallbackUri = recordingStateCallbackUri;
@@ -54,7 +53,6 @@ namespace Azure.Communication.CallAutomation
             RecordingFormatType = recordingFormatType;
             AudioChannelParticipantOrdering = audioChannelParticipantOrdering;
             ChannelAffinity = channelAffinity;
-            ExternalStorage = externalStorage;
             PauseOnStart = pauseOnStart;
         }
 
@@ -82,9 +80,7 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
-        /// <summary> Optional property to specify location where recording will be stored. </summary>
-        public RecordingStorageInternal ExternalStorage { get; set; }
-        /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
+        /// <summary> When set to true will start recording in Pause mode, which could be resumed. </summary>
         public bool? PauseOnStart { get; set; }
     }
 }

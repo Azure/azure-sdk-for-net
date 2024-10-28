@@ -18,15 +18,30 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             string recordingId = default;
             RecordingState state = default;
             DateTimeOffset? startDateTime = default;
             RecordingKind? recordingKind = default;
-            string callConnectionId = default;
-            string serverCallId = default;
-            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
@@ -59,30 +74,15 @@ namespace Azure.Communication.CallAutomation
                     recordingKind = new RecordingKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
             }
             return new RecordingStateChanged(
+                callConnectionId,
+                serverCallId,
+                correlationId,
                 recordingId,
                 state,
                 startDateTime,
-                recordingKind,
-                callConnectionId,
-                serverCallId,
-                correlationId);
+                recordingKind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

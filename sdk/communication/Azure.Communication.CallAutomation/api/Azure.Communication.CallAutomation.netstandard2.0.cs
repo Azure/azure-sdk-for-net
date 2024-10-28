@@ -50,9 +50,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CommunicationUserIdentifier AnsweredBy { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.CustomCallingContext CustomCallingContext { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
@@ -68,36 +66,6 @@ namespace Azure.Communication.CallAutomation
     {
         internal AnswerFailed() { }
         public static Azure.Communication.CallAutomation.AnswerFailed Deserialize(string content) { throw null; }
-    }
-    public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
-    {
-        internal AudioData() { }
-        public string Data { get { throw null; } }
-        public bool IsSilent { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTime Timestamp { get { throw null; } }
-    }
-    public partial class AudioMetadata : Azure.Communication.CallAutomation.StreamingData
-    {
-        public AudioMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
-        public int Channels { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
-        public string Encoding { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
-        public int Length { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
-        public string MediaSubscriptionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
-        public int SampleRate { get { throw null; } set { } }
-    }
-    public partial class AzureOpenAIDialog : Azure.Communication.CallAutomation.BaseDialog
-    {
-        public AzureOpenAIDialog(System.Collections.Generic.IDictionary<string, object> context) : base (default(System.Collections.Generic.IDictionary<string, object>)) { }
-    }
-    public partial class AzureOpenAIDialogUpdate : Azure.Communication.CallAutomation.DialogUpdateBase
-    {
-        public AzureOpenAIDialogUpdate(System.Collections.Generic.IDictionary<string, object> context) { }
     }
     public abstract partial class BaseDialog
     {
@@ -137,14 +105,13 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
-        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2023_10_03_Preview) { }
+        public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2024_01_22_Preview) { }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2023_03_06 = 1,
-            V2023_06_15_Preview = 2,
-            V2023_10_15 = 3,
-            V2023_10_03_Preview = 4,
+            V2023_10_15 = 2,
+            V2024_01_22_Preview = 3,
         }
     }
     public abstract partial class CallAutomationEventBase
@@ -184,36 +151,28 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.AnswerCallResult AnswerCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.AnswerFailed AnswerFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallAutomation.CallConnectionState callConnectionState = default(Azure.Communication.CallAutomation.CallConnectionState), System.Uri callbackUri = null, Azure.Communication.CommunicationIdentifier sourceIdentity = null, Azure.Communication.PhoneNumberIdentifier sourceCallerIdNumber = null, string sourceDisplayName = null, Azure.Communication.CommunicationUserIdentifier answeredBy = null, string mediaSubscriptionId = null, string dataSubscriptionId = null) { throw null; }
+        public static Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties(string callConnectionId = null, string serverCallId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets = null, Azure.Communication.CallAutomation.CallConnectionState callConnectionState = default(Azure.Communication.CallAutomation.CallConnectionState), System.Uri callbackUri = null, Azure.Communication.CommunicationIdentifier sourceIdentity = null, Azure.Communication.PhoneNumberIdentifier sourceCallerIdNumber = null, string sourceDisplayName = null, Azure.Communication.CommunicationUserIdentifier answeredBy = null, string dataSubscriptionId = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier = null, bool isMuted = false, bool isOnHold = false) { throw null; }
+        public static Azure.Communication.CallAutomation.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier = null, bool isMuted = false) { throw null; }
         public static Azure.Communication.CallAutomation.CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CommunicationIdentifier transferee = null, Azure.Communication.CommunicationIdentifier transferTarget = null) { throw null; }
         public static Azure.Communication.CallAutomation.CallTransferFailed CallTransferFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.CancelAddParticipantFailed CancelAddParticipantFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string invitationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CancelAddParticipantOperationResult CancelAddParticipantResult(string invitationId = null, string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = null, string serverCallId = null, string correlationId = null, string invitationId = null, Azure.Communication.CommunicationIdentifier participant = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = null, string serverCallId = null, string correlationId = null, string invitationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null) { throw null; }
-        public static Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneFailed ContinuousDtmfRecognitionToneFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ContinuousDtmfRecognitionToneReceived ContinuousDtmfRecognitionToneReceived(int? sequenceId = default(int?), Azure.Communication.CallAutomation.DtmfTone? tone = default(Azure.Communication.CallAutomation.DtmfTone?), string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CreateCallFailed CreateCallFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.CreateCallResult CreateCallResult(Azure.Communication.CallAutomation.CallConnection callConnection = null, Azure.Communication.CallAutomation.CallConnectionProperties callConnectionProperties = null) { throw null; }
         public static Azure.Communication.CallAutomation.DtmfResult DtmfResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.DtmfTone> tones = null) { throw null; }
-        public static Azure.Communication.CallAutomation.HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingFailed MediaStreamingFailed(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingStarted MediaStreamingStarted(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingStopped MediaStreamingStopped(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, Azure.Communication.CallAutomation.MediaStreamingStatus? mediaStreamingStatus = default(Azure.Communication.CallAutomation.MediaStreamingStatus?), Azure.Communication.CallAutomation.MediaStreamingStatusDetails? mediaStreamingStatusDetails = default(Azure.Communication.CallAutomation.MediaStreamingStatusDetails?)) { throw null; }
         public static Azure.Communication.CallAutomation.MuteParticipantResult MuteParticipantResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated ParticipantsUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.CallParticipant> participants = null, int sequenceNumber = 0) { throw null; }
         public static Azure.Communication.CallAutomation.PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
-        public static Azure.Communication.CallAutomation.PlayFailed PlayFailed(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, int? failedPlaySourceIndex = default(int?), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType = default(Azure.Communication.CallAutomation.CallMediaRecognitionType), Azure.Communication.CallAutomation.RecognizeResult recognizeResult = null) { throw null; }
-        public static Azure.Communication.CallAutomation.RecognizeFailed RecognizeFailed(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, int? failedPlaySourceIndex = default(int?), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, Azure.Communication.CallAutomation.RecordingState state = default(Azure.Communication.CallAutomation.RecordingState), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), Azure.Communication.CallAutomation.RecordingKind? recordingKind = default(Azure.Communication.CallAutomation.RecordingKind?)) { throw null; }
         public static Azure.Communication.CallAutomation.RecordingStateResult RecordingStateResult(string recordingId = null, Azure.Communication.CallAutomation.RecordingState? recordingState = default(Azure.Communication.CallAutomation.RecordingState?), Azure.Communication.CallAutomation.RecordingKind? recordingKind = default(Azure.Communication.CallAutomation.RecordingKind?)) { throw null; }
@@ -225,13 +184,12 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.SpeechResult SpeechResult(string speech = null) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdateResult = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdateResult = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdateResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate(Azure.Communication.CallAutomation.TranscriptionStatus? transcriptionStatus = default(Azure.Communication.CallAutomation.TranscriptionStatus?), Azure.Communication.CallAutomation.TranscriptionStatusDetails? transcriptionStatusDetails = default(Azure.Communication.CallAutomation.TranscriptionStatusDetails?)) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionUpdated TranscriptionUpdated(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionUpdated TranscriptionUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdateResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null) { throw null; }
-        public static Azure.Communication.CallAutomation.UnmuteParticipantResult UnmuteParticipantResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.UserConsent UserConsent(int? recording = default(int?)) { throw null; }
     }
     public partial class CallConnected : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -273,10 +231,6 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response<Azure.Communication.CallAutomation.TransferCallToParticipantResult> TransferCallToParticipant(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.TransferCallToParticipantResult>> TransferCallToParticipantAsync(Azure.Communication.CallAutomation.TransferToParticipantOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.TransferCallToParticipantResult>> TransferCallToParticipantAsync(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.UnmuteParticipantResult> UnmuteParticipant(Azure.Communication.CallAutomation.UnmuteParticipantOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.UnmuteParticipantResult> UnmuteParticipant(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.UnmuteParticipantResult>> UnmuteParticipantAsync(Azure.Communication.CallAutomation.UnmuteParticipantOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.UnmuteParticipantResult>> UnmuteParticipantAsync(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CallConnectionProperties
     {
@@ -287,7 +241,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnectionState CallConnectionState { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string DataSubscriptionId { get { throw null; } }
-        public string MediaSubscriptionId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Source { get { throw null; } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }
@@ -321,12 +274,10 @@ namespace Azure.Communication.CallAutomation
     {
         protected CallDialog() { }
         public virtual string CallConnectionId { get { throw null; } }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.DialogResult> StartDialog(Azure.Communication.CallAutomation.StartDialogOptions startDialog, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StartDialogAsync(Azure.Communication.CallAutomation.StartDialogOptions startDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.DialogResult> StopDialog(string dialogId, System.Uri operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StopDialogAsync(string dialogId, System.Uri operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateDialog(Azure.Communication.CallAutomation.UpdateDialogOptions updateDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDialogAsync(Azure.Communication.CallAutomation.UpdateDialogOptions updateDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.DialogResult> StartDialog(Azure.Communication.CallAutomation.StartDialog startDialog, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StartDialogAsync(Azure.Communication.CallAutomation.StartDialog StartDialog, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.DialogResult> StopDialog(string dialogId, string operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StopDialogAsync(string dialogId, string operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CallDisconnected : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -362,8 +313,6 @@ namespace Azure.Communication.CallAutomation
         public virtual string CallConnectionId { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult> CancelAllMediaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Hold(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> HoldAsync(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.PlayResult> Play(Azure.Communication.CallAutomation.PlayOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.PlayResult> Play(Azure.Communication.CallAutomation.PlaySource playSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.PlayResult>> PlayAsync(Azure.Communication.CallAutomation.PlayOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -380,10 +329,6 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response StartContinuousDtmfRecognition(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StartContinuousDtmfRecognitionAsync(Azure.Communication.CallAutomation.ContinuousDtmfRecognitionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StartContinuousDtmfRecognitionAsync(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This operations is deprecated, please us Hold instead.")]
-        public virtual Azure.Response StartHoldMusic(Azure.Communication.CallAutomation.StartHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This operations is deprecated, please us HoldAsync instead.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response> StartHoldMusicAsync(Azure.Communication.CallAutomation.StartHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.StartRecognizingCallMediaResult> StartRecognizing(Azure.Communication.CallAutomation.CallMediaRecognizeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.StartRecognizingCallMediaResult>> StartRecognizingAsync(Azure.Communication.CallAutomation.CallMediaRecognizeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StartTranscription(Azure.Communication.CallAutomation.StartTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -392,14 +337,8 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response StopContinuousDtmfRecognition(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopContinuousDtmfRecognitionAsync(Azure.Communication.CallAutomation.ContinuousDtmfRecognitionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopContinuousDtmfRecognitionAsync(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This operations is deprecated, please us Unhold instead.")]
-        public virtual Azure.Response StopHoldMusic(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This operations is deprecated, please us UnholdAsync instead.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response> StopHoldMusicAsync(Azure.Communication.CallAutomation.StopHoldMusicOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopTranscription(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTranscriptionAsync(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Unhold(Azure.Communication.CallAutomation.UnholdOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UnholdAsync(Azure.Communication.CallAutomation.UnholdOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateTranscription(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTranscriptionAsync(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -466,7 +405,6 @@ namespace Azure.Communication.CallAutomation
         internal CallParticipant() { }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } }
         public bool IsMuted { get { throw null; } }
-        public bool IsOnHold { get { throw null; } }
     }
     public partial class CallRecording
     {
@@ -525,9 +463,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal CancelAddParticipantEventResult() { }
         public Azure.Communication.CallAutomation.CancelAddParticipantFailed FailureResult { get { throw null; } }
-        public string InvitationId { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.CancelAddParticipantSucceeded SuccessResult { get { throw null; } }
     }
     public partial class CancelAddParticipantFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -582,13 +518,6 @@ namespace Azure.Communication.CallAutomation
         public string Label { get { throw null; } }
         public string RecognizedPhrase { get { throw null; } }
         public override Azure.Communication.CallAutomation.RecognizeResultType ResultType { get { throw null; } }
-    }
-    public partial class CollectTonesResult : Azure.Communication.CallAutomation.RecognizeResult
-    {
-        internal CollectTonesResult() { }
-        public override Azure.Communication.CallAutomation.RecognizeResultType ResultType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> Tones { get { throw null; } }
-        public string ConvertToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
@@ -649,7 +578,6 @@ namespace Azure.Communication.CallAutomation
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
@@ -666,8 +594,6 @@ namespace Azure.Communication.CallAutomation
         public CreateGroupCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.CustomCallingContext CustomCallingContext { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
@@ -708,7 +634,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.DialogSensitivityUpdate DialogSensitivityUpdateEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogStarted DialogStartedSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogTransfer DialogTransferSuccessEvent { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogUpdated DialogUpdatedEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
     }
@@ -733,7 +658,6 @@ namespace Azure.Communication.CallAutomation
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DialogInputType(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.DialogInputType AzureOpenAI { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogInputType PowerVirtualAgents { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.DialogInputType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -784,21 +708,6 @@ namespace Azure.Communication.CallAutomation
         public string TransferDestination { get { throw null; } }
         public string TransferType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogTransfer Deserialize(string content) { throw null; }
-    }
-    public abstract partial class DialogUpdateBase
-    {
-        protected DialogUpdateBase() { }
-        public System.Collections.Generic.IDictionary<string, object> Context { get { throw null; } set { } }
-    }
-    public partial class DialogUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal DialogUpdated() { }
-        public string DialogId { get { throw null; } }
-        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
-        public object IvrContext { get { throw null; } }
-        public string UpdatedDestination { get { throw null; } }
-        public string UpdatedType { get { throw null; } }
-        public static Azure.Communication.CallAutomation.DialogUpdated Deserialize(string content) { throw null; }
     }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
@@ -852,20 +761,6 @@ namespace Azure.Communication.CallAutomation
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HoldFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal HoldFailed() { }
-        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
-        public static Azure.Communication.CallAutomation.HoldFailed Deserialize(string content) { throw null; }
-    }
-    public partial class HoldOptions
-    {
-        public HoldOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public System.Uri OperationCallbackUri { get { throw null; } set { } }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaEventReasonCode : System.IEquatable<Azure.Communication.CallAutomation.MediaEventReasonCode>
     {
@@ -899,150 +794,6 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.MediaEventReasonCode (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.MediaEventReasonCode left, Azure.Communication.CallAutomation.MediaEventReasonCode right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingAudioChannel(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingAudioChannel Mixed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingAudioChannel Unmixed { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingAudioChannel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingAudioChannel left, Azure.Communication.CallAutomation.MediaStreamingAudioChannel right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingAudioChannel (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingAudioChannel left, Azure.Communication.CallAutomation.MediaStreamingAudioChannel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingConfiguration
-    {
-        public MediaStreamingConfiguration(System.Uri transportUrl, Azure.Communication.CallAutomation.MediaStreamingTransport transportType, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
-        public Azure.Communication.CallAutomation.MediaStreamingAudioChannel AudioChannelType { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContent ContentType { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingTransport TransportType { get { throw null; } }
-        public System.Uri TransportUrl { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingContent : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingContent>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingContent(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingContent Audio { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingContent left, Azure.Communication.CallAutomation.MediaStreamingContent right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingContent (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingContent left, Azure.Communication.CallAutomation.MediaStreamingContent right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal MediaStreamingFailed() { }
-        public Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingFailed Deserialize(string content) { throw null; }
-    }
-    public partial class MediaStreamingOptions
-    {
-        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingTransport transportType, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
-        public Azure.Communication.CallAutomation.MediaStreamingAudioChannel MediaStreamingAudioChannel { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingTransport MediaStreamingTransport { get { throw null; } }
-        public System.Uri TransportUri { get { throw null; } }
-    }
-    public partial class MediaStreamingStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal MediaStreamingStarted() { }
-        public Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStarted Deserialize(string content) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingStatus : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingStatus(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingFailed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingStarted { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatus MediaStreamingStopped { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatus UnspecifiedError { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingStatus left, Azure.Communication.CallAutomation.MediaStreamingStatus right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingStatus left, Azure.Communication.CallAutomation.MediaStreamingStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingStatusDetails : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingStatusDetails>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingStatusDetails(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails AuthenticationFailure { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails BadRequest { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails Forbidden { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails InitialWebSocketConnectionFailed { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails ServiceShutdown { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails ServiceTimeout { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails SpeechServicesConnectionError { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamConnectionInterrupted { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamConnectionReestablished { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamConnectionUnsuccessful { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails StreamUrlMissing { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails SubscriptionStarted { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails SubscriptionStopped { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails TooManyRequests { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStatusDetails UnspecifiedError { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingStatusDetails other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingStatusDetails left, Azure.Communication.CallAutomation.MediaStreamingStatusDetails right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingStatusDetails (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingStatusDetails left, Azure.Communication.CallAutomation.MediaStreamingStatusDetails right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingStopped : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal MediaStreamingStopped() { }
-        public Azure.Communication.CallAutomation.MediaStreamingUpdate MediaStreamingUpdate { get { throw null; } }
-        public static Azure.Communication.CallAutomation.MediaStreamingStopped Deserialize(string content) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MediaStreamingTransport : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingTransport>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MediaStreamingTransport(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.MediaStreamingTransport Websocket { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.MediaStreamingTransport other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.MediaStreamingTransport left, Azure.Communication.CallAutomation.MediaStreamingTransport right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.MediaStreamingTransport (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.MediaStreamingTransport left, Azure.Communication.CallAutomation.MediaStreamingTransport right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MediaStreamingUpdate
-    {
-        internal MediaStreamingUpdate() { }
-        public string ContentType { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingStatus? MediaStreamingStatus { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingStatusDetails? MediaStreamingStatusDetails { get { throw null; } }
     }
     public partial class MuteParticipantOptions
     {
@@ -1083,7 +834,6 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayFailed() { }
-        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.PlayFailed Deserialize(string content) { throw null; }
     }
@@ -1147,7 +897,6 @@ namespace Azure.Communication.CallAutomation
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeFailed() { }
-        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeFailed Deserialize(string content) { throw null; }
     }
@@ -1183,7 +932,6 @@ namespace Azure.Communication.CallAutomation
         private readonly int _dummyPrimitive;
         public RecognizeResultType(string value) { throw null; }
         public static Azure.Communication.CallAutomation.RecognizeResultType ChoiceResult { get { throw null; } }
-        public static Azure.Communication.CallAutomation.RecognizeResultType CollectTonesResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeResultType DtmfResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeResultType SpeechResult { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.RecognizeResultType other) { throw null; }
@@ -1304,31 +1052,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingKind? RecordingKind { get { throw null; } }
         public Azure.Communication.CallAutomation.RecordingState? RecordingState { get { throw null; } }
     }
-    public abstract partial class RecordingStorage
-    {
-        public RecordingStorage(Azure.Communication.CallAutomation.RecordingStorageKind recordingStorageKind) { }
-        public Azure.Communication.CallAutomation.RecordingStorageKind RecordingStorageKind { get { throw null; } }
-        public static Azure.Communication.CallAutomation.RecordingStorage CreateAzureBlobContainerRecordingStorage(System.Uri recordingDestinationContainerUri) { throw null; }
-        public static Azure.Communication.CallAutomation.RecordingStorage CreateAzureCommunicationsRecordingStorage() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RecordingStorageKind : System.IEquatable<Azure.Communication.CallAutomation.RecordingStorageKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RecordingStorageKind(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.RecordingStorageKind AzureBlobStorage { get { throw null; } }
-        public static Azure.Communication.CallAutomation.RecordingStorageKind AzureCommunicationServices { get { throw null; } }
-        public bool Equals(Azure.Communication.CallAutomation.RecordingStorageKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.CallAutomation.RecordingStorageKind left, Azure.Communication.CallAutomation.RecordingStorageKind right) { throw null; }
-        public static implicit operator Azure.Communication.CallAutomation.RecordingStorageKind (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.CallAutomation.RecordingStorageKind left, Azure.Communication.CallAutomation.RecordingStorageKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RedirectCallOptions
     {
         public RedirectCallOptions(string incomingCallContext, Azure.Communication.CallAutomation.CallInvite callInvite) { }
@@ -1438,21 +1161,14 @@ namespace Azure.Communication.CallAutomation
         public string CustomVoiceEndpointId { get { throw null; } set { } }
         public string SsmlText { get { throw null; } }
     }
-    public partial class StartDialogOptions
+    public partial class StartDialog
     {
-        public StartDialogOptions(Azure.Communication.CallAutomation.BaseDialog dialog) { }
-        public StartDialogOptions(string dialogId, Azure.Communication.CallAutomation.BaseDialog dialog) { }
+        public StartDialog(Azure.Communication.CallAutomation.BaseDialog dialog) { }
+        public StartDialog(string dialogId, Azure.Communication.CallAutomation.BaseDialog dialog) { }
         public Azure.Communication.CallAutomation.BaseDialog Dialog { get { throw null; } }
         public string DialogId { get { throw null; } }
+        public string OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-    }
-    public partial class StartHoldMusicOptions
-    {
-        public StartHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant, Azure.Communication.CallAutomation.PlaySource playSourceInfo) { }
-        public bool Loop { get { throw null; } set { } }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class StartRecognizingCallMediaResult
     {
@@ -1477,19 +1193,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackUri { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RecordingStorage RecordingStorage { get { throw null; } set { } }
     }
     public partial class StartTranscriptionOptions
     {
         public StartTranscriptionOptions() { }
         public string Locale { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-    }
-    public partial class StopHoldMusicOptions
-    {
-        public StopHoldMusicOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class StopTranscriptionOptions
     {
@@ -1536,7 +1245,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionFailed() { }
-        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdateResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionFailed Deserialize(string content) { throw null; }
     }
     public partial class TranscriptionMetadata : Azure.Communication.CallAutomation.StreamingData
@@ -1562,7 +1271,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionStarted() { }
-        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdateResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionStarted Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1621,7 +1330,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionStopped : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionStopped() { }
-        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdateResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionStopped Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1650,7 +1359,7 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionUpdated() { }
-        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdateResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionUpdated Deserialize(string content) { throw null; }
     }
     public partial class TransferCallToParticipantEventResult
@@ -1675,33 +1384,8 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CustomCallingContext CustomCallingContext { get { throw null; } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Transferee { get { throw null; } set { } }
-    }
-    public partial class UnholdOptions
-    {
-        public UnholdOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-    }
-    public partial class UnmuteParticipantOptions
-    {
-        public UnmuteParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
-        public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
-    }
-    public partial class UnmuteParticipantResult
-    {
-        internal UnmuteParticipantResult() { }
-        public string OperationContext { get { throw null; } }
-    }
-    public partial class UpdateDialogOptions
-    {
-        public UpdateDialogOptions(string dialogId, Azure.Communication.CallAutomation.DialogUpdateBase dialog) { }
-        public Azure.Communication.CallAutomation.DialogUpdateBase Dialog { get { throw null; } }
-        public string DialogId { get { throw null; } }
-        public string OperationContext { get { throw null; } set { } }
     }
     public partial class UserConsent
     {

@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(CallConnectionState left, CallConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CallConnectionState"/> values are not the same. </summary>
         public static bool operator !=(CallConnectionState left, CallConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CallConnectionState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CallConnectionState"/>. </summary>
         public static implicit operator CallConnectionState(string value) => new CallConnectionState(value);
 
         /// <inheritdoc />
