@@ -316,6 +316,8 @@ namespace System.ClientModel.Primitives.TwoWayClient
         public TwoWayMessageOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool? IsLastFragment { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public sealed partial class TwoWayPipeline : System.IAsyncDisposable, System.IDisposable
     {
@@ -396,6 +398,7 @@ namespace System.ClientModel.Primitives.TwoWayClient
     public abstract partial class WebSocketClientMessage : System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineClientMessage
     {
         protected WebSocketClientMessage() { }
+        public bool? IsLastFragment { get { throw null; } set { } }
     }
     public abstract partial class WebSocketServiceMessage : System.ClientModel.Primitives.TwoWayClient.TwoWayPipelineServiceMessage
     {
