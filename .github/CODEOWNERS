@@ -354,10 +354,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul
+/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul
+# ServiceOwners:                                                   @PallabPaul @amruthashree18
 
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew

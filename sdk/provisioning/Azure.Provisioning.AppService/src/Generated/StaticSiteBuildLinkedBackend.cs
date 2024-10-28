@@ -20,50 +20,78 @@ public partial class StaticSiteBuildLinkedBackend : ProvisionableResource
     /// <summary>
     /// Name of the backend to link to the static site.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The resource id of the backend linked to the static site.
     /// </summary>
-    public BicepValue<ResourceIdentifier> BackendResourceId { get => _backendResourceId; set => _backendResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _backendResourceId;
+    public BicepValue<ResourceIdentifier> BackendResourceId 
+    {
+        get { Initialize(); return _backendResourceId!; }
+        set { Initialize(); _backendResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _backendResourceId;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The region of the backend linked to the static site.
     /// </summary>
-    public BicepValue<string> Region { get => _region; set => _region.Assign(value); }
-    private readonly BicepValue<string> _region;
+    public BicepValue<string> Region 
+    {
+        get { Initialize(); return _region!; }
+        set { Initialize(); _region!.Assign(value); }
+    }
+    private BicepValue<string>? _region;
 
     /// <summary>
     /// The date and time on which the backend was linked to the static site.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the linking process.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new StaticSiteBuildLinkedBackend.
@@ -78,14 +106,21 @@ public partial class StaticSiteBuildLinkedBackend : ProvisionableResource
     public StaticSiteBuildLinkedBackend(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/staticSites/builds/linkedBackends", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _backendResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "BackendResourceId", ["properties", "backendResourceId"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _region = BicepValue<string>.DefineProperty(this, "Region", ["properties", "region"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StaticSiteBuildLinkedBackend.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _backendResourceId = DefineProperty<ResourceIdentifier>("BackendResourceId", ["properties", "backendResourceId"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _region = DefineProperty<string>("Region", ["properties", "region"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

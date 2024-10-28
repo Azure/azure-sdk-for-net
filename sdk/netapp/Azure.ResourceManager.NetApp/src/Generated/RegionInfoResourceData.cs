@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the RegionInfoResource data model.
     /// Information regarding regionInfo Item.
+    /// Serialized Name: RegionInfoResource
     /// </summary>
     public partial class RegionInfoResourceData : ResourceData
     {
@@ -62,8 +63,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
-        /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
+        /// <param name="storageToNetworkProximity">
+        /// Provides storage to network proximity information in the region.
+        /// Serialized Name: RegionInfoResource.properties.storageToNetworkProximity
+        /// </param>
+        /// <param name="availabilityZoneMappings">
+        /// Provides logical availability zone mappings for the subscription for a region.
+        /// Serialized Name: RegionInfoResource.properties.availabilityZoneMappings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegionInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegionStorageToNetworkProximity? storageToNetworkProximity, IList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,9 +79,15 @@ namespace Azure.ResourceManager.NetApp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Provides storage to network proximity information in the region. </summary>
+        /// <summary>
+        /// Provides storage to network proximity information in the region.
+        /// Serialized Name: RegionInfoResource.properties.storageToNetworkProximity
+        /// </summary>
         public RegionStorageToNetworkProximity? StorageToNetworkProximity { get; set; }
-        /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
+        /// <summary>
+        /// Provides logical availability zone mappings for the subscription for a region.
+        /// Serialized Name: RegionInfoResource.properties.availabilityZoneMappings
+        /// </summary>
         public IList<AvailabilityZoneMapping> AvailabilityZoneMappings { get; }
     }
 }

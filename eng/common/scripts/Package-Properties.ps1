@@ -17,7 +17,8 @@ class PackageProps
     [string]$ReleaseStatus
     # was this package purely included because other packages included it as an AdditionalValidationPackage?
     [boolean]$IncludedForValidation
-    # does this package include other packages that we should trigger validation for?
+    # does this package include other packages that we should trigger validation for or
+    # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
     [HashTable]$ArtifactDetails
 
@@ -83,42 +84,21 @@ class PackageProps
         $this.Group = $group
     }
 
-    hidden [object]GetValueSafely($hashtable, [string[]]$keys) {
-        $current = $hashtable
-        foreach ($key in $keys) {
-            if ($current.ContainsKey($key) -or $current[$key]) {
-                $current = $current[$key]
-            }
-            else {
-                return $null
-            }
-        }
-
-        return $current
-    }
-
     hidden [HashTable]ParseYmlForArtifact([string]$ymlPath) {
-        if (Test-Path -Path $ymlPath) {
-            try {
-                $content = Get-Content -Raw -Path $ymlPath | CompatibleConvertFrom-Yaml
-                if ($content) {
-                    $artifacts = $this.GetValueSafely($content, @("extends", "parameters", "Artifacts"))
-                    $artifactForCurrentPackage = $null
 
-                    if ($artifacts) {
-                        $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
-                    }
+        $content = LoadFrom-Yaml $ymlPath
+        if ($content) {
+            $artifacts = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "Artifacts")
+            $artifactForCurrentPackage = $null
 
-                    if ($artifactForCurrentPackage) {
-                        return [HashTable]$artifactForCurrentPackage
-                    }
-                }
+            if ($artifacts) {
+                $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
             }
-            catch {
-              Write-Host "Exception while parsing yml file $($ymlPath): $_"
+
+            if ($artifactForCurrentPackage) {
+                return [HashTable]$artifactForCurrentPackage
             }
         }
-
         return $null
     }
 

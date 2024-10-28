@@ -277,7 +277,7 @@ public class CloudMachineInfrastructure
             return false;
         }
 
-        string cmid = Azd.ReadOrCreateCmid();
+        string cmid = AzdHelpers.ReadOrCreateCmid();
 
         CloudMachineInfrastructure cmi = new(cmid);
         if (configure != default)
@@ -286,7 +286,7 @@ public class CloudMachineInfrastructure
         }
 
         string infraDirectory = Path.Combine(".", "infra");
-        Azd.Init(infraDirectory, cmi);
+        AzdHelpers.Init(infraDirectory, cmi);
         return true;
     }
 }

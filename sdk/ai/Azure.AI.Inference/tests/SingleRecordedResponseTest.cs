@@ -121,14 +121,14 @@ namespace Azure.AI.Inference.Tests
                 null,
                 new List<ChatCompletionsToolCall>()
                 {
-                    new ChatCompletionsFunctionToolCall(
+                    new ChatCompletionsToolCall(
                         id: "4",
                         function: new FunctionCall(
                             name: "func1",
                             arguments: "{\"arg1\": \"gg\"}"
                         )
                     ),
-                    new ChatCompletionsFunctionToolCall(
+                    new ChatCompletionsToolCall(
                         id: "5",
                         function: new FunctionCall(
                             name: "func1",

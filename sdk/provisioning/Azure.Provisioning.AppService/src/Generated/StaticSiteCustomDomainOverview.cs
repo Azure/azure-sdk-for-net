@@ -20,69 +20,106 @@ public partial class StaticSiteCustomDomainOverview : ProvisionableResource
     /// <summary>
     /// The custom domain to create.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Validation method for adding a custom domain.
     /// </summary>
-    public BicepValue<string> ValidationMethod { get => _validationMethod; set => _validationMethod.Assign(value); }
-    private readonly BicepValue<string> _validationMethod;
+    public BicepValue<string> ValidationMethod 
+    {
+        get { Initialize(); return _validationMethod!; }
+        set { Initialize(); _validationMethod!.Assign(value); }
+    }
+    private BicepValue<string>? _validationMethod;
 
     /// <summary>
     /// The date and time on which the custom domain was created for the static
     /// site.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// The domain name for the static site custom domain.
     /// </summary>
-    public BicepValue<string> DomainName { get => _domainName; }
-    private readonly BicepValue<string> _domainName;
+    public BicepValue<string> DomainName 
+    {
+        get { Initialize(); return _domainName!; }
+    }
+    private BicepValue<string>? _domainName;
 
     /// <summary>
     /// Gets the error message.
     /// </summary>
-    public BicepValue<string> ErrorMessage { get => _errorMessage; }
-    private readonly BicepValue<string> _errorMessage;
+    public BicepValue<string> ErrorMessage 
+    {
+        get { Initialize(); return _errorMessage!; }
+    }
+    private BicepValue<string>? _errorMessage;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The status of the custom domain.
     /// </summary>
-    public BicepValue<CustomDomainStatus> Status { get => _status; }
-    private readonly BicepValue<CustomDomainStatus> _status;
+    public BicepValue<CustomDomainStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<CustomDomainStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The TXT record validation token.
     /// </summary>
-    public BicepValue<string> ValidationToken { get => _validationToken; }
-    private readonly BicepValue<string> _validationToken;
+    public BicepValue<string> ValidationToken 
+    {
+        get { Initialize(); return _validationToken!; }
+    }
+    private BicepValue<string>? _validationToken;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSiteCustomDomainOverview.
@@ -97,17 +134,25 @@ public partial class StaticSiteCustomDomainOverview : ProvisionableResource
     public StaticSiteCustomDomainOverview(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/staticSites/customDomains", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _validationMethod = BicepValue<string>.DefineProperty(this, "ValidationMethod", ["properties", "validationMethod"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _domainName = BicepValue<string>.DefineProperty(this, "DomainName", ["properties", "domainName"], isOutput: true);
-        _errorMessage = BicepValue<string>.DefineProperty(this, "ErrorMessage", ["properties", "errorMessage"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _status = BicepValue<CustomDomainStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _validationToken = BicepValue<string>.DefineProperty(this, "ValidationToken", ["properties", "validationToken"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StaticSiteCustomDomainOverview.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _validationMethod = DefineProperty<string>("ValidationMethod", ["properties", "validationMethod"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _domainName = DefineProperty<string>("DomainName", ["properties", "domainName"], isOutput: true);
+        _errorMessage = DefineProperty<string>("ErrorMessage", ["properties", "errorMessage"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _status = DefineProperty<CustomDomainStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _validationToken = DefineProperty<string>("ValidationToken", ["properties", "validationToken"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

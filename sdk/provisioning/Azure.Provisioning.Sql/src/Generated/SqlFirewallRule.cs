@@ -20,35 +20,54 @@ public partial class SqlFirewallRule : ProvisionableResource
     /// <summary>
     /// The name of the firewall rule.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The end IP address of the firewall rule. Must be IPv4 format. Must be
     /// greater than or equal to startIpAddress. Use value &apos;0.0.0.0&apos;
     /// for all Azure-internal IP addresses.
     /// </summary>
-    public BicepValue<string> EndIPAddress { get => _endIPAddress; set => _endIPAddress.Assign(value); }
-    private readonly BicepValue<string> _endIPAddress;
+    public BicepValue<string> EndIPAddress 
+    {
+        get { Initialize(); return _endIPAddress!; }
+        set { Initialize(); _endIPAddress!.Assign(value); }
+    }
+    private BicepValue<string>? _endIPAddress;
 
     /// <summary>
     /// The start IP address of the firewall rule. Must be IPv4 format. Use
     /// value &apos;0.0.0.0&apos; for all Azure-internal IP addresses.
     /// </summary>
-    public BicepValue<string> StartIPAddress { get => _startIPAddress; set => _startIPAddress.Assign(value); }
-    private readonly BicepValue<string> _startIPAddress;
+    public BicepValue<string> StartIPAddress 
+    {
+        get { Initialize(); return _startIPAddress!; }
+        set { Initialize(); _startIPAddress!.Assign(value); }
+    }
+    private BicepValue<string>? _startIPAddress;
 
     /// <summary>
     /// Resource ID.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SqlFirewallRule.
@@ -63,11 +82,18 @@ public partial class SqlFirewallRule : ProvisionableResource
     public SqlFirewallRule(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _endIPAddress = BicepValue<string>.DefineProperty(this, "EndIPAddress", ["properties", "endIpAddress"]);
-        _startIPAddress = BicepValue<string>.DefineProperty(this, "StartIPAddress", ["properties", "startIpAddress"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlFirewallRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _endIPAddress = DefineProperty<string>("EndIPAddress", ["properties", "endIpAddress"]);
+        _startIPAddress = DefineProperty<string>("StartIPAddress", ["properties", "startIpAddress"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

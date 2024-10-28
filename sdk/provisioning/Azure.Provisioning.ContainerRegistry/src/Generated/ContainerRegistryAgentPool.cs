@@ -21,68 +21,109 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     /// <summary>
     /// The name of the agent pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The count of agent machine.
     /// </summary>
-    public BicepValue<int> Count { get => _count; set => _count.Assign(value); }
-    private readonly BicepValue<int> _count;
+    public BicepValue<int> Count 
+    {
+        get { Initialize(); return _count!; }
+        set { Initialize(); _count!.Assign(value); }
+    }
+    private BicepValue<int>? _count;
 
     /// <summary>
     /// The OS of agent machine.
     /// </summary>
-    public BicepValue<ContainerRegistryOS> OS { get => _oS; set => _oS.Assign(value); }
-    private readonly BicepValue<ContainerRegistryOS> _oS;
+    public BicepValue<ContainerRegistryOS> OS 
+    {
+        get { Initialize(); return _oS!; }
+        set { Initialize(); _oS!.Assign(value); }
+    }
+    private BicepValue<ContainerRegistryOS>? _oS;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The Tier of agent machine.
     /// </summary>
-    public BicepValue<string> Tier { get => _tier; set => _tier.Assign(value); }
-    private readonly BicepValue<string> _tier;
+    public BicepValue<string> Tier 
+    {
+        get { Initialize(); return _tier!; }
+        set { Initialize(); _tier!.Assign(value); }
+    }
+    private BicepValue<string>? _tier;
 
     /// <summary>
     /// The Virtual Network Subnet Resource Id of the agent machine.
     /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualNetworkSubnetResourceId { get => _virtualNetworkSubnetResourceId; set => _virtualNetworkSubnetResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _virtualNetworkSubnetResourceId;
+    public BicepValue<ResourceIdentifier> VirtualNetworkSubnetResourceId 
+    {
+        get { Initialize(); return _virtualNetworkSubnetResourceId!; }
+        set { Initialize(); _virtualNetworkSubnetResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _virtualNetworkSubnetResourceId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of this agent pool.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryAgentPool.
@@ -97,17 +138,24 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _count = BicepValue<int>.DefineProperty(this, "Count", ["properties", "count"]);
-        _oS = BicepValue<ContainerRegistryOS>.DefineProperty(this, "OS", ["properties", "os"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _tier = BicepValue<string>.DefineProperty(this, "Tier", ["properties", "tier"]);
-        _virtualNetworkSubnetResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "VirtualNetworkSubnetResourceId", ["properties", "virtualNetworkSubnetResourceId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryAgentPool.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _count = DefineProperty<int>("Count", ["properties", "count"]);
+        _oS = DefineProperty<ContainerRegistryOS>("OS", ["properties", "os"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _tier = DefineProperty<string>("Tier", ["properties", "tier"]);
+        _virtualNetworkSubnetResourceId = DefineProperty<ResourceIdentifier>("VirtualNetworkSubnetResourceId", ["properties", "virtualNetworkSubnetResourceId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
