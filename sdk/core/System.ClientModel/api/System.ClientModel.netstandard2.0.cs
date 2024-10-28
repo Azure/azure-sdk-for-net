@@ -315,6 +315,7 @@ namespace System.ClientModel.Primitives.TwoWayClient
     {
         public TwoWayMessageOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public bool? IsLastFragment { get { throw null; } set { } }
     }
     public sealed partial class TwoWayPipeline : System.IAsyncDisposable, System.IDisposable
     {

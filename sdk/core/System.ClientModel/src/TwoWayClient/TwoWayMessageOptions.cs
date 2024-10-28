@@ -11,6 +11,16 @@ namespace System.ClientModel.Primitives.TwoWayClient;
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public class TwoWayMessageOptions
 {
+    // TODO: freezing
+    // TODO: Error options?
+    // TODO: Policies for the two-way pipeline?
+    // TODO: method to apply options to ClientMessage?
+
     public CancellationToken CancellationToken { get; set; }
+
+    public bool? IsLastFragment {  get; set; }
+
+    // TODO: content type?
+    // Other message-specific metadata (on RequestOptions we have AddHeader)
 }
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
