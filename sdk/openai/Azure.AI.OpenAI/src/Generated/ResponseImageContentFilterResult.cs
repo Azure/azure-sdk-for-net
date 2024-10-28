@@ -68,7 +68,6 @@ namespace Azure.AI.OpenAI
         /// damage one's body or kill oneself.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal ResponseImageContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult violence, ContentFilterSeverityResult hate, ContentFilterSeverityResult selfHarm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
@@ -102,6 +101,5 @@ namespace Azure.AI.OpenAI
         /// damage one's body or kill oneself.
         /// </summary>
         public ContentFilterSeverityResult SelfHarm { get; }
-#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     }
 }

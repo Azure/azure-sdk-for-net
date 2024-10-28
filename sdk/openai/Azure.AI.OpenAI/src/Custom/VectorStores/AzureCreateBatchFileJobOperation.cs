@@ -3,11 +3,10 @@
 
 #if !AZURE_OPENAI_GA
 
-extern alias OpenAI;
 using Azure.Core;
 using System.ClientModel.Primitives;
 using System.ClientModel;
-using OpenAI::System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.VectorStores;
 

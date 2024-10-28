@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>
@@ -59,9 +59,7 @@
   <Choose>
     <When Condition="'$(ExternalOpenAISource)' != ''">
       <ItemGroup>
-        <ProjectReference Include="$(ExternalOpenAISource)">
-          <Aliases>OpenAI,global</Aliases>
-        </ProjectReference>
+        <ProjectReference Include="$(ExternalOpenAISource)" />
       </ItemGroup>
       <PropertyGroup>
         <NoWarn>$(NoWarn);NU5104</NoWarn>
@@ -69,17 +67,13 @@
     </When>
     <When Condition="'$(ExternalOpenAILibrary)' != ''">
       <ItemGroup>
-        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)">
-          <Aliases>OpenAI,global</Aliases>
-        </Reference>
+        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)" />
         <PackageReference Include="System.ClientModel" VersionOverride="$(SystemClientModelVersion)" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="OpenAI">
-          <Aliases>OpenAI,global</Aliases>
-        </PackageReference>
+        <PackageReference Include="OpenAI" />
       </ItemGroup>
     </Otherwise>
   </Choose>

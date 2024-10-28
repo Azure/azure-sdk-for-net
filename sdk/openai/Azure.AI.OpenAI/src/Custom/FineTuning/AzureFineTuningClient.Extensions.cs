@@ -5,10 +5,9 @@
 
 #nullable enable
 
-extern alias OpenAI;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using OpenAI::System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.FineTuning;
 
 namespace Azure.AI.OpenAI.FineTuning;

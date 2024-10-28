@@ -3,10 +3,9 @@
 
 #if !AZURE_OPENAI_GA
 
-extern alias OpenAI;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using OpenAI::System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.Assistants;

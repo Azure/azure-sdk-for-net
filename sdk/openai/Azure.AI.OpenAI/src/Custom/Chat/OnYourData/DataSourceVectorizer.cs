@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias OpenAI;
-using OpenAI::System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
@@ -34,7 +33,6 @@ public abstract partial class DataSourceVectorizer
     /// <param name="authentication"> The authentication mechanism to use with the endpoint. </param>
     /// <returns></returns>
 #endif
-#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public static DataSourceVectorizer FromEndpoint(Uri endpoint, DataSourceAuthentication authentication)
         => new InternalAzureChatDataSourceEndpointVectorizationSource(endpoint, authentication);
     public static DataSourceVectorizer FromDeploymentName(string deploymentName)
@@ -44,6 +42,5 @@ public abstract partial class DataSourceVectorizer
         => new InternalAzureChatDataSourceModelIdVectorizationSource(modelId);
     public static DataSourceVectorizer FromIntegratedResource()
         => new InternalAzureChatDataSourceIntegratedVectorizationSource();
-#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 #endif
 }

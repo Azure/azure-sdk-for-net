@@ -9,9 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI.Chat
 {
-#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     [PersistableModelProxy(typeof(InternalUnknownAzureChatDataSource))]
-#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public partial class ChatDataSource : IJsonModel<ChatDataSource>
     {
         void IJsonModel<ChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -74,18 +72,14 @@ namespace Azure.AI.OpenAI.Chat
             {
                 switch (discriminator.GetString())
                 {
-#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
                     case "azure_cosmos_db": return CosmosChatDataSource.DeserializeCosmosChatDataSource(element, options);
                     case "azure_search": return AzureSearchChatDataSource.DeserializeAzureSearchChatDataSource(element, options);
                     case "elasticsearch": return ElasticsearchChatDataSource.DeserializeElasticsearchChatDataSource(element, options);
                     case "mongo_db": return MongoDBChatDataSource.DeserializeMongoDBChatDataSource(element, options);
                     case "pinecone": return PineconeChatDataSource.DeserializePineconeChatDataSource(element, options);
-#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
                 }
             }
-#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return InternalUnknownAzureChatDataSource.DeserializeInternalUnknownAzureChatDataSource(element, options);
-#pragma warning restore AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         BinaryData IPersistableModel<ChatDataSource>.Write(ModelReaderWriterOptions options)
