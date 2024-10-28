@@ -240,7 +240,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             }
         }
 
-        private TestResultsUri? CheckAndRenewSasUri()
+        public TestResultsUri? CheckAndRenewSasUri()
         {
             var reporterUtils = new ReporterUtils();
             if (_testResultsSasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(_testResultsSasUri.Uri))
