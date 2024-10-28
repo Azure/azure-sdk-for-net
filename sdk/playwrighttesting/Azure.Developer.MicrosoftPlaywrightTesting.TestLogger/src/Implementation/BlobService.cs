@@ -34,7 +34,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
                 _logger.Error($"Failed to upload buffer: {ex}");
             }
         }
-
+        public void UploadBlobFile(string uri, string fileRelativePath, string filePath)
+        {
+            string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
+            BlobClient blobClient = new(new Uri(cloudFilePath));
+            blobClient.Upload(filePath, overwrite: true);
+            _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
+        }
         public string GetCloudFilePath(string uri, string fileRelativePath)
         {
             string[] parts = uri.Split(new string[] { ReporterConstants.s_sASUriSeparator }, StringSplitOptions.None);

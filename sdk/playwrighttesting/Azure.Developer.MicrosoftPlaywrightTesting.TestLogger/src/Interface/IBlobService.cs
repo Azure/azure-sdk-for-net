@@ -15,5 +15,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         Task UploadBufferAsync(string uri, string buffer, string fileRelativePath);
          string GetCloudFilePath(string uri, string fileRelativePath);
+        void UploadBlobFile(string uri, string fileRelativePath, string filePath);
     }
 }
