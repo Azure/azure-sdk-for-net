@@ -3,42 +3,63 @@
 
 extern alias BaseBlobs;
 extern alias DMBlobs;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Tests;
-using Azure.Storage.DataMovement.Blobs.Tests;
-using Azure.Storage.Test;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using NUnit.Framework;
-using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test.Shared;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     [DataMovementBlobsClientTestFixture]
-    public abstract class BlobDirectoryStartTransferUploadTestBase
+    public abstract class BlobDirectoryStartTransferUploadTestBase<TObjectClient>
         : StartTransferUploadDirectoryTestBase<
             BlobServiceClient,
             BlobContainerClient,
-            BlobBaseClient,
+            TObjectClient,
             BlobClientOptions,
             StorageTestEnvironment>
+        where TObjectClient : BlobBaseClient
     {
-        public bool UseNonRootDirectory { get; }
-
-        public BlobDirectoryStartTransferUploadTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, bool useNonRootDirectory)
+        public BlobDirectoryStartTransferUploadTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
-            UseNonRootDirectory = useNonRootDirectory;
+        }
+
+        protected abstract Task CreateBlobClientAsync(BlobContainerClient container, string blobName, Stream contents, CancellationToken cancellationToken = default);
+
+        protected abstract BlobType GetBlobType();
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDisposingContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default)
+            => await ClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override TransferValidator.ListFilesAsync GetStorageResourceLister(BlobContainerClient containerClient)
+            => TransferValidator.GetBlobLister(containerClient, "");
+
+        protected override async Task InitializeDestinationDataAsync(
+            BlobContainerClient containerClient,
+            List<(string FilePath, long Size)> fileSizes,
+            CancellationToken cancellationToken)
+        {
+            foreach ((string blobName, long size) in fileSizes)
+            {
+                await CreateBlobClientAsync(containerClient, blobName, new MemoryStream(GetRandomBuffer(size)), cancellationToken);
+            }
+        }
+
+        protected override StorageResourceContainer GetStorageResourceContainer(BlobContainerClient containerClient)
+        {
+            BlobStorageResourceContainerOptions options = new();
+            options.BlobType = new(GetBlobType());
+            return new BlobStorageResourceContainer(containerClient, options);
         }
     }
 }
