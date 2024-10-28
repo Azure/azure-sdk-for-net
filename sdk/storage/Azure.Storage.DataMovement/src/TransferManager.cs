@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
-        private readonly TransferCheckpointer _checkpointer;
+        private readonly ITransferCheckpointer _checkpointer;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
             IProcessor<JobPartInternal> partsProcessor,
             IProcessor<Func<Task>> chunksProcessor,
             JobBuilder jobBuilder,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             ICollection<StorageResourceProvider> resumeProviders,
             Func<string> generateTransferId = default)
         {
