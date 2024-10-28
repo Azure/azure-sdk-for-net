@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(DialogInputType left, DialogInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DialogInputType"/> values are not the same. </summary>
         public static bool operator !=(DialogInputType left, DialogInputType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DialogInputType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DialogInputType"/>. </summary>
         public static implicit operator DialogInputType(string value) => new DialogInputType(value);
 
         /// <inheritdoc />
