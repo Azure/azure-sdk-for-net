@@ -113,8 +113,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
 
         var cloudRunId = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
-        string baseUrl = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
-        string accessToken = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        string? baseUrl = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
+        string? accessToken = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
         {
             Console.Error.WriteLine(Constants.s_no_service_endpoint_error_message);

@@ -16,7 +16,7 @@ internal enum LogLevel
 
 internal class Logger : ILogger
 {
-    internal static string SdkLogLevel => Environment.GetEnvironmentVariable(Constants.s_pLAYWRIGHT_SERVICE_DEBUG);
+    internal static string? SdkLogLevel => Environment.GetEnvironmentVariable(Constants.s_pLAYWRIGHT_SERVICE_DEBUG);
 
 #pragma warning disable CA1822 // Mark members as static
     private void Log(LogLevel level, string message)

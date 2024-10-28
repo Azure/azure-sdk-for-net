@@ -165,7 +165,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 Uri url = new Uri(sasUri);
                 string query = url.Query;
                 var queryParams = System.Web.HttpUtility.ParseQueryString(query);
-                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+                string? expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
 
                 if (!string.IsNullOrEmpty(expiryTime))
                 {

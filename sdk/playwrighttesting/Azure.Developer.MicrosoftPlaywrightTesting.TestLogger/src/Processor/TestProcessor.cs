@@ -234,11 +234,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
             var result = FailedTestCount > 0 ? TestCaseResultStatus.s_fAILED : TestCaseResultStatus.s_pASSED;
 
-            if (e.ElapsedTimeInRunningTests != null)
-            {
-                testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
-                durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
-            }
+            testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
+            durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
+
             TestRunShardDto? testRunShard = _testRunShard;
             // Update Shard End
             if (testRunShard!.Summary == null)
@@ -266,13 +264,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
 ![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {SkippedTestCount}
 
-#### For more details, visit the [service dashboard]({Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}).
+#### For more details, visit the [service dashboard]({Uri.EscapeDataString(_cloudRunMetadata.PortalUrl!)}).
 ";
 
-                string filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
+                string? filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
                 try
                 {
-                    File.WriteAllText(filePath, markdownContent);
+                    File.WriteAllText(filePath ?? string.Empty, markdownContent);
                 }
                 catch (Exception ex)
                 {

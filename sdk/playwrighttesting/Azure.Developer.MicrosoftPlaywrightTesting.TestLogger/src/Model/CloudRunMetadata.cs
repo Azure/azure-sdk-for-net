@@ -12,7 +12,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model
         internal Uri? BaseUri { get; set; }
         internal string? PortalUrl
         {
-            get { return ReporterConstants.s_portalBaseUrl + Uri.EscapeDataString(WorkspaceId) + ReporterConstants.s_reportingRoute + Uri.EscapeDataString(RunId); }
+            get { return ReporterConstants.s_portalBaseUrl + Uri.EscapeDataString(WorkspaceId ?? string.Empty) + ReporterConstants.s_reportingRoute + Uri.EscapeDataString(RunId ?? string.Empty); }
         }
         internal bool EnableResultPublish { get; set; } = true;
         internal bool EnableGithubSummary { get; set; } = true;
