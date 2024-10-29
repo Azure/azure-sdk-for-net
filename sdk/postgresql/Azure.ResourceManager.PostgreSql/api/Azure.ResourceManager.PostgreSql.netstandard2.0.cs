@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork Network { get { throw null; } set { } }
         public System.DateTimeOffset? PointInTimeUtc { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica Replica { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica Replica { get { throw null; } set { } }
         public int? ReplicaCapacity { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku Sku { get { throw null; } set { } }
@@ -1139,8 +1139,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public string SourceDbServerFullyQualifiedDomainName { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata SourceDbServerMetadata { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceDbServerResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType? SourceType { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode? SslMode { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType? SourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode? SslMode { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStartDataMigration? StartDataMigration { get { throw null; } set { } }
         public string TargetDbServerFullyQualifiedDomainName { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata TargetDbServerMetadata { get { throw null; } }
@@ -1335,7 +1335,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(string zone = null, System.Collections.Generic.IEnumerable<string> supportedHAModes = null, bool? isGeoBackupSupported = default(bool?), bool? isZoneRedundantHASupported = default(bool?), bool? isZoneRedundantHAAndGeoBackupSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions = null, bool? fastProvisioningSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, string status = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string description = null, string defaultValue = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerConfigurationDataType? dataType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerConfigurationDataType?), string allowedValues = null, string source = null, bool? isDynamicConfig = default(bool?), bool? isReadOnly = default(bool?), bool? isConfigPendingRestart = default(bool?), string unit = null, string documentationLink = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? version = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), string minorVersion = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState?), string fullyQualifiedDomainName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorage storage = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerAuthConfig authConfig = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption dataEncryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork network = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, Azure.Core.ResourceIdentifier sourceServerResourceId = null, System.DateTimeOffset? pointInTimeUtc = default(System.DateTimeOffset?), string availabilityZone = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? replicationRole = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole?), int? replicaCapacity = default(int?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica replica = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCreateMode? createMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCreateMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? version = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), string minorVersion = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState?), string fullyQualifiedDomainName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorage storage = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerAuthConfig authConfig = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption dataEncryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork network = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, Azure.Core.ResourceIdentifier sourceServerResourceId = null, System.DateTimeOffset? pointInTimeUtc = default(System.DateTimeOffset?), string availabilityZone = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? replicationRole = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole?), int? replicaCapacity = default(int?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica replica = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCreateMode? createMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCreateMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku sku, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? version, string minorVersion, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, int? storageSizeInGB, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerAuthConfig authConfig, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption dataEncryption, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties backup, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork network, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability highAvailability, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, Azure.Core.ResourceIdentifier sourceServerResourceId, System.DateTimeOffset? pointInTimeUtc, string availabilityZone, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerCreateMode? createMode) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServerDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string charset = null, string collation = null) { throw null; }
@@ -1366,6 +1366,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus?), string reason = null, string name = null, int? vCores = default(int?), int? supportedIops = default(int?), long? supportedMemoryPerVcoreMb = default(long?), System.Collections.Generic.IEnumerable<string> supportedZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHAMode> supportedHaMode = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServersPrivateLinkResourceData PostgreSqlFlexibleServersPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? role = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole?), int? capacity = default(int?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState? replicationState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode? promoteMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption? promoteOption = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus?), string reason = null, long? supportedIops = default(long?), int? supportedMaximumIops = default(int?), long? storageSizeInMB = default(long?), long? maximumStorageSizeMb = default(long?), int? supportedThroughput = default(int?), int? supportedMaximumThroughput = default(int?), string defaultIopsTier = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(string name = null, long? supportedIops = default(long?), long? storageSizeInMB = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability> supportedUpgradableTierList = null, string status = null) { throw null; }
@@ -1375,21 +1376,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexbileServerCapabilityStatus?), string reason = null, string name = null, long? iops = default(long?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(string name = null, string tierName = null, long? iops = default(long?), bool? isBaseline = default(bool?), string status = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? status = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState?), System.DateTimeOffset? validationStartTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? validationEndTimeInUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem> serverLevelValidationDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus> dbLevelValidationDetails = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage PostgreSqlFlexibleServersValidationMessage(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState?), string message = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerIdentityType identityType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerIdentityType), System.Guid? tenantId = default(System.Guid?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVCoreCapability PostgreSqlFlexibleServerVCoreCapability(string name = null, long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVCoreInMB = default(long?), string status = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string subscriptionId = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? datasourceSizeInBytes = default(long?), long? dataTransferredInBytes = default(long?), string backupName = null, string backupMetadata = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlExecutionStatus? status = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlExecutionStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), double? percentComplete = default(double?), string errorCode = null, string errorMessage = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlMigrationData PostgreSqlMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string migrationId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStatus currentStatus = null, Azure.Core.ResourceIdentifier migrationInstanceResourceId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationMode? migrationMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationOption? migrationOption = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationOption?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType? sourceType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode? sslMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata sourceDbServerMetadata = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata targetDbServerMetadata = null, Azure.Core.ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, Azure.Core.ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSecretParameters secretParameters = null, System.Collections.Generic.IEnumerable<string> dbsToMigrate = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationLogicalReplicationOnSourceDb?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationOverwriteDbsInTarget?), System.DateTimeOffset? migrationWindowStartTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? migrationWindowEndTimeInUtc = default(System.DateTimeOffset?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrateRolesEnum? migrateRoles = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrateRolesEnum?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStartDataMigration? startDataMigration = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStartDataMigration?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationTriggerCutover? triggerCutover = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationTriggerCutover?), System.Collections.Generic.IEnumerable<string> dbsToTriggerCutoverOn = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationCancel? cancel = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationCancel?), System.Collections.Generic.IEnumerable<string> dbsToCancelMigrationOn = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlMigrationData PostgreSqlMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string migrationId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStatus currentStatus = null, Azure.Core.ResourceIdentifier migrationInstanceResourceId = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationMode? migrationMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationOption? migrationOption = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationOption?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType? sourceType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode? sslMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata sourceDbServerMetadata = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata targetDbServerMetadata = null, Azure.Core.ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, Azure.Core.ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSecretParameters secretParameters = null, System.Collections.Generic.IEnumerable<string> dbsToMigrate = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationLogicalReplicationOnSourceDb?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationOverwriteDbsInTarget?), System.DateTimeOffset? migrationWindowStartTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? migrationWindowEndTimeInUtc = default(System.DateTimeOffset?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrateRolesEnum? migrateRoles = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrateRolesEnum?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStartDataMigration? startDataMigration = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStartDataMigration?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationTriggerCutover? triggerCutover = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationTriggerCutover?), System.Collections.Generic.IEnumerable<string> dbsToTriggerCutoverOn = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationCancel? cancel = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationCancel?), System.Collections.Generic.IEnumerable<string> dbsToCancelMigrationOn = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStatus PostgreSqlMigrationStatus(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationState?), string error = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails currentSubStateDetails = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubState? currentSubState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus> dbDetails = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails validationDetails = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubState? currentSubState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubState?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus> dbDetails = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails validationDetails = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlServerMetadata PostgreSqlServerMetadata(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string version = null, int? storageMb = default(int?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku sku = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica Replica(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? role = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole?), int? capacity = default(int?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState? replicationState = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode? promoteMode = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption? promoteOption = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku ServerSku(string name = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSkuTier? tier = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSkuTier?)) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.ServerThreatProtectionSettingsModelData ServerThreatProtectionSettingsModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ThreatProtectionState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ThreatProtectionState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails ValidationDetails(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? status = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState?), System.DateTimeOffset? validationStartTimeInUtc = default(System.DateTimeOffset?), System.DateTimeOffset? validationEndTimeInUtc = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem> serverLevelValidationDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus> dbLevelValidationDetails = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage ValidationMessage(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState?), string message = null) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage> messages = null) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? state = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage> messages = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.VirtualEndpointResourceData VirtualEndpointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.VirtualEndpointType? endpointType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.VirtualEndpointType?), System.Collections.Generic.IEnumerable<string> members = null, System.Collections.Generic.IEnumerable<string> virtualEndpoints = null) { throw null; }
         public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.VirtualEndpointResourcePatch VirtualEndpointResourcePatch(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.VirtualEndpointType? endpointType = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.VirtualEndpointType?), System.Collections.Generic.IEnumerable<string> members = null, System.Collections.Generic.IEnumerable<string> virtualEndpoints = null) { throw null; }
     }
@@ -1425,6 +1425,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string Message { get { throw null; } }
         public string MigrationOperation { get { throw null; } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.MigrationDbState? MigrationState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int? NumFullLoadCompletedTables { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int? NumFullLoadErroredTables { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int? NumFullLoadLoadingTables { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public int? NumFullLoadQueuedTables { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2234,7 +2242,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork Network { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica Replica { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica Replica { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorage Storage { get { throw null; } set { } }
@@ -2440,6 +2448,109 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PostgreSqlFlexibleServersReplica : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>
+    {
+        public PostgreSqlFlexibleServersReplica() { }
+        public int? Capacity { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode? PromoteMode { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption? PromoteOption { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState? ReplicationState { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? Role { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplica>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PostgreSqlFlexibleServersReplicationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PostgreSqlFlexibleServersReplicationState(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Active { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Broken { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Catchup { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Reconfiguring { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersReplicationState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PostgreSqlFlexibleServersSourceType : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PostgreSqlFlexibleServersSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType AWS { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType AWSAurora { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType AWSEC2 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType AWSRDS { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType AzureVm { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType EDB { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType GCP { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType GCPAlloyDB { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType GCPCloudSQL { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType GCPCompute { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType OnPremises { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType PostgreSQLSingleServer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PostgreSqlFlexibleServersSslMode : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PostgreSqlFlexibleServersSslMode(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode Prefer { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode Require { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode VerifyCA { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode VerifyFull { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersSslMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PostgreSqlFlexibleServersStorageType : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PostgreSqlFlexibleServersStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType PremiumLRS { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType PremiumV2LRS { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PostgreSqlFlexibleServerState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerState>
     {
@@ -2469,7 +2580,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow? AutoGrow { get { throw null; } set { } }
         public int? Iops { get { throw null; } set { } }
         public int? StorageSizeInGB { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType? StorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersStorageType? StorageType { get { throw null; } set { } }
         public int? Throughput { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlManagedDiskPerformanceTier? Tier { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2547,6 +2658,52 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorageTierCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PostgreSqlFlexibleServersValidationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>
+    {
+        internal PostgreSqlFlexibleServersValidationDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus> DbLevelValidationDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem> ServerLevelValidationDetails { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? Status { get { throw null; } }
+        public System.DateTimeOffset? ValidationEndTimeInUtc { get { throw null; } }
+        public System.DateTimeOffset? ValidationStartTimeInUtc { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PostgreSqlFlexibleServersValidationMessage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>
+    {
+        internal PostgreSqlFlexibleServersValidationMessage() { }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PostgreSqlFlexibleServersValidationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PostgreSqlFlexibleServersValidationState(string value) { throw null; }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState Failed { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerUserAssignedIdentity>
     {
@@ -2975,7 +3132,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal PostgreSqlMigrationSubStateDetails() { }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubState? CurrentSubState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus> DbDetails { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails ValidationDetails { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationDetails ValidationDetails { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationSubStateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3033,21 +3190,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Replica : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>
-    {
-        public Replica() { }
-        public int? Capacity { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReadReplicaPromoteMode? PromoteMode { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption? PromoteOption { get { throw null; } set { } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState? ReplicationState { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerReplicationRole? Role { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.Replica>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReplicationPromoteOption : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption>
     {
@@ -3066,28 +3208,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationPromoteOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReplicationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReplicationState(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Active { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Broken { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Catchup { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Reconfiguring { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ReplicationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ServerSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku>
     {
         internal ServerSku() { }
@@ -3099,54 +3219,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ServerSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceType : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceType(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType AWS { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType AWSAurora { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType AWSEC2 { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType AWSRDS { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType AzureVm { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType EDB { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType GCP { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType GCPAlloyDB { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType GCPCloudSQL { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType GCPCompute { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType OnPremises { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType PostgreSQLSingleServer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SslMode : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SslMode(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode Prefer { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode Require { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode VerifyCA { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode VerifyFull { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.SslMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAutoGrow : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow>
@@ -3164,24 +3236,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow right) { throw null; }
         public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageAutoGrow right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageType : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageType(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType PremiumV2LRS { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.StorageType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3206,57 +3260,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class ValidationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>
-    {
-        internal ValidationDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus> DbLevelValidationDetails { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem> ServerLevelValidationDetails { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? Status { get { throw null; } }
-        public System.DateTimeOffset? ValidationEndTimeInUtc { get { throw null; } }
-        public System.DateTimeOffset? ValidationStartTimeInUtc { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ValidationMessage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>
-    {
-        internal ValidationMessage() { }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? State { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ValidationState : System.IEquatable<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ValidationState(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState Failed { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState left, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ValidationSummaryItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem>
     {
         internal ValidationSummaryItem() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationMessage> Messages { get { throw null; } }
-        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationState? State { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationMessage> Messages { get { throw null; } }
+        public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServersValidationState? State { get { throw null; } }
         public string ValidationSummaryItemType { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.ValidationSummaryItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
