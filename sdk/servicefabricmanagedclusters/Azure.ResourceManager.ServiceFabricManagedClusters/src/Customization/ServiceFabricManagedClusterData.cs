@@ -34,5 +34,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             AuxiliarySubnets = new ChangeTrackingList<ManagedClusterSubnet>();
             ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
         }
+
+        /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </summary>
+        [CodeGenMember("EnableHttpGatewayExclusiveAuthMode")]
+        public bool IsHttpGatewayExclusiveAuthModeEnabled { get; set; }
     }
 }
