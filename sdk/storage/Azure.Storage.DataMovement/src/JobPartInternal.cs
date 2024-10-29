@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Plan file writer for the respective job.
         /// </summary>
-        internal TransferCheckpointer _checkpointer { get; set; }
+        internal ITransferCheckpointer _checkpointer { get; set; }
 
         private TransferProgressTracker _progressTracker;
 
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
             long? initialTransferSize,
             DataTransferErrorMode errorHandling,
             StorageResourceCreationPreference createMode,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
@@ -487,7 +487,7 @@ namespace Azure.Storage.DataMovement
 
         internal async virtual Task SetCheckpointerStatus()
         {
-            await _checkpointer.SetJobPartTransferStatusAsync(
+            await _checkpointer.SetJobPartStatusAsync(
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
                 status: JobPartStatus).ConfigureAwait(false);

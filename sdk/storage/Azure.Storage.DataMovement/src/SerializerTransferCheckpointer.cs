@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,12 +13,12 @@ namespace Azure.Storage.DataMovement
     /// Base Checkpointer class to create the checkpointing logic
     /// to resume from.
     /// </summary>
-    internal abstract class TransferCheckpointer
+    internal abstract class SerializerTransferCheckpointer : ITransferCheckpointer
     {
         /// <summary>
         /// The protected constructor for the abstract TransferCheckpointer class (to allow for mocking).
         /// </summary>
-        protected TransferCheckpointer()
+        protected SerializerTransferCheckpointer()
         {
         }
 
@@ -179,5 +180,41 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>The list of all the transfers contained in the checkpointer.</returns>
         public abstract Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default);
+
+        Task<bool> ITransferCheckpointer.IsEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.IsEnumerationCompleteAsync(this, transferId, cancellationToken);
+
+        Task ITransferCheckpointer.SetEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.OnEnumerationCompleteAsync(this, transferId, cancellationToken);
+
+        Task<int> ITransferCheckpointer.GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken)
+            => this.CurrentJobPartCountAsync(transferId, cancellationToken);
+
+        Task<DataTransferStatus> ITransferCheckpointer.GetJobStatusAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.GetJobStatusAsync(this, transferId, cancellationToken);
+
+        Task<DataTransferProperties> ITransferCheckpointer.GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.GetDataTransferPropertiesAsync(this, transferId, cancellationToken);
+
+        async Task<JobPartPlanHeader> ITransferCheckpointer.GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken)
+        {
+            using Stream stream = await ReadJobPartPlanFileAsync(
+                transferId: transferId,
+                partNumber: partNumber,
+                offset: 0,
+                length: 0,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+           return JobPartPlanHeader.Deserialize(stream);
+        }
+
+        Task ITransferCheckpointer.SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken)
+        {
+            return this.SetJobTransferStatusAsync(transferId, status, cancellationToken);
+        }
+
+        Task ITransferCheckpointer.SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken)
+        {
+            return this.SetJobPartTransferStatusAsync(transferId, partNumber, status, cancellationToken);
+        }
     }
 }
