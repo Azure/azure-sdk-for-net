@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 MigrationMode = PostgreSqlMigrationMode.Offline,
                 MigrationOption = MigrationOption.ValidateAndMigrate,
-                SourceType = SourceType.OnPremises,
-                SslMode = SslMode.Prefer,
+                SourceType = PostgreSqlFlexibleServersSourceType.OnPremises,
+                SslMode = PostgreSqlFlexibleServersSslMode.Prefer,
                 SourceDbServerResourceId = new ResourceIdentifier("testsource:5432@pguser"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
                 DbsToMigrate =

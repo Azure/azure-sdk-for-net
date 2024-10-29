@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="createMode"> The mode to create a new PostgreSQL server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified resource. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServerSku sku = null, PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerBackupProperties backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, Replica replica = null, PostgreSqlFlexibleServerCreateMode? createMode = null, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PostgreSqlFlexibleServerSku sku = null, PostgreSqlFlexibleServerUserAssignedIdentity identity = null, string administratorLogin = null, string administratorLoginPassword = null, PostgreSqlFlexibleServerVersion? version = null, string minorVersion = null, PostgreSqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, PostgreSqlFlexibleServerStorage storage = null, PostgreSqlFlexibleServerAuthConfig authConfig = null, PostgreSqlFlexibleServerDataEncryption dataEncryption = null, PostgreSqlFlexibleServerBackupProperties backup = null, PostgreSqlFlexibleServerNetwork network = null, PostgreSqlFlexibleServerHighAvailability highAvailability = null, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? pointInTimeUtc = null, string availabilityZone = null, PostgreSqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, PostgreSqlFlexibleServersReplica replica = null, PostgreSqlFlexibleServerCreateMode? createMode = null, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
@@ -472,16 +472,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Replica"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersReplica"/>. </summary>
         /// <param name="role"> Used to indicate role of the server in replication set. </param>
         /// <param name="capacity"> Replicas allowed for a server. </param>
         /// <param name="replicationState"> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </param>
         /// <param name="promoteMode"> Sets the promote mode for a replica server. This is a write only property. </param>
         /// <param name="promoteOption"> Sets the promote options for a replica server. This is a write only property. </param>
-        /// <returns> A new <see cref="Models.Replica"/> instance for mocking. </returns>
-        public static Replica Replica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, ReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReplicationPromoteOption? promoteOption = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersReplica"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, PostgreSqlFlexibleServersReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReplicationPromoteOption? promoteOption = null)
         {
-            return new Replica(
+            return new PostgreSqlFlexibleServersReplica(
                 role,
                 capacity,
                 replicationState,
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
         /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, SourceType? sourceType = null, SslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesEnum? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesEnum? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dbsToMigrate ??= new List<string>();
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbDetails"> Dictionary of &lt;DbMigrationStatus&gt;. </param>
         /// <param name="validationDetails"> Details for the validation for migration. </param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, ValidationDetails validationDetails = null)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
         {
             dbDetails ??= new Dictionary<string, DbMigrationStatus>();
 
@@ -725,19 +725,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         /// <param name="status"> Validation status for migration. </param>
         /// <param name="validationStartTimeInUtc"> Validation Start date-time in UTC. </param>
         /// <param name="validationEndTimeInUtc"> Validation End date-time in UTC. </param>
         /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
-        /// <returns> A new <see cref="Models.ValidationDetails"/> instance for mocking. </returns>
-        public static ValidationDetails ValidationDetails(ValidationState? status = null, DateTimeOffset? validationStartTimeInUtc = null, DateTimeOffset? validationEndTimeInUtc = null, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = null, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = null, DateTimeOffset? validationStartTimeInUtc = null, DateTimeOffset? validationEndTimeInUtc = null, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = null, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = null)
         {
             serverLevelValidationDetails ??= new List<ValidationSummaryItem>();
             dbLevelValidationDetails ??= new List<DbLevelValidationStatus>();
 
-            return new ValidationDetails(
+            return new PostgreSqlFlexibleServersValidationDetails(
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
@@ -751,20 +751,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Validation status for migration. </param>
         /// <param name="messages"> Validation messages. </param>
         /// <returns> A new <see cref="Models.ValidationSummaryItem"/> instance for mocking. </returns>
-        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, ValidationState? state = null, IEnumerable<ValidationMessage> messages = null)
+        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, PostgreSqlFlexibleServersValidationState? state = null, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = null)
         {
-            messages ??= new List<ValidationMessage>();
+            messages ??= new List<PostgreSqlFlexibleServersValidationMessage>();
 
             return new ValidationSummaryItem(validationSummaryItemType, state, messages?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/>. </summary>
         /// <param name="state"> Severity of validation message. </param>
         /// <param name="message"> Validation message string. </param>
-        /// <returns> A new <see cref="Models.ValidationMessage"/> instance for mocking. </returns>
-        public static ValidationMessage ValidationMessage(ValidationState? state = null, string message = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersValidationMessage PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state = null, string message = null)
         {
-            return new ValidationMessage(state, message, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServersValidationMessage(state, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DbLevelValidationStatus"/>. </summary>

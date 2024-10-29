@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Validation message object. </summary>
-    public partial class ValidationMessage
+    public partial class PostgreSqlFlexibleServersValidationMessage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ValidationMessage"/>. </summary>
-        internal ValidationMessage()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationMessage"/>. </summary>
+        internal PostgreSqlFlexibleServersValidationMessage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ValidationMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationMessage"/>. </summary>
         /// <param name="state"> Severity of validation message. </param>
         /// <param name="message"> Validation message string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationMessage(ValidationState? state, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Message = message;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Severity of validation message. </summary>
         [WirePath("state")]
-        public ValidationState? State { get; }
+        public PostgreSqlFlexibleServersValidationState? State { get; }
         /// <summary> Validation message string. </summary>
         [WirePath("message")]
         public string Message { get; }

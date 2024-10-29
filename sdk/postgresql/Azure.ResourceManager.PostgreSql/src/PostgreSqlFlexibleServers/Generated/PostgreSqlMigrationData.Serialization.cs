@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier migrationInstanceResourceId = default;
             PostgreSqlMigrationMode? migrationMode = default;
             MigrationOption? migrationOption = default;
-            SourceType? sourceType = default;
-            SslMode? sslMode = default;
+            PostgreSqlFlexibleServersSourceType? sourceType = default;
+            PostgreSqlFlexibleServersSslMode? sslMode = default;
             PostgreSqlServerMetadata sourceDbServerMetadata = default;
             PostgreSqlServerMetadata targetDbServerMetadata = default;
             ResourceIdentifier sourceDbServerResourceId = default;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            sourceType = new SourceType(property0.Value.GetString());
+                            sourceType = new PostgreSqlFlexibleServersSourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sslMode"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            sslMode = new SslMode(property0.Value.GetString());
+                            sslMode = new PostgreSqlFlexibleServersSslMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerMetadata"u8))

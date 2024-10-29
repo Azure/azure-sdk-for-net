@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             PostgreSqlMigrationSubState? currentSubState = default;
             IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default;
-            ValidationDetails validationDetails = default;
+            PostgreSqlFlexibleServersValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    validationDetails = ValidationDetails.DeserializeValidationDetails(property.Value, options);
+                    validationDetails = PostgreSqlFlexibleServersValidationDetails.DeserializePostgreSqlFlexibleServersValidationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

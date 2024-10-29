@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class Replica : IUtf8JsonSerializable, IJsonModel<Replica>
+    public partial class PostgreSqlFlexibleServersReplica : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServersReplica>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Replica>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServersReplica>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Replica>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServersReplica>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Replica)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersReplica)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Role))
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        Replica IJsonModel<Replica>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServersReplica IJsonModel<PostgreSqlFlexibleServersReplica>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Replica)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersReplica)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplica(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServersReplica(document.RootElement, options);
         }
 
-        internal static Replica DeserializeReplica(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServersReplica DeserializePostgreSqlFlexibleServersReplica(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             PostgreSqlFlexibleServerReplicationRole? role = default;
             int? capacity = default;
-            ReplicationState? replicationState = default;
+            PostgreSqlFlexibleServersReplicationState? replicationState = default;
             ReadReplicaPromoteMode? promoteMode = default;
             ReplicationPromoteOption? promoteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    replicationState = new ReplicationState(property.Value.GetString());
+                    replicationState = new PostgreSqlFlexibleServersReplicationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("promoteMode"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Replica(
+            return new PostgreSqlFlexibleServersReplica(
                 role,
                 capacity,
                 replicationState,
@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<Replica>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServersReplica>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersReplica>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -267,26 +267,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(Replica)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersReplica)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Replica IPersistableModel<Replica>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServersReplica IPersistableModel<PostgreSqlFlexibleServersReplica>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersReplica>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReplica(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServersReplica(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Replica)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersReplica)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Replica>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServersReplica>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

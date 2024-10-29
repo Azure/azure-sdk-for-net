@@ -96,6 +96,8 @@ prepend-rp-prefix:
   - PrivateEndpointProvisioningState
   - PrivateLinkServiceConnectionStateStatus
   - PublicNetworkAccessEnum
+  - Replica
+  - ReplicationState
   - StorageProfile
   - ServerPropertiesForCreate
   - ServerPropertiesForDefaultCreate
@@ -112,8 +114,14 @@ prepend-rp-prefix:
   - ServerSecurityAlertPolicyListResult
   - ServerSecurityAlertPolicyState
   - ServerState
+  - SourceType
   - SslEnforcementEnum
+  - SslMode
   - StorageAutogrow
+  - StorageType
+  - ValidationDetails
+  - ValidationMessage
+  - ValidationState
   - VirtualNetworkRuleListResult
   - VirtualNetworkRuleState
 rename-mapping:

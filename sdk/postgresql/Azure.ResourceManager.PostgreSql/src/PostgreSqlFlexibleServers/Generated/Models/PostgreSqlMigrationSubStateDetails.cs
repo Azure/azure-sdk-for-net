@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbDetails"> Dictionary of &lt;DbMigrationStatus&gt;. </param>
         /// <param name="validationDetails"> Details for the validation for migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, ValidationDetails validationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentSubState = currentSubState;
             DbDetails = dbDetails;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public IReadOnlyDictionary<string, DbMigrationStatus> DbDetails { get; }
         /// <summary> Details for the validation for migration. </summary>
         [WirePath("validationDetails")]
-        public ValidationDetails ValidationDetails { get; }
+        public PostgreSqlFlexibleServersValidationDetails ValidationDetails { get; }
     }
 }

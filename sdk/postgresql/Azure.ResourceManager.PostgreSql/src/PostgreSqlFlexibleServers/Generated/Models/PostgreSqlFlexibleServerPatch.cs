@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="replica"> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </param>
         /// <param name="network"> Network properties of a server. These are required to be passed only in case if server is a private access server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, Replica replica, PostgreSqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, string> tags, AzureLocation? location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerCreateModeForUpdate? createMode, PostgreSqlFlexibleServerReplicationRole? replicationRole, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> Replica properties of a server. These Replica properties are required to be passed only in case you want to Promote a server. </summary>
         [WirePath("properties.replica")]
-        public Replica Replica { get; set; }
+        public PostgreSqlFlexibleServersReplica Replica { get; set; }
         /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
         [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }

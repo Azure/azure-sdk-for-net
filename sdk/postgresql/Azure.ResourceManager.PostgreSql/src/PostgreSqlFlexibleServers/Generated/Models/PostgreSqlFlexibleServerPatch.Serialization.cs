@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
-            Replica replica = default;
+            PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            replica = Replica.DeserializeReplica(property0.Value, options);
+                            replica = PostgreSqlFlexibleServersReplica.DeserializePostgreSqlFlexibleServersReplica(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))

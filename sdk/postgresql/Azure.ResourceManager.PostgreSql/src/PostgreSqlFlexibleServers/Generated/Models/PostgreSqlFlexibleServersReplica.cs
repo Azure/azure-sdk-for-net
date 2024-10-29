@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Replica properties of a server. </summary>
-    public partial class Replica
+    public partial class PostgreSqlFlexibleServersReplica
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
-        public Replica()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersReplica"/>. </summary>
+        public PostgreSqlFlexibleServersReplica()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersReplica"/>. </summary>
         /// <param name="role"> Used to indicate role of the server in replication set. </param>
         /// <param name="capacity"> Replicas allowed for a server. </param>
         /// <param name="replicationState"> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </param>
         /// <param name="promoteMode"> Sets the promote mode for a replica server. This is a write only property. </param>
         /// <param name="promoteOption"> Sets the promote options for a replica server. This is a write only property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Replica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, ReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReplicationPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, PostgreSqlFlexibleServersReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReplicationPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Capacity = capacity;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public int? Capacity { get; }
         /// <summary> Gets the replication state of a replica server. This property is returned only for replicas api call. Supported values are Active, Catchup, Provisioning, Updating, Broken, Reconfiguring. </summary>
         [WirePath("replicationState")]
-        public ReplicationState? ReplicationState { get; }
+        public PostgreSqlFlexibleServersReplicationState? ReplicationState { get; }
         /// <summary> Sets the promote mode for a replica server. This is a write only property. </summary>
         [WirePath("promoteMode")]
         public ReadReplicaPromoteMode? PromoteMode { get; set; }

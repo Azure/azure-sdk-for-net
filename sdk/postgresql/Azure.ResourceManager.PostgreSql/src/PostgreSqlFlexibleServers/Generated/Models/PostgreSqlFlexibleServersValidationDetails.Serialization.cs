@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class ValidationDetails : IUtf8JsonSerializable, IJsonModel<ValidationDetails>
+    public partial class PostgreSqlFlexibleServersValidationDetails : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServersValidationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServersValidationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ValidationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PostgreSqlFlexibleServersValidationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidationDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersValidationDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Status))
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        ValidationDetails IJsonModel<ValidationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServersValidationDetails IJsonModel<PostgreSqlFlexibleServersValidationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidationDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersValidationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeValidationDetails(document.RootElement, options);
+            return DeserializePostgreSqlFlexibleServersValidationDetails(document.RootElement, options);
         }
 
-        internal static ValidationDetails DeserializeValidationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PostgreSqlFlexibleServersValidationDetails DeserializePostgreSqlFlexibleServersValidationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            ValidationState? status = default;
+            PostgreSqlFlexibleServersValidationState? status = default;
             DateTimeOffset? validationStartTimeInUtc = default;
             DateTimeOffset? validationEndTimeInUtc = default;
             IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    status = new ValidationState(property.Value.GetString());
+                    status = new PostgreSqlFlexibleServersValidationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("validationStartTimeInUtc"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ValidationDetails(
+            return new PostgreSqlFlexibleServersValidationDetails(
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ValidationDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PostgreSqlFlexibleServersValidationDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -306,26 +306,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ValidationDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersValidationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ValidationDetails IPersistableModel<ValidationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PostgreSqlFlexibleServersValidationDetails IPersistableModel<PostgreSqlFlexibleServersValidationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeValidationDetails(document.RootElement, options);
+                        return DeserializePostgreSqlFlexibleServersValidationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ValidationDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersValidationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ValidationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PostgreSqlFlexibleServersValidationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

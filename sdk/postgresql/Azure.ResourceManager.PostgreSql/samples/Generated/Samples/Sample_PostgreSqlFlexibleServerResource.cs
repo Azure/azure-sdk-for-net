@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
             {
-                Replica = new Replica()
+                Replica = new PostgreSqlFlexibleServersReplica()
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
                     PromoteOption = ReplicationPromoteOption.Forced,
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
             {
-                Replica = new Replica()
+                Replica = new PostgreSqlFlexibleServersReplica()
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
                     PromoteOption = ReplicationPromoteOption.Planned,
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
             {
-                Replica = new Replica()
+                Replica = new PostgreSqlFlexibleServersReplica()
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
                     PromoteOption = ReplicationPromoteOption.Forced,
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
             {
-                Replica = new Replica()
+                Replica = new PostgreSqlFlexibleServersReplica()
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
                     PromoteOption = ReplicationPromoteOption.Planned,

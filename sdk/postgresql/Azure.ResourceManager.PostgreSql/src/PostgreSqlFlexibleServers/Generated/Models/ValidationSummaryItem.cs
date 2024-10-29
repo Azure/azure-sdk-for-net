@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
         internal ValidationSummaryItem()
         {
-            Messages = new ChangeTrackingList<ValidationMessage>();
+            Messages = new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="state"> Validation status for migration. </param>
         /// <param name="messages"> Validation messages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationSummaryItem(string validationSummaryItemType, ValidationState? state, IReadOnlyList<ValidationMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string ValidationSummaryItemType { get; }
         /// <summary> Validation status for migration. </summary>
         [WirePath("state")]
-        public ValidationState? State { get; }
+        public PostgreSqlFlexibleServersValidationState? State { get; }
         /// <summary> Validation messages. </summary>
         [WirePath("messages")]
-        public IReadOnlyList<ValidationMessage> Messages { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
     }
 }

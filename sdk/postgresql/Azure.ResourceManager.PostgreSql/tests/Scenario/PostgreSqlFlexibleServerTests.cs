@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "16",
-                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, 3000, 125, StorageType.PremiumV2LRS, null),
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, 3000, 125, PostgreSqlFlexibleServersStorageType.PremiumV2LRS, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
             PostgreSqlFlexibleServerResource server = lro.Value;
             Assert.AreEqual(serverName, server.Data.Name);
-            Assert.AreEqual(StorageType.PremiumV2LRS, server.Data.Storage.StorageType);
+            Assert.AreEqual(PostgreSqlFlexibleServersStorageType.PremiumV2LRS, server.Data.Storage.StorageType);
             // Update
             var newStorageSize = 256;
             var newIops = 3500;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             {
                 Storage = new PostgreSqlFlexibleServerStorage()
                 {
-                    StorageType = StorageType.PremiumV2LRS,
+                    StorageType = PostgreSqlFlexibleServersStorageType.PremiumV2LRS,
                     StorageSizeInGB = newStorageSize,
                     Iops = newIops,
                     Throughput = newThroughput
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
             // Perform switchover on replica 2
             var replica2ServerUpdate = await replica2Server.UpdateAsync(WaitUntil.Completed, new PostgreSqlFlexibleServerPatch()
             {
-                Replica = new Replica()
+                Replica = new PostgreSqlFlexibleServersReplica()
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
                     PromoteOption = ReplicationPromoteOption.Forced,

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlManagedDiskPerformanceTier? tier = default;
             int? iops = default;
             int? throughput = default;
-            StorageType? type = default;
+            PostgreSqlFlexibleServersStorageType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    type = new StorageType(property.Value.GetString());
+                    type = new PostgreSqlFlexibleServersStorageType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

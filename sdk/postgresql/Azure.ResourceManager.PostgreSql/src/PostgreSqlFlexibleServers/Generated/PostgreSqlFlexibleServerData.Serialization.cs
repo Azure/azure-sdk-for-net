@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             string availabilityZone = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             int? replicaCapacity = default;
-            Replica replica = default;
+            PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerCreateMode? createMode = default;
             IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            replica = Replica.DeserializeReplica(property0.Value, options);
+                            replica = PostgreSqlFlexibleServersReplica.DeserializePostgreSqlFlexibleServersReplica(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createMode"u8))

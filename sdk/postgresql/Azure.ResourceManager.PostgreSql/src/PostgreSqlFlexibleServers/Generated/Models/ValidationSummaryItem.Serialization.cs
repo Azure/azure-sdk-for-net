@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             string type = default;
-            ValidationState? state = default;
-            IReadOnlyList<ValidationMessage> messages = default;
+            PostgreSqlFlexibleServersValidationState? state = default;
+            IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    state = new ValidationState(property.Value.GetString());
+                    state = new PostgreSqlFlexibleServersValidationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("messages"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<ValidationMessage> array = new List<ValidationMessage>();
+                    List<PostgreSqlFlexibleServersValidationMessage> array = new List<PostgreSqlFlexibleServersValidationMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ValidationMessage.DeserializeValidationMessage(item, options));
+                        array.Add(PostgreSqlFlexibleServersValidationMessage.DeserializePostgreSqlFlexibleServersValidationMessage(item, options));
                     }
                     messages = array;
                     continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ValidationSummaryItem(type, state, messages ?? new ChangeTrackingList<ValidationMessage>(), serializedAdditionalRawData);
+            return new ValidationSummaryItem(type, state, messages ?? new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

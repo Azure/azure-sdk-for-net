@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="throughput"> Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS. </param>
         /// <param name="storageType"> Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS, and default is Premium_LRS if not specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, StorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public int? Throughput { get; set; }
         /// <summary> Storage type for the server. Allowed values are Premium_LRS and PremiumV2_LRS, and default is Premium_LRS if not specified. </summary>
         [WirePath("type")]
-        public StorageType? StorageType { get; set; }
+        public PostgreSqlFlexibleServersStorageType? StorageType { get; set; }
     }
 }
