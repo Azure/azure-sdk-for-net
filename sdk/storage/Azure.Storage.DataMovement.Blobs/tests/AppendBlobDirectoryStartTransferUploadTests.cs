@@ -31,7 +31,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await appendBlobClient.CreateIfNotExistsAsync();
             if (contents != default)
             {
-                await appendBlobClient.AppendBlockAsync(contents, cancellationToken: cancellationToken);
+                if (contents.Length != 0)
+                {
+                    // cannot append a stream that has a Content-Length of 0
+                    await appendBlobClient.AppendBlockAsync(contents, cancellationToken: cancellationToken);
+                }
             }
         }
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -28,16 +29,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobContainerClient container, string blobName, Stream contents, CancellationToken cancellationToken = default)
         {
             PageBlobClient pageBlobClient = container.GetPageBlobClient(blobName);
-            await pageBlobClient.CreateAsync(512 * 10);
+            await pageBlobClient.CreateAsync(Constants.KB * 5);
             if (contents != default)
             {
-                if (contents.Length == 0 || contents.Length % 512 != 0)
+                if (contents.Length % (Constants.KB/2) != 0)
                 {
-                    // cannot upload a page that has a Content-Length of 0 or not a multiple of 512
-                    int newLength = ((int)contents.Length / 512 + 1) * 512;
-                    contents = new MemoryStream(GetRandomBuffer(newLength));
+                    Assert.Inconclusive("Cannot upload a page that has a Content-Length not an increment of 512");
                 }
-                await pageBlobClient.UploadPagesAsync(contents, 0, cancellationToken: cancellationToken);
+                if (contents.Length != 0)
+                {
+                    // cannot upload a page that has a Content-Length of 0
+                    await pageBlobClient.UploadPagesAsync(contents, 0, cancellationToken: cancellationToken);
+                }
             }
         }
 
