@@ -102,8 +102,6 @@ namespace Azure.Storage.DataMovement
 
         private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
-
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
                 job.IncrementJobParts();
@@ -112,8 +110,6 @@ namespace Azure.Storage.DataMovement
         }
         private async Task ProcessPartAsync(JobPartInternal part, CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
-
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
         }
@@ -422,7 +418,6 @@ namespace Azure.Storage.DataMovement
 
         private async Task SetDataTransfers(CancellationToken cancellationToken = default)
         {
-            cancellationToken = LinkCancellation(cancellationToken);
             _dataTransfers.Clear();
 
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
