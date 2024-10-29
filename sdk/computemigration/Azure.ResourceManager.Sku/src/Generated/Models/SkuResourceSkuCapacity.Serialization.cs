@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Sku.Models
 
         void IJsonModel<SkuResourceSkuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SkuResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SkuResourceSkuCapacity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.Sku.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SkuResourceSkuCapacity IJsonModel<SkuResourceSkuCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
