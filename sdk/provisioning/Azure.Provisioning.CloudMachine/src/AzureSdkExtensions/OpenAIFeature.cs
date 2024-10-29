@@ -14,10 +14,10 @@ namespace Azure.Provisioning.CloudMachine.OpenAI;
 
 public class OpenAIFeature : CloudMachineFeature
 {
-    private OpenAiModelDeployment _chatDeployment;
-    private OpenAiModelDeployment? _embeddingsDeployment;
+    private AiModel _chatDeployment;
+    private AiModel? _embeddingsDeployment;
 
-    public OpenAIFeature(OpenAiModelDeployment chatDeployment, OpenAiModelDeployment? embeddingsDeployment = default)
+    public OpenAIFeature(AiModel chatDeployment, AiModel? embeddingsDeployment = default)
     {
         if (chatDeployment == null)
         {

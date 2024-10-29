@@ -24,7 +24,7 @@ public class CloudMachineTests
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
             cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature(new OpenAiModelDeployment("gpt-35-turbo", "0125"), new OpenAiModelDeployment("text-embedding-ada-002", "2")));
+            cm.AddFeature(new OpenAIFeature(new AiModel("gpt-35-turbo", "0125"), new AiModel("text-embedding-ada-002", "2")));
         }))
             return;
 
@@ -72,7 +72,7 @@ public class CloudMachineTests
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-            cm.AddFeature(new OpenAIFeature(new OpenAiModelDeployment("gpt-35-turbo", "0125")));
+            cm.AddFeature(new OpenAIFeature(new AiModel("gpt-35-turbo", "0125")));
         }))
             return;
 
@@ -138,7 +138,7 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
 
         // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBytes(BinaryData.FromString(message)));
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBinaryData(BinaryData.FromString(message)));
         cm.Storage.WhenBlobUploaded((StorageFile file) =>
         {
             var content = file.Download();

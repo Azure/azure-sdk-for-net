@@ -9,6 +9,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.CloudMachine;
 
@@ -44,62 +45,61 @@ public readonly struct StorageServices
 
     public string UploadJson(object json, string? name = default, bool overwrite = false)
     {
-        bool doOverwrite = false;
         BlobContainerClient container = GetDefaultContainer();
 
         if (name == default)
             name = $"b{Guid.NewGuid()}";
 
-        try
+        var client = container.GetBlockBlobClient(name);
+        var options = new BlobUploadOptions
         {
-            container.UploadBlob(name, BinaryData.FromObjectAsJson(json));
-        }
-        catch (RequestFailedException e) when (overwrite && e.Status == 409 && e.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-        {
-            doOverwrite = true;
-        }
-        if (doOverwrite)
-        {
-            container.GetBlobClient(name).Upload(BinaryData.FromObjectAsJson(json), overwrite: true);
-        }
+            Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
+            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationJson.ToString() }
+        };
 
+        client.Upload(BinaryData.FromObjectAsJson(json).ToStream(), options);
         return name;
     }
 
     public string UploadStream(Stream fileStream, string? name = default, bool overwrite = false)
     {
-        bool doOverwrite = false;
         BlobContainerClient container = GetDefaultContainer();
 
         if (name == default)
             name = $"b{Guid.NewGuid()}";
-        try
-        {
-            container.UploadBlob(name, BinaryData.FromStream(fileStream));
-        }
-        catch (RequestFailedException e) when (overwrite && e.Status == 409 && e.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-        {
-            doOverwrite = true;
-        }
-        if (doOverwrite)
-        {
-            fileStream.Position = 0;
-            container.GetBlobClient(name).Upload(fileStream, overwrite: true);
-        }
 
+        var client = container.GetBlockBlobClient(name);
+        var options = new BlobUploadOptions
+        {
+            Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
+            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationOctetStream.ToString() }
+        };
+
+        client.Upload(fileStream, options);
         return name;
     }
-    public string UploadBytes(BinaryData bytes, string? name = default)
+
+    public string UploadBinaryData(BinaryData data, string? name = default, bool overwrite = false)
     {
         BlobContainerClient container = GetDefaultContainer();
-        if (name == default) name = $"b{Guid.NewGuid()}";
-        container.UploadBlob(name, bytes);
+        if (name == default)
+            name = $"b{Guid.NewGuid()}";
+
+        var client = container.GetBlockBlobClient(name);
+        var options = new BlobUploadOptions
+        {
+            Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
+            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationOctetStream.ToString() }
+        };
+
+        client.Upload(data.ToStream(), options);
         return name;
     }
-    public string UploadBytes(byte[] bytes, string? name = default)
-        => UploadBytes(BinaryData.FromBytes(bytes), name);
-    public string UploadBytes(ReadOnlyMemory<byte> bytes, string? name = default)
-        => UploadBytes(BinaryData.FromBytes(bytes), name);
+
+    public string UploadBytes(byte[] bytes, string? name = default, bool overwrite = false)
+        => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
+    public string UploadBytes(ReadOnlyMemory<byte> bytes, string? name = default, bool overwrite = false)
+        => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
 
     public BinaryData DownloadBlob(string path)
     {
