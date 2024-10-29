@@ -113,6 +113,7 @@ prepend-rp-prefix:
   - ServerPrivateLinkServiceConnectionStateProperty
   - ServerSecurityAlertPolicyListResult
   - ServerSecurityAlertPolicyState
+  - ServerSku
   - ServerState
   - SourceType
   - SslEnforcementEnum

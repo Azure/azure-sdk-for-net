@@ -786,18 +786,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="storageMb"> Storage size in MB for database server. </param>
         /// <param name="sku"> SKU for the database server. This object is empty for PG single server. </param>
         /// <returns> A new <see cref="Models.PostgreSqlServerMetadata"/> instance for mocking. </returns>
-        public static PostgreSqlServerMetadata PostgreSqlServerMetadata(AzureLocation? location = null, string version = null, int? storageMb = null, ServerSku sku = null)
+        public static PostgreSqlServerMetadata PostgreSqlServerMetadata(AzureLocation? location = null, string version = null, int? storageMb = null, PostgreSqlFlexibleServersServerSku sku = null)
         {
             return new PostgreSqlServerMetadata(location, version, storageMb, sku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServerSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
-        /// <returns> A new <see cref="Models.ServerSku"/> instance for mocking. </returns>
-        public static ServerSku ServerSku(string name = null, PostgreSqlFlexibleServerSkuTier? tier = null)
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersServerSku"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServersServerSku PostgreSqlFlexibleServersServerSku(string name = null, PostgreSqlFlexibleServerSkuTier? tier = null)
         {
-            return new ServerSku(name, tier, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServersServerSku(name, tier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Sku information related properties of a server. </summary>
-    public partial class ServerSku
+    public partial class PostgreSqlFlexibleServersServerSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
-        internal ServerSku()
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersServerSku"/>. </summary>
+        internal PostgreSqlFlexibleServersServerSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
