@@ -6,41 +6,32 @@ This release uses GA api version 2024-08-01 for PostgreSQL flexible server.
 
 ### Features Added
 
-- Storage auto growth
-- IOPS scaling
-- Backup - Long Term Retention
-- Backup - On-demand
-- Geo-redundant backup encryption key - Revive Dropped
-- Server Logs
-- Migrations
-- Migration Pre-validation
-- Migration Roles
-- Private endpoint Migration
-- Private Endpoints
-- Read replicas - Switchover
-- Read replicas - Virtual Endpoints
-- Azure Defender / Threat Protection APIs
-- PG 16 support
-- PremiumV2_LRS storage type support
-- Location capabilities updates
-
-## 1.2.0-beta.7 (Unreleased)
-
-### Features Added
+- Upgraded api-version tag from 'package-flexibleserver-2023-03-01-preview' to 'package-flexibleserver-2024-08-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ce47f9b775ec53750f37def0402ecacf3f1d661b/specification/compute/resource-manager/readme.md.
+    - Storage auto growth
+    - IOPS scaling
+    - Backup - Long Term Retention
+    - Backup - On-demand
+    - Geo-redundant backup encryption key - Revive Dropped
+    - Server Logs
+    - Migrations
+    - Migration Pre-validation
+    - Migration Roles
+    - Private endpoint Migration
+    - Private Endpoints
+    - Read replicas - Switchover
+    - Read replicas - Virtual Endpoints
+    - Azure Defender / Threat Protection APIs
+    - PG 16 support
+    - PremiumV2_LRS storage type support
+    - Location capabilities updates
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.6 (2024-05-07)
 
 ### Features Added
 
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Bugs Fixed
 
@@ -56,7 +47,7 @@ This release uses GA api version 2024-08-01 for PostgreSQL flexible server.
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ## 1.1.3 (2024-03-25)
@@ -69,7 +60,7 @@ This release uses GA api version 2024-08-01 for PostgreSQL flexible server.
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this document for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this document for more details.
 - Added experimental Bicep serialization.
 - Added GetIfExists methods.
 - Added mocking types.
@@ -78,7 +69,7 @@ This release uses GA api version 2024-08-01 for PostgreSQL flexible server.
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -114,7 +105,7 @@ This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
