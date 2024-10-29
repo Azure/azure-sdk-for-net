@@ -21,45 +21,69 @@ public partial class RedisPrivateEndpointConnection : ProvisionableResource
     /// The name of the private endpoint connection associated with the Azure
     /// resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A collection of information about the state of the connection between
     /// service consumer and provider.
     /// </summary>
-    public BicepValue<RedisPrivateLinkServiceConnectionState> RedisPrivateLinkServiceConnectionState { get => _redisPrivateLinkServiceConnectionState; set => _redisPrivateLinkServiceConnectionState.Assign(value); }
-    private readonly BicepValue<RedisPrivateLinkServiceConnectionState> _redisPrivateLinkServiceConnectionState;
+    public RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState 
+    {
+        get { Initialize(); return _redisPrivateLinkServiceConnectionState!; }
+        set { Initialize(); AssignOrReplace(ref _redisPrivateLinkServiceConnectionState, value); }
+    }
+    private RedisPrivateLinkServiceConnectionState? _redisPrivateLinkServiceConnectionState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// The provisioning state of the private endpoint connection resource.
     /// </summary>
-    public BicepValue<RedisPrivateEndpointConnectionProvisioningState> RedisProvisioningState { get => _redisProvisioningState; }
-    private readonly BicepValue<RedisPrivateEndpointConnectionProvisioningState> _redisProvisioningState;
+    public BicepValue<RedisPrivateEndpointConnectionProvisioningState> RedisProvisioningState 
+    {
+        get { Initialize(); return _redisProvisioningState!; }
+    }
+    private BicepValue<RedisPrivateEndpointConnectionProvisioningState>? _redisProvisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent RedisResource.
     /// </summary>
-    public RedisResource? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<RedisResource> _parent;
+    public RedisResource? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<RedisResource>? _parent;
 
     /// <summary>
     /// Creates a new RedisPrivateEndpointConnection.
@@ -74,13 +98,21 @@ public partial class RedisPrivateEndpointConnection : ProvisionableResource
     public RedisPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Cache/redis/privateEndpointConnections", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _redisPrivateLinkServiceConnectionState = BicepValue<RedisPrivateLinkServiceConnectionState>.DefineProperty(this, "RedisPrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
-        _redisProvisioningState = BicepValue<RedisPrivateEndpointConnectionProvisioningState>.DefineProperty(this, "RedisProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<RedisResource>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// RedisPrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _redisPrivateLinkServiceConnectionState = DefineModelProperty<RedisPrivateLinkServiceConnectionState>("RedisPrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _redisProvisioningState = DefineProperty<RedisPrivateEndpointConnectionProvisioningState>("RedisProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<RedisResource>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

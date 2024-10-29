@@ -53,7 +53,7 @@ public class CloudMachineTests
             Assert.AreEqual("{\"Foo\":5,\"Bar\":true}", data.ToString());
             eventSlim.Set();
         });
-        var uploaded = cm.Storage.UploadBlob(new
+        var uploaded = cm.Storage.UploadJson(new
         {
             Foo = 5,
             Bar = true
@@ -137,7 +137,7 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
 
         // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBytes(BinaryData.FromString(message)));
         cm.Storage.WhenBlobUploaded((StorageFile file) =>
         {
             var content = file.Download();

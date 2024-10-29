@@ -20,14 +20,22 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// <summary>
     /// Name of the Data Transfer Job.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Data Transfer Create Job Properties.
     /// </summary>
-    public BicepValue<DataTransferJobProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<DataTransferJobProperties> _properties;
+    public DataTransferJobProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private DataTransferJobProperties? _properties;
 
     /// <summary>
     /// Destination DataStore details             Please note
@@ -43,50 +51,74 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
-    public BicepValue<DataTransferDataSourceSink> Destination { get => _destination; }
-    private readonly BicepValue<DataTransferDataSourceSink> _destination;
+    public DataTransferDataSourceSink Destination 
+    {
+        get { Initialize(); return _destination!; }
+    }
+    private DataTransferDataSourceSink? _destination;
 
     /// <summary>
     /// Total Duration of Job.
     /// </summary>
-    public BicepValue<TimeSpan> Duration { get => _duration; }
-    private readonly BicepValue<TimeSpan> _duration;
+    public BicepValue<TimeSpan> Duration 
+    {
+        get { Initialize(); return _duration!; }
+    }
+    private BicepValue<TimeSpan>? _duration;
 
     /// <summary>
     /// Error response for Faulted job.
     /// </summary>
-    public BicepValue<ErrorResponse> Error { get => _error; }
-    private readonly BicepValue<ErrorResponse> _error;
+    public ErrorResponse Error 
+    {
+        get { Initialize(); return _error!; }
+    }
+    private ErrorResponse? _error;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Job Name.
     /// </summary>
-    public BicepValue<string> JobName { get => _jobName; }
-    private readonly BicepValue<string> _jobName;
+    public BicepValue<string> JobName 
+    {
+        get { Initialize(); return _jobName!; }
+    }
+    private BicepValue<string>? _jobName;
 
     /// <summary>
     /// Last Updated Time (ISO-8601 format).
     /// </summary>
-    public BicepValue<DateTimeOffset> LastUpdatedUtcOn { get => _lastUpdatedUtcOn; }
-    private readonly BicepValue<DateTimeOffset> _lastUpdatedUtcOn;
+    public BicepValue<DateTimeOffset> LastUpdatedUtcOn 
+    {
+        get { Initialize(); return _lastUpdatedUtcOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastUpdatedUtcOn;
 
     /// <summary>
     /// Mode of job execution.
     /// </summary>
-    public BicepValue<DataTransferJobMode> Mode { get => _mode; }
-    private readonly BicepValue<DataTransferJobMode> _mode;
+    public BicepValue<DataTransferJobMode> Mode 
+    {
+        get { Initialize(); return _mode!; }
+    }
+    private BicepValue<DataTransferJobMode>? _mode;
 
     /// <summary>
     /// Processed Count.
     /// </summary>
-    public BicepValue<long> ProcessedCount { get => _processedCount; }
-    private readonly BicepValue<long> _processedCount;
+    public BicepValue<long> ProcessedCount 
+    {
+        get { Initialize(); return _processedCount!; }
+    }
+    private BicepValue<long>? _processedCount;
 
     /// <summary>
     /// Source DataStore details             Please note
@@ -102,38 +134,57 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
-    public BicepValue<DataTransferDataSourceSink> Source { get => _source; }
-    private readonly BicepValue<DataTransferDataSourceSink> _source;
+    public DataTransferDataSourceSink Source 
+    {
+        get { Initialize(); return _source!; }
+    }
+    private DataTransferDataSourceSink? _source;
 
     /// <summary>
     /// Job Status.
     /// </summary>
-    public BicepValue<string> Status { get => _status; }
-    private readonly BicepValue<string> _status;
+    public BicepValue<string> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<string>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Total Count.
     /// </summary>
-    public BicepValue<long> TotalCount { get => _totalCount; }
-    private readonly BicepValue<long> _totalCount;
+    public BicepValue<long> TotalCount 
+    {
+        get { Initialize(); return _totalCount!; }
+    }
+    private BicepValue<long>? _totalCount;
 
     /// <summary>
     /// Worker count.
     /// </summary>
-    public BicepValue<int> WorkerCount { get => _workerCount; }
-    private readonly BicepValue<int> _workerCount;
+    public BicepValue<int> WorkerCount 
+    {
+        get { Initialize(); return _workerCount!; }
+    }
+    private BicepValue<int>? _workerCount;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new DataTransferJobGetResult.
@@ -148,22 +199,29 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     public DataTransferJobGetResult(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _properties = BicepValue<DataTransferJobProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
-        _destination = BicepValue<DataTransferDataSourceSink>.DefineProperty(this, "Destination", ["properties", "destination"], isOutput: true);
-        _duration = BicepValue<TimeSpan>.DefineProperty(this, "Duration", ["properties", "duration"], isOutput: true);
-        _error = BicepValue<ErrorResponse>.DefineProperty(this, "Error", ["properties", "error"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _jobName = BicepValue<string>.DefineProperty(this, "JobName", ["properties", "jobName"], isOutput: true);
-        _lastUpdatedUtcOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastUpdatedUtcOn", ["properties", "lastUpdatedUtcTime"], isOutput: true);
-        _mode = BicepValue<DataTransferJobMode>.DefineProperty(this, "Mode", ["properties", "mode"], isOutput: true);
-        _processedCount = BicepValue<long>.DefineProperty(this, "ProcessedCount", ["properties", "processedCount"], isOutput: true);
-        _source = BicepValue<DataTransferDataSourceSink>.DefineProperty(this, "Source", ["properties", "source"], isOutput: true);
-        _status = BicepValue<string>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _totalCount = BicepValue<long>.DefineProperty(this, "TotalCount", ["properties", "totalCount"], isOutput: true);
-        _workerCount = BicepValue<int>.DefineProperty(this, "WorkerCount", ["properties", "workerCount"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of DataTransferJobGetResult.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _properties = DefineModelProperty<DataTransferJobProperties>("Properties", ["properties"], isRequired: true);
+        _destination = DefineModelProperty<DataTransferDataSourceSink>("Destination", ["properties", "destination"], isOutput: true);
+        _duration = DefineProperty<TimeSpan>("Duration", ["properties", "duration"], isOutput: true);
+        _error = DefineModelProperty<ErrorResponse>("Error", ["properties", "error"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _jobName = DefineProperty<string>("JobName", ["properties", "jobName"], isOutput: true);
+        _lastUpdatedUtcOn = DefineProperty<DateTimeOffset>("LastUpdatedUtcOn", ["properties", "lastUpdatedUtcTime"], isOutput: true);
+        _mode = DefineProperty<DataTransferJobMode>("Mode", ["properties", "mode"], isOutput: true);
+        _processedCount = DefineProperty<long>("ProcessedCount", ["properties", "processedCount"], isOutput: true);
+        _source = DefineModelProperty<DataTransferDataSourceSink>("Source", ["properties", "source"], isOutput: true);
+        _status = DefineProperty<string>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _totalCount = DefineProperty<long>("TotalCount", ["properties", "totalCount"], isOutput: true);
+        _workerCount = DefineProperty<int>("WorkerCount", ["properties", "workerCount"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Storage --prerelease
+dotnet add package Azure.Provisioning.Storage
 ```
 
 ### Prerequisites

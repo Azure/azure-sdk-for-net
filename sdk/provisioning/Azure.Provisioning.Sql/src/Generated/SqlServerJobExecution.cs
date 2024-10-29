@@ -20,104 +20,156 @@ public partial class SqlServerJobExecution : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The time that the job execution was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreateOn { get => _createOn; }
-    private readonly BicepValue<DateTimeOffset> _createOn;
+    public BicepValue<DateTimeOffset> CreateOn 
+    {
+        get { Initialize(); return _createOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createOn;
 
     /// <summary>
     /// Number of times the job execution has been attempted.
     /// </summary>
-    public BicepValue<int> CurrentAttempts { get => _currentAttempts; }
-    private readonly BicepValue<int> _currentAttempts;
+    public BicepValue<int> CurrentAttempts 
+    {
+        get { Initialize(); return _currentAttempts!; }
+    }
+    private BicepValue<int>? _currentAttempts;
 
     /// <summary>
     /// Start time of the current attempt.
     /// </summary>
-    public BicepValue<DateTimeOffset> CurrentAttemptStartOn { get => _currentAttemptStartOn; }
-    private readonly BicepValue<DateTimeOffset> _currentAttemptStartOn;
+    public BicepValue<DateTimeOffset> CurrentAttemptStartOn 
+    {
+        get { Initialize(); return _currentAttemptStartOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _currentAttemptStartOn;
 
     /// <summary>
     /// The time that the job execution completed.
     /// </summary>
-    public BicepValue<DateTimeOffset> EndOn { get => _endOn; }
-    private readonly BicepValue<DateTimeOffset> _endOn;
+    public BicepValue<DateTimeOffset> EndOn 
+    {
+        get { Initialize(); return _endOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _endOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The unique identifier of the job execution.
     /// </summary>
-    public BicepValue<Guid> JobExecutionId { get => _jobExecutionId; }
-    private readonly BicepValue<Guid> _jobExecutionId;
+    public BicepValue<Guid> JobExecutionId 
+    {
+        get { Initialize(); return _jobExecutionId!; }
+    }
+    private BicepValue<Guid>? _jobExecutionId;
 
     /// <summary>
     /// The job version number.
     /// </summary>
-    public BicepValue<int> JobVersion { get => _jobVersion; }
-    private readonly BicepValue<int> _jobVersion;
+    public BicepValue<int> JobVersion 
+    {
+        get { Initialize(); return _jobVersion!; }
+    }
+    private BicepValue<int>? _jobVersion;
 
     /// <summary>
     /// The last status or error message.
     /// </summary>
-    public BicepValue<string> LastMessage { get => _lastMessage; }
-    private readonly BicepValue<string> _lastMessage;
+    public BicepValue<string> LastMessage 
+    {
+        get { Initialize(); return _lastMessage!; }
+    }
+    private BicepValue<string>? _lastMessage;
 
     /// <summary>
     /// The detailed state of the job execution.
     /// </summary>
-    public BicepValue<JobExecutionLifecycle> Lifecycle { get => _lifecycle; }
-    private readonly BicepValue<JobExecutionLifecycle> _lifecycle;
+    public BicepValue<JobExecutionLifecycle> Lifecycle 
+    {
+        get { Initialize(); return _lifecycle!; }
+    }
+    private BicepValue<JobExecutionLifecycle>? _lifecycle;
 
     /// <summary>
     /// The ARM provisioning state of the job execution.
     /// </summary>
-    public BicepValue<JobExecutionProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<JobExecutionProvisioningState> _provisioningState;
+    public BicepValue<JobExecutionProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<JobExecutionProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The time that the job execution started.
     /// </summary>
-    public BicepValue<DateTimeOffset> StartOn { get => _startOn; }
-    private readonly BicepValue<DateTimeOffset> _startOn;
+    public BicepValue<DateTimeOffset> StartOn 
+    {
+        get { Initialize(); return _startOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
     /// The job step id.
     /// </summary>
-    public BicepValue<int> StepId { get => _stepId; }
-    private readonly BicepValue<int> _stepId;
+    public BicepValue<int> StepId 
+    {
+        get { Initialize(); return _stepId!; }
+    }
+    private BicepValue<int>? _stepId;
 
     /// <summary>
     /// The job step name.
     /// </summary>
-    public BicepValue<string> StepName { get => _stepName; }
-    private readonly BicepValue<string> _stepName;
+    public BicepValue<string> StepName 
+    {
+        get { Initialize(); return _stepName!; }
+    }
+    private BicepValue<string>? _stepName;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The target that this execution is executed on.
     /// </summary>
-    public BicepValue<JobExecutionTarget> Target { get => _target; }
-    private readonly BicepValue<JobExecutionTarget> _target;
+    public JobExecutionTarget Target 
+    {
+        get { Initialize(); return _target!; }
+    }
+    private JobExecutionTarget? _target;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServerJob.
     /// </summary>
-    public SqlServerJob? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServerJob> _parent;
+    public SqlServerJob? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServerJob>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerJobExecution.
@@ -132,23 +184,30 @@ public partial class SqlServerJobExecution : ProvisionableResource
     public SqlServerJobExecution(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/executions", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _createOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreateOn", ["properties", "createTime"], isOutput: true);
-        _currentAttempts = BicepValue<int>.DefineProperty(this, "CurrentAttempts", ["properties", "currentAttempts"], isOutput: true);
-        _currentAttemptStartOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CurrentAttemptStartOn", ["properties", "currentAttemptStartTime"], isOutput: true);
-        _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "endTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _jobExecutionId = BicepValue<Guid>.DefineProperty(this, "JobExecutionId", ["properties", "jobExecutionId"], isOutput: true);
-        _jobVersion = BicepValue<int>.DefineProperty(this, "JobVersion", ["properties", "jobVersion"], isOutput: true);
-        _lastMessage = BicepValue<string>.DefineProperty(this, "LastMessage", ["properties", "lastMessage"], isOutput: true);
-        _lifecycle = BicepValue<JobExecutionLifecycle>.DefineProperty(this, "Lifecycle", ["properties", "lifecycle"], isOutput: true);
-        _provisioningState = BicepValue<JobExecutionProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["properties", "startTime"], isOutput: true);
-        _stepId = BicepValue<int>.DefineProperty(this, "StepId", ["properties", "stepId"], isOutput: true);
-        _stepName = BicepValue<string>.DefineProperty(this, "StepName", ["properties", "stepName"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _target = BicepValue<JobExecutionTarget>.DefineProperty(this, "Target", ["properties", "target"], isOutput: true);
-        _parent = ResourceReference<SqlServerJob>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerJobExecution.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _createOn = DefineProperty<DateTimeOffset>("CreateOn", ["properties", "createTime"], isOutput: true);
+        _currentAttempts = DefineProperty<int>("CurrentAttempts", ["properties", "currentAttempts"], isOutput: true);
+        _currentAttemptStartOn = DefineProperty<DateTimeOffset>("CurrentAttemptStartOn", ["properties", "currentAttemptStartTime"], isOutput: true);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["properties", "endTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _jobExecutionId = DefineProperty<Guid>("JobExecutionId", ["properties", "jobExecutionId"], isOutput: true);
+        _jobVersion = DefineProperty<int>("JobVersion", ["properties", "jobVersion"], isOutput: true);
+        _lastMessage = DefineProperty<string>("LastMessage", ["properties", "lastMessage"], isOutput: true);
+        _lifecycle = DefineProperty<JobExecutionLifecycle>("Lifecycle", ["properties", "lifecycle"], isOutput: true);
+        _provisioningState = DefineProperty<JobExecutionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "startTime"], isOutput: true);
+        _stepId = DefineProperty<int>("StepId", ["properties", "stepId"], isOutput: true);
+        _stepName = DefineProperty<string>("StepName", ["properties", "stepName"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _target = DefineModelProperty<JobExecutionTarget>("Target", ["properties", "target"], isOutput: true);
+        _parent = DefineResource<SqlServerJob>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own.
-    /// Serialized Name: ChownMode
-    /// </summary>
+    /// <summary> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </summary>
     public readonly partial struct NetAppChownMode : IEquatable<NetAppChownMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string RestrictedValue = "Restricted";
         private const string UnrestrictedValue = "Unrestricted";
 
-        /// <summary>
-        /// Restricted
-        /// Serialized Name: ChownMode.Restricted
-        /// </summary>
+        /// <summary> Restricted. </summary>
         public static NetAppChownMode Restricted { get; } = new NetAppChownMode(RestrictedValue);
-        /// <summary>
-        /// Unrestricted
-        /// Serialized Name: ChownMode.Unrestricted
-        /// </summary>
+        /// <summary> Unrestricted. </summary>
         public static NetAppChownMode Unrestricted { get; } = new NetAppChownMode(UnrestrictedValue);
         /// <summary> Determines if two <see cref="NetAppChownMode"/> values are the same. </summary>
         public static bool operator ==(NetAppChownMode left, NetAppChownMode right) => left.Equals(right);
