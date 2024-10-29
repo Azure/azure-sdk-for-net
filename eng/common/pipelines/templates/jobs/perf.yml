@@ -144,7 +144,7 @@ jobs:
         --iterations ${{ parameters.Iterations }}
         $(Profile)
         ${{ parameters.AdditionalArguments }}
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
     displayName: Run perf tests
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
