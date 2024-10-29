@@ -66,7 +66,7 @@ public readonly struct StorageServices
         return name;
     }
 
-    public string UploadBlob(Stream fileStream, string? name = default, bool overwrite = false)
+    public string UploadStream(Stream fileStream, string? name = default, bool overwrite = false)
     {
         bool doOverwrite = false;
         BlobContainerClient container = GetDefaultContainer();

@@ -57,11 +57,11 @@ namespace Azure.CloudMachine
         private readonly int _dummyPrimitive;
         public void DeleteBlob(string path) { }
         public System.BinaryData DownloadBlob(string path) { throw null; }
-        public string UploadBlob(System.IO.Stream fileStream, string? name = null, bool overwrite = false) { throw null; }
         public string UploadBytes(System.BinaryData bytes, string? name = null) { throw null; }
         public string UploadBytes(byte[] bytes, string? name = null) { throw null; }
         public string UploadBytes(System.ReadOnlyMemory<byte> bytes, string? name = null) { throw null; }
         public string UploadJson(object json, string? name = null, bool overwrite = false) { throw null; }
+        public string UploadStream(System.IO.Stream fileStream, string? name = null, bool overwrite = false) { throw null; }
         public void WhenBlobUploaded(System.Action<Azure.CloudMachine.StorageFile> function) { }
     }
 }
