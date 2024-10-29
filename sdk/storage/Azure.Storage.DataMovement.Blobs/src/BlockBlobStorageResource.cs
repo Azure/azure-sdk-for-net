@@ -34,26 +34,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the storage resource.
-        /// </summary>
         protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
-        /// <summary>
-        /// Store Max Initial Size that a Put Blob can get to.
-        /// </summary>
+        // TODO: Do we need this??
         internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
+
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
