@@ -17,39 +17,39 @@ namespace Azure.ResourceManager.Terraform.Models
     {
         /// <summary> Initializes a new instance of <see cref="Models.ExportQueryTerraform"/>. </summary>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        /// <param name="recursive"> Whether to recursively list child resources of the query result. </param>
+        /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
         /// <returns> A new <see cref="Models.ExportQueryTerraform"/> instance for mocking. </returns>
-        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string query = null, string namePattern = null, bool? recursive = null)
+        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, string query = null, string namePattern = null, bool? isRecursive = null)
         {
             return new ExportQueryTerraform(
-                Type.ExportQuery,
+                CommonExportType.ExportQuery,
                 targetProvider,
-                fullProperties,
-                maskSensitive,
+                isOutputFullPropertiesEnabled,
+                isMaskSensitiveEnabled,
                 serializedAdditionalRawData: null,
                 query,
                 namePattern,
-                recursive);
+                isRecursive);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportResourceGroupTerraform"/>. </summary>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroupTerraform"/> instance for mocking. </returns>
-        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? fullProperties = null, bool? maskSensitive = null, string resourceGroupName = null, string namePattern = null)
+        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, string resourceGroupName = null, string namePattern = null)
         {
             return new ExportResourceGroupTerraform(
-                Type.ExportResourceGroup,
+                CommonExportType.ExportResourceGroup,
                 targetProvider,
-                fullProperties,
-                maskSensitive,
+                isOutputFullPropertiesEnabled,
+                isMaskSensitiveEnabled,
                 serializedAdditionalRawData: null,
                 resourceGroupName,
                 namePattern);

@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("targetProvider"u8);
                 writer.WriteStringValue(TargetProvider.Value.ToString());
             }
-            if (Optional.IsDefined(FullProperties))
+            if (Optional.IsDefined(IsOutputFullPropertiesEnabled))
             {
                 writer.WritePropertyName("fullProperties"u8);
-                writer.WriteBooleanValue(FullProperties.Value);
+                writer.WriteBooleanValue(IsOutputFullPropertiesEnabled.Value);
             }
-            if (Optional.IsDefined(MaskSensitive))
+            if (Optional.IsDefined(IsMaskSensitiveEnabled))
             {
                 writer.WritePropertyName("maskSensitive"u8);
-                writer.WriteBooleanValue(MaskSensitive.Value);
+                writer.WriteBooleanValue(IsMaskSensitiveEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

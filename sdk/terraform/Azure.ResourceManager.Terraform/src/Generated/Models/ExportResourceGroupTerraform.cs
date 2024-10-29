@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Terraform.Models
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             ResourceGroupName = resourceGroupName;
-            Type = Type.ExportResourceGroup;
+            Type = CommonExportType.ExportResourceGroup;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportResourceGroupTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceGroupTerraform(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        internal ExportResourceGroupTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroupName, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, serializedAdditionalRawData)
         {
             ResourceGroupName = resourceGroupName;
             NamePattern = namePattern;

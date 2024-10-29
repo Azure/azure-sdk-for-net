@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("namePattern"u8);
                 writer.WriteStringValue(NamePattern);
             }
-            if (Optional.IsDefined(Recursive))
+            if (Optional.IsDefined(IsRecursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteBooleanValue(Recursive.Value);
+                writer.WriteBooleanValue(IsRecursive.Value);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Terraform.Models
             string query = default;
             string namePattern = default;
             bool? recursive = default;
-            Type type = default;
+            CommonExportType type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new Type(property.Value.GetString());
+                    type = new CommonExportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetProvider"u8))

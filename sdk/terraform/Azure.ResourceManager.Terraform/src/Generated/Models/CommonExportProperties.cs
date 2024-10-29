@@ -57,25 +57,25 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             TargetProvider = targetProvider;
-            FullProperties = fullProperties;
-            MaskSensitive = maskSensitive;
+            IsOutputFullPropertiesEnabled = isOutputFullPropertiesEnabled;
+            IsMaskSensitiveEnabled = isMaskSensitiveEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The parameter type. </summary>
-        internal Type Type { get; set; }
+        internal CommonExportType Type { get; set; }
         /// <summary> The target Azure Terraform Provider. </summary>
         public TargetTerraformProvider? TargetProvider { get; set; }
         /// <summary> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </summary>
-        public bool? FullProperties { get; set; }
+        public bool? IsOutputFullPropertiesEnabled { get; set; }
         /// <summary> Mask sensitive attributes in the Terraform configuration. </summary>
-        public bool? MaskSensitive { get; set; }
+        public bool? IsMaskSensitiveEnabled { get; set; }
     }
 }

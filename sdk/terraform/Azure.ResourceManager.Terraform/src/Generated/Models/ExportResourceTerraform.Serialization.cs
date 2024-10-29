@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Terraform.Models
             string resourceName = default;
             string resourceType = default;
             string namePattern = default;
-            Type type = default;
+            CommonExportType type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
             bool? maskSensitive = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new Type(property.Value.GetString());
+                    type = new CommonExportType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetProvider"u8))

@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.Terraform.Models
             Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
-            Type = Type.ExportQuery;
+            Type = CommonExportType.ExportQuery;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportQueryTerraform"/>. </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
-        /// <param name="fullProperties"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
-        /// <param name="maskSensitive"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
+        /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        /// <param name="recursive"> Whether to recursively list child resources of the query result. </param>
-        internal ExportQueryTerraform(Type type, TargetTerraformProvider? targetProvider, bool? fullProperties, bool? maskSensitive, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? recursive) : base(type, targetProvider, fullProperties, maskSensitive, serializedAdditionalRawData)
+        /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
+        internal ExportQueryTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? isRecursive) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, serializedAdditionalRawData)
         {
             Query = query;
             NamePattern = namePattern;
-            Recursive = recursive;
+            IsRecursive = isRecursive;
             Type = type;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> The name pattern of the Terraform resources. </summary>
         public string NamePattern { get; set; }
         /// <summary> Whether to recursively list child resources of the query result. </summary>
-        public bool? Recursive { get; set; }
+        public bool? IsRecursive { get; set; }
     }
 }
