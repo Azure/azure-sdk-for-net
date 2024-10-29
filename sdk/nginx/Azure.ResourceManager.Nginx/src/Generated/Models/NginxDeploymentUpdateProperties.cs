@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Update settings for NGINX App Protect (NAP). </summary>
         internal NginxDeploymentUpdatePropertiesNginxAppProtect NginxAppProtect { get; set; }
         /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
-        public ActivationState? WebApplicationFirewallActivationState
+        public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
         {
             get => NginxAppProtect is null ? default : NginxAppProtect.WebApplicationFirewallActivationState;
             set
