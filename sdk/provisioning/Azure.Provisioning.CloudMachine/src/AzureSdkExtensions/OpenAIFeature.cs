@@ -31,7 +31,7 @@ public class OpenAIFeature : CloudMachineFeature
     {
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
-            Name = $"{cloudMachine.Id}/{cloudMachine.Id}",
+            Name = cloudMachine.Id,
             Kind = "OpenAI",
             Sku = new CognitiveServicesSku { Name = "S0" },
             Properties = new CognitiveServicesAccountProperties()
@@ -69,7 +69,7 @@ public class OpenAIFeature : CloudMachineFeature
             CognitiveServicesAccountDeployment embeddings = new("openai_deployment", "2023-05-01")
             {
                 Parent = cognitiveServices,
-                Name = $"{cloudMachine.Id}/{cloudMachine.Id}-embedding",
+                Name = $"{cloudMachine.Id}-embedding",
                 Properties = new CognitiveServicesAccountDeploymentProperties()
                 {
                     Model = new CognitiveServicesAccountDeploymentModel()
