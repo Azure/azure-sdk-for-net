@@ -19,13 +19,21 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         void IJsonModel<SimSwapRetrievalContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SimSwapRetrievalContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SimSwapRetrievalContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
@@ -48,7 +56,6 @@ namespace Azure.Communication.ProgrammableConnectivity
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SimSwapRetrievalContent IJsonModel<SimSwapRetrievalContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
