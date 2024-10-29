@@ -21,9 +21,6 @@ namespace Azure.Generator.Providers
 
         public override CSharpType HttpMessageType => typeof(HttpMessage);
 
-        public override MethodBodyStatement Apply(ValueExpression options)
-            => MethodBodyStatement.Empty;
-
         public override ValueExpression BufferResponse()
             => Original.Property(nameof(HttpMessage.BufferResponse));
 
@@ -41,7 +38,10 @@ namespace Azure.Generator.Providers
 
         public override HttpMessageApi ToExpression() => this;
 
-        public override MethodBodyStatement Assign(StatusCodeClassifierApi statusCodeClassifier)
+        public override MethodBodyStatement ApplyResponseClassifier(StatusCodeClassifierApi statusCodeClassifier)
+            => MethodBodyStatement.Empty;
+
+        public override MethodBodyStatement ApplyRequestOptions(HttpRequestOptionsApi options)
             => MethodBodyStatement.Empty;
     }
 }

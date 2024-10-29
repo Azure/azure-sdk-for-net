@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.Generator.CSharp.Statements;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
@@ -40,10 +40,10 @@ namespace Azure.Generator.Providers.Abstraction
 
         public override ClientPipelineApi ToExpression() => this;
 
-        public override InvokeMethodExpression Send(HttpMessageApi message, HttpRequestOptionsApi options)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, options.Property(nameof(RequestContext.CancellationToken))]);
+        public override MethodBodyStatement Send(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.Send), [message, options.Property(nameof(RequestContext.CancellationToken))]).Terminate();
 
-        public override InvokeMethodExpression SendAsync(HttpMessageApi message, HttpRequestOptionsApi options)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, options.Property(nameof(RequestContext.CancellationToken))], true);
+        public override MethodBodyStatement SendAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, options.Property(nameof(RequestContext.CancellationToken))], true).Terminate();
     }
 }

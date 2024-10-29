@@ -31,7 +31,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/hello", false);
@@ -50,7 +50,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/againHi/", false);
@@ -67,7 +67,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/noContentType/", false);
@@ -84,7 +84,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/demoHi", false);
@@ -97,7 +97,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/literal", false);
@@ -112,7 +112,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/helloLiteral/", false);
@@ -128,7 +128,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top/", false);
@@ -142,7 +142,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/top2", false);
@@ -155,7 +155,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("PATCH");
+            request.Method = RequestMethod.Patch;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/patch", false);
@@ -170,7 +170,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/anonymousBody", false);
@@ -185,7 +185,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/friendlyName", false);
@@ -200,7 +200,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
@@ -213,7 +213,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projectedName", false);
@@ -228,7 +228,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/returnsAnonymousModel", false);
@@ -241,7 +241,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/unknown-value", false);
@@ -254,7 +254,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("POST");
+            request.Method = RequestMethod.Post;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/internalProtocol", false);
@@ -269,7 +269,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("GET");
+            request.Method = RequestMethod.Get;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/stillConvenient", false);
@@ -281,7 +281,7 @@ namespace BasicTypeSpec
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier2xxAnd4xx);
             Request request = message.Request;
-            request.Method = RequestMethod.Parse("HEAD");
+            request.Method = RequestMethod.Head;
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/headAsBoolean/", false);
