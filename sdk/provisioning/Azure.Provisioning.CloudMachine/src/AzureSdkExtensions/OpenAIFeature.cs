@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.Linq;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using Azure.Provisioning.Authorization;
@@ -111,6 +112,19 @@ public static class AzureOpenAIExtensions
         });
 
         return embeddingsClient;
+    }
+
+    public static EmbeddingKnowledgebase CreateEmbeddingKnowledgebase(this ClientWorkspace workspace)
+    {
+        EmbeddingClient embeddingsClient = workspace.GetOpenAIEmbeddingsClient();
+        return new EmbeddingKnowledgebase(embeddingsClient);
+    }
+
+    public static OpenAIConversation CreateOpenAIConversation(this ClientWorkspace workspace)
+    {
+        ChatClient chatClient = workspace.GetOpenAIChatClient();
+        EmbeddingKnowledgebase knowledgebase = workspace.CreateEmbeddingKnowledgebase();
+        return new OpenAIConversation(chatClient, [], knowledgebase);
     }
 
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)

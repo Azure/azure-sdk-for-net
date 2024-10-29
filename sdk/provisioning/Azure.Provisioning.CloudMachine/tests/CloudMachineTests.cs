@@ -31,6 +31,8 @@ public class CloudMachineTests
         CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
         var embeddings = cm.GetOpenAIEmbeddingsClient();
+        var kb = cm.CreateEmbeddingKnowledgebase();
+        var conversation = cm.CreateOpenAIConversation();
     }
 
     [Ignore("no recordings yet")]

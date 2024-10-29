@@ -157,6 +157,7 @@
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
