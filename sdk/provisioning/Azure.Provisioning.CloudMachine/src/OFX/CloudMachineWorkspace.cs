@@ -32,7 +32,7 @@ public class CloudMachineWorkspace : ClientWorkspace
         string? cmid;
         if (configuration == default)
         {
-            cmid = Azd.ReadOrCreateCmid();
+            cmid = AzdHelpers.ReadOrCreateCmid();
         }
         else
         {

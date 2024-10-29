@@ -22,75 +22,118 @@ public partial class ContainerAppConnectedEnvironment : ProvisionableResource
     /// <summary>
     /// Name of the connectedEnvironment.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Custom domain configuration for the environment.
     /// </summary>
-    public BicepValue<ContainerAppCustomDomainConfiguration> CustomDomainConfiguration { get => _customDomainConfiguration; set => _customDomainConfiguration.Assign(value); }
-    private readonly BicepValue<ContainerAppCustomDomainConfiguration> _customDomainConfiguration;
+    public ContainerAppCustomDomainConfiguration CustomDomainConfiguration 
+    {
+        get { Initialize(); return _customDomainConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _customDomainConfiguration, value); }
+    }
+    private ContainerAppCustomDomainConfiguration? _customDomainConfiguration;
 
     /// <summary>
     /// Application Insights connection string used by Dapr to export Service
     /// to Service communication telemetry.
     /// </summary>
-    public BicepValue<string> DaprAIConnectionString { get => _daprAIConnectionString; set => _daprAIConnectionString.Assign(value); }
-    private readonly BicepValue<string> _daprAIConnectionString;
+    public BicepValue<string> DaprAIConnectionString 
+    {
+        get { Initialize(); return _daprAIConnectionString!; }
+        set { Initialize(); _daprAIConnectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _daprAIConnectionString;
 
     /// <summary>
     /// The complex type of the extended location.
     /// </summary>
-    public BicepValue<ContainerAppExtendedLocation> ExtendedLocation { get => _extendedLocation; set => _extendedLocation.Assign(value); }
-    private readonly BicepValue<ContainerAppExtendedLocation> _extendedLocation;
+    public ContainerAppExtendedLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ContainerAppExtendedLocation? _extendedLocation;
 
     /// <summary>
     /// Static IP of the connectedEnvironment.
     /// </summary>
-    public BicepValue<IPAddress> StaticIP { get => _staticIP; set => _staticIP.Assign(value); }
-    private readonly BicepValue<IPAddress> _staticIP;
+    public BicepValue<IPAddress> StaticIP 
+    {
+        get { Initialize(); return _staticIP!; }
+        set { Initialize(); _staticIP!.Assign(value); }
+    }
+    private BicepValue<IPAddress>? _staticIP;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Default Domain Name for the cluster.
     /// </summary>
-    public BicepValue<string> DefaultDomain { get => _defaultDomain; }
-    private readonly BicepValue<string> _defaultDomain;
+    public BicepValue<string> DefaultDomain 
+    {
+        get { Initialize(); return _defaultDomain!; }
+    }
+    private BicepValue<string>? _defaultDomain;
 
     /// <summary>
     /// Any errors that occurred during deployment or deployment validation.
     /// </summary>
-    public BicepValue<string> DeploymentErrors { get => _deploymentErrors; }
-    private readonly BicepValue<string> _deploymentErrors;
+    public BicepValue<string> DeploymentErrors 
+    {
+        get { Initialize(); return _deploymentErrors!; }
+    }
+    private BicepValue<string>? _deploymentErrors;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the Kubernetes Environment.
     /// </summary>
-    public BicepValue<ContainerAppConnectedEnvironmentProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerAppConnectedEnvironmentProvisioningState> _provisioningState;
+    public BicepValue<ContainerAppConnectedEnvironmentProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerAppConnectedEnvironmentProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ContainerAppConnectedEnvironment.
@@ -105,18 +148,26 @@ public partial class ContainerAppConnectedEnvironment : ProvisionableResource
     public ContainerAppConnectedEnvironment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.App/connectedEnvironments", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _customDomainConfiguration = BicepValue<ContainerAppCustomDomainConfiguration>.DefineProperty(this, "CustomDomainConfiguration", ["properties", "customDomainConfiguration"]);
-        _daprAIConnectionString = BicepValue<string>.DefineProperty(this, "DaprAIConnectionString", ["properties", "daprAIConnectionString"]);
-        _extendedLocation = BicepValue<ContainerAppExtendedLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _staticIP = BicepValue<IPAddress>.DefineProperty(this, "StaticIP", ["properties", "staticIp"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _defaultDomain = BicepValue<string>.DefineProperty(this, "DefaultDomain", ["properties", "defaultDomain"], isOutput: true);
-        _deploymentErrors = BicepValue<string>.DefineProperty(this, "DeploymentErrors", ["properties", "deploymentErrors"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerAppConnectedEnvironmentProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerAppConnectedEnvironment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _customDomainConfiguration = DefineModelProperty<ContainerAppCustomDomainConfiguration>("CustomDomainConfiguration", ["properties", "customDomainConfiguration"]);
+        _daprAIConnectionString = DefineProperty<string>("DaprAIConnectionString", ["properties", "daprAIConnectionString"]);
+        _extendedLocation = DefineModelProperty<ContainerAppExtendedLocation>("ExtendedLocation", ["extendedLocation"]);
+        _staticIP = DefineProperty<IPAddress>("StaticIP", ["properties", "staticIp"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _defaultDomain = DefineProperty<string>("DefaultDomain", ["properties", "defaultDomain"], isOutput: true);
+        _deploymentErrors = DefineProperty<string>("DeploymentErrors", ["properties", "deploymentErrors"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerAppConnectedEnvironmentProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

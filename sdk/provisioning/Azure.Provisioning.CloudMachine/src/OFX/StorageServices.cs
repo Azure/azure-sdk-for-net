@@ -42,7 +42,7 @@ public readonly struct StorageServices
         return container;
     }
 
-    public string UploadBlob(object json, string? name = default)
+    public string UploadJson(object json, string? name = default)
     {
         BlobContainerClient container = GetDefaultContainer();
 
@@ -53,6 +53,17 @@ public readonly struct StorageServices
 
         return name;
     }
+    public string UploadBytes(BinaryData bytes, string? name = default)
+    {
+        BlobContainerClient container = GetDefaultContainer();
+        if (name == default) name = $"b{Guid.NewGuid()}";
+        container.UploadBlob(name, bytes);
+        return name;
+    }
+    public string UploadBytes(byte[] bytes, string? name = default)
+        => UploadBytes(BinaryData.FromBytes(bytes), name);
+    public string UploadBytes(ReadOnlyMemory<byte> bytes, string? name = default)
+        => UploadBytes(BinaryData.FromBytes(bytes), name);
 
     public BinaryData DownloadBlob(string path)
     {

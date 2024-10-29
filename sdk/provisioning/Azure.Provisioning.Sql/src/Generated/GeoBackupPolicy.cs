@@ -20,51 +20,77 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The state of the geo backup policy.
     /// </summary>
-    public BicepValue<GeoBackupPolicyState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<GeoBackupPolicyState> _state;
+    public BicepValue<GeoBackupPolicyState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<GeoBackupPolicyState>? _state;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Kind of geo backup policy.  This is metadata used for the Azure portal
     /// experience.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Backup policy location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The storage type of the geo backup policy.
     /// </summary>
-    public BicepValue<string> StorageType { get => _storageType; }
-    private readonly BicepValue<string> _storageType;
+    public BicepValue<string> StorageType 
+    {
+        get { Initialize(); return _storageType!; }
+    }
+    private BicepValue<string>? _storageType;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new GeoBackupPolicy.
@@ -79,14 +105,21 @@ public partial class GeoBackupPolicy : ProvisionableResource
     public GeoBackupPolicy(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _state = BicepValue<GeoBackupPolicyState>.DefineProperty(this, "State", ["properties", "state"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _storageType = BicepValue<string>.DefineProperty(this, "StorageType", ["properties", "storageType"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of GeoBackupPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _state = DefineProperty<GeoBackupPolicyState>("State", ["properties", "state"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _storageType = DefineProperty<string>("StorageType", ["properties", "storageType"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

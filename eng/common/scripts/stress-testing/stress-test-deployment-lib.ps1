@@ -103,7 +103,7 @@ function DeployStressTests(
     [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][switch]$RetryFailedTests,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
-    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixSelection,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,

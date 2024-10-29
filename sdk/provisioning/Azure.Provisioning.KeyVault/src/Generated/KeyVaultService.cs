@@ -26,38 +26,60 @@ public partial class KeyVaultService : ProvisionableResource
     /// <summary>
     /// Name of the vault.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The supported Azure location where the key vault should be created.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Properties of the vault.
     /// </summary>
-    public BicepValue<KeyVaultProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<KeyVaultProperties> _properties;
+    public KeyVaultProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private KeyVaultProperties? _properties;
 
     /// <summary>
     /// The tags that will be assigned to the key vault.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new KeyVaultService.
@@ -72,12 +94,19 @@ public partial class KeyVaultService : ProvisionableResource
     public KeyVaultService(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _properties = BicepValue<KeyVaultProperties>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of KeyVaultService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _properties = DefineModelProperty<KeyVaultProperties>("Properties", ["properties"], isRequired: true);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
