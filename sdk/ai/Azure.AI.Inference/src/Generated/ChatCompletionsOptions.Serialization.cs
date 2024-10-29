@@ -31,7 +31,7 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ChatRequestMessage>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FrequencyPenalty))
