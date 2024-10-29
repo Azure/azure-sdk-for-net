@@ -138,8 +138,20 @@ namespace Azure.Provisioning.CloudMachine.OpenAI
 {
     public static partial class AzureOpenAIExtensions
     {
+        public static Azure.Provisioning.CloudMachine.OpenAI.EmbeddingKnowledgebase CreateEmbeddingKnowledgebase(this Azure.Core.ClientWorkspace workspace) { throw null; }
+        public static Azure.Provisioning.CloudMachine.OpenAI.OpenAIConversation CreateOpenAIConversation(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static OpenAI.Chat.ChatClient GetOpenAIChatClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
+    }
+    public partial class EmbeddingKnowledgebase
+    {
+        internal EmbeddingKnowledgebase() { }
+        public void Add(string fact) { }
+    }
+    public partial class OpenAIConversation
+    {
+        internal OpenAIConversation() { }
+        public string Say(string message) { throw null; }
     }
     public partial class OpenAIFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
     {
