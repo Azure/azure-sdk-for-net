@@ -16,37 +16,56 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBService.
 /// </summary>
-public partial class CosmosDBService : Resource
+public partial class CosmosDBService : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB service name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Instance count for the service.
     /// </summary>
-    public BicepValue<int> InstanceCount { get => _instanceCount; set => _instanceCount.Assign(value); }
-    private readonly BicepValue<int> _instanceCount;
+    public BicepValue<int> InstanceCount 
+    {
+        get { Initialize(); return _instanceCount!; }
+        set { Initialize(); _instanceCount!.Assign(value); }
+    }
+    private BicepValue<int>? _instanceCount;
 
     /// <summary>
     /// Instance type for the service.
     /// </summary>
-    public BicepValue<CosmosDBServiceSize> InstanceSize { get => _instanceSize; set => _instanceSize.Assign(value); }
-    private readonly BicepValue<CosmosDBServiceSize> _instanceSize;
+    public BicepValue<CosmosDBServiceSize> InstanceSize 
+    {
+        get { Initialize(); return _instanceSize!; }
+        set { Initialize(); _instanceSize!.Assign(value); }
+    }
+    private BicepValue<CosmosDBServiceSize>? _instanceSize;
 
     /// <summary>
     /// ServiceType for the service.
     /// </summary>
-    public BicepValue<CosmosDBServiceType> ServiceType { get => _serviceType; set => _serviceType.Assign(value); }
-    private readonly BicepValue<CosmosDBServiceType> _serviceType;
+    public BicepValue<CosmosDBServiceType> ServiceType 
+    {
+        get { Initialize(); return _serviceType!; }
+        set { Initialize(); _serviceType!.Assign(value); }
+    }
+    private BicepValue<CosmosDBServiceType>? _serviceType;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Services response resource.             Please note
@@ -61,42 +80,59 @@ public partial class CosmosDBService : Resource
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.SqlDedicatedGatewayServiceProperties.
     /// </summary>
-    public BicepValue<CosmosDBServiceProperties> Properties { get => _properties; }
-    private readonly BicepValue<CosmosDBServiceProperties> _properties;
+    public CosmosDBServiceProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+    }
+    private CosmosDBServiceProperties? _properties;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new CosmosDBService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBService resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
-    public CosmosDBService(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
+    public CosmosDBService(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/services", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _instanceCount = BicepValue<int>.DefineProperty(this, "InstanceCount", ["properties", "instanceCount"]);
-        _instanceSize = BicepValue<CosmosDBServiceSize>.DefineProperty(this, "InstanceSize", ["properties", "instanceSize"]);
-        _serviceType = BicepValue<CosmosDBServiceType>.DefineProperty(this, "ServiceType", ["properties", "serviceType"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _properties = BicepValue<CosmosDBServiceProperties>.DefineProperty(this, "Properties", ["properties"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CosmosDBService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _instanceCount = DefineProperty<int>("InstanceCount", ["properties", "instanceCount"]);
+        _instanceSize = DefineProperty<CosmosDBServiceSize>("InstanceSize", ["properties", "instanceSize"]);
+        _serviceType = DefineProperty<CosmosDBServiceType>("ServiceType", ["properties", "serviceType"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _properties = DefineModelProperty<CosmosDBServiceProperties>("Properties", ["properties"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -104,11 +140,6 @@ public partial class CosmosDBService : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -238,7 +269,7 @@ public partial class CosmosDBService : Resource
     /// <summary>
     /// Creates a reference to an existing CosmosDBService.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CosmosDBService resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -246,6 +277,6 @@ public partial class CosmosDBService : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBService.</param>
     /// <returns>The existing CosmosDBService resource.</returns>
-    public static CosmosDBService FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

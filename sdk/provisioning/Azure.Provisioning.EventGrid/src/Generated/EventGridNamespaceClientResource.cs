@@ -16,13 +16,17 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespaceClientResource.
 /// </summary>
-public partial class EventGridNamespaceClientResource : Resource
+public partial class EventGridNamespaceClientResource : ProvisionableResource
 {
     /// <summary>
     /// The client name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Attributes for the client. Supported values are int, bool, string,
@@ -44,81 +48,122 @@ public partial class EventGridNamespaceClientResource : Resource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepDictionary<BinaryData> Attributes { get => _attributes; set => _attributes.Assign(value); }
-    private readonly BicepDictionary<BinaryData> _attributes;
+    public BicepDictionary<BinaryData> Attributes 
+    {
+        get { Initialize(); return _attributes!; }
+        set { Initialize(); _attributes!.Assign(value); }
+    }
+    private BicepDictionary<BinaryData>? _attributes;
 
     /// <summary>
     /// The name presented by the client for authentication. The default value
     /// is the name of the resource.
     /// </summary>
-    public BicepValue<string> AuthenticationName { get => _authenticationName; set => _authenticationName.Assign(value); }
-    private readonly BicepValue<string> _authenticationName;
+    public BicepValue<string> AuthenticationName 
+    {
+        get { Initialize(); return _authenticationName!; }
+        set { Initialize(); _authenticationName!.Assign(value); }
+    }
+    private BicepValue<string>? _authenticationName;
 
     /// <summary>
     /// The client certificate authentication information.
     /// </summary>
-    public BicepValue<ClientCertificateAuthentication> ClientCertificateAuthentication { get => _clientCertificateAuthentication; set => _clientCertificateAuthentication.Assign(value); }
-    private readonly BicepValue<ClientCertificateAuthentication> _clientCertificateAuthentication;
+    public ClientCertificateAuthentication ClientCertificateAuthentication 
+    {
+        get { Initialize(); return _clientCertificateAuthentication!; }
+        set { Initialize(); AssignOrReplace(ref _clientCertificateAuthentication, value); }
+    }
+    private ClientCertificateAuthentication? _clientCertificateAuthentication;
 
     /// <summary>
     /// Description for the Client resource.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Indicates if the client is enabled or not. Default value is Enabled.
     /// </summary>
-    public BicepValue<EventGridNamespaceClientState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<EventGridNamespaceClientState> _state;
+    public BicepValue<EventGridNamespaceClientState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<EventGridNamespaceClientState>? _state;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the Client resource.
     /// </summary>
-    public BicepValue<EventGridNamespaceClientProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<EventGridNamespaceClientProvisioningState> _provisioningState;
+    public BicepValue<EventGridNamespaceClientProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<EventGridNamespaceClientProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventGridNamespaceClientResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespaceClientResource
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
-    public EventGridNamespaceClientResource(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/namespaces/clients", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespaceClientResource(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clients", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _attributes = BicepDictionary<BinaryData>.DefineProperty(this, "Attributes", ["properties", "attributes"]);
-        _authenticationName = BicepValue<string>.DefineProperty(this, "AuthenticationName", ["properties", "authenticationName"]);
-        _clientCertificateAuthentication = BicepValue<ClientCertificateAuthentication>.DefineProperty(this, "ClientCertificateAuthentication", ["properties", "clientCertificateAuthentication"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _state = BicepValue<EventGridNamespaceClientState>.DefineProperty(this, "State", ["properties", "state"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<EventGridNamespaceClientProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// EventGridNamespaceClientResource.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _attributes = DefineDictionaryProperty<BinaryData>("Attributes", ["properties", "attributes"]);
+        _authenticationName = DefineProperty<string>("AuthenticationName", ["properties", "authenticationName"]);
+        _clientCertificateAuthentication = DefineModelProperty<ClientCertificateAuthentication>("ClientCertificateAuthentication", ["properties", "clientCertificateAuthentication"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _state = DefineProperty<EventGridNamespaceClientState>("State", ["properties", "state"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<EventGridNamespaceClientProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -126,16 +171,11 @@ public partial class EventGridNamespaceClientResource : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientResource.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespaceClientResource
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -143,6 +183,6 @@ public partial class EventGridNamespaceClientResource : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientResource.</param>
     /// <returns>The existing EventGridNamespaceClientResource resource.</returns>
-    public static EventGridNamespaceClientResource FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespaceClientResource FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

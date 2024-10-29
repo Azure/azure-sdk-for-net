@@ -15,61 +15,90 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
 /// </summary>
-public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Resource
+public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : ProvisionableResource
 {
     /// <summary>
     /// Gets or sets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Guid of the objectId for the administrator.
     /// </summary>
-    public BicepValue<string> ObjectId { get => _objectId; }
-    private readonly BicepValue<string> _objectId;
+    public BicepValue<string> ObjectId 
+    {
+        get { Initialize(); return _objectId!; }
+    }
+    private BicepValue<string>? _objectId;
 
     /// <summary>
     /// Active Directory administrator principal name.
     /// </summary>
-    public BicepValue<string> PrincipalName { get => _principalName; set => _principalName.Assign(value); }
-    private readonly BicepValue<string> _principalName;
+    public BicepValue<string> PrincipalName 
+    {
+        get { Initialize(); return _principalName!; }
+        set { Initialize(); _principalName!.Assign(value); }
+    }
+    private BicepValue<string>? _principalName;
 
     /// <summary>
     /// The principal type used to represent the type of Active Directory
     /// Administrator.
     /// </summary>
-    public BicepValue<PostgreSqlFlexibleServerPrincipalType> PrincipalType { get => _principalType; set => _principalType.Assign(value); }
-    private readonly BicepValue<PostgreSqlFlexibleServerPrincipalType> _principalType;
+    public BicepValue<PostgreSqlFlexibleServerPrincipalType> PrincipalType 
+    {
+        get { Initialize(); return _principalType!; }
+        set { Initialize(); _principalType!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServerPrincipalType>? _principalType;
 
     /// <summary>
     /// The tenantId of the Active Directory administrator.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; set => _tenantId.Assign(value); }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+        set { Initialize(); _tenantId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlFlexibleServer.
     /// </summary>
-    public PostgreSqlFlexibleServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlFlexibleServer> _parent;
+    public PostgreSqlFlexibleServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlFlexibleServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
     /// can be used to refer to the resource in expressions, but is not the
@@ -77,17 +106,25 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
-    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/administrators", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _objectId = BicepValue<string>.DefineProperty(this, "ObjectId", ["properties", "objectId"], isOutput: true);
-        _principalName = BicepValue<string>.DefineProperty(this, "PrincipalName", ["properties", "principalName"]);
-        _principalType = BicepValue<PostgreSqlFlexibleServerPrincipalType>.DefineProperty(this, "PrincipalType", ["properties", "principalType"]);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["properties", "tenantId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _objectId = DefineProperty<string>("ObjectId", ["properties", "objectId"], isOutput: true);
+        _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"]);
+        _principalType = DefineProperty<PostgreSqlFlexibleServerPrincipalType>("PrincipalType", ["properties", "principalType"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -116,7 +153,7 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// Creates a reference to an existing
     /// PostgreSqlFlexibleServerActiveDirectoryAdministrator.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.  This
     /// can be used to refer to the resource in expressions, but is not the
@@ -125,6 +162,6 @@ public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Reso
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerActiveDirectoryAdministrator.</param>
     /// <returns>The existing PostgreSqlFlexibleServerActiveDirectoryAdministrator resource.</returns>
-    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

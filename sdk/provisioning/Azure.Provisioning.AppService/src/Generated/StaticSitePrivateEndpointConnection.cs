@@ -17,84 +17,124 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSitePrivateEndpointConnection.
 /// </summary>
-public partial class StaticSitePrivateEndpointConnection : Resource
+public partial class StaticSitePrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the private endpoint connection.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Private IPAddresses mapped to the remote private endpoint.
     /// </summary>
-    public BicepList<IPAddress> IPAddresses { get => _iPAddresses; set => _iPAddresses.Assign(value); }
-    private readonly BicepList<IPAddress> _iPAddresses;
+    public BicepList<IPAddress> IPAddresses 
+    {
+        get { Initialize(); return _iPAddresses!; }
+        set { Initialize(); _iPAddresses!.Assign(value); }
+    }
+    private BicepList<IPAddress>? _iPAddresses;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The state of a private link connection.
     /// </summary>
-    public BicepValue<PrivateLinkConnectionState> PrivateLinkServiceConnectionState { get => _privateLinkServiceConnectionState; set => _privateLinkServiceConnectionState.Assign(value); }
-    private readonly BicepValue<PrivateLinkConnectionState> _privateLinkServiceConnectionState;
+    public PrivateLinkConnectionState PrivateLinkServiceConnectionState 
+    {
+        get { Initialize(); return _privateLinkServiceConnectionState!; }
+        set { Initialize(); AssignOrReplace(ref _privateLinkServiceConnectionState, value); }
+    }
+    private PrivateLinkConnectionState? _privateLinkServiceConnectionState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// Gets the provisioning state.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSitePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// StaticSitePrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
     /// resource.  This value can contain letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSitePrivateEndpointConnection.</param>
-    public StaticSitePrivateEndpointConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion ?? "2024-04-01")
+    public StaticSitePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/privateEndpointConnections", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _iPAddresses = BicepList<IPAddress>.DefineProperty(this, "IPAddresses", ["properties", "ipAddresses"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _privateLinkServiceConnectionState = BicepValue<PrivateLinkConnectionState>.DefineProperty(this, "PrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StaticSitePrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _iPAddresses = DefineListProperty<IPAddress>("IPAddresses", ["properties", "ipAddresses"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _privateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>("PrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -176,7 +216,7 @@ public partial class StaticSitePrivateEndpointConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSitePrivateEndpointConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the
     /// StaticSitePrivateEndpointConnection resource.  This can be used to
     /// refer to the resource in expressions, but is not the Azure name of the
@@ -184,6 +224,6 @@ public partial class StaticSitePrivateEndpointConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSitePrivateEndpointConnection.</param>
     /// <returns>The existing StaticSitePrivateEndpointConnection resource.</returns>
-    public static StaticSitePrivateEndpointConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StaticSitePrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

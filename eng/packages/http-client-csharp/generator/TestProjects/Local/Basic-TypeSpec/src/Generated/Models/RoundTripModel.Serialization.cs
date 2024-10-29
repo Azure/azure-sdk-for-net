@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 using BasicTypeSpec;
 
 namespace BasicTypeSpec.Models
@@ -643,16 +644,18 @@ namespace BasicTypeSpec.Models
 
         string IPersistableModel<RoundTripModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(RoundTripModel roundTripModel)
+        /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RoundTripModel roundTripModel)
         {
-            return BinaryContent.Create(roundTripModel, ModelSerializationExtensions.WireOptions);
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
-        public static explicit operator RoundTripModel(ClientResult result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RoundTripModel"/> from. </param>
+        public static explicit operator RoundTripModel(Response result)
         {
-            using PipelineResponse response = result.GetRawResponse();
+            using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
             return DeserializeRoundTripModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }

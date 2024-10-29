@@ -15,98 +15,147 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotHybridConnection.
 /// </summary>
-public partial class WebSiteSlotHybridConnection : Resource
+public partial class WebSiteSlotHybridConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the hybrid connection configuration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the biztalk uri.
     /// </summary>
-    public BicepValue<Uri> BiztalkUri { get => _biztalkUri; set => _biztalkUri.Assign(value); }
-    private readonly BicepValue<Uri> _biztalkUri;
+    public BicepValue<Uri> BiztalkUri 
+    {
+        get { Initialize(); return _biztalkUri!; }
+        set { Initialize(); _biztalkUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _biztalkUri;
 
     /// <summary>
     /// Gets or sets the entity connection string.
     /// </summary>
-    public BicepValue<string> EntityConnectionString { get => _entityConnectionString; set => _entityConnectionString.Assign(value); }
-    private readonly BicepValue<string> _entityConnectionString;
+    public BicepValue<string> EntityConnectionString 
+    {
+        get { Initialize(); return _entityConnectionString!; }
+        set { Initialize(); _entityConnectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _entityConnectionString;
 
     /// <summary>
     /// Gets or sets the entity name.
     /// </summary>
-    public BicepValue<string> EntityName { get => _entityName; set => _entityName.Assign(value); }
-    private readonly BicepValue<string> _entityName;
+    public BicepValue<string> EntityName 
+    {
+        get { Initialize(); return _entityName!; }
+        set { Initialize(); _entityName!.Assign(value); }
+    }
+    private BicepValue<string>? _entityName;
 
     /// <summary>
     /// Gets or sets the hostname.
     /// </summary>
-    public BicepValue<string> Hostname { get => _hostname; set => _hostname.Assign(value); }
-    private readonly BicepValue<string> _hostname;
+    public BicepValue<string> Hostname 
+    {
+        get { Initialize(); return _hostname!; }
+        set { Initialize(); _hostname!.Assign(value); }
+    }
+    private BicepValue<string>? _hostname;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the port.
     /// </summary>
-    public BicepValue<int> Port { get => _port; set => _port.Assign(value); }
-    private readonly BicepValue<int> _port;
+    public BicepValue<int> Port 
+    {
+        get { Initialize(); return _port!; }
+        set { Initialize(); _port!.Assign(value); }
+    }
+    private BicepValue<int>? _port;
 
     /// <summary>
     /// Gets or sets the resource connection string.
     /// </summary>
-    public BicepValue<string> ResourceConnectionString { get => _resourceConnectionString; set => _resourceConnectionString.Assign(value); }
-    private readonly BicepValue<string> _resourceConnectionString;
+    public BicepValue<string> ResourceConnectionString 
+    {
+        get { Initialize(); return _resourceConnectionString!; }
+        set { Initialize(); _resourceConnectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _resourceConnectionString;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new WebSiteSlotHybridConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlotHybridConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
-    public WebSiteSlotHybridConnection(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotHybridConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/hybridconnection", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _biztalkUri = BicepValue<Uri>.DefineProperty(this, "BiztalkUri", ["properties", "biztalkUri"]);
-        _entityConnectionString = BicepValue<string>.DefineProperty(this, "EntityConnectionString", ["properties", "entityConnectionString"]);
-        _entityName = BicepValue<string>.DefineProperty(this, "EntityName", ["properties", "entityName"]);
-        _hostname = BicepValue<string>.DefineProperty(this, "Hostname", ["properties", "hostname"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _port = BicepValue<int>.DefineProperty(this, "Port", ["properties", "port"]);
-        _resourceConnectionString = BicepValue<string>.DefineProperty(this, "ResourceConnectionString", ["properties", "resourceConnectionString"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSiteSlotHybridConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _biztalkUri = DefineProperty<Uri>("BiztalkUri", ["properties", "biztalkUri"]);
+        _entityConnectionString = DefineProperty<string>("EntityConnectionString", ["properties", "entityConnectionString"]);
+        _entityName = DefineProperty<string>("EntityName", ["properties", "entityName"]);
+        _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _port = DefineProperty<int>("Port", ["properties", "port"]);
+        _resourceConnectionString = DefineProperty<string>("ResourceConnectionString", ["properties", "resourceConnectionString"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -273,7 +322,7 @@ public partial class WebSiteSlotHybridConnection : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotHybridConnection.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSlotHybridConnection
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -281,6 +330,6 @@ public partial class WebSiteSlotHybridConnection : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotHybridConnection.</param>
     /// <returns>The existing WebSiteSlotHybridConnection resource.</returns>
-    public static WebSiteSlotHybridConnection FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotHybridConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

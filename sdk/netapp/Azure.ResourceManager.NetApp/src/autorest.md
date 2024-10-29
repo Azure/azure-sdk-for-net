@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md
-tag: package-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/92e45eacb58f010293254e88a2bf1160c9a25478/specification/netapp/resource-manager/readme.md
+#tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -242,7 +242,12 @@ rename-mapping:
   Backup.properties.volumeResourceId: -|arm-id
   Backup.properties.backupPolicyResourceId: BackupPolicyArmResourceId
   KeyVaultProperties.keyVaultResourceId: keyVaultArmResourceId
-  
+  ClusterPeerCommandResponse: ClusterPeerCommandResult
+  SvmPeerCommandResponse: SvmPeerCommandResult
+  Volume.properties.snapshotId: -|string
+  VolumeRevert.snapshotId: -|string
+  Volume.properties.backupId: -|string
+  BackupsMigrationRequest.backupVaultId: -|string
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

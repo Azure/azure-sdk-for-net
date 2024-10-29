@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Threading;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CloudMachine.KeyVault;
 using Azure.Provisioning.CloudMachine.OpenAI;
@@ -20,10 +21,12 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Provisioning(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
             cm.AddFeature(new KeyVaultFeature());
             cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
-        })) return;
+        }))
+            return;
 
         CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
@@ -35,19 +38,29 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Storage(string[] args)
     {
+        ManualResetEventSlim eventSlim = new(false);
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-        })) return;
+        }))
+            return;
 
         CloudMachineClient cm = new();
 
-        var uploaded = cm.Storage.UploadBlob(new
+        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        {
+            var data = file.Download();
+            Console.WriteLine(data.ToString());
+            Assert.AreEqual("{\"Foo\":5,\"Bar\":true}", data.ToString());
+            eventSlim.Set();
+        });
+        var uploaded = cm.Storage.UploadJson(new
         {
             Foo = 5,
             Bar = true
         });
         BinaryData downloaded = cm.Storage.DownloadBlob(uploaded);
         Console.WriteLine(downloaded.ToString());
+        eventSlim.Wait();
     }
 
     [Ignore("no recordings yet")]
@@ -56,9 +69,11 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void OpenAI(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
             cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
-        })) return;
+        }))
+            return;
 
         CloudMachineWorkspace cm = new();
         ChatClient chat = cm.GetOpenAIChatClient();
@@ -77,9 +92,11 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void KeyVault(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) => {
+        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        {
             cm.AddFeature(new KeyVaultFeature());
-        })) return;
+        }))
+            return;
 
         CloudMachineWorkspace cm = new();
         SecretClient secrets = cm.GetKeyVaultSecretsClient();
@@ -92,10 +109,15 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Messaging(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args)) return;
+        if (CloudMachineInfrastructure.Configure(args))
+            return;
 
         CloudMachineClient cm = new();
-        cm.Messaging.WhenMessageReceived((string message) => Console.WriteLine(message));
+        cm.Messaging.WhenMessageReceived(message =>
+        {
+            Console.WriteLine(message);
+            Assert.True(message != null);
+        });
         cm.Messaging.SendMessage(new
         {
             Foo = 5,
@@ -109,14 +131,17 @@ public class CloudMachineTests
     [TestCase([new string[] { "" }])]
     public void Demo(string[] args)
     {
-        if (CloudMachineInfrastructure.Configure(args)) return;
+        if (CloudMachineInfrastructure.Configure(args))
+            return;
 
         CloudMachineClient cm = new();
 
         // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
-        cm.Storage.WhenBlobUploaded((string content) => {
-            ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content);
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBytes(BinaryData.FromString(message)));
+        cm.Storage.WhenBlobUploaded((StorageFile file) =>
+        {
+            var content = file.Download();
+            ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content.ToString());
             Console.WriteLine(completion.Content[0].Text);
         });
 

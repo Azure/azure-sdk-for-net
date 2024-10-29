@@ -16,32 +16,48 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryTaskRun.
 /// </summary>
-public partial class ContainerRegistryTaskRun : Resource
+public partial class ContainerRegistryTaskRun : ProvisionableResource
 {
     /// <summary>
     /// The name of the task run.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// How the run should be forced to rerun even if the run request
     /// configuration has not changed.
     /// </summary>
-    public BicepValue<string> ForceUpdateTag { get => _forceUpdateTag; set => _forceUpdateTag.Assign(value); }
-    private readonly BicepValue<string> _forceUpdateTag;
+    public BicepValue<string> ForceUpdateTag 
+    {
+        get { Initialize(); return _forceUpdateTag!; }
+        set { Initialize(); _forceUpdateTag!.Assign(value); }
+    }
+    private BicepValue<string>? _forceUpdateTag;
 
     /// <summary>
     /// Identity for the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The location of the resource.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The request (parameters) for the run             Please note
@@ -56,62 +72,89 @@ public partial class ContainerRegistryTaskRun : Resource
     /// and
     /// Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskRunContent.
     /// </summary>
-    public BicepValue<ContainerRegistryRunContent> RunRequest { get => _runRequest; set => _runRequest.Assign(value); }
-    private readonly BicepValue<ContainerRegistryRunContent> _runRequest;
+    public ContainerRegistryRunContent RunRequest 
+    {
+        get { Initialize(); return _runRequest!; }
+        set { Initialize(); AssignOrReplace(ref _runRequest, value); }
+    }
+    private ContainerRegistryRunContent? _runRequest;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of this task run.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The result of this task run.
     /// </summary>
-    public BicepValue<ContainerRegistryRunData> RunResult { get => _runResult; }
-    private readonly BicepValue<ContainerRegistryRunData> _runResult;
+    public ContainerRegistryRunData RunResult 
+    {
+        get { Initialize(); return _runResult!; }
+    }
+    private ContainerRegistryRunData? _runResult;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
-    public ContainerRegistryTaskRun(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2019-06-01-preview")
+    public ContainerRegistryTaskRun(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/taskRuns", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _forceUpdateTag = BicepValue<string>.DefineProperty(this, "ForceUpdateTag", ["properties", "forceUpdateTag"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"]);
-        _runRequest = BicepValue<ContainerRegistryRunContent>.DefineProperty(this, "RunRequest", ["properties", "runRequest"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _runResult = BicepValue<ContainerRegistryRunData>.DefineProperty(this, "RunResult", ["properties", "runResult"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryTaskRun.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _forceUpdateTag = DefineProperty<string>("ForceUpdateTag", ["properties", "forceUpdateTag"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _runRequest = DefineModelProperty<ContainerRegistryRunContent>("RunRequest", ["properties", "runRequest"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _runResult = DefineModelProperty<ContainerRegistryRunData>("RunResult", ["properties", "runResult"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -120,15 +163,40 @@ public partial class ContainerRegistryTaskRun : Resource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2019-06-01-preview.
+        /// 2023-07-01.
         /// </summary>
-        public static readonly string V2019_06_01_preview = "2019-06-01-preview";
+        public static readonly string V2023_07_01 = "2023-07-01";
+
+        /// <summary>
+        /// 2022-12-01.
+        /// </summary>
+        public static readonly string V2022_12_01 = "2022-12-01";
+
+        /// <summary>
+        /// 2021-09-01.
+        /// </summary>
+        public static readonly string V2021_09_01 = "2021-09-01";
+
+        /// <summary>
+        /// 2019-05-01.
+        /// </summary>
+        public static readonly string V2019_05_01 = "2019-05-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryTaskRun.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ContainerRegistryTaskRun resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -136,6 +204,6 @@ public partial class ContainerRegistryTaskRun : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryTaskRun.</param>
     /// <returns>The existing ContainerRegistryTaskRun resource.</returns>
-    public static ContainerRegistryTaskRun FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryTaskRun FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

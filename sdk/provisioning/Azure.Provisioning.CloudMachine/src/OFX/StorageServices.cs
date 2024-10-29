@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using Azure.Messaging.EventGrid;
+using Azure.Messaging.EventGrid.SystemEvents;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -26,31 +29,116 @@ public readonly struct StorageServices
         return container;
     }
 
-    public string UploadBlob(object json, string? name = default)
+    private BlobContainerClient GetContainer(string containerName)
+    {
+        string blobContainerClientId = typeof(BlobContainerClient).FullName;
+        CloudMachineClient cm = _cm;
+        BlobContainerClient container = cm.Subclients.Get(() =>
+        {
+            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), containerName);
+            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
+            return container;
+        });
+        return container;
+    }
+
+    public string UploadJson(object json, string? name = default)
     {
         BlobContainerClient container = GetDefaultContainer();
 
-        if (name == default) name = $"b{Guid.NewGuid()}";
+        if (name == default)
+            name = $"b{Guid.NewGuid()}";
 
         container.UploadBlob(name, BinaryData.FromObjectAsJson(json));
 
         return name;
     }
-
-    public BinaryData DownloadBlob(string name)
+    public string UploadBytes(BinaryData bytes, string? name = default)
     {
         BlobContainerClient container = GetDefaultContainer();
-        BlobClient blob = container.GetBlobClient(name);
+        if (name == default) name = $"b{Guid.NewGuid()}";
+        container.UploadBlob(name, bytes);
+        return name;
+    }
+    public string UploadBytes(byte[] bytes, string? name = default)
+        => UploadBytes(BinaryData.FromBytes(bytes), name);
+    public string UploadBytes(ReadOnlyMemory<byte> bytes, string? name = default)
+        => UploadBytes(BinaryData.FromBytes(bytes), name);
+
+    public BinaryData DownloadBlob(string path)
+    {
+        BlobClient blob = GetBlobClientFromPath(path, null);
         BlobDownloadResult result = blob.DownloadContent();
         return result.Content;
     }
 
-    public void WhenBlobUploaded(Action<string> function)
+    public void DeleteBlob(string path)
     {
-        throw new NotImplementedException();
+        BlobClient blob = GetBlobClientFromPath(path, null);
+        blob.DeleteIfExists();
     }
-    public void WhenBlobCreated(Func<string, Task> function)
+
+    private BlobClient GetBlobClientFromPath(string path, string? containerName)
     {
-        throw new NotImplementedException();
+        var _blobContainer = GetDefaultContainer();
+        var blobPath = ConvertPathToBlobPath(path, _blobContainer);
+        if (containerName is null)
+        {
+            return _blobContainer.GetBlobClient(blobPath);
+        }
+        else
+        {
+            var container = GetContainer(containerName);
+            container.CreateIfNotExists();
+            return container.GetBlobClient(blobPath);
+        }
+    }
+
+    private static string ConvertPathToBlobPath(string path, BlobContainerClient container)
+    {
+        if (Uri.TryCreate(path, UriKind.Absolute, out Uri blobUri))
+        {
+            if (blobUri.Host == container.Uri.Host)
+                return blobUri.AbsoluteUri.Substring(container.Uri.AbsoluteUri.Length);
+            if (!string.IsNullOrEmpty(blobUri.LocalPath))
+            {
+                return blobUri.LocalPath.Substring(Path.GetPathRoot(path).Length).Replace('\\', '/');
+            }
+        }
+        return path.Substring(Path.GetPathRoot(path).Length).Replace('\\', '/');
+    }
+
+    public void WhenBlobUploaded(Action<StorageFile> function)
+    {
+        var processor = _cm.Messaging.GetServiceBusProcessor();
+        var cm = _cm;
+
+        // TODO: How to unsubscribe?
+        processor.ProcessMessageAsync += async (args) =>
+        {
+            EventGridEvent e = EventGridEvent.Parse(args.Message.Body);
+            if (e.TryGetSystemEventData(out object systemEvent))
+            {
+                switch (systemEvent)
+                {
+                    case StorageBlobCreatedEventData bc:
+                        var blobUri = bc.Url;
+                        var requestId = bc.ClientRequestId;
+                        // _logger.Log.EventReceived(nameof(OnProcessMessage), $"StorageBlobCreatedEventData: blobUri='{blobUri}' requestId='{requestId}'");
+
+                        var eventArgs = new StorageFile(cm.Storage, blobUri, requestId, default);
+                        function(eventArgs);
+                        await args.CompleteMessageAsync(args.Message).ConfigureAwait(false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            await Task.CompletedTask.ConfigureAwait(false);
+        };
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+        processor.StartProcessingAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+
     }
 }

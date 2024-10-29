@@ -49,7 +49,7 @@ public class OpenAIFeature : CloudMachineFeature
                 Model = new CognitiveServicesAccountDeploymentModel() {
                     Name = this.Model,
                     Format = "OpenAI",
-                    Version = this.ModelVersion
+                    Version = this.ModelVersion,
                 }
             },
         };

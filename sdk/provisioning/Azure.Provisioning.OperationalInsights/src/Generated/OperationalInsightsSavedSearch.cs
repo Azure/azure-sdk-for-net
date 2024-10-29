@@ -17,45 +17,68 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsSavedSearch.
 /// </summary>
-public partial class OperationalInsightsSavedSearch : Resource
+public partial class OperationalInsightsSavedSearch : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The category of the saved search. This helps the user to find a saved
     /// search faster.
     /// </summary>
-    public BicepValue<string> Category { get => _category; set => _category.Assign(value); }
-    private readonly BicepValue<string> _category;
+    public BicepValue<string> Category 
+    {
+        get { Initialize(); return _category!; }
+        set { Initialize(); _category!.Assign(value); }
+    }
+    private BicepValue<string>? _category;
 
     /// <summary>
     /// Saved search display name.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// The query expression for the saved search.
     /// </summary>
-    public BicepValue<string> Query { get => _query; set => _query.Assign(value); }
-    private readonly BicepValue<string> _query;
+    public BicepValue<string> Query 
+    {
+        get { Initialize(); return _query!; }
+        set { Initialize(); _query!.Assign(value); }
+    }
+    private BicepValue<string>? _query;
 
     /// <summary>
     /// The ETag of the saved search. To override an existing saved search, use
     /// &quot;*&quot; or specify the current Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// The function alias if query serves as a function.
     /// </summary>
-    public BicepValue<string> FunctionAlias { get => _functionAlias; set => _functionAlias.Assign(value); }
-    private readonly BicepValue<string> _functionAlias;
+    public BicepValue<string> FunctionAlias 
+    {
+        get { Initialize(); return _functionAlias!; }
+        set { Initialize(); _functionAlias!.Assign(value); }
+    }
+    private BicepValue<string>? _functionAlias;
 
     /// <summary>
     /// The optional function parameters if query serves as a function. Value
@@ -64,65 +87,95 @@ public partial class OperationalInsightsSavedSearch : Resource
     /// examples and proper syntax please refer to
     /// https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions.
     /// </summary>
-    public BicepValue<string> FunctionParameters { get => _functionParameters; set => _functionParameters.Assign(value); }
-    private readonly BicepValue<string> _functionParameters;
+    public BicepValue<string> FunctionParameters 
+    {
+        get { Initialize(); return _functionParameters!; }
+        set { Initialize(); _functionParameters!.Assign(value); }
+    }
+    private BicepValue<string>? _functionParameters;
 
     /// <summary>
     /// The tags attached to the saved search.
     /// </summary>
-    public BicepList<OperationalInsightsTag> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepList<OperationalInsightsTag> _tags;
+    public BicepList<OperationalInsightsTag> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepList<OperationalInsightsTag>? _tags;
 
     /// <summary>
     /// The version number of the query language. The current version is 2 and
     /// is the default.
     /// </summary>
-    public BicepValue<long> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<long> _version;
+    public BicepValue<long> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<long>? _version;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsSavedSearch.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsSavedSearch
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsSavedSearch.</param>
-    public OperationalInsightsSavedSearch(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsSavedSearch(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/savedSearches", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _category = BicepValue<string>.DefineProperty(this, "Category", ["properties", "category"], isRequired: true);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"], isRequired: true);
-        _query = BicepValue<string>.DefineProperty(this, "Query", ["properties", "query"], isRequired: true);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _functionAlias = BicepValue<string>.DefineProperty(this, "FunctionAlias", ["properties", "functionAlias"]);
-        _functionParameters = BicepValue<string>.DefineProperty(this, "FunctionParameters", ["properties", "functionParameters"]);
-        _tags = BicepList<OperationalInsightsTag>.DefineProperty(this, "Tags", ["properties", "tags"]);
-        _version = BicepValue<long>.DefineProperty(this, "Version", ["properties", "version"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// OperationalInsightsSavedSearch.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _category = DefineProperty<string>("Category", ["properties", "category"], isRequired: true);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"], isRequired: true);
+        _query = DefineProperty<string>("Query", ["properties", "query"], isRequired: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _functionAlias = DefineProperty<string>("FunctionAlias", ["properties", "functionAlias"]);
+        _functionParameters = DefineProperty<string>("FunctionParameters", ["properties", "functionParameters"]);
+        _tags = DefineListProperty<OperationalInsightsTag>("Tags", ["properties", "tags"]);
+        _version = DefineProperty<long>("Version", ["properties", "version"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -164,7 +217,7 @@ public partial class OperationalInsightsSavedSearch : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsSavedSearch.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsSavedSearch
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -172,6 +225,6 @@ public partial class OperationalInsightsSavedSearch : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsSavedSearch.</param>
     /// <returns>The existing OperationalInsightsSavedSearch resource.</returns>
-    public static OperationalInsightsSavedSearch FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsSavedSearch FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

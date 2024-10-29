@@ -16,26 +16,37 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBRoleDefinition.
 /// </summary>
-public partial class MongoDBRoleDefinition : Resource
+public partial class MongoDBRoleDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The database name for which access is being granted for this Role
     /// Definition.
     /// </summary>
-    public BicepValue<string> DatabaseName { get => _databaseName; set => _databaseName.Assign(value); }
-    private readonly BicepValue<string> _databaseName;
+    public BicepValue<string> DatabaseName 
+    {
+        get { Initialize(); return _databaseName!; }
+        set { Initialize(); _databaseName!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseName;
 
     /// <summary>
     /// Indicates whether the Role Definition was built-in or user created.
     /// </summary>
-    public BicepValue<MongoDBRoleDefinitionType> DefinitionType { get => _definitionType; set => _definitionType.Assign(value); }
-    private readonly BicepValue<MongoDBRoleDefinitionType> _definitionType;
+    public BicepValue<MongoDBRoleDefinitionType> DefinitionType 
+    {
+        get { Initialize(); return _definitionType!; }
+        set { Initialize(); _definitionType!.Assign(value); }
+    }
+    private BicepValue<MongoDBRoleDefinitionType>? _definitionType;
 
     /// <summary>
     /// A set of privileges contained by the Role Definition. This will allow
@@ -43,62 +54,91 @@ public partial class MongoDBRoleDefinition : Resource
     /// any underlying Database / Collection. Scopes higher than Database are
     /// not enforceable as privilege.
     /// </summary>
-    public BicepList<MongoDBPrivilege> Privileges { get => _privileges; set => _privileges.Assign(value); }
-    private readonly BicepList<MongoDBPrivilege> _privileges;
+    public BicepList<MongoDBPrivilege> Privileges 
+    {
+        get { Initialize(); return _privileges!; }
+        set { Initialize(); _privileges!.Assign(value); }
+    }
+    private BicepList<MongoDBPrivilege>? _privileges;
 
     /// <summary>
     /// A user-friendly name for the Role Definition. Must be unique for the
     /// database account.
     /// </summary>
-    public BicepValue<string> RoleName { get => _roleName; set => _roleName.Assign(value); }
-    private readonly BicepValue<string> _roleName;
+    public BicepValue<string> RoleName 
+    {
+        get { Initialize(); return _roleName!; }
+        set { Initialize(); _roleName!.Assign(value); }
+    }
+    private BicepValue<string>? _roleName;
 
     /// <summary>
     /// The set of roles inherited by this Role Definition.
     /// </summary>
-    public BicepList<MongoDBRole> Roles { get => _roles; set => _roles.Assign(value); }
-    private readonly BicepList<MongoDBRole> _roles;
+    public BicepList<MongoDBRole> Roles 
+    {
+        get { Initialize(); return _roles!; }
+        set { Initialize(); _roles!.Assign(value); }
+    }
+    private BicepList<MongoDBRole>? _roles;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new MongoDBRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBRoleDefinition resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
-    public MongoDBRoleDefinition(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2024-08-15")
+    public MongoDBRoleDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);
-        _definitionType = BicepValue<MongoDBRoleDefinitionType>.DefineProperty(this, "DefinitionType", ["properties", "type"]);
-        _privileges = BicepList<MongoDBPrivilege>.DefineProperty(this, "Privileges", ["properties", "privileges"]);
-        _roleName = BicepValue<string>.DefineProperty(this, "RoleName", ["properties", "roleName"]);
-        _roles = BicepList<MongoDBRole>.DefineProperty(this, "Roles", ["properties", "roles"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of MongoDBRoleDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _databaseName = DefineProperty<string>("DatabaseName", ["properties", "databaseName"]);
+        _definitionType = DefineProperty<MongoDBRoleDefinitionType>("DefinitionType", ["properties", "type"]);
+        _privileges = DefineListProperty<MongoDBPrivilege>("Privileges", ["properties", "privileges"]);
+        _roleName = DefineProperty<string>("RoleName", ["properties", "roleName"]);
+        _roles = DefineListProperty<MongoDBRole>("Roles", ["properties", "roles"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -106,11 +146,6 @@ public partial class MongoDBRoleDefinition : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -240,7 +275,7 @@ public partial class MongoDBRoleDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the MongoDBRoleDefinition resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -248,6 +283,6 @@ public partial class MongoDBRoleDefinition : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
     /// <returns>The existing MongoDBRoleDefinition resource.</returns>
-    public static MongoDBRoleDefinition FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBRoleDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
