@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<PublicIpAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PublicIpAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicIpAddressConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IpAddressProvisioningType))
             {
                 writer.WritePropertyName("provision"u8);
@@ -56,7 +64,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PublicIpAddressConfiguration IJsonModel<PublicIpAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
