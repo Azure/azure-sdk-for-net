@@ -36,9 +36,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
-        // TODO: Do we need this??
-        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
-
         protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
 
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
@@ -157,7 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     DataMovementBlobsExtensions.GetBlobUploadOptions(
                         _options,
                         overwrite,
-                        _maxInitialSize,
+                        MaxSupportedSingleTransferSize,  // We don't want any internal partioning
                         options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
