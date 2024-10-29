@@ -16,89 +16,138 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// MongoDBUserDefinition.
 /// </summary>
-public partial class MongoDBUserDefinition : Resource
+public partial class MongoDBUserDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A custom definition for the USer Definition.
     /// </summary>
-    public BicepValue<string> CustomData { get => _customData; set => _customData.Assign(value); }
-    private readonly BicepValue<string> _customData;
+    public BicepValue<string> CustomData 
+    {
+        get { Initialize(); return _customData!; }
+        set { Initialize(); _customData!.Assign(value); }
+    }
+    private BicepValue<string>? _customData;
 
     /// <summary>
     /// The database name for which access is being granted for this User
     /// Definition.
     /// </summary>
-    public BicepValue<string> DatabaseName { get => _databaseName; set => _databaseName.Assign(value); }
-    private readonly BicepValue<string> _databaseName;
+    public BicepValue<string> DatabaseName 
+    {
+        get { Initialize(); return _databaseName!; }
+        set { Initialize(); _databaseName!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseName;
 
     /// <summary>
     /// The Mongo Auth mechanism. For now, we only support auth mechanism
     /// SCRAM-SHA-256.
     /// </summary>
-    public BicepValue<string> Mechanisms { get => _mechanisms; set => _mechanisms.Assign(value); }
-    private readonly BicepValue<string> _mechanisms;
+    public BicepValue<string> Mechanisms 
+    {
+        get { Initialize(); return _mechanisms!; }
+        set { Initialize(); _mechanisms!.Assign(value); }
+    }
+    private BicepValue<string>? _mechanisms;
 
     /// <summary>
     /// The password for User Definition. Response does not contain user
     /// password.
     /// </summary>
-    public BicepValue<string> Password { get => _password; set => _password.Assign(value); }
-    private readonly BicepValue<string> _password;
+    public BicepValue<string> Password 
+    {
+        get { Initialize(); return _password!; }
+        set { Initialize(); _password!.Assign(value); }
+    }
+    private BicepValue<string>? _password;
 
     /// <summary>
     /// The set of roles inherited by the User Definition.
     /// </summary>
-    public BicepList<MongoDBRole> Roles { get => _roles; set => _roles.Assign(value); }
-    private readonly BicepList<MongoDBRole> _roles;
+    public BicepList<MongoDBRole> Roles 
+    {
+        get { Initialize(); return _roles!; }
+        set { Initialize(); _roles!.Assign(value); }
+    }
+    private BicepList<MongoDBRole>? _roles;
 
     /// <summary>
     /// The user name for User Definition.
     /// </summary>
-    public BicepValue<string> UserName { get => _userName; set => _userName.Assign(value); }
-    private readonly BicepValue<string> _userName;
+    public BicepValue<string> UserName 
+    {
+        get { Initialize(); return _userName!; }
+        set { Initialize(); _userName!.Assign(value); }
+    }
+    private BicepValue<string>? _userName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new MongoDBUserDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBUserDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MongoDBUserDefinition resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBUserDefinition.</param>
-    public MongoDBUserDefinition(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion ?? "2024-08-15")
+    public MongoDBUserDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _customData = BicepValue<string>.DefineProperty(this, "CustomData", ["properties", "customData"]);
-        _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);
-        _mechanisms = BicepValue<string>.DefineProperty(this, "Mechanisms", ["properties", "mechanisms"]);
-        _password = BicepValue<string>.DefineProperty(this, "Password", ["properties", "password"]);
-        _roles = BicepList<MongoDBRole>.DefineProperty(this, "Roles", ["properties", "roles"]);
-        _userName = BicepValue<string>.DefineProperty(this, "UserName", ["properties", "userName"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of MongoDBUserDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _customData = DefineProperty<string>("CustomData", ["properties", "customData"]);
+        _databaseName = DefineProperty<string>("DatabaseName", ["properties", "databaseName"]);
+        _mechanisms = DefineProperty<string>("Mechanisms", ["properties", "mechanisms"]);
+        _password = DefineProperty<string>("Password", ["properties", "password"]);
+        _roles = DefineListProperty<MongoDBRole>("Roles", ["properties", "roles"]);
+        _userName = DefineProperty<string>("UserName", ["properties", "userName"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -106,11 +155,6 @@ public partial class MongoDBUserDefinition : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -240,9 +284,14 @@ public partial class MongoDBUserDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing MongoDBUserDefinition.
     /// </summary>
-    /// <param name="resourceName">Name of the MongoDBUserDefinition.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the MongoDBUserDefinition resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the MongoDBUserDefinition.</param>
     /// <returns>The existing MongoDBUserDefinition resource.</returns>
-    public static MongoDBUserDefinition FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static MongoDBUserDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

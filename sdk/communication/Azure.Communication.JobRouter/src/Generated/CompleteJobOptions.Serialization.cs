@@ -19,13 +19,21 @@ namespace Azure.Communication.JobRouter
 
         void IJsonModel<CompleteJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CompleteJobOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CompleteJobOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
@@ -46,7 +54,6 @@ namespace Azure.Communication.JobRouter
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CompleteJobOptions IJsonModel<CompleteJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -16,100 +16,160 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerAppManagedEnvironmentDaprComponent.
 /// </summary>
-public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
+public partial class ContainerAppManagedEnvironmentDaprComponent : ProvisionableResource
 {
     /// <summary>
     /// Name of the Dapr Component.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Component type.
     /// </summary>
-    public BicepValue<string> ComponentType { get => _componentType; set => _componentType.Assign(value); }
-    private readonly BicepValue<string> _componentType;
+    public BicepValue<string> ComponentType 
+    {
+        get { Initialize(); return _componentType!; }
+        set { Initialize(); _componentType!.Assign(value); }
+    }
+    private BicepValue<string>? _componentType;
 
     /// <summary>
     /// Boolean describing if the component errors are ignores.
     /// </summary>
-    public BicepValue<bool> IgnoreErrors { get => _ignoreErrors; set => _ignoreErrors.Assign(value); }
-    private readonly BicepValue<bool> _ignoreErrors;
+    public BicepValue<bool> IgnoreErrors 
+    {
+        get { Initialize(); return _ignoreErrors!; }
+        set { Initialize(); _ignoreErrors!.Assign(value); }
+    }
+    private BicepValue<bool>? _ignoreErrors;
 
     /// <summary>
     /// Initialization timeout.
     /// </summary>
-    public BicepValue<string> InitTimeout { get => _initTimeout; set => _initTimeout.Assign(value); }
-    private readonly BicepValue<string> _initTimeout;
+    public BicepValue<string> InitTimeout 
+    {
+        get { Initialize(); return _initTimeout!; }
+        set { Initialize(); _initTimeout!.Assign(value); }
+    }
+    private BicepValue<string>? _initTimeout;
 
     /// <summary>
     /// Component metadata.
     /// </summary>
-    public BicepList<ContainerAppDaprMetadata> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepList<ContainerAppDaprMetadata> _metadata;
+    public BicepList<ContainerAppDaprMetadata> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepList<ContainerAppDaprMetadata>? _metadata;
 
     /// <summary>
     /// Names of container apps that can use this Dapr component.
     /// </summary>
-    public BicepList<string> Scopes { get => _scopes; set => _scopes.Assign(value); }
-    private readonly BicepList<string> _scopes;
+    public BicepList<string> Scopes 
+    {
+        get { Initialize(); return _scopes!; }
+        set { Initialize(); _scopes!.Assign(value); }
+    }
+    private BicepList<string>? _scopes;
 
     /// <summary>
     /// Collection of secrets used by a Dapr component.
     /// </summary>
-    public BicepList<ContainerAppWritableSecret> Secrets { get => _secrets; set => _secrets.Assign(value); }
-    private readonly BicepList<ContainerAppWritableSecret> _secrets;
+    public BicepList<ContainerAppWritableSecret> Secrets 
+    {
+        get { Initialize(); return _secrets!; }
+        set { Initialize(); _secrets!.Assign(value); }
+    }
+    private BicepList<ContainerAppWritableSecret>? _secrets;
 
     /// <summary>
     /// Name of a Dapr component to retrieve component secrets from.
     /// </summary>
-    public BicepValue<string> SecretStoreComponent { get => _secretStoreComponent; set => _secretStoreComponent.Assign(value); }
-    private readonly BicepValue<string> _secretStoreComponent;
+    public BicepValue<string> SecretStoreComponent 
+    {
+        get { Initialize(); return _secretStoreComponent!; }
+        set { Initialize(); _secretStoreComponent!.Assign(value); }
+    }
+    private BicepValue<string>? _secretStoreComponent;
 
     /// <summary>
     /// Component version.
     /// </summary>
-    public BicepValue<string> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerAppManagedEnvironment.
     /// </summary>
-    public ContainerAppManagedEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerAppManagedEnvironment> _parent;
+    public ContainerAppManagedEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerAppManagedEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new ContainerAppManagedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentDaprComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppManagedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
-    public ContainerAppManagedEnvironmentDaprComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
+    public ContainerAppManagedEnvironmentDaprComponent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/daprComponents", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _componentType = BicepValue<string>.DefineProperty(this, "ComponentType", ["properties", "componentType"]);
-        _ignoreErrors = BicepValue<bool>.DefineProperty(this, "IgnoreErrors", ["properties", "ignoreErrors"]);
-        _initTimeout = BicepValue<string>.DefineProperty(this, "InitTimeout", ["properties", "initTimeout"]);
-        _metadata = BicepList<ContainerAppDaprMetadata>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _scopes = BicepList<string>.DefineProperty(this, "Scopes", ["properties", "scopes"]);
-        _secrets = BicepList<ContainerAppWritableSecret>.DefineProperty(this, "Secrets", ["properties", "secrets"]);
-        _secretStoreComponent = BicepValue<string>.DefineProperty(this, "SecretStoreComponent", ["properties", "secretStoreComponent"]);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerAppManagedEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ContainerAppManagedEnvironmentDaprComponent.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _componentType = DefineProperty<string>("ComponentType", ["properties", "componentType"]);
+        _ignoreErrors = DefineProperty<bool>("IgnoreErrors", ["properties", "ignoreErrors"]);
+        _initTimeout = DefineProperty<string>("InitTimeout", ["properties", "initTimeout"]);
+        _metadata = DefineListProperty<ContainerAppDaprMetadata>("Metadata", ["properties", "metadata"]);
+        _scopes = DefineListProperty<string>("Scopes", ["properties", "scopes"]);
+        _secrets = DefineListProperty<ContainerAppWritableSecret>("Secrets", ["properties", "secrets"]);
+        _secretStoreComponent = DefineProperty<string>("SecretStoreComponent", ["properties", "secretStoreComponent"]);
+        _version = DefineProperty<string>("Version", ["properties", "version"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -117,11 +177,6 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -147,9 +202,15 @@ public partial class ContainerAppManagedEnvironmentDaprComponent : Resource
     /// Creates a reference to an existing
     /// ContainerAppManagedEnvironmentDaprComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerAppManagedEnvironmentDaprComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ContainerAppManagedEnvironmentDaprComponent resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentDaprComponent.</param>
     /// <returns>The existing ContainerAppManagedEnvironmentDaprComponent resource.</returns>
-    public static ContainerAppManagedEnvironmentDaprComponent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerAppManagedEnvironmentDaprComponent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

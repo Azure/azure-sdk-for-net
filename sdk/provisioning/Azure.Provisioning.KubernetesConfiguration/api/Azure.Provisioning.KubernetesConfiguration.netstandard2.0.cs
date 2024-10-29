@@ -1,21 +1,23 @@
 namespace Azure.Provisioning.KubernetesConfiguration
 {
-    public partial class HelmOperatorProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class HelmOperatorProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public HelmOperatorProperties() { }
         public Azure.Provisioning.BicepValue<string> ChartValues { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ChartVersion { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class HelmReleaseProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class HelmReleaseProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public HelmReleaseProperties() { }
         public Azure.Provisioning.BicepValue<long> FailureCount { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesObjectReference> HelmChartRef { get { throw null; } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesObjectReference HelmChartRef { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> InstallFailureCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> LastRevisionApplied { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> UpgradeFailureCount { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesAzureBlob : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesAzureBlob : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesAzureBlob() { }
         public Azure.Provisioning.BicepValue<string> AccountKey { get { throw null; } set { } }
@@ -23,12 +25,13 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<string> LocalAuthRef { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> ManagedIdentityClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SasToken { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesServicePrincipal> ServicePrincipal { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesServicePrincipal ServicePrincipal { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> SyncIntervalInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TimeoutInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesBucket : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesBucket : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesBucket() { }
         public Azure.Provisioning.BicepValue<string> AccessKey { get { throw null; } set { } }
@@ -38,11 +41,12 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<long> TimeoutInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseInsecureCommunication { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesClusterExtension : Azure.Provisioning.Primitives.Resource
+    public partial class KubernetesClusterExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KubernetesClusterExtension(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> AksAssignedIdentity { get { throw null; } set { } }
+        public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity AksAssignedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AutoUpgradeMinorVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ConfigurationProtectedSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ConfigurationSettings { get { throw null; } set { } }
@@ -51,20 +55,21 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<Azure.ResponseError> ErrorInfo { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ExtensionType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSystemExtension { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> PackageUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ArmPlan> Plan { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ArmPlan Plan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReleaseTrain { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtensionScope> Scope { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtensionScope Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtensionStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtension FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtension FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
@@ -73,13 +78,14 @@ namespace Azure.Provisioning.KubernetesConfiguration
             public static readonly string V2023_05_01;
         }
     }
-    public partial class KubernetesClusterExtensionScope : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesClusterExtensionScope : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesClusterExtensionScope() { }
         public Azure.Provisioning.BicepValue<string> ClusterReleaseNamespace { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TargetNamespace { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesClusterExtensionStatus : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesClusterExtensionStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesClusterExtensionStatus() { }
         public Azure.Provisioning.BicepValue<string> Code { get { throw null; } set { } }
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesClusterExtensionStatusLevel> Level { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Time { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum KubernetesClusterExtensionStatusLevel
     {
@@ -124,13 +131,14 @@ namespace Azure.Provisioning.KubernetesConfiguration
         Installed = 3,
         Failed = 4,
     }
-    public partial class KubernetesConfigurationComplianceStatus : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesConfigurationComplianceStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesConfigurationComplianceStatus() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationComplianceStateType> ComplianceState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastConfigAppliedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationMesageLevel> MessageLevel { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum KubernetesConfigurationMesageLevel
     {
@@ -177,15 +185,15 @@ namespace Azure.Provisioning.KubernetesConfiguration
         Suspended = 3,
         Unknown = 4,
     }
-    public partial class KubernetesFluxConfiguration : Azure.Provisioning.Primitives.Resource
+    public partial class KubernetesFluxConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesAzureBlob> AzureBlob { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesBucket> Bucket { get { throw null; } set { } }
+        public KubernetesFluxConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesAzureBlob AzureBlob { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesBucket Bucket { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesFluxComplianceState> ComplianceState { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> ConfigurationProtectedSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ErrorMessage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesGitRepository> GitRepository { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesGitRepository GitRepository { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsReconciliationSuspended { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.KubernetesConfiguration.Kustomization> Kustomizations { get { throw null; } set { } }
@@ -199,57 +207,61 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> SourceUpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KubernetesConfiguration.KubernetesObjectStatus> Statuses { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StatusUpdatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.KubernetesConfiguration.KubernetesFluxConfiguration FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.KubernetesConfiguration.KubernetesFluxConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2022_03_01;
             public static readonly string V2022_07_01;
             public static readonly string V2022_11_01;
             public static readonly string V2023_05_01;
-            public static readonly string V2024_04_01_preview;
         }
     }
-    public partial class KubernetesGitRepository : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesGitRepository : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesGitRepository() { }
         public Azure.Provisioning.BicepValue<string> HttpsCACert { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> HttpsUser { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LocalAuthRef { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesGitRepositoryRef> RepositoryRef { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesGitRepositoryRef RepositoryRef { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SshKnownHosts { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> SyncIntervalInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TimeoutInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesGitRepositoryRef : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesGitRepositoryRef : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesGitRepositoryRef() { }
         public Azure.Provisioning.BicepValue<string> Branch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Commit { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Semver { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesObjectReference : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesObjectReference : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesObjectReference() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Namespace { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesObjectStatus : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesObjectStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesObjectStatus() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesObjectReference> AppliedBy { get { throw null; } }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesObjectReference AppliedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesFluxComplianceState> ComplianceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.HelmReleaseProperties> HelmReleaseProperties { get { throw null; } }
+        public Azure.Provisioning.KubernetesConfiguration.HelmReleaseProperties HelmReleaseProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Namespace { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KubernetesConfiguration.KubernetesObjectStatusCondition> StatusConditions { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesObjectStatusCondition : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesObjectStatusCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesObjectStatusCondition() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastTransitionOn { get { throw null; } }
@@ -257,6 +269,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<string> ObjectStatusConditionDefinitionType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Reason { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum KubernetesOperator
     {
@@ -269,7 +282,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
         [System.Runtime.Serialization.DataMemberAttribute(Name="namespace")]
         Namespace = 1,
     }
-    public partial class KubernetesServicePrincipal : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class KubernetesServicePrincipal : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KubernetesServicePrincipal() { }
         public Azure.Provisioning.BicepValue<string> ClientCertificate { get { throw null; } set { } }
@@ -278,13 +291,14 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class KubernetesSourceControlConfiguration : Azure.Provisioning.Primitives.Resource
+    public partial class KubernetesSourceControlConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KubernetesSourceControlConfiguration(string resourceName, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationComplianceStatus> ComplianceStatus { get { throw null; } }
+        public KubernetesSourceControlConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.KubernetesConfiguration.KubernetesConfigurationComplianceStatus ComplianceStatus { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> ConfigurationProtectedSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KubernetesConfiguration.HelmOperatorProperties> HelmOperatorProperties { get { throw null; } set { } }
+        public Azure.Provisioning.KubernetesConfiguration.HelmOperatorProperties HelmOperatorProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsHelmOperatorEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -297,8 +311,9 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<string> RepositoryPublicKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> RepositoryUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SshKnownHostsContents { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.KubernetesConfiguration.KubernetesSourceControlConfiguration FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.KubernetesConfiguration.KubernetesSourceControlConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_03_01;
@@ -308,7 +323,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
             public static readonly string V2023_05_01;
         }
     }
-    public partial class Kustomization : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class Kustomization : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public Kustomization() { }
         public Azure.Provisioning.BicepList<string> DependsOn { get { throw null; } set { } }
@@ -319,5 +334,6 @@ namespace Azure.Provisioning.KubernetesConfiguration
         public Azure.Provisioning.BicepValue<long> RetryIntervalInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> SyncIntervalInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TimeoutInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
 }

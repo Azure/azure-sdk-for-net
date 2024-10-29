@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement
     /// Creates a checkpointer which uses a locally stored file to obtain
     /// the information in order to resume transfers in the future.
     /// </summary>
-    internal class LocalTransferCheckpointer : TransferCheckpointer
+    internal class LocalTransferCheckpointer : SerializerTransferCheckpointer
     {
         internal string _pathToCheckpointer;
 

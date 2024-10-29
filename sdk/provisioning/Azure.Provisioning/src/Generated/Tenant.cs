@@ -16,88 +16,130 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// Tenant.
 /// </summary>
-public partial class Tenant : Resource
+public partial class Tenant : ProvisionableResource
 {
     /// <summary>
     /// Country/region name of the address for the tenant.
     /// </summary>
-    public BicepValue<string> Country { get => _country; }
-    private readonly BicepValue<string> _country;
+    public BicepValue<string> Country 
+    {
+        get { Initialize(); return _country!; }
+    }
+    private BicepValue<string>? _country;
 
     /// <summary>
     /// Country/region abbreviation for the tenant.
     /// </summary>
-    public BicepValue<string> CountryCode { get => _countryCode; }
-    private readonly BicepValue<string> _countryCode;
+    public BicepValue<string> CountryCode 
+    {
+        get { Initialize(); return _countryCode!; }
+    }
+    private BicepValue<string>? _countryCode;
 
     /// <summary>
     /// The default domain for the tenant.
     /// </summary>
-    public BicepValue<string> DefaultDomain { get => _defaultDomain; }
-    private readonly BicepValue<string> _defaultDomain;
+    public BicepValue<string> DefaultDomain 
+    {
+        get { Initialize(); return _defaultDomain!; }
+    }
+    private BicepValue<string>? _defaultDomain;
 
     /// <summary>
     /// The display name of the tenant.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// The list of domains for the tenant.
     /// </summary>
-    public BicepList<string> Domains { get => _domains; }
-    private readonly BicepList<string> _domains;
+    public BicepList<string> Domains 
+    {
+        get { Initialize(); return _domains!; }
+    }
+    private BicepList<string>? _domains;
 
     /// <summary>
     /// The fully qualified ID of the tenant. For example,
     /// /tenants/8d65815f-a5b6-402f-9298-045155da7d74.
     /// </summary>
-    public BicepValue<string> Id { get => _id; }
-    private readonly BicepValue<string> _id;
+    public BicepValue<string> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<string>? _id;
 
     /// <summary>
     /// The tenant&apos;s branding logo URL. Only available for
     /// &apos;Home&apos; tenant category.
     /// </summary>
-    public BicepValue<Uri> TenantBrandingLogoUri { get => _tenantBrandingLogoUri; }
-    private readonly BicepValue<Uri> _tenantBrandingLogoUri;
+    public BicepValue<Uri> TenantBrandingLogoUri 
+    {
+        get { Initialize(); return _tenantBrandingLogoUri!; }
+    }
+    private BicepValue<Uri>? _tenantBrandingLogoUri;
 
     /// <summary>
     /// Category of the tenant.
     /// </summary>
-    public BicepValue<TenantCategory> TenantCategory { get => _tenantCategory; }
-    private readonly BicepValue<TenantCategory> _tenantCategory;
+    public BicepValue<TenantCategory> TenantCategory 
+    {
+        get { Initialize(); return _tenantCategory!; }
+    }
+    private BicepValue<TenantCategory>? _tenantCategory;
 
     /// <summary>
     /// The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// The tenant type. Only available for &apos;Home&apos; tenant category.
     /// </summary>
-    public BicepValue<string> TenantType { get => _tenantType; }
-    private readonly BicepValue<string> _tenantType;
+    public BicepValue<string> TenantType 
+    {
+        get { Initialize(); return _tenantType!; }
+    }
+    private BicepValue<string>? _tenantType;
 
     /// <summary>
     /// Creates a new Tenant.
     /// </summary>
-    /// <param name="resourceName">Name of the Tenant.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the Tenant resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the Tenant.</param>
-    public Tenant(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
+    public Tenant(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/tenants", resourceVersion ?? "2020-01-01")
     {
-        _country = BicepValue<string>.DefineProperty(this, "Country", ["country"], isOutput: true);
-        _countryCode = BicepValue<string>.DefineProperty(this, "CountryCode", ["countryCode"], isOutput: true);
-        _defaultDomain = BicepValue<string>.DefineProperty(this, "DefaultDomain", ["defaultDomain"], isOutput: true);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["displayName"], isOutput: true);
-        _domains = BicepList<string>.DefineProperty(this, "Domains", ["domains"], isOutput: true);
-        _id = BicepValue<string>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _tenantBrandingLogoUri = BicepValue<Uri>.DefineProperty(this, "TenantBrandingLogoUri", ["tenantBrandingLogoUrl"], isOutput: true);
-        _tenantCategory = BicepValue<TenantCategory>.DefineProperty(this, "TenantCategory", ["tenantCategory"], isOutput: true);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["tenantId"], isOutput: true);
-        _tenantType = BicepValue<string>.DefineProperty(this, "TenantType", ["tenantType"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of Tenant.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _country = DefineProperty<string>("Country", ["country"], isOutput: true);
+        _countryCode = DefineProperty<string>("CountryCode", ["countryCode"], isOutput: true);
+        _defaultDomain = DefineProperty<string>("DefaultDomain", ["defaultDomain"], isOutput: true);
+        _displayName = DefineProperty<string>("DisplayName", ["displayName"], isOutput: true);
+        _domains = DefineListProperty<string>("Domains", ["domains"], isOutput: true);
+        _id = DefineProperty<string>("Id", ["id"], isOutput: true);
+        _tenantBrandingLogoUri = DefineProperty<Uri>("TenantBrandingLogoUri", ["tenantBrandingLogoUrl"], isOutput: true);
+        _tenantCategory = DefineProperty<TenantCategory>("TenantCategory", ["tenantCategory"], isOutput: true);
+        _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
+        _tenantType = DefineProperty<string>("TenantType", ["tenantType"], isOutput: true);
     }
 
     /// <summary>
@@ -219,21 +261,5 @@ public partial class Tenant : Resource
         /// 2015-01-01.
         /// </summary>
         public static readonly string V2015_01_01 = "2015-01-01";
-    }
-
-    /// <summary>
-    /// Creates a new Tenant resource from a Bicep expression that evaluates to
-    /// a Tenant.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a Tenant resource.
-    /// </param>
-    /// <returns>A Tenant resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static Tenant FromExpression(Expression expression)
-    {
-        Tenant resource = new(expression.ToString());
-        resource.OverrideWithExpression(expression);
-        return resource;
     }
 }

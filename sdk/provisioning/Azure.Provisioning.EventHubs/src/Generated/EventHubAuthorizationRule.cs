@@ -18,58 +18,91 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubAuthorizationRule.
 /// </summary>
-public partial class EventHubAuthorizationRule : Resource
+public partial class EventHubAuthorizationRule : ProvisionableResource
 {
     /// <summary>
     /// The authorization rule name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The rights associated with the rule.
     /// </summary>
-    public BicepList<EventHubsAccessRight> Rights { get => _rights; set => _rights.Assign(value); }
-    private readonly BicepList<EventHubsAccessRight> _rights;
+    public BicepList<EventHubsAccessRight> Rights 
+    {
+        get { Initialize(); return _rights!; }
+        set { Initialize(); _rights!.Assign(value); }
+    }
+    private BicepList<EventHubsAccessRight>? _rights;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventHub.
     /// </summary>
-    public EventHub? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventHub> _parent;
+    public EventHub? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventHub>? _parent;
 
     /// <summary>
     /// Creates a new EventHubAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubAuthorizationRule.</param>
-    public EventHubAuthorizationRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs/authorizationRules", resourceVersion ?? "2024-01-01")
+    public EventHubAuthorizationRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs/authorizationRules", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _rights = BicepList<EventHubsAccessRight>.DefineProperty(this, "Rights", ["properties", "rights"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventHub>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventHubAuthorizationRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _rights = DefineListProperty<EventHubsAccessRight>("Rights", ["properties", "rights"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventHub>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -77,11 +110,6 @@ public partial class EventHubAuthorizationRule : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -101,11 +129,16 @@ public partial class EventHubAuthorizationRule : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubAuthorizationRule.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubAuthorizationRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubAuthorizationRule
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubAuthorizationRule.</param>
     /// <returns>The existing EventHubAuthorizationRule resource.</returns>
-    public static EventHubAuthorizationRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubAuthorizationRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubAuthorizationRule resource.
@@ -119,7 +152,10 @@ public partial class EventHubAuthorizationRule : Resource
     /// Get access keys for this EventHubAuthorizationRule resource.
     /// </summary>
     /// <returns>The keys for this EventHubAuthorizationRule resource.</returns>
-    public EventHubsAccessKeys GetKeys() =>
-        EventHubsAccessKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(ResourceName), "listKeys")));
+    public EventHubsAccessKeys GetKeys()
+    {
+        EventHubsAccessKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

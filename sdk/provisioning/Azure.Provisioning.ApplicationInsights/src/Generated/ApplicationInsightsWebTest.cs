@@ -16,114 +16,181 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWebTest.
 /// </summary>
-public partial class ApplicationInsightsWebTest : Resource
+public partial class ApplicationInsightsWebTest : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights WebTest resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// User defined description for this WebTest.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Interval in seconds between test runs for this WebTest. Default value
     /// is 300.
     /// </summary>
-    public BicepValue<int> FrequencyInSeconds { get => _frequencyInSeconds; set => _frequencyInSeconds.Assign(value); }
-    private readonly BicepValue<int> _frequencyInSeconds;
+    public BicepValue<int> FrequencyInSeconds 
+    {
+        get { Initialize(); return _frequencyInSeconds!; }
+        set { Initialize(); _frequencyInSeconds!.Assign(value); }
+    }
+    private BicepValue<int>? _frequencyInSeconds;
 
     /// <summary>
     /// Is the test actively being monitored.
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// Allow for retries should this WebTest fail.
     /// </summary>
-    public BicepValue<bool> IsRetryEnabled { get => _isRetryEnabled; set => _isRetryEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isRetryEnabled;
+    public BicepValue<bool> IsRetryEnabled 
+    {
+        get { Initialize(); return _isRetryEnabled!; }
+        set { Initialize(); _isRetryEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isRetryEnabled;
 
     /// <summary>
     /// The kind of WebTest that this web test watches. Choices are ping,
     /// multistep and standard.
     /// </summary>
-    public BicepValue<WebTestKind> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<WebTestKind> _kind;
+    public BicepValue<WebTestKind> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<WebTestKind>? _kind;
 
     /// <summary>
     /// A list of where to physically run the tests from to give global
     /// coverage for accessibility of your application.
     /// </summary>
-    public BicepList<WebTestGeolocation> Locations { get => _locations; set => _locations.Assign(value); }
-    private readonly BicepList<WebTestGeolocation> _locations;
+    public BicepList<WebTestGeolocation> Locations 
+    {
+        get { Initialize(); return _locations!; }
+        set { Initialize(); _locations!.Assign(value); }
+    }
+    private BicepList<WebTestGeolocation>? _locations;
 
     /// <summary>
     /// The collection of request properties.
     /// </summary>
-    public BicepValue<WebTestRequest> Request { get => _request; set => _request.Assign(value); }
-    private readonly BicepValue<WebTestRequest> _request;
+    public WebTestRequest Request 
+    {
+        get { Initialize(); return _request!; }
+        set { Initialize(); AssignOrReplace(ref _request, value); }
+    }
+    private WebTestRequest? _request;
 
     /// <summary>
     /// Unique ID of this WebTest. This is typically the same value as the Name
     /// field.
     /// </summary>
-    public BicepValue<string> SyntheticMonitorId { get => _syntheticMonitorId; set => _syntheticMonitorId.Assign(value); }
-    private readonly BicepValue<string> _syntheticMonitorId;
+    public BicepValue<string> SyntheticMonitorId 
+    {
+        get { Initialize(); return _syntheticMonitorId!; }
+        set { Initialize(); _syntheticMonitorId!.Assign(value); }
+    }
+    private BicepValue<string>? _syntheticMonitorId;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Seconds until this WebTest will timeout and fail. Default value is 30.
     /// </summary>
-    public BicepValue<int> TimeoutInSeconds { get => _timeoutInSeconds; set => _timeoutInSeconds.Assign(value); }
-    private readonly BicepValue<int> _timeoutInSeconds;
+    public BicepValue<int> TimeoutInSeconds 
+    {
+        get { Initialize(); return _timeoutInSeconds!; }
+        set { Initialize(); _timeoutInSeconds!.Assign(value); }
+    }
+    private BicepValue<int>? _timeoutInSeconds;
 
     /// <summary>
     /// The collection of validation rule properties.
     /// </summary>
-    public BicepValue<WebTestValidationRules> ValidationRules { get => _validationRules; set => _validationRules.Assign(value); }
-    private readonly BicepValue<WebTestValidationRules> _validationRules;
+    public WebTestValidationRules ValidationRules 
+    {
+        get { Initialize(); return _validationRules!; }
+        set { Initialize(); AssignOrReplace(ref _validationRules, value); }
+    }
+    private WebTestValidationRules? _validationRules;
 
     /// <summary>
     /// The XML specification of a WebTest to run against an application.
     /// </summary>
-    public BicepValue<string> WebTest { get => _webTest; set => _webTest.Assign(value); }
-    private readonly BicepValue<string> _webTest;
+    public BicepValue<string> WebTest 
+    {
+        get { Initialize(); return _webTest!; }
+        set { Initialize(); _webTest!.Assign(value); }
+    }
+    private BicepValue<string>? _webTest;
 
     /// <summary>
     /// The kind of web test this is, valid choices are ping, multistep and
     /// standard.
     /// </summary>
-    public BicepValue<WebTestKind> WebTestKind { get => _webTestKind; set => _webTestKind.Assign(value); }
-    private readonly BicepValue<WebTestKind> _webTestKind;
+    public BicepValue<WebTestKind> WebTestKind 
+    {
+        get { Initialize(); return _webTestKind!; }
+        set { Initialize(); _webTestKind!.Assign(value); }
+    }
+    private BicepValue<WebTestKind>? _webTestKind;
 
     /// <summary>
     /// User defined name if this WebTest.
     /// </summary>
-    public BicepValue<string> WebTestName { get => _webTestName; set => _webTestName.Assign(value); }
-    private readonly BicepValue<string> _webTestName;
+    public BicepValue<string> WebTestName 
+    {
+        get { Initialize(); return _webTestName!; }
+        set { Initialize(); _webTestName!.Assign(value); }
+    }
+    private BicepValue<string>? _webTestName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Current state of this component, whether or not is has been provisioned
@@ -131,42 +198,60 @@ public partial class ApplicationInsightsWebTest : Resource
     /// value but are able to read from it. Values will include Succeeded,
     /// Deploying, Canceled, and Failed.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ApplicationInsightsWebTest.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsWebTest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ApplicationInsightsWebTest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWebTest.</param>
-    public ApplicationInsightsWebTest(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Insights/webtests", resourceVersion ?? "2022-06-15")
+    public ApplicationInsightsWebTest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/webtests", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "Description"]);
-        _frequencyInSeconds = BicepValue<int>.DefineProperty(this, "FrequencyInSeconds", ["properties", "Frequency"]);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "Enabled"]);
-        _isRetryEnabled = BicepValue<bool>.DefineProperty(this, "IsRetryEnabled", ["properties", "RetryEnabled"]);
-        _kind = BicepValue<WebTestKind>.DefineProperty(this, "Kind", ["kind"]);
-        _locations = BicepList<WebTestGeolocation>.DefineProperty(this, "Locations", ["properties", "Locations"]);
-        _request = BicepValue<WebTestRequest>.DefineProperty(this, "Request", ["properties", "Request"]);
-        _syntheticMonitorId = BicepValue<string>.DefineProperty(this, "SyntheticMonitorId", ["properties", "SyntheticMonitorId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _timeoutInSeconds = BicepValue<int>.DefineProperty(this, "TimeoutInSeconds", ["properties", "Timeout"]);
-        _validationRules = BicepValue<WebTestValidationRules>.DefineProperty(this, "ValidationRules", ["properties", "ValidationRules"]);
-        _webTest = BicepValue<string>.DefineProperty(this, "WebTest", ["properties", "Configuration", "WebTest"]);
-        _webTestKind = BicepValue<WebTestKind>.DefineProperty(this, "WebTestKind", ["properties", "Kind"]);
-        _webTestName = BicepValue<string>.DefineProperty(this, "WebTestName", ["properties", "Name"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ApplicationInsightsWebTest.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "Description"]);
+        _frequencyInSeconds = DefineProperty<int>("FrequencyInSeconds", ["properties", "Frequency"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "Enabled"]);
+        _isRetryEnabled = DefineProperty<bool>("IsRetryEnabled", ["properties", "RetryEnabled"]);
+        _kind = DefineProperty<WebTestKind>("Kind", ["kind"]);
+        _locations = DefineListProperty<WebTestGeolocation>("Locations", ["properties", "Locations"]);
+        _request = DefineModelProperty<WebTestRequest>("Request", ["properties", "Request"]);
+        _syntheticMonitorId = DefineProperty<string>("SyntheticMonitorId", ["properties", "SyntheticMonitorId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _timeoutInSeconds = DefineProperty<int>("TimeoutInSeconds", ["properties", "Timeout"]);
+        _validationRules = DefineModelProperty<WebTestValidationRules>("ValidationRules", ["properties", "ValidationRules"]);
+        _webTest = DefineProperty<string>("WebTest", ["properties", "Configuration", "WebTest"]);
+        _webTestKind = DefineProperty<WebTestKind>("WebTestKind", ["properties", "Kind"]);
+        _webTestName = DefineProperty<string>("WebTestName", ["properties", "Name"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -198,9 +283,14 @@ public partial class ApplicationInsightsWebTest : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsWebTest.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsWebTest.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ApplicationInsightsWebTest
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWebTest.</param>
     /// <returns>The existing ApplicationInsightsWebTest resource.</returns>
-    public static ApplicationInsightsWebTest FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsWebTest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

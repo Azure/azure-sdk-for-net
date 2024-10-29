@@ -17,44 +17,68 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlDatabase.
 /// </summary>
-public partial class SqlDatabase : Resource
+public partial class SqlDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Time in minutes after which database is automatically paused. A value
     /// of -1 means that automatic pause is disabled.
     /// </summary>
-    public BicepValue<int> AutoPauseDelay { get => _autoPauseDelay; set => _autoPauseDelay.Assign(value); }
-    private readonly BicepValue<int> _autoPauseDelay;
+    public BicepValue<int> AutoPauseDelay 
+    {
+        get { Initialize(); return _autoPauseDelay!; }
+        set { Initialize(); _autoPauseDelay!.Assign(value); }
+    }
+    private BicepValue<int>? _autoPauseDelay;
 
     /// <summary>
     /// Specifies the availability zone the database is pinned to.
     /// </summary>
-    public BicepValue<SqlAvailabilityZoneType> AvailabilityZone { get => _availabilityZone; set => _availabilityZone.Assign(value); }
-    private readonly BicepValue<SqlAvailabilityZoneType> _availabilityZone;
+    public BicepValue<SqlAvailabilityZoneType> AvailabilityZone 
+    {
+        get { Initialize(); return _availabilityZone!; }
+        set { Initialize(); _availabilityZone!.Assign(value); }
+    }
+    private BicepValue<SqlAvailabilityZoneType>? _availabilityZone;
 
     /// <summary>
     /// Collation of the metadata catalog.
     /// </summary>
-    public BicepValue<CatalogCollationType> CatalogCollation { get => _catalogCollation; set => _catalogCollation.Assign(value); }
-    private readonly BicepValue<CatalogCollationType> _catalogCollation;
+    public BicepValue<CatalogCollationType> CatalogCollation 
+    {
+        get { Initialize(); return _catalogCollation!; }
+        set { Initialize(); _catalogCollation!.Assign(value); }
+    }
+    private BicepValue<CatalogCollationType>? _catalogCollation;
 
     /// <summary>
     /// The collation of the database.
     /// </summary>
-    public BicepValue<string> Collation { get => _collation; set => _collation.Assign(value); }
-    private readonly BicepValue<string> _collation;
+    public BicepValue<string> Collation 
+    {
+        get { Initialize(); return _collation!; }
+        set { Initialize(); _collation!.Assign(value); }
+    }
+    private BicepValue<string>? _collation;
 
     /// <summary>
     /// Specifies the mode of database creation.
@@ -85,34 +109,54 @@ public partial class SqlDatabase : Resource
     /// and RestoreLongTermRetentionBackup are not supported for DataWarehouse
     /// edition.
     /// </summary>
-    public BicepValue<SqlDatabaseCreateMode> CreateMode { get => _createMode; set => _createMode.Assign(value); }
-    private readonly BicepValue<SqlDatabaseCreateMode> _createMode;
+    public BicepValue<SqlDatabaseCreateMode> CreateMode 
+    {
+        get { Initialize(); return _createMode!; }
+        set { Initialize(); _createMode!.Assign(value); }
+    }
+    private BicepValue<SqlDatabaseCreateMode>? _createMode;
 
     /// <summary>
     /// The resource identifier of the elastic pool containing this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ElasticPoolId { get => _elasticPoolId; set => _elasticPoolId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _elasticPoolId;
+    public BicepValue<ResourceIdentifier> ElasticPoolId 
+    {
+        get { Initialize(); return _elasticPoolId!; }
+        set { Initialize(); _elasticPoolId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _elasticPoolId;
 
     /// <summary>
     /// The azure key vault URI of the database if it&apos;s configured with
     /// per Database Customer Managed Keys.
     /// </summary>
-    public BicepValue<string> EncryptionProtector { get => _encryptionProtector; set => _encryptionProtector.Assign(value); }
-    private readonly BicepValue<string> _encryptionProtector;
+    public BicepValue<string> EncryptionProtector 
+    {
+        get { Initialize(); return _encryptionProtector!; }
+        set { Initialize(); _encryptionProtector!.Assign(value); }
+    }
+    private BicepValue<string>? _encryptionProtector;
 
     /// <summary>
     /// The flag to enable or disable auto rotation of database encryption
     /// protector AKV key.
     /// </summary>
-    public BicepValue<bool> EncryptionProtectorAutoRotation { get => _encryptionProtectorAutoRotation; set => _encryptionProtectorAutoRotation.Assign(value); }
-    private readonly BicepValue<bool> _encryptionProtectorAutoRotation;
+    public BicepValue<bool> EncryptionProtectorAutoRotation 
+    {
+        get { Initialize(); return _encryptionProtectorAutoRotation!; }
+        set { Initialize(); _encryptionProtectorAutoRotation!.Assign(value); }
+    }
+    private BicepValue<bool>? _encryptionProtectorAutoRotation;
 
     /// <summary>
     /// The Client id used for cross tenant per database CMK scenario.
     /// </summary>
-    public BicepValue<Guid> FederatedClientId { get => _federatedClientId; set => _federatedClientId.Assign(value); }
-    private readonly BicepValue<Guid> _federatedClientId;
+    public BicepValue<Guid> FederatedClientId 
+    {
+        get { Initialize(); return _federatedClientId!; }
+        set { Initialize(); _federatedClientId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _federatedClientId;
 
     /// <summary>
     /// Specifies the behavior when monthly free limits are exhausted for the
@@ -122,67 +166,103 @@ public partial class SqlDatabase : Resource
     /// continue to be online upon exhaustion of free limits and any overage
     /// will be billed.
     /// </summary>
-    public BicepValue<FreeLimitExhaustionBehavior> FreeLimitExhaustionBehavior { get => _freeLimitExhaustionBehavior; set => _freeLimitExhaustionBehavior.Assign(value); }
-    private readonly BicepValue<FreeLimitExhaustionBehavior> _freeLimitExhaustionBehavior;
+    public BicepValue<FreeLimitExhaustionBehavior> FreeLimitExhaustionBehavior 
+    {
+        get { Initialize(); return _freeLimitExhaustionBehavior!; }
+        set { Initialize(); _freeLimitExhaustionBehavior!.Assign(value); }
+    }
+    private BicepValue<FreeLimitExhaustionBehavior>? _freeLimitExhaustionBehavior;
 
     /// <summary>
     /// The number of secondary replicas associated with the database that are
     /// used to provide high availability. Not applicable to a Hyperscale
     /// database within an elastic pool.
     /// </summary>
-    public BicepValue<int> HighAvailabilityReplicaCount { get => _highAvailabilityReplicaCount; set => _highAvailabilityReplicaCount.Assign(value); }
-    private readonly BicepValue<int> _highAvailabilityReplicaCount;
+    public BicepValue<int> HighAvailabilityReplicaCount 
+    {
+        get { Initialize(); return _highAvailabilityReplicaCount!; }
+        set { Initialize(); _highAvailabilityReplicaCount!.Assign(value); }
+    }
+    private BicepValue<int>? _highAvailabilityReplicaCount;
 
     /// <summary>
     /// The Azure Active Directory identity of the database.
     /// </summary>
-    public BicepValue<DatabaseIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<DatabaseIdentity> _identity;
+    public DatabaseIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private DatabaseIdentity? _identity;
 
     /// <summary>
     /// Whether or not this database is a ledger database, which means all
     /// tables in the database are ledger tables. Note: the value of this
     /// property cannot be changed after the database has been created.
     /// </summary>
-    public BicepValue<bool> IsLedgerOn { get => _isLedgerOn; set => _isLedgerOn.Assign(value); }
-    private readonly BicepValue<bool> _isLedgerOn;
+    public BicepValue<bool> IsLedgerOn 
+    {
+        get { Initialize(); return _isLedgerOn!; }
+        set { Initialize(); _isLedgerOn!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLedgerOn;
 
     /// <summary>
     /// Whether or not this database is zone redundant, which means the
     /// replicas of this database will be spread across multiple availability
     /// zones.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// The resource ids of the user assigned identities to use.
     /// </summary>
-    public BicepDictionary<SqlDatabaseKey> Keys { get => _keys; set => _keys.Assign(value); }
-    private readonly BicepDictionary<SqlDatabaseKey> _keys;
+    public BicepDictionary<SqlDatabaseKey> Keys 
+    {
+        get { Initialize(); return _keys!; }
+        set { Initialize(); _keys!.Assign(value); }
+    }
+    private BicepDictionary<SqlDatabaseKey>? _keys;
 
     /// <summary>
     /// The license type to apply for this database. `LicenseIncluded` if you
     /// need a license, or `BasePrice` if you have a license and are eligible
     /// for the Azure Hybrid Benefit.
     /// </summary>
-    public BicepValue<DatabaseLicenseType> LicenseType { get => _licenseType; set => _licenseType.Assign(value); }
-    private readonly BicepValue<DatabaseLicenseType> _licenseType;
+    public BicepValue<DatabaseLicenseType> LicenseType 
+    {
+        get { Initialize(); return _licenseType!; }
+        set { Initialize(); _licenseType!.Assign(value); }
+    }
+    private BicepValue<DatabaseLicenseType>? _licenseType;
 
     /// <summary>
     /// The resource identifier of the long term retention backup associated
     /// with create operation of this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> LongTermRetentionBackupResourceId { get => _longTermRetentionBackupResourceId; set => _longTermRetentionBackupResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _longTermRetentionBackupResourceId;
+    public BicepValue<ResourceIdentifier> LongTermRetentionBackupResourceId 
+    {
+        get { Initialize(); return _longTermRetentionBackupResourceId!; }
+        set { Initialize(); _longTermRetentionBackupResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _longTermRetentionBackupResourceId;
 
     /// <summary>
     /// Maintenance configuration id assigned to the database. This
     /// configuration defines the period when the maintenance updates will
     /// occur.
     /// </summary>
-    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId { get => _maintenanceConfigurationId; set => _maintenanceConfigurationId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _maintenanceConfigurationId;
+    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId 
+    {
+        get { Initialize(); return _maintenanceConfigurationId!; }
+        set { Initialize(); _maintenanceConfigurationId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _maintenanceConfigurationId;
 
     /// <summary>
     /// Whether or not customer controlled manual cutover needs to be done
@@ -196,21 +276,33 @@ public partial class SqlDatabase : Resource
     /// &apos;performCutover&apos; parameter when the Scaling operation is in
     /// Waiting state.
     /// </summary>
-    public BicepValue<bool> ManualCutover { get => _manualCutover; set => _manualCutover.Assign(value); }
-    private readonly BicepValue<bool> _manualCutover;
+    public BicepValue<bool> ManualCutover 
+    {
+        get { Initialize(); return _manualCutover!; }
+        set { Initialize(); _manualCutover!.Assign(value); }
+    }
+    private BicepValue<bool>? _manualCutover;
 
     /// <summary>
     /// The max size of the database expressed in bytes.
     /// </summary>
-    public BicepValue<long> MaxSizeBytes { get => _maxSizeBytes; set => _maxSizeBytes.Assign(value); }
-    private readonly BicepValue<long> _maxSizeBytes;
+    public BicepValue<long> MaxSizeBytes 
+    {
+        get { Initialize(); return _maxSizeBytes!; }
+        set { Initialize(); _maxSizeBytes!.Assign(value); }
+    }
+    private BicepValue<long>? _maxSizeBytes;
 
     /// <summary>
     /// Minimal capacity that database will always have allocated, if not
     /// paused.
     /// </summary>
-    public BicepValue<double> MinCapacity { get => _minCapacity; set => _minCapacity.Assign(value); }
-    private readonly BicepValue<double> _minCapacity;
+    public BicepValue<double> MinCapacity 
+    {
+        get { Initialize(); return _minCapacity!; }
+        set { Initialize(); _minCapacity!.Assign(value); }
+    }
+    private BicepValue<double>? _minCapacity;
 
     /// <summary>
     /// To trigger customer controlled manual cutover during the wait state
@@ -224,14 +316,22 @@ public partial class SqlDatabase : Resource
     /// the scaling operation will trigger cutover and perform role-change to
     /// Hyperscale database.
     /// </summary>
-    public BicepValue<bool> PerformCutover { get => _performCutover; set => _performCutover.Assign(value); }
-    private readonly BicepValue<bool> _performCutover;
+    public BicepValue<bool> PerformCutover 
+    {
+        get { Initialize(); return _performCutover!; }
+        set { Initialize(); _performCutover!.Assign(value); }
+    }
+    private BicepValue<bool>? _performCutover;
 
     /// <summary>
     /// Type of enclave requested on the database i.e. Default or VBS enclaves.
     /// </summary>
-    public BicepValue<SqlAlwaysEncryptedEnclaveType> PreferredEnclaveType { get => _preferredEnclaveType; set => _preferredEnclaveType.Assign(value); }
-    private readonly BicepValue<SqlAlwaysEncryptedEnclaveType> _preferredEnclaveType;
+    public BicepValue<SqlAlwaysEncryptedEnclaveType> PreferredEnclaveType 
+    {
+        get { Initialize(); return _preferredEnclaveType!; }
+        set { Initialize(); _preferredEnclaveType!.Assign(value); }
+    }
+    private BicepValue<SqlAlwaysEncryptedEnclaveType>? _preferredEnclaveType;
 
     /// <summary>
     /// The state of read-only routing. If enabled, connections that have
@@ -239,55 +339,87 @@ public partial class SqlDatabase : Resource
     /// routed to a readonly secondary replica in the same region. Not
     /// applicable to a Hyperscale database within an elastic pool.
     /// </summary>
-    public BicepValue<DatabaseReadScale> ReadScale { get => _readScale; set => _readScale.Assign(value); }
-    private readonly BicepValue<DatabaseReadScale> _readScale;
+    public BicepValue<DatabaseReadScale> ReadScale 
+    {
+        get { Initialize(); return _readScale!; }
+        set { Initialize(); _readScale!.Assign(value); }
+    }
+    private BicepValue<DatabaseReadScale>? _readScale;
 
     /// <summary>
     /// The resource identifier of the recoverable database associated with
     /// create operation of this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RecoverableDatabaseId { get => _recoverableDatabaseId; set => _recoverableDatabaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _recoverableDatabaseId;
+    public BicepValue<ResourceIdentifier> RecoverableDatabaseId 
+    {
+        get { Initialize(); return _recoverableDatabaseId!; }
+        set { Initialize(); _recoverableDatabaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _recoverableDatabaseId;
 
     /// <summary>
     /// The resource identifier of the recovery point associated with create
     /// operation of this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RecoveryServicesRecoveryPointId { get => _recoveryServicesRecoveryPointId; set => _recoveryServicesRecoveryPointId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _recoveryServicesRecoveryPointId;
+    public BicepValue<ResourceIdentifier> RecoveryServicesRecoveryPointId 
+    {
+        get { Initialize(); return _recoveryServicesRecoveryPointId!; }
+        set { Initialize(); _recoveryServicesRecoveryPointId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _recoveryServicesRecoveryPointId;
 
     /// <summary>
     /// The storage account type to be used to store backups for this database.
     /// </summary>
-    public BicepValue<SqlBackupStorageRedundancy> RequestedBackupStorageRedundancy { get => _requestedBackupStorageRedundancy; set => _requestedBackupStorageRedundancy.Assign(value); }
-    private readonly BicepValue<SqlBackupStorageRedundancy> _requestedBackupStorageRedundancy;
+    public BicepValue<SqlBackupStorageRedundancy> RequestedBackupStorageRedundancy 
+    {
+        get { Initialize(); return _requestedBackupStorageRedundancy!; }
+        set { Initialize(); _requestedBackupStorageRedundancy!.Assign(value); }
+    }
+    private BicepValue<SqlBackupStorageRedundancy>? _requestedBackupStorageRedundancy;
 
     /// <summary>
     /// The resource identifier of the restorable dropped database associated
     /// with create operation of this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RestorableDroppedDatabaseId { get => _restorableDroppedDatabaseId; set => _restorableDroppedDatabaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _restorableDroppedDatabaseId;
+    public BicepValue<ResourceIdentifier> RestorableDroppedDatabaseId 
+    {
+        get { Initialize(); return _restorableDroppedDatabaseId!; }
+        set { Initialize(); _restorableDroppedDatabaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _restorableDroppedDatabaseId;
 
     /// <summary>
     /// Specifies the point in time (ISO8601 format) of the source database
     /// that will be restored to create the new database.
     /// </summary>
-    public BicepValue<DateTimeOffset> RestorePointInTime { get => _restorePointInTime; set => _restorePointInTime.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _restorePointInTime;
+    public BicepValue<DateTimeOffset> RestorePointInTime 
+    {
+        get { Initialize(); return _restorePointInTime!; }
+        set { Initialize(); _restorePointInTime!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _restorePointInTime;
 
     /// <summary>
     /// The name of the sample schema to apply when creating this database.
     /// </summary>
-    public BicepValue<SampleSchemaName> SampleName { get => _sampleName; set => _sampleName.Assign(value); }
-    private readonly BicepValue<SampleSchemaName> _sampleName;
+    public BicepValue<SampleSchemaName> SampleName 
+    {
+        get { Initialize(); return _sampleName!; }
+        set { Initialize(); _sampleName!.Assign(value); }
+    }
+    private BicepValue<SampleSchemaName>? _sampleName;
 
     /// <summary>
     /// The secondary type of the database if it is a secondary.  Valid values
     /// are Geo, Named and Standby.
     /// </summary>
-    public BicepValue<SecondaryType> SecondaryType { get => _secondaryType; set => _secondaryType.Assign(value); }
-    private readonly BicepValue<SecondaryType> _secondaryType;
+    public BicepValue<SecondaryType> SecondaryType 
+    {
+        get { Initialize(); return _secondaryType!; }
+        set { Initialize(); _secondaryType!.Assign(value); }
+    }
+    private BicepValue<SecondaryType>? _secondaryType;
 
     /// <summary>
     /// The database SKU.                           The list of SKUs may vary
@@ -301,21 +433,33 @@ public partial class SqlDatabase : Resource
     /// Get-AzSqlServerServiceObjective -Location
     /// &lt;location&gt;              ````
     /// </summary>
-    public BicepValue<SqlSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<SqlSku> _sku;
+    public SqlSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private SqlSku? _sku;
 
     /// <summary>
     /// Specifies the time that the database was deleted.
     /// </summary>
-    public BicepValue<DateTimeOffset> SourceDatabaseDeletedOn { get => _sourceDatabaseDeletedOn; set => _sourceDatabaseDeletedOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _sourceDatabaseDeletedOn;
+    public BicepValue<DateTimeOffset> SourceDatabaseDeletedOn 
+    {
+        get { Initialize(); return _sourceDatabaseDeletedOn!; }
+        set { Initialize(); _sourceDatabaseDeletedOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _sourceDatabaseDeletedOn;
 
     /// <summary>
     /// The resource identifier of the source database associated with create
     /// operation of this database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceDatabaseId { get => _sourceDatabaseId; set => _sourceDatabaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceDatabaseId;
+    public BicepValue<ResourceIdentifier> SourceDatabaseId 
+    {
+        get { Initialize(); return _sourceDatabaseId!; }
+        set { Initialize(); _sourceDatabaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceDatabaseId;
 
     /// <summary>
     /// The resource identifier of the source associated with the create
@@ -340,205 +484,287 @@ public partial class SqlDatabase : Resource
     /// “x-ms-authorization-auxiliary” header see
     /// https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceResourceId { get => _sourceResourceId; set => _sourceResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceResourceId;
+    public BicepValue<ResourceIdentifier> SourceResourceId 
+    {
+        get { Initialize(); return _sourceResourceId!; }
+        set { Initialize(); _sourceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceResourceId;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Whether or not the database uses free monthly limits. Allowed on one
     /// database in a subscription.
     /// </summary>
-    public BicepValue<bool> UseFreeLimit { get => _useFreeLimit; set => _useFreeLimit.Assign(value); }
-    private readonly BicepValue<bool> _useFreeLimit;
+    public BicepValue<bool> UseFreeLimit 
+    {
+        get { Initialize(); return _useFreeLimit!; }
+        set { Initialize(); _useFreeLimit!.Assign(value); }
+    }
+    private BicepValue<bool>? _useFreeLimit;
 
     /// <summary>
     /// The creation date of the database (ISO8601 format).
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// The storage account type used to store backups for this database.
     /// </summary>
-    public BicepValue<SqlBackupStorageRedundancy> CurrentBackupStorageRedundancy { get => _currentBackupStorageRedundancy; }
-    private readonly BicepValue<SqlBackupStorageRedundancy> _currentBackupStorageRedundancy;
+    public BicepValue<SqlBackupStorageRedundancy> CurrentBackupStorageRedundancy 
+    {
+        get { Initialize(); return _currentBackupStorageRedundancy!; }
+    }
+    private BicepValue<SqlBackupStorageRedundancy>? _currentBackupStorageRedundancy;
 
     /// <summary>
     /// The current service level objective name of the database.
     /// </summary>
-    public BicepValue<string> CurrentServiceObjectiveName { get => _currentServiceObjectiveName; }
-    private readonly BicepValue<string> _currentServiceObjectiveName;
+    public BicepValue<string> CurrentServiceObjectiveName 
+    {
+        get { Initialize(); return _currentServiceObjectiveName!; }
+    }
+    private BicepValue<string>? _currentServiceObjectiveName;
 
     /// <summary>
     /// The name and tier of the SKU.
     /// </summary>
-    public BicepValue<SqlSku> CurrentSku { get => _currentSku; }
-    private readonly BicepValue<SqlSku> _currentSku;
+    public SqlSku CurrentSku 
+    {
+        get { Initialize(); return _currentSku!; }
+    }
+    private SqlSku? _currentSku;
 
     /// <summary>
     /// The ID of the database.
     /// </summary>
-    public BicepValue<Guid> DatabaseId { get => _databaseId; }
-    private readonly BicepValue<Guid> _databaseId;
+    public BicepValue<Guid> DatabaseId 
+    {
+        get { Initialize(); return _databaseId!; }
+    }
+    private BicepValue<Guid>? _databaseId;
 
     /// <summary>
     /// The default secondary region for this database.
     /// </summary>
-    public BicepValue<AzureLocation> DefaultSecondaryLocation { get => _defaultSecondaryLocation; }
-    private readonly BicepValue<AzureLocation> _defaultSecondaryLocation;
+    public BicepValue<AzureLocation> DefaultSecondaryLocation 
+    {
+        get { Initialize(); return _defaultSecondaryLocation!; }
+    }
+    private BicepValue<AzureLocation>? _defaultSecondaryLocation;
 
     /// <summary>
     /// This records the earliest start date and time that restore is available
     /// for this database (ISO8601 format).
     /// </summary>
-    public BicepValue<DateTimeOffset> EarliestRestoreOn { get => _earliestRestoreOn; }
-    private readonly BicepValue<DateTimeOffset> _earliestRestoreOn;
+    public BicepValue<DateTimeOffset> EarliestRestoreOn 
+    {
+        get { Initialize(); return _earliestRestoreOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _earliestRestoreOn;
 
     /// <summary>
     /// Failover Group resource identifier that this database belongs to.
     /// </summary>
-    public BicepValue<ResourceIdentifier> FailoverGroupId { get => _failoverGroupId; }
-    private readonly BicepValue<ResourceIdentifier> _failoverGroupId;
+    public BicepValue<ResourceIdentifier> FailoverGroupId 
+    {
+        get { Initialize(); return _failoverGroupId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _failoverGroupId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Infra encryption is enabled for this database.
     /// </summary>
-    public BicepValue<bool> IsInfraEncryptionEnabled { get => _isInfraEncryptionEnabled; }
-    private readonly BicepValue<bool> _isInfraEncryptionEnabled;
+    public BicepValue<bool> IsInfraEncryptionEnabled 
+    {
+        get { Initialize(); return _isInfraEncryptionEnabled!; }
+    }
+    private BicepValue<bool>? _isInfraEncryptionEnabled;
 
     /// <summary>
     /// Kind of database. This is metadata used for the Azure portal experience.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Resource that manages the database.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// The max log size for this database.
     /// </summary>
-    public BicepValue<long> MaxLogSizeBytes { get => _maxLogSizeBytes; }
-    private readonly BicepValue<long> _maxLogSizeBytes;
+    public BicepValue<long> MaxLogSizeBytes 
+    {
+        get { Initialize(); return _maxLogSizeBytes!; }
+    }
+    private BicepValue<long>? _maxLogSizeBytes;
 
     /// <summary>
     /// The date when database was paused by user configuration or
     /// action(ISO8601 format). Null if the database is ready.
     /// </summary>
-    public BicepValue<DateTimeOffset> PausedOn { get => _pausedOn; }
-    private readonly BicepValue<DateTimeOffset> _pausedOn;
+    public BicepValue<DateTimeOffset> PausedOn 
+    {
+        get { Initialize(); return _pausedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _pausedOn;
 
     /// <summary>
     /// The requested service level objective name of the database.
     /// </summary>
-    public BicepValue<string> RequestedServiceObjectiveName { get => _requestedServiceObjectiveName; }
-    private readonly BicepValue<string> _requestedServiceObjectiveName;
+    public BicepValue<string> RequestedServiceObjectiveName 
+    {
+        get { Initialize(); return _requestedServiceObjectiveName!; }
+    }
+    private BicepValue<string>? _requestedServiceObjectiveName;
 
     /// <summary>
     /// The date when database was resumed by user action or database login
     /// (ISO8601 format). Null if the database is paused.
     /// </summary>
-    public BicepValue<DateTimeOffset> ResumedOn { get => _resumedOn; }
-    private readonly BicepValue<DateTimeOffset> _resumedOn;
+    public BicepValue<DateTimeOffset> ResumedOn 
+    {
+        get { Initialize(); return _resumedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _resumedOn;
 
     /// <summary>
     /// The status of the database.
     /// </summary>
-    public BicepValue<SqlDatabaseStatus> Status { get => _status; }
-    private readonly BicepValue<SqlDatabaseStatus> _status;
+    public BicepValue<SqlDatabaseStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<SqlDatabaseStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SqlDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlDatabase resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
-    public SqlDatabase(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
+    public SqlDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _autoPauseDelay = BicepValue<int>.DefineProperty(this, "AutoPauseDelay", ["properties", "autoPauseDelay"]);
-        _availabilityZone = BicepValue<SqlAvailabilityZoneType>.DefineProperty(this, "AvailabilityZone", ["properties", "availabilityZone"]);
-        _catalogCollation = BicepValue<CatalogCollationType>.DefineProperty(this, "CatalogCollation", ["properties", "catalogCollation"]);
-        _collation = BicepValue<string>.DefineProperty(this, "Collation", ["properties", "collation"]);
-        _createMode = BicepValue<SqlDatabaseCreateMode>.DefineProperty(this, "CreateMode", ["properties", "createMode"]);
-        _elasticPoolId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ElasticPoolId", ["properties", "elasticPoolId"]);
-        _encryptionProtector = BicepValue<string>.DefineProperty(this, "EncryptionProtector", ["properties", "encryptionProtector"]);
-        _encryptionProtectorAutoRotation = BicepValue<bool>.DefineProperty(this, "EncryptionProtectorAutoRotation", ["properties", "encryptionProtectorAutoRotation"]);
-        _federatedClientId = BicepValue<Guid>.DefineProperty(this, "FederatedClientId", ["properties", "federatedClientId"]);
-        _freeLimitExhaustionBehavior = BicepValue<FreeLimitExhaustionBehavior>.DefineProperty(this, "FreeLimitExhaustionBehavior", ["properties", "freeLimitExhaustionBehavior"]);
-        _highAvailabilityReplicaCount = BicepValue<int>.DefineProperty(this, "HighAvailabilityReplicaCount", ["properties", "highAvailabilityReplicaCount"]);
-        _identity = BicepValue<DatabaseIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isLedgerOn = BicepValue<bool>.DefineProperty(this, "IsLedgerOn", ["properties", "isLedgerOn"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _keys = BicepDictionary<SqlDatabaseKey>.DefineProperty(this, "Keys", ["properties", "keys"]);
-        _licenseType = BicepValue<DatabaseLicenseType>.DefineProperty(this, "LicenseType", ["properties", "licenseType"]);
-        _longTermRetentionBackupResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "LongTermRetentionBackupResourceId", ["properties", "longTermRetentionBackupResourceId"]);
-        _maintenanceConfigurationId = BicepValue<ResourceIdentifier>.DefineProperty(this, "MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
-        _manualCutover = BicepValue<bool>.DefineProperty(this, "ManualCutover", ["properties", "manualCutover"]);
-        _maxSizeBytes = BicepValue<long>.DefineProperty(this, "MaxSizeBytes", ["properties", "maxSizeBytes"]);
-        _minCapacity = BicepValue<double>.DefineProperty(this, "MinCapacity", ["properties", "minCapacity"]);
-        _performCutover = BicepValue<bool>.DefineProperty(this, "PerformCutover", ["properties", "performCutover"]);
-        _preferredEnclaveType = BicepValue<SqlAlwaysEncryptedEnclaveType>.DefineProperty(this, "PreferredEnclaveType", ["properties", "preferredEnclaveType"]);
-        _readScale = BicepValue<DatabaseReadScale>.DefineProperty(this, "ReadScale", ["properties", "readScale"]);
-        _recoverableDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RecoverableDatabaseId", ["properties", "recoverableDatabaseId"]);
-        _recoveryServicesRecoveryPointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RecoveryServicesRecoveryPointId", ["properties", "recoveryServicesRecoveryPointId"]);
-        _requestedBackupStorageRedundancy = BicepValue<SqlBackupStorageRedundancy>.DefineProperty(this, "RequestedBackupStorageRedundancy", ["properties", "requestedBackupStorageRedundancy"]);
-        _restorableDroppedDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RestorableDroppedDatabaseId", ["properties", "restorableDroppedDatabaseId"]);
-        _restorePointInTime = BicepValue<DateTimeOffset>.DefineProperty(this, "RestorePointInTime", ["properties", "restorePointInTime"]);
-        _sampleName = BicepValue<SampleSchemaName>.DefineProperty(this, "SampleName", ["properties", "sampleName"]);
-        _secondaryType = BicepValue<SecondaryType>.DefineProperty(this, "SecondaryType", ["properties", "secondaryType"]);
-        _sku = BicepValue<SqlSku>.DefineProperty(this, "Sku", ["sku"]);
-        _sourceDatabaseDeletedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "SourceDatabaseDeletedOn", ["properties", "sourceDatabaseDeletionDate"]);
-        _sourceDatabaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceDatabaseId", ["properties", "sourceDatabaseId"]);
-        _sourceResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceResourceId", ["properties", "sourceResourceId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _useFreeLimit = BicepValue<bool>.DefineProperty(this, "UseFreeLimit", ["properties", "useFreeLimit"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _currentBackupStorageRedundancy = BicepValue<SqlBackupStorageRedundancy>.DefineProperty(this, "CurrentBackupStorageRedundancy", ["properties", "currentBackupStorageRedundancy"], isOutput: true);
-        _currentServiceObjectiveName = BicepValue<string>.DefineProperty(this, "CurrentServiceObjectiveName", ["properties", "currentServiceObjectiveName"], isOutput: true);
-        _currentSku = BicepValue<SqlSku>.DefineProperty(this, "CurrentSku", ["properties", "currentSku"], isOutput: true);
-        _databaseId = BicepValue<Guid>.DefineProperty(this, "DatabaseId", ["properties", "databaseId"], isOutput: true);
-        _defaultSecondaryLocation = BicepValue<AzureLocation>.DefineProperty(this, "DefaultSecondaryLocation", ["properties", "defaultSecondaryLocation"], isOutput: true);
-        _earliestRestoreOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
-        _failoverGroupId = BicepValue<ResourceIdentifier>.DefineProperty(this, "FailoverGroupId", ["properties", "failoverGroupId"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isInfraEncryptionEnabled = BicepValue<bool>.DefineProperty(this, "IsInfraEncryptionEnabled", ["properties", "isInfraEncryptionEnabled"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"], isOutput: true);
-        _maxLogSizeBytes = BicepValue<long>.DefineProperty(this, "MaxLogSizeBytes", ["properties", "maxLogSizeBytes"], isOutput: true);
-        _pausedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "PausedOn", ["properties", "pausedDate"], isOutput: true);
-        _requestedServiceObjectiveName = BicepValue<string>.DefineProperty(this, "RequestedServiceObjectiveName", ["properties", "requestedServiceObjectiveName"], isOutput: true);
-        _resumedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ResumedOn", ["properties", "resumedDate"], isOutput: true);
-        _status = BicepValue<SqlDatabaseStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlDatabase.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _autoPauseDelay = DefineProperty<int>("AutoPauseDelay", ["properties", "autoPauseDelay"]);
+        _availabilityZone = DefineProperty<SqlAvailabilityZoneType>("AvailabilityZone", ["properties", "availabilityZone"]);
+        _catalogCollation = DefineProperty<CatalogCollationType>("CatalogCollation", ["properties", "catalogCollation"]);
+        _collation = DefineProperty<string>("Collation", ["properties", "collation"]);
+        _createMode = DefineProperty<SqlDatabaseCreateMode>("CreateMode", ["properties", "createMode"]);
+        _elasticPoolId = DefineProperty<ResourceIdentifier>("ElasticPoolId", ["properties", "elasticPoolId"]);
+        _encryptionProtector = DefineProperty<string>("EncryptionProtector", ["properties", "encryptionProtector"]);
+        _encryptionProtectorAutoRotation = DefineProperty<bool>("EncryptionProtectorAutoRotation", ["properties", "encryptionProtectorAutoRotation"]);
+        _federatedClientId = DefineProperty<Guid>("FederatedClientId", ["properties", "federatedClientId"]);
+        _freeLimitExhaustionBehavior = DefineProperty<FreeLimitExhaustionBehavior>("FreeLimitExhaustionBehavior", ["properties", "freeLimitExhaustionBehavior"]);
+        _highAvailabilityReplicaCount = DefineProperty<int>("HighAvailabilityReplicaCount", ["properties", "highAvailabilityReplicaCount"]);
+        _identity = DefineModelProperty<DatabaseIdentity>("Identity", ["identity"]);
+        _isLedgerOn = DefineProperty<bool>("IsLedgerOn", ["properties", "isLedgerOn"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _keys = DefineDictionaryProperty<SqlDatabaseKey>("Keys", ["properties", "keys"]);
+        _licenseType = DefineProperty<DatabaseLicenseType>("LicenseType", ["properties", "licenseType"]);
+        _longTermRetentionBackupResourceId = DefineProperty<ResourceIdentifier>("LongTermRetentionBackupResourceId", ["properties", "longTermRetentionBackupResourceId"]);
+        _maintenanceConfigurationId = DefineProperty<ResourceIdentifier>("MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
+        _manualCutover = DefineProperty<bool>("ManualCutover", ["properties", "manualCutover"]);
+        _maxSizeBytes = DefineProperty<long>("MaxSizeBytes", ["properties", "maxSizeBytes"]);
+        _minCapacity = DefineProperty<double>("MinCapacity", ["properties", "minCapacity"]);
+        _performCutover = DefineProperty<bool>("PerformCutover", ["properties", "performCutover"]);
+        _preferredEnclaveType = DefineProperty<SqlAlwaysEncryptedEnclaveType>("PreferredEnclaveType", ["properties", "preferredEnclaveType"]);
+        _readScale = DefineProperty<DatabaseReadScale>("ReadScale", ["properties", "readScale"]);
+        _recoverableDatabaseId = DefineProperty<ResourceIdentifier>("RecoverableDatabaseId", ["properties", "recoverableDatabaseId"]);
+        _recoveryServicesRecoveryPointId = DefineProperty<ResourceIdentifier>("RecoveryServicesRecoveryPointId", ["properties", "recoveryServicesRecoveryPointId"]);
+        _requestedBackupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>("RequestedBackupStorageRedundancy", ["properties", "requestedBackupStorageRedundancy"]);
+        _restorableDroppedDatabaseId = DefineProperty<ResourceIdentifier>("RestorableDroppedDatabaseId", ["properties", "restorableDroppedDatabaseId"]);
+        _restorePointInTime = DefineProperty<DateTimeOffset>("RestorePointInTime", ["properties", "restorePointInTime"]);
+        _sampleName = DefineProperty<SampleSchemaName>("SampleName", ["properties", "sampleName"]);
+        _secondaryType = DefineProperty<SecondaryType>("SecondaryType", ["properties", "secondaryType"]);
+        _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
+        _sourceDatabaseDeletedOn = DefineProperty<DateTimeOffset>("SourceDatabaseDeletedOn", ["properties", "sourceDatabaseDeletionDate"]);
+        _sourceDatabaseId = DefineProperty<ResourceIdentifier>("SourceDatabaseId", ["properties", "sourceDatabaseId"]);
+        _sourceResourceId = DefineProperty<ResourceIdentifier>("SourceResourceId", ["properties", "sourceResourceId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _useFreeLimit = DefineProperty<bool>("UseFreeLimit", ["properties", "useFreeLimit"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _currentBackupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>("CurrentBackupStorageRedundancy", ["properties", "currentBackupStorageRedundancy"], isOutput: true);
+        _currentServiceObjectiveName = DefineProperty<string>("CurrentServiceObjectiveName", ["properties", "currentServiceObjectiveName"], isOutput: true);
+        _currentSku = DefineModelProperty<SqlSku>("CurrentSku", ["properties", "currentSku"], isOutput: true);
+        _databaseId = DefineProperty<Guid>("DatabaseId", ["properties", "databaseId"], isOutput: true);
+        _defaultSecondaryLocation = DefineProperty<AzureLocation>("DefaultSecondaryLocation", ["properties", "defaultSecondaryLocation"], isOutput: true);
+        _earliestRestoreOn = DefineProperty<DateTimeOffset>("EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
+        _failoverGroupId = DefineProperty<ResourceIdentifier>("FailoverGroupId", ["properties", "failoverGroupId"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isInfraEncryptionEnabled = DefineProperty<bool>("IsInfraEncryptionEnabled", ["properties", "isInfraEncryptionEnabled"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"], isOutput: true);
+        _maxLogSizeBytes = DefineProperty<long>("MaxLogSizeBytes", ["properties", "maxLogSizeBytes"], isOutput: true);
+        _pausedOn = DefineProperty<DateTimeOffset>("PausedOn", ["properties", "pausedDate"], isOutput: true);
+        _requestedServiceObjectiveName = DefineProperty<string>("RequestedServiceObjectiveName", ["properties", "requestedServiceObjectiveName"], isOutput: true);
+        _resumedOn = DefineProperty<DateTimeOffset>("ResumedOn", ["properties", "resumedDate"], isOutput: true);
+        _status = DefineProperty<SqlDatabaseStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -546,11 +772,6 @@ public partial class SqlDatabase : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -575,11 +796,16 @@ public partial class SqlDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlDatabase resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
     /// <returns>The existing SqlDatabase resource.</returns>
-    public static SqlDatabase FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this SqlDatabase resource.

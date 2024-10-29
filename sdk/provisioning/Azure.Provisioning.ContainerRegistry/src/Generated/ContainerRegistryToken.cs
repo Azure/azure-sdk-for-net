@@ -17,80 +17,124 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ContainerRegistryToken.
 /// </summary>
-public partial class ContainerRegistryToken : Resource
+public partial class ContainerRegistryToken : ProvisionableResource
 {
     /// <summary>
     /// The name of the token.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The credentials that can be used for authenticating the token.
     /// </summary>
-    public BicepValue<ContainerRegistryTokenCredentials> Credentials { get => _credentials; set => _credentials.Assign(value); }
-    private readonly BicepValue<ContainerRegistryTokenCredentials> _credentials;
+    public ContainerRegistryTokenCredentials Credentials 
+    {
+        get { Initialize(); return _credentials!; }
+        set { Initialize(); AssignOrReplace(ref _credentials, value); }
+    }
+    private ContainerRegistryTokenCredentials? _credentials;
 
     /// <summary>
     /// The resource ID of the scope map to which the token will be associated
     /// with.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ScopeMapId { get => _scopeMapId; set => _scopeMapId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _scopeMapId;
+    public BicepValue<ResourceIdentifier> ScopeMapId 
+    {
+        get { Initialize(); return _scopeMapId!; }
+        set { Initialize(); _scopeMapId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _scopeMapId;
 
     /// <summary>
     /// The status of the token example enabled or disabled.
     /// </summary>
-    public BicepValue<ContainerRegistryTokenStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<ContainerRegistryTokenStatus> _status;
+    public BicepValue<ContainerRegistryTokenStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<ContainerRegistryTokenStatus>? _status;
 
     /// <summary>
     /// The creation date of scope map.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ContainerRegistryToken.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryToken.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryToken resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
-    public ContainerRegistryToken(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
+    public ContainerRegistryToken(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/tokens", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _credentials = BicepValue<ContainerRegistryTokenCredentials>.DefineProperty(this, "Credentials", ["properties", "credentials"]);
-        _scopeMapId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ScopeMapId", ["properties", "scopeMapId"]);
-        _status = BicepValue<ContainerRegistryTokenStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerRegistryToken.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _credentials = DefineModelProperty<ContainerRegistryTokenCredentials>("Credentials", ["properties", "credentials"]);
+        _scopeMapId = DefineProperty<ResourceIdentifier>("ScopeMapId", ["properties", "scopeMapId"]);
+        _status = DefineProperty<ContainerRegistryTokenStatus>("Status", ["properties", "status"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -98,11 +142,6 @@ public partial class ContainerRegistryToken : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>
@@ -117,11 +156,16 @@ public partial class ContainerRegistryToken : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerRegistryToken.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerRegistryToken.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerRegistryToken resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryToken.</param>
     /// <returns>The existing ContainerRegistryToken resource.</returns>
-    public static ContainerRegistryToken FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerRegistryToken FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerRegistryToken resource.

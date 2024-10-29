@@ -17,69 +17,106 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ResourceGroup.
 /// </summary>
-public partial class ResourceGroup : Resource
+public partial class ResourceGroup : ProvisionableResource
 {
     /// <summary>
     /// The name of the resource group to create or update. Can include
     /// alphanumeric, underscore, parentheses, hyphen, period (except at end),
     /// and Unicode characters that match the allowed characters.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The ID of the resource that manages this resource group.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; set => _managedBy.Assign(value); }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+        set { Initialize(); _managedBy!.Assign(value); }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state.
     /// </summary>
-    public BicepValue<string> ResourceGroupProvisioningState { get => _resourceGroupProvisioningState; }
-    private readonly BicepValue<string> _resourceGroupProvisioningState;
+    public BicepValue<string> ResourceGroupProvisioningState 
+    {
+        get { Initialize(); return _resourceGroupProvisioningState!; }
+    }
+    private BicepValue<string>? _resourceGroupProvisioningState;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
-    public ResourceGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
+    public ResourceGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/resourceGroups", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _resourceGroupProvisioningState = BicepValue<string>.DefineProperty(this, "ResourceGroupProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ResourceGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _resourceGroupProvisioningState = DefineProperty<string>("ResourceGroupProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -87,11 +124,6 @@ public partial class ResourceGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-07-01-preview.
-        /// </summary>
-        public static readonly string V2023_07_01_preview = "2023-07-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>
@@ -306,27 +338,16 @@ public partial class ResourceGroup : Resource
     /// <summary>
     /// Creates a reference to an existing ResourceGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the ResourceGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ResourceGroup resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ResourceGroup.</param>
     /// <returns>The existing ResourceGroup resource.</returns>
-    public static ResourceGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
-
-    /// <summary>
-    /// Creates a new ResourceGroup resource from a Bicep expression that
-    /// evaluates to a ResourceGroup.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ResourceGroup resource.
-    /// </param>
-    /// <returns>A ResourceGroup resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ResourceGroup FromExpression(Expression expression)
-    {
-        ResourceGroup resource = new(expression.ToString());
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
+    public static ResourceGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ResourceGroup resource.

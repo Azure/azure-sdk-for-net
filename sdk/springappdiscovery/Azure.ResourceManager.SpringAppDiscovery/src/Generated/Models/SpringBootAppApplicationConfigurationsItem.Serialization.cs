@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
         void IJsonModel<SpringBootAppApplicationConfigurationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppApplicationConfigurationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SpringBootAppApplicationConfigurationsItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             if (Optional.IsDefined(Value))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SpringBootAppApplicationConfigurationsItem IJsonModel<SpringBootAppApplicationConfigurationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

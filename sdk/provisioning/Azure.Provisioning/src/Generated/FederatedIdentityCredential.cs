@@ -16,65 +16,103 @@ namespace Azure.Provisioning.Roles;
 /// <summary>
 /// FederatedIdentityCredential.
 /// </summary>
-public partial class FederatedIdentityCredential : Resource
+public partial class FederatedIdentityCredential : ProvisionableResource
 {
     /// <summary>
     /// The name of the federated identity credential resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The list of audiences that can appear in the issued token.
     /// </summary>
-    public BicepList<string> Audiences { get => _audiences; set => _audiences.Assign(value); }
-    private readonly BicepList<string> _audiences;
+    public BicepList<string> Audiences 
+    {
+        get { Initialize(); return _audiences!; }
+        set { Initialize(); _audiences!.Assign(value); }
+    }
+    private BicepList<string>? _audiences;
 
     /// <summary>
     /// The URL of the issuer to be trusted.
     /// </summary>
-    public BicepValue<Uri> IssuerUri { get => _issuerUri; set => _issuerUri.Assign(value); }
-    private readonly BicepValue<Uri> _issuerUri;
+    public BicepValue<Uri> IssuerUri 
+    {
+        get { Initialize(); return _issuerUri!; }
+        set { Initialize(); _issuerUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _issuerUri;
 
     /// <summary>
     /// The identifier of the external identity.
     /// </summary>
-    public BicepValue<string> Subject { get => _subject; set => _subject.Assign(value); }
-    private readonly BicepValue<string> _subject;
+    public BicepValue<string> Subject 
+    {
+        get { Initialize(); return _subject!; }
+        set { Initialize(); _subject!.Assign(value); }
+    }
+    private BicepValue<string>? _subject;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent UserAssignedIdentity.
     /// </summary>
-    public UserAssignedIdentity? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<UserAssignedIdentity> _parent;
+    public UserAssignedIdentity? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<UserAssignedIdentity>? _parent;
 
     /// <summary>
     /// Creates a new FederatedIdentityCredential.
     /// </summary>
-    /// <param name="resourceName">Name of the FederatedIdentityCredential.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FederatedIdentityCredential
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
-    public FederatedIdentityCredential(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
+    public FederatedIdentityCredential(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _audiences = BicepList<string>.DefineProperty(this, "Audiences", ["properties", "audiences"]);
-        _issuerUri = BicepValue<Uri>.DefineProperty(this, "IssuerUri", ["properties", "issuer"]);
-        _subject = BicepValue<string>.DefineProperty(this, "Subject", ["properties", "subject"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<UserAssignedIdentity>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of FederatedIdentityCredential.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _audiences = DefineListProperty<string>("Audiences", ["properties", "audiences"]);
+        _issuerUri = DefineProperty<Uri>("IssuerUri", ["properties", "issuer"]);
+        _subject = DefineProperty<string>("Subject", ["properties", "subject"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<UserAssignedIdentity>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -101,9 +139,14 @@ public partial class FederatedIdentityCredential : Resource
     /// <summary>
     /// Creates a reference to an existing FederatedIdentityCredential.
     /// </summary>
-    /// <param name="resourceName">Name of the FederatedIdentityCredential.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FederatedIdentityCredential
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
     /// <returns>The existing FederatedIdentityCredential resource.</returns>
-    public static FederatedIdentityCredential FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FederatedIdentityCredential FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

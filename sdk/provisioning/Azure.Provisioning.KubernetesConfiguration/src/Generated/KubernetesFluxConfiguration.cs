@@ -19,165 +19,247 @@ namespace Azure.Provisioning.KubernetesConfiguration;
 /// <summary>
 /// KubernetesFluxConfiguration.
 /// </summary>
-public partial class KubernetesFluxConfiguration : Resource
+public partial class KubernetesFluxConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Name of the Flux Configuration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Parameters to reconcile to the AzureBlob source kind type.
     /// </summary>
-    public BicepValue<KubernetesAzureBlob> AzureBlob { get => _azureBlob; set => _azureBlob.Assign(value); }
-    private readonly BicepValue<KubernetesAzureBlob> _azureBlob;
+    public KubernetesAzureBlob AzureBlob 
+    {
+        get { Initialize(); return _azureBlob!; }
+        set { Initialize(); AssignOrReplace(ref _azureBlob, value); }
+    }
+    private KubernetesAzureBlob? _azureBlob;
 
     /// <summary>
     /// Parameters to reconcile to the Bucket source kind type.
     /// </summary>
-    public BicepValue<KubernetesBucket> Bucket { get => _bucket; set => _bucket.Assign(value); }
-    private readonly BicepValue<KubernetesBucket> _bucket;
+    public KubernetesBucket Bucket 
+    {
+        get { Initialize(); return _bucket!; }
+        set { Initialize(); AssignOrReplace(ref _bucket, value); }
+    }
+    private KubernetesBucket? _bucket;
 
     /// <summary>
     /// Key-value pairs of protected configuration settings for the
     /// configuration.
     /// </summary>
-    public BicepDictionary<string> ConfigurationProtectedSettings { get => _configurationProtectedSettings; set => _configurationProtectedSettings.Assign(value); }
-    private readonly BicepDictionary<string> _configurationProtectedSettings;
+    public BicepDictionary<string> ConfigurationProtectedSettings 
+    {
+        get { Initialize(); return _configurationProtectedSettings!; }
+        set { Initialize(); _configurationProtectedSettings!.Assign(value); }
+    }
+    private BicepDictionary<string>? _configurationProtectedSettings;
 
     /// <summary>
     /// Parameters to reconcile to the GitRepository source kind type.
     /// </summary>
-    public BicepValue<KubernetesGitRepository> GitRepository { get => _gitRepository; set => _gitRepository.Assign(value); }
-    private readonly BicepValue<KubernetesGitRepository> _gitRepository;
+    public KubernetesGitRepository GitRepository 
+    {
+        get { Initialize(); return _gitRepository!; }
+        set { Initialize(); AssignOrReplace(ref _gitRepository, value); }
+    }
+    private KubernetesGitRepository? _gitRepository;
 
     /// <summary>
     /// Whether this configuration should suspend its reconciliation of its
     /// kustomizations and sources.
     /// </summary>
-    public BicepValue<bool> IsReconciliationSuspended { get => _isReconciliationSuspended; set => _isReconciliationSuspended.Assign(value); }
-    private readonly BicepValue<bool> _isReconciliationSuspended;
+    public BicepValue<bool> IsReconciliationSuspended 
+    {
+        get { Initialize(); return _isReconciliationSuspended!; }
+        set { Initialize(); _isReconciliationSuspended!.Assign(value); }
+    }
+    private BicepValue<bool>? _isReconciliationSuspended;
 
     /// <summary>
     /// Array of kustomizations used to reconcile the artifact pulled by the
     /// source type on the cluster.
     /// </summary>
-    public BicepDictionary<Kustomization> Kustomizations { get => _kustomizations; set => _kustomizations.Assign(value); }
-    private readonly BicepDictionary<Kustomization> _kustomizations;
+    public BicepDictionary<Kustomization> Kustomizations 
+    {
+        get { Initialize(); return _kustomizations!; }
+        set { Initialize(); _kustomizations!.Assign(value); }
+    }
+    private BicepDictionary<Kustomization>? _kustomizations;
 
     /// <summary>
     /// The namespace to which this configuration is installed to. Maximum of
     /// 253 lower case alphanumeric characters, hyphen and period only.
     /// </summary>
-    public BicepValue<string> Namespace { get => _namespace; set => _namespace.Assign(value); }
-    private readonly BicepValue<string> _namespace;
+    public BicepValue<string> Namespace 
+    {
+        get { Initialize(); return _namespace!; }
+        set { Initialize(); _namespace!.Assign(value); }
+    }
+    private BicepValue<string>? _namespace;
 
     /// <summary>
     /// Scope at which the operator will be installed.
     /// </summary>
-    public BicepValue<KubernetesConfigurationScope> Scope { get => _scope; set => _scope.Assign(value); }
-    private readonly BicepValue<KubernetesConfigurationScope> _scope;
+    public BicepValue<KubernetesConfigurationScope> Scope 
+    {
+        get { Initialize(); return _scope!; }
+        set { Initialize(); _scope!.Assign(value); }
+    }
+    private BicepValue<KubernetesConfigurationScope>? _scope;
 
     /// <summary>
     /// Source Kind to pull the configuration data from.
     /// </summary>
-    public BicepValue<KubernetesConfigurationSourceKind> SourceKind { get => _sourceKind; set => _sourceKind.Assign(value); }
-    private readonly BicepValue<KubernetesConfigurationSourceKind> _sourceKind;
+    public BicepValue<KubernetesConfigurationSourceKind> SourceKind 
+    {
+        get { Initialize(); return _sourceKind!; }
+        set { Initialize(); _sourceKind!.Assign(value); }
+    }
+    private BicepValue<KubernetesConfigurationSourceKind>? _sourceKind;
 
     /// <summary>
     /// Combined status of the Flux Kubernetes resources created by the
     /// fluxConfiguration or created by the managed objects.
     /// </summary>
-    public BicepValue<KubernetesFluxComplianceState> ComplianceState { get => _complianceState; }
-    private readonly BicepValue<KubernetesFluxComplianceState> _complianceState;
+    public BicepValue<KubernetesFluxComplianceState> ComplianceState 
+    {
+        get { Initialize(); return _complianceState!; }
+    }
+    private BicepValue<KubernetesFluxComplianceState>? _complianceState;
 
     /// <summary>
     /// Error message returned to the user in the case of provisioning failure.
     /// </summary>
-    public BicepValue<string> ErrorMessage { get => _errorMessage; }
-    private readonly BicepValue<string> _errorMessage;
+    public BicepValue<string> ErrorMessage 
+    {
+        get { Initialize(); return _errorMessage!; }
+    }
+    private BicepValue<string>? _errorMessage;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Status of the creation of the fluxConfiguration.
     /// </summary>
-    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<KubernetesConfigurationProvisioningState> _provisioningState;
+    public BicepValue<KubernetesConfigurationProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<KubernetesConfigurationProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Public Key associated with this fluxConfiguration (either generated
     /// within the cluster or provided by the user).
     /// </summary>
-    public BicepValue<string> RepositoryPublicKey { get => _repositoryPublicKey; }
-    private readonly BicepValue<string> _repositoryPublicKey;
+    public BicepValue<string> RepositoryPublicKey 
+    {
+        get { Initialize(); return _repositoryPublicKey!; }
+    }
+    private BicepValue<string>? _repositoryPublicKey;
 
     /// <summary>
     /// Branch and/or SHA of the source commit synced with the cluster.
     /// </summary>
-    public BicepValue<string> SourceSyncedCommitId { get => _sourceSyncedCommitId; }
-    private readonly BicepValue<string> _sourceSyncedCommitId;
+    public BicepValue<string> SourceSyncedCommitId 
+    {
+        get { Initialize(); return _sourceSyncedCommitId!; }
+    }
+    private BicepValue<string>? _sourceSyncedCommitId;
 
     /// <summary>
     /// Datetime the fluxConfiguration synced its source on the cluster.
     /// </summary>
-    public BicepValue<DateTimeOffset> SourceUpdatedOn { get => _sourceUpdatedOn; }
-    private readonly BicepValue<DateTimeOffset> _sourceUpdatedOn;
+    public BicepValue<DateTimeOffset> SourceUpdatedOn 
+    {
+        get { Initialize(); return _sourceUpdatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _sourceUpdatedOn;
 
     /// <summary>
     /// Statuses of the Flux Kubernetes resources created by the
     /// fluxConfiguration or created by the managed objects provisioned by the
     /// fluxConfiguration.
     /// </summary>
-    public BicepList<KubernetesObjectStatus> Statuses { get => _statuses; }
-    private readonly BicepList<KubernetesObjectStatus> _statuses;
+    public BicepList<KubernetesObjectStatus> Statuses 
+    {
+        get { Initialize(); return _statuses!; }
+    }
+    private BicepList<KubernetesObjectStatus>? _statuses;
 
     /// <summary>
     /// Datetime the fluxConfiguration synced its status on the cluster with
     /// Azure.
     /// </summary>
-    public BicepValue<DateTimeOffset> StatusUpdatedOn { get => _statusUpdatedOn; }
-    private readonly BicepValue<DateTimeOffset> _statusUpdatedOn;
+    public BicepValue<DateTimeOffset> StatusUpdatedOn 
+    {
+        get { Initialize(); return _statusUpdatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _statusUpdatedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new KubernetesFluxConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesFluxConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the KubernetesFluxConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
-    public KubernetesFluxConfiguration(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
+    public KubernetesFluxConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/fluxConfigurations", resourceVersion ?? "2023-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _azureBlob = BicepValue<KubernetesAzureBlob>.DefineProperty(this, "AzureBlob", ["properties", "azureBlob"]);
-        _bucket = BicepValue<KubernetesBucket>.DefineProperty(this, "Bucket", ["properties", "bucket"]);
-        _configurationProtectedSettings = BicepDictionary<string>.DefineProperty(this, "ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
-        _gitRepository = BicepValue<KubernetesGitRepository>.DefineProperty(this, "GitRepository", ["properties", "gitRepository"]);
-        _isReconciliationSuspended = BicepValue<bool>.DefineProperty(this, "IsReconciliationSuspended", ["properties", "suspend"]);
-        _kustomizations = BicepDictionary<Kustomization>.DefineProperty(this, "Kustomizations", ["properties", "kustomizations"]);
-        _namespace = BicepValue<string>.DefineProperty(this, "Namespace", ["properties", "namespace"]);
-        _scope = BicepValue<KubernetesConfigurationScope>.DefineProperty(this, "Scope", ["properties", "scope"]);
-        _sourceKind = BicepValue<KubernetesConfigurationSourceKind>.DefineProperty(this, "SourceKind", ["properties", "sourceKind"]);
-        _complianceState = BicepValue<KubernetesFluxComplianceState>.DefineProperty(this, "ComplianceState", ["properties", "complianceState"], isOutput: true);
-        _errorMessage = BicepValue<string>.DefineProperty(this, "ErrorMessage", ["properties", "errorMessage"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<KubernetesConfigurationProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _repositoryPublicKey = BicepValue<string>.DefineProperty(this, "RepositoryPublicKey", ["properties", "repositoryPublicKey"], isOutput: true);
-        _sourceSyncedCommitId = BicepValue<string>.DefineProperty(this, "SourceSyncedCommitId", ["properties", "sourceSyncedCommitId"], isOutput: true);
-        _sourceUpdatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "SourceUpdatedOn", ["properties", "sourceUpdatedAt"], isOutput: true);
-        _statuses = BicepList<KubernetesObjectStatus>.DefineProperty(this, "Statuses", ["properties", "statuses"], isOutput: true);
-        _statusUpdatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StatusUpdatedOn", ["properties", "statusUpdatedAt"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of KubernetesFluxConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _azureBlob = DefineModelProperty<KubernetesAzureBlob>("AzureBlob", ["properties", "azureBlob"]);
+        _bucket = DefineModelProperty<KubernetesBucket>("Bucket", ["properties", "bucket"]);
+        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
+        _gitRepository = DefineModelProperty<KubernetesGitRepository>("GitRepository", ["properties", "gitRepository"]);
+        _isReconciliationSuspended = DefineProperty<bool>("IsReconciliationSuspended", ["properties", "suspend"]);
+        _kustomizations = DefineDictionaryProperty<Kustomization>("Kustomizations", ["properties", "kustomizations"]);
+        _namespace = DefineProperty<string>("Namespace", ["properties", "namespace"]);
+        _scope = DefineProperty<KubernetesConfigurationScope>("Scope", ["properties", "scope"]);
+        _sourceKind = DefineProperty<KubernetesConfigurationSourceKind>("SourceKind", ["properties", "sourceKind"]);
+        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["properties", "complianceState"], isOutput: true);
+        _errorMessage = DefineProperty<string>("ErrorMessage", ["properties", "errorMessage"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["properties", "repositoryPublicKey"], isOutput: true);
+        _sourceSyncedCommitId = DefineProperty<string>("SourceSyncedCommitId", ["properties", "sourceSyncedCommitId"], isOutput: true);
+        _sourceUpdatedOn = DefineProperty<DateTimeOffset>("SourceUpdatedOn", ["properties", "sourceUpdatedAt"], isOutput: true);
+        _statuses = DefineListProperty<KubernetesObjectStatus>("Statuses", ["properties", "statuses"], isOutput: true);
+        _statusUpdatedOn = DefineProperty<DateTimeOffset>("StatusUpdatedOn", ["properties", "statusUpdatedAt"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -185,11 +267,6 @@ public partial class KubernetesFluxConfiguration : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2023-05-01.
         /// </summary>
@@ -214,42 +291,48 @@ public partial class KubernetesFluxConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing KubernetesFluxConfiguration.
     /// </summary>
-    /// <param name="resourceName">Name of the KubernetesFluxConfiguration.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the KubernetesFluxConfiguration
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the KubernetesFluxConfiguration.</param>
     /// <returns>The existing KubernetesFluxConfiguration resource.</returns>
-    public static KubernetesFluxConfiguration FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static KubernetesFluxConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// KubernetesFluxConfiguration.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this KubernetesFluxConfiguration.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// KubernetesFluxConfiguration.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

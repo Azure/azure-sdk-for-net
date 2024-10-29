@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// FileShare.
 /// </summary>
-public partial class FileShare : Resource
+public partial class FileShare : ProvisionableResource
 {
     /// <summary>
     /// The name of the file share within the specified storage account. File
@@ -27,180 +27,269 @@ public partial class FileShare : Resource
     /// character must be immediately preceded and followed by a letter or
     /// number.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Access tier for specific share. GpV2 account can choose between
     /// TransactionOptimized (default), Hot, and Cool. FileStorage account can
     /// choose Premium.
     /// </summary>
-    public BicepValue<FileShareAccessTier> AccessTier { get => _accessTier; set => _accessTier.Assign(value); }
-    private readonly BicepValue<FileShareAccessTier> _accessTier;
+    public BicepValue<FileShareAccessTier> AccessTier 
+    {
+        get { Initialize(); return _accessTier!; }
+        set { Initialize(); _accessTier!.Assign(value); }
+    }
+    private BicepValue<FileShareAccessTier>? _accessTier;
 
     /// <summary>
     /// The authentication protocol that is used for the file share. Can only
     /// be specified when creating a share.
     /// </summary>
-    public BicepValue<FileShareEnabledProtocol> EnabledProtocol { get => _enabledProtocol; set => _enabledProtocol.Assign(value); }
-    private readonly BicepValue<FileShareEnabledProtocol> _enabledProtocol;
+    public BicepValue<FileShareEnabledProtocol> EnabledProtocol 
+    {
+        get { Initialize(); return _enabledProtocol!; }
+        set { Initialize(); _enabledProtocol!.Assign(value); }
+    }
+    private BicepValue<FileShareEnabledProtocol>? _enabledProtocol;
 
     /// <summary>
     /// A name-value pair to associate with the share as metadata.
     /// </summary>
-    public BicepDictionary<string> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepDictionary<string> _metadata;
+    public BicepDictionary<string> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepDictionary<string>? _metadata;
 
     /// <summary>
     /// The property is for NFS share only. The default is NoRootSquash.
     /// </summary>
-    public BicepValue<RootSquashType> RootSquash { get => _rootSquash; set => _rootSquash.Assign(value); }
-    private readonly BicepValue<RootSquashType> _rootSquash;
+    public BicepValue<RootSquashType> RootSquash 
+    {
+        get { Initialize(); return _rootSquash!; }
+        set { Initialize(); _rootSquash!.Assign(value); }
+    }
+    private BicepValue<RootSquashType>? _rootSquash;
 
     /// <summary>
     /// The maximum size of the share, in gigabytes. Must be greater than 0,
     /// and less than or equal to 5TB (5120). For Large File Shares, the
     /// maximum size is 102400.
     /// </summary>
-    public BicepValue<int> ShareQuota { get => _shareQuota; set => _shareQuota.Assign(value); }
-    private readonly BicepValue<int> _shareQuota;
+    public BicepValue<int> ShareQuota 
+    {
+        get { Initialize(); return _shareQuota!; }
+        set { Initialize(); _shareQuota!.Assign(value); }
+    }
+    private BicepValue<int>? _shareQuota;
 
     /// <summary>
     /// List of stored access policies specified on the share.
     /// </summary>
-    public BicepList<StorageSignedIdentifier> SignedIdentifiers { get => _signedIdentifiers; set => _signedIdentifiers.Assign(value); }
-    private readonly BicepList<StorageSignedIdentifier> _signedIdentifiers;
+    public BicepList<StorageSignedIdentifier> SignedIdentifiers 
+    {
+        get { Initialize(); return _signedIdentifiers!; }
+        set { Initialize(); _signedIdentifiers!.Assign(value); }
+    }
+    private BicepList<StorageSignedIdentifier>? _signedIdentifiers;
 
     /// <summary>
     /// Indicates the last modification time for share access tier.
     /// </summary>
-    public BicepValue<DateTimeOffset> AccessTierChangeOn { get => _accessTierChangeOn; }
-    private readonly BicepValue<DateTimeOffset> _accessTierChangeOn;
+    public BicepValue<DateTimeOffset> AccessTierChangeOn 
+    {
+        get { Initialize(); return _accessTierChangeOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _accessTierChangeOn;
 
     /// <summary>
     /// Indicates if there is a pending transition for access tier.
     /// </summary>
-    public BicepValue<string> AccessTierStatus { get => _accessTierStatus; }
-    private readonly BicepValue<string> _accessTierStatus;
+    public BicepValue<string> AccessTierStatus 
+    {
+        get { Initialize(); return _accessTierStatus!; }
+    }
+    private BicepValue<string>? _accessTierStatus;
 
     /// <summary>
     /// The deleted time if the share was deleted.
     /// </summary>
-    public BicepValue<DateTimeOffset> DeletedOn { get => _deletedOn; }
-    private readonly BicepValue<DateTimeOffset> _deletedOn;
+    public BicepValue<DateTimeOffset> DeletedOn 
+    {
+        get { Initialize(); return _deletedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _deletedOn;
 
     /// <summary>
     /// Resource Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Indicates whether the share was deleted.
     /// </summary>
-    public BicepValue<bool> IsDeleted { get => _isDeleted; }
-    private readonly BicepValue<bool> _isDeleted;
+    public BicepValue<bool> IsDeleted 
+    {
+        get { Initialize(); return _isDeleted!; }
+    }
+    private BicepValue<bool>? _isDeleted;
 
     /// <summary>
     /// Returns the date and time the share was last modified.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Specifies whether the lease on a share is of infinite or fixed
     /// duration, only when the share is leased.
     /// </summary>
-    public BicepValue<StorageLeaseDurationType> LeaseDuration { get => _leaseDuration; }
-    private readonly BicepValue<StorageLeaseDurationType> _leaseDuration;
+    public BicepValue<StorageLeaseDurationType> LeaseDuration 
+    {
+        get { Initialize(); return _leaseDuration!; }
+    }
+    private BicepValue<StorageLeaseDurationType>? _leaseDuration;
 
     /// <summary>
     /// Lease state of the share.
     /// </summary>
-    public BicepValue<StorageLeaseState> LeaseState { get => _leaseState; }
-    private readonly BicepValue<StorageLeaseState> _leaseState;
+    public BicepValue<StorageLeaseState> LeaseState 
+    {
+        get { Initialize(); return _leaseState!; }
+    }
+    private BicepValue<StorageLeaseState>? _leaseState;
 
     /// <summary>
     /// The lease status of the share.
     /// </summary>
-    public BicepValue<StorageLeaseStatus> LeaseStatus { get => _leaseStatus; }
-    private readonly BicepValue<StorageLeaseStatus> _leaseStatus;
+    public BicepValue<StorageLeaseStatus> LeaseStatus 
+    {
+        get { Initialize(); return _leaseStatus!; }
+    }
+    private BicepValue<StorageLeaseStatus>? _leaseStatus;
 
     /// <summary>
     /// Remaining retention days for share that was soft deleted.
     /// </summary>
-    public BicepValue<int> RemainingRetentionDays { get => _remainingRetentionDays; }
-    private readonly BicepValue<int> _remainingRetentionDays;
+    public BicepValue<int> RemainingRetentionDays 
+    {
+        get { Initialize(); return _remainingRetentionDays!; }
+    }
+    private BicepValue<int>? _remainingRetentionDays;
 
     /// <summary>
     /// The approximate size of the data stored on the share. Note that this
     /// value may not include all recently created or recently resized files.
     /// </summary>
-    public BicepValue<long> ShareUsageBytes { get => _shareUsageBytes; }
-    private readonly BicepValue<long> _shareUsageBytes;
+    public BicepValue<long> ShareUsageBytes 
+    {
+        get { Initialize(); return _shareUsageBytes!; }
+    }
+    private BicepValue<long>? _shareUsageBytes;
 
     /// <summary>
     /// Creation time of share snapshot returned in the response of list shares
     /// with expand param &quot;snapshots&quot;.
     /// </summary>
-    public BicepValue<DateTimeOffset> SnapshotOn { get => _snapshotOn; }
-    private readonly BicepValue<DateTimeOffset> _snapshotOn;
+    public BicepValue<DateTimeOffset> SnapshotOn 
+    {
+        get { Initialize(); return _snapshotOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _snapshotOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The version of the share.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets or sets a reference to the parent FileService.
     /// </summary>
-    public FileService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<FileService> _parent;
+    public FileService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<FileService>? _parent;
 
     /// <summary>
     /// Creates a new FileShare.
     /// </summary>
-    /// <param name="resourceName">Name of the FileShare.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FileShare resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
-    public FileShare(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2024-01-01")
+    public FileShare(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _accessTier = BicepValue<FileShareAccessTier>.DefineProperty(this, "AccessTier", ["properties", "accessTier"]);
-        _enabledProtocol = BicepValue<FileShareEnabledProtocol>.DefineProperty(this, "EnabledProtocol", ["properties", "enabledProtocols"]);
-        _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _rootSquash = BicepValue<RootSquashType>.DefineProperty(this, "RootSquash", ["properties", "rootSquash"]);
-        _shareQuota = BicepValue<int>.DefineProperty(this, "ShareQuota", ["properties", "shareQuota"]);
-        _signedIdentifiers = BicepList<StorageSignedIdentifier>.DefineProperty(this, "SignedIdentifiers", ["properties", "signedIdentifiers"]);
-        _accessTierChangeOn = BicepValue<DateTimeOffset>.DefineProperty(this, "AccessTierChangeOn", ["properties", "accessTierChangeTime"], isOutput: true);
-        _accessTierStatus = BicepValue<string>.DefineProperty(this, "AccessTierStatus", ["properties", "accessTierStatus"], isOutput: true);
-        _deletedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "DeletedOn", ["properties", "deletedTime"], isOutput: true);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isDeleted = BicepValue<bool>.DefineProperty(this, "IsDeleted", ["properties", "deleted"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _leaseDuration = BicepValue<StorageLeaseDurationType>.DefineProperty(this, "LeaseDuration", ["properties", "leaseDuration"], isOutput: true);
-        _leaseState = BicepValue<StorageLeaseState>.DefineProperty(this, "LeaseState", ["properties", "leaseState"], isOutput: true);
-        _leaseStatus = BicepValue<StorageLeaseStatus>.DefineProperty(this, "LeaseStatus", ["properties", "leaseStatus"], isOutput: true);
-        _remainingRetentionDays = BicepValue<int>.DefineProperty(this, "RemainingRetentionDays", ["properties", "remainingRetentionDays"], isOutput: true);
-        _shareUsageBytes = BicepValue<long>.DefineProperty(this, "ShareUsageBytes", ["properties", "shareUsageBytes"], isOutput: true);
-        _snapshotOn = BicepValue<DateTimeOffset>.DefineProperty(this, "SnapshotOn", ["properties", "snapshotTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
-        _parent = ResourceReference<FileService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of FileShare.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _accessTier = DefineProperty<FileShareAccessTier>("AccessTier", ["properties", "accessTier"]);
+        _enabledProtocol = DefineProperty<FileShareEnabledProtocol>("EnabledProtocol", ["properties", "enabledProtocols"]);
+        _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
+        _rootSquash = DefineProperty<RootSquashType>("RootSquash", ["properties", "rootSquash"]);
+        _shareQuota = DefineProperty<int>("ShareQuota", ["properties", "shareQuota"]);
+        _signedIdentifiers = DefineListProperty<StorageSignedIdentifier>("SignedIdentifiers", ["properties", "signedIdentifiers"]);
+        _accessTierChangeOn = DefineProperty<DateTimeOffset>("AccessTierChangeOn", ["properties", "accessTierChangeTime"], isOutput: true);
+        _accessTierStatus = DefineProperty<string>("AccessTierStatus", ["properties", "accessTierStatus"], isOutput: true);
+        _deletedOn = DefineProperty<DateTimeOffset>("DeletedOn", ["properties", "deletedTime"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isDeleted = DefineProperty<bool>("IsDeleted", ["properties", "deleted"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _leaseDuration = DefineProperty<StorageLeaseDurationType>("LeaseDuration", ["properties", "leaseDuration"], isOutput: true);
+        _leaseState = DefineProperty<StorageLeaseState>("LeaseState", ["properties", "leaseState"], isOutput: true);
+        _leaseStatus = DefineProperty<StorageLeaseStatus>("LeaseStatus", ["properties", "leaseStatus"], isOutput: true);
+        _remainingRetentionDays = DefineProperty<int>("RemainingRetentionDays", ["properties", "remainingRetentionDays"], isOutput: true);
+        _shareUsageBytes = DefineProperty<long>("ShareUsageBytes", ["properties", "shareUsageBytes"], isOutput: true);
+        _snapshotOn = DefineProperty<DateTimeOffset>("SnapshotOn", ["properties", "snapshotTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
+        _parent = DefineResource<FileService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -322,11 +411,16 @@ public partial class FileShare : Resource
     /// <summary>
     /// Creates a reference to an existing FileShare.
     /// </summary>
-    /// <param name="resourceName">Name of the FileShare.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the FileShare resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
     /// <returns>The existing FileShare resource.</returns>
-    public static FileShare FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static FileShare FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this FileShare resource.

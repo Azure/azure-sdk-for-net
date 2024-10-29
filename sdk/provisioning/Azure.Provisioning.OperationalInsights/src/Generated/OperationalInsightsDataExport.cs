@@ -16,102 +16,160 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsDataExport.
 /// </summary>
-public partial class OperationalInsightsDataExport : Resource
+public partial class OperationalInsightsDataExport : ProvisionableResource
 {
     /// <summary>
     /// The data export rule name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The latest data export rule modification time.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; set => _createdOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+        set { Initialize(); _createdOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// The data export rule ID.
     /// </summary>
-    public BicepValue<Guid> DataExportId { get => _dataExportId; set => _dataExportId.Assign(value); }
-    private readonly BicepValue<Guid> _dataExportId;
+    public BicepValue<Guid> DataExportId 
+    {
+        get { Initialize(); return _dataExportId!; }
+        set { Initialize(); _dataExportId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _dataExportId;
 
     /// <summary>
     /// Optional. Allows to define an Event Hub name. Not applicable when
     /// destination is Storage Account.
     /// </summary>
-    public BicepValue<string> EventHubName { get => _eventHubName; set => _eventHubName.Assign(value); }
-    private readonly BicepValue<string> _eventHubName;
+    public BicepValue<string> EventHubName 
+    {
+        get { Initialize(); return _eventHubName!; }
+        set { Initialize(); _eventHubName!.Assign(value); }
+    }
+    private BicepValue<string>? _eventHubName;
 
     /// <summary>
     /// Active when enabled.
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// Date and time when the export was last modified.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; set => _lastModifiedOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+        set { Initialize(); _lastModifiedOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// The destination resource ID. This can be copied from the Properties
     /// entry of the destination resource in Azure.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ResourceId { get => _resourceId; set => _resourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _resourceId;
+    public BicepValue<ResourceIdentifier> ResourceId 
+    {
+        get { Initialize(); return _resourceId!; }
+        set { Initialize(); _resourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
     /// An array of tables to export, for example: [“Heartbeat, SecurityEvent”].
     /// </summary>
-    public BicepList<string> TableNames { get => _tableNames; set => _tableNames.Assign(value); }
-    private readonly BicepList<string> _tableNames;
+    public BicepList<string> TableNames 
+    {
+        get { Initialize(); return _tableNames!; }
+        set { Initialize(); _tableNames!.Assign(value); }
+    }
+    private BicepList<string>? _tableNames;
 
     /// <summary>
     /// The type of the destination resource.
     /// </summary>
-    public BicepValue<OperationalInsightsDataExportDestinationType> DestinationType { get => _destinationType; }
-    private readonly BicepValue<OperationalInsightsDataExportDestinationType> _destinationType;
+    public BicepValue<OperationalInsightsDataExportDestinationType> DestinationType 
+    {
+        get { Initialize(); return _destinationType!; }
+    }
+    private BicepValue<OperationalInsightsDataExportDestinationType>? _destinationType;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsDataExport.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the OperationalInsightsDataExport
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
-    public OperationalInsightsDataExport(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsDataExport(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/dataExports", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"]);
-        _dataExportId = BicepValue<Guid>.DefineProperty(this, "DataExportId", ["properties", "dataExportId"]);
-        _eventHubName = BicepValue<string>.DefineProperty(this, "EventHubName", ["properties", "eventHubName"]);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enable"]);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedDate"]);
-        _resourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ResourceId", ["properties", "resourceId"]);
-        _tableNames = BicepList<string>.DefineProperty(this, "TableNames", ["properties", "tableNames"]);
-        _destinationType = BicepValue<OperationalInsightsDataExportDestinationType>.DefineProperty(this, "DestinationType", ["properties", "type"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// OperationalInsightsDataExport.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdDate"]);
+        _dataExportId = DefineProperty<Guid>("DataExportId", ["properties", "dataExportId"]);
+        _eventHubName = DefineProperty<string>("EventHubName", ["properties", "eventHubName"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "enable"]);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedDate"]);
+        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["properties", "resourceId"]);
+        _tableNames = DefineListProperty<string>("TableNames", ["properties", "tableNames"]);
+        _destinationType = DefineProperty<OperationalInsightsDataExportDestinationType>("DestinationType", ["properties", "type"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -133,9 +191,14 @@ public partial class OperationalInsightsDataExport : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsDataExport.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsDataExport.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the OperationalInsightsDataExport
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsDataExport.</param>
     /// <returns>The existing OperationalInsightsDataExport resource.</returns>
-    public static OperationalInsightsDataExport FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsDataExport FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

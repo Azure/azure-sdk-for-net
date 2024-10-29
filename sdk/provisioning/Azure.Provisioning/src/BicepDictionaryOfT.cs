@@ -10,22 +10,21 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning;
 
-// TODO: Dictionaries are less commonly used in Azure APIs so I haven't
-// implemented all the more experimental parts of BicepList here yet while we
-// iterate on the design.
-
 /// <summary>
 /// Represents a dictionary with string keys and bicep values.
 /// </summary>
 /// <typeparam name="T">The type of element represented by the values.</typeparam>
-public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>, IDictionary<string, BicepValue>
+public class BicepDictionary<T> :
+    BicepValue, IDictionary<string, BicepValue<T>>,
+    IDictionary<string, IBicepValue>,
+    IReadOnlyDictionary<string, BicepValue<T>>
 {
     // Literal values
     private IDictionary<string, BicepValue<T>> _values;
-    internal override object? GetLiteralValue() => _values;
+    private protected override object? GetLiteralValue() => _values;
 
     // We're empty if unset or no literal values
-    internal override bool IsEmpty => base.IsEmpty || (Kind == BicepValueKind.Literal && _values.Count == 0);
+    public override bool IsEmpty => base.IsEmpty || (_kind == BicepValueKind.Literal && _values.Count == 0);
 
     /// <summary>
     /// Creates a new BicepDictionary.
@@ -37,30 +36,27 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     /// </summary>
     public BicepDictionary(IDictionary<string, BicepValue<T>>? values) : this(self: null, values) { }
 
-    private protected BicepDictionary(BicepValueReference? self, Expression expression)
+    private protected BicepDictionary(BicepValueReference? self, BicepExpression expression)
         : base(self, expression)
         => _values = new Dictionary<string, BicepValue<T>>();
 
-    private BicepDictionary(BicepValueReference? self, IDictionary<string, BicepValue<T>>? values = null)
+    internal BicepDictionary(BicepValueReference? self, IDictionary<string, BicepValue<T>>? values = null)
         : base(self)
     {
-        Kind = BicepValueKind.Literal;
-        _values = values != null ? new Dictionary<string, BicepValue<T>>(values) : [];
+        _kind = BicepValueKind.Literal;
         // Shallow clone their values
+        _values = values != null ? new Dictionary<string, BicepValue<T>>(values) : [];
     }
 
     // Move literal elements when assigning values to a dictionary
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepDictionary<T> source) => Assign((BicepValue)source);
-    internal override void Assign(BicepValue source)
+    internal override void Assign(IBicepValue source)
     {
         if (source is BicepDictionary<T> typed)
         {
-            // TODO: Decide if we'd rather shallow copy or steal their reference.
             _values = typed._values;
         }
-
-        // Everything else is handled by the base Assign
         base.Assign(source);
     }
 
@@ -69,12 +65,7 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     /// </summary>
     /// <param name="reference">The variable or parameter.</param>
     public static implicit operator BicepDictionary<T>(ProvisioningVariable reference) =>
-        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.ResourceName)) { IsSecure = reference is ProvisioningParameter p && p.IsSecure };
-
-    // TODO: Make it possible to correctly reference these values (especially
-    // across module boundaries)?  Currently we only allow pulling values into
-    // collections.
-    private BicepValue<T> WrapValue(string key, BicepValue<T> value) => value;
+        new(new BicepValueReference(reference, "{}"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
     /// <summary>
     /// Gets or sets a value in a BicepDictionary.
@@ -83,14 +74,12 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     /// <returns>The value.</returns>
     public BicepValue<T> this[string key]
     {
-        // TODO: Decide if we want to support expression overrides (though
-        // we'd also neeed a FromExpression + factory)
         get => _values[key];
-        set => _values[key] = WrapValue(key, value);
+        set => _values[key] = value;
     }
 
-    public void Add(string key, BicepValue<T> value) => _values.Add(key, WrapValue(key, value));
-    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, WrapValue(item.Key, item.Value));
+    public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
+    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, item.Value);
 
     // TODO: Decide whether it's important to "unlink" resources on removal
     public bool Remove(string key) => _values.Remove(key);
@@ -108,15 +97,17 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
     public bool Remove(KeyValuePair<string, BicepValue<T>> item) => Remove(item.Key);
     public IEnumerator<KeyValuePair<string, BicepValue<T>>> GetEnumerator() => _values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => _values.GetEnumerator();
+    IEnumerable<string> IReadOnlyDictionary<string, BicepValue<T>>.Keys => _values.Keys;
+    ICollection<IBicepValue> IDictionary<string, IBicepValue>.Values => _values.Values.OfType<IBicepValue>().ToList();
+    IEnumerable<BicepValue<T>> IReadOnlyDictionary<string, BicepValue<T>>.Values => _values.Values;
 
-    ICollection<BicepValue> IDictionary<string, BicepValue>.Values => _values.Values.OfType<BicepValue>().ToList();
-    BicepValue IDictionary<string, BicepValue>.this[string key]
+    IBicepValue IDictionary<string, IBicepValue>.this[string key]
     {
         get => this[key];
         set => this[key] = (BicepValue<T>)value;
     }
-    void IDictionary<string, BicepValue>.Add(string key, BicepValue value) => Add(key, (BicepValue<T>)value);
-    bool IDictionary<string, BicepValue>.TryGetValue(string key, out BicepValue value)
+    void IDictionary<string, IBicepValue>.Add(string key, IBicepValue value) => Add(key, (BicepValue<T>)value);
+    bool IDictionary<string, IBicepValue>.TryGetValue(string key, out IBicepValue value)
     {
         if (TryGetValue(key, out BicepValue<T> val))
         {
@@ -126,29 +117,11 @@ public class BicepDictionary<T> : BicepValue, IDictionary<string, BicepValue<T>>
         value = new BicepValue<object>(BicepSyntax.Null());
         return false;
     }
-    void ICollection<KeyValuePair<string, BicepValue>>.Add(KeyValuePair<string, BicepValue> item) => Add(item.Key, (BicepValue<T>)item.Value);
-    bool ICollection<KeyValuePair<string, BicepValue>>.Contains(KeyValuePair<string, BicepValue> item) => ContainsKey(item.Key);
-    void ICollection<KeyValuePair<string, BicepValue>>.CopyTo(KeyValuePair<string, BicepValue>[] array, int arrayIndex) =>
-        _values.Select(p => new KeyValuePair<string, BicepValue>(p.Key, p.Value)).ToList().CopyTo(array, arrayIndex);
-    bool ICollection<KeyValuePair<string, BicepValue>>.Remove(KeyValuePair<string, BicepValue> item) => Remove(item.Key);
-    IEnumerator<KeyValuePair<string, BicepValue>> IEnumerable<KeyValuePair<string, BicepValue>>.GetEnumerator() =>
-        _values.Select(p => new KeyValuePair<string, BicepValue>(p.Key, p.Value)).GetEnumerator();
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepDictionary<T> DefineProperty(
-        ProvisioningConstruct construct,
-        string propertyName,
-        string[]? bicepPath,
-        bool isOutput = false,
-        bool isRequired = false)
-    {
-        BicepDictionary<T> values =
-            new(new BicepValueReference(construct, propertyName, bicepPath))
-            {
-                IsOutput = isOutput,
-                IsRequired = isRequired
-            };
-        construct.ProvisioningProperties[propertyName] = values;
-        return values;
-    }
+    void ICollection<KeyValuePair<string, IBicepValue>>.Add(KeyValuePair<string, IBicepValue> item) => Add(item.Key, (BicepValue<T>)item.Value);
+    bool ICollection<KeyValuePair<string, IBicepValue>>.Contains(KeyValuePair<string, IBicepValue> item) => ContainsKey(item.Key);
+    void ICollection<KeyValuePair<string, IBicepValue>>.CopyTo(KeyValuePair<string, IBicepValue>[] array, int arrayIndex) =>
+        _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).ToList().CopyTo(array, arrayIndex);
+    bool ICollection<KeyValuePair<string, IBicepValue>>.Remove(KeyValuePair<string, IBicepValue> item) => Remove(item.Key);
+    IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
+        _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
 }

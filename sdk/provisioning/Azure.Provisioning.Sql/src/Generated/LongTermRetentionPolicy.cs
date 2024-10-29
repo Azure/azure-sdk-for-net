@@ -15,86 +15,135 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LongTermRetentionPolicy.
 /// </summary>
-public partial class LongTermRetentionPolicy : Resource
+public partial class LongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The BackupStorageAccessTier for the LTR backups.
     /// </summary>
-    public BicepValue<SqlBackupStorageAccessTier> BackupStorageAccessTier { get => _backupStorageAccessTier; set => _backupStorageAccessTier.Assign(value); }
-    private readonly BicepValue<SqlBackupStorageAccessTier> _backupStorageAccessTier;
+    public BicepValue<SqlBackupStorageAccessTier> BackupStorageAccessTier 
+    {
+        get { Initialize(); return _backupStorageAccessTier!; }
+        set { Initialize(); _backupStorageAccessTier!.Assign(value); }
+    }
+    private BicepValue<SqlBackupStorageAccessTier>? _backupStorageAccessTier;
 
     /// <summary>
     /// The setting whether to make LTR backups immutable.
     /// </summary>
-    public BicepValue<bool> MakeBackupsImmutable { get => _makeBackupsImmutable; set => _makeBackupsImmutable.Assign(value); }
-    private readonly BicepValue<bool> _makeBackupsImmutable;
+    public BicepValue<bool> MakeBackupsImmutable 
+    {
+        get { Initialize(); return _makeBackupsImmutable!; }
+        set { Initialize(); _makeBackupsImmutable!.Assign(value); }
+    }
+    private BicepValue<bool>? _makeBackupsImmutable;
 
     /// <summary>
     /// The monthly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> MonthlyRetention { get => _monthlyRetention; set => _monthlyRetention.Assign(value); }
-    private readonly BicepValue<string> _monthlyRetention;
+    public BicepValue<string> MonthlyRetention 
+    {
+        get { Initialize(); return _monthlyRetention!; }
+        set { Initialize(); _monthlyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _monthlyRetention;
 
     /// <summary>
     /// The weekly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> WeeklyRetention { get => _weeklyRetention; set => _weeklyRetention.Assign(value); }
-    private readonly BicepValue<string> _weeklyRetention;
+    public BicepValue<string> WeeklyRetention 
+    {
+        get { Initialize(); return _weeklyRetention!; }
+        set { Initialize(); _weeklyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _weeklyRetention;
 
     /// <summary>
     /// The week of year to take the yearly backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<int> WeekOfYear { get => _weekOfYear; set => _weekOfYear.Assign(value); }
-    private readonly BicepValue<int> _weekOfYear;
+    public BicepValue<int> WeekOfYear 
+    {
+        get { Initialize(); return _weekOfYear!; }
+        set { Initialize(); _weekOfYear!.Assign(value); }
+    }
+    private BicepValue<int>? _weekOfYear;
 
     /// <summary>
     /// The yearly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
-    public BicepValue<string> YearlyRetention { get => _yearlyRetention; set => _yearlyRetention.Assign(value); }
-    private readonly BicepValue<string> _yearlyRetention;
+    public BicepValue<string> YearlyRetention 
+    {
+        get { Initialize(); return _yearlyRetention!; }
+        set { Initialize(); _yearlyRetention!.Assign(value); }
+    }
+    private BicepValue<string>? _yearlyRetention;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new LongTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the LongTermRetentionPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LongTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LongTermRetentionPolicy.</param>
-    public LongTermRetentionPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+    public LongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _backupStorageAccessTier = BicepValue<SqlBackupStorageAccessTier>.DefineProperty(this, "BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
-        _makeBackupsImmutable = BicepValue<bool>.DefineProperty(this, "MakeBackupsImmutable", ["properties", "makeBackupsImmutable"]);
-        _monthlyRetention = BicepValue<string>.DefineProperty(this, "MonthlyRetention", ["properties", "monthlyRetention"]);
-        _weeklyRetention = BicepValue<string>.DefineProperty(this, "WeeklyRetention", ["properties", "weeklyRetention"]);
-        _weekOfYear = BicepValue<int>.DefineProperty(this, "WeekOfYear", ["properties", "weekOfYear"]);
-        _yearlyRetention = BicepValue<string>.DefineProperty(this, "YearlyRetention", ["properties", "yearlyRetention"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of LongTermRetentionPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _backupStorageAccessTier = DefineProperty<SqlBackupStorageAccessTier>("BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
+        _makeBackupsImmutable = DefineProperty<bool>("MakeBackupsImmutable", ["properties", "makeBackupsImmutable"]);
+        _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
+        _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);
+        _weekOfYear = DefineProperty<int>("WeekOfYear", ["properties", "weekOfYear"]);
+        _yearlyRetention = DefineProperty<string>("YearlyRetention", ["properties", "yearlyRetention"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -102,11 +151,6 @@ public partial class LongTermRetentionPolicy : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -116,9 +160,14 @@ public partial class LongTermRetentionPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing LongTermRetentionPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the LongTermRetentionPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the LongTermRetentionPolicy resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LongTermRetentionPolicy.</param>
     /// <returns>The existing LongTermRetentionPolicy resource.</returns>
-    public static LongTermRetentionPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LongTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

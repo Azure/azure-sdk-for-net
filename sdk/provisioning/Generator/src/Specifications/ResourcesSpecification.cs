@@ -28,6 +28,15 @@ public class ResourcesSpecification : Specification
         CustomizeResource<ArmDeploymentResource>(r => r.FromExpression = true);
         CustomizeEnum<ResourceTypeAliasPatternType>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
         CustomizeEnum<ResourceTypeAliasType>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
+        CustomizePropertyIsoDuration<JitSchedulingPolicy>("Duration");
+        CustomizePropertyIsoDuration<ArmApplicationJitAccessPolicy>("MaximumJitAccessDuration");
+        CustomizePropertyIsoDuration<ArmDeploymentPropertiesExtended>("Duration");
+        // Not generated today:
+        // CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
+        // CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
+        // CustomizePropertyIsoDuration<AzurePowerShellScript>("RetentionInterval");
+        // CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
+        // CustomizePropertyIsoDuration<ArmDeploymentOperationProperties>("Duration");
 
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);

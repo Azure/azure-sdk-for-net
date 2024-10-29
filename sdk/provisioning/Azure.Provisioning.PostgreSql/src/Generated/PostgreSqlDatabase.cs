@@ -16,58 +16,92 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlDatabase.
 /// </summary>
-public partial class PostgreSqlDatabase : Resource
+public partial class PostgreSqlDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The charset of the database.
     /// </summary>
-    public BicepValue<string> Charset { get => _charset; set => _charset.Assign(value); }
-    private readonly BicepValue<string> _charset;
+    public BicepValue<string> Charset 
+    {
+        get { Initialize(); return _charset!; }
+        set { Initialize(); _charset!.Assign(value); }
+    }
+    private BicepValue<string>? _charset;
 
     /// <summary>
     /// The collation of the database.
     /// </summary>
-    public BicepValue<string> Collation { get => _collation; set => _collation.Assign(value); }
-    private readonly BicepValue<string> _collation;
+    public BicepValue<string> Collation 
+    {
+        get { Initialize(); return _collation!; }
+        set { Initialize(); _collation!.Assign(value); }
+    }
+    private BicepValue<string>? _collation;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlServer.
     /// </summary>
-    public PostgreSqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlServer> _parent;
+    public PostgreSqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlDatabase resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlDatabase.</param>
-    public PostgreSqlDatabase(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion ?? "2017-12-01")
+    public PostgreSqlDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/servers/databases", resourceVersion ?? "2017-12-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);
-        _collation = BicepValue<string>.DefineProperty(this, "Collation", ["properties", "collation"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlDatabase.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _charset = DefineProperty<string>("Charset", ["properties", "charset"]);
+        _collation = DefineProperty<string>("Collation", ["properties", "collation"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -75,11 +109,6 @@ public partial class PostgreSqlDatabase : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2017-12-01-preview.
-        /// </summary>
-        public static readonly string V2017_12_01_preview = "2017-12-01-preview";
-
         /// <summary>
         /// 2017-12-01.
         /// </summary>
@@ -89,11 +118,16 @@ public partial class PostgreSqlDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlDatabase.
     /// </summary>
-    /// <param name="resourceName">Name of the PostgreSqlDatabase.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PostgreSqlDatabase resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlDatabase.</param>
     /// <returns>The existing PostgreSqlDatabase resource.</returns>
-    public static PostgreSqlDatabase FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this PostgreSqlDatabase resource.

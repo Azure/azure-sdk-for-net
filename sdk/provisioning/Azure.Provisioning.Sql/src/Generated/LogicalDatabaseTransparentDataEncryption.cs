@@ -15,51 +15,82 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// LogicalDatabaseTransparentDataEncryption.
 /// </summary>
-public partial class LogicalDatabaseTransparentDataEncryption : Resource
+public partial class LogicalDatabaseTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Specifies the state of the transparent data encryption.
     /// </summary>
-    public BicepValue<TransparentDataEncryptionState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<TransparentDataEncryptionState> _state;
+    public BicepValue<TransparentDataEncryptionState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<TransparentDataEncryptionState>? _state;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new LogicalDatabaseTransparentDataEncryption.
     /// </summary>
-    /// <param name="resourceName">Name of the LogicalDatabaseTransparentDataEncryption.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// LogicalDatabaseTransparentDataEncryption resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogicalDatabaseTransparentDataEncryption.</param>
-    public LogicalDatabaseTransparentDataEncryption(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
+    public LogicalDatabaseTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// LogicalDatabaseTransparentDataEncryption.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _state = DefineProperty<TransparentDataEncryptionState>("State", ["properties", "state"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -67,11 +98,6 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -87,9 +113,15 @@ public partial class LogicalDatabaseTransparentDataEncryption : Resource
     /// Creates a reference to an existing
     /// LogicalDatabaseTransparentDataEncryption.
     /// </summary>
-    /// <param name="resourceName">Name of the LogicalDatabaseTransparentDataEncryption.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// LogicalDatabaseTransparentDataEncryption resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the LogicalDatabaseTransparentDataEncryption.</param>
     /// <returns>The existing LogicalDatabaseTransparentDataEncryption resource.</returns>
-    public static LogicalDatabaseTransparentDataEncryption FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static LogicalDatabaseTransparentDataEncryption FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

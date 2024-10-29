@@ -18,44 +18,68 @@ namespace Azure.Provisioning.AppContainers;
 /// <summary>
 /// ContainerApp.
 /// </summary>
-public partial class ContainerApp : Resource
+public partial class ContainerApp : ProvisionableResource
 {
     /// <summary>
     /// Name of the Container App.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Non versioned Container App configuration properties.
     /// </summary>
-    public BicepValue<ContainerAppConfiguration> Configuration { get => _configuration; set => _configuration.Assign(value); }
-    private readonly BicepValue<ContainerAppConfiguration> _configuration;
+    public ContainerAppConfiguration Configuration 
+    {
+        get { Initialize(); return _configuration!; }
+        set { Initialize(); AssignOrReplace(ref _configuration, value); }
+    }
+    private ContainerAppConfiguration? _configuration;
 
     /// <summary>
     /// Resource ID of environment.
     /// </summary>
-    public BicepValue<ResourceIdentifier> EnvironmentId { get => _environmentId; set => _environmentId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _environmentId;
+    public BicepValue<ResourceIdentifier> EnvironmentId 
+    {
+        get { Initialize(); return _environmentId!; }
+        set { Initialize(); _environmentId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _environmentId;
 
     /// <summary>
     /// The complex type of the extended location.
     /// </summary>
-    public BicepValue<ContainerAppExtendedLocation> ExtendedLocation { get => _extendedLocation; set => _extendedLocation.Assign(value); }
-    private readonly BicepValue<ContainerAppExtendedLocation> _extendedLocation;
+    public ContainerAppExtendedLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ContainerAppExtendedLocation? _extendedLocation;
 
     /// <summary>
     /// managed identities for the Container App to interact with other Azure
     /// services without maintaining any secrets or credentials in code.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The fully qualified resource ID of the resource that manages this
@@ -64,115 +88,174 @@ public partial class ContainerApp : Resource
     /// the resource if it is removed from the template since it is managed by
     /// another resource.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; set => _managedBy.Assign(value); }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+        set { Initialize(); _managedBy!.Assign(value); }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// Deprecated. Resource ID of the Container App&apos;s environment.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ManagedEnvironmentId { get => _managedEnvironmentId; set => _managedEnvironmentId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _managedEnvironmentId;
+    public BicepValue<ResourceIdentifier> ManagedEnvironmentId 
+    {
+        get { Initialize(); return _managedEnvironmentId!; }
+        set { Initialize(); _managedEnvironmentId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _managedEnvironmentId;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Container App versioned application definition.
     /// </summary>
-    public BicepValue<ContainerAppTemplate> Template { get => _template; set => _template.Assign(value); }
-    private readonly BicepValue<ContainerAppTemplate> _template;
+    public ContainerAppTemplate Template 
+    {
+        get { Initialize(); return _template!; }
+        set { Initialize(); AssignOrReplace(ref _template, value); }
+    }
+    private ContainerAppTemplate? _template;
 
     /// <summary>
     /// Workload profile name to pin for container app execution.
     /// </summary>
-    public BicepValue<string> WorkloadProfileName { get => _workloadProfileName; set => _workloadProfileName.Assign(value); }
-    private readonly BicepValue<string> _workloadProfileName;
+    public BicepValue<string> WorkloadProfileName 
+    {
+        get { Initialize(); return _workloadProfileName!; }
+        set { Initialize(); _workloadProfileName!.Assign(value); }
+    }
+    private BicepValue<string>? _workloadProfileName;
 
     /// <summary>
     /// Id used to verify domain name ownership.
     /// </summary>
-    public BicepValue<string> CustomDomainVerificationId { get => _customDomainVerificationId; }
-    private readonly BicepValue<string> _customDomainVerificationId;
+    public BicepValue<string> CustomDomainVerificationId 
+    {
+        get { Initialize(); return _customDomainVerificationId!; }
+    }
+    private BicepValue<string>? _customDomainVerificationId;
 
     /// <summary>
     /// The endpoint of the eventstream of the container app.
     /// </summary>
-    public BicepValue<Uri> EventStreamEndpoint { get => _eventStreamEndpoint; }
-    private readonly BicepValue<Uri> _eventStreamEndpoint;
+    public BicepValue<Uri> EventStreamEndpoint 
+    {
+        get { Initialize(); return _eventStreamEndpoint!; }
+    }
+    private BicepValue<Uri>? _eventStreamEndpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Name of the latest ready revision of the Container App.
     /// </summary>
-    public BicepValue<string> LatestReadyRevisionName { get => _latestReadyRevisionName; }
-    private readonly BicepValue<string> _latestReadyRevisionName;
+    public BicepValue<string> LatestReadyRevisionName 
+    {
+        get { Initialize(); return _latestReadyRevisionName!; }
+    }
+    private BicepValue<string>? _latestReadyRevisionName;
 
     /// <summary>
     /// Fully Qualified Domain Name of the latest revision of the Container App.
     /// </summary>
-    public BicepValue<string> LatestRevisionFqdn { get => _latestRevisionFqdn; }
-    private readonly BicepValue<string> _latestRevisionFqdn;
+    public BicepValue<string> LatestRevisionFqdn 
+    {
+        get { Initialize(); return _latestRevisionFqdn!; }
+    }
+    private BicepValue<string>? _latestRevisionFqdn;
 
     /// <summary>
     /// Name of the latest revision of the Container App.
     /// </summary>
-    public BicepValue<string> LatestRevisionName { get => _latestRevisionName; }
-    private readonly BicepValue<string> _latestRevisionName;
+    public BicepValue<string> LatestRevisionName 
+    {
+        get { Initialize(); return _latestRevisionName!; }
+    }
+    private BicepValue<string>? _latestRevisionName;
 
     /// <summary>
     /// Outbound IP Addresses for container app.
     /// </summary>
-    public BicepList<IPAddress> OutboundIPAddressList { get => _outboundIPAddressList; }
-    private readonly BicepList<IPAddress> _outboundIPAddressList;
+    public BicepList<IPAddress> OutboundIPAddressList 
+    {
+        get { Initialize(); return _outboundIPAddressList!; }
+    }
+    private BicepList<IPAddress>? _outboundIPAddressList;
 
     /// <summary>
     /// Provisioning state of the Container App.
     /// </summary>
-    public BicepValue<ContainerAppProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerAppProvisioningState> _provisioningState;
+    public BicepValue<ContainerAppProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerAppProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ContainerApp.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerApp resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
-    public ContainerApp(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
+    public ContainerApp(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _configuration = BicepValue<ContainerAppConfiguration>.DefineProperty(this, "Configuration", ["properties", "configuration"]);
-        _environmentId = BicepValue<ResourceIdentifier>.DefineProperty(this, "EnvironmentId", ["properties", "environmentId"]);
-        _extendedLocation = BicepValue<ContainerAppExtendedLocation>.DefineProperty(this, "ExtendedLocation", ["extendedLocation"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"]);
-        _managedEnvironmentId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ManagedEnvironmentId", ["properties", "managedEnvironmentId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _template = BicepValue<ContainerAppTemplate>.DefineProperty(this, "Template", ["properties", "template"]);
-        _workloadProfileName = BicepValue<string>.DefineProperty(this, "WorkloadProfileName", ["properties", "workloadProfileName"]);
-        _customDomainVerificationId = BicepValue<string>.DefineProperty(this, "CustomDomainVerificationId", ["properties", "customDomainVerificationId"], isOutput: true);
-        _eventStreamEndpoint = BicepValue<Uri>.DefineProperty(this, "EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _latestReadyRevisionName = BicepValue<string>.DefineProperty(this, "LatestReadyRevisionName", ["properties", "latestReadyRevisionName"], isOutput: true);
-        _latestRevisionFqdn = BicepValue<string>.DefineProperty(this, "LatestRevisionFqdn", ["properties", "latestRevisionFqdn"], isOutput: true);
-        _latestRevisionName = BicepValue<string>.DefineProperty(this, "LatestRevisionName", ["properties", "latestRevisionName"], isOutput: true);
-        _outboundIPAddressList = BicepList<IPAddress>.DefineProperty(this, "OutboundIPAddressList", ["properties", "outboundIpAddresses"], isOutput: true);
-        _provisioningState = BicepValue<ContainerAppProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerApp.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _configuration = DefineModelProperty<ContainerAppConfiguration>("Configuration", ["properties", "configuration"]);
+        _environmentId = DefineProperty<ResourceIdentifier>("EnvironmentId", ["properties", "environmentId"]);
+        _extendedLocation = DefineModelProperty<ContainerAppExtendedLocation>("ExtendedLocation", ["extendedLocation"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"]);
+        _managedEnvironmentId = DefineProperty<ResourceIdentifier>("ManagedEnvironmentId", ["properties", "managedEnvironmentId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _template = DefineModelProperty<ContainerAppTemplate>("Template", ["properties", "template"]);
+        _workloadProfileName = DefineProperty<string>("WorkloadProfileName", ["properties", "workloadProfileName"]);
+        _customDomainVerificationId = DefineProperty<string>("CustomDomainVerificationId", ["properties", "customDomainVerificationId"], isOutput: true);
+        _eventStreamEndpoint = DefineProperty<Uri>("EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _latestReadyRevisionName = DefineProperty<string>("LatestReadyRevisionName", ["properties", "latestReadyRevisionName"], isOutput: true);
+        _latestRevisionFqdn = DefineProperty<string>("LatestRevisionFqdn", ["properties", "latestRevisionFqdn"], isOutput: true);
+        _latestRevisionName = DefineProperty<string>("LatestRevisionName", ["properties", "latestRevisionName"], isOutput: true);
+        _outboundIPAddressList = DefineListProperty<IPAddress>("OutboundIPAddressList", ["properties", "outboundIpAddresses"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerAppProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -180,11 +263,6 @@ public partial class ContainerApp : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-08-02-preview.
-        /// </summary>
-        public static readonly string V2024_08_02_preview = "2024-08-02-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -209,11 +287,16 @@ public partial class ContainerApp : Resource
     /// <summary>
     /// Creates a reference to an existing ContainerApp.
     /// </summary>
-    /// <param name="resourceName">Name of the ContainerApp.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ContainerApp resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
     /// <returns>The existing ContainerApp resource.</returns>
-    public static ContainerApp FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ContainerApp FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ContainerApp resource.

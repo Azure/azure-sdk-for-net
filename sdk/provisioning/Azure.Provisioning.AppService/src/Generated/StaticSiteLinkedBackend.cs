@@ -15,79 +15,123 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteLinkedBackend.
 /// </summary>
-public partial class StaticSiteLinkedBackend : Resource
+public partial class StaticSiteLinkedBackend : ProvisionableResource
 {
     /// <summary>
     /// Name of the backend to link to the static site.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The resource id of the backend linked to the static site.
     /// </summary>
-    public BicepValue<ResourceIdentifier> BackendResourceId { get => _backendResourceId; set => _backendResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _backendResourceId;
+    public BicepValue<ResourceIdentifier> BackendResourceId 
+    {
+        get { Initialize(); return _backendResourceId!; }
+        set { Initialize(); _backendResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _backendResourceId;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The region of the backend linked to the static site.
     /// </summary>
-    public BicepValue<string> Region { get => _region; set => _region.Assign(value); }
-    private readonly BicepValue<string> _region;
+    public BicepValue<string> Region 
+    {
+        get { Initialize(); return _region!; }
+        set { Initialize(); _region!.Assign(value); }
+    }
+    private BicepValue<string>? _region;
 
     /// <summary>
     /// The date and time on which the backend was linked to the static site.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The provisioning state of the linking process.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSiteLinkedBackend.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteLinkedBackend.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteLinkedBackend resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteLinkedBackend.</param>
-    public StaticSiteLinkedBackend(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2024-04-01")
+    public StaticSiteLinkedBackend(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/linkedBackends", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _backendResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "BackendResourceId", ["properties", "backendResourceId"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _region = BicepValue<string>.DefineProperty(this, "Region", ["properties", "region"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdOn"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StaticSiteLinkedBackend.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _backendResourceId = DefineProperty<ResourceIdentifier>("BackendResourceId", ["properties", "backendResourceId"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _region = DefineProperty<string>("Region", ["properties", "region"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdOn"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -169,9 +213,14 @@ public partial class StaticSiteLinkedBackend : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteLinkedBackend.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteLinkedBackend.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteLinkedBackend resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteLinkedBackend.</param>
     /// <returns>The existing StaticSiteLinkedBackend resource.</returns>
-    public static StaticSiteLinkedBackend FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteLinkedBackend FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

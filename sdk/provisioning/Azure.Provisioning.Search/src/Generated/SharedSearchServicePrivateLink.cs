@@ -15,53 +15,84 @@ namespace Azure.Provisioning.Search;
 /// <summary>
 /// SharedSearchServicePrivateLink.
 /// </summary>
-public partial class SharedSearchServicePrivateLink : Resource
+public partial class SharedSearchServicePrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource managed by the Azure AI
     /// Search service within the specified resource group.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Describes the properties of a shared private link resource managed by
     /// the Azure AI Search service.
     /// </summary>
-    public BicepValue<SharedSearchServicePrivateLinkResourceProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<SharedSearchServicePrivateLinkResourceProperties> _properties;
+    public SharedSearchServicePrivateLinkResourceProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private SharedSearchServicePrivateLinkResourceProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SearchService.
     /// </summary>
-    public SearchService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SearchService> _parent;
+    public SearchService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SearchService>? _parent;
 
     /// <summary>
     /// Creates a new SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SharedSearchServicePrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SharedSearchServicePrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
-    public SharedSearchServicePrivateLink(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2023-11-01")
+    public SharedSearchServicePrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Search/searchServices/sharedPrivateLinkResources", resourceVersion ?? "2023-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _properties = BicepValue<SharedSearchServicePrivateLinkResourceProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SearchService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// SharedSearchServicePrivateLink.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _properties = DefineModelProperty<SharedSearchServicePrivateLinkResourceProperties>("Properties", ["properties"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SearchService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -138,9 +169,14 @@ public partial class SharedSearchServicePrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing SharedSearchServicePrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the SharedSearchServicePrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SharedSearchServicePrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SharedSearchServicePrivateLink.</param>
     /// <returns>The existing SharedSearchServicePrivateLink resource.</returns>
-    public static SharedSearchServicePrivateLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SharedSearchServicePrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

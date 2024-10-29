@@ -86,8 +86,11 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteObjectValue(IPAddress, options);
             }
-            writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
+            if (Optional.IsDefined(ContainerGroupOSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(ContainerGroupOSType.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
@@ -163,6 +166,21 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
+            if (Optional.IsDefined(ContainerGroupProfile))
+            {
+                writer.WritePropertyName("containerGroupProfile"u8);
+                writer.WriteObjectValue(ContainerGroupProfile, options);
+            }
+            if (Optional.IsDefined(StandbyPoolProfile))
+            {
+                writer.WritePropertyName("standbyPoolProfile"u8);
+                writer.WriteObjectValue(StandbyPoolProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsCreatedFromStandbyPool))
+            {
+                writer.WritePropertyName("isCreatedFromStandbyPool"u8);
+                writer.WriteBooleanValue(IsCreatedFromStandbyPool.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -199,7 +217,7 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
             ContainerGroupIPAddress ipAddress = default;
-            ContainerInstanceOperatingSystemType osType = default;
+            ContainerInstanceOperatingSystemType? osType = default;
             IList<ContainerVolume> volumes = default;
             ContainerGroupInstanceView instanceView = default;
             ContainerGroupDiagnostics diagnostics = default;
@@ -211,6 +229,9 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<DeploymentExtensionSpec> extensions = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
+            ContainerGroupProfileReferenceDefinition containerGroupProfile = default;
+            StandbyPoolProfileDefinition standbyPoolProfile = default;
+            bool? isCreatedFromStandbyPool = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,6 +360,10 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("osType"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
                             continue;
                         }
@@ -461,6 +486,33 @@ namespace Azure.ResourceManager.ContainerInstance
                             priority = new ContainerGroupPriority(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("containerGroupProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerGroupProfile = ContainerGroupProfileReferenceDefinition.DeserializeContainerGroupProfileReferenceDefinition(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("standbyPoolProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            standbyPoolProfile = StandbyPoolProfileDefinition.DeserializeStandbyPoolProfileDefinition(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("isCreatedFromStandbyPool"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isCreatedFromStandbyPool = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -495,6 +547,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 confidentialComputeProperties,
                 priority,
+                containerGroupProfile,
+                standbyPoolProfile,
+                isCreatedFromStandbyPool,
                 zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

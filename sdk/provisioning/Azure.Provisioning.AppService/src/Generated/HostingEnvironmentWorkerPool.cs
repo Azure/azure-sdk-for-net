@@ -16,93 +16,146 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// HostingEnvironmentWorkerPool.
 /// </summary>
-public partial class HostingEnvironmentWorkerPool : Resource
+public partial class HostingEnvironmentWorkerPool : ProvisionableResource
 {
     /// <summary>
     /// Name of the worker pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Shared or dedicated app hosting.
     /// </summary>
-    public BicepValue<ComputeModeOption> ComputeMode { get => _computeMode; set => _computeMode.Assign(value); }
-    private readonly BicepValue<ComputeModeOption> _computeMode;
+    public BicepValue<ComputeModeOption> ComputeMode 
+    {
+        get { Initialize(); return _computeMode!; }
+        set { Initialize(); _computeMode!.Assign(value); }
+    }
+    private BicepValue<ComputeModeOption>? _computeMode;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Description of a SKU for a scalable resource.
     /// </summary>
-    public BicepValue<AppServiceSkuDescription> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<AppServiceSkuDescription> _sku;
+    public AppServiceSkuDescription Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private AppServiceSkuDescription? _sku;
 
     /// <summary>
     /// Number of instances in the worker pool.
     /// </summary>
-    public BicepValue<int> WorkerCount { get => _workerCount; set => _workerCount.Assign(value); }
-    private readonly BicepValue<int> _workerCount;
+    public BicepValue<int> WorkerCount 
+    {
+        get { Initialize(); return _workerCount!; }
+        set { Initialize(); _workerCount!.Assign(value); }
+    }
+    private BicepValue<int>? _workerCount;
 
     /// <summary>
     /// VM size of the worker pool instances.
     /// </summary>
-    public BicepValue<string> WorkerSize { get => _workerSize; set => _workerSize.Assign(value); }
-    private readonly BicepValue<string> _workerSize;
+    public BicepValue<string> WorkerSize 
+    {
+        get { Initialize(); return _workerSize!; }
+        set { Initialize(); _workerSize!.Assign(value); }
+    }
+    private BicepValue<string>? _workerSize;
 
     /// <summary>
     /// Worker size ID for referencing this worker pool.
     /// </summary>
-    public BicepValue<int> WorkerSizeId { get => _workerSizeId; set => _workerSizeId.Assign(value); }
-    private readonly BicepValue<int> _workerSizeId;
+    public BicepValue<int> WorkerSizeId 
+    {
+        get { Initialize(); return _workerSizeId!; }
+        set { Initialize(); _workerSizeId!.Assign(value); }
+    }
+    private BicepValue<int>? _workerSizeId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Names of all instances in the worker pool (read only).
     /// </summary>
-    public BicepList<string> InstanceNames { get => _instanceNames; }
-    private readonly BicepList<string> _instanceNames;
+    public BicepList<string> InstanceNames 
+    {
+        get { Initialize(); return _instanceNames!; }
+    }
+    private BicepList<string>? _instanceNames;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppServiceEnvironment.
     /// </summary>
-    public AppServiceEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppServiceEnvironment> _parent;
+    public AppServiceEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppServiceEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new HostingEnvironmentWorkerPool.
     /// </summary>
-    /// <param name="resourceName">Name of the HostingEnvironmentWorkerPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the HostingEnvironmentWorkerPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentWorkerPool.</param>
-    public HostingEnvironmentWorkerPool(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments/workerPools", resourceVersion ?? "2024-04-01")
+    public HostingEnvironmentWorkerPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/workerPools", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _computeMode = BicepValue<ComputeModeOption>.DefineProperty(this, "ComputeMode", ["properties", "computeMode"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _sku = BicepValue<AppServiceSkuDescription>.DefineProperty(this, "Sku", ["sku"]);
-        _workerCount = BicepValue<int>.DefineProperty(this, "WorkerCount", ["properties", "workerCount"]);
-        _workerSize = BicepValue<string>.DefineProperty(this, "WorkerSize", ["properties", "workerSize"]);
-        _workerSizeId = BicepValue<int>.DefineProperty(this, "WorkerSizeId", ["properties", "workerSizeId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _instanceNames = BicepList<string>.DefineProperty(this, "InstanceNames", ["properties", "instanceNames"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppServiceEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of HostingEnvironmentWorkerPool.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _computeMode = DefineProperty<ComputeModeOption>("ComputeMode", ["properties", "computeMode"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _sku = DefineModelProperty<AppServiceSkuDescription>("Sku", ["sku"]);
+        _workerCount = DefineProperty<int>("WorkerCount", ["properties", "workerCount"]);
+        _workerSize = DefineProperty<string>("WorkerSize", ["properties", "workerSize"]);
+        _workerSizeId = DefineProperty<int>("WorkerSizeId", ["properties", "workerSizeId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _instanceNames = DefineListProperty<string>("InstanceNames", ["properties", "instanceNames"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppServiceEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -264,9 +317,14 @@ public partial class HostingEnvironmentWorkerPool : Resource
     /// <summary>
     /// Creates a reference to an existing HostingEnvironmentWorkerPool.
     /// </summary>
-    /// <param name="resourceName">Name of the HostingEnvironmentWorkerPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the HostingEnvironmentWorkerPool
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentWorkerPool.</param>
     /// <returns>The existing HostingEnvironmentWorkerPool resource.</returns>
-    public static HostingEnvironmentWorkerPool FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static HostingEnvironmentWorkerPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

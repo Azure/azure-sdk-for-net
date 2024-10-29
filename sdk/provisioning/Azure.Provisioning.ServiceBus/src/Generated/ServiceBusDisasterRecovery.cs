@@ -16,91 +16,136 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusDisasterRecovery.
 /// </summary>
-public partial class ServiceBusDisasterRecovery : Resource
+public partial class ServiceBusDisasterRecovery : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Primary/Secondary eventhub namespace name, which is part of GEO DR
     /// pairing.
     /// </summary>
-    public BicepValue<string> AlternateName { get => _alternateName; set => _alternateName.Assign(value); }
-    private readonly BicepValue<string> _alternateName;
+    public BicepValue<string> AlternateName 
+    {
+        get { Initialize(); return _alternateName!; }
+        set { Initialize(); _alternateName!.Assign(value); }
+    }
+    private BicepValue<string>? _alternateName;
 
     /// <summary>
     /// ARM Id of the Primary/Secondary eventhub namespace name, which is part
     /// of GEO DR pairing.
     /// </summary>
-    public BicepValue<string> PartnerNamespace { get => _partnerNamespace; set => _partnerNamespace.Assign(value); }
-    private readonly BicepValue<string> _partnerNamespace;
+    public BicepValue<string> PartnerNamespace 
+    {
+        get { Initialize(); return _partnerNamespace!; }
+        set { Initialize(); _partnerNamespace!.Assign(value); }
+    }
+    private BicepValue<string>? _partnerNamespace;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Number of entities pending to be replicated.
     /// </summary>
-    public BicepValue<long> PendingReplicationOperationsCount { get => _pendingReplicationOperationsCount; }
-    private readonly BicepValue<long> _pendingReplicationOperationsCount;
+    public BicepValue<long> PendingReplicationOperationsCount 
+    {
+        get { Initialize(); return _pendingReplicationOperationsCount!; }
+    }
+    private BicepValue<long>? _pendingReplicationOperationsCount;
 
     /// <summary>
     /// Provisioning state of the Alias(Disaster Recovery configuration) -
     /// possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or
     /// &apos;Failed&apos;.
     /// </summary>
-    public BicepValue<ServiceBusDisasterRecoveryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ServiceBusDisasterRecoveryProvisioningState> _provisioningState;
+    public BicepValue<ServiceBusDisasterRecoveryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ServiceBusDisasterRecoveryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// role of namespace in GEO DR - possible values &apos;Primary&apos; or
     /// &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;.
     /// </summary>
-    public BicepValue<ServiceBusDisasterRecoveryRole> Role { get => _role; }
-    private readonly BicepValue<ServiceBusDisasterRecoveryRole> _role;
+    public BicepValue<ServiceBusDisasterRecoveryRole> Role 
+    {
+        get { Initialize(); return _role!; }
+    }
+    private BicepValue<ServiceBusDisasterRecoveryRole>? _role;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusNamespace.
     /// </summary>
-    public ServiceBusNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusNamespace> _parent;
+    public ServiceBusNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusNamespace>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
-    public ServiceBusDisasterRecovery(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
+    public ServiceBusDisasterRecovery(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _alternateName = BicepValue<string>.DefineProperty(this, "AlternateName", ["properties", "alternateName"]);
-        _partnerNamespace = BicepValue<string>.DefineProperty(this, "PartnerNamespace", ["properties", "partnerNamespace"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _pendingReplicationOperationsCount = BicepValue<long>.DefineProperty(this, "PendingReplicationOperationsCount", ["properties", "pendingReplicationOperationsCount"], isOutput: true);
-        _provisioningState = BicepValue<ServiceBusDisasterRecoveryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _role = BicepValue<ServiceBusDisasterRecoveryRole>.DefineProperty(this, "Role", ["properties", "role"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ServiceBusNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ServiceBusDisasterRecovery.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _alternateName = DefineProperty<string>("AlternateName", ["properties", "alternateName"]);
+        _partnerNamespace = DefineProperty<string>("PartnerNamespace", ["properties", "partnerNamespace"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _pendingReplicationOperationsCount = DefineProperty<long>("PendingReplicationOperationsCount", ["properties", "pendingReplicationOperationsCount"], isOutput: true);
+        _provisioningState = DefineProperty<ServiceBusDisasterRecoveryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _role = DefineProperty<ServiceBusDisasterRecoveryRole>("Role", ["properties", "role"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ServiceBusNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -127,11 +172,16 @@ public partial class ServiceBusDisasterRecovery : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusDisasterRecovery.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusDisasterRecovery.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusDisasterRecovery
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusDisasterRecovery.</param>
     /// <returns>The existing ServiceBusDisasterRecovery resource.</returns>
-    public static ServiceBusDisasterRecovery FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusDisasterRecovery FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ServiceBusDisasterRecovery

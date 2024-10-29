@@ -17,93 +17,143 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsSchemaGroup.
 /// </summary>
-public partial class EventHubsSchemaGroup : Resource
+public partial class EventHubsSchemaGroup : ProvisionableResource
 {
     /// <summary>
     /// The Schema Group name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// dictionary object for SchemaGroup group properties.
     /// </summary>
-    public BicepDictionary<string> GroupProperties { get => _groupProperties; set => _groupProperties.Assign(value); }
-    private readonly BicepDictionary<string> _groupProperties;
+    public BicepDictionary<string> GroupProperties 
+    {
+        get { Initialize(); return _groupProperties!; }
+        set { Initialize(); _groupProperties!.Assign(value); }
+    }
+    private BicepDictionary<string>? _groupProperties;
 
     /// <summary>
     /// Gets or sets the schema compatibility.
     /// </summary>
-    public BicepValue<EventHubsSchemaCompatibility> SchemaCompatibility { get => _schemaCompatibility; set => _schemaCompatibility.Assign(value); }
-    private readonly BicepValue<EventHubsSchemaCompatibility> _schemaCompatibility;
+    public BicepValue<EventHubsSchemaCompatibility> SchemaCompatibility 
+    {
+        get { Initialize(); return _schemaCompatibility!; }
+        set { Initialize(); _schemaCompatibility!.Assign(value); }
+    }
+    private BicepValue<EventHubsSchemaCompatibility>? _schemaCompatibility;
 
     /// <summary>
     /// Gets or sets the schema type.
     /// </summary>
-    public BicepValue<EventHubsSchemaType> SchemaType { get => _schemaType; set => _schemaType.Assign(value); }
-    private readonly BicepValue<EventHubsSchemaType> _schemaType;
+    public BicepValue<EventHubsSchemaType> SchemaType 
+    {
+        get { Initialize(); return _schemaType!; }
+        set { Initialize(); _schemaType!.Assign(value); }
+    }
+    private BicepValue<EventHubsSchemaType>? _schemaType;
 
     /// <summary>
     /// Exact time the Schema Group was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedAtUtc { get => _createdAtUtc; }
-    private readonly BicepValue<DateTimeOffset> _createdAtUtc;
+    public BicepValue<DateTimeOffset> CreatedAtUtc 
+    {
+        get { Initialize(); return _createdAtUtc!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdAtUtc;
 
     /// <summary>
     /// The ETag value.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Exact time the Schema Group was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedAtUtc { get => _updatedAtUtc; }
-    private readonly BicepValue<DateTimeOffset> _updatedAtUtc;
+    public BicepValue<DateTimeOffset> UpdatedAtUtc 
+    {
+        get { Initialize(); return _updatedAtUtc!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedAtUtc;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventHubsNamespace.
     /// </summary>
-    public EventHubsNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventHubsNamespace> _parent;
+    public EventHubsNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventHubsNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventHubsSchemaGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsSchemaGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
-    public EventHubsSchemaGroup(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion ?? "2024-01-01")
+    public EventHubsSchemaGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/schemagroups", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _groupProperties = BicepDictionary<string>.DefineProperty(this, "GroupProperties", ["properties", "groupProperties"]);
-        _schemaCompatibility = BicepValue<EventHubsSchemaCompatibility>.DefineProperty(this, "SchemaCompatibility", ["properties", "schemaCompatibility"]);
-        _schemaType = BicepValue<EventHubsSchemaType>.DefineProperty(this, "SchemaType", ["properties", "schemaType"]);
-        _createdAtUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedAtUtc", ["properties", "createdAtUtc"], isOutput: true);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["properties", "eTag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedAtUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedAtUtc", ["properties", "updatedAtUtc"], isOutput: true);
-        _parent = ResourceReference<EventHubsNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventHubsSchemaGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _groupProperties = DefineDictionaryProperty<string>("GroupProperties", ["properties", "groupProperties"]);
+        _schemaCompatibility = DefineProperty<EventHubsSchemaCompatibility>("SchemaCompatibility", ["properties", "schemaCompatibility"]);
+        _schemaType = DefineProperty<EventHubsSchemaType>("SchemaType", ["properties", "schemaType"]);
+        _createdAtUtc = DefineProperty<DateTimeOffset>("CreatedAtUtc", ["properties", "createdAtUtc"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["properties", "eTag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedAtUtc = DefineProperty<DateTimeOffset>("UpdatedAtUtc", ["properties", "updatedAtUtc"], isOutput: true);
+        _parent = DefineResource<EventHubsNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -111,11 +161,6 @@ public partial class EventHubsSchemaGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -145,9 +190,14 @@ public partial class EventHubsSchemaGroup : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsSchemaGroup.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHubsSchemaGroup.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHubsSchemaGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHubsSchemaGroup.</param>
     /// <returns>The existing EventHubsSchemaGroup resource.</returns>
-    public static EventHubsSchemaGroup FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsSchemaGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

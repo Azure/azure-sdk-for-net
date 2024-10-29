@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         void IJsonModel<CropRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CropRegion)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("aspectRatio"u8);
             writer.WriteNumberValue(AspectRatio);
             writer.WritePropertyName("boundingBox"u8);
@@ -45,7 +53,6 @@ namespace Azure.AI.Vision.ImageAnalysis
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CropRegion IJsonModel<CropRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

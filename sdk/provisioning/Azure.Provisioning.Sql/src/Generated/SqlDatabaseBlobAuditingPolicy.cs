@@ -16,13 +16,16 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlDatabaseBlobAuditingPolicy.
 /// </summary>
-public partial class SqlDatabaseBlobAuditingPolicy : Resource
+public partial class SqlDatabaseBlobAuditingPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Specifies the Actions-Groups and Actions to audit.
@@ -82,8 +85,12 @@ public partial class SqlDatabaseBlobAuditingPolicy : Resource
     /// [Database-Level Audit
     /// Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
     /// </summary>
-    public BicepList<string> AuditActionsAndGroups { get => _auditActionsAndGroups; set => _auditActionsAndGroups.Assign(value); }
-    private readonly BicepList<string> _auditActionsAndGroups;
+    public BicepList<string> AuditActionsAndGroups 
+    {
+        get { Initialize(); return _auditActionsAndGroups!; }
+        set { Initialize(); _auditActionsAndGroups!.Assign(value); }
+    }
+    private BicepList<string>? _auditActionsAndGroups;
 
     /// <summary>
     /// Specifies whether audit events are sent to Azure Monitor.
@@ -103,43 +110,67 @@ public partial class SqlDatabaseBlobAuditingPolicy : Resource
     /// or [Diagnostic Settings
     /// PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
     /// </summary>
-    public BicepValue<bool> IsAzureMonitorTargetEnabled { get => _isAzureMonitorTargetEnabled; set => _isAzureMonitorTargetEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isAzureMonitorTargetEnabled;
+    public BicepValue<bool> IsAzureMonitorTargetEnabled 
+    {
+        get { Initialize(); return _isAzureMonitorTargetEnabled!; }
+        set { Initialize(); _isAzureMonitorTargetEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAzureMonitorTargetEnabled;
 
     /// <summary>
     /// Specifies whether Managed Identity is used to access blob storage.
     /// </summary>
-    public BicepValue<bool> IsManagedIdentityInUse { get => _isManagedIdentityInUse; set => _isManagedIdentityInUse.Assign(value); }
-    private readonly BicepValue<bool> _isManagedIdentityInUse;
+    public BicepValue<bool> IsManagedIdentityInUse 
+    {
+        get { Initialize(); return _isManagedIdentityInUse!; }
+        set { Initialize(); _isManagedIdentityInUse!.Assign(value); }
+    }
+    private BicepValue<bool>? _isManagedIdentityInUse;
 
     /// <summary>
     /// Specifies whether storageAccountAccessKey value is the storage&apos;s
     /// secondary key.
     /// </summary>
-    public BicepValue<bool> IsStorageSecondaryKeyInUse { get => _isStorageSecondaryKeyInUse; set => _isStorageSecondaryKeyInUse.Assign(value); }
-    private readonly BicepValue<bool> _isStorageSecondaryKeyInUse;
+    public BicepValue<bool> IsStorageSecondaryKeyInUse 
+    {
+        get { Initialize(); return _isStorageSecondaryKeyInUse!; }
+        set { Initialize(); _isStorageSecondaryKeyInUse!.Assign(value); }
+    }
+    private BicepValue<bool>? _isStorageSecondaryKeyInUse;
 
     /// <summary>
     /// Specifies the amount of time in milliseconds that can elapse before
     /// audit actions are forced to be processed.             The default
     /// minimum value is 1000 (1 second). The maximum is 2,147,483,647.
     /// </summary>
-    public BicepValue<int> QueueDelayMs { get => _queueDelayMs; set => _queueDelayMs.Assign(value); }
-    private readonly BicepValue<int> _queueDelayMs;
+    public BicepValue<int> QueueDelayMs 
+    {
+        get { Initialize(); return _queueDelayMs!; }
+        set { Initialize(); _queueDelayMs!.Assign(value); }
+    }
+    private BicepValue<int>? _queueDelayMs;
 
     /// <summary>
     /// Specifies the number of days to keep in the audit logs in the storage
     /// account.
     /// </summary>
-    public BicepValue<int> RetentionDays { get => _retentionDays; set => _retentionDays.Assign(value); }
-    private readonly BicepValue<int> _retentionDays;
+    public BicepValue<int> RetentionDays 
+    {
+        get { Initialize(); return _retentionDays!; }
+        set { Initialize(); _retentionDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionDays;
 
     /// <summary>
     /// Specifies the state of the audit. If state is Enabled, storageEndpoint
     /// or isAzureMonitorTargetEnabled are required.
     /// </summary>
-    public BicepValue<BlobAuditingPolicyState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<BlobAuditingPolicyState> _state;
+    public BicepValue<BlobAuditingPolicyState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<BlobAuditingPolicyState>? _state;
 
     /// <summary>
     /// Specifies the identifier key of the auditing storage account.
@@ -154,70 +185,108 @@ public partial class SqlDatabaseBlobAuditingPolicy : Resource
     /// more information, see [Auditing to storage using Managed Identity
     /// authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     /// </summary>
-    public BicepValue<string> StorageAccountAccessKey { get => _storageAccountAccessKey; set => _storageAccountAccessKey.Assign(value); }
-    private readonly BicepValue<string> _storageAccountAccessKey;
+    public BicepValue<string> StorageAccountAccessKey 
+    {
+        get { Initialize(); return _storageAccountAccessKey!; }
+        set { Initialize(); _storageAccountAccessKey!.Assign(value); }
+    }
+    private BicepValue<string>? _storageAccountAccessKey;
 
     /// <summary>
     /// Specifies the blob storage subscription Id.
     /// </summary>
-    public BicepValue<Guid> StorageAccountSubscriptionId { get => _storageAccountSubscriptionId; set => _storageAccountSubscriptionId.Assign(value); }
-    private readonly BicepValue<Guid> _storageAccountSubscriptionId;
+    public BicepValue<Guid> StorageAccountSubscriptionId 
+    {
+        get { Initialize(); return _storageAccountSubscriptionId!; }
+        set { Initialize(); _storageAccountSubscriptionId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _storageAccountSubscriptionId;
 
     /// <summary>
     /// Specifies the blob storage endpoint (e.g.
     /// https://MyAccount.blob.core.windows.net). If state is Enabled,
     /// storageEndpoint or isAzureMonitorTargetEnabled is required.
     /// </summary>
-    public BicepValue<string> StorageEndpoint { get => _storageEndpoint; set => _storageEndpoint.Assign(value); }
-    private readonly BicepValue<string> _storageEndpoint;
+    public BicepValue<string> StorageEndpoint 
+    {
+        get { Initialize(); return _storageEndpoint!; }
+        set { Initialize(); _storageEndpoint!.Assign(value); }
+    }
+    private BicepValue<string>? _storageEndpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Resource kind.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new SqlDatabaseBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseBlobAuditingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlDatabaseBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseBlobAuditingPolicy.</param>
-    public SqlDatabaseBlobAuditingPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/databases/auditingSettings", resourceVersion ?? "2021-11-01")
+    public SqlDatabaseBlobAuditingPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/auditingSettings", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _auditActionsAndGroups = BicepList<string>.DefineProperty(this, "AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
-        _isAzureMonitorTargetEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);
-        _isManagedIdentityInUse = BicepValue<bool>.DefineProperty(this, "IsManagedIdentityInUse", ["properties", "isManagedIdentityInUse"]);
-        _isStorageSecondaryKeyInUse = BicepValue<bool>.DefineProperty(this, "IsStorageSecondaryKeyInUse", ["properties", "isStorageSecondaryKeyInUse"]);
-        _queueDelayMs = BicepValue<int>.DefineProperty(this, "QueueDelayMs", ["properties", "queueDelayMs"]);
-        _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
-        _state = BicepValue<BlobAuditingPolicyState>.DefineProperty(this, "State", ["properties", "state"]);
-        _storageAccountAccessKey = BicepValue<string>.DefineProperty(this, "StorageAccountAccessKey", ["properties", "storageAccountAccessKey"]);
-        _storageAccountSubscriptionId = BicepValue<Guid>.DefineProperty(this, "StorageAccountSubscriptionId", ["properties", "storageAccountSubscriptionId"]);
-        _storageEndpoint = BicepValue<string>.DefineProperty(this, "StorageEndpoint", ["properties", "storageEndpoint"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// SqlDatabaseBlobAuditingPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _auditActionsAndGroups = DefineListProperty<string>("AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
+        _isAzureMonitorTargetEnabled = DefineProperty<bool>("IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);
+        _isManagedIdentityInUse = DefineProperty<bool>("IsManagedIdentityInUse", ["properties", "isManagedIdentityInUse"]);
+        _isStorageSecondaryKeyInUse = DefineProperty<bool>("IsStorageSecondaryKeyInUse", ["properties", "isStorageSecondaryKeyInUse"]);
+        _queueDelayMs = DefineProperty<int>("QueueDelayMs", ["properties", "queueDelayMs"]);
+        _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
+        _state = DefineProperty<BlobAuditingPolicyState>("State", ["properties", "state"]);
+        _storageAccountAccessKey = DefineProperty<string>("StorageAccountAccessKey", ["properties", "storageAccountAccessKey"]);
+        _storageAccountSubscriptionId = DefineProperty<Guid>("StorageAccountSubscriptionId", ["properties", "storageAccountSubscriptionId"]);
+        _storageEndpoint = DefineProperty<string>("StorageEndpoint", ["properties", "storageEndpoint"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -225,11 +294,6 @@ public partial class SqlDatabaseBlobAuditingPolicy : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -239,9 +303,14 @@ public partial class SqlDatabaseBlobAuditingPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlDatabaseBlobAuditingPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlDatabaseBlobAuditingPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlDatabaseBlobAuditingPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseBlobAuditingPolicy.</param>
     /// <returns>The existing SqlDatabaseBlobAuditingPolicy resource.</returns>
-    public static SqlDatabaseBlobAuditingPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlDatabaseBlobAuditingPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

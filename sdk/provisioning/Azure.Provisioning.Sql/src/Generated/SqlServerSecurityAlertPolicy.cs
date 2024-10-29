@@ -16,106 +16,162 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerSecurityAlertPolicy.
 /// </summary>
-public partial class SqlServerSecurityAlertPolicy : Resource
+public partial class SqlServerSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Specifies an array of alerts that are disabled. Allowed values are:
     /// Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly,
     /// Data_Exfiltration, Unsafe_Action, Brute_Force.
     /// </summary>
-    public BicepList<string> DisabledAlerts { get => _disabledAlerts; set => _disabledAlerts.Assign(value); }
-    private readonly BicepList<string> _disabledAlerts;
+    public BicepList<string> DisabledAlerts 
+    {
+        get { Initialize(); return _disabledAlerts!; }
+        set { Initialize(); _disabledAlerts!.Assign(value); }
+    }
+    private BicepList<string>? _disabledAlerts;
 
     /// <summary>
     /// Specifies an array of e-mail addresses to which the alert is sent.
     /// </summary>
-    public BicepList<string> EmailAddresses { get => _emailAddresses; set => _emailAddresses.Assign(value); }
-    private readonly BicepList<string> _emailAddresses;
+    public BicepList<string> EmailAddresses 
+    {
+        get { Initialize(); return _emailAddresses!; }
+        set { Initialize(); _emailAddresses!.Assign(value); }
+    }
+    private BicepList<string>? _emailAddresses;
 
     /// <summary>
     /// Specifies the number of days to keep in the Threat Detection audit logs.
     /// </summary>
-    public BicepValue<int> RetentionDays { get => _retentionDays; set => _retentionDays.Assign(value); }
-    private readonly BicepValue<int> _retentionDays;
+    public BicepValue<int> RetentionDays 
+    {
+        get { Initialize(); return _retentionDays!; }
+        set { Initialize(); _retentionDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionDays;
 
     /// <summary>
     /// Specifies that the alert is sent to the account administrators.
     /// </summary>
-    public BicepValue<bool> SendToEmailAccountAdmins { get => _sendToEmailAccountAdmins; set => _sendToEmailAccountAdmins.Assign(value); }
-    private readonly BicepValue<bool> _sendToEmailAccountAdmins;
+    public BicepValue<bool> SendToEmailAccountAdmins 
+    {
+        get { Initialize(); return _sendToEmailAccountAdmins!; }
+        set { Initialize(); _sendToEmailAccountAdmins!.Assign(value); }
+    }
+    private BicepValue<bool>? _sendToEmailAccountAdmins;
 
     /// <summary>
     /// Specifies the state of the policy, whether it is enabled or disabled or
     /// a policy has not been applied yet on the specific database.
     /// </summary>
-    public BicepValue<SecurityAlertsPolicyState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<SecurityAlertsPolicyState> _state;
+    public BicepValue<SecurityAlertsPolicyState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<SecurityAlertsPolicyState>? _state;
 
     /// <summary>
     /// Specifies the identifier key of the Threat Detection audit storage
     /// account.
     /// </summary>
-    public BicepValue<string> StorageAccountAccessKey { get => _storageAccountAccessKey; set => _storageAccountAccessKey.Assign(value); }
-    private readonly BicepValue<string> _storageAccountAccessKey;
+    public BicepValue<string> StorageAccountAccessKey 
+    {
+        get { Initialize(); return _storageAccountAccessKey!; }
+        set { Initialize(); _storageAccountAccessKey!.Assign(value); }
+    }
+    private BicepValue<string>? _storageAccountAccessKey;
 
     /// <summary>
     /// Specifies the blob storage endpoint (e.g.
     /// https://MyAccount.blob.core.windows.net). This blob storage will hold
     /// all Threat Detection audit logs.
     /// </summary>
-    public BicepValue<string> StorageEndpoint { get => _storageEndpoint; set => _storageEndpoint.Assign(value); }
-    private readonly BicepValue<string> _storageEndpoint;
+    public BicepValue<string> StorageEndpoint 
+    {
+        get { Initialize(); return _storageEndpoint!; }
+        set { Initialize(); _storageEndpoint!.Assign(value); }
+    }
+    private BicepValue<string>? _storageEndpoint;
 
     /// <summary>
     /// Specifies the UTC creation time of the policy.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerSecurityAlertPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerSecurityAlertPolicy.</param>
-    public SqlServerSecurityAlertPolicy(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01")
+    public SqlServerSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/securityAlertPolicies", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _disabledAlerts = BicepList<string>.DefineProperty(this, "DisabledAlerts", ["properties", "disabledAlerts"]);
-        _emailAddresses = BicepList<string>.DefineProperty(this, "EmailAddresses", ["properties", "emailAddresses"]);
-        _retentionDays = BicepValue<int>.DefineProperty(this, "RetentionDays", ["properties", "retentionDays"]);
-        _sendToEmailAccountAdmins = BicepValue<bool>.DefineProperty(this, "SendToEmailAccountAdmins", ["properties", "emailAccountAdmins"]);
-        _state = BicepValue<SecurityAlertsPolicyState>.DefineProperty(this, "State", ["properties", "state"]);
-        _storageAccountAccessKey = BicepValue<string>.DefineProperty(this, "StorageAccountAccessKey", ["properties", "storageAccountAccessKey"]);
-        _storageEndpoint = BicepValue<string>.DefineProperty(this, "StorageEndpoint", ["properties", "storageEndpoint"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerSecurityAlertPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _disabledAlerts = DefineListProperty<string>("DisabledAlerts", ["properties", "disabledAlerts"]);
+        _emailAddresses = DefineListProperty<string>("EmailAddresses", ["properties", "emailAddresses"]);
+        _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
+        _sendToEmailAccountAdmins = DefineProperty<bool>("SendToEmailAccountAdmins", ["properties", "emailAccountAdmins"]);
+        _state = DefineProperty<SecurityAlertsPolicyState>("State", ["properties", "state"]);
+        _storageAccountAccessKey = DefineProperty<string>("StorageAccountAccessKey", ["properties", "storageAccountAccessKey"]);
+        _storageEndpoint = DefineProperty<string>("StorageEndpoint", ["properties", "storageEndpoint"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -123,11 +179,6 @@ public partial class SqlServerSecurityAlertPolicy : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -137,9 +188,14 @@ public partial class SqlServerSecurityAlertPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerSecurityAlertPolicy.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerSecurityAlertPolicy.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerSecurityAlertPolicy
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerSecurityAlertPolicy.</param>
     /// <returns>The existing SqlServerSecurityAlertPolicy resource.</returns>
-    public static SqlServerSecurityAlertPolicy FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

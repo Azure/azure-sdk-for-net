@@ -16,51 +16,81 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CassandraDataCenter.
 /// </summary>
-public partial class CassandraDataCenter : Resource
+public partial class CassandraDataCenter : ProvisionableResource
 {
     /// <summary>
     /// Data center name in a managed Cassandra cluster.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Properties of a managed Cassandra data center.
     /// </summary>
-    public BicepValue<CassandraDataCenterProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<CassandraDataCenterProperties> _properties;
+    public CassandraDataCenterProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private CassandraDataCenterProperties? _properties;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CassandraCluster.
     /// </summary>
-    public CassandraCluster? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CassandraCluster> _parent;
+    public CassandraCluster? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CassandraCluster>? _parent;
 
     /// <summary>
     /// Creates a new CassandraDataCenter.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraDataCenter.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CassandraDataCenter resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
-    public CassandraDataCenter(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
+    public CassandraDataCenter(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/cassandraClusters/dataCenters", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _properties = BicepValue<CassandraDataCenterProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CassandraCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CassandraDataCenter.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _properties = DefineModelProperty<CassandraDataCenterProperties>("Properties", ["properties"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CassandraCluster>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -68,11 +98,6 @@ public partial class CassandraDataCenter : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-09-01-preview.
-        /// </summary>
-        public static readonly string V2024_09_01_preview = "2024-09-01-preview";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>
@@ -127,9 +152,14 @@ public partial class CassandraDataCenter : Resource
     /// <summary>
     /// Creates a reference to an existing CassandraDataCenter.
     /// </summary>
-    /// <param name="resourceName">Name of the CassandraDataCenter.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CassandraDataCenter resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CassandraDataCenter.</param>
     /// <returns>The existing CassandraDataCenter resource.</returns>
-    public static CassandraDataCenter FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CassandraDataCenter FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

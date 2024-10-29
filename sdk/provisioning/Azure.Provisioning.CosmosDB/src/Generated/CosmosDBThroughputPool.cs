@@ -16,84 +16,116 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// CosmosDBThroughputPool.
 /// </summary>
-public partial class CosmosDBThroughputPool : Resource
+public partial class CosmosDBThroughputPool : ProvisionableResource
 {
     /// <summary>
     /// Cosmos DB Throughput Pool name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Value for throughput to be shared among CosmosDB resources in the pool.
     /// </summary>
-    public BicepValue<int> MaxThroughput { get => _maxThroughput; set => _maxThroughput.Assign(value); }
-    private readonly BicepValue<int> _maxThroughput;
+    public BicepValue<int> MaxThroughput 
+    {
+        get { Initialize(); return _maxThroughput!; }
+        set { Initialize(); _maxThroughput!.Assign(value); }
+    }
+    private BicepValue<int>? _maxThroughput;
 
     /// <summary>
     /// A provisioning state of the ThroughputPool.
     /// </summary>
-    public BicepValue<CosmosDBStatus> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<CosmosDBStatus> _provisioningState;
+    public BicepValue<CosmosDBStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<CosmosDBStatus>? _provisioningState;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new CosmosDBThroughputPool.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBThroughputPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBThroughputPool resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPool.</param>
-    public CosmosDBThroughputPool(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.DocumentDB/throughputPools", resourceVersion ?? "2024-02-15-preview")
+    public CosmosDBThroughputPool(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DocumentDB/throughputPools", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _maxThroughput = BicepValue<int>.DefineProperty(this, "MaxThroughput", ["properties", "maxThroughput"]);
-        _provisioningState = BicepValue<CosmosDBStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported CosmosDBThroughputPool resource versions.
+    /// Define all the provisionable properties of CosmosDBThroughputPool.
     /// </summary>
-    public static class ResourceVersions
+    protected override void DefineProvisionableProperties()
     {
-        /// <summary>
-        /// 2024-02-15-preview.
-        /// </summary>
-        public static readonly string V2024_02_15_preview = "2024-02-15-preview";
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _maxThroughput = DefineProperty<int>("MaxThroughput", ["properties", "maxThroughput"]);
+        _provisioningState = DefineProperty<CosmosDBStatus>("ProvisioningState", ["properties", "provisioningState"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing CosmosDBThroughputPool.
     /// </summary>
-    /// <param name="resourceName">Name of the CosmosDBThroughputPool.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the CosmosDBThroughputPool resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBThroughputPool.</param>
     /// <returns>The existing CosmosDBThroughputPool resource.</returns>
-    public static CosmosDBThroughputPool FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static CosmosDBThroughputPool FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

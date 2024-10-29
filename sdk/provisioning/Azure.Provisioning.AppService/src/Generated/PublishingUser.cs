@@ -15,79 +15,124 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// PublishingUser.
 /// </summary>
-public partial class PublishingUser : Resource
+public partial class PublishingUser : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Password used for publishing.
     /// </summary>
-    public BicepValue<string> PublishingPassword { get => _publishingPassword; set => _publishingPassword.Assign(value); }
-    private readonly BicepValue<string> _publishingPassword;
+    public BicepValue<string> PublishingPassword 
+    {
+        get { Initialize(); return _publishingPassword!; }
+        set { Initialize(); _publishingPassword!.Assign(value); }
+    }
+    private BicepValue<string>? _publishingPassword;
 
     /// <summary>
     /// Password hash used for publishing.
     /// </summary>
-    public BicepValue<string> PublishingPasswordHash { get => _publishingPasswordHash; set => _publishingPasswordHash.Assign(value); }
-    private readonly BicepValue<string> _publishingPasswordHash;
+    public BicepValue<string> PublishingPasswordHash 
+    {
+        get { Initialize(); return _publishingPasswordHash!; }
+        set { Initialize(); _publishingPasswordHash!.Assign(value); }
+    }
+    private BicepValue<string>? _publishingPasswordHash;
 
     /// <summary>
     /// Password hash salt used for publishing.
     /// </summary>
-    public BicepValue<string> PublishingPasswordHashSalt { get => _publishingPasswordHashSalt; set => _publishingPasswordHashSalt.Assign(value); }
-    private readonly BicepValue<string> _publishingPasswordHashSalt;
+    public BicepValue<string> PublishingPasswordHashSalt 
+    {
+        get { Initialize(); return _publishingPasswordHashSalt!; }
+        set { Initialize(); _publishingPasswordHashSalt!.Assign(value); }
+    }
+    private BicepValue<string>? _publishingPasswordHashSalt;
 
     /// <summary>
     /// Username used for publishing.
     /// </summary>
-    public BicepValue<string> PublishingUserName { get => _publishingUserName; set => _publishingUserName.Assign(value); }
-    private readonly BicepValue<string> _publishingUserName;
+    public BicepValue<string> PublishingUserName 
+    {
+        get { Initialize(); return _publishingUserName!; }
+        set { Initialize(); _publishingUserName!.Assign(value); }
+    }
+    private BicepValue<string>? _publishingUserName;
 
     /// <summary>
     /// Url of SCM site.
     /// </summary>
-    public BicepValue<Uri> ScmUri { get => _scmUri; set => _scmUri.Assign(value); }
-    private readonly BicepValue<Uri> _scmUri;
+    public BicepValue<Uri> ScmUri 
+    {
+        get { Initialize(); return _scmUri!; }
+        set { Initialize(); _scmUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _scmUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PublishingUser.
     /// </summary>
-    /// <param name="resourceName">Name of the PublishingUser.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PublishingUser resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PublishingUser.</param>
-    public PublishingUser(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/publishingUsers", resourceVersion ?? "2024-04-01")
+    public PublishingUser(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/publishingUsers", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _publishingPassword = BicepValue<string>.DefineProperty(this, "PublishingPassword", ["properties", "publishingPassword"]);
-        _publishingPasswordHash = BicepValue<string>.DefineProperty(this, "PublishingPasswordHash", ["properties", "publishingPasswordHash"]);
-        _publishingPasswordHashSalt = BicepValue<string>.DefineProperty(this, "PublishingPasswordHashSalt", ["properties", "publishingPasswordHashSalt"]);
-        _publishingUserName = BicepValue<string>.DefineProperty(this, "PublishingUserName", ["properties", "publishingUserName"]);
-        _scmUri = BicepValue<Uri>.DefineProperty(this, "ScmUri", ["properties", "scmUri"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PublishingUser.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _publishingPassword = DefineProperty<string>("PublishingPassword", ["properties", "publishingPassword"]);
+        _publishingPasswordHash = DefineProperty<string>("PublishingPasswordHash", ["properties", "publishingPasswordHash"]);
+        _publishingPasswordHashSalt = DefineProperty<string>("PublishingPasswordHashSalt", ["properties", "publishingPasswordHashSalt"]);
+        _publishingUserName = DefineProperty<string>("PublishingUserName", ["properties", "publishingUserName"]);
+        _scmUri = DefineProperty<Uri>("ScmUri", ["properties", "scmUri"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -229,9 +274,14 @@ public partial class PublishingUser : Resource
     /// <summary>
     /// Creates a reference to an existing PublishingUser.
     /// </summary>
-    /// <param name="resourceName">Name of the PublishingUser.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the PublishingUser resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the PublishingUser.</param>
     /// <returns>The existing PublishingUser resource.</returns>
-    public static PublishingUser FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static PublishingUser FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

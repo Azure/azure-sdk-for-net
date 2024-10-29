@@ -16,80 +16,125 @@ namespace Azure.Provisioning.ServiceBus;
 /// <summary>
 /// ServiceBusRule.
 /// </summary>
-public partial class ServiceBusRule : Resource
+public partial class ServiceBusRule : ProvisionableResource
 {
     /// <summary>
     /// The rule name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Represents the filter actions which are allowed for the transformation
     /// of a message that have been matched by a filter expression.
     /// </summary>
-    public BicepValue<ServiceBusFilterAction> Action { get => _action; set => _action.Assign(value); }
-    private readonly BicepValue<ServiceBusFilterAction> _action;
+    public ServiceBusFilterAction Action 
+    {
+        get { Initialize(); return _action!; }
+        set { Initialize(); AssignOrReplace(ref _action, value); }
+    }
+    private ServiceBusFilterAction? _action;
 
     /// <summary>
     /// Properties of correlationFilter.
     /// </summary>
-    public BicepValue<ServiceBusCorrelationFilter> CorrelationFilter { get => _correlationFilter; set => _correlationFilter.Assign(value); }
-    private readonly BicepValue<ServiceBusCorrelationFilter> _correlationFilter;
+    public ServiceBusCorrelationFilter CorrelationFilter 
+    {
+        get { Initialize(); return _correlationFilter!; }
+        set { Initialize(); AssignOrReplace(ref _correlationFilter, value); }
+    }
+    private ServiceBusCorrelationFilter? _correlationFilter;
 
     /// <summary>
     /// Filter type that is evaluated against a BrokeredMessage.
     /// </summary>
-    public BicepValue<ServiceBusFilterType> FilterType { get => _filterType; set => _filterType.Assign(value); }
-    private readonly BicepValue<ServiceBusFilterType> _filterType;
+    public BicepValue<ServiceBusFilterType> FilterType 
+    {
+        get { Initialize(); return _filterType!; }
+        set { Initialize(); _filterType!.Assign(value); }
+    }
+    private BicepValue<ServiceBusFilterType>? _filterType;
 
     /// <summary>
     /// Properties of sqlFilter.
     /// </summary>
-    public BicepValue<ServiceBusSqlFilter> SqlFilter { get => _sqlFilter; set => _sqlFilter.Assign(value); }
-    private readonly BicepValue<ServiceBusSqlFilter> _sqlFilter;
+    public ServiceBusSqlFilter SqlFilter 
+    {
+        get { Initialize(); return _sqlFilter!; }
+        set { Initialize(); AssignOrReplace(ref _sqlFilter, value); }
+    }
+    private ServiceBusSqlFilter? _sqlFilter;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ServiceBusSubscription.
     /// </summary>
-    public ServiceBusSubscription? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ServiceBusSubscription> _parent;
+    public ServiceBusSubscription? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ServiceBusSubscription>? _parent;
 
     /// <summary>
     /// Creates a new ServiceBusRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusRule.</param>
-    public ServiceBusRule(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules", resourceVersion ?? "2024-01-01")
+    public ServiceBusRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _action = BicepValue<ServiceBusFilterAction>.DefineProperty(this, "Action", ["properties", "action"]);
-        _correlationFilter = BicepValue<ServiceBusCorrelationFilter>.DefineProperty(this, "CorrelationFilter", ["properties", "correlationFilter"]);
-        _filterType = BicepValue<ServiceBusFilterType>.DefineProperty(this, "FilterType", ["properties", "filterType"]);
-        _sqlFilter = BicepValue<ServiceBusSqlFilter>.DefineProperty(this, "SqlFilter", ["properties", "sqlFilter"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ServiceBusSubscription>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ServiceBusRule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _action = DefineModelProperty<ServiceBusFilterAction>("Action", ["properties", "action"]);
+        _correlationFilter = DefineModelProperty<ServiceBusCorrelationFilter>("CorrelationFilter", ["properties", "correlationFilter"]);
+        _filterType = DefineProperty<ServiceBusFilterType>("FilterType", ["properties", "filterType"]);
+        _sqlFilter = DefineModelProperty<ServiceBusSqlFilter>("SqlFilter", ["properties", "sqlFilter"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ServiceBusSubscription>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -116,9 +161,14 @@ public partial class ServiceBusRule : Resource
     /// <summary>
     /// Creates a reference to an existing ServiceBusRule.
     /// </summary>
-    /// <param name="resourceName">Name of the ServiceBusRule.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ServiceBusRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ServiceBusRule.</param>
     /// <returns>The existing ServiceBusRule resource.</returns>
-    public static ServiceBusRule FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ServiceBusRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

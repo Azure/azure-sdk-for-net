@@ -15,36 +15,47 @@ namespace Azure.Provisioning.Primitives;
 public abstract class InfrastructureResolver
 {
     /// <summary>
+    /// Try to resolve the values of any unset properties in the given construct.
+    /// </summary>
+    /// <param name="construct">The construct with properties to resolve.</param>
+    /// <param name="options">The current build options.</param>
+    public virtual void ResolveProperties(
+        ProvisionableConstruct construct,
+        ProvisioningBuildOptions options)
+    {
+    }
+
+    /// <summary>
     /// Resolve any properties of the infrastructure.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
     /// <param name="infrastructure">The infrastructure to resolve properties of.</param>
+    /// <param name="options">The current build options.</param>
     public virtual void ResolveInfrastructure(
-        ProvisioningContext context,
-        Infrastructure infrastructure)
+        Infrastructure infrastructure,
+        ProvisioningBuildOptions options)
     {
     }
 
     /// <summary>
     /// Process the collection of resources in the infrastructure.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
     /// <param name="resources">The existing resources to resolve.</param>
+    /// <param name="options">The current build options.</param>
     public virtual IEnumerable<Provisionable> ResolveResources(
-        ProvisioningContext context,
-        IEnumerable<Provisionable> resources) =>
+        IEnumerable<Provisionable> resources,
+        ProvisioningBuildOptions options) =>
         resources;
 
     /// <summary>
     /// Gets any nested infrastructure that should be composed separately.
     /// </summary>
-    /// <param name="context">The current provisioning context.</param>
     /// <param name="infrastructure">
     /// The infrastructure to inspect for any nested infrastructure.
     /// </param>
-    /// <returns></returns>
-    public IEnumerable<Infrastructure> GetNestedInfrastructure(
-        ProvisioningContext context,
-        Infrastructure infrastructure) =>
+    /// <param name="options">The current build options.</param>
+    /// <returns>Nested infrastructure.</returns>
+    public virtual IEnumerable<Infrastructure> GetNestedInfrastructure(
+        Infrastructure infrastructure,
+        ProvisioningBuildOptions options) =>
         [];
 }

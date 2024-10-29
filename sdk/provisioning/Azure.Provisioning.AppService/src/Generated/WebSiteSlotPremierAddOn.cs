@@ -16,100 +16,158 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSlotPremierAddOn.
 /// </summary>
-public partial class WebSiteSlotPremierAddOn : Resource
+public partial class WebSiteSlotPremierAddOn : ProvisionableResource
 {
     /// <summary>
     /// Add-on name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Premier add on Marketplace offer.
     /// </summary>
-    public BicepValue<string> MarketplaceOffer { get => _marketplaceOffer; set => _marketplaceOffer.Assign(value); }
-    private readonly BicepValue<string> _marketplaceOffer;
+    public BicepValue<string> MarketplaceOffer 
+    {
+        get { Initialize(); return _marketplaceOffer!; }
+        set { Initialize(); _marketplaceOffer!.Assign(value); }
+    }
+    private BicepValue<string>? _marketplaceOffer;
 
     /// <summary>
     /// Premier add on Marketplace publisher.
     /// </summary>
-    public BicepValue<string> MarketplacePublisher { get => _marketplacePublisher; set => _marketplacePublisher.Assign(value); }
-    private readonly BicepValue<string> _marketplacePublisher;
+    public BicepValue<string> MarketplacePublisher 
+    {
+        get { Initialize(); return _marketplacePublisher!; }
+        set { Initialize(); _marketplacePublisher!.Assign(value); }
+    }
+    private BicepValue<string>? _marketplacePublisher;
 
     /// <summary>
     /// Premier add on Product.
     /// </summary>
-    public BicepValue<string> Product { get => _product; set => _product.Assign(value); }
-    private readonly BicepValue<string> _product;
+    public BicepValue<string> Product 
+    {
+        get { Initialize(); return _product!; }
+        set { Initialize(); _product!.Assign(value); }
+    }
+    private BicepValue<string>? _product;
 
     /// <summary>
     /// Premier add on SKU.
     /// </summary>
-    public BicepValue<string> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<string> _sku;
+    public BicepValue<string> Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); _sku!.Assign(value); }
+    }
+    private BicepValue<string>? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Premier add on Vendor.
     /// </summary>
-    public BicepValue<string> Vendor { get => _vendor; set => _vendor.Assign(value); }
-    private readonly BicepValue<string> _vendor;
+    public BicepValue<string> Vendor 
+    {
+        get { Initialize(); return _vendor!; }
+        set { Initialize(); _vendor!.Assign(value); }
+    }
+    private BicepValue<string>? _vendor;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new WebSiteSlotPremierAddOn.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPremierAddOn.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotPremierAddOn resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPremierAddOn.</param>
-    public WebSiteSlotPremierAddOn(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/premieraddons", resourceVersion ?? "2024-04-01")
+    public WebSiteSlotPremierAddOn(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/premieraddons", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _marketplaceOffer = BicepValue<string>.DefineProperty(this, "MarketplaceOffer", ["properties", "marketplaceOffer"]);
-        _marketplacePublisher = BicepValue<string>.DefineProperty(this, "MarketplacePublisher", ["properties", "marketplacePublisher"]);
-        _product = BicepValue<string>.DefineProperty(this, "Product", ["properties", "product"]);
-        _sku = BicepValue<string>.DefineProperty(this, "Sku", ["properties", "sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _vendor = BicepValue<string>.DefineProperty(this, "Vendor", ["properties", "vendor"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSiteSlotPremierAddOn.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _marketplaceOffer = DefineProperty<string>("MarketplaceOffer", ["properties", "marketplaceOffer"]);
+        _marketplacePublisher = DefineProperty<string>("MarketplacePublisher", ["properties", "marketplacePublisher"]);
+        _product = DefineProperty<string>("Product", ["properties", "product"]);
+        _sku = DefineProperty<string>("Sku", ["properties", "sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _vendor = DefineProperty<string>("Vendor", ["properties", "vendor"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -276,9 +334,14 @@ public partial class WebSiteSlotPremierAddOn : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSlotPremierAddOn.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSiteSlotPremierAddOn.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSiteSlotPremierAddOn resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSlotPremierAddOn.</param>
     /// <returns>The existing WebSiteSlotPremierAddOn resource.</returns>
-    public static WebSiteSlotPremierAddOn FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSlotPremierAddOn FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

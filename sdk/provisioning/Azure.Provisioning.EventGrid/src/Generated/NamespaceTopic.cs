@@ -15,94 +15,129 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// NamespaceTopic.
 /// </summary>
-public partial class NamespaceTopic : Resource
+public partial class NamespaceTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the namespace topic.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Event retention for the namespace topic expressed in days. The property
     /// default value is 1 day.             Min event retention duration value
     /// is 1 day and max event retention duration value is 1 day.
     /// </summary>
-    public BicepValue<int> EventRetentionInDays { get => _eventRetentionInDays; set => _eventRetentionInDays.Assign(value); }
-    private readonly BicepValue<int> _eventRetentionInDays;
+    public BicepValue<int> EventRetentionInDays 
+    {
+        get { Initialize(); return _eventRetentionInDays!; }
+        set { Initialize(); _eventRetentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _eventRetentionInDays;
 
     /// <summary>
     /// This determines the format that is expected for incoming events
     /// published to the topic.
     /// </summary>
-    public BicepValue<EventInputSchema> InputSchema { get => _inputSchema; set => _inputSchema.Assign(value); }
-    private readonly BicepValue<EventInputSchema> _inputSchema;
+    public BicepValue<EventInputSchema> InputSchema 
+    {
+        get { Initialize(); return _inputSchema!; }
+        set { Initialize(); _inputSchema!.Assign(value); }
+    }
+    private BicepValue<EventInputSchema>? _inputSchema;
 
     /// <summary>
     /// Publisher type of the namespace topic.
     /// </summary>
-    public BicepValue<PublisherType> PublisherType { get => _publisherType; set => _publisherType.Assign(value); }
-    private readonly BicepValue<PublisherType> _publisherType;
+    public BicepValue<PublisherType> PublisherType 
+    {
+        get { Initialize(); return _publisherType!; }
+        set { Initialize(); _publisherType!.Assign(value); }
+    }
+    private BicepValue<PublisherType>? _publisherType;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the namespace topic.
     /// </summary>
-    public BicepValue<NamespaceTopicProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<NamespaceTopicProvisioningState> _provisioningState;
+    public BicepValue<NamespaceTopicProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<NamespaceTopicProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
-    public NamespaceTopic(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2024-06-01-preview")
+    public NamespaceTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _eventRetentionInDays = BicepValue<int>.DefineProperty(this, "EventRetentionInDays", ["properties", "eventRetentionInDays"]);
-        _inputSchema = BicepValue<EventInputSchema>.DefineProperty(this, "InputSchema", ["properties", "inputSchema"]);
-        _publisherType = BicepValue<PublisherType>.DefineProperty(this, "PublisherType", ["properties", "publisherType"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<NamespaceTopicProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported NamespaceTopic resource versions.
+    /// Define all the provisionable properties of NamespaceTopic.
     /// </summary>
-    public static class ResourceVersions
+    protected override void DefineProvisionableProperties()
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _eventRetentionInDays = DefineProperty<int>("EventRetentionInDays", ["properties", "eventRetentionInDays"]);
+        _inputSchema = DefineProperty<EventInputSchema>("InputSchema", ["properties", "inputSchema"]);
+        _publisherType = DefineProperty<PublisherType>("PublisherType", ["properties", "publisherType"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<NamespaceTopicProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing NamespaceTopic.
     /// </summary>
-    /// <param name="resourceName">Name of the NamespaceTopic.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the NamespaceTopic resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
     /// <returns>The existing NamespaceTopic resource.</returns>
-    public static NamespaceTopic FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static NamespaceTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

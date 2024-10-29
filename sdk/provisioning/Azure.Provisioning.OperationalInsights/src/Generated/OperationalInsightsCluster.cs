@@ -17,44 +17,68 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsCluster.
 /// </summary>
-public partial class OperationalInsightsCluster : Resource
+public partial class OperationalInsightsCluster : ProvisionableResource
 {
     /// <summary>
     /// The name of the Log Analytics cluster.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The list of Log Analytics workspaces associated with the cluster.
     /// </summary>
-    public BicepList<OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces { get => _associatedWorkspaces; set => _associatedWorkspaces.Assign(value); }
-    private readonly BicepList<OperationalInsightsClusterAssociatedWorkspace> _associatedWorkspaces;
+    public BicepList<OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces 
+    {
+        get { Initialize(); return _associatedWorkspaces!; }
+        set { Initialize(); _associatedWorkspaces!.Assign(value); }
+    }
+    private BicepList<OperationalInsightsClusterAssociatedWorkspace>? _associatedWorkspaces;
 
     /// <summary>
     /// The cluster&apos;s billing type.
     /// </summary>
-    public BicepValue<OperationalInsightsBillingType> BillingType { get => _billingType; set => _billingType.Assign(value); }
-    private readonly BicepValue<OperationalInsightsBillingType> _billingType;
+    public BicepValue<OperationalInsightsBillingType> BillingType 
+    {
+        get { Initialize(); return _billingType!; }
+        set { Initialize(); _billingType!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsBillingType>? _billingType;
 
     /// <summary>
     /// Additional properties for capacity reservation.
     /// </summary>
-    public BicepValue<OperationalInsightsCapacityReservationProperties> CapacityReservationProperties { get => _capacityReservationProperties; set => _capacityReservationProperties.Assign(value); }
-    private readonly BicepValue<OperationalInsightsCapacityReservationProperties> _capacityReservationProperties;
+    public OperationalInsightsCapacityReservationProperties CapacityReservationProperties 
+    {
+        get { Initialize(); return _capacityReservationProperties!; }
+        set { Initialize(); AssignOrReplace(ref _capacityReservationProperties, value); }
+    }
+    private OperationalInsightsCapacityReservationProperties? _capacityReservationProperties;
 
     /// <summary>
     /// The identity of the resource. Current supported identity types: None,
     /// SystemAssigned, UserAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Sets whether the cluster will support availability zones. This can be
@@ -63,96 +87,146 @@ public partial class OperationalInsightsCluster : Resource
     /// creation. Default value is &apos;true&apos; if region supports
     /// Availability Zones.
     /// </summary>
-    public BicepValue<bool> IsAvailabilityZonesEnabled { get => _isAvailabilityZonesEnabled; set => _isAvailabilityZonesEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isAvailabilityZonesEnabled;
+    public BicepValue<bool> IsAvailabilityZonesEnabled 
+    {
+        get { Initialize(); return _isAvailabilityZonesEnabled!; }
+        set { Initialize(); _isAvailabilityZonesEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAvailabilityZonesEnabled;
 
     /// <summary>
     /// Configures whether cluster will use double encryption. This Property
     /// can not be modified after cluster creation. Default value is
     /// &apos;true&apos;.
     /// </summary>
-    public BicepValue<bool> IsDoubleEncryptionEnabled { get => _isDoubleEncryptionEnabled; set => _isDoubleEncryptionEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isDoubleEncryptionEnabled;
+    public BicepValue<bool> IsDoubleEncryptionEnabled 
+    {
+        get { Initialize(); return _isDoubleEncryptionEnabled!; }
+        set { Initialize(); _isDoubleEncryptionEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDoubleEncryptionEnabled;
 
     /// <summary>
     /// The associated key properties.
     /// </summary>
-    public BicepValue<OperationalInsightsKeyVaultProperties> KeyVaultProperties { get => _keyVaultProperties; set => _keyVaultProperties.Assign(value); }
-    private readonly BicepValue<OperationalInsightsKeyVaultProperties> _keyVaultProperties;
+    public OperationalInsightsKeyVaultProperties KeyVaultProperties 
+    {
+        get { Initialize(); return _keyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _keyVaultProperties, value); }
+    }
+    private OperationalInsightsKeyVaultProperties? _keyVaultProperties;
 
     /// <summary>
     /// The sku properties.
     /// </summary>
-    public BicepValue<OperationalInsightsClusterSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<OperationalInsightsClusterSku> _sku;
+    public OperationalInsightsClusterSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private OperationalInsightsClusterSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The ID associated with the cluster.
     /// </summary>
-    public BicepValue<Guid> ClusterId { get => _clusterId; }
-    private readonly BicepValue<Guid> _clusterId;
+    public BicepValue<Guid> ClusterId 
+    {
+        get { Initialize(); return _clusterId!; }
+    }
+    private BicepValue<Guid>? _clusterId;
 
     /// <summary>
     /// The cluster creation time.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The last time the cluster was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// The provisioning state of the cluster.
     /// </summary>
-    public BicepValue<OperationalInsightsClusterEntityStatus> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<OperationalInsightsClusterEntityStatus> _provisioningState;
+    public BicepValue<OperationalInsightsClusterEntityStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<OperationalInsightsClusterEntityStatus>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new OperationalInsightsCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsCluster.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the OperationalInsightsCluster
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
-    public OperationalInsightsCluster(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsCluster(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _associatedWorkspaces = BicepList<OperationalInsightsClusterAssociatedWorkspace>.DefineProperty(this, "AssociatedWorkspaces", ["properties", "associatedWorkspaces"]);
-        _billingType = BicepValue<OperationalInsightsBillingType>.DefineProperty(this, "BillingType", ["properties", "billingType"]);
-        _capacityReservationProperties = BicepValue<OperationalInsightsCapacityReservationProperties>.DefineProperty(this, "CapacityReservationProperties", ["properties", "capacityReservationProperties"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _isAvailabilityZonesEnabled = BicepValue<bool>.DefineProperty(this, "IsAvailabilityZonesEnabled", ["properties", "isAvailabilityZonesEnabled"]);
-        _isDoubleEncryptionEnabled = BicepValue<bool>.DefineProperty(this, "IsDoubleEncryptionEnabled", ["properties", "isDoubleEncryptionEnabled"]);
-        _keyVaultProperties = BicepValue<OperationalInsightsKeyVaultProperties>.DefineProperty(this, "KeyVaultProperties", ["properties", "keyVaultProperties"]);
-        _sku = BicepValue<OperationalInsightsClusterSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _clusterId = BicepValue<Guid>.DefineProperty(this, "ClusterId", ["properties", "clusterId"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedDate"], isOutput: true);
-        _provisioningState = BicepValue<OperationalInsightsClusterEntityStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of OperationalInsightsCluster.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _associatedWorkspaces = DefineListProperty<OperationalInsightsClusterAssociatedWorkspace>("AssociatedWorkspaces", ["properties", "associatedWorkspaces"]);
+        _billingType = DefineProperty<OperationalInsightsBillingType>("BillingType", ["properties", "billingType"]);
+        _capacityReservationProperties = DefineModelProperty<OperationalInsightsCapacityReservationProperties>("CapacityReservationProperties", ["properties", "capacityReservationProperties"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isAvailabilityZonesEnabled = DefineProperty<bool>("IsAvailabilityZonesEnabled", ["properties", "isAvailabilityZonesEnabled"]);
+        _isDoubleEncryptionEnabled = DefineProperty<bool>("IsDoubleEncryptionEnabled", ["properties", "isDoubleEncryptionEnabled"]);
+        _keyVaultProperties = DefineModelProperty<OperationalInsightsKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
+        _sku = DefineModelProperty<OperationalInsightsClusterSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _clusterId = DefineProperty<Guid>("ClusterId", ["properties", "clusterId"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedDate"], isOutput: true);
+        _provisioningState = DefineProperty<OperationalInsightsClusterEntityStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -189,11 +263,16 @@ public partial class OperationalInsightsCluster : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsCluster.
     /// </summary>
-    /// <param name="resourceName">Name of the OperationalInsightsCluster.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the OperationalInsightsCluster
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
     /// <returns>The existing OperationalInsightsCluster resource.</returns>
-    public static OperationalInsightsCluster FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsCluster FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this OperationalInsightsCluster

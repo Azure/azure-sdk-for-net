@@ -16,101 +16,155 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHub.
 /// </summary>
-public partial class EventHub : Resource
+public partial class EventHub : ProvisionableResource
 {
     /// <summary>
     /// The Event Hub name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Properties of capture description.
     /// </summary>
-    public BicepValue<CaptureDescription> CaptureDescription { get => _captureDescription; set => _captureDescription.Assign(value); }
-    private readonly BicepValue<CaptureDescription> _captureDescription;
+    public CaptureDescription CaptureDescription 
+    {
+        get { Initialize(); return _captureDescription!; }
+        set { Initialize(); AssignOrReplace(ref _captureDescription, value); }
+    }
+    private CaptureDescription? _captureDescription;
 
     /// <summary>
     /// Number of partitions created for the Event Hub, allowed values are from
     /// 1 to 32 partitions.
     /// </summary>
-    public BicepValue<long> PartitionCount { get => _partitionCount; set => _partitionCount.Assign(value); }
-    private readonly BicepValue<long> _partitionCount;
+    public BicepValue<long> PartitionCount 
+    {
+        get { Initialize(); return _partitionCount!; }
+        set { Initialize(); _partitionCount!.Assign(value); }
+    }
+    private BicepValue<long>? _partitionCount;
 
     /// <summary>
     /// Event Hub retention settings.
     /// </summary>
-    public BicepValue<RetentionDescription> RetentionDescription { get => _retentionDescription; set => _retentionDescription.Assign(value); }
-    private readonly BicepValue<RetentionDescription> _retentionDescription;
+    public RetentionDescription RetentionDescription 
+    {
+        get { Initialize(); return _retentionDescription!; }
+        set { Initialize(); AssignOrReplace(ref _retentionDescription, value); }
+    }
+    private RetentionDescription? _retentionDescription;
 
     /// <summary>
     /// Enumerates the possible values for the status of the Event Hub.
     /// </summary>
-    public BicepValue<EventHubEntityStatus> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<EventHubEntityStatus> _status;
+    public BicepValue<EventHubEntityStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<EventHubEntityStatus>? _status;
 
     /// <summary>
     /// Exact time the Event Hub was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Current number of shards on the Event Hub.
     /// </summary>
-    public BicepList<string> PartitionIds { get => _partitionIds; }
-    private readonly BicepList<string> _partitionIds;
+    public BicepList<string> PartitionIds 
+    {
+        get { Initialize(); return _partitionIds!; }
+    }
+    private BicepList<string>? _partitionIds;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The exact time the message was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventHubsNamespace.
     /// </summary>
-    public EventHubsNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventHubsNamespace> _parent;
+    public EventHubsNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventHubsNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventHub.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHub.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHub resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
-    public EventHub(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
+    public EventHub(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _captureDescription = BicepValue<CaptureDescription>.DefineProperty(this, "CaptureDescription", ["properties", "captureDescription"]);
-        _partitionCount = BicepValue<long>.DefineProperty(this, "PartitionCount", ["properties", "partitionCount"]);
-        _retentionDescription = BicepValue<RetentionDescription>.DefineProperty(this, "RetentionDescription", ["properties", "retentionDescription"]);
-        _status = BicepValue<EventHubEntityStatus>.DefineProperty(this, "Status", ["properties", "status"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdAt"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _partitionIds = BicepList<string>.DefineProperty(this, "PartitionIds", ["properties", "partitionIds"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedAt"], isOutput: true);
-        _parent = ResourceReference<EventHubsNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventHub.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _captureDescription = DefineModelProperty<CaptureDescription>("CaptureDescription", ["properties", "captureDescription"]);
+        _partitionCount = DefineProperty<long>("PartitionCount", ["properties", "partitionCount"]);
+        _retentionDescription = DefineModelProperty<RetentionDescription>("RetentionDescription", ["properties", "retentionDescription"]);
+        _status = DefineProperty<EventHubEntityStatus>("Status", ["properties", "status"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _partitionIds = DefineListProperty<string>("PartitionIds", ["properties", "partitionIds"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedAt"], isOutput: true);
+        _parent = DefineResource<EventHubsNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -118,11 +172,6 @@ public partial class EventHub : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -142,9 +191,14 @@ public partial class EventHub : Resource
     /// <summary>
     /// Creates a reference to an existing EventHub.
     /// </summary>
-    /// <param name="resourceName">Name of the EventHub.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the EventHub resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the EventHub.</param>
     /// <returns>The existing EventHub resource.</returns>
-    public static EventHub FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static EventHub FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

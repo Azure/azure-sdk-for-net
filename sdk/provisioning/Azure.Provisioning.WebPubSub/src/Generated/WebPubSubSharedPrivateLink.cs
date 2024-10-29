@@ -15,81 +15,125 @@ namespace Azure.Provisioning.WebPubSub;
 /// <summary>
 /// WebPubSubSharedPrivateLink.
 /// </summary>
-public partial class WebPubSubSharedPrivateLink : Resource
+public partial class WebPubSubSharedPrivateLink : ProvisionableResource
 {
     /// <summary>
     /// The name of the shared private link resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The group id from the provider of resource the shared private link
     /// resource is for.
     /// </summary>
-    public BicepValue<string> GroupId { get => _groupId; set => _groupId.Assign(value); }
-    private readonly BicepValue<string> _groupId;
+    public BicepValue<string> GroupId 
+    {
+        get { Initialize(); return _groupId!; }
+        set { Initialize(); _groupId!.Assign(value); }
+    }
+    private BicepValue<string>? _groupId;
 
     /// <summary>
     /// The resource id of the resource the shared private link resource is for.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateLinkResourceId { get => _privateLinkResourceId; set => _privateLinkResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _privateLinkResourceId;
+    public BicepValue<ResourceIdentifier> PrivateLinkResourceId 
+    {
+        get { Initialize(); return _privateLinkResourceId!; }
+        set { Initialize(); _privateLinkResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateLinkResourceId;
 
     /// <summary>
     /// The request message for requesting approval of the shared private link
     /// resource.
     /// </summary>
-    public BicepValue<string> RequestMessage { get => _requestMessage; set => _requestMessage.Assign(value); }
-    private readonly BicepValue<string> _requestMessage;
+    public BicepValue<string> RequestMessage 
+    {
+        get { Initialize(); return _requestMessage!; }
+        set { Initialize(); _requestMessage!.Assign(value); }
+    }
+    private BicepValue<string>? _requestMessage;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<WebPubSubProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<WebPubSubProvisioningState> _provisioningState;
+    public BicepValue<WebPubSubProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<WebPubSubProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Status of the shared private link resource.
     /// </summary>
-    public BicepValue<WebPubSubSharedPrivateLinkStatus> Status { get => _status; }
-    private readonly BicepValue<WebPubSubSharedPrivateLinkStatus> _status;
+    public BicepValue<WebPubSubSharedPrivateLinkStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<WebPubSubSharedPrivateLinkStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebPubSubService.
     /// </summary>
-    public WebPubSubService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebPubSubService> _parent;
+    public WebPubSubService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebPubSubService>? _parent;
 
     /// <summary>
     /// Creates a new WebPubSubSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebPubSubSharedPrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubSharedPrivateLink.</param>
-    public WebPubSubSharedPrivateLink(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
+    public WebPubSubSharedPrivateLink(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _groupId = BicepValue<string>.DefineProperty(this, "GroupId", ["properties", "groupId"]);
-        _privateLinkResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateLinkResourceId", ["properties", "privateLinkResourceId"]);
-        _requestMessage = BicepValue<string>.DefineProperty(this, "RequestMessage", ["properties", "requestMessage"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<WebPubSubProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _status = BicepValue<WebPubSubSharedPrivateLinkStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebPubSubService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebPubSubSharedPrivateLink.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"]);
+        _privateLinkResourceId = DefineProperty<ResourceIdentifier>("PrivateLinkResourceId", ["properties", "privateLinkResourceId"]);
+        _requestMessage = DefineProperty<string>("RequestMessage", ["properties", "requestMessage"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<WebPubSubProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _status = DefineProperty<WebPubSubSharedPrivateLinkStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebPubSubService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -97,11 +141,6 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>
@@ -126,9 +165,14 @@ public partial class WebPubSubSharedPrivateLink : Resource
     /// <summary>
     /// Creates a reference to an existing WebPubSubSharedPrivateLink.
     /// </summary>
-    /// <param name="resourceName">Name of the WebPubSubSharedPrivateLink.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebPubSubSharedPrivateLink
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebPubSubSharedPrivateLink.</param>
     /// <returns>The existing WebPubSubSharedPrivateLink resource.</returns>
-    public static WebPubSubSharedPrivateLink FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebPubSubSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

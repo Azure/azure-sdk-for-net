@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// BlobContainer.
 /// </summary>
-public partial class BlobContainer : Resource
+public partial class BlobContainer : ProvisionableResource
 {
     /// <summary>
     /// The name of the blob container within the specified storage account.
@@ -27,65 +27,103 @@ public partial class BlobContainer : Resource
     /// character must be immediately preceded and followed by a letter or
     /// number.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Default the container to use specified encryption scope for all writes.
     /// </summary>
-    public BicepValue<string> DefaultEncryptionScope { get => _defaultEncryptionScope; set => _defaultEncryptionScope.Assign(value); }
-    private readonly BicepValue<string> _defaultEncryptionScope;
+    public BicepValue<string> DefaultEncryptionScope 
+    {
+        get { Initialize(); return _defaultEncryptionScope!; }
+        set { Initialize(); _defaultEncryptionScope!.Assign(value); }
+    }
+    private BicepValue<string>? _defaultEncryptionScope;
 
     /// <summary>
     /// Enable NFSv3 all squash on blob container.
     /// </summary>
-    public BicepValue<bool> EnableNfsV3AllSquash { get => _enableNfsV3AllSquash; set => _enableNfsV3AllSquash.Assign(value); }
-    private readonly BicepValue<bool> _enableNfsV3AllSquash;
+    public BicepValue<bool> EnableNfsV3AllSquash 
+    {
+        get { Initialize(); return _enableNfsV3AllSquash!; }
+        set { Initialize(); _enableNfsV3AllSquash!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableNfsV3AllSquash;
 
     /// <summary>
     /// Enable NFSv3 root squash on blob container.
     /// </summary>
-    public BicepValue<bool> EnableNfsV3RootSquash { get => _enableNfsV3RootSquash; set => _enableNfsV3RootSquash.Assign(value); }
-    private readonly BicepValue<bool> _enableNfsV3RootSquash;
+    public BicepValue<bool> EnableNfsV3RootSquash 
+    {
+        get { Initialize(); return _enableNfsV3RootSquash!; }
+        set { Initialize(); _enableNfsV3RootSquash!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableNfsV3RootSquash;
 
     /// <summary>
     /// The object level immutability property of the container. The property
     /// is immutable and can only be set to true at the container creation
     /// time. Existing containers must undergo a migration process.
     /// </summary>
-    public BicepValue<ImmutableStorageWithVersioning> ImmutableStorageWithVersioning { get => _immutableStorageWithVersioning; set => _immutableStorageWithVersioning.Assign(value); }
-    private readonly BicepValue<ImmutableStorageWithVersioning> _immutableStorageWithVersioning;
+    public ImmutableStorageWithVersioning ImmutableStorageWithVersioning 
+    {
+        get { Initialize(); return _immutableStorageWithVersioning!; }
+        set { Initialize(); AssignOrReplace(ref _immutableStorageWithVersioning, value); }
+    }
+    private ImmutableStorageWithVersioning? _immutableStorageWithVersioning;
 
     /// <summary>
     /// A name-value pair to associate with the container as metadata.
     /// </summary>
-    public BicepDictionary<string> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepDictionary<string> _metadata;
+    public BicepDictionary<string> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepDictionary<string>? _metadata;
 
     /// <summary>
     /// Block override of encryption scope from the container default.
     /// </summary>
-    public BicepValue<bool> PreventEncryptionScopeOverride { get => _preventEncryptionScopeOverride; set => _preventEncryptionScopeOverride.Assign(value); }
-    private readonly BicepValue<bool> _preventEncryptionScopeOverride;
+    public BicepValue<bool> PreventEncryptionScopeOverride 
+    {
+        get { Initialize(); return _preventEncryptionScopeOverride!; }
+        set { Initialize(); _preventEncryptionScopeOverride!.Assign(value); }
+    }
+    private BicepValue<bool>? _preventEncryptionScopeOverride;
 
     /// <summary>
     /// Specifies whether data in the container may be accessed publicly and
     /// the level of access.
     /// </summary>
-    public BicepValue<StoragePublicAccessType> PublicAccess { get => _publicAccess; set => _publicAccess.Assign(value); }
-    private readonly BicepValue<StoragePublicAccessType> _publicAccess;
+    public BicepValue<StoragePublicAccessType> PublicAccess 
+    {
+        get { Initialize(); return _publicAccess!; }
+        set { Initialize(); _publicAccess!.Assign(value); }
+    }
+    private BicepValue<StoragePublicAccessType>? _publicAccess;
 
     /// <summary>
     /// Blob container deletion time.
     /// </summary>
-    public BicepValue<DateTimeOffset> DeletedOn { get => _deletedOn; }
-    private readonly BicepValue<DateTimeOffset> _deletedOn;
+    public BicepValue<DateTimeOffset> DeletedOn 
+    {
+        get { Initialize(); return _deletedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _deletedOn;
 
     /// <summary>
     /// Resource Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// The hasImmutabilityPolicy public property is set to true by SRP if
@@ -93,8 +131,11 @@ public partial class BlobContainer : Resource
     /// hasImmutabilityPolicy public property is set to false by SRP if
     /// ImmutabilityPolicy has not been created for this container.
     /// </summary>
-    public BicepValue<bool> HasImmutabilityPolicy { get => _hasImmutabilityPolicy; }
-    private readonly BicepValue<bool> _hasImmutabilityPolicy;
+    public BicepValue<bool> HasImmutabilityPolicy 
+    {
+        get { Initialize(); return _hasImmutabilityPolicy!; }
+    }
+    private BicepValue<bool>? _hasImmutabilityPolicy;
 
     /// <summary>
     /// The hasLegalHold public property is set to true by SRP if there are at
@@ -103,114 +144,166 @@ public partial class BlobContainer : Resource
     /// can be a maximum of 1000 blob containers with hasLegalHold=true for a
     /// given account.
     /// </summary>
-    public BicepValue<bool> HasLegalHold { get => _hasLegalHold; }
-    private readonly BicepValue<bool> _hasLegalHold;
+    public BicepValue<bool> HasLegalHold 
+    {
+        get { Initialize(); return _hasLegalHold!; }
+    }
+    private BicepValue<bool>? _hasLegalHold;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The ImmutabilityPolicy property of the container.
     /// </summary>
-    public BicepValue<BlobContainerImmutabilityPolicy> ImmutabilityPolicy { get => _immutabilityPolicy; }
-    private readonly BicepValue<BlobContainerImmutabilityPolicy> _immutabilityPolicy;
+    public BlobContainerImmutabilityPolicy ImmutabilityPolicy 
+    {
+        get { Initialize(); return _immutabilityPolicy!; }
+    }
+    private BlobContainerImmutabilityPolicy? _immutabilityPolicy;
 
     /// <summary>
     /// Indicates whether the blob container was deleted.
     /// </summary>
-    public BicepValue<bool> IsDeleted { get => _isDeleted; }
-    private readonly BicepValue<bool> _isDeleted;
+    public BicepValue<bool> IsDeleted 
+    {
+        get { Initialize(); return _isDeleted!; }
+    }
+    private BicepValue<bool>? _isDeleted;
 
     /// <summary>
     /// Returns the date and time the container was last modified.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Specifies whether the lease on a container is of infinite or fixed
     /// duration, only when the container is leased.
     /// </summary>
-    public BicepValue<StorageLeaseDurationType> LeaseDuration { get => _leaseDuration; }
-    private readonly BicepValue<StorageLeaseDurationType> _leaseDuration;
+    public BicepValue<StorageLeaseDurationType> LeaseDuration 
+    {
+        get { Initialize(); return _leaseDuration!; }
+    }
+    private BicepValue<StorageLeaseDurationType>? _leaseDuration;
 
     /// <summary>
     /// Lease state of the container.
     /// </summary>
-    public BicepValue<StorageLeaseState> LeaseState { get => _leaseState; }
-    private readonly BicepValue<StorageLeaseState> _leaseState;
+    public BicepValue<StorageLeaseState> LeaseState 
+    {
+        get { Initialize(); return _leaseState!; }
+    }
+    private BicepValue<StorageLeaseState>? _leaseState;
 
     /// <summary>
     /// The lease status of the container.
     /// </summary>
-    public BicepValue<StorageLeaseStatus> LeaseStatus { get => _leaseStatus; }
-    private readonly BicepValue<StorageLeaseStatus> _leaseStatus;
+    public BicepValue<StorageLeaseStatus> LeaseStatus 
+    {
+        get { Initialize(); return _leaseStatus!; }
+    }
+    private BicepValue<StorageLeaseStatus>? _leaseStatus;
 
     /// <summary>
     /// The LegalHold property of the container.
     /// </summary>
-    public BicepValue<LegalHoldProperties> LegalHold { get => _legalHold; }
-    private readonly BicepValue<LegalHoldProperties> _legalHold;
+    public LegalHoldProperties LegalHold 
+    {
+        get { Initialize(); return _legalHold!; }
+    }
+    private LegalHoldProperties? _legalHold;
 
     /// <summary>
     /// Remaining retention days for soft deleted blob container.
     /// </summary>
-    public BicepValue<int> RemainingRetentionDays { get => _remainingRetentionDays; }
-    private readonly BicepValue<int> _remainingRetentionDays;
+    public BicepValue<int> RemainingRetentionDays 
+    {
+        get { Initialize(); return _remainingRetentionDays!; }
+    }
+    private BicepValue<int>? _remainingRetentionDays;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The version of the deleted blob container.
     /// </summary>
-    public BicepValue<string> Version { get => _version; }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets or sets a reference to the parent BlobService.
     /// </summary>
-    public BlobService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<BlobService> _parent;
+    public BlobService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<BlobService>? _parent;
 
     /// <summary>
     /// Creates a new BlobContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobContainer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
-    public BlobContainer(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2024-01-01")
+    public BlobContainer(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _defaultEncryptionScope = BicepValue<string>.DefineProperty(this, "DefaultEncryptionScope", ["properties", "defaultEncryptionScope"]);
-        _enableNfsV3AllSquash = BicepValue<bool>.DefineProperty(this, "EnableNfsV3AllSquash", ["properties", "enableNfsV3AllSquash"]);
-        _enableNfsV3RootSquash = BicepValue<bool>.DefineProperty(this, "EnableNfsV3RootSquash", ["properties", "enableNfsV3RootSquash"]);
-        _immutableStorageWithVersioning = BicepValue<ImmutableStorageWithVersioning>.DefineProperty(this, "ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
-        _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _preventEncryptionScopeOverride = BicepValue<bool>.DefineProperty(this, "PreventEncryptionScopeOverride", ["properties", "denyEncryptionScopeOverride"]);
-        _publicAccess = BicepValue<StoragePublicAccessType>.DefineProperty(this, "PublicAccess", ["properties", "publicAccess"]);
-        _deletedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "DeletedOn", ["properties", "deletedTime"], isOutput: true);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"], isOutput: true);
-        _hasImmutabilityPolicy = BicepValue<bool>.DefineProperty(this, "HasImmutabilityPolicy", ["properties", "hasImmutabilityPolicy"], isOutput: true);
-        _hasLegalHold = BicepValue<bool>.DefineProperty(this, "HasLegalHold", ["properties", "hasLegalHold"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _immutabilityPolicy = BicepValue<BlobContainerImmutabilityPolicy>.DefineProperty(this, "ImmutabilityPolicy", ["properties", "immutabilityPolicy"], isOutput: true);
-        _isDeleted = BicepValue<bool>.DefineProperty(this, "IsDeleted", ["properties", "deleted"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _leaseDuration = BicepValue<StorageLeaseDurationType>.DefineProperty(this, "LeaseDuration", ["properties", "leaseDuration"], isOutput: true);
-        _leaseState = BicepValue<StorageLeaseState>.DefineProperty(this, "LeaseState", ["properties", "leaseState"], isOutput: true);
-        _leaseStatus = BicepValue<StorageLeaseStatus>.DefineProperty(this, "LeaseStatus", ["properties", "leaseStatus"], isOutput: true);
-        _legalHold = BicepValue<LegalHoldProperties>.DefineProperty(this, "LegalHold", ["properties", "legalHold"], isOutput: true);
-        _remainingRetentionDays = BicepValue<int>.DefineProperty(this, "RemainingRetentionDays", ["properties", "remainingRetentionDays"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
-        _parent = ResourceReference<BlobService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of BlobContainer.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _defaultEncryptionScope = DefineProperty<string>("DefaultEncryptionScope", ["properties", "defaultEncryptionScope"]);
+        _enableNfsV3AllSquash = DefineProperty<bool>("EnableNfsV3AllSquash", ["properties", "enableNfsV3AllSquash"]);
+        _enableNfsV3RootSquash = DefineProperty<bool>("EnableNfsV3RootSquash", ["properties", "enableNfsV3RootSquash"]);
+        _immutableStorageWithVersioning = DefineModelProperty<ImmutableStorageWithVersioning>("ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
+        _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
+        _preventEncryptionScopeOverride = DefineProperty<bool>("PreventEncryptionScopeOverride", ["properties", "denyEncryptionScopeOverride"]);
+        _publicAccess = DefineProperty<StoragePublicAccessType>("PublicAccess", ["properties", "publicAccess"]);
+        _deletedOn = DefineProperty<DateTimeOffset>("DeletedOn", ["properties", "deletedTime"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _hasImmutabilityPolicy = DefineProperty<bool>("HasImmutabilityPolicy", ["properties", "hasImmutabilityPolicy"], isOutput: true);
+        _hasLegalHold = DefineProperty<bool>("HasLegalHold", ["properties", "hasLegalHold"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _immutabilityPolicy = DefineModelProperty<BlobContainerImmutabilityPolicy>("ImmutabilityPolicy", ["properties", "immutabilityPolicy"], isOutput: true);
+        _isDeleted = DefineProperty<bool>("IsDeleted", ["properties", "deleted"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _leaseDuration = DefineProperty<StorageLeaseDurationType>("LeaseDuration", ["properties", "leaseDuration"], isOutput: true);
+        _leaseState = DefineProperty<StorageLeaseState>("LeaseState", ["properties", "leaseState"], isOutput: true);
+        _leaseStatus = DefineProperty<StorageLeaseStatus>("LeaseStatus", ["properties", "leaseStatus"], isOutput: true);
+        _legalHold = DefineModelProperty<LegalHoldProperties>("LegalHold", ["properties", "legalHold"], isOutput: true);
+        _remainingRetentionDays = DefineProperty<int>("RemainingRetentionDays", ["properties", "remainingRetentionDays"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
+        _parent = DefineResource<BlobService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -332,11 +425,16 @@ public partial class BlobContainer : Resource
     /// <summary>
     /// Creates a reference to an existing BlobContainer.
     /// </summary>
-    /// <param name="resourceName">Name of the BlobContainer.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the BlobContainer resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
     /// <returns>The existing BlobContainer resource.</returns>
-    public static BlobContainer FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static BlobContainer FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this BlobContainer resource.

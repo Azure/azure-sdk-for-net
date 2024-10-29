@@ -15,90 +15,140 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJobStep.
 /// </summary>
-public partial class SqlServerJobStep : Resource
+public partial class SqlServerJobStep : ProvisionableResource
 {
     /// <summary>
     /// The name of the job step.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The action payload of the job step.
     /// </summary>
-    public BicepValue<JobStepAction> Action { get => _action; set => _action.Assign(value); }
-    private readonly BicepValue<JobStepAction> _action;
+    public JobStepAction Action 
+    {
+        get { Initialize(); return _action!; }
+        set { Initialize(); AssignOrReplace(ref _action, value); }
+    }
+    private JobStepAction? _action;
 
     /// <summary>
     /// The resource ID of the job credential that will be used to connect to
     /// the targets.
     /// </summary>
-    public BicepValue<string> Credential { get => _credential; set => _credential.Assign(value); }
-    private readonly BicepValue<string> _credential;
+    public BicepValue<string> Credential 
+    {
+        get { Initialize(); return _credential!; }
+        set { Initialize(); _credential!.Assign(value); }
+    }
+    private BicepValue<string>? _credential;
 
     /// <summary>
     /// Execution options for the job step.
     /// </summary>
-    public BicepValue<JobStepExecutionOptions> ExecutionOptions { get => _executionOptions; set => _executionOptions.Assign(value); }
-    private readonly BicepValue<JobStepExecutionOptions> _executionOptions;
+    public JobStepExecutionOptions ExecutionOptions 
+    {
+        get { Initialize(); return _executionOptions!; }
+        set { Initialize(); AssignOrReplace(ref _executionOptions, value); }
+    }
+    private JobStepExecutionOptions? _executionOptions;
 
     /// <summary>
     /// Output destination properties of the job step.
     /// </summary>
-    public BicepValue<JobStepOutput> Output { get => _output; set => _output.Assign(value); }
-    private readonly BicepValue<JobStepOutput> _output;
+    public JobStepOutput Output 
+    {
+        get { Initialize(); return _output!; }
+        set { Initialize(); AssignOrReplace(ref _output, value); }
+    }
+    private JobStepOutput? _output;
 
     /// <summary>
     /// The job step&apos;s index within the job. If not specified when
     /// creating the job step, it will be created as the last step. If not
     /// specified when updating the job step, the step id is not modified.
     /// </summary>
-    public BicepValue<int> StepId { get => _stepId; set => _stepId.Assign(value); }
-    private readonly BicepValue<int> _stepId;
+    public BicepValue<int> StepId 
+    {
+        get { Initialize(); return _stepId!; }
+        set { Initialize(); _stepId!.Assign(value); }
+    }
+    private BicepValue<int>? _stepId;
 
     /// <summary>
     /// The resource ID of the target group that the job step will be executed
     /// on.
     /// </summary>
-    public BicepValue<string> TargetGroup { get => _targetGroup; set => _targetGroup.Assign(value); }
-    private readonly BicepValue<string> _targetGroup;
+    public BicepValue<string> TargetGroup 
+    {
+        get { Initialize(); return _targetGroup!; }
+        set { Initialize(); _targetGroup!.Assign(value); }
+    }
+    private BicepValue<string>? _targetGroup;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServerJob.
     /// </summary>
-    public SqlServerJob? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServerJob> _parent;
+    public SqlServerJob? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServerJob>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerJobStep.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobStep.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJobStep resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobStep.</param>
-    public SqlServerJobStep(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01")
+    public SqlServerJobStep(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/steps", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _action = BicepValue<JobStepAction>.DefineProperty(this, "Action", ["properties", "action"]);
-        _credential = BicepValue<string>.DefineProperty(this, "Credential", ["properties", "credential"]);
-        _executionOptions = BicepValue<JobStepExecutionOptions>.DefineProperty(this, "ExecutionOptions", ["properties", "executionOptions"]);
-        _output = BicepValue<JobStepOutput>.DefineProperty(this, "Output", ["properties", "output"]);
-        _stepId = BicepValue<int>.DefineProperty(this, "StepId", ["properties", "stepId"]);
-        _targetGroup = BicepValue<string>.DefineProperty(this, "TargetGroup", ["properties", "targetGroup"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServerJob>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerJobStep.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _action = DefineModelProperty<JobStepAction>("Action", ["properties", "action"]);
+        _credential = DefineProperty<string>("Credential", ["properties", "credential"]);
+        _executionOptions = DefineModelProperty<JobStepExecutionOptions>("ExecutionOptions", ["properties", "executionOptions"]);
+        _output = DefineModelProperty<JobStepOutput>("Output", ["properties", "output"]);
+        _stepId = DefineProperty<int>("StepId", ["properties", "stepId"]);
+        _targetGroup = DefineProperty<string>("TargetGroup", ["properties", "targetGroup"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServerJob>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -106,11 +156,6 @@ public partial class SqlServerJobStep : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -120,9 +165,14 @@ public partial class SqlServerJobStep : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerJobStep.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJobStep.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJobStep resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobStep.</param>
     /// <returns>The existing SqlServerJobStep resource.</returns>
-    public static SqlServerJobStep FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerJobStep FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

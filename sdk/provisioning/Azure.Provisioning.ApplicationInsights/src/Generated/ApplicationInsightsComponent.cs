@@ -21,39 +21,59 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsComponent.
 /// </summary>
-public partial class ApplicationInsightsComponent : Resource
+public partial class ApplicationInsightsComponent : ProvisionableResource
 {
     /// <summary>
     /// The name of the Application Insights component resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The kind of application that this component refers to, used to
     /// customize UI. This value is a freeform string, values should typically
     /// be one of the following: web, ios, other, store, java, phone.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Type of application being monitored.
     /// </summary>
-    public BicepValue<ApplicationInsightsApplicationType> ApplicationType { get => _applicationType; set => _applicationType.Assign(value); }
-    private readonly BicepValue<ApplicationInsightsApplicationType> _applicationType;
+    public BicepValue<ApplicationInsightsApplicationType> ApplicationType 
+    {
+        get { Initialize(); return _applicationType!; }
+        set { Initialize(); _applicationType!.Assign(value); }
+    }
+    private BicepValue<ApplicationInsightsApplicationType>? _applicationType;
 
     /// <summary>
     /// Resource etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Used by the Application Insights system to determine what kind of flow
@@ -61,85 +81,137 @@ public partial class ApplicationInsightsComponent : Resource
     /// &apos;Bluefield&apos; when creating/updating a component via the REST
     /// API.
     /// </summary>
-    public BicepValue<ComponentFlowType> FlowType { get => _flowType; set => _flowType.Assign(value); }
-    private readonly BicepValue<ComponentFlowType> _flowType;
+    public BicepValue<ComponentFlowType> FlowType 
+    {
+        get { Initialize(); return _flowType!; }
+        set { Initialize(); _flowType!.Assign(value); }
+    }
+    private BicepValue<ComponentFlowType>? _flowType;
 
     /// <summary>
     /// The unique application ID created when a new application is added to
     /// HockeyApp, used for communications with HockeyApp.
     /// </summary>
-    public BicepValue<string> HockeyAppId { get => _hockeyAppId; set => _hockeyAppId.Assign(value); }
-    private readonly BicepValue<string> _hockeyAppId;
+    public BicepValue<string> HockeyAppId 
+    {
+        get { Initialize(); return _hockeyAppId!; }
+        set { Initialize(); _hockeyAppId!.Assign(value); }
+    }
+    private BicepValue<string>? _hockeyAppId;
 
     /// <summary>
     /// Indicates the flow of the ingestion.
     /// </summary>
-    public BicepValue<ComponentIngestionMode> IngestionMode { get => _ingestionMode; set => _ingestionMode.Assign(value); }
-    private readonly BicepValue<ComponentIngestionMode> _ingestionMode;
+    public BicepValue<ComponentIngestionMode> IngestionMode 
+    {
+        get { Initialize(); return _ingestionMode!; }
+        set { Initialize(); _ingestionMode!.Assign(value); }
+    }
+    private BicepValue<ComponentIngestionMode>? _ingestionMode;
 
     /// <summary>
     /// Disable IP masking.
     /// </summary>
-    public BicepValue<bool> IsDisableIPMasking { get => _isDisableIPMasking; set => _isDisableIPMasking.Assign(value); }
-    private readonly BicepValue<bool> _isDisableIPMasking;
+    public BicepValue<bool> IsDisableIPMasking 
+    {
+        get { Initialize(); return _isDisableIPMasking!; }
+        set { Initialize(); _isDisableIPMasking!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDisableIPMasking;
 
     /// <summary>
     /// Disable Non-AAD based Auth.
     /// </summary>
-    public BicepValue<bool> IsDisableLocalAuth { get => _isDisableLocalAuth; set => _isDisableLocalAuth.Assign(value); }
-    private readonly BicepValue<bool> _isDisableLocalAuth;
+    public BicepValue<bool> IsDisableLocalAuth 
+    {
+        get { Initialize(); return _isDisableLocalAuth!; }
+        set { Initialize(); _isDisableLocalAuth!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDisableLocalAuth;
 
     /// <summary>
     /// Force users to create their own storage account for profiler and
     /// debugger.
     /// </summary>
-    public BicepValue<bool> IsForceCustomerStorageForProfiler { get => _isForceCustomerStorageForProfiler; set => _isForceCustomerStorageForProfiler.Assign(value); }
-    private readonly BicepValue<bool> _isForceCustomerStorageForProfiler;
+    public BicepValue<bool> IsForceCustomerStorageForProfiler 
+    {
+        get { Initialize(); return _isForceCustomerStorageForProfiler!; }
+        set { Initialize(); _isForceCustomerStorageForProfiler!.Assign(value); }
+    }
+    private BicepValue<bool>? _isForceCustomerStorageForProfiler;
 
     /// <summary>
     /// Purge data immediately after 30 days.
     /// </summary>
-    public BicepValue<bool> IsImmediatePurgeDataOn30Days { get => _isImmediatePurgeDataOn30Days; set => _isImmediatePurgeDataOn30Days.Assign(value); }
-    private readonly BicepValue<bool> _isImmediatePurgeDataOn30Days;
+    public BicepValue<bool> IsImmediatePurgeDataOn30Days 
+    {
+        get { Initialize(); return _isImmediatePurgeDataOn30Days!; }
+        set { Initialize(); _isImmediatePurgeDataOn30Days!.Assign(value); }
+    }
+    private BicepValue<bool>? _isImmediatePurgeDataOn30Days;
 
     /// <summary>
     /// The network access type for accessing Application Insights ingestion.
     /// </summary>
-    public BicepValue<ApplicationInsightsPublicNetworkAccessType> PublicNetworkAccessForIngestion { get => _publicNetworkAccessForIngestion; set => _publicNetworkAccessForIngestion.Assign(value); }
-    private readonly BicepValue<ApplicationInsightsPublicNetworkAccessType> _publicNetworkAccessForIngestion;
+    public BicepValue<ApplicationInsightsPublicNetworkAccessType> PublicNetworkAccessForIngestion 
+    {
+        get { Initialize(); return _publicNetworkAccessForIngestion!; }
+        set { Initialize(); _publicNetworkAccessForIngestion!.Assign(value); }
+    }
+    private BicepValue<ApplicationInsightsPublicNetworkAccessType>? _publicNetworkAccessForIngestion;
 
     /// <summary>
     /// The network access type for accessing Application Insights query.
     /// </summary>
-    public BicepValue<ApplicationInsightsPublicNetworkAccessType> PublicNetworkAccessForQuery { get => _publicNetworkAccessForQuery; set => _publicNetworkAccessForQuery.Assign(value); }
-    private readonly BicepValue<ApplicationInsightsPublicNetworkAccessType> _publicNetworkAccessForQuery;
+    public BicepValue<ApplicationInsightsPublicNetworkAccessType> PublicNetworkAccessForQuery 
+    {
+        get { Initialize(); return _publicNetworkAccessForQuery!; }
+        set { Initialize(); _publicNetworkAccessForQuery!.Assign(value); }
+    }
+    private BicepValue<ApplicationInsightsPublicNetworkAccessType>? _publicNetworkAccessForQuery;
 
     /// <summary>
     /// Describes what tool created this Application Insights component.
     /// Customers using this API should set this to the default
     /// &apos;rest&apos;.
     /// </summary>
-    public BicepValue<ComponentRequestSource> RequestSource { get => _requestSource; set => _requestSource.Assign(value); }
-    private readonly BicepValue<ComponentRequestSource> _requestSource;
+    public BicepValue<ComponentRequestSource> RequestSource 
+    {
+        get { Initialize(); return _requestSource!; }
+        set { Initialize(); _requestSource!.Assign(value); }
+    }
+    private BicepValue<ComponentRequestSource>? _requestSource;
 
     /// <summary>
     /// Retention period in days.
     /// </summary>
-    public BicepValue<int> RetentionInDays { get => _retentionInDays; set => _retentionInDays.Assign(value); }
-    private readonly BicepValue<int> _retentionInDays;
+    public BicepValue<int> RetentionInDays 
+    {
+        get { Initialize(); return _retentionInDays!; }
+        set { Initialize(); _retentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionInDays;
 
     /// <summary>
     /// Percentage of the data produced by the application being monitored that
     /// is being sampled for Application Insights telemetry.
     /// </summary>
-    public BicepValue<double> SamplingPercentage { get => _samplingPercentage; set => _samplingPercentage.Assign(value); }
-    private readonly BicepValue<double> _samplingPercentage;
+    public BicepValue<double> SamplingPercentage 
+    {
+        get { Initialize(); return _samplingPercentage!; }
+        set { Initialize(); _samplingPercentage!.Assign(value); }
+    }
+    private BicepValue<double>? _samplingPercentage;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Resource Id of the log analytics workspace which the data will be
@@ -147,47 +219,69 @@ public partial class ApplicationInsightsComponent : Resource
     /// this API version. Applications from older versions will not have this
     /// property.
     /// </summary>
-    public BicepValue<ResourceIdentifier> WorkspaceResourceId { get => _workspaceResourceId; set => _workspaceResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _workspaceResourceId;
+    public BicepValue<ResourceIdentifier> WorkspaceResourceId 
+    {
+        get { Initialize(); return _workspaceResourceId!; }
+        set { Initialize(); _workspaceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _workspaceResourceId;
 
     /// <summary>
     /// Application Insights Unique ID for your Application.
     /// </summary>
-    public BicepValue<string> AppId { get => _appId; }
-    private readonly BicepValue<string> _appId;
+    public BicepValue<string> AppId 
+    {
+        get { Initialize(); return _appId!; }
+    }
+    private BicepValue<string>? _appId;
 
     /// <summary>
     /// The unique ID of your application. This field mirrors the
     /// &apos;Name&apos; field and cannot be changed.
     /// </summary>
-    public BicepValue<string> ApplicationId { get => _applicationId; }
-    private readonly BicepValue<string> _applicationId;
+    public BicepValue<string> ApplicationId 
+    {
+        get { Initialize(); return _applicationId!; }
+    }
+    private BicepValue<string>? _applicationId;
 
     /// <summary>
     /// Application Insights component connection string.
     /// </summary>
-    public BicepValue<string> ConnectionString { get => _connectionString; }
-    private readonly BicepValue<string> _connectionString;
+    public BicepValue<string> ConnectionString 
+    {
+        get { Initialize(); return _connectionString!; }
+    }
+    private BicepValue<string>? _connectionString;
 
     /// <summary>
     /// Creation Date for the Application Insights component, in ISO 8601
     /// format.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Token used to authenticate communications with between Application
     /// Insights and HockeyApp.
     /// </summary>
-    public BicepValue<string> HockeyAppToken { get => _hockeyAppToken; }
-    private readonly BicepValue<string> _hockeyAppToken;
+    public BicepValue<string> HockeyAppToken 
+    {
+        get { Initialize(); return _hockeyAppToken!; }
+    }
+    private BicepValue<string>? _hockeyAppToken;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Application Insights Instrumentation key. A read-only value that
@@ -195,26 +289,38 @@ public partial class ApplicationInsightsComponent : Resource
     /// sent to Azure Application Insights. This value will be supplied upon
     /// construction of each new Application Insights component.
     /// </summary>
-    public BicepValue<string> InstrumentationKey { get => _instrumentationKey; }
-    private readonly BicepValue<string> _instrumentationKey;
+    public BicepValue<string> InstrumentationKey 
+    {
+        get { Initialize(); return _instrumentationKey!; }
+    }
+    private BicepValue<string>? _instrumentationKey;
 
     /// <summary>
     /// The date which the component got migrated to LA, in ISO 8601 format.
     /// </summary>
-    public BicepValue<DateTimeOffset> LaMigrationOn { get => _laMigrationOn; }
-    private readonly BicepValue<DateTimeOffset> _laMigrationOn;
+    public BicepValue<DateTimeOffset> LaMigrationOn 
+    {
+        get { Initialize(); return _laMigrationOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _laMigrationOn;
 
     /// <summary>
     /// Application name.
     /// </summary>
-    public BicepValue<string> NamePropertiesName { get => _namePropertiesName; }
-    private readonly BicepValue<string> _namePropertiesName;
+    public BicepValue<string> NamePropertiesName 
+    {
+        get { Initialize(); return _namePropertiesName!; }
+    }
+    private BicepValue<string>? _namePropertiesName;
 
     /// <summary>
     /// List of linked private link scope resources.
     /// </summary>
-    public BicepList<PrivateLinkScopedResourceReference> PrivateLinkScopedResources { get => _privateLinkScopedResources; }
-    private readonly BicepList<PrivateLinkScopedResourceReference> _privateLinkScopedResources;
+    public BicepList<PrivateLinkScopedResourceReference> PrivateLinkScopedResources 
+    {
+        get { Initialize(); return _privateLinkScopedResources!; }
+    }
+    private BicepList<PrivateLinkScopedResourceReference>? _privateLinkScopedResources;
 
     /// <summary>
     /// Current state of this component: whether or not is has been provisioned
@@ -222,61 +328,82 @@ public partial class ApplicationInsightsComponent : Resource
     /// value but are able to read from it. Values will include Succeeded,
     /// Deploying, Canceled, and Failed.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Azure Tenant Id.
     /// </summary>
-    public BicepValue<Guid> TenantId { get => _tenantId; }
-    private readonly BicepValue<Guid> _tenantId;
+    public BicepValue<Guid> TenantId 
+    {
+        get { Initialize(); return _tenantId!; }
+    }
+    private BicepValue<Guid>? _tenantId;
 
     /// <summary>
     /// Creates a new ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ApplicationInsightsComponent
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
-    public ApplicationInsightsComponent(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
+    public ApplicationInsightsComponent(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/components", resourceVersion ?? "2020-02-02")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _applicationType = BicepValue<ApplicationInsightsApplicationType>.DefineProperty(this, "ApplicationType", ["properties", "Application_Type"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _flowType = BicepValue<ComponentFlowType>.DefineProperty(this, "FlowType", ["properties", "Flow_Type"]);
-        _hockeyAppId = BicepValue<string>.DefineProperty(this, "HockeyAppId", ["properties", "HockeyAppId"]);
-        _ingestionMode = BicepValue<ComponentIngestionMode>.DefineProperty(this, "IngestionMode", ["properties", "IngestionMode"]);
-        _isDisableIPMasking = BicepValue<bool>.DefineProperty(this, "IsDisableIPMasking", ["properties", "DisableIpMasking"]);
-        _isDisableLocalAuth = BicepValue<bool>.DefineProperty(this, "IsDisableLocalAuth", ["properties", "DisableLocalAuth"]);
-        _isForceCustomerStorageForProfiler = BicepValue<bool>.DefineProperty(this, "IsForceCustomerStorageForProfiler", ["properties", "ForceCustomerStorageForProfiler"]);
-        _isImmediatePurgeDataOn30Days = BicepValue<bool>.DefineProperty(this, "IsImmediatePurgeDataOn30Days", ["properties", "ImmediatePurgeDataOn30Days"]);
-        _publicNetworkAccessForIngestion = BicepValue<ApplicationInsightsPublicNetworkAccessType>.DefineProperty(this, "PublicNetworkAccessForIngestion", ["properties", "publicNetworkAccessForIngestion"]);
-        _publicNetworkAccessForQuery = BicepValue<ApplicationInsightsPublicNetworkAccessType>.DefineProperty(this, "PublicNetworkAccessForQuery", ["properties", "publicNetworkAccessForQuery"]);
-        _requestSource = BicepValue<ComponentRequestSource>.DefineProperty(this, "RequestSource", ["properties", "Request_Source"]);
-        _retentionInDays = BicepValue<int>.DefineProperty(this, "RetentionInDays", ["properties", "RetentionInDays"]);
-        _samplingPercentage = BicepValue<double>.DefineProperty(this, "SamplingPercentage", ["properties", "SamplingPercentage"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _workspaceResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "WorkspaceResourceId", ["properties", "WorkspaceResourceId"]);
-        _appId = BicepValue<string>.DefineProperty(this, "AppId", ["properties", "AppId"], isOutput: true);
-        _applicationId = BicepValue<string>.DefineProperty(this, "ApplicationId", ["properties", "ApplicationId"], isOutput: true);
-        _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "ConnectionString"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "CreationDate"], isOutput: true);
-        _hockeyAppToken = BicepValue<string>.DefineProperty(this, "HockeyAppToken", ["properties", "HockeyAppToken"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _instrumentationKey = BicepValue<string>.DefineProperty(this, "InstrumentationKey", ["properties", "InstrumentationKey"], isOutput: true, isSecure: true);
-        _laMigrationOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LaMigrationOn", ["properties", "LaMigrationDate"], isOutput: true);
-        _namePropertiesName = BicepValue<string>.DefineProperty(this, "NamePropertiesName", ["properties", "Name"], isOutput: true);
-        _privateLinkScopedResources = BicepList<PrivateLinkScopedResourceReference>.DefineProperty(this, "PrivateLinkScopedResources", ["properties", "PrivateLinkScopedResources"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tenantId = BicepValue<Guid>.DefineProperty(this, "TenantId", ["properties", "TenantId"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ApplicationInsightsComponent.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _applicationType = DefineProperty<ApplicationInsightsApplicationType>("ApplicationType", ["properties", "Application_Type"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _flowType = DefineProperty<ComponentFlowType>("FlowType", ["properties", "Flow_Type"]);
+        _hockeyAppId = DefineProperty<string>("HockeyAppId", ["properties", "HockeyAppId"]);
+        _ingestionMode = DefineProperty<ComponentIngestionMode>("IngestionMode", ["properties", "IngestionMode"]);
+        _isDisableIPMasking = DefineProperty<bool>("IsDisableIPMasking", ["properties", "DisableIpMasking"]);
+        _isDisableLocalAuth = DefineProperty<bool>("IsDisableLocalAuth", ["properties", "DisableLocalAuth"]);
+        _isForceCustomerStorageForProfiler = DefineProperty<bool>("IsForceCustomerStorageForProfiler", ["properties", "ForceCustomerStorageForProfiler"]);
+        _isImmediatePurgeDataOn30Days = DefineProperty<bool>("IsImmediatePurgeDataOn30Days", ["properties", "ImmediatePurgeDataOn30Days"]);
+        _publicNetworkAccessForIngestion = DefineProperty<ApplicationInsightsPublicNetworkAccessType>("PublicNetworkAccessForIngestion", ["properties", "publicNetworkAccessForIngestion"]);
+        _publicNetworkAccessForQuery = DefineProperty<ApplicationInsightsPublicNetworkAccessType>("PublicNetworkAccessForQuery", ["properties", "publicNetworkAccessForQuery"]);
+        _requestSource = DefineProperty<ComponentRequestSource>("RequestSource", ["properties", "Request_Source"]);
+        _retentionInDays = DefineProperty<int>("RetentionInDays", ["properties", "RetentionInDays"]);
+        _samplingPercentage = DefineProperty<double>("SamplingPercentage", ["properties", "SamplingPercentage"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _workspaceResourceId = DefineProperty<ResourceIdentifier>("WorkspaceResourceId", ["properties", "WorkspaceResourceId"]);
+        _appId = DefineProperty<string>("AppId", ["properties", "AppId"], isOutput: true);
+        _applicationId = DefineProperty<string>("ApplicationId", ["properties", "ApplicationId"], isOutput: true);
+        _connectionString = DefineProperty<string>("ConnectionString", ["properties", "ConnectionString"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "CreationDate"], isOutput: true);
+        _hockeyAppToken = DefineProperty<string>("HockeyAppToken", ["properties", "HockeyAppToken"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _instrumentationKey = DefineProperty<string>("InstrumentationKey", ["properties", "InstrumentationKey"], isOutput: true, isSecure: true);
+        _laMigrationOn = DefineProperty<DateTimeOffset>("LaMigrationOn", ["properties", "LaMigrationDate"], isOutput: true);
+        _namePropertiesName = DefineProperty<string>("NamePropertiesName", ["properties", "Name"], isOutput: true);
+        _privateLinkScopedResources = DefineListProperty<PrivateLinkScopedResourceReference>("PrivateLinkScopedResources", ["properties", "PrivateLinkScopedResources"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tenantId = DefineProperty<Guid>("TenantId", ["properties", "TenantId"], isOutput: true);
     }
 
     /// <summary>
@@ -284,11 +411,6 @@ public partial class ApplicationInsightsComponent : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2020-02-02-preview.
-        /// </summary>
-        public static readonly string V2020_02_02_preview = "2020-02-02-preview";
-
         /// <summary>
         /// 2020-02-02.
         /// </summary>
@@ -313,11 +435,16 @@ public partial class ApplicationInsightsComponent : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsComponent.
     /// </summary>
-    /// <param name="resourceName">Name of the ApplicationInsightsComponent.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ApplicationInsightsComponent
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsComponent.</param>
     /// <returns>The existing ApplicationInsightsComponent resource.</returns>
-    public static ApplicationInsightsComponent FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsComponent FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ApplicationInsightsComponent
@@ -329,35 +456,36 @@ public partial class ApplicationInsightsComponent : Resource
         new(minLength: 1, maxLength: 260, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
     /// <summary>
-    /// Assign a role to a user-assigned identity that grants access to this
-    /// ApplicationInsightsComponent.
+    /// Creates a role assignment for a user-assigned identity that grants
+    /// access to this ApplicationInsightsComponent.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="identity">The <see cref="UserAssignedIdentity"/>.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{ResourceName}_{identity.ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
+        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
         {
             Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = identity.PrincipalId
         };
 
     /// <summary>
-    /// Assign a role to a principal that grants access to this
+    /// Creates a role assignment for a principal that grants access to this
     /// ApplicationInsightsComponent.
     /// </summary>
     /// <param name="role">The role to grant.</param>
     /// <param name="principalType">The type of the principal to assign to.</param>
     /// <param name="principalId">The principal to assign to.</param>
+    /// <param name="bicepIdentifierSuffix">Optional role assignment identifier name suffix.</param>
     /// <returns>The <see cref="RoleAssignment"/>.</returns>
-    public RoleAssignment AssignRole(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId) =>
-        new($"{ResourceName}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
+    public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
+        new($"{BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
         {
             Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(ResourceName),
+            Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = principalType,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
             PrincipalId = principalId

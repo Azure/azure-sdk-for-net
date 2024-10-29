@@ -17,65 +17,103 @@ namespace Azure.Provisioning.KeyVault;
 /// <summary>
 /// ManagedHsm.
 /// </summary>
-public partial class ManagedHsm : Resource
+public partial class ManagedHsm : ProvisionableResource
 {
     /// <summary>
     /// Name of the managed HSM Pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Properties of the managed HSM.
     /// </summary>
-    public BicepValue<ManagedHsmProperties> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<ManagedHsmProperties> _properties;
+    public ManagedHsmProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private ManagedHsmProperties? _properties;
 
     /// <summary>
     /// SKU details.
     /// </summary>
-    public BicepValue<ManagedHsmSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<ManagedHsmSku> _sku;
+    public ManagedHsmSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private ManagedHsmSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ManagedHsm.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedHsm.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedHsm resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsm.</param>
-    public ManagedHsm(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2023-07-01")
+    public ManagedHsm(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _properties = BicepValue<ManagedHsmProperties>.DefineProperty(this, "Properties", ["properties"]);
-        _sku = BicepValue<ManagedHsmSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagedHsm.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _properties = DefineModelProperty<ManagedHsmProperties>("Properties", ["properties"]);
+        _sku = DefineModelProperty<ManagedHsmSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -83,11 +121,6 @@ public partial class ManagedHsm : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-04-01-preview.
-        /// </summary>
-        public static readonly string V2024_04_01_preview = "2024-04-01-preview";
-
         /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>
@@ -122,9 +155,14 @@ public partial class ManagedHsm : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedHsm.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedHsm.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the ManagedHsm resource.  This can be
+    /// used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsm.</param>
     /// <returns>The existing ManagedHsm resource.</returns>
-    public static ManagedHsm FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedHsm FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

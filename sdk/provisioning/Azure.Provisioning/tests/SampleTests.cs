@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -29,19 +31,27 @@ internal class SampleTests(bool async)
         ProvisioningOutput? endpoint = null;
 
         await using Trycep test = CreateBicepTest();
+#pragma warning disable SA1112 // Closing parenthesis should be on line of opening parenthesis
         await test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
 
                 // Create a storage account and blob resources
-                StorageAccount storage = StorageResources.CreateAccount(nameof(storage));
+                StorageAccount storage =
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+                    {
+                        Kind = StorageKind.StorageV2,
+                        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                        IsHnsEnabled = true,
+                        AllowBlobPublicAccess = false
+                    };
                 infra.Add(storage);
                 blobs = new(nameof(blobs)) { Parent = storage };
                 infra.Add(blobs);
 
                 // Grab the endpoint
-                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri };
                 infra.Add(endpoint);
 
                 return infra;
@@ -73,6 +83,7 @@ internal class SampleTests(bool async)
             """)
         .Lint()
         .ValidateAndDeployAsync(
+#if EXPERIMENTAL_PROVISIONING
             async deployment =>
             {
                 // Create a client
@@ -88,7 +99,10 @@ internal class SampleTests(bool async)
                 // Make a service call and verify it doesn't throw
                 Response<BlobServiceProperties> result = await storage.GetPropertiesAsync();
                 Assert.AreEqual(200, result.GetRawResponse().Status);
-            });
+            }
+#endif
+        );
+#pragma warning restore SA1112 // Closing parenthesis should be on line of opening parenthesis
     }
 
     [Test]
@@ -131,7 +145,7 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(acr);
 
-                RoleAssignment pullAssignment = acr.AssignRole(ContainerRegistryBuiltInRole.AcrPull, mi);
+                RoleAssignment pullAssignment = acr.CreateRoleAssignment(ContainerRegistryBuiltInRole.AcrPull, mi);
                 infra.Add(pullAssignment);
 
                 OperationalInsightsWorkspace law =
@@ -167,22 +181,22 @@ internal class SampleTests(bool async)
                     };
                 infra.Add(cae);
 
-                RoleAssignment contribAssignment = cae.AssignRole(AppContainersBuiltInRole.Contributor, mi);
+                RoleAssignment contribAssignment = cae.CreateRoleAssignment(AppContainersBuiltInRole.Contributor, mi);
                 infra.Add(contribAssignment);
 
                 // Hack in the Aspire Dashboard as a literal since there's no
                 // management plane library support for dotNetComponents yet
                 BicepLiteral aspireDashboard =
-                    new("aspireDashboard",
+                    new(
                         new ResourceStatement(
                             "aspireDashboard",
-                            new StringLiteral("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
+                            new StringLiteralExpression("Microsoft.App/managedEnvironments/dotNetComponents@2024-02-02-preview"),
                             new ObjectExpression(
                                 new PropertyExpression("name", "aspire-dashboard"),
-                                new PropertyExpression("parent", new IdentifierExpression(cae.ResourceName)),
+                                new PropertyExpression("parent", new IdentifierExpression(cae.BicepIdentifier)),
                                 new PropertyExpression("properties",
                                     new ObjectExpression(
-                                        new PropertyExpression("componentType", new StringLiteral("AspireDashboard")))))));
+                                        new PropertyExpression("componentType", new StringLiteralExpression("AspireDashboard")))))));
                 infra.Add(aspireDashboard);
 
                 infra.Add(new ProvisioningOutput("MANAGED_IDENTITY_CLIENT_ID", typeof(string)) { Value = mi.ClientId });
@@ -321,9 +335,9 @@ internal class SampleTests(bool async)
             {
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
-                Infrastructure infra = new() { TargetScope = "subscription" };
+                Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 
-                ResourceGroup rg = new("rg-test", "2024-03-01");
+                ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);
 
                 return infra;
@@ -335,12 +349,44 @@ internal class SampleTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = deployment().location
 
-            resource rg-test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-              name: take('rg-test-${uniqueString(deployment().id)}', 90)
+            resource rg_test 'Microsoft.Resources/resourceGroups@2024-03-01' = {
+              name: take('rg_test-${uniqueString(deployment().id)}', 90)
               location: location
             }
             """)
         .Lint()
         .ValidateAndDeployAsync();
+    }
+
+    [Test]
+    public void ValidNames()
+    {
+        // Check null is invalid
+        Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(null));
+        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateBicepIdentifier(null));
+        Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
+
+        // Check invalid names
+        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
+        foreach (string name in invalid)
+        {
+            Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(name));
+            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateBicepIdentifier(name));
+            if (!string.IsNullOrEmpty(name))
+            {
+                Assert.AreNotEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
+            }
+            Assert.Throws<ArgumentException>(() => new StorageAccount(name));
+        }
+
+        // Check valid names
+        List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
+        foreach (string name in valid)
+        {
+            Assert.IsTrue(Infrastructure.IsValidBicepIdentifier(name));
+            Assert.DoesNotThrow(() => Infrastructure.ValidateBicepIdentifier(name));
+            Assert.AreEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
+            Assert.DoesNotThrow(() => new StorageAccount(name));
+        }
     }
 }

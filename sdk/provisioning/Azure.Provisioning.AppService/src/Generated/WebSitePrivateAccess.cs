@@ -16,65 +16,102 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSitePrivateAccess.
 /// </summary>
-public partial class WebSitePrivateAccess : Resource
+public partial class WebSitePrivateAccess : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Whether private access is enabled or not.
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The Virtual Networks (and subnets) allowed to access the site privately.
     /// </summary>
-    public BicepList<PrivateAccessVirtualNetwork> VirtualNetworks { get => _virtualNetworks; set => _virtualNetworks.Assign(value); }
-    private readonly BicepList<PrivateAccessVirtualNetwork> _virtualNetworks;
+    public BicepList<PrivateAccessVirtualNetwork> VirtualNetworks 
+    {
+        get { Initialize(); return _virtualNetworks!; }
+        set { Initialize(); _virtualNetworks!.Assign(value); }
+    }
+    private BicepList<PrivateAccessVirtualNetwork>? _virtualNetworks;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
-    public WebSitePrivateAccess(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
+    public WebSitePrivateAccess(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/privateAccess", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "enabled"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _virtualNetworks = BicepList<PrivateAccessVirtualNetwork>.DefineProperty(this, "VirtualNetworks", ["properties", "virtualNetworks"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSitePrivateAccess.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "enabled"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _virtualNetworks = DefineListProperty<PrivateAccessVirtualNetwork>("VirtualNetworks", ["properties", "virtualNetworks"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -241,9 +278,14 @@ public partial class WebSitePrivateAccess : Resource
     /// <summary>
     /// Creates a reference to an existing WebSitePrivateAccess.
     /// </summary>
-    /// <param name="resourceName">Name of the WebSitePrivateAccess.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the WebSitePrivateAccess resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the WebSitePrivateAccess.</param>
     /// <returns>The existing WebSitePrivateAccess resource.</returns>
-    public static WebSitePrivateAccess FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static WebSitePrivateAccess FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

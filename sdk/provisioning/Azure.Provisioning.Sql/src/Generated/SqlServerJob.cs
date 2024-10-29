@@ -15,65 +15,102 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SqlServerJob.
 /// </summary>
-public partial class SqlServerJob : Resource
+public partial class SqlServerJob : ProvisionableResource
 {
     /// <summary>
     /// The name of the job to get.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// User-defined description of the job.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Schedule properties of the job.
     /// </summary>
-    public BicepValue<SqlServerJobSchedule> Schedule { get => _schedule; set => _schedule.Assign(value); }
-    private readonly BicepValue<SqlServerJobSchedule> _schedule;
+    public SqlServerJobSchedule Schedule 
+    {
+        get { Initialize(); return _schedule!; }
+        set { Initialize(); AssignOrReplace(ref _schedule, value); }
+    }
+    private SqlServerJobSchedule? _schedule;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The job version number.
     /// </summary>
-    public BicepValue<int> Version { get => _version; }
-    private readonly BicepValue<int> _version;
+    public BicepValue<int> Version 
+    {
+        get { Initialize(); return _version!; }
+    }
+    private BicepValue<int>? _version;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServerJobAgent.
     /// </summary>
-    public SqlServerJobAgent? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServerJobAgent> _parent;
+    public SqlServerJobAgent? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServerJobAgent>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerJob.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJob.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJob resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJob.</param>
-    public SqlServerJob(string resourceName, string? resourceVersion = default)
-        : base(resourceName, "Microsoft.Sql/servers/jobAgents/jobs", resourceVersion ?? "2021-11-01")
+    public SqlServerJob(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _schedule = BicepValue<SqlServerJobSchedule>.DefineProperty(this, "Schedule", ["properties", "schedule"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _version = BicepValue<int>.DefineProperty(this, "Version", ["properties", "version"], isOutput: true);
-        _parent = ResourceReference<SqlServerJobAgent>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerJob.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _schedule = DefineModelProperty<SqlServerJobSchedule>("Schedule", ["properties", "schedule"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _version = DefineProperty<int>("Version", ["properties", "version"], isOutput: true);
+        _parent = DefineResource<SqlServerJobAgent>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -81,11 +118,6 @@ public partial class SqlServerJob : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -95,9 +127,14 @@ public partial class SqlServerJob : Resource
     /// <summary>
     /// Creates a reference to an existing SqlServerJob.
     /// </summary>
-    /// <param name="resourceName">Name of the SqlServerJob.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SqlServerJob resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJob.</param>
     /// <returns>The existing SqlServerJob resource.</returns>
-    public static SqlServerJob FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SqlServerJob FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
