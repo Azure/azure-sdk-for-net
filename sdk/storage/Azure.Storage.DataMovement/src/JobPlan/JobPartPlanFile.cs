@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// </summary>
         public readonly SemaphoreSlim WriteLock;
 
+        private const int DefaultBufferSize = 81920;
+
         private JobPartPlanFile()
         {
             WriteLock = new SemaphoreSlim(1);
@@ -38,7 +40,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             string checkpointerPath,
             string id,
             int jobPart,
-            Stream headerStream)
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -46,20 +49,13 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
-            JobPartPlanFile result = new JobPartPlanFile()
-            {
-                FileName = fileName
-            };
-            using (FileStream fileStream = File.Create(result.FileName.ToString()))
-            {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
-            }
-            return result;
+            return await CreateJobPartPlanFileAsync(fileName, headerStream, cancellationToken).ConfigureAwait(false);
         }
 
         public static async Task<JobPartPlanFile> CreateJobPartPlanFileAsync(
             JobPartPlanFileName fileName,
-            Stream headerStream)
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             JobPartPlanFile result = new JobPartPlanFile()
             {
@@ -68,7 +64,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             using (FileStream fileStream = File.Create(result.FileName.ToString()))
             {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
             }
             return result;
         }

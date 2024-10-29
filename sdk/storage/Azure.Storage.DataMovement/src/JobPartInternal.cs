@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement
                 {
                     try
                     {
-                        await Task.Run(chunkTask).ConfigureAwait(false);
+                        await Task.Run(chunkTask, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -464,7 +464,7 @@ namespace Azure.Storage.DataMovement
                 // If the job part is paused or ended with failures
                 // delete the destination resource because it could be unfinished or corrupted
                 // If we resume we would have to start from the beginning anyways.
-                await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
+                await _destinationResource.DeleteIfExistsAsync(_cancellationToken).ConfigureAwait(false);
             }
         }
 

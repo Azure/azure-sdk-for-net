@@ -123,11 +123,11 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act
-            DataTransferStatus status = new DataTransferStatus(state, hasFailedItems, hasSkippedItems);
+            DataTransferStatus[] status = { new DataTransferStatus(state, hasFailedItems, hasSkippedItems) };
             IList<DataTransfer> result = await manager.GetTransfersAsync(status).ToListAsync();
 
             // Assert
-            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status).ToList(), result);
+            AssertListTransfersEquals(storedTransfers.Where(d => d.TransferStatus == status.First()).ToList(), result);
         }
 
         [Test]
