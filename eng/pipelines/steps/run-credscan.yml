@@ -1,0 +1,51 @@
+parameters:
+- name: Tag
+  type: string
+- name: ScanFolder
+  type: string
+  default: "$(Build.SourcesDirectory)"
+- name: SuppressionsFile
+  type: string
+- name: ArtifactFolder
+  type: string
+  default: "$(Build.ArtifactStagingDirectory)"
+
+steps:
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+    displayName: Invoke CredScan
+    inputs:
+      toolVersion: 2.3.12.23
+      scanFolder: ${{ parameters.ScanFolder }}
+      suppressionsFile: ${{ parameters.SuppressionsFile }}
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+    displayName: Analyze Credscan Results
+    inputs:
+      GdnBreakAllTools: false
+      GdnBreakGdnToolCredScan: true
+      GdnBreakGdnToolCredScanSeverity: Error
+
+  - pwsh: |
+      $tag = "${{ parameters.Tag }}"
+      $disallowedCharacters = @('\', '/', "'", ':', '<', '>', '|', '*', '?')
+      $placeholder = '_'
+      $pattern = ($disallowedCharacters | ForEach-Object { [regex]::Escape($_) }) -join '|'
+      $artifactName = $tag -replace $pattern, $placeholder
+
+      Write-Host "##vso[task.setvariable variable=ArtifactName]$artifactName"
+    displayName: Generate Artifact Name
+    condition: failed()
+
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+    displayName: 'CredScan Artifacts'
+    condition: failed()
+    inputs:
+      ArtifactName: $(ArtifactName)
+      ArtifactType: Container
+      PublishProcessedResults: false
+      AllTools: true
+
+  - pwsh: |
+      Get-ChildItem -Recurse $(Build.ArtifactStagingDirectory) | % { Write-Host $_.FullName }
+    displayName: Parse Failing Credscan Results
+    condition: failed()
