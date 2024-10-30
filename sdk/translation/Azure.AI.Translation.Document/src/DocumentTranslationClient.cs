@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -614,5 +615,49 @@ namespace Azure.AI.Translation.Document
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTranslationsStatusNextPageRequest(nextLink, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationStatuses", "value", "nextLink", context);
         }
+
+        #region supported formats functions nobody wants to see these
+
+        /// <summary>
+        /// Get the list of the glossary formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<SupportedFileFormats> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        {
+            return GetSupportedFormats(FileFormatType.Glossary, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of the glossary formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetSupportedFormatsAsync(FileFormatType.Glossary, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the list of the document formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<SupportedFileFormats> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        {
+            return GetSupportedFormats(FileFormatType.Document, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of the document formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetSupportedFormatsAsync(FileFormatType.Document, cancellationToken).ConfigureAwait(false);
+        }
+
+        #endregion
     }
 }
