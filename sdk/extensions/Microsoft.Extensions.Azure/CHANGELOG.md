@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for constructing a `DefaultAzureCredential` or `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
 
 ### Breaking Changes
 

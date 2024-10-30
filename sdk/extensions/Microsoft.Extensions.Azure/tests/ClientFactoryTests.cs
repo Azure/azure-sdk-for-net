@@ -308,6 +308,7 @@ namespace Azure.Core.Extensions.Tests
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
 
             // if both clientId and resourceId set, we expect an ArgumentException
+            // We also expect an exception if objectId is set for DefaultAzureCredential, as it is only supported for ManagedIdentityCredential
             if ((clientId && resourceId) || objectId)
             {
                 Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
@@ -342,8 +343,6 @@ namespace Azure.Core.Extensions.Tests
                 Assert.AreEqual("tenantId", pwshCredential.TenantId);
             }
 
-            // TODO: Since these can't build with project reference, we have to comment them out for now.
-            // When we resolve https://github.com/Azure/azure-sdk-for-net/issues/45806, we can add them back.
             string managedIdentityId;
             int idType;
             ReflectIdAndType(miCredential, out managedIdentityId, out idType);
