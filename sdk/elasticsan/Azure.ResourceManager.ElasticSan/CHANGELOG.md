@@ -1,5 +1,22 @@
 # Release History
 
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.1 (2024-10-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-05' to 'package-preview-2024-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/9a8af2acfafc4d7a23eff41b859d2d332f51b0bc/specification/elasticsan/resource-manager/readme.md.
+    - Supported auto scale policy for ElasticSan.
+
 ## 1.1.0 (2024-09-27)
 
 ### Features Added
@@ -7,6 +24,7 @@
 - Upgraded api-version tag from 'package-2023-01' to 'package-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/262a9d16d94c3448fc7f37c840757f6e74acf7de/specification/elasticsan/resource-manager/readme.md.
     - Supported EnforceDataIntegrityCheckForIscsi for volume groups.
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Other Changes
 

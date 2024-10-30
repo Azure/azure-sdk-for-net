@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         void IJsonModel<SecretBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecretBaseInfo IJsonModel<SecretBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

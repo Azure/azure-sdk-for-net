@@ -9,7 +9,7 @@ Azure.Provisioning.CloudMachine simplifies declarative resource provisioning in 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.CloudMachine
+dotnet add package Azure.Provisioning.CloudMachine --prerelease
 ```
 
 ### Prerequisites

@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<BatchSupportedImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             writer.WritePropertyName("imageReference"u8);
@@ -64,7 +72,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchSupportedImage IJsonModel<BatchSupportedImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

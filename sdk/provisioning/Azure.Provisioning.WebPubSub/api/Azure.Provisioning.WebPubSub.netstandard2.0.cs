@@ -5,49 +5,56 @@ namespace Azure.Provisioning.WebPubSub
         Allow = 0,
         Deny = 1,
     }
-    public partial class BillingInfoSku : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class BillingInfoSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public BillingInfoSku() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public BillingInfoSku() { }
         public Azure.Provisioning.BicepValue<int> Capacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Family { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Size { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubSkuTier> Tier { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class LiveTraceCategory : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class LiveTraceCategory : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public LiveTraceCategory() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public LiveTraceCategory() { }
         public Azure.Provisioning.BicepValue<string> IsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class LiveTraceConfiguration : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class LiveTraceConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public LiveTraceConfiguration() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public LiveTraceConfiguration() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.LiveTraceCategory> Categories { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> IsEnabled { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class PrivateEndpointAcl : Azure.Provisioning.WebPubSub.PublicNetworkAcls
     {
         public PrivateEndpointAcl() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class PublicNetworkAcls : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class PublicNetworkAcls : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public PublicNetworkAcls() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public PublicNetworkAcls() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.WebPubSubRequestType> Allow { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.WebPubSubRequestType> Deny { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class ResourceLogCategory : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class ResourceLogCategory : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public ResourceLogCategory() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public ResourceLogCategory() { }
         public Azure.Provisioning.BicepValue<string> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class UpstreamAuthSettings : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class UpstreamAuthSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public UpstreamAuthSettings() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public UpstreamAuthSettings() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.UpstreamAuthType> AuthType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentityResource { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum UpstreamAuthType
     {
@@ -75,77 +82,97 @@ namespace Azure.Provisioning.WebPubSub
         public static bool operator !=(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole left, Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebPubSubEventHandler : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubEventHandler : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubEventHandler() : base (default(Azure.Provisioning.ProvisioningContext)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.UpstreamAuthSettings> Auth { get { throw null; } set { } }
+        public WebPubSubEventHandler() { }
+        public Azure.Provisioning.WebPubSub.UpstreamAuthSettings Auth { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> SystemEvents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UrlTemplate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UserEventPattern { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebPubSubHub : Azure.Provisioning.Primitives.Resource
+    public partial class WebPubSubHub : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WebPubSubHub(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubHub(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.WebPubSub.WebPubSubService? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubHubProperties> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.WebPubSub.WebPubSubHub FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.WebPubSub.WebPubSubHubProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.WebPubSub.WebPubSubHub FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2020_05_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2024_03_01;
+        }
     }
-    public partial class WebPubSubHubProperties : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubHubProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubHubProperties() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubHubProperties() { }
         public Azure.Provisioning.BicepValue<string> AnonymousConnectPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.WebPubSubEventHandler> EventHandlers { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebPubSubKeys : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubKeys() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubKeys() { }
         public Azure.Provisioning.BicepValue<string> PrimaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryConnectionString { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.Provisioning.WebPubSub.WebPubSubKeys FromExpression(Azure.Provisioning.Expressions.Expression expression) { throw null; }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebPubSubNetworkAcls : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubNetworkAcls : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubNetworkAcls() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubNetworkAcls() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.AclAction> DefaultAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.PrivateEndpointAcl> PrivateEndpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.PublicNetworkAcls> PublicNetwork { get { throw null; } set { } }
+        public Azure.Provisioning.WebPubSub.PublicNetworkAcls PublicNetwork { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebPubSubPrivateEndpointConnection : Azure.Provisioning.Primitives.Resource
+    public partial class WebPubSubPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WebPubSubPrivateEndpointConnection(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public WebPubSubPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.WebPubSub.WebPubSubPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.WebPubSub.WebPubSubService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.WebPubSub.WebPubSubPrivateEndpointConnection FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.WebPubSub.WebPubSubPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2020_05_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2024_03_01;
+        }
     }
-    public partial class WebPubSubPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubPrivateEndpointConnectionData() : base (default(Azure.Provisioning.ProvisioningContext)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubPrivateLinkServiceConnectionState> ConnectionState { get { throw null; } set { } }
+        public WebPubSubPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.WebPubSub.WebPubSubPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
-    public partial class WebPubSubPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubPrivateLinkServiceConnectionState() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubPrivateLinkServiceConnectionState() { }
         public Azure.Provisioning.BicepValue<string> ActionsRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubPrivateLinkServiceConnectionStatus> Status { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum WebPubSubPrivateLinkServiceConnectionStatus
     {
@@ -174,21 +201,21 @@ namespace Azure.Provisioning.WebPubSub
         RestApi = 2,
         Trace = 3,
     }
-    public partial class WebPubSubService : Azure.Provisioning.Primitives.Resource
+    public partial class WebPubSubService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WebPubSubService(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ExternalIP { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HostNamePrefix { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsAadAuthDisabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsClientCertEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLocalAuthDisabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.LiveTraceConfiguration> LiveTraceConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.WebPubSub.LiveTraceConfiguration LiveTraceConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubNetworkAcls> NetworkAcls { get { throw null; } set { } }
+        public Azure.Provisioning.WebPubSub.WebPubSubNetworkAcls NetworkAcls { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PublicNetworkAccess { get { throw null; } set { } }
@@ -196,20 +223,28 @@ namespace Azure.Provisioning.WebPubSub
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.ResourceLogCategory> ResourceLogCategories { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ServerPort { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.WebPubSub.WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.BillingInfoSku> Sku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.WebPubSub.BillingInfoSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.WebPubSub.WebPubSubService FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.WebPubSub.WebPubSubBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.WebPubSub.WebPubSubService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.WebPubSub.WebPubSubKeys GetKeys() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2020_05_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2024_03_01;
+        }
     }
-    public partial class WebPubSubSharedPrivateLink : Azure.Provisioning.Primitives.Resource
+    public partial class WebPubSubSharedPrivateLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WebPubSubSharedPrivateLink(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubSharedPrivateLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -218,12 +253,20 @@ namespace Azure.Provisioning.WebPubSub
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubSharedPrivateLinkStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
-        public static Azure.Provisioning.WebPubSub.WebPubSubSharedPrivateLink FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.WebPubSub.WebPubSubSharedPrivateLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2020_05_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2024_03_01;
+        }
     }
-    public partial class WebPubSubSharedPrivateLinkData : Azure.Provisioning.Primitives.ProvisioningConstruct
+    public partial class WebPubSubSharedPrivateLinkData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public WebPubSubSharedPrivateLinkData() : base (default(Azure.Provisioning.ProvisioningContext)) { }
+        public WebPubSubSharedPrivateLinkData() { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
@@ -231,7 +274,8 @@ namespace Azure.Provisioning.WebPubSub
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RequestMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.WebPubSub.WebPubSubSharedPrivateLinkStatus> Status { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum WebPubSubSharedPrivateLinkStatus
     {

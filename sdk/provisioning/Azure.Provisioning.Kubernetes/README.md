@@ -9,7 +9,7 @@ Azure.Provisioning.Kubernetes simplifies declarative resource provisioning in .N
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Kubernetes
+dotnet add package Azure.Provisioning.Kubernetes --prerelease
 ```
 
 ### Prerequisites

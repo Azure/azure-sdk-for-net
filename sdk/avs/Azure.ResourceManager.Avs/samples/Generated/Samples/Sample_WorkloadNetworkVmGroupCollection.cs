@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_WorkloadNetworksListVMGroups()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_ListVMGroups.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListVMGroups.json
             // this example is just showing the usage of "WorkloadNetworks_ListVmGroups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkVmGroupResource
-            WorkloadNetworkVmGroupCollection collection = avsPrivateCloud.GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = workloadNetwork.GetWorkloadNetworkVmGroups();
 
             // invoke the operation and iterate over the result
             await foreach (WorkloadNetworkVmGroupResource item in collection.GetAllAsync())
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetVMGroups.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
             // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkVmGroupResource
-            WorkloadNetworkVmGroupCollection collection = avsPrivateCloud.GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = workloadNetwork.GetWorkloadNetworkVmGroups();
 
             // invoke the operation
             string vmGroupId = "vmGroup1";
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetVMGroups.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
             // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkVmGroupResource
-            WorkloadNetworkVmGroupCollection collection = avsPrivateCloud.GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = workloadNetwork.GetWorkloadNetworkVmGroups();
 
             // invoke the operation
             string vmGroupId = "vmGroup1";
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetVMGroups.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
             // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkVmGroupResource
-            WorkloadNetworkVmGroupCollection collection = avsPrivateCloud.GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = workloadNetwork.GetWorkloadNetworkVmGroups();
 
             // invoke the operation
             string vmGroupId = "vmGroup1";
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_WorkloadNetworksCreateVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_CreateVMGroups.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreateVMGroup.json
             // this example is just showing the usage of "WorkloadNetworks_CreateVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,16 +173,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkVmGroupResource
-            WorkloadNetworkVmGroupCollection collection = avsPrivateCloud.GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = workloadNetwork.GetWorkloadNetworkVmGroups();
 
             // invoke the operation
             string vmGroupId = "vmGroup1";
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Avs.Samples
 {
 "564d43da-fefc-2a3b-1d92-42855622fa50"
 },
-                Revision = 1,
+                Revision = 1L,
             };
             ArmOperation<WorkloadNetworkVmGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmGroupId, data);
             WorkloadNetworkVmGroupResource result = lro.Value;

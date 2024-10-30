@@ -84,6 +84,7 @@ namespace Azure.Storage.DataMovement
             long? length = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             FileStream stream = new FileStream(_uri.LocalPath, FileMode.Open, FileAccess.Read);
             stream.Position = position;
             return Task.FromResult(new StorageResourceReadStreamResult(stream));
@@ -93,8 +94,7 @@ namespace Azure.Storage.DataMovement
         /// Creates the local file.
         /// </summary>
         /// <param name="overwrite"></param>
-        /// <returns></returns>
-        internal Task CreateAsync(bool overwrite)
+        internal void Create(bool overwrite)
         {
             if (overwrite || !File.Exists(_uri.LocalPath))
             {
@@ -102,9 +102,11 @@ namespace Azure.Storage.DataMovement
                 File.Create(_uri.LocalPath).Close();
                 FileAttributes attributes = File.GetAttributes(_uri.LocalPath);
                 File.SetAttributes(_uri.LocalPath, attributes | FileAttributes.Temporary);
-                return Task.CompletedTask;
             }
-            throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            else
+            {
+                throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
+            }
         }
 
         /// <summary>
@@ -136,7 +138,7 @@ namespace Azure.Storage.DataMovement
             long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
-                await CreateAsync(overwrite).ConfigureAwait(false);
+                Create(overwrite);
             }
             if (streamLength > 0)
             {

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static bool operator ==(HighAvailabilityMode left, HighAvailabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HighAvailabilityMode"/> values are not the same. </summary>
         public static bool operator !=(HighAvailabilityMode left, HighAvailabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HighAvailabilityMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HighAvailabilityMode"/>. </summary>
         public static implicit operator HighAvailabilityMode(string value) => new HighAvailabilityMode(value);
 
         /// <inheritdoc />

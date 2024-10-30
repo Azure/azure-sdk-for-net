@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageQueue.
 /// </summary>
-public partial class StorageQueue : Resource
+public partial class StorageQueue : ProvisionableResource
 {
     /// <summary>
     /// A queue name must be unique within a storage account and must be
@@ -26,66 +26,219 @@ public partial class StorageQueue : Resource
     /// an alphanumeric character and it cannot have two consecutive dash(-)
     /// characters.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A name-value pair that represents queue metadata.
     /// </summary>
-    public BicepDictionary<string> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepDictionary<string> _metadata;
+    public BicepDictionary<string> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepDictionary<string>? _metadata;
 
     /// <summary>
     /// Integer indicating an approximate number of messages in the queue. This
     /// number is not lower than the actual number of messages in the queue,
     /// but could be higher.
     /// </summary>
-    public BicepValue<int> ApproximateMessageCount { get => _approximateMessageCount; }
-    private readonly BicepValue<int> _approximateMessageCount;
+    public BicepValue<int> ApproximateMessageCount 
+    {
+        get { Initialize(); return _approximateMessageCount!; }
+    }
+    private BicepValue<int>? _approximateMessageCount;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent QueueService.
     /// </summary>
-    public QueueService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<QueueService> _parent;
+    public QueueService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<QueueService>? _parent;
 
     /// <summary>
     /// Creates a new StorageQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StorageQueue resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StorageQueue(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion, context)
+    public StorageQueue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _approximateMessageCount = BicepValue<int>.DefineProperty(this, "ApproximateMessageCount", ["properties", "approximateMessageCount"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<QueueService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StorageQueue.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
+        _approximateMessageCount = DefineProperty<int>("ApproximateMessageCount", ["properties", "approximateMessageCount"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<QueueService>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported StorageQueue resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2021-09-01.
+        /// </summary>
+        public static readonly string V2021_09_01 = "2021-09-01";
+
+        /// <summary>
+        /// 2021-08-01.
+        /// </summary>
+        public static readonly string V2021_08_01 = "2021-08-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
+
+        /// <summary>
+        /// 2021-04-01.
+        /// </summary>
+        public static readonly string V2021_04_01 = "2021-04-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-07-01.
+        /// </summary>
+        public static readonly string V2018_07_01 = "2018-07-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-06-01.
+        /// </summary>
+        public static readonly string V2017_06_01 = "2017-06-01";
+
+        /// <summary>
+        /// 2016-12-01.
+        /// </summary>
+        public static readonly string V2016_12_01 = "2016-12-01";
+
+        /// <summary>
+        /// 2016-05-01.
+        /// </summary>
+        public static readonly string V2016_05_01 = "2016-05-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing StorageQueue.
     /// </summary>
-    /// <param name="resourceName">Name of the StorageQueue.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StorageQueue resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
     /// <returns>The existing StorageQueue resource.</returns>
-    public static StorageQueue FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StorageQueue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this StorageQueue resource.

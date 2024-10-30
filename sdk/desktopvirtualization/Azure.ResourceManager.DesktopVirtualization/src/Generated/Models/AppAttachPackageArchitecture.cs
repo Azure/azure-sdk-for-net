@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(AppAttachPackageArchitecture left, AppAttachPackageArchitecture right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppAttachPackageArchitecture"/> values are not the same. </summary>
         public static bool operator !=(AppAttachPackageArchitecture left, AppAttachPackageArchitecture right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppAttachPackageArchitecture"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppAttachPackageArchitecture"/>. </summary>
         public static implicit operator AppAttachPackageArchitecture(string value) => new AppAttachPackageArchitecture(value);
 
         /// <inheritdoc />

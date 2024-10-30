@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Network.Samples
                 FilePath = "D:\\capture\\pc1.cap",
             })
             {
-                BytesToCapturePerPacket = 10000,
-                TotalBytesPerSession = 100000,
+                BytesToCapturePerPacket = 10000L,
+                TotalBytesPerSession = 100000L,
                 TimeLimitInSeconds = 100,
                 Filters =
 {

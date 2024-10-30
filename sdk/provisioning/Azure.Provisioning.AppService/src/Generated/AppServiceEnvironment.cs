@@ -17,123 +17,197 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceEnvironment.
 /// </summary>
-public partial class AppServiceEnvironment : Resource
+public partial class AppServiceEnvironment : ProvisionableResource
 {
     /// <summary>
     /// Name of the App Service Environment.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Custom settings for changing the behavior of the App Service
     /// Environment.
     /// </summary>
-    public BicepList<AppServiceNameValuePair> ClusterSettings { get => _clusterSettings; set => _clusterSettings.Assign(value); }
-    private readonly BicepList<AppServiceNameValuePair> _clusterSettings;
+    public BicepList<AppServiceNameValuePair> ClusterSettings 
+    {
+        get { Initialize(); return _clusterSettings!; }
+        set { Initialize(); _clusterSettings!.Assign(value); }
+    }
+    private BicepList<AppServiceNameValuePair>? _clusterSettings;
 
     /// <summary>
     /// Full view of the custom domain suffix configuration for ASEv3.
     /// </summary>
-    public BicepValue<CustomDnsSuffixConfigurationData> CustomDnsSuffixConfiguration { get => _customDnsSuffixConfiguration; set => _customDnsSuffixConfiguration.Assign(value); }
-    private readonly BicepValue<CustomDnsSuffixConfigurationData> _customDnsSuffixConfiguration;
+    public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration 
+    {
+        get { Initialize(); return _customDnsSuffixConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _customDnsSuffixConfiguration, value); }
+    }
+    private CustomDnsSuffixConfigurationData? _customDnsSuffixConfiguration;
 
     /// <summary>
     /// Dedicated Host Count.
     /// </summary>
-    public BicepValue<int> DedicatedHostCount { get => _dedicatedHostCount; set => _dedicatedHostCount.Assign(value); }
-    private readonly BicepValue<int> _dedicatedHostCount;
+    public BicepValue<int> DedicatedHostCount 
+    {
+        get { Initialize(); return _dedicatedHostCount!; }
+        set { Initialize(); _dedicatedHostCount!.Assign(value); }
+    }
+    private BicepValue<int>? _dedicatedHostCount;
 
     /// <summary>
     /// DNS suffix of the App Service Environment.
     /// </summary>
-    public BicepValue<string> DnsSuffix { get => _dnsSuffix; set => _dnsSuffix.Assign(value); }
-    private readonly BicepValue<string> _dnsSuffix;
+    public BicepValue<string> DnsSuffix 
+    {
+        get { Initialize(); return _dnsSuffix!; }
+        set { Initialize(); _dnsSuffix!.Assign(value); }
+    }
+    private BicepValue<string>? _dnsSuffix;
 
     /// <summary>
     /// Scale factor for front-ends.
     /// </summary>
-    public BicepValue<int> FrontEndScaleFactor { get => _frontEndScaleFactor; set => _frontEndScaleFactor.Assign(value); }
-    private readonly BicepValue<int> _frontEndScaleFactor;
+    public BicepValue<int> FrontEndScaleFactor 
+    {
+        get { Initialize(); return _frontEndScaleFactor!; }
+        set { Initialize(); _frontEndScaleFactor!.Assign(value); }
+    }
+    private BicepValue<int>? _frontEndScaleFactor;
 
     /// <summary>
     /// Specifies which endpoints to serve internally in the Virtual Network
     /// for the App Service Environment.
     /// </summary>
-    public BicepValue<LoadBalancingMode> InternalLoadBalancingMode { get => _internalLoadBalancingMode; set => _internalLoadBalancingMode.Assign(value); }
-    private readonly BicepValue<LoadBalancingMode> _internalLoadBalancingMode;
+    public BicepValue<LoadBalancingMode> InternalLoadBalancingMode 
+    {
+        get { Initialize(); return _internalLoadBalancingMode!; }
+        set { Initialize(); _internalLoadBalancingMode!.Assign(value); }
+    }
+    private BicepValue<LoadBalancingMode>? _internalLoadBalancingMode;
 
     /// <summary>
     /// Number of IP SSL addresses reserved for the App Service Environment.
     /// </summary>
-    public BicepValue<int> IPSslAddressCount { get => _iPSslAddressCount; set => _iPSslAddressCount.Assign(value); }
-    private readonly BicepValue<int> _iPSslAddressCount;
+    public BicepValue<int> IPSslAddressCount 
+    {
+        get { Initialize(); return _iPSslAddressCount!; }
+        set { Initialize(); _iPSslAddressCount!.Assign(value); }
+    }
+    private BicepValue<int>? _iPSslAddressCount;
 
     /// <summary>
     /// Whether or not this App Service Environment is zone-redundant.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;.
     /// </summary>
-    public BicepValue<string> MultiSize { get => _multiSize; set => _multiSize.Assign(value); }
-    private readonly BicepValue<string> _multiSize;
+    public BicepValue<string> MultiSize 
+    {
+        get { Initialize(); return _multiSize!; }
+        set { Initialize(); _multiSize!.Assign(value); }
+    }
+    private BicepValue<string>? _multiSize;
 
     /// <summary>
     /// Full view of networking configuration for an ASE.
     /// </summary>
-    public BicepValue<AseV3NetworkingConfigurationData> NetworkingConfiguration { get => _networkingConfiguration; set => _networkingConfiguration.Assign(value); }
-    private readonly BicepValue<AseV3NetworkingConfigurationData> _networkingConfiguration;
+    public AseV3NetworkingConfigurationData NetworkingConfiguration 
+    {
+        get { Initialize(); return _networkingConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _networkingConfiguration, value); }
+    }
+    private AseV3NetworkingConfigurationData? _networkingConfiguration;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Upgrade Preference.
     /// </summary>
-    public BicepValue<AppServiceEnvironmentUpgradePreference> UpgradePreference { get => _upgradePreference; set => _upgradePreference.Assign(value); }
-    private readonly BicepValue<AppServiceEnvironmentUpgradePreference> _upgradePreference;
+    public BicepValue<AppServiceEnvironmentUpgradePreference> UpgradePreference 
+    {
+        get { Initialize(); return _upgradePreference!; }
+        set { Initialize(); _upgradePreference!.Assign(value); }
+    }
+    private BicepValue<AppServiceEnvironmentUpgradePreference>? _upgradePreference;
 
     /// <summary>
     /// User added ip ranges to whitelist on ASE db.
     /// </summary>
-    public BicepList<string> UserWhitelistedIPRanges { get => _userWhitelistedIPRanges; set => _userWhitelistedIPRanges.Assign(value); }
-    private readonly BicepList<string> _userWhitelistedIPRanges;
+    public BicepList<string> UserWhitelistedIPRanges 
+    {
+        get { Initialize(); return _userWhitelistedIPRanges!; }
+        set { Initialize(); _userWhitelistedIPRanges!.Assign(value); }
+    }
+    private BicepList<string>? _userWhitelistedIPRanges;
 
     /// <summary>
     /// Description of the Virtual Network.
     /// </summary>
-    public BicepValue<AppServiceVirtualNetworkProfile> VirtualNetwork { get => _virtualNetwork; set => _virtualNetwork.Assign(value); }
-    private readonly BicepValue<AppServiceVirtualNetworkProfile> _virtualNetwork;
+    public AppServiceVirtualNetworkProfile VirtualNetwork 
+    {
+        get { Initialize(); return _virtualNetwork!; }
+        set { Initialize(); AssignOrReplace(ref _virtualNetwork, value); }
+    }
+    private AppServiceVirtualNetworkProfile? _virtualNetwork;
 
     /// <summary>
     /// Flag that displays whether an ASE has linux workers or not.
     /// </summary>
-    public BicepValue<bool> HasLinuxWorkers { get => _hasLinuxWorkers; }
-    private readonly BicepValue<bool> _hasLinuxWorkers;
+    public BicepValue<bool> HasLinuxWorkers 
+    {
+        get { Initialize(); return _hasLinuxWorkers!; }
+    }
+    private BicepValue<bool>? _hasLinuxWorkers;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is
@@ -142,80 +216,112 @@ public partial class AppServiceEnvironment : Resource
     /// available              (most likely because NSG blocked the incoming
     /// traffic).
     /// </summary>
-    public BicepValue<bool> IsSuspended { get => _isSuspended; }
-    private readonly BicepValue<bool> _isSuspended;
+    public BicepValue<bool> IsSuspended 
+    {
+        get { Initialize(); return _isSuspended!; }
+    }
+    private BicepValue<bool>? _isSuspended;
 
     /// <summary>
     /// Maximum number of VMs in the App Service Environment.
     /// </summary>
-    public BicepValue<int> MaximumNumberOfMachines { get => _maximumNumberOfMachines; }
-    private readonly BicepValue<int> _maximumNumberOfMachines;
+    public BicepValue<int> MaximumNumberOfMachines 
+    {
+        get { Initialize(); return _maximumNumberOfMachines!; }
+    }
+    private BicepValue<int>? _maximumNumberOfMachines;
 
     /// <summary>
     /// Number of front-end instances.
     /// </summary>
-    public BicepValue<int> MultiRoleCount { get => _multiRoleCount; }
-    private readonly BicepValue<int> _multiRoleCount;
+    public BicepValue<int> MultiRoleCount 
+    {
+        get { Initialize(); return _multiRoleCount!; }
+    }
+    private BicepValue<int>? _multiRoleCount;
 
     /// <summary>
     /// Provisioning state of the App Service Environment.
     /// </summary>
-    public BicepValue<ProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ProvisioningState> _provisioningState;
+    public BicepValue<ProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Current status of the App Service Environment.
     /// </summary>
-    public BicepValue<HostingEnvironmentStatus> Status { get => _status; }
-    private readonly BicepValue<HostingEnvironmentStatus> _status;
+    public BicepValue<HostingEnvironmentStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<HostingEnvironmentStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Whether an upgrade is available for this App Service Environment.
     /// </summary>
-    public BicepValue<AppServiceEnvironmentUpgradeAvailability> UpgradeAvailability { get => _upgradeAvailability; }
-    private readonly BicepValue<AppServiceEnvironmentUpgradeAvailability> _upgradeAvailability;
+    public BicepValue<AppServiceEnvironmentUpgradeAvailability> UpgradeAvailability 
+    {
+        get { Initialize(); return _upgradeAvailability!; }
+    }
+    private BicepValue<AppServiceEnvironmentUpgradeAvailability>? _upgradeAvailability;
 
     /// <summary>
     /// Creates a new AppServiceEnvironment.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceEnvironment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceEnvironment resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public AppServiceEnvironment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2023-12-01", context)
+    public AppServiceEnvironment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _clusterSettings = BicepList<AppServiceNameValuePair>.DefineProperty(this, "ClusterSettings", ["properties", "clusterSettings"]);
-        _customDnsSuffixConfiguration = BicepValue<CustomDnsSuffixConfigurationData>.DefineProperty(this, "CustomDnsSuffixConfiguration", ["properties", "customDnsSuffixConfiguration"]);
-        _dedicatedHostCount = BicepValue<int>.DefineProperty(this, "DedicatedHostCount", ["properties", "dedicatedHostCount"]);
-        _dnsSuffix = BicepValue<string>.DefineProperty(this, "DnsSuffix", ["properties", "dnsSuffix"]);
-        _frontEndScaleFactor = BicepValue<int>.DefineProperty(this, "FrontEndScaleFactor", ["properties", "frontEndScaleFactor"]);
-        _internalLoadBalancingMode = BicepValue<LoadBalancingMode>.DefineProperty(this, "InternalLoadBalancingMode", ["properties", "internalLoadBalancingMode"]);
-        _iPSslAddressCount = BicepValue<int>.DefineProperty(this, "IPSslAddressCount", ["properties", "ipsslAddressCount"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "zoneRedundant"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _multiSize = BicepValue<string>.DefineProperty(this, "MultiSize", ["properties", "multiSize"]);
-        _networkingConfiguration = BicepValue<AseV3NetworkingConfigurationData>.DefineProperty(this, "NetworkingConfiguration", ["properties", "networkingConfiguration"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _upgradePreference = BicepValue<AppServiceEnvironmentUpgradePreference>.DefineProperty(this, "UpgradePreference", ["properties", "upgradePreference"]);
-        _userWhitelistedIPRanges = BicepList<string>.DefineProperty(this, "UserWhitelistedIPRanges", ["properties", "userWhitelistedIpRanges"]);
-        _virtualNetwork = BicepValue<AppServiceVirtualNetworkProfile>.DefineProperty(this, "VirtualNetwork", ["properties", "virtualNetwork"]);
-        _hasLinuxWorkers = BicepValue<bool>.DefineProperty(this, "HasLinuxWorkers", ["properties", "hasLinuxWorkers"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isSuspended = BicepValue<bool>.DefineProperty(this, "IsSuspended", ["properties", "suspended"], isOutput: true);
-        _maximumNumberOfMachines = BicepValue<int>.DefineProperty(this, "MaximumNumberOfMachines", ["properties", "maximumNumberOfMachines"], isOutput: true);
-        _multiRoleCount = BicepValue<int>.DefineProperty(this, "MultiRoleCount", ["properties", "multiRoleCount"], isOutput: true);
-        _provisioningState = BicepValue<ProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _status = BicepValue<HostingEnvironmentStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _upgradeAvailability = BicepValue<AppServiceEnvironmentUpgradeAvailability>.DefineProperty(this, "UpgradeAvailability", ["properties", "upgradeAvailability"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppServiceEnvironment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _clusterSettings = DefineListProperty<AppServiceNameValuePair>("ClusterSettings", ["properties", "clusterSettings"]);
+        _customDnsSuffixConfiguration = DefineModelProperty<CustomDnsSuffixConfigurationData>("CustomDnsSuffixConfiguration", ["properties", "customDnsSuffixConfiguration"]);
+        _dedicatedHostCount = DefineProperty<int>("DedicatedHostCount", ["properties", "dedicatedHostCount"]);
+        _dnsSuffix = DefineProperty<string>("DnsSuffix", ["properties", "dnsSuffix"]);
+        _frontEndScaleFactor = DefineProperty<int>("FrontEndScaleFactor", ["properties", "frontEndScaleFactor"]);
+        _internalLoadBalancingMode = DefineProperty<LoadBalancingMode>("InternalLoadBalancingMode", ["properties", "internalLoadBalancingMode"]);
+        _iPSslAddressCount = DefineProperty<int>("IPSslAddressCount", ["properties", "ipsslAddressCount"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _multiSize = DefineProperty<string>("MultiSize", ["properties", "multiSize"]);
+        _networkingConfiguration = DefineModelProperty<AseV3NetworkingConfigurationData>("NetworkingConfiguration", ["properties", "networkingConfiguration"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _upgradePreference = DefineProperty<AppServiceEnvironmentUpgradePreference>("UpgradePreference", ["properties", "upgradePreference"]);
+        _userWhitelistedIPRanges = DefineListProperty<string>("UserWhitelistedIPRanges", ["properties", "userWhitelistedIpRanges"]);
+        _virtualNetwork = DefineModelProperty<AppServiceVirtualNetworkProfile>("VirtualNetwork", ["properties", "virtualNetwork"]);
+        _hasLinuxWorkers = DefineProperty<bool>("HasLinuxWorkers", ["properties", "hasLinuxWorkers"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isSuspended = DefineProperty<bool>("IsSuspended", ["properties", "suspended"], isOutput: true);
+        _maximumNumberOfMachines = DefineProperty<int>("MaximumNumberOfMachines", ["properties", "maximumNumberOfMachines"], isOutput: true);
+        _multiRoleCount = DefineProperty<int>("MultiRoleCount", ["properties", "multiRoleCount"], isOutput: true);
+        _provisioningState = DefineProperty<ProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _status = DefineProperty<HostingEnvironmentStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _upgradeAvailability = DefineProperty<AppServiceEnvironmentUpgradeAvailability>("UpgradeAvailability", ["properties", "upgradeAvailability"], isOutput: true);
     }
 
     /// <summary>
@@ -223,6 +329,11 @@ public partial class AppServiceEnvironment : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -377,9 +488,14 @@ public partial class AppServiceEnvironment : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceEnvironment.
     /// </summary>
-    /// <param name="resourceName">Name of the AppServiceEnvironment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the AppServiceEnvironment resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the AppServiceEnvironment.</param>
     /// <returns>The existing AppServiceEnvironment resource.</returns>
-    public static AppServiceEnvironment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceEnvironment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

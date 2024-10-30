@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static bool operator ==(DeviceProvisioningServicesPublicNetworkAccess left, DeviceProvisioningServicesPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(DeviceProvisioningServicesPublicNetworkAccess left, DeviceProvisioningServicesPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
         public static implicit operator DeviceProvisioningServicesPublicNetworkAccess(string value) => new DeviceProvisioningServicesPublicNetworkAccess(value);
 
         /// <inheritdoc />

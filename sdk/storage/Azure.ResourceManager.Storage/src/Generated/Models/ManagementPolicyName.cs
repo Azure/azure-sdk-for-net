@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(ManagementPolicyName left, ManagementPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagementPolicyName"/> values are not the same. </summary>
         public static bool operator !=(ManagementPolicyName left, ManagementPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagementPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagementPolicyName"/>. </summary>
         public static implicit operator ManagementPolicyName(string value) => new ManagementPolicyName(value);
 
         /// <inheritdoc />

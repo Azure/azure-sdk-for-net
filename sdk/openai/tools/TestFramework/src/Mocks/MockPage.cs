@@ -31,7 +31,12 @@ public class MockPage<TValue>
     {
         PipelineResponse response = result.GetRawResponse();
         response.BufferContent();
-        return response.Content.ToObjectFromJson<MockPage<TValue>>();
+        MockPage<TValue> mockPage = response.Content.ToObjectFromJson<MockPage<TValue>>() ?? new MockPage<TValue>
+        {
+            Values = [],
+            Next = 0
+        };
+        return mockPage;
     }
 
     /// <summary>

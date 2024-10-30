@@ -19,76 +19,22 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<ActiveBaseSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(CommitOn))
-            {
-                writer.WritePropertyName("commitTime"u8);
-                writer.WriteStringValue(CommitOn.Value, "O");
-            }
-            if (Optional.IsDefined(Region))
-            {
-                writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
-            }
-            if (Optional.IsDefined(ConfigurationDescription))
-            {
-                writer.WritePropertyName("configurationDescription"u8);
-                writer.WriteStringValue(ConfigurationDescription);
-            }
-            if (Optional.IsDefined(RuleCollectionDescription))
-            {
-                writer.WritePropertyName("ruleCollectionDescription"u8);
-                writer.WriteStringValue(RuleCollectionDescription);
-            }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
-            {
-                writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in RuleCollectionAppliesToGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(RuleGroups))
-            {
-                writer.WritePropertyName("ruleGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in RuleGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         ActiveBaseSecurityAdminRule IJsonModel<ActiveBaseSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

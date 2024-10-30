@@ -2,7 +2,7 @@
   "default": {
     "endpoint": "https://Sanitized.openai.azure.com/",
     "key": "Sanitized",
-    "deployment": "gpt-4-turbo",
+    "deployment": "gpt-4o-mini",
     "resource_group": "Sanitized",
     "subscription_id": "Sanitized"
   },

@@ -28,6 +28,13 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
+        /// Specifies the format in which the file permission is returned. If unspecified or explicitly set to SDDL,
+        /// the permission is returned in SDDL format. If explicitly set to binary, the permission is returned as a base64
+        /// string representing the binary encoding of the permission.
+        /// </summary>
+        public FilePermissionFormat? PermissionFormat { get; set; }
+
+        /// <summary>
         /// Specifies the option to copy file security descriptor from source file or
         /// to set it using the value which is defined by the header value of FilePermission
         /// or FilePermissionKey.

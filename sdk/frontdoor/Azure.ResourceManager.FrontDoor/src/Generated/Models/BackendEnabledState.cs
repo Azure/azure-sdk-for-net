@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(BackendEnabledState left, BackendEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackendEnabledState"/> values are not the same. </summary>
         public static bool operator !=(BackendEnabledState left, BackendEnabledState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackendEnabledState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendEnabledState"/>. </summary>
         public static implicit operator BackendEnabledState(string value) => new BackendEnabledState(value);
 
         /// <inheritdoc />

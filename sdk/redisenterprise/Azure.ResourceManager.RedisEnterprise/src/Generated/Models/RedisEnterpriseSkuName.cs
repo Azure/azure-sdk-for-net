@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseSkuName left, RedisEnterpriseSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseSkuName"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseSkuName left, RedisEnterpriseSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseSkuName"/>. </summary>
         public static implicit operator RedisEnterpriseSkuName(string value) => new RedisEnterpriseSkuName(value);
 
         /// <inheritdoc />

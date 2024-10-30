@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
             double? searchRerankerScore = default;
             IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
             IReadOnlyList<QueryCaptionResult> searchCaptions = default;
+            IReadOnlyList<DocumentDebugInfo> searchDocumentDebugInfo = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -82,10 +83,31 @@ namespace Azure.Search.Documents.Models
                     searchCaptions = array;
                     continue;
                 }
+                if (property.NameEquals("@search.documentDebugInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDocumentDebugInfo = null;
+                        continue;
+                    }
+                    List<DocumentDebugInfo> array = new List<DocumentDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(item));
+                    }
+                    searchDocumentDebugInfo = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, searchRerankerScore, searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(), searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(), additionalProperties);
+            return new SearchResult(
+                searchScore,
+                searchRerankerScore,
+                searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(),
+                additionalProperties);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

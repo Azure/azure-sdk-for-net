@@ -1,14 +1,14 @@
 namespace Azure.Provisioning.Kubernetes
 {
-    public partial class ConnectedCluster : Azure.Provisioning.Primitives.Resource
+    public partial class ConnectedCluster : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ConnectedCluster(string resourceName, string? resourceVersion = null, Azure.Provisioning.ProvisioningContext? context = null) : base (default(string), default(Azure.Core.ResourceType), default(string), default(Azure.Provisioning.ProvisioningContext)) { }
+        public ConnectedCluster(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AgentPublicKeyCertificate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AgentVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ConnectivityStatus> ConnectivityStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Distribution { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentity> Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Infrastructure { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastConnectivityOn { get { throw null; } }
@@ -19,13 +19,14 @@ namespace Azure.Provisioning.Kubernetes
         public Azure.Provisioning.BicepValue<string> PrivateLinkScopeResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.PrivateLinkState> PrivateLinkState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Kubernetes.ProvisioningState> ProvisioningState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.SystemData> SystemData { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> TotalCoreCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TotalNodeCount { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment AssignRole(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
-        public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string resourceName, string? resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Kubernetes.KubernetesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
@@ -33,7 +34,6 @@ namespace Azure.Provisioning.Kubernetes
             public static readonly string V2021_03_01;
             public static readonly string V2021_10_01;
             public static readonly string V2024_01_01;
-            public static readonly string V2024_07_15_preview;
         }
     }
     public enum ConnectivityStatus

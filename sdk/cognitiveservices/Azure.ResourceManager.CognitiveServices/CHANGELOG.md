@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.4 (2024-10-23)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.3.3 (2024-05-07)
 
 ### Features Added

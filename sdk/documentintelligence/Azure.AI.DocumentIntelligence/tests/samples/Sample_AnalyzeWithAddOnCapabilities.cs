@@ -16,8 +16,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithFormulaExtraction()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleFormulaExtraction
 #if SNIPPET
@@ -65,8 +64,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithFontStyling()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleFontStyling
 #if SNIPPET
@@ -229,8 +227,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithBarcodeExtraction()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBarcodeExtraction
 #if SNIPPET
@@ -280,8 +277,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithLanguageDetection()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleLanguageDetection
 #if SNIPPET
@@ -323,8 +319,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task AnalyzeWithKeyValuePairs()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 #if SNIPPET

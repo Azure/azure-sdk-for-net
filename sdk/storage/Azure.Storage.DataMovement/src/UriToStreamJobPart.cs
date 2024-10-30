@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -25,7 +26,7 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -51,7 +52,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -83,7 +84,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a checkpoint file.
         /// </summary>
         private UriToStreamJobPart(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -122,8 +123,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a single transfer.
         /// </summary>
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
@@ -135,20 +136,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
-        public static async Task<UriToStreamJobPart> CreateJobPartAsync(
-            UriToStreamTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            long? length = default)
+            StorageResourceItem destinationResource)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             UriToStreamJobPart part = new UriToStreamJobPart(
                 job: job,
                 partNumber: partNumber,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                length: length);
+                destinationResource: destinationResource);
             await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
@@ -157,7 +159,7 @@ namespace Azure.Storage.DataMovement
         /// Called when creating a job part from a checkpoint file on resume.
         /// </summary>
         public static UriToStreamJobPart CreateJobPartFromCheckpoint(
-            UriToStreamTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,

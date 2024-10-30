@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(DefaultPriorityLevel left, DefaultPriorityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DefaultPriorityLevel"/> values are not the same. </summary>
         public static bool operator !=(DefaultPriorityLevel left, DefaultPriorityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DefaultPriorityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DefaultPriorityLevel"/>. </summary>
         public static implicit operator DefaultPriorityLevel(string value) => new DefaultPriorityLevel(value);
 
         /// <inheritdoc />

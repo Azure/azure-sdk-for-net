@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         void IJsonModel<ComputeFleetComputeProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetComputeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetComputeProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("baseVirtualMachineProfile"u8);
             writer.WriteObjectValue(BaseVirtualMachineProfile, options);
             if (Optional.IsDefined(ComputeApiVersion))
@@ -37,6 +45,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
+            }
+            if (Optional.IsDefined(AdditionalVirtualMachineCapabilities))
+            {
+                writer.WritePropertyName("additionalVirtualMachineCapabilities"u8);
+                writer.WriteObjectValue(AdditionalVirtualMachineCapabilities, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -53,7 +66,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ComputeFleetComputeProfile IJsonModel<ComputeFleetComputeProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,6 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetVmProfile baseVirtualMachineProfile = default;
             string computeApiVersion = default;
             int? platformFaultDomainCount = default;
+            AdditionalCapabilities additionalVirtualMachineCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,13 +115,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     platformFaultDomainCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("additionalVirtualMachineCapabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalVirtualMachineCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComputeFleetComputeProfile(baseVirtualMachineProfile, computeApiVersion, platformFaultDomainCount, serializedAdditionalRawData);
+            return new ComputeFleetComputeProfile(baseVirtualMachineProfile, computeApiVersion, platformFaultDomainCount, additionalVirtualMachineCapabilities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeFleetComputeProfile>.Write(ModelReaderWriterOptions options)

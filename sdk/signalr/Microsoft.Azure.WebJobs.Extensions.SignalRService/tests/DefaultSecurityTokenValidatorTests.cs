@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
         {
             var ctx = new DefaultHttpContext();
             var req = ctx.Request;
-            req.Headers.Add("Authorization", new StringValues(tokenString));
+            req.Headers.Append("Authorization", new StringValues(tokenString));
 
             Action<TokenValidationParameters> configureTokenValidationParameters = parameters =>
             {

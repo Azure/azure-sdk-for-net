@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Logic.Models
 
         void IJsonModel<IntegrationAccountBusinessIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBusinessIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationAccountBusinessIdentity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("qualifier"u8);
             writer.WriteStringValue(Qualifier);
             writer.WritePropertyName("value"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Logic.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         IntegrationAccountBusinessIdentity IJsonModel<IntegrationAccountBusinessIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

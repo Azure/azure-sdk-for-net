@@ -156,6 +156,18 @@ file.Flush(SampleFileContent.Length);
 Response<FileDownloadInfo> fileContents = file.Read();
 ```
 
+### Reading Streaming Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+Stream readStream = fileContents.Value.Content;
+```
+
+### Reading Content Data from a DataLake File
+```C# Snippet:SampleSnippetDataLakeFileClient_ReadContent
+Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+BinaryData readData = fileContents.Value.Content;
+```
+
 ### Listing/Traversing through a DataLake Filesystem
 ```C# Snippet:SampleSnippetDataLakeFileClient_List
 foreach (PathItem pathItem in filesystem.GetPaths())

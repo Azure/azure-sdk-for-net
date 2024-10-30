@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -115,6 +116,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
         public string UserFriendlyAppliedScopeType { get { throw null; } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization Utilization { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -147,6 +149,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public Azure.Core.ResourceIdentifier SavingsPlanOrderId { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -202,6 +205,7 @@ namespace Azure.ResourceManager.BillingBenefits
         public System.Collections.Generic.IList<string> SavingsPlans { get { throw null; } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,6 +305,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -347,6 +352,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public BillingBenefitsCommitment() { }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitmentGrain? Grain { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -375,6 +381,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         internal BillingBenefitsExtendedStatusInfo() { }
         public string Message { get { throw null; } }
         public string StatusCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -424,6 +431,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsPrice() { }
         public double? Amount { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -467,6 +475,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public bool? IsRenewed { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -489,6 +498,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsTerm? Term { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -545,6 +555,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string PrincipalId { get { throw null; } }
         public Azure.Core.ResourceIdentifier RoleDefinitionId { get { throw null; } }
         public Azure.Core.ResourceIdentifier Scope { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -555,6 +566,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public BillingBenefitsSavingsPlanPatch() { }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties Properties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -569,6 +581,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string DisplayName { get { throw null; } set { } }
         public bool? IsRenewed { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent RenewPurchaseProperties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -580,6 +593,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         internal BillingBenefitsSavingsPlanUtilization() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate> Aggregates { get { throw null; } }
         public string Trend { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -593,6 +607,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string GrainUnit { get { throw null; } }
         public float? Value { get { throw null; } }
         public string ValueUnit { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -603,6 +618,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public BillingBenefitsSku() { }
         public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -635,6 +651,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice PricingCurrencyTotal { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail> Transactions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -651,6 +668,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public System.DateTimeOffset? PayOn { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice PricingCurrencyTotal { get { throw null; } set { } }
         public Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPaymentStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -661,6 +679,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public SavingsPlanPurchaseValidateContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData> Benefits { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -671,6 +690,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         public SavingsPlanUpdateValidateContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties> Benefits { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -683,6 +703,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public bool? IsValid { get { throw null; } }
         public string Reason { get { throw null; } }
         public string ReasonCode { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

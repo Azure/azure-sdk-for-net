@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ExportScheduleRecurrenceType left, ExportScheduleRecurrenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportScheduleRecurrenceType"/> values are not the same. </summary>
         public static bool operator !=(ExportScheduleRecurrenceType left, ExportScheduleRecurrenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportScheduleRecurrenceType"/>. </summary>
         public static implicit operator ExportScheduleRecurrenceType(string value) => new ExportScheduleRecurrenceType(value);
 
         /// <inheritdoc />

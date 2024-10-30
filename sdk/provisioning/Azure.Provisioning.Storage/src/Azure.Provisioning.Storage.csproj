@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET for Azure Storage.</Description>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 
@@ -12,6 +12,10 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
+    <!--
+    <PackageReference Include="Azure.Storage.Queues" />
+    ...
+    -->
   </ItemGroup>
 
 </Project>

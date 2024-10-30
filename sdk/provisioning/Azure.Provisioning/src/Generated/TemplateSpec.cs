@@ -16,32 +16,48 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// TemplateSpec.
 /// </summary>
-public partial class TemplateSpec : Resource
+public partial class TemplateSpec : ProvisionableResource
 {
     /// <summary>
     /// Name of the Template Spec.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The location of the Template Spec. It cannot be changed after Template
     /// Spec creation. It must be one of the supported Azure locations.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Template Spec description.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Template Spec display name.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// The Template Spec metadata. Metadata is an open-ended object and is
@@ -60,63 +76,112 @@ public partial class TemplateSpec : Resource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepValue<BinaryData> _metadata;
+    public BicepValue<BinaryData> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _metadata;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// High-level information about the versions within this Template Spec.
     /// The keys are the version names. Only populated if the $expand query
     /// parameter is set to &apos;versions&apos;.
     /// </summary>
-    public BicepDictionary<TemplateSpecVersionInfo> Versions { get => _versions; }
-    private readonly BicepDictionary<TemplateSpecVersionInfo> _versions;
+    public BicepDictionary<TemplateSpecVersionInfo> Versions 
+    {
+        get { Initialize(); return _versions!; }
+    }
+    private BicepDictionary<TemplateSpecVersionInfo>? _versions;
 
     /// <summary>
     /// Creates a new TemplateSpec.
     /// </summary>
-    /// <param name="resourceName">Name of the TemplateSpec.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TemplateSpec resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpec.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public TemplateSpec(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Resources/templateSpecs", resourceVersion, context)
+    public TemplateSpec(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Resources/templateSpecs", resourceVersion ?? "2022-02-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _metadata = BicepValue<BinaryData>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _versions = BicepDictionary<TemplateSpecVersionInfo>.DefineProperty(this, "Versions", ["properties", "versions"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of TemplateSpec.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _metadata = DefineProperty<BinaryData>("Metadata", ["properties", "metadata"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _versions = DefineDictionaryProperty<TemplateSpecVersionInfo>("Versions", ["properties", "versions"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported TemplateSpec resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2022-02-01.
+        /// </summary>
+        public static readonly string V2022_02_01 = "2022-02-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing TemplateSpec.
     /// </summary>
-    /// <param name="resourceName">Name of the TemplateSpec.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TemplateSpec resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the TemplateSpec.</param>
     /// <returns>The existing TemplateSpec resource.</returns>
-    public static TemplateSpec FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static TemplateSpec FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this TemplateSpec resource.

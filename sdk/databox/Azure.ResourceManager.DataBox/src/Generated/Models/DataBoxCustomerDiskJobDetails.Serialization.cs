@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.DataBox.Models
 
         void IJsonModel<DataBoxCustomerDiskJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxCustomerDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(ImportDiskDetails))
             {
                 writer.WritePropertyName("importDiskDetailsCollection"u8);
@@ -70,141 +79,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("enableManifestBackup"u8);
                 writer.WriteBooleanValue(EnableManifestBackup.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
-            {
-                writer.WritePropertyName("jobStages"u8);
-                writer.WriteStartArray();
-                foreach (var item in JobStages)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
-            if (Optional.IsDefined(ShippingAddress))
-            {
-                writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
-            {
-                writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
-            {
-                writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage, options);
-            }
-            if (Optional.IsCollectionDefined(DataImportDetails))
-            {
-                writer.WritePropertyName("dataImportDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataImportDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DataExportDetails))
-            {
-                writer.WritePropertyName("dataExportDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataExportDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("jobDetailsType"u8);
-            writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Optional.IsDefined(Preferences))
-            {
-                writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences, options);
-            }
-            if (Optional.IsDefined(ReverseShippingDetails))
-            {
-                writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
-            {
-                writer.WritePropertyName("copyLogDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in CopyLogDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
-            {
-                writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
-                writer.WriteStringValue(ReverseShipmentLabelSasKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
-            {
-                writer.WritePropertyName("chainOfCustodySasKey"u8);
-                writer.WriteStringValue(ChainOfCustodySasKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
-            {
-                writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails, options);
-            }
-            if (Optional.IsDefined(KeyEncryptionKey))
-            {
-                writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey, options);
-            }
-            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
-            {
-                writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
-                writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
-            {
-                writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
-            {
-                writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
-            {
-                writer.WritePropertyName("dataCenterCode"u8);
-                writer.WriteStringValue(DataCenterCode.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DataBoxCustomerDiskJobDetails IJsonModel<DataBoxCustomerDiskJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
