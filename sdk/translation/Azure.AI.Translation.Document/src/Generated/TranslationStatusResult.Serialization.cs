@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document
                 _error.WriteTo(writer);
             }
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue<StatusSummary>(Summary, options);
+            writer.WriteObjectValue<TranslationStatusSummary>(Summary, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,7 +84,7 @@ namespace Azure.AI.Translation.Document
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
             JsonElement error = default;
-            StatusSummary summary = default;
+            TranslationStatusSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("summary"u8))
                 {
-                    summary = StatusSummary.DeserializeStatusSummary(property.Value, options);
+                    summary = TranslationStatusSummary.DeserializeTranslationStatusSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

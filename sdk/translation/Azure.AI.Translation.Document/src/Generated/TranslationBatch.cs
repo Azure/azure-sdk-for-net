@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Translation job submission batch request. </summary>
-    public partial class StartTranslationDetails
+    public partial class TranslationBatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
+        public TranslationBatch(IEnumerable<DocumentTranslationInput> inputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StartTranslationDetails(IList<DocumentTranslationInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationBatch(IList<DocumentTranslationInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/> for deserialization. </summary>
-        internal StartTranslationDetails()
+        /// <summary> Initializes a new instance of <see cref="TranslationBatch"/> for deserialization. </summary>
+        internal TranslationBatch()
         {
         }
 

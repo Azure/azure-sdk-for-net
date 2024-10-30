@@ -10,8 +10,8 @@ namespace Azure.AI.Translation.Document
     [CodeGenModel("SourceInput")]
     public partial class TranslationSource
     {
-        [CodeGenMember("StorageSource")]
-        internal string StorageSource { get; set; }
+        [CodeGenMember("TranslationStorageSource")]
+        internal string TranslationStorageSource { get; set; }
 
         /// <summary>
         /// Location of the folder / container or single file with your documents.
@@ -83,7 +83,7 @@ namespace Azure.AI.Translation.Document
             }
             if (storageSource != null)
             {
-                StorageSource = storageSource;
+                TranslationStorageSource = storageSource;
             }
             if (prefix != null)
             {

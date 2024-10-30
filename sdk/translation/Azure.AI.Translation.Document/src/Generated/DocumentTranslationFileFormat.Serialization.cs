@@ -60,7 +60,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.AI.Translation.Document
             IReadOnlyList<string> contentTypes = default;
             string defaultVersion = default;
             IReadOnlyList<string> versions = default;
-            string type = default;
+            FileFormatType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,11 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new FileFormatType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
