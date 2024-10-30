@@ -2,38 +2,38 @@ trigger: none
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - eng/packages/http-client-csharp
+      - eng/packages/http-client-csharp
 
 parameters:
   - name: BuildPrereleaseVersion
-    displayName: 'Build prerelease version'
+    displayName: "Build prerelease version"
     type: boolean
     default: true
   - name: UseTypeSpecNext
-    displayName: 'Use TypeSpec Next'
+    displayName: "Use TypeSpec Next"
     type: boolean
     default: false
   - name: ShouldPublish
-    displayName: 'Publish packages'
+    displayName: "Publish packages"
     type: boolean
     default: false
   - name: PublishPublic
-    displayName: 'Publish to npmjs.org'
+    displayName: "Publish to npmjs.org"
     type: boolean
     default: false
   - name: ShouldRegenerate
-    displayName: 'Regenerate clients'
+    displayName: "Regenerate clients"
     type: boolean
     default: false
-    
+
 variables:
-- template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
@@ -44,11 +44,11 @@ extends:
       ShouldPublish: ${{ parameters.ShouldPublish }}
       PublishPublic: ${{ parameters.PublishPublic }}
       PublishDependsOnTest: ${{ parameters.PublishPublic }}
-      
+
       ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
     TestMatrix:
-        All:
-          TestArguments: -UnitTests -GenerationChecks -Filter .NET
+      All:
+        TestArguments: -UnitTests -GenerationChecks -Filter .NET

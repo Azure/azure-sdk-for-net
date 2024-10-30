@@ -39,7 +39,6 @@
     "@typespec/rest": "0.60.0",
     "@typespec/versioning": "0.60.0",
     "@typespec/xml": "0.60.0",
-
     "@types/node": "~22.7.5",
     "@types/prettier": "^2.6.3",
     "@vitest/coverage-v8": "^1.4.0",

@@ -5,16 +5,16 @@ export default defineConfig({
     environment: "node",
     isolate: false,
     coverage: {
-      reporter: ["cobertura", "json", "text"],
+      reporter: ["cobertura", "json", "text"]
     },
     outputFile: {
-      junit: "./test-results.xml",
+      junit: "./test-results.xml"
     },
-    exclude: ["node_modules", "dist/test"],
+    exclude: ["node_modules", "dist/test"]
   },
   server: {
     watch: {
-      ignored: [],
-    },
-  },
+      ignored: []
+    }
+  }
 });
