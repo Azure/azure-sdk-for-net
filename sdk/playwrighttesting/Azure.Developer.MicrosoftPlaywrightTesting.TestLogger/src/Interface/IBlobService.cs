@@ -16,5 +16,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface
         Task UploadBufferAsync(string uri, string buffer, string fileRelativePath);
          string GetCloudFilePath(string uri, string fileRelativePath);
         void UploadBlobFile(string uri, string fileRelativePath, string filePath);
+        public string? GetCloudFileName(string filePath, string testExecutionId);
     }
 }

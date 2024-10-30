@@ -7,6 +7,7 @@ using System.Text;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Storage.Blobs;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -48,6 +49,15 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             string sasToken = parts.Length > 1 ? parts[1] : string.Empty;
 
             return $"{containerUri}/{fileRelativePath}?{sasToken}";
+        }
+        public string? GetCloudFileName(string filePath, string testExecutionId)
+        {
+            var fileName = Path.GetFileName(filePath);
+            if (fileName == null)
+            {
+                return null;
+            }
+            return $"{testExecutionId}/{fileName}"; // TODO check if we need to add {Guid.NewGuid()} for file with same name
         }
     }
 }

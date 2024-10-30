@@ -174,7 +174,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                                 UploadBuffer(sasUri!.Uri!, rawTestResultJson, filePath);
+                                _blobService.UploadBufferAsync(sasUri!.Uri!, rawTestResultJson, filePath);
                             }
                             else
                             {
@@ -218,9 +218,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                         {
                             // get file size
                             var fileSize = new FileInfo(filePath).Length;
-                            var cloudFileName = ReporterUtils.GetCloudFileName(filePath, testExecutionId);
+                            var cloudFileName = _blobService.GetCloudFileName(filePath, testExecutionId);
                             if (cloudFileName != null) {
-                                UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
+                                _blobService.UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
                                 TotalArtifactCount++;
                                 TotalArtifactSizeInBytes = TotalArtifactSizeInBytes + (int)fileSize;
                             }
@@ -240,7 +240,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             }
         }
 
-        public TestResultsUri? CheckAndRenewSasUri()
+        internal TestResultsUri? CheckAndRenewSasUri()
         {
             var reporterUtils = new ReporterUtils();
             if (_testResultsSasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(_testResultsSasUri.Uri))
@@ -272,16 +272,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
             }
             _cloudRunErrorParser.DisplayMessages();
-        }
-        private  void UploadBuffer(string uri, string buffer, string fileRelativePath)
-        {
-             _blobService.UploadBufferAsync(uri, buffer, fileRelativePath);
-        }
-
-        private void UploadBlobFile(string uri, string fileRelativePath, string filePath)
-        {
-            _blobService.UploadBlobFile(uri, fileRelativePath, filePath);
-            _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
         }
 
         private TestRunShardDto GetTestRunEndShard(TestRunCompleteEventArgs e)
