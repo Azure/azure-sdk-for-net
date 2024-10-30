@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            ManagedServiceIdentityUpdate identity = default;
             DeidPropertiesUpdate properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

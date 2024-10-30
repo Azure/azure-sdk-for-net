@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
-namespace Azure.Health.Deidentification
+namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
-    /// <summary> Storage location. </summary>
-    public partial class TargetStorageLocation
+    /// <summary> The template for adding optional properties. </summary>
+    public partial class ManagedServiceIdentityUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +46,26 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
-        /// <param name="location"> URL to storage location. </param>
-        /// <param name="prefix"> Prefix to filter path by. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
-        public TargetStorageLocation(Uri location, string prefix)
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        public ManagedServiceIdentityUpdate()
         {
-            Argument.AssertNotNull(location, nameof(location));
-            Argument.AssertNotNull(prefix, nameof(prefix));
-
-            Location = location;
-            Prefix = prefix;
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
-        /// <param name="location"> URL to storage location. </param>
-        /// <param name="prefix"> Prefix to filter path by. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetStorageLocation(Uri location, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Location = location;
-            Prefix = prefix;
+            Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/> for deserialization. </summary>
-        internal TargetStorageLocation()
-        {
-        }
-
-        /// <summary> URL to storage location. </summary>
-        public Uri Location { get; set; }
-        /// <summary> Prefix to filter path by. </summary>
-        public string Prefix { get; set; }
+        /// <summary> The type of managed identity assigned to this resource. </summary>
+        public ManagedServiceIdentityType? Type { get; set; }
+        /// <summary> The identities assigned to this resource by the user. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }
