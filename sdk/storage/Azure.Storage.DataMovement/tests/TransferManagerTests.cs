@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -432,51 +433,35 @@ public class TransferManagerTests
     }
 
     [Test]
-    public async Task MultipleTransfersAddedCheckpointer()
+    [TestCase(5)]
+    [TestCase(10)]
+    [TestCase(12345)]
+    public async Task MultipleTransfersAddedCheckpointer(int numJobs)
     {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+
+        (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
+            = GetBasicSetupResources(false, srcUri, dstUri);
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer.Object,
+            default);
+
         // Add jobs on separate Tasks
-        Queue<Task<DataTransfer>> runningTasks = new();
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        var loopResult = Parallel.For(0, numJobs, i =>
         {
-            Task<DataTransfer> transfer = transferManager.StartTransferAsync(
-                srcResource.Object,
-                dstResource.Object,
-                new()
-                {
-                    InitialTransferSize = chunkSize,
-                    MaximumTransferChunkSize = chunkSize,
-                });
-            runningTasks.Enqueue(transfer);
-
-            srcResource.VerifySourceResourceOnQueue();
-            dstResource.VerifyDestinationResourceOnQueue();
-            srcResource.VerifyNoOtherCalls();
-            dstResource.VerifyNoOtherCalls();
-        }
-
-        // Wait for all tasks to complete
-        if (runningTasks != null)
-        {
-            while (runningTasks.Count > 0)
-            {
-                await ConsumeQueuedTask().ConfigureAwait(false);
-            }
-        }
+            Task<DataTransfer> task = transferManager.StartTransferAsync(srcResource, dstResource);
+        });
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
-        {
-            srcResource.VerifySourceResourceOnJobProcess();
-            dstResource.VerifyDestinationResourceOnJobProcess();
-            srcResource.VerifyNoOtherCalls();
-            dstResource.VerifyNoOtherCalls();
-        }
-
-        async Task ConsumeQueuedTask()
-        {
-            DataTransfer taskTransfer = await runningTasks.Dequeue();
-
-            await taskTransfer.WaitForCompletionAsync();
-        }
     }
 }
 
