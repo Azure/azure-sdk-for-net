@@ -64,9 +64,7 @@ $packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json `
 
 # set default matrix config for each package if there isn't an override
 $packageProperties | ForEach-Object {
-  if (-not $_.CIMatrixConfigs) {
-    $_.CIMatrixConfigs = $configs
-  }
+  $_.CIMatrixConfigs = $_.CIMatrixConfigs ?? $configs
 }
 
 # The key here is that after we group the packages by the matrix config objects, we can use the first item's MatrixConfig

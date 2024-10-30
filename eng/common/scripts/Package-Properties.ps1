@@ -21,6 +21,7 @@ class PackageProps
     # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
     [HashTable]$ArtifactDetails
+    [HashTable[]]$CIMatrixConfigs
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
