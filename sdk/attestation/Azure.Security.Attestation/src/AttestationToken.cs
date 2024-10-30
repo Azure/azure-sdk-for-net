@@ -449,7 +449,7 @@ namespace Azure.Security.Attestation
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
 #if NET6_0_OR_GREATER
-                AsymmetricAlgorithm asymmetricAlgorithm = (AsymmetricAlgorithm)signer.SigningCertificates[0].GetRSAPublicKey() ?? signer.SigningCertificates[0].GetDSAPublicKey();
+                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].GetRSAPublicKey();
 #else
                 AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
 #endif
@@ -650,7 +650,7 @@ namespace Azure.Security.Attestation
             if (signingKey.Certificate.HasPrivateKey)
             {
 #if NET6_0_OR_GREATER
-                signer = (AsymmetricAlgorithm)signingKey.Certificate.GetRSAPrivateKey() ?? signingKey.Certificate.GetDSAPrivateKey();
+                signer = signingKey.Certificate.GetRSAPrivateKey();
 #else
                 signer = signingKey.Certificate.PrivateKey;
 #endif

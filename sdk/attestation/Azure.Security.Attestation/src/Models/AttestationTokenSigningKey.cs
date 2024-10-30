@@ -46,7 +46,7 @@ namespace Azure.Security.Attestation
                 throw new ArgumentException($"Certificate provided {certificate.ToString()} does not have a private key.");
             }
 #if NET6_0_OR_GREATER
-            Signer = (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetDSAPrivateKey();
+            Signer = certificate.GetRSAPublicKey();
 #else
             Signer = certificate.PrivateKey;
 #endif
@@ -67,7 +67,7 @@ namespace Azure.Security.Attestation
         private static void VerifySignerMatchesCertificate(AsymmetricAlgorithm signer, X509Certificate2 certificate)
         {
 #if NET6_0_OR_GREATER
-            AsymmetricAlgorithm publicKey = (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetDSAPublicKey();
+            AsymmetricAlgorithm publicKey = certificate.GetRSAPublicKey();
 #else
             AsymmetricAlgorithm publicKey = certificate.PublicKey.Key;
 #endif
@@ -82,7 +82,7 @@ namespace Azure.Security.Attestation
             {
                 string signerKey = signer.ToXmlString(false);
 #if NET6_0_OR_GREATER
-                string certificateKey = ((AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetDSAPublicKey()).ToXmlString(false);
+                string certificateKey = certificate.GetRSAPublicKey().ToXmlString(false);
 #else
                 string certificateKey = certificate.PublicKey.Key.ToXmlString(false);
 #endif

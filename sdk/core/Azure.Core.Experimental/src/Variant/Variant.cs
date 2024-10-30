@@ -1107,13 +1107,13 @@ namespace Azure
             }
             else if (typeof(T) == typeof(DateTimeOffset) && _object == TypeFlags.DateTimeOffset)
             {
-                var dateTimeOffset = new DateTimeOffset(_union.Ticks, TimeSpan.Zero);
+                DateTimeOffset dateTimeOffset = new(_union.Ticks, TimeSpan.Zero);
                 value = Unsafe.As<DateTimeOffset, T>(ref Unsafe.AsRef(in dateTimeOffset));
                 success = true;
             }
             else if (typeof(T) == typeof(DateTimeOffset) && _object == TypeFlags.PackedDateTimeOffset)
             {
-                var dateTimeOffset = _union.PackedDateTimeOffset.Extract();
+                DateTimeOffset dateTimeOffset = _union.PackedDateTimeOffset.Extract();
                 value = Unsafe.As<DateTimeOffset, T>(ref Unsafe.AsRef(in dateTimeOffset));
                 success = true;
             }
@@ -1288,22 +1288,22 @@ namespace Azure
                 switch (size)
                 {
                     case (2):
-                        var byteTemplate = new NullableTemplate<byte>(_union.Byte);
+                        NullableTemplate<byte> byteTemplate = new(_union.Byte);
                         value = Unsafe.As<NullableTemplate<byte>, T>(ref Unsafe.AsRef(in byteTemplate));
                         result = true;
                         break;
                     case (4):
-                        var shortTemplate = new NullableTemplate<ushort>(_union.UInt16);
+                        NullableTemplate<ushort> shortTemplate = new(_union.UInt16);
                         value = Unsafe.As<NullableTemplate<ushort>, T>(ref Unsafe.AsRef(in shortTemplate));
                         result = true;
                         break;
                     case (8):
-                        var intTemplate = new NullableTemplate<uint>(_union.UInt32);
+                        NullableTemplate<uint> intTemplate = new(_union.UInt32);
                         value = Unsafe.As<NullableTemplate<uint>, T>(ref Unsafe.AsRef(in intTemplate));
                         result = true;
                         break;
                     case (16):
-                        var longTemplate = new NullableTemplate<ulong>(_union.UInt64);
+                        NullableTemplate<ulong> longTemplate = new(_union.UInt64);
                         value = Unsafe.As<NullableTemplate<ulong>, T>(ref Unsafe.AsRef(in longTemplate));
                         result = true;
                         break;
