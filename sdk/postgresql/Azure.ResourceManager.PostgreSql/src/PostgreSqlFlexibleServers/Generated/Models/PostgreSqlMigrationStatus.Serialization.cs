@@ -175,14 +175,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CurrentSubState", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentSubStateDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  currentSubStateDetails: ");
-                builder.AppendLine("{");
-                builder.Append("    currentSubState: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
             }
             else
             {
