@@ -17,86 +17,124 @@ namespace Azure.Provisioning.ContainerRegistry;
 /// <summary>
 /// ScopeMap.
 /// </summary>
-public partial class ScopeMap : Resource
+public partial class ScopeMap : ProvisionableResource
 {
     /// <summary>
     /// The name of the scope map.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The list of scoped permissions for registry artifacts.             E.g.
     /// repositories/repository-name/content/read,
     /// repositories/repository-name/metadata/write
     /// </summary>
-    public BicepList<string> Actions { get => _actions; set => _actions.Assign(value); }
-    private readonly BicepList<string> _actions;
+    public BicepList<string> Actions 
+    {
+        get { Initialize(); return _actions!; }
+        set { Initialize(); _actions!.Assign(value); }
+    }
+    private BicepList<string>? _actions;
 
     /// <summary>
     /// The user friendly description of the scope map.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The creation date of scope map.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the resource.
     /// </summary>
-    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+    public BicepValue<ContainerRegistryProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The type of the scope map. E.g. BuildIn scope map.
     /// </summary>
-    public BicepValue<string> ScopeMapType { get => _scopeMapType; }
-    private readonly BicepValue<string> _scopeMapType;
+    public BicepValue<string> ScopeMapType 
+    {
+        get { Initialize(); return _scopeMapType!; }
+    }
+    private BicepValue<string>? _scopeMapType;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerRegistryService.
     /// </summary>
-    public ContainerRegistryService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerRegistryService> _parent;
+    public ContainerRegistryService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
     /// Creates a new ScopeMap.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ScopeMap resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ScopeMap.</param>
-    public ScopeMap(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01")
+    public ScopeMap(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _actions = BicepList<string>.DefineProperty(this, "Actions", ["properties", "actions"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ContainerRegistryProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _scopeMapType = BicepValue<string>.DefineProperty(this, "ScopeMapType", ["properties", "type"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerRegistryService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ScopeMap.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _actions = DefineListProperty<string>("Actions", ["properties", "actions"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _scopeMapType = DefineProperty<string>("ScopeMapType", ["properties", "type"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -104,11 +142,6 @@ public partial class ScopeMap : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-11-01-preview.
-        /// </summary>
-        public static readonly string V2023_11_01_preview = "2023-11-01-preview";
-
         /// <summary>
         /// 2023-07-01.
         /// </summary>
@@ -123,7 +156,7 @@ public partial class ScopeMap : Resource
     /// <summary>
     /// Creates a reference to an existing ScopeMap.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ScopeMap resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -131,8 +164,8 @@ public partial class ScopeMap : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ScopeMap.</param>
     /// <returns>The existing ScopeMap resource.</returns>
-    public static ScopeMap FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ScopeMap FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ScopeMap resource.

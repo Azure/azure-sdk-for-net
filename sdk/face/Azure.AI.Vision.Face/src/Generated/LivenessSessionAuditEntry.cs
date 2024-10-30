@@ -83,8 +83,10 @@ namespace Azure.AI.Vision.Face
         /// <param name="request"> The request of this entry. </param>
         /// <param name="response"> The response of this entry. </param>
         /// <param name="digest"> The server calculated digest for this request. If the client reported digest differs from the server calculated digest, then the message integrity between the client and service has been compromised and the result should not be trusted. For more information, see how to guides on how to leverage this value to secure your end-to-end solution. </param>
+        /// <param name="sessionImageId"> The image ID of the session request. </param>
+        /// <param name="verifyImageHash"> The sha256 hash of the verify-image in the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessSessionAuditEntry(long id, string sessionId, string requestId, string clientRequestId, DateTimeOffset receivedDateTime, AuditRequestInfo request, AuditLivenessResponseInfo response, string digest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LivenessSessionAuditEntry(long id, string sessionId, string requestId, string clientRequestId, DateTimeOffset receivedDateTime, AuditRequestInfo request, AuditLivenessResponseInfo response, string digest, string sessionImageId, string verifyImageHash, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SessionId = sessionId;
@@ -94,6 +96,8 @@ namespace Azure.AI.Vision.Face
             Request = request;
             Response = response;
             Digest = digest;
+            SessionImageId = sessionImageId;
+            VerifyImageHash = verifyImageHash;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -118,5 +122,9 @@ namespace Azure.AI.Vision.Face
         public AuditLivenessResponseInfo Response { get; }
         /// <summary> The server calculated digest for this request. If the client reported digest differs from the server calculated digest, then the message integrity between the client and service has been compromised and the result should not be trusted. For more information, see how to guides on how to leverage this value to secure your end-to-end solution. </summary>
         public string Digest { get; }
+        /// <summary> The image ID of the session request. </summary>
+        public string SessionImageId { get; }
+        /// <summary> The sha256 hash of the verify-image in the request. </summary>
+        public string VerifyImageHash { get; }
     }
 }

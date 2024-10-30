@@ -15,135 +15,202 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// SyncMember.
 /// </summary>
-public partial class SyncMember : Resource
+public partial class SyncMember : ProvisionableResource
 {
     /// <summary>
     /// The name of the sync member.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Database name of the member database in the sync member.
     /// </summary>
-    public BicepValue<string> DatabaseName { get => _databaseName; set => _databaseName.Assign(value); }
-    private readonly BicepValue<string> _databaseName;
+    public BicepValue<string> DatabaseName 
+    {
+        get { Initialize(); return _databaseName!; }
+        set { Initialize(); _databaseName!.Assign(value); }
+    }
+    private BicepValue<string>? _databaseName;
 
     /// <summary>
     /// Database type of the sync member.
     /// </summary>
-    public BicepValue<SyncMemberDbType> DatabaseType { get => _databaseType; set => _databaseType.Assign(value); }
-    private readonly BicepValue<SyncMemberDbType> _databaseType;
+    public BicepValue<SyncMemberDbType> DatabaseType 
+    {
+        get { Initialize(); return _databaseType!; }
+        set { Initialize(); _databaseType!.Assign(value); }
+    }
+    private BicepValue<SyncMemberDbType>? _databaseType;
 
     /// <summary>
     /// Password of the member database in the sync member.
     /// </summary>
-    public BicepValue<string> Password { get => _password; set => _password.Assign(value); }
-    private readonly BicepValue<string> _password;
+    public BicepValue<string> Password 
+    {
+        get { Initialize(); return _password!; }
+        set { Initialize(); _password!.Assign(value); }
+    }
+    private BicepValue<string>? _password;
 
     /// <summary>
     /// Server name of the member database in the sync member.
     /// </summary>
-    public BicepValue<string> ServerName { get => _serverName; set => _serverName.Assign(value); }
-    private readonly BicepValue<string> _serverName;
+    public BicepValue<string> ServerName 
+    {
+        get { Initialize(); return _serverName!; }
+        set { Initialize(); _serverName!.Assign(value); }
+    }
+    private BicepValue<string>? _serverName;
 
     /// <summary>
     /// SQL Server database id of the sync member.
     /// </summary>
-    public BicepValue<Guid> SqlServerDatabaseId { get => _sqlServerDatabaseId; set => _sqlServerDatabaseId.Assign(value); }
-    private readonly BicepValue<Guid> _sqlServerDatabaseId;
+    public BicepValue<Guid> SqlServerDatabaseId 
+    {
+        get { Initialize(); return _sqlServerDatabaseId!; }
+        set { Initialize(); _sqlServerDatabaseId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _sqlServerDatabaseId;
 
     /// <summary>
     /// ARM resource id of the sync agent in the sync member.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SyncAgentId { get => _syncAgentId; set => _syncAgentId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _syncAgentId;
+    public BicepValue<ResourceIdentifier> SyncAgentId 
+    {
+        get { Initialize(); return _syncAgentId!; }
+        set { Initialize(); _syncAgentId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _syncAgentId;
 
     /// <summary>
     /// Sync direction of the sync member.
     /// </summary>
-    public BicepValue<SyncDirection> SyncDirection { get => _syncDirection; set => _syncDirection.Assign(value); }
-    private readonly BicepValue<SyncDirection> _syncDirection;
+    public BicepValue<SyncDirection> SyncDirection 
+    {
+        get { Initialize(); return _syncDirection!; }
+        set { Initialize(); _syncDirection!.Assign(value); }
+    }
+    private BicepValue<SyncDirection>? _syncDirection;
 
     /// <summary>
     /// ARM resource id of the sync member logical database, for sync members
     /// in Azure.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SyncMemberAzureDatabaseResourceId { get => _syncMemberAzureDatabaseResourceId; set => _syncMemberAzureDatabaseResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _syncMemberAzureDatabaseResourceId;
+    public BicepValue<ResourceIdentifier> SyncMemberAzureDatabaseResourceId 
+    {
+        get { Initialize(); return _syncMemberAzureDatabaseResourceId!; }
+        set { Initialize(); _syncMemberAzureDatabaseResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _syncMemberAzureDatabaseResourceId;
 
     /// <summary>
     /// Whether to use private link connection.
     /// </summary>
-    public BicepValue<bool> UsePrivateLinkConnection { get => _usePrivateLinkConnection; set => _usePrivateLinkConnection.Assign(value); }
-    private readonly BicepValue<bool> _usePrivateLinkConnection;
+    public BicepValue<bool> UsePrivateLinkConnection 
+    {
+        get { Initialize(); return _usePrivateLinkConnection!; }
+        set { Initialize(); _usePrivateLinkConnection!.Assign(value); }
+    }
+    private BicepValue<bool>? _usePrivateLinkConnection;
 
     /// <summary>
     /// User name of the member database in the sync member.
     /// </summary>
-    public BicepValue<string> UserName { get => _userName; set => _userName.Assign(value); }
-    private readonly BicepValue<string> _userName;
+    public BicepValue<string> UserName 
+    {
+        get { Initialize(); return _userName!; }
+        set { Initialize(); _userName!.Assign(value); }
+    }
+    private BicepValue<string>? _userName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Private endpoint name of the sync member if use private link connection
     /// is enabled, for sync members in Azure.
     /// </summary>
-    public BicepValue<string> PrivateEndpointName { get => _privateEndpointName; }
-    private readonly BicepValue<string> _privateEndpointName;
+    public BicepValue<string> PrivateEndpointName 
+    {
+        get { Initialize(); return _privateEndpointName!; }
+    }
+    private BicepValue<string>? _privateEndpointName;
 
     /// <summary>
     /// Sync state of the sync member.
     /// </summary>
-    public BicepValue<SyncMemberState> SyncState { get => _syncState; }
-    private readonly BicepValue<SyncMemberState> _syncState;
+    public BicepValue<SyncMemberState> SyncState 
+    {
+        get { Initialize(); return _syncState!; }
+    }
+    private BicepValue<SyncMemberState>? _syncState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SyncGroup.
     /// </summary>
-    public SyncGroup? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SyncGroup> _parent;
+    public SyncGroup? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SyncGroup>? _parent;
 
     /// <summary>
     /// Creates a new SyncMember.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SyncMember resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SyncMember.</param>
-    public SyncMember(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2021-11-01")
+    public SyncMember(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/syncGroups/syncMembers", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _databaseName = BicepValue<string>.DefineProperty(this, "DatabaseName", ["properties", "databaseName"]);
-        _databaseType = BicepValue<SyncMemberDbType>.DefineProperty(this, "DatabaseType", ["properties", "databaseType"]);
-        _password = BicepValue<string>.DefineProperty(this, "Password", ["properties", "password"]);
-        _serverName = BicepValue<string>.DefineProperty(this, "ServerName", ["properties", "serverName"]);
-        _sqlServerDatabaseId = BicepValue<Guid>.DefineProperty(this, "SqlServerDatabaseId", ["properties", "sqlServerDatabaseId"]);
-        _syncAgentId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncAgentId", ["properties", "syncAgentId"]);
-        _syncDirection = BicepValue<SyncDirection>.DefineProperty(this, "SyncDirection", ["properties", "syncDirection"]);
-        _syncMemberAzureDatabaseResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SyncMemberAzureDatabaseResourceId", ["properties", "syncMemberAzureDatabaseResourceId"]);
-        _usePrivateLinkConnection = BicepValue<bool>.DefineProperty(this, "UsePrivateLinkConnection", ["properties", "usePrivateLinkConnection"]);
-        _userName = BicepValue<string>.DefineProperty(this, "UserName", ["properties", "userName"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _privateEndpointName = BicepValue<string>.DefineProperty(this, "PrivateEndpointName", ["properties", "privateEndpointName"], isOutput: true);
-        _syncState = BicepValue<SyncMemberState>.DefineProperty(this, "SyncState", ["properties", "syncState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SyncGroup>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SyncMember.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _databaseName = DefineProperty<string>("DatabaseName", ["properties", "databaseName"]);
+        _databaseType = DefineProperty<SyncMemberDbType>("DatabaseType", ["properties", "databaseType"]);
+        _password = DefineProperty<string>("Password", ["properties", "password"]);
+        _serverName = DefineProperty<string>("ServerName", ["properties", "serverName"]);
+        _sqlServerDatabaseId = DefineProperty<Guid>("SqlServerDatabaseId", ["properties", "sqlServerDatabaseId"]);
+        _syncAgentId = DefineProperty<ResourceIdentifier>("SyncAgentId", ["properties", "syncAgentId"]);
+        _syncDirection = DefineProperty<SyncDirection>("SyncDirection", ["properties", "syncDirection"]);
+        _syncMemberAzureDatabaseResourceId = DefineProperty<ResourceIdentifier>("SyncMemberAzureDatabaseResourceId", ["properties", "syncMemberAzureDatabaseResourceId"]);
+        _usePrivateLinkConnection = DefineProperty<bool>("UsePrivateLinkConnection", ["properties", "usePrivateLinkConnection"]);
+        _userName = DefineProperty<string>("UserName", ["properties", "userName"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _privateEndpointName = DefineProperty<string>("PrivateEndpointName", ["properties", "privateEndpointName"], isOutput: true);
+        _syncState = DefineProperty<SyncMemberState>("SyncState", ["properties", "syncState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SyncGroup>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -151,11 +218,6 @@ public partial class SyncMember : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -165,7 +227,7 @@ public partial class SyncMember : Resource
     /// <summary>
     /// Creates a reference to an existing SyncMember.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SyncMember resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -173,6 +235,6 @@ public partial class SyncMember : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SyncMember.</param>
     /// <returns>The existing SyncMember resource.</returns>
-    public static SyncMember FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SyncMember FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

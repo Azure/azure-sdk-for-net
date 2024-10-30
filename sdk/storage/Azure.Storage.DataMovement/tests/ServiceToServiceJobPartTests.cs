@@ -134,6 +134,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(Constants.MB);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
 
             // Set up default checkpointer with transfer job
@@ -145,10 +146,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -156,7 +159,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -201,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(resource => resource.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
+            mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(length - 1);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
 
             // Set up default checkpointer with transfer job
@@ -212,10 +216,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
-            ServiceToServiceTransferJob job = new(
+            TransferJobInternal job = new(
                 new DataTransfer(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
@@ -223,7 +229,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1);
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             await jobPart.ProcessPartToChunkAsync();

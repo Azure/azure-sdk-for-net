@@ -15,96 +15,138 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// CustomDnsSuffixConfiguration.
 /// </summary>
-public partial class CustomDnsSuffixConfiguration : Resource
+public partial class CustomDnsSuffixConfiguration : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The URL referencing the Azure Key Vault certificate secret that should
     /// be used as the default SSL/TLS certificate for sites with the custom
     /// domain suffix.
     /// </summary>
-    public BicepValue<Uri> CertificateUri { get => _certificateUri; set => _certificateUri.Assign(value); }
-    private readonly BicepValue<Uri> _certificateUri;
+    public BicepValue<Uri> CertificateUri 
+    {
+        get { Initialize(); return _certificateUri!; }
+        set { Initialize(); _certificateUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _certificateUri;
 
     /// <summary>
     /// The default custom domain suffix to use for all sites deployed on the
     /// ASE.
     /// </summary>
-    public BicepValue<string> DnsSuffix { get => _dnsSuffix; set => _dnsSuffix.Assign(value); }
-    private readonly BicepValue<string> _dnsSuffix;
+    public BicepValue<string> DnsSuffix 
+    {
+        get { Initialize(); return _dnsSuffix!; }
+        set { Initialize(); _dnsSuffix!.Assign(value); }
+    }
+    private BicepValue<string>? _dnsSuffix;
 
     /// <summary>
     /// The user-assigned identity to use for resolving the key vault
     /// certificate reference. If not specified, the system-assigned ASE
     /// identity will be used if available.
     /// </summary>
-    public BicepValue<string> KeyVaultReferenceIdentity { get => _keyVaultReferenceIdentity; set => _keyVaultReferenceIdentity.Assign(value); }
-    private readonly BicepValue<string> _keyVaultReferenceIdentity;
+    public BicepValue<string> KeyVaultReferenceIdentity 
+    {
+        get { Initialize(); return _keyVaultReferenceIdentity!; }
+        set { Initialize(); _keyVaultReferenceIdentity!.Assign(value); }
+    }
+    private BicepValue<string>? _keyVaultReferenceIdentity;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the provisioning details.
     /// </summary>
-    public BicepValue<string> ProvisioningDetails { get => _provisioningDetails; }
-    private readonly BicepValue<string> _provisioningDetails;
+    public BicepValue<string> ProvisioningDetails 
+    {
+        get { Initialize(); return _provisioningDetails!; }
+    }
+    private BicepValue<string>? _provisioningDetails;
 
     /// <summary>
     /// Gets the provisioning state.
     /// </summary>
-    public BicepValue<CustomDnsSuffixProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<CustomDnsSuffixProvisioningState> _provisioningState;
+    public BicepValue<CustomDnsSuffixProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<CustomDnsSuffixProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent AppServiceEnvironment.
     /// </summary>
-    public AppServiceEnvironment? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<AppServiceEnvironment> _parent;
+    public AppServiceEnvironment? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<AppServiceEnvironment>? _parent;
 
     /// <summary>
     /// Creates a new CustomDnsSuffixConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CustomDnsSuffixConfiguration
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the CustomDnsSuffixConfiguration.</param>
-    public CustomDnsSuffixConfiguration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
+    public CustomDnsSuffixConfiguration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/configurations", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _certificateUri = BicepValue<Uri>.DefineProperty(this, "CertificateUri", ["properties", "certificateUrl"]);
-        _dnsSuffix = BicepValue<string>.DefineProperty(this, "DnsSuffix", ["properties", "dnsSuffix"]);
-        _keyVaultReferenceIdentity = BicepValue<string>.DefineProperty(this, "KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningDetails = BicepValue<string>.DefineProperty(this, "ProvisioningDetails", ["properties", "provisioningDetails"], isOutput: true);
-        _provisioningState = BicepValue<CustomDnsSuffixProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<AppServiceEnvironment>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CustomDnsSuffixConfiguration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _certificateUri = DefineProperty<Uri>("CertificateUri", ["properties", "certificateUrl"]);
+        _dnsSuffix = DefineProperty<string>("DnsSuffix", ["properties", "dnsSuffix"]);
+        _keyVaultReferenceIdentity = DefineProperty<string>("KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningDetails = DefineProperty<string>("ProvisioningDetails", ["properties", "provisioningDetails"], isOutput: true);
+        _provisioningState = DefineProperty<CustomDnsSuffixProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<AppServiceEnvironment>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -271,7 +313,7 @@ public partial class CustomDnsSuffixConfiguration : Resource
     /// <summary>
     /// Creates a reference to an existing CustomDnsSuffixConfiguration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the CustomDnsSuffixConfiguration
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -279,6 +321,6 @@ public partial class CustomDnsSuffixConfiguration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the CustomDnsSuffixConfiguration.</param>
     /// <returns>The existing CustomDnsSuffixConfiguration resource.</returns>
-    public static CustomDnsSuffixConfiguration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static CustomDnsSuffixConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

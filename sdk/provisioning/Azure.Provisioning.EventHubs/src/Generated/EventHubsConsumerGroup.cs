@@ -16,13 +16,17 @@ namespace Azure.Provisioning.EventHubs;
 /// <summary>
 /// EventHubsConsumerGroup.
 /// </summary>
-public partial class EventHubsConsumerGroup : Resource
+public partial class EventHubsConsumerGroup : ProvisionableResource
 {
     /// <summary>
     /// The consumer group name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// User Metadata is a placeholder to store user-defined string data with
@@ -30,66 +34,96 @@ public partial class EventHubsConsumerGroup : Resource
     /// such as list of teams and their contact information also user-defined
     /// configuration settings can be stored.
     /// </summary>
-    public BicepValue<string> UserMetadata { get => _userMetadata; set => _userMetadata.Assign(value); }
-    private readonly BicepValue<string> _userMetadata;
+    public BicepValue<string> UserMetadata 
+    {
+        get { Initialize(); return _userMetadata!; }
+        set { Initialize(); _userMetadata!.Assign(value); }
+    }
+    private BicepValue<string>? _userMetadata;
 
     /// <summary>
     /// Exact time the message was created.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The geo-location where the resource lives.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The exact time the message was updated.
     /// </summary>
-    public BicepValue<DateTimeOffset> UpdatedOn { get => _updatedOn; }
-    private readonly BicepValue<DateTimeOffset> _updatedOn;
+    public BicepValue<DateTimeOffset> UpdatedOn 
+    {
+        get { Initialize(); return _updatedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _updatedOn;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventHub.
     /// </summary>
-    public EventHub? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventHub> _parent;
+    public EventHub? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventHub>? _parent;
 
     /// <summary>
     /// Creates a new EventHubsConsumerGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsConsumerGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsConsumerGroup.</param>
-    public EventHubsConsumerGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01")
+    public EventHubsConsumerGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventHub/namespaces/eventhubs/consumergroups", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _userMetadata = BicepValue<string>.DefineProperty(this, "UserMetadata", ["properties", "userMetadata"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdAt"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "UpdatedOn", ["properties", "updatedAt"], isOutput: true);
-        _parent = ResourceReference<EventHub>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of EventHubsConsumerGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _userMetadata = DefineProperty<string>("UserMetadata", ["properties", "userMetadata"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedOn = DefineProperty<DateTimeOffset>("UpdatedOn", ["properties", "updatedAt"], isOutput: true);
+        _parent = DefineResource<EventHub>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -97,11 +131,6 @@ public partial class EventHubsConsumerGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2024-01-01.
         /// </summary>
@@ -121,7 +150,7 @@ public partial class EventHubsConsumerGroup : Resource
     /// <summary>
     /// Creates a reference to an existing EventHubsConsumerGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventHubsConsumerGroup resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -129,8 +158,8 @@ public partial class EventHubsConsumerGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventHubsConsumerGroup.</param>
     /// <returns>The existing EventHubsConsumerGroup resource.</returns>
-    public static EventHubsConsumerGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventHubsConsumerGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this EventHubsConsumerGroup resource.

@@ -19,13 +19,21 @@ namespace Azure.Compute.Batch
 
         void IJsonModel<AzureFileShareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureFileShareConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("azureFileUrl"u8);
@@ -54,7 +62,6 @@ namespace Azure.Compute.Batch
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AzureFileShareConfiguration IJsonModel<AzureFileShareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

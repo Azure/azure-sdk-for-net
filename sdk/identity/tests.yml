@@ -29,10 +29,8 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfigurations:
-          - $(sub-config-azure-cloud-test-resources)
           # Contains alternate tenant, AAD app and cert info for testing
           - $(sub-config-identity-test-resources)
-        ServiceConnection: azure-sdk-tests
     EnvVars:
       ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
       ARM_CLIENT_ID: $(ARM_CLIENT_ID)

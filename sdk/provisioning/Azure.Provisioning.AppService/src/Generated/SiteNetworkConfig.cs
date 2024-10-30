@@ -15,73 +15,105 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteNetworkConfig.
 /// </summary>
-public partial class SiteNetworkConfig : Resource
+public partial class SiteNetworkConfig : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A flag that specifies if the scale unit this Web App is on supports
     /// Swift integration.
     /// </summary>
-    public BicepValue<bool> IsSwiftSupported { get => _isSwiftSupported; set => _isSwiftSupported.Assign(value); }
-    private readonly BicepValue<bool> _isSwiftSupported;
+    public BicepValue<bool> IsSwiftSupported 
+    {
+        get { Initialize(); return _isSwiftSupported!; }
+        set { Initialize(); _isSwiftSupported!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSwiftSupported;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The Virtual Network subnet&apos;s resource ID. This is the subnet that
     /// this Web App will join. This subnet must have a delegation to
     /// Microsoft.Web/serverFarms defined first.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SubnetResourceId { get => _subnetResourceId; set => _subnetResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _subnetResourceId;
+    public BicepValue<ResourceIdentifier> SubnetResourceId 
+    {
+        get { Initialize(); return _subnetResourceId!; }
+        set { Initialize(); _subnetResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _subnetResourceId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new SiteNetworkConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteNetworkConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SiteNetworkConfig.</param>
-    public SiteNetworkConfig(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/networkConfig", resourceVersion ?? "2024-04-01")
+    public SiteNetworkConfig(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/networkConfig", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _isSwiftSupported = BicepValue<bool>.DefineProperty(this, "IsSwiftSupported", ["properties", "swiftSupported"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _subnetResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SubnetResourceId", ["properties", "subnetResourceId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteNetworkConfig.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _isSwiftSupported = DefineProperty<bool>("IsSwiftSupported", ["properties", "swiftSupported"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _subnetResourceId = DefineProperty<ResourceIdentifier>("SubnetResourceId", ["properties", "subnetResourceId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -213,7 +245,7 @@ public partial class SiteNetworkConfig : Resource
     /// <summary>
     /// Creates a reference to an existing SiteNetworkConfig.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SiteNetworkConfig resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -221,6 +253,6 @@ public partial class SiteNetworkConfig : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteNetworkConfig.</param>
     /// <returns>The existing SiteNetworkConfig resource.</returns>
-    public static SiteNetworkConfig FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SiteNetworkConfig FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

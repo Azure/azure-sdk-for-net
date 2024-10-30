@@ -15,109 +15,161 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// WebSiteSourceControl.
 /// </summary>
-public partial class WebSiteSourceControl : Resource
+public partial class WebSiteSourceControl : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Name of branch to use for deployment.
     /// </summary>
-    public BicepValue<string> Branch { get => _branch; set => _branch.Assign(value); }
-    private readonly BicepValue<string> _branch;
+    public BicepValue<string> Branch 
+    {
+        get { Initialize(); return _branch!; }
+        set { Initialize(); _branch!.Assign(value); }
+    }
+    private BicepValue<string>? _branch;
 
     /// <summary>
     /// If GitHub Action is selected, than the associated configuration.
     /// </summary>
-    public BicepValue<GitHubActionConfiguration> GitHubActionConfiguration { get => _gitHubActionConfiguration; set => _gitHubActionConfiguration.Assign(value); }
-    private readonly BicepValue<GitHubActionConfiguration> _gitHubActionConfiguration;
+    public GitHubActionConfiguration GitHubActionConfiguration 
+    {
+        get { Initialize(); return _gitHubActionConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _gitHubActionConfiguration, value); }
+    }
+    private GitHubActionConfiguration? _gitHubActionConfiguration;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise,
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsDeploymentRollbackEnabled { get => _isDeploymentRollbackEnabled; set => _isDeploymentRollbackEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isDeploymentRollbackEnabled;
+    public BicepValue<bool> IsDeploymentRollbackEnabled 
+    {
+        get { Initialize(); return _isDeploymentRollbackEnabled!; }
+        set { Initialize(); _isDeploymentRollbackEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDeploymentRollbackEnabled;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action.
     /// </summary>
-    public BicepValue<bool> IsGitHubAction { get => _isGitHubAction; set => _isGitHubAction.Assign(value); }
-    private readonly BicepValue<bool> _isGitHubAction;
+    public BicepValue<bool> IsGitHubAction 
+    {
+        get { Initialize(); return _isGitHubAction!; }
+        set { Initialize(); _isGitHubAction!.Assign(value); }
+    }
+    private BicepValue<bool>? _isGitHubAction;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to limit to manual integration;
     /// &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which
     /// configures webhooks into online repos like GitHub).
     /// </summary>
-    public BicepValue<bool> IsManualIntegration { get => _isManualIntegration; set => _isManualIntegration.Assign(value); }
-    private readonly BicepValue<bool> _isManualIntegration;
+    public BicepValue<bool> IsManualIntegration 
+    {
+        get { Initialize(); return _isManualIntegration!; }
+        set { Initialize(); _isManualIntegration!.Assign(value); }
+    }
+    private BicepValue<bool>? _isManualIntegration;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; for a Mercurial repository;
     /// &lt;code&gt;false&lt;/code&gt; for a Git repository.
     /// </summary>
-    public BicepValue<bool> IsMercurial { get => _isMercurial; set => _isMercurial.Assign(value); }
-    private readonly BicepValue<bool> _isMercurial;
+    public BicepValue<bool> IsMercurial 
+    {
+        get { Initialize(); return _isMercurial!; }
+        set { Initialize(); _isMercurial!.Assign(value); }
+    }
+    private BicepValue<bool>? _isMercurial;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Repository or source control URL.
     /// </summary>
-    public BicepValue<Uri> RepoUri { get => _repoUri; set => _repoUri.Assign(value); }
-    private readonly BicepValue<Uri> _repoUri;
+    public BicepValue<Uri> RepoUri 
+    {
+        get { Initialize(); return _repoUri!; }
+        set { Initialize(); _repoUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _repoUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new WebSiteSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
-    public WebSiteSourceControl(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2024-04-01")
+    public WebSiteSourceControl(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/sourcecontrols", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
-        _gitHubActionConfiguration = BicepValue<GitHubActionConfiguration>.DefineProperty(this, "GitHubActionConfiguration", ["properties", "gitHubActionConfiguration"]);
-        _isDeploymentRollbackEnabled = BicepValue<bool>.DefineProperty(this, "IsDeploymentRollbackEnabled", ["properties", "deploymentRollbackEnabled"]);
-        _isGitHubAction = BicepValue<bool>.DefineProperty(this, "IsGitHubAction", ["properties", "isGitHubAction"]);
-        _isManualIntegration = BicepValue<bool>.DefineProperty(this, "IsManualIntegration", ["properties", "isManualIntegration"]);
-        _isMercurial = BicepValue<bool>.DefineProperty(this, "IsMercurial", ["properties", "isMercurial"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _repoUri = BicepValue<Uri>.DefineProperty(this, "RepoUri", ["properties", "repoUrl"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of WebSiteSourceControl.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
+        _gitHubActionConfiguration = DefineModelProperty<GitHubActionConfiguration>("GitHubActionConfiguration", ["properties", "gitHubActionConfiguration"]);
+        _isDeploymentRollbackEnabled = DefineProperty<bool>("IsDeploymentRollbackEnabled", ["properties", "deploymentRollbackEnabled"]);
+        _isGitHubAction = DefineProperty<bool>("IsGitHubAction", ["properties", "isGitHubAction"]);
+        _isManualIntegration = DefineProperty<bool>("IsManualIntegration", ["properties", "isManualIntegration"]);
+        _isMercurial = DefineProperty<bool>("IsMercurial", ["properties", "isMercurial"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _repoUri = DefineProperty<Uri>("RepoUri", ["properties", "repoUrl"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -284,7 +336,7 @@ public partial class WebSiteSourceControl : Resource
     /// <summary>
     /// Creates a reference to an existing WebSiteSourceControl.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the WebSiteSourceControl resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -292,6 +344,6 @@ public partial class WebSiteSourceControl : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteSourceControl.</param>
     /// <returns>The existing WebSiteSourceControl resource.</returns>
-    public static WebSiteSourceControl FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static WebSiteSourceControl FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

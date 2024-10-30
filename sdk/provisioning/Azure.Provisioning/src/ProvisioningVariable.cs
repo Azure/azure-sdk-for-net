@@ -12,7 +12,7 @@ namespace Azure.Provisioning;
 /// <summary>
 /// Represents a variable in a Bicep template.
 /// </summary>
-public class ProvisioningVariable : NamedProvisioningConstruct
+public class ProvisioningVariable : NamedProvisionableConstruct
 {
     /// <summary>
     /// Gets or sets the value of the variable.
@@ -29,41 +29,41 @@ public class ProvisioningVariable : NamedProvisioningConstruct
     /// Gets the Bicep type of the value.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public Expression BicepType { get; }
+    public BicepExpression BicepType { get; }
 
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">
-    /// Name of the variable.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the variable.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the variable.</param>
     /// <param name="value">Default value of the variable.</param>
-    protected ProvisioningVariable(string name, Expression type, BicepValue<object>? value)
-        : base(name)
+    protected ProvisioningVariable(string bicepIdentifier, BicepExpression type, BicepValue<object>? value)
+        : base(bicepIdentifier)
     {
         BicepType = type;
-        _value = BicepValue<object>.DefineProperty(this, nameof(Value), bicepPath: null, defaultValue: value);
+        _value = DefineProperty<object>(nameof(Value), bicepPath: null, defaultValue: value);
     }
 
     /// <summary>
     /// Creates a new ProvisioningVariable.
     /// </summary>
-    /// <param name="name">
-    /// Name of the variable.  This value can contain letters, numbers, and
-    /// underscores.
+    /// <param name="bicepIdentifier">
+    /// Bicep identifier of the variable.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
     /// <param name="type">Type of the variable.</param>
-    public ProvisioningVariable(string name, Type type)
-        : this(name, new TypeExpression(type), value: null) { }
+    public ProvisioningVariable(string bicepIdentifier, Type type)
+        : this(bicepIdentifier, new TypeExpression(type), value: null) { }
 
     /// <inheritdoc />
-    protected internal override IEnumerable<Statement> Compile()
+    protected internal override IEnumerable<BicepStatement> Compile()
     {
         // TODO: add the rest of https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters#use-decorators?
-        VariableStatement stmt = BicepSyntax.Declare.Var(IdentifierName, Value.Compile());
-        if (Description is not null) { stmt = stmt.Decorate("description", BicepSyntax.Value(Description)); }
-        yield return stmt;
+        VariableStatement statement = BicepSyntax.Declare.Var(BicepIdentifier, Value.Compile());
+        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        yield return statement;
     }
 }

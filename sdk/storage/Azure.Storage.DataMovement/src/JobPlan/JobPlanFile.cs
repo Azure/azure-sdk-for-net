@@ -34,6 +34,8 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// </summary>
         public readonly SemaphoreSlim WriteLock;
 
+        private const int DefaultBufferSize = 81920;
+
         private JobPlanFile(string id, string filePath)
         {
             Id = id;
@@ -45,7 +47,8 @@ namespace Azure.Storage.DataMovement.JobPlan
         public static async Task<JobPlanFile> CreateJobPlanFileAsync(
             string checkpointerPath,
             string id,
-            Stream headerStream)
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -57,7 +60,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPlanFile jobPlanFile = new(id, filePath);
             using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
             {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
             }
 
             return jobPlanFile;

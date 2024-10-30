@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         void IJsonModel<ContainerServiceFleetManagedClusterUpgradeSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UpgradeType.ToString());
             if (Optional.IsDefined(KubernetesVersion))
@@ -48,7 +56,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerServiceFleetManagedClusterUpgradeSpec IJsonModel<ContainerServiceFleetManagedClusterUpgradeSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

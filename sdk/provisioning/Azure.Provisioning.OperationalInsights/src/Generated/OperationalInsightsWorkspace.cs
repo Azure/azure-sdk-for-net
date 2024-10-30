@@ -19,167 +19,247 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsWorkspace.
 /// </summary>
-public partial class OperationalInsightsWorkspace : Resource
+public partial class OperationalInsightsWorkspace : ProvisionableResource
 {
     /// <summary>
     /// The name of the workspace.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The resource ID of the default Data Collection Rule to use for this
     /// workspace. Expected format is -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> DefaultDataCollectionRuleResourceId { get => _defaultDataCollectionRuleResourceId; set => _defaultDataCollectionRuleResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _defaultDataCollectionRuleResourceId;
+    public BicepValue<ResourceIdentifier> DefaultDataCollectionRuleResourceId 
+    {
+        get { Initialize(); return _defaultDataCollectionRuleResourceId!; }
+        set { Initialize(); _defaultDataCollectionRuleResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _defaultDataCollectionRuleResourceId;
 
     /// <summary>
     /// The etag of the workspace.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Workspace features.
     /// </summary>
-    public BicepValue<OperationalInsightsWorkspaceFeatures> Features { get => _features; set => _features.Assign(value); }
-    private readonly BicepValue<OperationalInsightsWorkspaceFeatures> _features;
+    public OperationalInsightsWorkspaceFeatures Features 
+    {
+        get { Initialize(); return _features!; }
+        set { Initialize(); AssignOrReplace(ref _features, value); }
+    }
+    private OperationalInsightsWorkspaceFeatures? _features;
 
     /// <summary>
     /// Indicates whether customer managed storage is mandatory for query
     /// management.
     /// </summary>
-    public BicepValue<bool> ForceCmkForQuery { get => _forceCmkForQuery; set => _forceCmkForQuery.Assign(value); }
-    private readonly BicepValue<bool> _forceCmkForQuery;
+    public BicepValue<bool> ForceCmkForQuery 
+    {
+        get { Initialize(); return _forceCmkForQuery!; }
+        set { Initialize(); _forceCmkForQuery!.Assign(value); }
+    }
+    private BicepValue<bool>? _forceCmkForQuery;
 
     /// <summary>
     /// The identity of the resource. Current supported identity types: None,
     /// SystemAssigned, UserAssigned.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The network access type for accessing Log Analytics ingestion.
     /// </summary>
-    public BicepValue<OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForIngestion { get => _publicNetworkAccessForIngestion; set => _publicNetworkAccessForIngestion.Assign(value); }
-    private readonly BicepValue<OperationalInsightsPublicNetworkAccessType> _publicNetworkAccessForIngestion;
+    public BicepValue<OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForIngestion 
+    {
+        get { Initialize(); return _publicNetworkAccessForIngestion!; }
+        set { Initialize(); _publicNetworkAccessForIngestion!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsPublicNetworkAccessType>? _publicNetworkAccessForIngestion;
 
     /// <summary>
     /// The network access type for accessing Log Analytics query.
     /// </summary>
-    public BicepValue<OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForQuery { get => _publicNetworkAccessForQuery; set => _publicNetworkAccessForQuery.Assign(value); }
-    private readonly BicepValue<OperationalInsightsPublicNetworkAccessType> _publicNetworkAccessForQuery;
+    public BicepValue<OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForQuery 
+    {
+        get { Initialize(); return _publicNetworkAccessForQuery!; }
+        set { Initialize(); _publicNetworkAccessForQuery!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsPublicNetworkAccessType>? _publicNetworkAccessForQuery;
 
     /// <summary>
     /// The workspace data retention in days. Allowed values are per pricing
     /// plan. See pricing tiers documentation for details.
     /// </summary>
-    public BicepValue<int> RetentionInDays { get => _retentionInDays; set => _retentionInDays.Assign(value); }
-    private readonly BicepValue<int> _retentionInDays;
+    public BicepValue<int> RetentionInDays 
+    {
+        get { Initialize(); return _retentionInDays!; }
+        set { Initialize(); _retentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionInDays;
 
     /// <summary>
     /// The SKU of the workspace.
     /// </summary>
-    public BicepValue<OperationalInsightsWorkspaceSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<OperationalInsightsWorkspaceSku> _sku;
+    public OperationalInsightsWorkspaceSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private OperationalInsightsWorkspaceSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The daily volume cap for ingestion.
     /// </summary>
-    public BicepValue<OperationalInsightsWorkspaceCapping> WorkspaceCapping { get => _workspaceCapping; set => _workspaceCapping.Assign(value); }
-    private readonly BicepValue<OperationalInsightsWorkspaceCapping> _workspaceCapping;
+    public OperationalInsightsWorkspaceCapping WorkspaceCapping 
+    {
+        get { Initialize(); return _workspaceCapping!; }
+        set { Initialize(); AssignOrReplace(ref _workspaceCapping, value); }
+    }
+    private OperationalInsightsWorkspaceCapping? _workspaceCapping;
 
     /// <summary>
     /// Workspace creation date.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// This is a read-only property. Represents the ID associated with the
     /// workspace.
     /// </summary>
-    public BicepValue<Guid> CustomerId { get => _customerId; }
-    private readonly BicepValue<Guid> _customerId;
+    public BicepValue<Guid> CustomerId 
+    {
+        get { Initialize(); return _customerId!; }
+    }
+    private BicepValue<Guid>? _customerId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Workspace modification date.
     /// </summary>
-    public BicepValue<DateTimeOffset> ModifiedOn { get => _modifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _modifiedOn;
+    public BicepValue<DateTimeOffset> ModifiedOn 
+    {
+        get { Initialize(); return _modifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _modifiedOn;
 
     /// <summary>
     /// List of linked private link scope resources.
     /// </summary>
-    public BicepList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get => _privateLinkScopedResources; }
-    private readonly BicepList<OperationalInsightsPrivateLinkScopedResourceInfo> _privateLinkScopedResources;
+    public BicepList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources 
+    {
+        get { Initialize(); return _privateLinkScopedResources!; }
+    }
+    private BicepList<OperationalInsightsPrivateLinkScopedResourceInfo>? _privateLinkScopedResources;
 
     /// <summary>
     /// The provisioning state of the workspace.
     /// </summary>
-    public BicepValue<OperationalInsightsWorkspaceEntityStatus> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<OperationalInsightsWorkspaceEntityStatus> _provisioningState;
+    public BicepValue<OperationalInsightsWorkspaceEntityStatus> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<OperationalInsightsWorkspaceEntityStatus>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new OperationalInsightsWorkspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsWorkspace
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
-    public OperationalInsightsWorkspace(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsWorkspace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _defaultDataCollectionRuleResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "DefaultDataCollectionRuleResourceId", ["properties", "defaultDataCollectionRuleResourceId"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _features = BicepValue<OperationalInsightsWorkspaceFeatures>.DefineProperty(this, "Features", ["properties", "features"]);
-        _forceCmkForQuery = BicepValue<bool>.DefineProperty(this, "ForceCmkForQuery", ["properties", "forceCmkForQuery"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _publicNetworkAccessForIngestion = BicepValue<OperationalInsightsPublicNetworkAccessType>.DefineProperty(this, "PublicNetworkAccessForIngestion", ["properties", "publicNetworkAccessForIngestion"]);
-        _publicNetworkAccessForQuery = BicepValue<OperationalInsightsPublicNetworkAccessType>.DefineProperty(this, "PublicNetworkAccessForQuery", ["properties", "publicNetworkAccessForQuery"]);
-        _retentionInDays = BicepValue<int>.DefineProperty(this, "RetentionInDays", ["properties", "retentionInDays"]);
-        _sku = BicepValue<OperationalInsightsWorkspaceSku>.DefineProperty(this, "Sku", ["properties", "sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _workspaceCapping = BicepValue<OperationalInsightsWorkspaceCapping>.DefineProperty(this, "WorkspaceCapping", ["properties", "workspaceCapping"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "createdDate"], isOutput: true);
-        _customerId = BicepValue<Guid>.DefineProperty(this, "CustomerId", ["properties", "customerId"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _modifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ModifiedOn", ["properties", "modifiedDate"], isOutput: true);
-        _privateLinkScopedResources = BicepList<OperationalInsightsPrivateLinkScopedResourceInfo>.DefineProperty(this, "PrivateLinkScopedResources", ["properties", "privateLinkScopedResources"], isOutput: true);
-        _provisioningState = BicepValue<OperationalInsightsWorkspaceEntityStatus>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of OperationalInsightsWorkspace.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _defaultDataCollectionRuleResourceId = DefineProperty<ResourceIdentifier>("DefaultDataCollectionRuleResourceId", ["properties", "defaultDataCollectionRuleResourceId"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _features = DefineModelProperty<OperationalInsightsWorkspaceFeatures>("Features", ["properties", "features"]);
+        _forceCmkForQuery = DefineProperty<bool>("ForceCmkForQuery", ["properties", "forceCmkForQuery"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _publicNetworkAccessForIngestion = DefineProperty<OperationalInsightsPublicNetworkAccessType>("PublicNetworkAccessForIngestion", ["properties", "publicNetworkAccessForIngestion"]);
+        _publicNetworkAccessForQuery = DefineProperty<OperationalInsightsPublicNetworkAccessType>("PublicNetworkAccessForQuery", ["properties", "publicNetworkAccessForQuery"]);
+        _retentionInDays = DefineProperty<int>("RetentionInDays", ["properties", "retentionInDays"]);
+        _sku = DefineModelProperty<OperationalInsightsWorkspaceSku>("Sku", ["properties", "sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _workspaceCapping = DefineModelProperty<OperationalInsightsWorkspaceCapping>("WorkspaceCapping", ["properties", "workspaceCapping"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdDate"], isOutput: true);
+        _customerId = DefineProperty<Guid>("CustomerId", ["properties", "customerId"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["properties", "modifiedDate"], isOutput: true);
+        _privateLinkScopedResources = DefineListProperty<OperationalInsightsPrivateLinkScopedResourceInfo>("PrivateLinkScopedResources", ["properties", "privateLinkScopedResources"], isOutput: true);
+        _provisioningState = DefineProperty<OperationalInsightsWorkspaceEntityStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -221,7 +301,7 @@ public partial class OperationalInsightsWorkspace : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsWorkspace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsWorkspace
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -229,8 +309,8 @@ public partial class OperationalInsightsWorkspace : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsWorkspace.</param>
     /// <returns>The existing OperationalInsightsWorkspace resource.</returns>
-    public static OperationalInsightsWorkspace FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsWorkspace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this OperationalInsightsWorkspace
@@ -245,7 +325,10 @@ public partial class OperationalInsightsWorkspace : Resource
     /// Get access keys for this OperationalInsightsWorkspace resource.
     /// </summary>
     /// <returns>The keys for this OperationalInsightsWorkspace resource.</returns>
-    public OperationalInsightsWorkspaceSharedKeys GetKeys() =>
-        OperationalInsightsWorkspaceSharedKeys.FromExpression(
-            new FunctionCallExpression(new MemberExpression(new IdentifierExpression(IdentifierName), "listKeys")));
+    public OperationalInsightsWorkspaceSharedKeys GetKeys()
+    {
+        OperationalInsightsWorkspaceSharedKeys key = new();
+        ((IBicepValue)key).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
+        return key;
+    }
 }

@@ -16,58 +16,90 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerTopic.
 /// </summary>
-public partial class PartnerTopic : Resource
+public partial class PartnerTopic : ProvisionableResource
 {
     /// <summary>
     /// Name of the partner topic.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Activation state of the partner topic.
     /// </summary>
-    public BicepValue<PartnerTopicActivationState> ActivationState { get => _activationState; set => _activationState.Assign(value); }
-    private readonly BicepValue<PartnerTopicActivationState> _activationState;
+    public BicepValue<PartnerTopicActivationState> ActivationState 
+    {
+        get { Initialize(); return _activationState!; }
+        set { Initialize(); _activationState!.Assign(value); }
+    }
+    private BicepValue<PartnerTopicActivationState>? _activationState;
 
     /// <summary>
     /// Event Type information from the corresponding event channel.
     /// </summary>
-    public BicepValue<PartnerTopicEventTypeInfo> EventTypeInfo { get => _eventTypeInfo; set => _eventTypeInfo.Assign(value); }
-    private readonly BicepValue<PartnerTopicEventTypeInfo> _eventTypeInfo;
+    public PartnerTopicEventTypeInfo EventTypeInfo 
+    {
+        get { Initialize(); return _eventTypeInfo!; }
+        set { Initialize(); AssignOrReplace(ref _eventTypeInfo, value); }
+    }
+    private PartnerTopicEventTypeInfo? _eventTypeInfo;
 
     /// <summary>
     /// Expiration time of the partner topic. If this timer expires while the
     /// partner topic is still never activated,             the partner topic
     /// and corresponding event channel are deleted.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOnIfNotActivated { get => _expireOnIfNotActivated; set => _expireOnIfNotActivated.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _expireOnIfNotActivated;
+    public BicepValue<DateTimeOffset> ExpireOnIfNotActivated 
+    {
+        get { Initialize(); return _expireOnIfNotActivated!; }
+        set { Initialize(); _expireOnIfNotActivated!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _expireOnIfNotActivated;
 
     /// <summary>
     /// Identity information for the Partner Topic resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Context or helpful message that can be used during the approval process
     /// by the subscriber.
     /// </summary>
-    public BicepValue<string> MessageForActivation { get => _messageForActivation; set => _messageForActivation.Assign(value); }
-    private readonly BicepValue<string> _messageForActivation;
+    public BicepValue<string> MessageForActivation 
+    {
+        get { Initialize(); return _messageForActivation!; }
+        set { Initialize(); _messageForActivation!.Assign(value); }
+    }
+    private BicepValue<string>? _messageForActivation;
 
     /// <summary>
     /// The immutableId of the corresponding partner registration.
     /// </summary>
-    public BicepValue<Guid> PartnerRegistrationImmutableId { get => _partnerRegistrationImmutableId; set => _partnerRegistrationImmutableId.Assign(value); }
-    private readonly BicepValue<Guid> _partnerRegistrationImmutableId;
+    public BicepValue<Guid> PartnerRegistrationImmutableId 
+    {
+        get { Initialize(); return _partnerRegistrationImmutableId!; }
+        set { Initialize(); _partnerRegistrationImmutableId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _partnerRegistrationImmutableId;
 
     /// <summary>
     /// Friendly description about the topic. This can be set by the
@@ -75,67 +107,95 @@ public partial class PartnerTopic : Resource
     /// topic.             This will be helpful to remove any ambiguity of the
     /// origin of creation of the partner topic for the customer.
     /// </summary>
-    public BicepValue<string> PartnerTopicFriendlyDescription { get => _partnerTopicFriendlyDescription; set => _partnerTopicFriendlyDescription.Assign(value); }
-    private readonly BicepValue<string> _partnerTopicFriendlyDescription;
+    public BicepValue<string> PartnerTopicFriendlyDescription 
+    {
+        get { Initialize(); return _partnerTopicFriendlyDescription!; }
+        set { Initialize(); _partnerTopicFriendlyDescription!.Assign(value); }
+    }
+    private BicepValue<string>? _partnerTopicFriendlyDescription;
 
     /// <summary>
     /// Source associated with this partner topic. This represents a unique
     /// partner resource.
     /// </summary>
-    public BicepValue<string> Source { get => _source; set => _source.Assign(value); }
-    private readonly BicepValue<string> _source;
+    public BicepValue<string> Source 
+    {
+        get { Initialize(); return _source!; }
+        set { Initialize(); _source!.Assign(value); }
+    }
+    private BicepValue<string>? _source;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the partner topic.
     /// </summary>
-    public BicepValue<PartnerTopicProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<PartnerTopicProvisioningState> _provisioningState;
+    public BicepValue<PartnerTopicProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<PartnerTopicProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new PartnerTopic.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerTopic resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerTopic.</param>
-    public PartnerTopic(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2022-06-15")
+    public PartnerTopic(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _activationState = BicepValue<PartnerTopicActivationState>.DefineProperty(this, "ActivationState", ["properties", "activationState"]);
-        _eventTypeInfo = BicepValue<PartnerTopicEventTypeInfo>.DefineProperty(this, "EventTypeInfo", ["properties", "eventTypeInfo"]);
-        _expireOnIfNotActivated = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOnIfNotActivated", ["properties", "expirationTimeIfNotActivatedUtc"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _messageForActivation = BicepValue<string>.DefineProperty(this, "MessageForActivation", ["properties", "messageForActivation"]);
-        _partnerRegistrationImmutableId = BicepValue<Guid>.DefineProperty(this, "PartnerRegistrationImmutableId", ["properties", "partnerRegistrationImmutableId"]);
-        _partnerTopicFriendlyDescription = BicepValue<string>.DefineProperty(this, "PartnerTopicFriendlyDescription", ["properties", "partnerTopicFriendlyDescription"]);
-        _source = BicepValue<string>.DefineProperty(this, "Source", ["properties", "source"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<PartnerTopicProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PartnerTopic.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _activationState = DefineProperty<PartnerTopicActivationState>("ActivationState", ["properties", "activationState"]);
+        _eventTypeInfo = DefineModelProperty<PartnerTopicEventTypeInfo>("EventTypeInfo", ["properties", "eventTypeInfo"]);
+        _expireOnIfNotActivated = DefineProperty<DateTimeOffset>("ExpireOnIfNotActivated", ["properties", "expirationTimeIfNotActivatedUtc"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _messageForActivation = DefineProperty<string>("MessageForActivation", ["properties", "messageForActivation"]);
+        _partnerRegistrationImmutableId = DefineProperty<Guid>("PartnerRegistrationImmutableId", ["properties", "partnerRegistrationImmutableId"]);
+        _partnerTopicFriendlyDescription = DefineProperty<string>("PartnerTopicFriendlyDescription", ["properties", "partnerTopicFriendlyDescription"]);
+        _source = DefineProperty<string>("Source", ["properties", "source"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<PartnerTopicProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -143,11 +203,6 @@ public partial class PartnerTopic : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
-
         /// <summary>
         /// 2022-06-15.
         /// </summary>
@@ -157,7 +212,7 @@ public partial class PartnerTopic : Resource
     /// <summary>
     /// Creates a reference to an existing PartnerTopic.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PartnerTopic resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -165,6 +220,6 @@ public partial class PartnerTopic : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerTopic.</param>
     /// <returns>The existing PartnerTopic resource.</returns>
-    public static PartnerTopic FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PartnerTopic FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

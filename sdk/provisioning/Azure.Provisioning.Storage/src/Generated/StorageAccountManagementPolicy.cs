@@ -16,40 +16,57 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageAccountManagementPolicy.
 /// </summary>
-public partial class StorageAccountManagementPolicy : Resource
+public partial class StorageAccountManagementPolicy : ProvisionableResource
 {
-    private readonly BicepValue<string> _name;
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The Storage Account ManagementPolicies Rules. See more details in:
     /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
     /// </summary>
-    public BicepList<ManagementPolicyRule> Rules { get => _rules; set => _rules.Assign(value); }
-    private readonly BicepList<ManagementPolicyRule> _rules;
+    public BicepList<ManagementPolicyRule> Rules 
+    {
+        get { Initialize(); return _rules!; }
+        set { Initialize(); _rules!.Assign(value); }
+    }
+    private BicepList<ManagementPolicyRule>? _rules;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Returns the date and time the ManagementPolicies was last modified.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastModifiedOn { get => _lastModifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastModifiedOn;
+    public BicepValue<DateTimeOffset> LastModifiedOn 
+    {
+        get { Initialize(); return _lastModifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastModifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -59,22 +76,30 @@ public partial class StorageAccountManagementPolicy : Resource
     /// <summary>
     /// Creates a new StorageAccountManagementPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageAccountManagementPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountManagementPolicy.</param>
-    public StorageAccountManagementPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion ?? "2024-01-01")
+    public StorageAccountManagementPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/managementPolicies", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
-        _rules = BicepList<ManagementPolicyRule>.DefineProperty(this, "Rules", ["properties", "policy", "rules"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _lastModifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// StorageAccountManagementPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
+        _rules = DefineListProperty<ManagementPolicyRule>("Rules", ["properties", "policy", "rules"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _lastModifiedOn = DefineProperty<DateTimeOffset>("LastModifiedOn", ["properties", "lastModifiedTime"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -206,7 +231,7 @@ public partial class StorageAccountManagementPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing StorageAccountManagementPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageAccountManagementPolicy
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -214,6 +239,6 @@ public partial class StorageAccountManagementPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountManagementPolicy.</param>
     /// <returns>The existing StorageAccountManagementPolicy resource.</returns>
-    public static StorageAccountManagementPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StorageAccountManagementPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -19,7 +19,6 @@ using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ContainerService.Models;
 using System.Drawing;
-using UpgradeChannel = Azure.ResourceManager.ContainerServiceFleet.Models.UpgradeChannel;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 {
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             string autoUpgradeProfileName = "autoupgradeprofile1";
             AutoUpgradeProfileData createAutoUpgradeProfileData = new AutoUpgradeProfileData()
             {
-                Channel = UpgradeChannel.Stable,
+                Channel = ContainerServiceFleetUpgradeChannel.Stable,
             };
             ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData);
             AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
@@ -151,12 +150,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Update AutoUpgradeProfile
             AutoUpgradeProfileData updateAutoUpgradeProfileData = new AutoUpgradeProfileData()
             {
-                Channel = UpgradeChannel.Rapid,
+                Channel = ContainerServiceFleetUpgradeChannel.Rapid,
             };
             ArmOperation<AutoUpgradeProfileResource> updateAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, updateAutoUpgradeProfileData);
             AutoUpgradeProfileResource updateAutoUpgradeProfileResult = updateAutoUpgradeProfileLRO.Value;
             Debug.Assert(updateAutoUpgradeProfileResult.HasData, "CreateOrUpdateAsync AutoUpgradeProfile data was not valid");
-            Debug.Assert(updateAutoUpgradeProfileResult.Data.Channel == UpgradeChannel.Rapid, "CreateOrUpdateAsync AutoUpgradeProfile channel was not successfully updated.");
+            Debug.Assert(updateAutoUpgradeProfileResult.Data.Channel == ContainerServiceFleetUpgradeChannel.Rapid, "CreateOrUpdateAsync AutoUpgradeProfile channel was not successfully updated.");
 
             // Delete AutoUpgradeProfile
             await updateAutoUpgradeProfileResult.DeleteAsync(WaitUntil.Completed);

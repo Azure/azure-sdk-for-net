@@ -1,6 +1,17 @@
 # Release History
 
-## 12.0.0-beta.6 (Unreleased)
+## 12.0.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.
+
+### Other Changes
+
+## 12.0.0-beta.6 (2024-10-14)
 
 ### Features Added
 - Added support to disable checkpointing via `TransferCheckpointStoreOptions.Disabled`.
@@ -9,10 +20,8 @@
 - Removed the constructor for `TransferCheckpointStoreOptions` and replaced with a static builder method `Local`.
 - Changed `TransferCheckpointStoreOptions.CheckpointerPath` to internal.
 
-### Bugs Fixed
-- Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.
-
 ### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
 ## 12.0.0-beta.5 (2024-07-16)
 

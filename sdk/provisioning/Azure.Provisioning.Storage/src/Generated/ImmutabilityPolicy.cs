@@ -16,13 +16,16 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// ImmutabilityPolicy.
 /// </summary>
-public partial class ImmutabilityPolicy : Resource
+public partial class ImmutabilityPolicy : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// This property can only be changed for unlocked time-based retention
@@ -32,8 +35,12 @@ public partial class ImmutabilityPolicy : Resource
     /// deleted. This property cannot be changed with ExtendImmutabilityPolicy
     /// API.
     /// </summary>
-    public BicepValue<bool> AllowProtectedAppendWrites { get => _allowProtectedAppendWrites; set => _allowProtectedAppendWrites.Assign(value); }
-    private readonly BicepValue<bool> _allowProtectedAppendWrites;
+    public BicepValue<bool> AllowProtectedAppendWrites 
+    {
+        get { Initialize(); return _allowProtectedAppendWrites!; }
+        set { Initialize(); _allowProtectedAppendWrites!.Assign(value); }
+    }
+    private BicepValue<bool>? _allowProtectedAppendWrites;
 
     /// <summary>
     /// This property can only be changed for unlocked time-based retention
@@ -46,69 +53,100 @@ public partial class ImmutabilityPolicy : Resource
     /// &apos;allowProtectedAppendWritesAll&apos; properties are mutually
     /// exclusive.
     /// </summary>
-    public BicepValue<bool> AllowProtectedAppendWritesAll { get => _allowProtectedAppendWritesAll; set => _allowProtectedAppendWritesAll.Assign(value); }
-    private readonly BicepValue<bool> _allowProtectedAppendWritesAll;
+    public BicepValue<bool> AllowProtectedAppendWritesAll 
+    {
+        get { Initialize(); return _allowProtectedAppendWritesAll!; }
+        set { Initialize(); _allowProtectedAppendWritesAll!.Assign(value); }
+    }
+    private BicepValue<bool>? _allowProtectedAppendWritesAll;
 
     /// <summary>
     /// The immutability period for the blobs in the container since the policy
     /// creation, in days.
     /// </summary>
-    public BicepValue<int> ImmutabilityPeriodSinceCreationInDays { get => _immutabilityPeriodSinceCreationInDays; set => _immutabilityPeriodSinceCreationInDays.Assign(value); }
-    private readonly BicepValue<int> _immutabilityPeriodSinceCreationInDays;
+    public BicepValue<int> ImmutabilityPeriodSinceCreationInDays 
+    {
+        get { Initialize(); return _immutabilityPeriodSinceCreationInDays!; }
+        set { Initialize(); _immutabilityPeriodSinceCreationInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _immutabilityPeriodSinceCreationInDays;
 
     /// <summary>
     /// Resource Etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The ImmutabilityPolicy state of a blob container, possible values
     /// include: Locked and Unlocked.
     /// </summary>
-    public BicepValue<ImmutabilityPolicyState> State { get => _state; }
-    private readonly BicepValue<ImmutabilityPolicyState> _state;
+    public BicepValue<ImmutabilityPolicyState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<ImmutabilityPolicyState>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent BlobContainer.
     /// </summary>
-    public BlobContainer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<BlobContainer> _parent;
+    public BlobContainer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<BlobContainer>? _parent;
 
     /// <summary>
     /// Creates a new ImmutabilityPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ImmutabilityPolicy resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ImmutabilityPolicy.</param>
-    public ImmutabilityPolicy(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2024-01-01")
+    public ImmutabilityPolicy(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _allowProtectedAppendWrites = BicepValue<bool>.DefineProperty(this, "AllowProtectedAppendWrites", ["properties", "allowProtectedAppendWrites"]);
-        _allowProtectedAppendWritesAll = BicepValue<bool>.DefineProperty(this, "AllowProtectedAppendWritesAll", ["properties", "allowProtectedAppendWritesAll"]);
-        _immutabilityPeriodSinceCreationInDays = BicepValue<int>.DefineProperty(this, "ImmutabilityPeriodSinceCreationInDays", ["properties", "immutabilityPeriodSinceCreationInDays"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _state = BicepValue<ImmutabilityPolicyState>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<BlobContainer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ImmutabilityPolicy.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _allowProtectedAppendWrites = DefineProperty<bool>("AllowProtectedAppendWrites", ["properties", "allowProtectedAppendWrites"]);
+        _allowProtectedAppendWritesAll = DefineProperty<bool>("AllowProtectedAppendWritesAll", ["properties", "allowProtectedAppendWritesAll"]);
+        _immutabilityPeriodSinceCreationInDays = DefineProperty<int>("ImmutabilityPeriodSinceCreationInDays", ["properties", "immutabilityPeriodSinceCreationInDays"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _state = DefineProperty<ImmutabilityPolicyState>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<BlobContainer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -230,7 +268,7 @@ public partial class ImmutabilityPolicy : Resource
     /// <summary>
     /// Creates a reference to an existing ImmutabilityPolicy.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ImmutabilityPolicy resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -238,6 +276,6 @@ public partial class ImmutabilityPolicy : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ImmutabilityPolicy.</param>
     /// <returns>The existing ImmutabilityPolicy resource.</returns>
-    public static ImmutabilityPolicy FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ImmutabilityPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

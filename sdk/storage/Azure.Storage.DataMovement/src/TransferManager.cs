@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -35,7 +36,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
-        private readonly TransferCheckpointer _checkpointer;
+        private readonly ITransferCheckpointer _checkpointer;
 
         private readonly List<StorageResourceProvider> _resumeProviders;
 
@@ -78,7 +79,7 @@ namespace Azure.Storage.DataMovement
             IProcessor<JobPartInternal> partsProcessor,
             IProcessor<Func<Task>> chunksProcessor,
             JobBuilder jobBuilder,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             ICollection<StorageResourceProvider> resumeProviders,
             Func<string> generateTransferId = default)
         {
@@ -100,15 +101,15 @@ namespace Azure.Storage.DataMovement
             _chunksProcessor.Process = Task.Run;
         }
 
-        private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken _)
+        private async Task ProcessJobAsync(TransferJobInternal job, CancellationToken cancellationToken = default)
         {
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
                 job.IncrementJobParts();
-                await _partsProcessor.QueueAsync(partItem).ConfigureAwait(false);
+                await _partsProcessor.QueueAsync(partItem, cancellationToken).ConfigureAwait(false);
             }
         }
-        private async Task ProcessPartAsync(JobPartInternal part, CancellationToken _)
+        private async Task ProcessPartAsync(JobPartInternal part, CancellationToken cancellationToken = default)
         {
             part.SetQueueChunkDelegate(_chunksProcessor.QueueAsync);
             await part.ProcessPartToChunkAsync().ConfigureAwait(false);
@@ -148,13 +149,19 @@ namespace Azure.Storage.DataMovement
         /// If not specified or specified to <see cref="DataTransferState.None"/>,
         /// all transfers will be returned regardless of status.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            params DataTransferStatus[] filterByStatus)
+            ICollection<DataTransferStatus> filterByStatus = default,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await SetDataTransfers().ConfigureAwait(false);
+            cancellationToken = LinkCancellation(cancellationToken);
+            await SetDataTransfers(cancellationToken).ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
-            if (filterByStatus == default || filterByStatus.Length == 0)
+            if (filterByStatus == default || filterByStatus.Count == 0)
             {
                 totalTransfers = _dataTransfers.Select(d => d.Value);
             }
@@ -173,22 +180,28 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Lists all the transfers stored in the checkpointer that can be resumed.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// List of <see cref="DataTransferProperties"/> objects that can be used to rebuild resources
         /// to resume with.
         /// </returns>
-        public virtual async IAsyncEnumerable<DataTransferProperties> GetResumableTransfersAsync()
+        public virtual async IAsyncEnumerable<DataTransferProperties> GetResumableTransfersAsync(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
+            cancellationToken = LinkCancellation(cancellationToken);
+            List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                if (!await _checkpointer.IsResumableAsync(transferId, _cancellationToken).ConfigureAwait(false))
+                if (!await _checkpointer.IsResumableAsync(transferId, cancellationToken).ConfigureAwait(false))
                 {
                     continue;
                 }
 
                 DataTransferProperties properties = await _checkpointer.GetDataTransferPropertiesAsync(
-                    transferId, _cancellationToken).ConfigureAwait(false);
+                    transferId, cancellationToken).ConfigureAwait(false);
                 yield return properties;
             }
         }
@@ -215,7 +228,7 @@ namespace Azure.Storage.DataMovement
             }
 
             List<DataTransfer> transfers = new();
-            await foreach (DataTransferProperties properties in GetResumableTransfersAsync().ConfigureAwait(false))
+            await foreach (DataTransferProperties properties in GetResumableTransfersAsync(cancellationToken).ConfigureAwait(false))
             {
                 transfers.Add(await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false));
             }
@@ -406,14 +419,14 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        private async Task SetDataTransfers()
+        private async Task SetDataTransfers(CancellationToken cancellationToken = default)
         {
             _dataTransfers.Clear();
 
-            List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
+            List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId).ConfigureAwait(false);
+                DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
                 // If TryAdd fails here, we need to check if in other places where we are
                 // adding that every transferId is unique.
                 if (!_dataTransfers.TryAdd(transferId, new DataTransfer(

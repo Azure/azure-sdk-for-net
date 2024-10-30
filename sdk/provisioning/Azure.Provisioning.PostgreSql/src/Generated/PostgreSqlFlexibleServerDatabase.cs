@@ -15,63 +15,93 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlFlexibleServerDatabase.
 /// </summary>
-public partial class PostgreSqlFlexibleServerDatabase : Resource
+public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
 {
     /// <summary>
     /// The name of the database.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The charset of the database.
     /// </summary>
-    public BicepValue<string> Charset { get => _charset; set => _charset.Assign(value); }
-    private readonly BicepValue<string> _charset;
+    public BicepValue<string> Charset 
+    {
+        get { Initialize(); return _charset!; }
+        set { Initialize(); _charset!.Assign(value); }
+    }
+    private BicepValue<string>? _charset;
 
     /// <summary>
     /// The collation of the database.
     /// </summary>
-    public BicepValue<string> Collation { get => _collation; set => _collation.Assign(value); }
-    private readonly BicepValue<string> _collation;
+    public BicepValue<string> Collation 
+    {
+        get { Initialize(); return _collation!; }
+        set { Initialize(); _collation!.Assign(value); }
+    }
+    private BicepValue<string>? _collation;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlFlexibleServer.
     /// </summary>
-    public PostgreSqlFlexibleServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlFlexibleServer> _parent;
+    public PostgreSqlFlexibleServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlFlexibleServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
-    public PostgreSqlFlexibleServerDatabase(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
+    public PostgreSqlFlexibleServerDatabase(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _charset = BicepValue<string>.DefineProperty(this, "Charset", ["properties", "charset"]);
-        _collation = BicepValue<string>.DefineProperty(this, "Collation", ["properties", "collation"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// PostgreSqlFlexibleServerDatabase.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _charset = DefineProperty<string>("Charset", ["properties", "charset"]);
+        _collation = DefineProperty<string>("Collation", ["properties", "collation"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -98,7 +128,7 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlFlexibleServerDatabase.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlFlexibleServerDatabase
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -106,6 +136,6 @@ public partial class PostgreSqlFlexibleServerDatabase : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
     /// <returns>The existing PostgreSqlFlexibleServerDatabase resource.</returns>
-    public static PostgreSqlFlexibleServerDatabase FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlFlexibleServerDatabase FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

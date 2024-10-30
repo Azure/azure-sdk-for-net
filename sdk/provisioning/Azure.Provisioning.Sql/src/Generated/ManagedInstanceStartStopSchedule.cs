@@ -16,85 +16,124 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceStartStopSchedule.
 /// </summary>
-public partial class ManagedInstanceStartStopSchedule : Resource
+public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The description of the schedule.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Schedule list.
     /// </summary>
-    public BicepList<SqlScheduleItem> ScheduleList { get => _scheduleList; set => _scheduleList.Assign(value); }
-    private readonly BicepList<SqlScheduleItem> _scheduleList;
+    public BicepList<SqlScheduleItem> ScheduleList 
+    {
+        get { Initialize(); return _scheduleList!; }
+        set { Initialize(); _scheduleList!.Assign(value); }
+    }
+    private BicepList<SqlScheduleItem>? _scheduleList;
 
     /// <summary>
     /// The time zone of the schedule.
     /// </summary>
-    public BicepValue<string> TimeZoneId { get => _timeZoneId; set => _timeZoneId.Assign(value); }
-    private readonly BicepValue<string> _timeZoneId;
+    public BicepValue<string> TimeZoneId 
+    {
+        get { Initialize(); return _timeZoneId!; }
+        set { Initialize(); _timeZoneId!.Assign(value); }
+    }
+    private BicepValue<string>? _timeZoneId;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Timestamp when the next action will be executed in the corresponding
     /// schedule time zone.
     /// </summary>
-    public BicepValue<string> NextExecutionTime { get => _nextExecutionTime; }
-    private readonly BicepValue<string> _nextExecutionTime;
+    public BicepValue<string> NextExecutionTime 
+    {
+        get { Initialize(); return _nextExecutionTime!; }
+    }
+    private BicepValue<string>? _nextExecutionTime;
 
     /// <summary>
     /// Next action to be executed (Start or Stop).
     /// </summary>
-    public BicepValue<string> NextRunAction { get => _nextRunAction; }
-    private readonly BicepValue<string> _nextRunAction;
+    public BicepValue<string> NextRunAction 
+    {
+        get { Initialize(); return _nextRunAction!; }
+    }
+    private BicepValue<string>? _nextRunAction;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceStartStopSchedule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceStartStopSchedule
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceStartStopSchedule.</param>
-    public ManagedInstanceStartStopSchedule(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/startStopSchedules", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceStartStopSchedule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/startStopSchedules", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _scheduleList = BicepList<SqlScheduleItem>.DefineProperty(this, "ScheduleList", ["properties", "scheduleList"]);
-        _timeZoneId = BicepValue<string>.DefineProperty(this, "TimeZoneId", ["properties", "timeZoneId"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _nextExecutionTime = BicepValue<string>.DefineProperty(this, "NextExecutionTime", ["properties", "nextExecutionTime"], isOutput: true);
-        _nextRunAction = BicepValue<string>.DefineProperty(this, "NextRunAction", ["properties", "nextRunAction"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceStartStopSchedule.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _scheduleList = DefineListProperty<SqlScheduleItem>("ScheduleList", ["properties", "scheduleList"]);
+        _timeZoneId = DefineProperty<string>("TimeZoneId", ["properties", "timeZoneId"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _nextExecutionTime = DefineProperty<string>("NextExecutionTime", ["properties", "nextExecutionTime"], isOutput: true);
+        _nextRunAction = DefineProperty<string>("NextRunAction", ["properties", "nextRunAction"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -102,11 +141,6 @@ public partial class ManagedInstanceStartStopSchedule : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -116,7 +150,7 @@ public partial class ManagedInstanceStartStopSchedule : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceStartStopSchedule.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceStartStopSchedule
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -124,6 +158,6 @@ public partial class ManagedInstanceStartStopSchedule : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceStartStopSchedule.</param>
     /// <returns>The existing ManagedInstanceStartStopSchedule resource.</returns>
-    public static ManagedInstanceStartStopSchedule FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceStartStopSchedule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

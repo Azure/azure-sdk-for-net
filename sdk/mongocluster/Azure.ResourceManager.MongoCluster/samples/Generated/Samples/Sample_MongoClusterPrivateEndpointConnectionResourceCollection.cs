@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Get_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task Exists_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task GetIfExists_GetAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MongoCluster.Samples
         public async Task CreateOrUpdate_ApprovesAPrivateEndpointConnectionOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_PrivateEndpointConnectionPut.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnectionResource_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
