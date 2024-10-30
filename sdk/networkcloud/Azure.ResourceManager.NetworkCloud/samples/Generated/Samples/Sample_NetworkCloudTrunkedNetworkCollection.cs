@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/l2IsolationDomainName"),new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/l3IsolationDomainName")
             }, new long[]
             {
-12,14
+12L,14L
             })
             {
                 InterfaceName = "eth0",

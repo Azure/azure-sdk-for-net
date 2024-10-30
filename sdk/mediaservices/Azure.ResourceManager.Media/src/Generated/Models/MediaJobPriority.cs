@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaJobPriority left, MediaJobPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaJobPriority"/> values are not the same. </summary>
         public static bool operator !=(MediaJobPriority left, MediaJobPriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaJobPriority"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaJobPriority"/>. </summary>
         public static implicit operator MediaJobPriority(string value) => new MediaJobPriority(value);
 
         /// <inheritdoc />

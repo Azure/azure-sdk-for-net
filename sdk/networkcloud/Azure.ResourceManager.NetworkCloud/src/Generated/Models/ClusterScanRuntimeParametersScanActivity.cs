@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterScanRuntimeParametersScanActivity left, ClusterScanRuntimeParametersScanActivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterScanRuntimeParametersScanActivity"/> values are not the same. </summary>
         public static bool operator !=(ClusterScanRuntimeParametersScanActivity left, ClusterScanRuntimeParametersScanActivity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterScanRuntimeParametersScanActivity"/>. </summary>
         public static implicit operator ClusterScanRuntimeParametersScanActivity(string value) => new ClusterScanRuntimeParametersScanActivity(value);
 
         /// <inheritdoc />

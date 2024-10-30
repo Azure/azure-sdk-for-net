@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(VersioningScheme left, VersioningScheme right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VersioningScheme"/> values are not the same. </summary>
         public static bool operator !=(VersioningScheme left, VersioningScheme right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VersioningScheme"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VersioningScheme"/>. </summary>
         public static implicit operator VersioningScheme(string value) => new VersioningScheme(value);
 
         /// <inheritdoc />

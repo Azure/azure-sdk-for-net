@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(ContentSourceKind left, ContentSourceKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentSourceKind"/> values are not the same. </summary>
         public static bool operator !=(ContentSourceKind left, ContentSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentSourceKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentSourceKind"/>. </summary>
         public static implicit operator ContentSourceKind(string value) => new ContentSourceKind(value);
 
         /// <inheritdoc />

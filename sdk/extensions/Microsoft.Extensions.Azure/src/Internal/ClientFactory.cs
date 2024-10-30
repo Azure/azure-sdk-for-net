@@ -97,6 +97,7 @@ namespace Microsoft.Extensions.Azure
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
             var resourceId = configuration["managedIdentityResourceId"];
+            var objectId = configuration["managedIdentityObjectId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
@@ -114,14 +115,24 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
+                int idCount = 0;
+                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
+
+                if (idCount > 1)
                 {
-                    throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
+                    throw new ArgumentException("Only one of either 'clientId', 'managedIdentityResourceId', or 'managedIdentityObjectId' can be specified for managed identity.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
                     return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                }
+
+                if (!string.IsNullOrWhiteSpace(objectId))
+                {
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedObjectId(objectId));
                 }
 
                 return new ManagedIdentityCredential(clientId);
@@ -214,6 +225,11 @@ namespace Microsoft.Extensions.Azure
             }
 
             // TODO: More logging
+
+            if (!string.IsNullOrWhiteSpace(objectId))
+            {
+                throw new ArgumentException("Managed identity 'objectId' is only supported when the credential type is 'managedidentity'.");
+            }
 
             if (additionallyAllowedTenantsList != null
                 || !string.IsNullOrWhiteSpace(tenantId)

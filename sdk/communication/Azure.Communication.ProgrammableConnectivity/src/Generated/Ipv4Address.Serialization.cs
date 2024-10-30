@@ -19,13 +19,21 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         void IJsonModel<Ipv4Address>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<Ipv4Address>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(Ipv4Address)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ipv4"u8);
             writer.WriteStringValue(Ipv4);
             writer.WritePropertyName("port"u8);
@@ -45,7 +53,6 @@ namespace Azure.Communication.ProgrammableConnectivity
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         Ipv4Address IJsonModel<Ipv4Address>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

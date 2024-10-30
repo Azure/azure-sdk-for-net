@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
-    <PackageReference Include="Azure.ResourceManager.IotHub" VersionOverride="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.Logic" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.IotHub" VersionOverride="1.2.0-beta.1" />
+    <PackageReference Include="Azure.ResourceManager.Logic" VersionOverride="1.2.0-beta.1" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>

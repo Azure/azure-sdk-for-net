@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
+using Microsoft.Win32;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerService.Tests;
@@ -21,9 +22,16 @@ public class BasicContainerServiceTests(bool async)
         await test.Define(
             ctx =>
             {
-                BicepParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
-                BicepParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
-                BicepParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
+                Infrastructure infra = new();
+
+                ProvisioningParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
+                infra.Add(dnsPrefix);
+
+                ProvisioningParameter linuxAdminUsername = new(nameof(linuxAdminUsername), typeof(string));
+                infra.Add(linuxAdminUsername);
+
+                ProvisioningParameter sshRsaPublicKey = new(nameof(sshRsaPublicKey), typeof(string));
+                infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =
                     new(nameof(aks))
@@ -52,6 +60,9 @@ public class BasicContainerServiceTests(bool async)
                             }
                         }
                     };
+                infra.Add(aks);
+
+                return infra;
             })
         .Compare(
             """
@@ -64,7 +75,7 @@ public class BasicContainerServiceTests(bool async)
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource aks 'Microsoft.ContainerService/managedClusters@2023-08-01' = {
+            resource aks 'Microsoft.ContainerService/managedClusters@2024-08-01' = {
               name: take('aks-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {

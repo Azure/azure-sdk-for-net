@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaAssetStorageEncryptionFormat left, MediaAssetStorageEncryptionFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaAssetStorageEncryptionFormat"/> values are not the same. </summary>
         public static bool operator !=(MediaAssetStorageEncryptionFormat left, MediaAssetStorageEncryptionFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaAssetStorageEncryptionFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaAssetStorageEncryptionFormat"/>. </summary>
         public static implicit operator MediaAssetStorageEncryptionFormat(string value) => new MediaAssetStorageEncryptionFormat(value);
 
         /// <inheritdoc />

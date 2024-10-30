@@ -20,6 +20,7 @@ modelerfour:
 models-to-treat-empty-string-as-null:
 - HDInsightStorageAccountInfo
 use-model-reader-writer: true
+use-write-core: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

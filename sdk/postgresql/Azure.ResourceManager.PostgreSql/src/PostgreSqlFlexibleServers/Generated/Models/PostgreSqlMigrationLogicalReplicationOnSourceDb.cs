@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlMigrationLogicalReplicationOnSourceDb left, PostgreSqlMigrationLogicalReplicationOnSourceDb right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlMigrationLogicalReplicationOnSourceDb left, PostgreSqlMigrationLogicalReplicationOnSourceDb right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationLogicalReplicationOnSourceDb"/>. </summary>
         public static implicit operator PostgreSqlMigrationLogicalReplicationOnSourceDb(string value) => new PostgreSqlMigrationLogicalReplicationOnSourceDb(value);
 
         /// <inheritdoc />

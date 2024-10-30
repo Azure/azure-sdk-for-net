@@ -53,7 +53,7 @@ The package includes `ChatCompletionsClient` <!-- and `EmbeddingsClient`and `Ima
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 ```
 
 <!--
@@ -90,7 +90,7 @@ All clients provide a `get_model_info` method to retrive AI model information. T
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 Response<ModelInfo> modelInfo = client.GetModelInfo();
 
 Console.WriteLine($"Model name: {modelInfo.Value.ModelName}");
@@ -106,13 +106,13 @@ The `ChatCompletionsClient` has a method named `complete`. The method makes a RE
 
 See simple chat completion examples below. More can be found in the [samples](https://aka.ms/azsdk/azure-ai-inference/csharp/samples) folder.
 
-<!--
 ### Text Embeddings
 
-The `EmbeddingsClient` has a method named `embedding`. The method makes a REST API call to the `/embeddings` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-embeddings).
+The `EmbeddingsClient` has a method named `embed`. The method makes a REST API call to the `/embeddings` route on the provided endpoint, as documented in [the REST API reference](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-embeddings).
 
 See simple text embedding example below. More can be found in the [samples](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-inference/samples) folder.
 
+<!--
 ### Image Embeddings
 
 TODO: Add overview and link to explain image embeddings.
@@ -150,7 +150,7 @@ In the following sections you will find simple examples of:
 * [Chat completions](#chat-completions-example)
 * [Streaming chat completions](#streaming-chat-completions-example)
 * [Chat completions with additional model-specific parameters](#chat-completions-with-additional-model-specific-parameters)
-<!-- * [Text Embeddings](#text-embeddings-example) -->
+* [Text Embeddings](#text-embeddings-example)
 <!-- * [Image Embeddings](#image-embeddings-example) -->
 
 The examples create a client as mentioned in [Create and authenticate a client directly, using key](#create-and-authenticate-a-client-directly-using-key). Only mandatory input settings are shown for simplicity.
@@ -165,7 +165,7 @@ This example demonstrates how to generate a single chat completions, with key au
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -177,12 +177,12 @@ var requestOptions = new ChatCompletionsOptions()
 };
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 The following types or messages are supported: `SystemMessage`,`UserMessage`, `AssistantMessage`, `ToolMessage`. See also samples:
 
-* [Sample5_ChatCompletionsWithImageUrl.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample5_ChatCompletionsWithImageUrl.md) for usage of `UserMessage` that includes sending an image URL.
+* [Sample5_ChatCompletionsWithImages.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample5_ChatCompletionsWithImages.md) for usage of `UserMessage` that includes sending an image URL or image data from a local file.
 * [Sample7_ChatCompletionsWithTools.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Inference/samples/Sample7_ChatCompletionsWithTools.md) for usage of `ToolMessage`.
 
 Alternatively, you can read a `BinaryData` object based on a JSON string instead of using the strongly typed classes like `ChatRequestSystemMessage` and `ChatRequestUserMessage`:
@@ -191,7 +191,7 @@ Alternatively, you can read a `BinaryData` object based on a JSON string instead
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -207,7 +207,7 @@ BinaryData messages = BinaryData.FromString(jsonMessages);
 requestOptions = ModelReaderWriter.Read<ChatCompletionsOptions>(messages);
 
 Response<ChatCompletions> response = client.Complete(requestOptions);
-System.Console.WriteLine(response.Value.Choices[0].Message.Content);
+System.Console.WriteLine(response.Value.Content);
 ```
 
 To generate completions for additional messages, simply call `client.Complete` multiple times using the same `client`.
@@ -220,7 +220,7 @@ This example demonstrates how to generate a single chat completions with streami
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -255,15 +255,13 @@ In this example, extra JSON elements are inserted at the root of the request bod
 
 Note that by default, the service will reject any request payload that includes unknown parameters (ones that are not defined in the REST API [Request Body table](https://learn.microsoft.com/azure/ai-studio/reference/reference-model-inference-chat-completions#request-body)). In order to change the default service behaviour, when the `Complete` method includes `AdditonalProperties`, the client library will automatically add the HTTP request header `"unknown_params": "pass-through"`.
 
-<!-- The input argument `Additional` is not restricted to chat completions. It is suppored on other client methods as well. -->
-
 Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenario
 
 ```C# Snippet:Azure_AI_Inference_ChatCompletionsWithAdditionalPropertiesScenario
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
-var client = new ChatCompletionsClient(endpoint, credential, new ChatCompletionsClientOptions());
+var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -278,13 +276,25 @@ Response<ChatCompletions> response = client.Complete(requestOptions);
 System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 ```
 
-<!--
 ### Text Embeddings example
 
 This example demonstrates how to get text embeddings, with key authentication, assuming `endpoint` and `key` are already defined.
 
-```C#
+```C# Snippet:Azure_AI_Inference_BasicEmbedding
+var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_EMBEDDINGS_ENDPOINT"));
+var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_EMBEDDINGS_KEY"));
 
+var client = new EmbeddingsClient(endpoint, credential, new AzureAIInferenceClientOptions());
+
+var input = new List<string> { "King", "Queen", "Jack", "Page" };
+var requestOptions = new EmbeddingsOptions(input);
+
+Response<EmbeddingsResult> response = client.Embed(requestOptions);
+foreach (EmbeddingItem item in response.Value.Data)
+{
+    List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
+    Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
+}
 ```
 
 The length of the embedding vector depends on the model, but you should see something like this:
@@ -296,7 +306,6 @@ data[2]: length=1024, [0.04196167, 0.029083252, ..., -0.0027484894, 0.0073127747
 ```
 
 To generate embeddings for additional phrases, simply call `client.embed` multiple times using the same `client`.
--->
 
 <!--
 ### Image Embeddings example
@@ -339,6 +348,73 @@ To generate embeddings for additional phrases, simply call `client.embed` multip
 -->
 
 ## Troubleshooting
+
+### Observability with OpenTelemetry
+
+Azure AI Inference client library supports tracing and metrics with OpenTelemetry. Refer to
+[Azure SDK Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing)
+documentation for general information on OpenTelemetry support in Azure client libraries.
+
+Distributed tracing and metrics with OpenTelemetry are supported in Azure AI Inference in experimental mode and could be enabled through either
+of these steps:
+
+- Set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true`.
+- Set the `Azure.Experimental.EnableActivitySource` context switch to `true` in your application code
+
+Refer to [Azure Monitor documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) on how to use
+Azure Monitor OpenTelemetry Distro.
+
+> [!NOTE]
+> With the Azure Monitor OpenTelemetry Distro, you only need to opt-into Azure SDK experimental telemetry features with one of the ways documented at
+> the beginning of this section.
+> The distro enables activity sources and meters for Azure AI Inference automatically.
+
+The following section provides an example on how to configure OpenTelemetry and enable Azure AI Inference tracing and metrics if your
+OpenTelemetry distro does not include Azure AI Inference by default.
+
+#### Generic OpenTelemetry configuration
+
+In this example we're going to export traces and metrics to console, and to the local [OTLP](https://opentelemetry.io/docs/specs/otel/protocol/) destination.
+[Aspire dashboard](https://learn.microsoft.com/dotnet/aspire/fundamentals/dashboard/standalone) can be used for local testing and exploration.
+
+To run this example, you'll need to install the following dependencies (HTTP tracing and metrics instrumentation
+as well as console and OTLP exporters):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Instrumentation.Http
+dotnet add package OpenTelemetry.Exporter.Console
+dotnet add package OpenTelemetry.Exporter.OpenTelemetryProtocol
+```
+
+These packages also bring [OpenTelemetry SDK](https://www.nuget.org/packages/OpenTelemetry) as a dependency.
+
+```C# Snippet:Azure_AI_Inference_EnableOpenTelemetry
+// Enables experimental Azure SDK observability
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+
+// By default instrumentation captures chat messages without content
+// since content can be very verbose and have sensitive information.
+// The following AppContext switch enables content recording.
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+
+using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddHttpClientInstrumentation()
+    .AddSource("Azure.AI.Inference.*")
+    .ConfigureResource(r => r.AddService("sample"))
+    .AddConsoleExporter()
+    .AddOtlpExporter()
+    .Build();
+
+using var meterProvider = Sdk.CreateMeterProviderBuilder()
+    .AddHttpClientInstrumentation()
+    .AddMeter("Azure.AI.Inference.*")
+    .ConfigureResource(r => r.AddService("sample"))
+    .AddConsoleExporter()
+    .AddOtlpExporter()
+    .Build();
+```
+
+Check out [OpenTelemetry .NET](https://opentelemetry.io/docs/languages/net/) and your observability provider documentation on how to configure OpenTelemetry.
 
 ### Exceptions
 

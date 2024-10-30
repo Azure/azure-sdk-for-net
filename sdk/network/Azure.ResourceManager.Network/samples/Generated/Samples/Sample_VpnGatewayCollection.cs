@@ -179,7 +179,7 @@ Name = "vpnConnection1",
 },
                 BgpSettings = new BgpSettings()
                 {
-                    Asn = 65515,
+                    Asn = 65515L,
                     PeerWeight = 0,
                     BgpPeeringAddresses =
 {

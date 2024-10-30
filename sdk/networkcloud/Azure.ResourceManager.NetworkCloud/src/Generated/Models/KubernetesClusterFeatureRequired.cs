@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(KubernetesClusterFeatureRequired left, KubernetesClusterFeatureRequired right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KubernetesClusterFeatureRequired"/> values are not the same. </summary>
         public static bool operator !=(KubernetesClusterFeatureRequired left, KubernetesClusterFeatureRequired right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
         public static implicit operator KubernetesClusterFeatureRequired(string value) => new KubernetesClusterFeatureRequired(value);
 
         /// <inheritdoc />

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 RequestedResource = new QuotaAllocationRequestBase()
                 {
-                    Limit = 10,
+                    Limit = 10L,
                     Region = "westus",
                 },
             };
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 RequestedResource = new QuotaAllocationRequestBase()
                 {
-                    Limit = 10,
+                    Limit = 10L,
                     Region = "westus",
                 },
             };

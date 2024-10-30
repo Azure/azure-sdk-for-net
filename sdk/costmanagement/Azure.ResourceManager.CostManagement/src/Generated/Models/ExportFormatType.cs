@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ExportFormatType left, ExportFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportFormatType"/> values are not the same. </summary>
         public static bool operator !=(ExportFormatType left, ExportFormatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExportFormatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportFormatType"/>. </summary>
         public static implicit operator ExportFormatType(string value) => new ExportFormatType(value);
 
         /// <inheritdoc />

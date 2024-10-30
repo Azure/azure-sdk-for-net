@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterContinueUpdateVersionMachineGroupTargetingMode left, ClusterContinueUpdateVersionMachineGroupTargetingMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/> values are not the same. </summary>
         public static bool operator !=(ClusterContinueUpdateVersionMachineGroupTargetingMode left, ClusterContinueUpdateVersionMachineGroupTargetingMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterContinueUpdateVersionMachineGroupTargetingMode"/>. </summary>
         public static implicit operator ClusterContinueUpdateVersionMachineGroupTargetingMode(string value) => new ClusterContinueUpdateVersionMachineGroupTargetingMode(value);
 
         /// <inheritdoc />

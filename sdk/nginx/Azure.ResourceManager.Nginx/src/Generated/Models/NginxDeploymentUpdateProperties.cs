@@ -56,14 +56,16 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
         /// <param name="userProfile"></param>
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
+        /// <param name="nginxAppProtect"> Update settings for NGINX App Protect (NAP). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, AutoUpgradeProfile autoUpgradeProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
             ScalingProperties = scalingProperties;
             UserProfile = userProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
+            NginxAppProtect = nginxAppProtect;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,6 +108,20 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             get => AutoUpgradeProfile is null ? default : AutoUpgradeProfile.UpgradeChannel;
             set => AutoUpgradeProfile = new AutoUpgradeProfile(value);
+        }
+
+        /// <summary> Update settings for NGINX App Protect (NAP). </summary>
+        internal NginxDeploymentUpdatePropertiesNginxAppProtect NginxAppProtect { get; set; }
+        /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
+        public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
+        {
+            get => NginxAppProtect is null ? default : NginxAppProtect.WebApplicationFirewallActivationState;
+            set
+            {
+                if (NginxAppProtect is null)
+                    NginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect();
+                NginxAppProtect.WebApplicationFirewallActivationState = value;
+            }
         }
     }
 }

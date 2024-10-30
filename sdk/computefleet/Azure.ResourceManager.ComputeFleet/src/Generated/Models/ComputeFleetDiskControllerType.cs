@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static bool operator ==(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetDiskControllerType"/> values are not the same. </summary>
         public static bool operator !=(ComputeFleetDiskControllerType left, ComputeFleetDiskControllerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiskControllerType"/>. </summary>
         public static implicit operator ComputeFleetDiskControllerType(string value) => new ComputeFleetDiskControllerType(value);
 
         /// <inheritdoc />

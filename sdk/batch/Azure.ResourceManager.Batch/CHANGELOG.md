@@ -32,6 +32,7 @@
   - Added `ContainerHostBatchBindMounts` to `BatchTaskContainerSettings` definition.
 
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Other Changes
 

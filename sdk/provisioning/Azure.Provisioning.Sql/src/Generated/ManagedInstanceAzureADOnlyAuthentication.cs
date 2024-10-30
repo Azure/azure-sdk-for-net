@@ -15,61 +15,108 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceAzureADOnlyAuthentication.
 /// </summary>
-public partial class ManagedInstanceAzureADOnlyAuthentication : Resource
+public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Azure Active Directory only Authentication enabled.
     /// </summary>
-    public BicepValue<bool> IsAzureADOnlyAuthenticationEnabled { get => _isAzureADOnlyAuthenticationEnabled; set => _isAzureADOnlyAuthenticationEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isAzureADOnlyAuthenticationEnabled;
+    public BicepValue<bool> IsAzureADOnlyAuthenticationEnabled 
+    {
+        get { Initialize(); return _isAzureADOnlyAuthenticationEnabled!; }
+        set { Initialize(); _isAzureADOnlyAuthenticationEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAzureADOnlyAuthenticationEnabled;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAzureADOnlyAuthentication.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public ManagedInstanceAzureADOnlyAuthentication(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion, context)
+    public ManagedInstanceAzureADOnlyAuthentication(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/azureADOnlyAuthentications", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _isAzureADOnlyAuthenticationEnabled = BicepValue<bool>.DefineProperty(this, "IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceAzureADOnlyAuthentication.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _isAzureADOnlyAuthenticationEnabled = DefineProperty<bool>("IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedInstanceAzureADOnlyAuthentication resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing
     /// ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
-    /// <param name="resourceName">Name of the ManagedInstanceAzureADOnlyAuthentication.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// ManagedInstanceAzureADOnlyAuthentication resource.  This can be used
+    /// to refer to the resource in expressions, but is not the Azure name of
+    /// the resource.  This value can contain letters, numbers, and
+    /// underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceAzureADOnlyAuthentication.</param>
     /// <returns>The existing ManagedInstanceAzureADOnlyAuthentication resource.</returns>
-    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceAzureADOnlyAuthentication FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

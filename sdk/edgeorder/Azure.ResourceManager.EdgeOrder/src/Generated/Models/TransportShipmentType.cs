@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(TransportShipmentType left, TransportShipmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TransportShipmentType"/> values are not the same. </summary>
         public static bool operator !=(TransportShipmentType left, TransportShipmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TransportShipmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TransportShipmentType"/>. </summary>
         public static implicit operator TransportShipmentType(string value) => new TransportShipmentType(value);
 
         /// <inheritdoc />

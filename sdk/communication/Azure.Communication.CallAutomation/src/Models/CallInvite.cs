@@ -43,6 +43,16 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Creates a new CallInvite object.
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+        }
+
+        /// <summary>
         /// The target callee.
         /// </summary>
         /// <value></value>

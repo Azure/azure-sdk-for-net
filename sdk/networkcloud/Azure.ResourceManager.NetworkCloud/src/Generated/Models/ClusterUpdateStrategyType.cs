@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterUpdateStrategyType left, ClusterUpdateStrategyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterUpdateStrategyType"/> values are not the same. </summary>
         public static bool operator !=(ClusterUpdateStrategyType left, ClusterUpdateStrategyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterUpdateStrategyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterUpdateStrategyType"/>. </summary>
         public static implicit operator ClusterUpdateStrategyType(string value) => new ClusterUpdateStrategyType(value);
 
         /// <inheritdoc />

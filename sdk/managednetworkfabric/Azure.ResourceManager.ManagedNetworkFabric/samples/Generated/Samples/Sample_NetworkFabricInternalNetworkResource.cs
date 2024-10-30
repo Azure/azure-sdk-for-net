@@ -113,7 +113,7 @@ Annotation = "annotation",
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerAsn = 61234,
+                    PeerAsn = 61234L,
                     IPv4ListenRangePrefixes =
 {
 "10.1.0.0/25"

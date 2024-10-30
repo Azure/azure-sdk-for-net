@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 {
 new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm")
 },
-                Count = 3,
+                Count = 3L,
                 UpgradeSettings = new AgentPoolUpgradeSettings()
                 {
-                    DrainTimeout = 1800,
+                    DrainTimeout = 1800L,
                     MaxSurge = "1",
                     MaxUnavailable = "0",
                 },

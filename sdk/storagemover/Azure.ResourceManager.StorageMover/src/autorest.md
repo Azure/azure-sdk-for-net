@@ -14,6 +14,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+use-write-core: true
 
 rename-mapping:
   JobDefinition.properties.agentResourceId: -|arm-id

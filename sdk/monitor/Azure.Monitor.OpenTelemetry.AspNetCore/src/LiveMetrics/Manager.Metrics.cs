@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
@@ -45,9 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             string projectionError = string.Empty;
             Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
-            DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
-            foreach (var item in filledBuffer.ReadAllAndClear())
+
+            ConcurrentQueue<DocumentIngress> filledBuffer = _documentBuffer.FlipDocumentBuffers();
+            while (filledBuffer.TryDequeue(out DocumentIngress? item))
             {
                 bool matchesDocumentStreamFilter = false;
 

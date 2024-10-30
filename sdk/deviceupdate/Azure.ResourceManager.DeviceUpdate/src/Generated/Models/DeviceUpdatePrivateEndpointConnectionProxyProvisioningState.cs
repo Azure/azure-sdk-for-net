@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public static bool operator ==(DeviceUpdatePrivateEndpointConnectionProxyProvisioningState left, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeviceUpdatePrivateEndpointConnectionProxyProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DeviceUpdatePrivateEndpointConnectionProxyProvisioningState left, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeviceUpdatePrivateEndpointConnectionProxyProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceUpdatePrivateEndpointConnectionProxyProvisioningState"/>. </summary>
         public static implicit operator DeviceUpdatePrivateEndpointConnectionProxyProvisioningState(string value) => new DeviceUpdatePrivateEndpointConnectionProxyProvisioningState(value);
 
         /// <inheritdoc />

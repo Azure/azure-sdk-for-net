@@ -1,15 +1,26 @@
 # Release History
 
-## 12.0.0-beta.6 (Unreleased)
+## 12.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.6 (2024-10-14)
+
+### Breaking Changes
+- Changed `FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)` to `FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)`
+- Changed `FromBlob(string blobUri, BlobStorageResourceOptions options = default)` to `FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)`
+
+### Bugs Fixed
 - Fixed bug where using OAuth would not preserve source properties to destination properties.
 
 ### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
 ## 12.0.0-beta.5 (2024-07-16)
 

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string virtualMachineName = "virtualMachineName";
-            NetworkCloudVirtualMachineData data = new NetworkCloudVirtualMachineData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), "username", new NetworkAttachment(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/cloudServicesNetworks/cloudServicesNetworkName"), VirtualMachineIPAllocationMethod.Dynamic), 2, 8, new NetworkCloudStorageProfile(new NetworkCloudOSDisk(120)
+            NetworkCloudVirtualMachineData data = new NetworkCloudVirtualMachineData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), "username", new NetworkAttachment(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/cloudServicesNetworks/cloudServicesNetworkName"), VirtualMachineIPAllocationMethod.Dynamic), 2L, 8L, new NetworkCloudStorageProfile(new NetworkCloudOSDisk(120L)
             {
                 CreateOption = OSDiskCreateOption.Ephemeral,
                 DeleteOption = OSDiskDeleteOption.Delete,

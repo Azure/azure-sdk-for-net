@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerSkuTier(string value) => new PostgreSqlFlexibleServerSkuTier(value);
 
         /// <inheritdoc />

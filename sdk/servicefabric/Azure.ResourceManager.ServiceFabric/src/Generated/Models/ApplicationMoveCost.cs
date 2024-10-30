@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ApplicationMoveCost left, ApplicationMoveCost right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationMoveCost"/> values are not the same. </summary>
         public static bool operator !=(ApplicationMoveCost left, ApplicationMoveCost right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApplicationMoveCost"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationMoveCost"/>. </summary>
         public static implicit operator ApplicationMoveCost(string value) => new ApplicationMoveCost(value);
 
         /// <inheritdoc />

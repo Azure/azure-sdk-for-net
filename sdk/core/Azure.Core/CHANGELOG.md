@@ -1,6 +1,6 @@
 # Release History
 
-## 1.44.0-beta.1 (Unreleased)
+## 1.45.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
+
+## 1.44.1 (2024-10-09)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
+## 1.44.0 (2024-10-03)
+
+### Features Added
+
+- `TokenRequestContext` added the `IsProofOfPossessionEnabled`, `ResourceRequestMethod`, and `ResourceRequestUri` properties to support Proof of Possession tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- `AccessToken` added the `TokenType` property to support distinguishing Bearer tokens from Proof of Possession (PoP) tokens ([45134](https://github.com/Azure/azure-sdk-for-net/pull/45134)).
+- Moved implementation of `Azure.AzureKeyCredential` into `System.ClientModel.ApiKeyCredential` and made `ApiKeyCredential` the base type for `AzureKeyCredential` ([#46128](https://github.com/Azure/azure-sdk-for-net/pull/46128)).
+- `BearerTokenAuthenticationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default ([#46277](https://github.com/Azure/azure-sdk-for-net/pull/46277)).
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
 
 ## 1.43.0 (2024-09-12)
 

@@ -8,6 +8,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.AppService.Tests;
@@ -23,6 +24,8 @@ public class BasicAppServiceTests(bool async)
         await test.Define(
             ctx =>
             {
+                Infrastructure infra = new();
+
                 StorageAccount storage =
                     new(nameof(storage))
                     {
@@ -31,6 +34,7 @@ public class BasicAppServiceTests(bool async)
                         EnableHttpsTrafficOnly = true,
                         IsDefaultToOAuthAuthentication = true
                     };
+                infra.Add(storage);
 
                 AppServicePlan hostingPlan =
                     new(nameof(hostingPlan), "2021-03-01")
@@ -42,6 +46,7 @@ public class BasicAppServiceTests(bool async)
                                 Name = "Y1"
                             }
                     };
+                infra.Add(hostingPlan);
 
                 ApplicationInsightsComponent appInsights =
                     new(nameof(appInsights))
@@ -50,15 +55,17 @@ public class BasicAppServiceTests(bool async)
                         ApplicationType = ApplicationInsightsApplicationType.Web,
                         RequestSource = ComponentRequestSource.Rest
                     };
+                infra.Add(appInsights);
 
-                BicepVariable funcAppName =
+                ProvisioningVariable funcAppName =
                     new(nameof(funcAppName), typeof(string))
                     {
                         Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))
                     };
+                infra.Add(funcAppName);
 
                 WebSite functionApp =
-                    new(nameof(functionApp))
+                    new(nameof(functionApp), WebSite.ResourceVersions.V2023_12_01)
                     {
                         Name = funcAppName,
                         Kind = "functionapp",
@@ -75,12 +82,12 @@ public class BasicAppServiceTests(bool async)
                                     new AppServiceNameValuePair
                                     {
                                         Name = "AzureWebJobsStorage",
-                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Value!.Value}")
+                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
                                     },
                                     new AppServiceNameValuePair
                                     {
                                         Name = "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Value!.Value}")
+                                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
                                     },
                                     new AppServiceNameValuePair
                                     {
@@ -110,13 +117,16 @@ public class BasicAppServiceTests(bool async)
                                 }
                             }
                     };
+                infra.Add(functionApp);
+
+                return infra;
             })
         .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+            resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
               kind: 'Storage'
               location: location

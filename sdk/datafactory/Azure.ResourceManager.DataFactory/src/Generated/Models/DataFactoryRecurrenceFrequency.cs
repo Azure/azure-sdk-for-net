@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(DataFactoryRecurrenceFrequency left, DataFactoryRecurrenceFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFactoryRecurrenceFrequency"/> values are not the same. </summary>
         public static bool operator !=(DataFactoryRecurrenceFrequency left, DataFactoryRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
         public static implicit operator DataFactoryRecurrenceFrequency(string value) => new DataFactoryRecurrenceFrequency(value);
 
         /// <inheritdoc />

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageSkuName left, StorageSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSkuName"/> values are not the same. </summary>
         public static bool operator !=(StorageSkuName left, StorageSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSkuName"/>. </summary>
         public static implicit operator StorageSkuName(string value) => new StorageSkuName(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static bool operator ==(SphereOSFeedType left, SphereOSFeedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereOSFeedType"/> values are not the same. </summary>
         public static bool operator !=(SphereOSFeedType left, SphereOSFeedType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereOSFeedType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereOSFeedType"/>. </summary>
         public static implicit operator SphereOSFeedType(string value) => new SphereOSFeedType(value);
 
         /// <inheritdoc />
