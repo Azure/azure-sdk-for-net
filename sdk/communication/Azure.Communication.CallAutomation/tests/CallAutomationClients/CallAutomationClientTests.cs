@@ -447,7 +447,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("12345")),
+                    new CallInvite(new CommunicationUserIdentifier("8:acs:12345")),
+                    new Uri("https://bot.contoso.com/callback")
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_CreateOPSCall()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CallInvite(new MicrosoftTeamsAppIdentifier("28:acs:12345")),
                     new Uri("https://bot.contoso.com/callback")
                 },
             };
