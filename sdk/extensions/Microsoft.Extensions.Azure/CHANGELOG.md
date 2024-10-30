@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.13.1`.
 
 ## 1.7.6 (2024-10-04)
 
