@@ -6850,6 +6850,8 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
 
             // Assert
+            Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
+            Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
             Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
         }
 

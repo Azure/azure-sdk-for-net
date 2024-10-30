@@ -3,6 +3,8 @@
 
 #pragma warning disable SA1402  // File may only contain a single type
 
+using System;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -11,6 +13,16 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public class ShareFileSymbolicLinkInfo
     {
+        /// <summary>
+        /// The ETag contains a value which represents the version of the file, in quotes.
+        /// </summary>
+        public ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the file was last modified.
+        /// </summary>
+        public DateTimeOffset LastModified { get; internal set; }
+
         /// <summary>
         /// Text of the symbolic link.
         /// </summary>
@@ -22,7 +34,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new FileSymolicLinkInfo for mocking.
         /// </summary>
-        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(string path = default)
-            => new ShareFileSymbolicLinkInfo { LinkText = path };
+        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            string linkText = default)
+            => new ShareFileSymbolicLinkInfo
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                LinkText = linkText
+            };
     }
 }

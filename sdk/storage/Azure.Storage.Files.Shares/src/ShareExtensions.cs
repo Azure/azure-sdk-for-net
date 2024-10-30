@@ -1062,6 +1062,8 @@ namespace Azure.Storage.Files.Shares
 
             return new ShareFileSymbolicLinkInfo
             {
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 LinkText = response.Headers.LinkText
             };
         }
