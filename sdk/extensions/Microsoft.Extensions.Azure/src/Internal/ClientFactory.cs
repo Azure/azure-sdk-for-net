@@ -132,7 +132,7 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(objectId))
                 {
-                    return new ManagedIdentityCredential(objectId);
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedObjectId(objectId));
                 }
 
                 return new ManagedIdentityCredential(clientId);
