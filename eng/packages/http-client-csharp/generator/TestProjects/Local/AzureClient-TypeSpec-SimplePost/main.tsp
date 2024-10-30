@@ -14,6 +14,7 @@ using TypeSpec.Rest;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
 
+@client
 interface SimplePostClient {
     @post @route("add") IncrementCount(@path addend: int32) : int32;
 }

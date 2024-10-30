@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -18,17 +17,31 @@ namespace SimplePost
     public partial class SimplePostClient
     {
         private readonly Uri _endpoint;
-        private SimplePostClient _cachedSimplePostClient;
 
         /// <summary> Initializes a new instance of SimplePostClient for mocking. </summary>
         protected SimplePostClient()
         {
         }
 
-        internal SimplePostClient(HttpPipeline pipeline, Uri endpoint)
+        /// <summary> Initializes a new instance of SimplePostClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public SimplePostClient(Uri endpoint) : this(endpoint, new SimplePostClientOptions())
         {
+        }
+
+        /// <summary> Initializes a new instance of SimplePostClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public SimplePostClient(Uri endpoint, SimplePostClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new SimplePostClientOptions();
+
             _endpoint = endpoint;
-            Pipeline = pipeline;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -86,12 +99,6 @@ namespace SimplePost
         {
             Response result = await IncrementCountAsync(addend, null).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToObjectFromJson<int>(), result);
-        }
-
-        /// <summary> Initializes a new instance of SimplePostClient. </summary>
-        public virtual SimplePostClient GetSimplePostClient()
-        {
-            return Volatile.Read(ref _cachedSimplePostClient) ?? Interlocked.CompareExchange(ref _cachedSimplePostClient, new SimplePostClient(Pipeline, _endpoint), null) ?? _cachedSimplePostClient;
         }
     }
 }
