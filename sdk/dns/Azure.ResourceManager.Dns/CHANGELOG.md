@@ -1,10 +1,11 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2024-10-31)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Fixed the NAPTR record type serialization issue and added relevant tests and recordings.
 
 ### Breaking Changes
 
