@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.Inference;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -16,6 +17,8 @@ public class Sample_ChatCompletions
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
         InferenceClient client = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetInferenceClient();
 
-        var test = client.GetChatCompletionsClient();
+        ChatCompletionsClient test = client.GetChatCompletionsClient();
+
+        // Call ChatCompletionsClient Operations
     }
 }

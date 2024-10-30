@@ -30,8 +30,4 @@
   <ItemGroup>
     <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Custom\Evaluation\" />
-  </ItemGroup>
 </Project>
