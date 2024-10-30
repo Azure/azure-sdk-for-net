@@ -1095,7 +1095,13 @@
 # Add owners for package dependency changes
 /eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
 
-# ######## DPG ########
+# ######## Code Generation ########
 
-# Onboarding Documentation and Quickstarts
-/doc/DataPlaneCodeGeneration                                       @chunyu3 @pshao25 @lirenhe @annelo-msft
+#PRLabel: %CodeGen %Client
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft
+
+# ServiceLabel: %CodeGen 
+# AzureSdkOwners:                                                  @JoshLove-msft
+
+#PRLabel: %CodeGen %Client
+/eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
