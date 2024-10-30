@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public PageBlobDirectoryStartTransferUploadTests(
             bool async,
             BlobClientOptions.ServiceVersion serviceVersion)
-        : base(async, serviceVersion)
+        : base(async, serviceVersion, isPageBlob: true)
         {
         }
 

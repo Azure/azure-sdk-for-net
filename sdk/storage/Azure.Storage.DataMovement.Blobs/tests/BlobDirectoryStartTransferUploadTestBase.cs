@@ -26,8 +26,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageTestEnvironment>
         where TObjectClient : BlobBaseClient
     {
-        public BlobDirectoryStartTransferUploadTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobDirectoryStartTransferUploadTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, bool isPageBlob = false)
+            : base(async, null, isPageBlob)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
         }
