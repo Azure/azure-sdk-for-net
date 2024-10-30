@@ -6831,7 +6831,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<ShareFileInfo> response = await symlink.CreateSymbolicLinkAsync(
-                path: source.Uri.ToString(),
+                linkText: source.Uri.ToString(),
                 options: options);
 
             // Assert
@@ -6871,7 +6871,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString()),
+                symlink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString()),
                 e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
 
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
@@ -6895,7 +6895,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient symlink = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
             // Act
-            await symlink.CreateSymbolicLinkAsync(path: source.Uri.ToString());
+            await symlink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString());
             await symlink.GetSymbolicLinkAsync();
         }
 
@@ -6916,7 +6916,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
                 // Act
                 Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
-                    path: $"{directory.Name}/{source.Name}",
+                    targetFile: $"{directory.Name}/{source.Name}",
                     conditions: new ShareFileRequestConditions() { LeaseId = lease.LeaseId });
 
                 // Assert
@@ -6957,7 +6957,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<ShareFileInfo> response = await hardLink.CreateHardLinkAsync(
-                path: $"{directory.Name}/{source.Name}");
+                targetFile: $"{directory.Name}/{source.Name}");
         }
 
         [RecordedTest]
@@ -6974,7 +6974,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                hardLink.CreateSymbolicLinkAsync(path: source.Uri.ToString()),
+                hardLink.CreateSymbolicLinkAsync(linkText: source.Uri.ToString()),
                 e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 

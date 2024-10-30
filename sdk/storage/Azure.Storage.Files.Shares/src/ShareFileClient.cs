@@ -6834,7 +6834,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a symoblic link to the file specified by path.
         /// </summary>
-        /// <param name="path">
+        /// <param name="linkText">
         /// The absolution or relative path to the file to be linked to.
         /// </param>
         /// <param name="options">
@@ -6854,11 +6854,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// https://github.com/Azure/azure-sdk-for-net/issues/46907
         internal virtual Response<ShareFileInfo> CreateSymbolicLink(
-            string path,
+            string linkText,
             ShareFileCreateSymbolicLinkOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateSymbolicLinkInternal(
-                path: path,
+                linkText: linkText,
                 options: options,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -6867,7 +6867,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a symoblic link to the file specified by path.
         /// </summary>
-        /// <param name="path">
+        /// <param name="linkText">
         /// The absolution or relative path to the file to be linked to.
         /// </param>
         /// <param name="options">
@@ -6887,11 +6887,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// https://github.com/Azure/azure-sdk-for-net/issues/46907
         internal virtual async Task<Response<ShareFileInfo>> CreateSymbolicLinkAsync(
-            string path,
+            string linkText,
             ShareFileCreateSymbolicLinkOptions options = default,
             CancellationToken cancellationToken = default) =>
             await CreateSymbolicLinkInternal(
-                path: path,
+                linkText: linkText,
                 options: options,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -6900,7 +6900,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a symoblic link to the file specified by path.
         /// </summary>
-        /// <param name="path">
+        /// <param name="linkText">
         /// The absolution or relative path to the file to be linked to.
         /// </param>
         /// <param name="options">
@@ -6922,7 +6922,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileInfo>> CreateSymbolicLinkInternal(
-            string path,
+            string linkText,
             ShareFileCreateSymbolicLinkOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -6945,7 +6945,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.CreateSymbolicLinkAsync(
-                            linkText: path,
+                            linkText: linkText,
                             metadata: options?.Metadata,
                             fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
@@ -6958,7 +6958,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.CreateSymbolicLink(
-                            linkText: path,
+                            linkText: linkText,
                             metadata: options?.Metadata,
                             fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
@@ -6991,8 +6991,8 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a hard link to the file file specified by path.
         /// </summary>
-        /// <param name="path">
-        /// Full path of the file to create the hard link to.
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -7011,11 +7011,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileInfo> CreateHardLink(
-            string path,
+            string targetFile,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => CreateHardLinkInternal(
-                path: path,
+                targetFile: targetFile,
                 conditions: conditions,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -7024,8 +7024,8 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a hard link to the file file specified by path.
         /// </summary>
-        /// <param name="path">
-        /// Full path of the file to create the hard link to.
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -7044,11 +7044,11 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public async virtual Task<Response<ShareFileInfo>> CreateHardLinkAsync(
-            string path,
+            string targetFile,
             ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => await CreateHardLinkInternal(
-                path: path,
+                targetFile: targetFile,
                 conditions: conditions,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -7057,8 +7057,8 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// NFS only.  Creates a hard link to the file file specified by path.
         /// </summary>
-        /// <param name="path">
-        /// Full path of the file to create the hard link to.
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -7080,7 +7080,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileInfo>> CreateHardLinkInternal(
-            string path,
+            string targetFile,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -7091,7 +7091,7 @@ namespace Azure.Storage.Files.Shares
                     nameof(ShareFileClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(path)}: {path}");
+                    $"{nameof(targetFile)}: {targetFile}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(CreateHardLink)}");
 
@@ -7104,7 +7104,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await FileRestClient.CreateHardLinkAsync(
-                            targetFile: path,
+                            targetFile: targetFile,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -7112,7 +7112,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.CreateHardLink(
-                            targetFile: path,
+                            targetFile: targetFile,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
