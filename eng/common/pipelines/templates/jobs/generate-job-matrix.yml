@@ -48,6 +48,7 @@ parameters:
 - name: PRMatrixSetting
   type: string
   default: 'ArtifactPackageNames'
+# Mappings to OS name required at template compile time by 1es pipeline templates
 - name: Pools
   type: object
   default:
