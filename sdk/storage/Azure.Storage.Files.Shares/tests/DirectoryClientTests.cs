@@ -1032,8 +1032,8 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
-            Assert.AreEqual(0, response.Value.NfsProperties.Owner);
-            Assert.AreEqual(0, response.Value.NfsProperties.Group);
+            Assert.AreEqual("0", response.Value.NfsProperties.Owner);
+            Assert.AreEqual("0", response.Value.NfsProperties.Group);
             Assert.AreEqual("0755", response.Value.NfsProperties.FileMode.ToOctalFileMode());
 
             Assert.IsNull(response.Value.NfsProperties.LinkCount);
@@ -3120,7 +3120,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => directoryClient.GenerateSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match LinkText in the Client. ShareSasBuilder.FilePath must either be left empty or match the LinkText in the Client"));
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
         }
         #endregion
 

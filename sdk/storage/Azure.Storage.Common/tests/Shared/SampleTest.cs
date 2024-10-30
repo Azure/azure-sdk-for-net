@@ -104,7 +104,7 @@ namespace Azure.Storage
         /// Create a temporary file on disk.
         /// </summary>
         /// <param name="content">Optional content for the file.</param>
-        /// <returns>LinkText to the temporary file.</returns>
+        /// <returns>Path to the temporary file.</returns>
         public string CreateTempFile(string content = SampleFileContent)
         {
             string path = CreateTempPath();
