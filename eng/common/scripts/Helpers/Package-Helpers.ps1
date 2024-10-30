@@ -170,7 +170,6 @@ function GetValueSafelyFrom-Yaml {
         $current = $current[$key]
       }
       else {
-        Write-Host "The '$key' part of the path $($Keys -join "/") doesn't exist or is null."
         return $null
       }
   }
