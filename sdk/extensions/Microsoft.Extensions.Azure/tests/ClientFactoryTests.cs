@@ -406,9 +406,30 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var resourceId = (string)typeof(ManagedIdentityCredential).GetField("_clientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var resourceId = (string)typeof(ManagedIdentityCredential).GetField("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
 
             Assert.AreEqual("ConfigurationResourceId", resourceId);
+        }
+
+        [Test]
+        public void CreatesManagedServiceIdentityCredentialsWithObjectId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("managedIdentityObjectId", "ConfigurationObjectId"),
+                new KeyValuePair<string, string>("credential", "managedidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
+            var managedIdentityCredential = (ManagedIdentityCredential)credential;
+
+            var managedIdentityClient = typeof(ManagedIdentityCredential).GetProperty("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var managedIdentityClientOptions = managedIdentityClient.GetType().GetField("_options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityClient);
+            var managedIdentityId = managedIdentityClientOptions.GetType().GetProperty("ManagedIdentityId").GetValue(managedIdentityClientOptions);
+            var objectId = (string)typeof(ManagedIdentityId).GetField("_userAssignedId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityId);
+
+            Assert.AreEqual("ConfigurationObjectId", objectId);
         }
 
         [Test]
