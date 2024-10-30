@@ -127,7 +127,7 @@ namespace Azure.AI.Projects
         // <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
         public virtual ChatCompletionsClient GetChatCompletionsClient()
         {
-            ConnectionsListSecretsResponse secret = AIProjectClient.GetConnectionsClient().GetConnection();
+            ConnectionsListSecretsResponse secret = AIProjectClient.GetConnectionsClient().GetConnection(ConnectionType.Serverless, true);
 
             // Get the URI and Key from the secret
             var endpoint = new Uri("uri");
