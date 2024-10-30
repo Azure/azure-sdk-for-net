@@ -744,7 +744,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCreateOptions options = new ShareFileCreateOptions
             {
-                NfsProperties = new FileNfsProperties
+                NfsProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -1787,7 +1787,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileSetHttpHeadersOptions options = new ShareFileSetHttpHeadersOptions
             {
-                NfsProperties = new FileNfsProperties
+                NfsProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -2566,7 +2566,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareFileCopyOptions options = new ShareFileCopyOptions
             {
-                NfsProperties = new FileNfsProperties()
+                NfsProperties = new FilePosixProperties()
             };
 
             if (overwriteOwnerAndMode)
@@ -6850,7 +6850,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareFileSymbolicLinkInfo> getSymLinkResponse = await symlink.GetSymbolicLinkAsync();
 
             // Assert
-            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.Path);
+            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
         }
 
         [RecordedTest]
@@ -7266,7 +7266,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => fileClient.GenerateSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match LinkText in the Client. ShareSasBuilder.FilePath must either be left empty or match the LinkText in the Client"));
         }
         #endregion
 

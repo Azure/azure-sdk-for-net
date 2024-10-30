@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The directory's NFS properties.
         /// Only applicable to files in a NFS share.
         /// </summary>
-        public FileNfsProperties NfsProperties { get; internal set; }
+        public FilePosixProperties NfsProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
             ETag eTag = default,
             DateTimeOffset lastModified = default,
             FileSmbProperties smbProperties = default,
-            FileNfsProperties nfsProperties = default)
+            FilePosixProperties nfsProperties = default)
             => new ShareDirectoryInfo
             {
                 ETag = eTag,

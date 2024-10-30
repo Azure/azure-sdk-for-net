@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 handleId = (string)handleIdElement;
             }
-            if (element.Element("Path") is XElement pathElement)
+            if (element.Element("LinkText") is XElement pathElement)
             {
                 path = StringEncoded.DeserializeStringEncoded(pathElement);
             }

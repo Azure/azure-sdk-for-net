@@ -31,6 +31,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// Note that this property is only applicable to directories created in NFS shares.
         /// </summary>
         /// </summary>
-        public FileNfsProperties NfsProperties { get; set; }
+        public FilePosixProperties NfsProperties { get; set; }
     }
 }

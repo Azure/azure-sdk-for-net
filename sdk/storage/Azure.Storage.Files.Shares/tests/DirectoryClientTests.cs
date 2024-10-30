@@ -602,7 +602,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
             {
-                NfsProperties = new FileNfsProperties
+                NfsProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
             {
-                NfsProperties = new FileNfsProperties
+                NfsProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -3120,7 +3120,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             TestHelper.AssertExpectedException(
                 () => directoryClient.GenerateSasUri(sasBuilder),
-                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match Path in the Client. ShareSasBuilder.FilePath must either be left empty or match the Path in the Client"));
+                new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.FilePath does not match LinkText in the Client. ShareSasBuilder.FilePath must either be left empty or match the LinkText in the Client"));
         }
         #endregion
 

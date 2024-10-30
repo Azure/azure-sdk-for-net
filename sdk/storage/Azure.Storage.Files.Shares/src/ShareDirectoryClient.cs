@@ -742,7 +742,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1032,7 +1032,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -1744,7 +1744,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3628,7 +3628,7 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ShareName and Path, if they are null.
+            // Assign builder's ShareName and LinkText, if they are null.
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;
 

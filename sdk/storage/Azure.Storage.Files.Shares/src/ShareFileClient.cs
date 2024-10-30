@@ -951,7 +951,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -1696,7 +1696,7 @@ namespace Azure.Storage.Files.Shares
             bool? setArchiveAttribute,
             ShareFileRequestConditions conditions,
             CopyableFileSmbProperties? copyableFileSmbProperties,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3779,7 +3779,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FileNfsProperties nfsProperties,
+            FilePosixProperties nfsProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -7459,7 +7459,7 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original ShareSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ShareName and Path, if they are null.
+            // Assign builder's ShareName and LinkText, if they are null.
             builder.ShareName ??= ShareName;
             builder.FilePath ??= Path;
 

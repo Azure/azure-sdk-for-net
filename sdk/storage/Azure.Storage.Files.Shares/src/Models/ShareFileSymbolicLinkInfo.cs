@@ -12,9 +12,9 @@ namespace Azure.Storage.Files.Shares.Models
     public class ShareFileSymbolicLinkInfo
     {
         /// <summary>
-        /// Path to the file the symbolic link is pointed to.
+        /// Text of the symbolic link.
         /// </summary>
-        public string Path { get; internal set; }
+        public string LinkText { get; internal set; }
     }
 
     public static partial class SharesModelFactory
@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new FileSymolicLinkInfo for mocking.
         /// </summary>
-        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(string path)
-            => new ShareFileSymbolicLinkInfo { Path = path };
+        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(string path = default)
+            => new ShareFileSymbolicLinkInfo { LinkText = path };
     }
 }

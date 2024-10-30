@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The file's NFS properties.
         /// Only applicable to files in a NFS share.
         /// </summary>
-        public FileNfsProperties NfsProperties { get; internal set; }
+        public FilePosixProperties NfsProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -86,7 +86,7 @@ namespace Azure.Storage.Files.Shares.Models
                     FileId = fileId,
                     ParentId = fileParentId
                 },
-                NfsProperties = new FileNfsProperties
+                NfsProperties = new FilePosixProperties
                 {
                     FileMode = nfsFileMode,
                     Owner =  owner,

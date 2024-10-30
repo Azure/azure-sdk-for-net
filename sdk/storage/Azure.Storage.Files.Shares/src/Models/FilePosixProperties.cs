@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Note that these properties only apply to files or directories in
     /// premium NFS file accounts.
     /// </summary>
-    public class FileNfsProperties
+    public class FilePosixProperties
     {
         /// <summary>
         /// Optional. Version TBD and newer. The mode permissions to be set on the file or directory.
@@ -49,14 +49,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileDownloadProperties instance for mocking.
         /// </summary>
-        public static FileNfsProperties FileNfsProperties(
+        public static FilePosixProperties FileNfsProperties(
             NfsFileMode fileMode,
             string owner,
             string group,
             NfsFileType fileType,
             long? linkCount)
         {
-            return new FileNfsProperties
+            return new FilePosixProperties
             {
                 FileMode = fileMode,
                 Owner = owner,
