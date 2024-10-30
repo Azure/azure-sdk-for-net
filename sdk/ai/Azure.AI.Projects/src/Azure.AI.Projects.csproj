@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.AI.Inference" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -28,5 +29,9 @@
 
   <ItemGroup>
     <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Custom\Evaluation\" />
   </ItemGroup>
 </Project>

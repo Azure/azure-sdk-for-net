@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Projects
 {
@@ -35,6 +36,27 @@ namespace Azure.AI.Projects
                   credential,
                   options)
         {
+        }
+
+        internal AIProjectClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
+            _projectName = projectName;
+        }
+
+        /// <summary> Initializes a new instance of EvaluationsClient. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual InferenceClient GetInferenceClient(string apiVersion = "2024-07-01-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new InferenceClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
         }
     }
 }
