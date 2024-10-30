@@ -24,15 +24,17 @@ public class CloudMachineTests
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
             cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature(new AiModel("gpt-35-turbo", "0125"), new AiModel("text-embedding-ada-002", "2")));
+            cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
+            {
+                Chat = new AIModel("gpt-35-turbo", "0125"),
+                Embeddings = new AIModel("text-embedding-ada-002", "2")
+            });
         }))
             return;
 
         CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
         var embeddings = cm.GetOpenAIEmbeddingsClient();
-        var kb = cm.CreateEmbeddingKnowledgebase();
-        var conversation = cm.CreateOpenAIConversation();
     }
 
     [Ignore("no recordings yet")]
@@ -74,7 +76,9 @@ public class CloudMachineTests
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-            cm.AddFeature(new OpenAIFeature(new AiModel("gpt-35-turbo", "0125")));
+            cm.AddFeature(new OpenAIFeature() {
+                Chat = new AIModel("gpt-35-turbo", "0125")
+            });
         }))
             return;
 

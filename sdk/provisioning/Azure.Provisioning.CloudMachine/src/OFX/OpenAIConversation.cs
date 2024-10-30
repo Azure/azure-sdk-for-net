@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OpenAI.Chat;
-using static Azure.Provisioning.CloudMachine.OpenAI.EmbeddingKnowledgebase;
+using static Azure.CloudMachine.OpenAI.EmbeddingKnowledgebase;
 
-namespace Azure.Provisioning.CloudMachine.OpenAI;
+namespace Azure.CloudMachine.OpenAI;
 
 /// <summary>
 /// Represents a conversation with the OpenAI chat model, incorporating a knowledgebase of embeddings data.

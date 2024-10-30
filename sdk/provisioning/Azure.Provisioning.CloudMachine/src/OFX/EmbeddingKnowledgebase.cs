@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using OpenAI.Embeddings;
 
-namespace Azure.Provisioning.CloudMachine.OpenAI;
+namespace Azure.CloudMachine.OpenAI;
 
 /// <summary>
 /// Represents a knowledgebase of facts represented by embeddings that can be used to find relevant facts based on a given text.
