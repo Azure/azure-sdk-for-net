@@ -443,7 +443,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(false, srcUri, dstUri);
