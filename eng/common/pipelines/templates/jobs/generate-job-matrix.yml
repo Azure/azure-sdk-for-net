@@ -45,9 +45,9 @@ parameters:
 - name: EnablePRGeneration
   type: boolean
   default: false
-- name: PRMatrix
-  type: object
-# Mappings to OS name required at template compile time by 1es pipeline templates
+- name: PRMatrixSetting
+  type: string
+  default: 'ArtifactPackageNames'
 - name: Pools
   type: object
   default:
@@ -124,16 +124,16 @@ jobs:
       # Not currently not hardcoded, so not doing the needful and populating this folder before we hit this step will result in generation errors.
     - ${{ else }}:
       - ${{ each pool in parameters.Pools }}:
-        - task: Powershell@2
-          inputs:
-            pwsh: true
-            filePath: eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1
-            arguments: >
-              -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo
-              -PRMatrixFile ${{ parameters.PRMatrix.Path }}
-              -PRMatrixSetting ${{ parameters.PRMatrix.Setting }}
-              -DisplayNameFilter '$(displayNameFilter)'
-              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}'
+        - pwsh: |
+            # dump the conglomerated CI matrix
+            '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
+
+            ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
+              -PackagePropertiesFolder $(Build.ArtifactStagingDirectory)/PackageInfo `
+              -PRMatrixFile matrix.json `
+              -PRMatrixSetting ${{ parameters.PRMatrixSetting }} `
+              -DisplayNameFilter '$(displayNameFilter)' `
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}
