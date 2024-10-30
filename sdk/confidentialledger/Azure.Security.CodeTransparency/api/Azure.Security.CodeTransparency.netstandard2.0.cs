@@ -72,6 +72,7 @@ namespace Azure.Security.CodeTransparency
         public Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication Authentication { get { throw null; } }
         public Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy Policy { get { throw null; } }
         public string ServiceIdentifier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -83,6 +84,7 @@ namespace Azure.Security.CodeTransparency
         internal CodeTransparencyConfigurationAuthentication() { }
         public bool AllowUnauthenticated { get { throw null; } }
         public Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt Jwt { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -93,6 +95,7 @@ namespace Azure.Security.CodeTransparency
     {
         internal CodeTransparencyConfigurationAuthenticationJwt() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> RequiredClaims { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -104,6 +107,7 @@ namespace Azure.Security.CodeTransparency
         internal CodeTransparencyConfigurationPolicy() { }
         public System.Collections.Generic.IReadOnlyList<string> AcceptedAlgorithms { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AcceptedDidIssuers { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CodeTransparencyConfigurationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -114,6 +118,7 @@ namespace Azure.Security.CodeTransparency
     {
         internal CreateEntryResult() { }
         public string OperationId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CreateEntryResult System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CreateEntryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.CreateEntryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.CreateEntryResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.CreateEntryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -125,6 +130,7 @@ namespace Azure.Security.CodeTransparency
         internal DidDocument() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Security.CodeTransparency.DidDocumentKey> AssertionMethod { get { throw null; } }
         public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.DidDocument System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.DidDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.DidDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.DidDocument System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.DidDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -138,6 +144,7 @@ namespace Azure.Security.CodeTransparency
         public string Id { get { throw null; } }
         public Azure.Security.CodeTransparency.JsonWebKey PublicKeyJwk { get { throw null; } }
         public Azure.Security.CodeTransparency.DidDocumentKeyType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.DidDocumentKey System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.DidDocumentKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.DidDocumentKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.DidDocumentKey System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.DidDocumentKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,6 +175,7 @@ namespace Azure.Security.CodeTransparency
         public string Error { get { throw null; } }
         public string OperationId { get { throw null; } }
         public Azure.Security.CodeTransparency.OperationStatus Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.GetOperationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.GetOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.GetOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.GetOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.GetOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,6 +202,7 @@ namespace Azure.Security.CodeTransparency
         public string X { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> X5c { get { throw null; } }
         public string Y { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.JsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.JsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -204,6 +213,7 @@ namespace Azure.Security.CodeTransparency
     {
         internal ListOperationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Security.CodeTransparency.GetOperationResult> Operations { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.ListOperationResult System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.ListOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.ListOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.ListOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.ListOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -236,6 +246,7 @@ namespace Azure.Security.CodeTransparency
         public string ServiceId { get { throw null; } }
         public string SignatureAlgorithm { get { throw null; } }
         public string TreeAlgorithm { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.ParametersResult System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.ParametersResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.ParametersResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.ParametersResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.ParametersResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -268,6 +279,7 @@ namespace Azure.Security.CodeTransparency
     {
         internal VersionResult() { }
         public string ScittVersion { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.VersionResult System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.VersionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.VersionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Security.CodeTransparency.VersionResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.VersionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
