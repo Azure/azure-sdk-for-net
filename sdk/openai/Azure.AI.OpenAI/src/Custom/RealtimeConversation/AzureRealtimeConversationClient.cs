@@ -52,8 +52,6 @@ internal partial class AzureRealtimeConversationClient : RealtimeConversationCli
             _ => uriBuilder.Scheme,
         };
 
-        apiVersion = "2024-10-01-preview";
-
         bool isLegacyNoDeployment = string.IsNullOrEmpty(deploymentName);
 
         string requiredPathSuffix = isLegacyNoDeployment ? "realtime" : "openai/realtime";
