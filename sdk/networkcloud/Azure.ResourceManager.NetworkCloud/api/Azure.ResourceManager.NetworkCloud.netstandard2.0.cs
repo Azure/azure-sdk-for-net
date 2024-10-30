@@ -765,6 +765,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? Required { get { throw null; } }
         public string Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1624,6 +1625,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? DrainTimeout { get { throw null; } set { } }
         public string MaxSurge { get { throw null; } set { } }
         public string MaxUnavailable { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2335,6 +2337,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public ClusterContinueUpdateVersionContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode? MachineGroupTargetingMode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2522,6 +2525,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public ClusterScanRuntimeContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity? ScanActivity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2551,6 +2555,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ClusterSecretArchive(Azure.Core.ResourceIdentifier keyVaultId) { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled? UseKeyVault { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2601,6 +2606,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType ThresholdType { get { throw null; } set { } }
         public long ThresholdValue { get { throw null; } set { } }
         public long? WaitTimeMinutes { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2641,6 +2647,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public CommandOutputSettings() { }
         public Azure.ResourceManager.NetworkCloud.Models.IdentitySelector AssociatedIdentity { get { throw null; } set { } }
         public System.Uri ContainerUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2741,6 +2748,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ControlPlaneNodePatchConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> AdministratorSshPublicKeys { get { throw null; } }
         public long? Count { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2986,6 +2994,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IdentitySelector() { }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.IdentitySelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.IdentitySelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3755,6 +3764,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public NetworkCloudKubernetesClusterFeaturePatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> Options { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4156,6 +4166,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.DateTimeOffset? ScanCompletedOn { get { throw null; } }
         public System.DateTimeOffset? ScanScheduledOn { get { throw null; } }
         public System.DateTimeOffset? ScanStartedOn { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4168,6 +4179,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } }
         public string SecretName { get { throw null; } }
         public string SecretVersion { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4182,6 +4194,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? RotationPeriodDays { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference SecretArchiveReference { get { throw null; } }
         public string SecretType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4323,6 +4336,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public StringKeyValuePair(string key, string value) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
