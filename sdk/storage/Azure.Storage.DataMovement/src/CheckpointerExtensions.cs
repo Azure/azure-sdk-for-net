@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class CheckpointerExtensions
     {
-        internal static TransferCheckpointer BuildCheckpointer(TransferCheckpointStoreOptions options)
+        internal static ITransferCheckpointer BuildCheckpointer(TransferCheckpointStoreOptions options)
         {
             if (options?.Enabled == false)
             {
@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
         internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
 
         internal static async Task<DataTransferStatus> GetJobStatusAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<bool> IsResumableAsync(
-            this TransferCheckpointer checkpointer,
+            this ITransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)
         {
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<DataTransferProperties> GetDataTransferPropertiesAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)
         {
@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task<bool> IsEnumerationCompleteAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement
         }
 
         internal static async Task OnEnumerationCompleteAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken = default)
         {

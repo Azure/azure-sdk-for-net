@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Sku information related properties of a server. </summary>
-    public partial class ServerSku
+    /// <summary> Represents a virtual endpoint for a server. </summary>
+    public partial class VirtualEndpointResourcePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,41 +43,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier tier)
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
+        public VirtualEndpointResourcePatch()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Tier = tier;
+            Members = new ChangeTrackingList<string>();
+            VirtualEndpoints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
+        /// <param name="endpointType"> The endpoint type for the virtual endpoint. </param>
+        /// <param name="members"> List of members for a virtual endpoint. </param>
+        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualEndpointResourcePatch(VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Tier = tier;
+            EndpointType = endpointType;
+            Members = members;
+            VirtualEndpoints = virtualEndpoints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerSku"/> for deserialization. </summary>
-        internal ServerSku()
-        {
-        }
-
-        /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-        /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
-        [WirePath("tier")]
-        public PostgreSqlFlexibleServerSkuTier Tier { get; }
+        /// <summary> The endpoint type for the virtual endpoint. </summary>
+        [WirePath("properties.endpointType")]
+        public VirtualEndpointType? EndpointType { get; set; }
+        /// <summary> List of members for a virtual endpoint. </summary>
+        [WirePath("properties.members")]
+        public IList<string> Members { get; }
+        /// <summary> List of virtual endpoints for a server. </summary>
+        [WirePath("properties.virtualEndpoints")]
+        public IReadOnlyList<string> VirtualEndpoints { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication properties
-    /// Serialized Name: ReplicationObject
-    /// </summary>
+    /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
         /// <summary>
@@ -55,30 +52,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="replicationId">
-        /// Id
-        /// Serialized Name: ReplicationObject.replicationId
-        /// </param>
-        /// <param name="endpointType">
-        /// Indicates whether the local volume is the source or destination for the Volume Replication
-        /// Serialized Name: ReplicationObject.endpointType
-        /// </param>
-        /// <param name="replicationSchedule">
-        /// Schedule
-        /// Serialized Name: ReplicationObject.replicationSchedule
-        /// </param>
-        /// <param name="remoteVolumeResourceId">
-        /// The resource ID of the remote volume. Required for cross region and cross zone replication
-        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
-        /// </param>
-        /// <param name="remotePath">
-        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
-        /// Serialized Name: ReplicationObject.remotePath
-        /// </param>
-        /// <param name="remoteVolumeRegion">
-        /// The remote region for the other end of the Volume Replication.
-        /// Serialized Name: ReplicationObject.remoteVolumeRegion
-        /// </param>
+        /// <param name="replicationId"> Id. </param>
+        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
+        /// <param name="replicationSchedule"> Schedule. </param>
+        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
+        /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
+        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,30 +69,15 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeRegion = remoteVolumeRegion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary>
-        /// Indicates whether the local volume is the source or destination for the Volume Replication
-        /// Serialized Name: ReplicationObject.endpointType
-        /// </summary>
+        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
         public NetAppEndpointType? EndpointType { get; set; }
-        /// <summary>
-        /// Schedule
-        /// Serialized Name: ReplicationObject.replicationSchedule
-        /// </summary>
+        /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
-        /// <summary>
-        /// The resource ID of the remote volume. Required for cross region and cross zone replication
-        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
-        /// </summary>
+        /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
-        /// <summary>
-        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
-        /// Serialized Name: ReplicationObject.remotePath
-        /// </summary>
+        /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
         public RemotePath RemotePath { get; set; }
-        /// <summary>
-        /// The remote region for the other end of the Volume Replication.
-        /// Serialized Name: ReplicationObject.remoteVolumeRegion
-        /// </summary>
+        /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
     }
 }

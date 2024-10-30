@@ -95,7 +95,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new();
+        Mock<ITransferCheckpointer> checkpointer = new();
 
         var resources = Enumerable.Range(0, items).Select(_ =>
         {
@@ -201,7 +201,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new();
+        Mock<ITransferCheckpointer> checkpointer = new();
 
         var resources = Enumerable.Range(1, numJobs).Select(i =>
         {
@@ -295,7 +295,7 @@ public class TransferManagerTests
         {
             CallBase = true,
         };
-        Mock<TransferCheckpointer> checkpointer = new();
+        Mock<ITransferCheckpointer> checkpointer = new();
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
@@ -305,7 +305,7 @@ public class TransferManagerTests
         {
             case 0:
                 jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
-                    It.IsAny<DataTransferOptions>(), It.IsAny<TransferCheckpointer>(), It.IsAny<string>(),
+                    It.IsAny<DataTransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
                     It.IsAny<bool>(), It.IsAny<CancellationToken>())
                 ).Throws(expectedException);
                 break;
@@ -346,7 +346,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
@@ -394,7 +394,7 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
-        Mock<TransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);

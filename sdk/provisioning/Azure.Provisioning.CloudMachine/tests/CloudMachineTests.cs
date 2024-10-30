@@ -17,24 +17,29 @@ namespace Azure.CloudMachine.Tests;
 public class CloudMachineTests
 {
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Provisioning(string[] args)
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
             cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+            cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
+            {
+                Chat = new AIModel("gpt-35-turbo", "0125"),
+                Embeddings = new AIModel("text-embedding-ada-002", "2")
+            });
         }))
             return;
 
         CloudMachineWorkspace cm = new();
         Console.WriteLine(cm.Id);
+        var embeddings = cm.GetOpenAIEmbeddingsClient();
     }
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Storage(string[] args)
     {
@@ -53,7 +58,7 @@ public class CloudMachineTests
             Assert.AreEqual("{\"Foo\":5,\"Bar\":true}", data.ToString());
             eventSlim.Set();
         });
-        var uploaded = cm.Storage.UploadBlob(new
+        var uploaded = cm.Storage.UploadJson(new
         {
             Foo = 5,
             Bar = true
@@ -65,13 +70,15 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void OpenAI(string[] args)
     {
         if (CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
+            cm.AddFeature(new OpenAIFeature() {
+                Chat = new AIModel("gpt-35-turbo", "0125")
+            });
         }))
             return;
 
@@ -88,7 +95,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void KeyVault(string[] args)
     {
@@ -105,7 +112,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Messaging(string[] args)
     {
@@ -127,7 +134,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Demo(string[] args)
     {
@@ -137,7 +144,7 @@ public class CloudMachineTests
         CloudMachineClient cm = new();
 
         // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
+        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBinaryData(BinaryData.FromString(message)));
         cm.Storage.WhenBlobUploaded((StorageFile file) =>
         {
             var content = file.Download();
