@@ -11,7 +11,7 @@ This guide will walk you through the steps to integrate your Playwright project 
 ```C# Snippet:Sample2_SetDefaultAuthenticationMechanism
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
-namespace PlaywrightATests; // Remember to change this as per your project namespace
+namespace PlaywrightTests; // Remember to change this as per your project namespace
 
 [SetUpFixture]
 public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
@@ -24,7 +24,7 @@ public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};
 <RunSettings>
     <TestRunParameters>
         <!-- Set the service auth type as AccessToken -->
-        <Parameter name="ServiceAuth" value="AccessToken" />
+        <Parameter name="ServiceAuthType" value="AccessToken" />
     </TestRunParameters>
 </RunSettings>
 ```

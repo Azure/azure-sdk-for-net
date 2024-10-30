@@ -16,64 +16,100 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// PostgreSqlMigration.
 /// </summary>
-public partial class PostgreSqlMigration : Resource
+public partial class PostgreSqlMigration : ProvisionableResource
 {
     /// <summary>
     /// The name of the migration.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// To trigger cancel for entire migration we need to send this flag as
     /// True.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationCancel> Cancel { get => _cancel; set => _cancel.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationCancel> _cancel;
+    public BicepValue<PostgreSqlMigrationCancel> Cancel 
+    {
+        get { Initialize(); return _cancel!; }
+        set { Initialize(); _cancel!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationCancel>? _cancel;
 
     /// <summary>
     /// When you want to trigger cancel for specific databases send cancel flag
     /// as True and database names in this array.
     /// </summary>
-    public BicepList<string> DbsToCancelMigrationOn { get => _dbsToCancelMigrationOn; set => _dbsToCancelMigrationOn.Assign(value); }
-    private readonly BicepList<string> _dbsToCancelMigrationOn;
+    public BicepList<string> DbsToCancelMigrationOn 
+    {
+        get { Initialize(); return _dbsToCancelMigrationOn!; }
+        set { Initialize(); _dbsToCancelMigrationOn!.Assign(value); }
+    }
+    private BicepList<string>? _dbsToCancelMigrationOn;
 
     /// <summary>
     /// Number of databases to migrate.
     /// </summary>
-    public BicepList<string> DbsToMigrate { get => _dbsToMigrate; set => _dbsToMigrate.Assign(value); }
-    private readonly BicepList<string> _dbsToMigrate;
+    public BicepList<string> DbsToMigrate 
+    {
+        get { Initialize(); return _dbsToMigrate!; }
+        set { Initialize(); _dbsToMigrate!.Assign(value); }
+    }
+    private BicepList<string>? _dbsToMigrate;
 
     /// <summary>
     /// When you want to trigger cutover for specific databases send
     /// triggerCutover flag as True and database names in this array.
     /// </summary>
-    public BicepList<string> DbsToTriggerCutoverOn { get => _dbsToTriggerCutoverOn; set => _dbsToTriggerCutoverOn.Assign(value); }
-    private readonly BicepList<string> _dbsToTriggerCutoverOn;
+    public BicepList<string> DbsToTriggerCutoverOn 
+    {
+        get { Initialize(); return _dbsToTriggerCutoverOn!; }
+        set { Initialize(); _dbsToTriggerCutoverOn!.Assign(value); }
+    }
+    private BicepList<string>? _dbsToTriggerCutoverOn;
 
     /// <summary>
     /// There are two types of migration modes Online and Offline.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationMode> MigrationMode { get => _migrationMode; set => _migrationMode.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationMode> _migrationMode;
+    public BicepValue<PostgreSqlMigrationMode> MigrationMode 
+    {
+        get { Initialize(); return _migrationMode!; }
+        set { Initialize(); _migrationMode!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationMode>? _migrationMode;
 
     /// <summary>
     /// End time in UTC for migration window.
     /// </summary>
-    public BicepValue<DateTimeOffset> MigrationWindowEndTimeInUtc { get => _migrationWindowEndTimeInUtc; set => _migrationWindowEndTimeInUtc.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _migrationWindowEndTimeInUtc;
+    public BicepValue<DateTimeOffset> MigrationWindowEndTimeInUtc 
+    {
+        get { Initialize(); return _migrationWindowEndTimeInUtc!; }
+        set { Initialize(); _migrationWindowEndTimeInUtc!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _migrationWindowEndTimeInUtc;
 
     /// <summary>
     /// Start time in UTC for migration window.
     /// </summary>
-    public BicepValue<DateTimeOffset> MigrationWindowStartTimeInUtc { get => _migrationWindowStartTimeInUtc; set => _migrationWindowStartTimeInUtc.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _migrationWindowStartTimeInUtc;
+    public BicepValue<DateTimeOffset> MigrationWindowStartTimeInUtc 
+    {
+        get { Initialize(); return _migrationWindowStartTimeInUtc!; }
+        set { Initialize(); _migrationWindowStartTimeInUtc!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _migrationWindowStartTimeInUtc;
 
     /// <summary>
     /// Indicates whether the databases on the target server can be
@@ -81,147 +117,215 @@ public partial class PostgreSqlMigration : Resource
     /// workflow will wait for a confirmation, if it detects that the database
     /// already exists.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationOverwriteDbsInTarget> OverwriteDbsInTarget { get => _overwriteDbsInTarget; set => _overwriteDbsInTarget.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationOverwriteDbsInTarget> _overwriteDbsInTarget;
+    public BicepValue<PostgreSqlMigrationOverwriteDbsInTarget> OverwriteDbsInTarget 
+    {
+        get { Initialize(); return _overwriteDbsInTarget!; }
+        set { Initialize(); _overwriteDbsInTarget!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationOverwriteDbsInTarget>? _overwriteDbsInTarget;
 
     /// <summary>
     /// Migration secret parameters.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationSecretParameters> SecretParameters { get => _secretParameters; set => _secretParameters.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationSecretParameters> _secretParameters;
+    public PostgreSqlMigrationSecretParameters SecretParameters 
+    {
+        get { Initialize(); return _secretParameters!; }
+        set { Initialize(); AssignOrReplace(ref _secretParameters, value); }
+    }
+    private PostgreSqlMigrationSecretParameters? _secretParameters;
 
     /// <summary>
     /// Indicates whether to setup LogicalReplicationOnSourceDb, if needed.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded { get => _setupLogicalReplicationOnSourceDbIfNeeded; set => _setupLogicalReplicationOnSourceDbIfNeeded.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> _setupLogicalReplicationOnSourceDbIfNeeded;
+    public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded 
+    {
+        get { Initialize(); return _setupLogicalReplicationOnSourceDbIfNeeded!; }
+        set { Initialize(); _setupLogicalReplicationOnSourceDbIfNeeded!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb>? _setupLogicalReplicationOnSourceDbIfNeeded;
 
     /// <summary>
     /// Source server fully qualified domain name or ip. It is a optional
     /// value, if customer provide it, dms will always use it for connection.
     /// </summary>
-    public BicepValue<string> SourceDbServerFullyQualifiedDomainName { get => _sourceDbServerFullyQualifiedDomainName; set => _sourceDbServerFullyQualifiedDomainName.Assign(value); }
-    private readonly BicepValue<string> _sourceDbServerFullyQualifiedDomainName;
+    public BicepValue<string> SourceDbServerFullyQualifiedDomainName 
+    {
+        get { Initialize(); return _sourceDbServerFullyQualifiedDomainName!; }
+        set { Initialize(); _sourceDbServerFullyQualifiedDomainName!.Assign(value); }
+    }
+    private BicepValue<string>? _sourceDbServerFullyQualifiedDomainName;
 
     /// <summary>
     /// ResourceId of the source database server.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceDbServerResourceId { get => _sourceDbServerResourceId; set => _sourceDbServerResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceDbServerResourceId;
+    public BicepValue<ResourceIdentifier> SourceDbServerResourceId 
+    {
+        get { Initialize(); return _sourceDbServerResourceId!; }
+        set { Initialize(); _sourceDbServerResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceDbServerResourceId;
 
     /// <summary>
     /// Indicates whether the data migration should start right away.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationStartDataMigration> StartDataMigration { get => _startDataMigration; set => _startDataMigration.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationStartDataMigration> _startDataMigration;
+    public BicepValue<PostgreSqlMigrationStartDataMigration> StartDataMigration 
+    {
+        get { Initialize(); return _startDataMigration!; }
+        set { Initialize(); _startDataMigration!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationStartDataMigration>? _startDataMigration;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Target server fully qualified domain name or ip. It is a optional
     /// value, if customer provide it, dms will always use it for connection.
     /// </summary>
-    public BicepValue<string> TargetDbServerFullyQualifiedDomainName { get => _targetDbServerFullyQualifiedDomainName; set => _targetDbServerFullyQualifiedDomainName.Assign(value); }
-    private readonly BicepValue<string> _targetDbServerFullyQualifiedDomainName;
+    public BicepValue<string> TargetDbServerFullyQualifiedDomainName 
+    {
+        get { Initialize(); return _targetDbServerFullyQualifiedDomainName!; }
+        set { Initialize(); _targetDbServerFullyQualifiedDomainName!.Assign(value); }
+    }
+    private BicepValue<string>? _targetDbServerFullyQualifiedDomainName;
 
     /// <summary>
     /// To trigger cutover for entire migration we need to send this flag as
     /// True.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationTriggerCutover> TriggerCutover { get => _triggerCutover; set => _triggerCutover.Assign(value); }
-    private readonly BicepValue<PostgreSqlMigrationTriggerCutover> _triggerCutover;
+    public BicepValue<PostgreSqlMigrationTriggerCutover> TriggerCutover 
+    {
+        get { Initialize(); return _triggerCutover!; }
+        set { Initialize(); _triggerCutover!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlMigrationTriggerCutover>? _triggerCutover;
 
     /// <summary>
     /// Current status of migration.
     /// </summary>
-    public BicepValue<PostgreSqlMigrationStatus> CurrentStatus { get => _currentStatus; }
-    private readonly BicepValue<PostgreSqlMigrationStatus> _currentStatus;
+    public PostgreSqlMigrationStatus CurrentStatus 
+    {
+        get { Initialize(); return _currentStatus!; }
+    }
+    private PostgreSqlMigrationStatus? _currentStatus;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// ID for migration, a GUID.
     /// </summary>
-    public BicepValue<string> MigrationId { get => _migrationId; }
-    private readonly BicepValue<string> _migrationId;
+    public BicepValue<string> MigrationId 
+    {
+        get { Initialize(); return _migrationId!; }
+    }
+    private BicepValue<string>? _migrationId;
 
     /// <summary>
     /// Metadata of the source database server.
     /// </summary>
-    public BicepValue<PostgreSqlServerMetadata> SourceDbServerMetadata { get => _sourceDbServerMetadata; }
-    private readonly BicepValue<PostgreSqlServerMetadata> _sourceDbServerMetadata;
+    public PostgreSqlServerMetadata SourceDbServerMetadata 
+    {
+        get { Initialize(); return _sourceDbServerMetadata!; }
+    }
+    private PostgreSqlServerMetadata? _sourceDbServerMetadata;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Metadata of the target database server.
     /// </summary>
-    public BicepValue<PostgreSqlServerMetadata> TargetDbServerMetadata { get => _targetDbServerMetadata; }
-    private readonly BicepValue<PostgreSqlServerMetadata> _targetDbServerMetadata;
+    public PostgreSqlServerMetadata TargetDbServerMetadata 
+    {
+        get { Initialize(); return _targetDbServerMetadata!; }
+    }
+    private PostgreSqlServerMetadata? _targetDbServerMetadata;
 
     /// <summary>
     /// ResourceId of the source database server.
     /// </summary>
-    public BicepValue<ResourceIdentifier> TargetDbServerResourceId { get => _targetDbServerResourceId; }
-    private readonly BicepValue<ResourceIdentifier> _targetDbServerResourceId;
+    public BicepValue<ResourceIdentifier> TargetDbServerResourceId 
+    {
+        get { Initialize(); return _targetDbServerResourceId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _targetDbServerResourceId;
 
     /// <summary>
     /// Gets or sets a reference to the parent PostgreSqlFlexibleServer.
     /// </summary>
-    public PostgreSqlFlexibleServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<PostgreSqlFlexibleServer> _parent;
+    public PostgreSqlFlexibleServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PostgreSqlFlexibleServer>? _parent;
 
     /// <summary>
     /// Creates a new PostgreSqlMigration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlMigration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
-    public PostgreSqlMigration(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
+    public PostgreSqlMigration(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _cancel = BicepValue<PostgreSqlMigrationCancel>.DefineProperty(this, "Cancel", ["properties", "cancel"]);
-        _dbsToCancelMigrationOn = BicepList<string>.DefineProperty(this, "DbsToCancelMigrationOn", ["properties", "dbsToCancelMigrationOn"]);
-        _dbsToMigrate = BicepList<string>.DefineProperty(this, "DbsToMigrate", ["properties", "dbsToMigrate"]);
-        _dbsToTriggerCutoverOn = BicepList<string>.DefineProperty(this, "DbsToTriggerCutoverOn", ["properties", "dbsToTriggerCutoverOn"]);
-        _migrationMode = BicepValue<PostgreSqlMigrationMode>.DefineProperty(this, "MigrationMode", ["properties", "migrationMode"]);
-        _migrationWindowEndTimeInUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "MigrationWindowEndTimeInUtc", ["properties", "migrationWindowEndTimeInUtc"]);
-        _migrationWindowStartTimeInUtc = BicepValue<DateTimeOffset>.DefineProperty(this, "MigrationWindowStartTimeInUtc", ["properties", "migrationWindowStartTimeInUtc"]);
-        _overwriteDbsInTarget = BicepValue<PostgreSqlMigrationOverwriteDbsInTarget>.DefineProperty(this, "OverwriteDbsInTarget", ["properties", "overwriteDbsInTarget"]);
-        _secretParameters = BicepValue<PostgreSqlMigrationSecretParameters>.DefineProperty(this, "SecretParameters", ["properties", "secretParameters"]);
-        _setupLogicalReplicationOnSourceDbIfNeeded = BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb>.DefineProperty(this, "SetupLogicalReplicationOnSourceDbIfNeeded", ["properties", "setupLogicalReplicationOnSourceDbIfNeeded"]);
-        _sourceDbServerFullyQualifiedDomainName = BicepValue<string>.DefineProperty(this, "SourceDbServerFullyQualifiedDomainName", ["properties", "sourceDbServerFullyQualifiedDomainName"]);
-        _sourceDbServerResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceDbServerResourceId", ["properties", "sourceDbServerResourceId"]);
-        _startDataMigration = BicepValue<PostgreSqlMigrationStartDataMigration>.DefineProperty(this, "StartDataMigration", ["properties", "startDataMigration"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _targetDbServerFullyQualifiedDomainName = BicepValue<string>.DefineProperty(this, "TargetDbServerFullyQualifiedDomainName", ["properties", "targetDbServerFullyQualifiedDomainName"]);
-        _triggerCutover = BicepValue<PostgreSqlMigrationTriggerCutover>.DefineProperty(this, "TriggerCutover", ["properties", "triggerCutover"]);
-        _currentStatus = BicepValue<PostgreSqlMigrationStatus>.DefineProperty(this, "CurrentStatus", ["properties", "currentStatus"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _migrationId = BicepValue<string>.DefineProperty(this, "MigrationId", ["properties", "migrationId"], isOutput: true);
-        _sourceDbServerMetadata = BicepValue<PostgreSqlServerMetadata>.DefineProperty(this, "SourceDbServerMetadata", ["properties", "sourceDbServerMetadata"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _targetDbServerMetadata = BicepValue<PostgreSqlServerMetadata>.DefineProperty(this, "TargetDbServerMetadata", ["properties", "targetDbServerMetadata"], isOutput: true);
-        _targetDbServerResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "TargetDbServerResourceId", ["properties", "targetDbServerResourceId"], isOutput: true);
-        _parent = ResourceReference<PostgreSqlFlexibleServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of PostgreSqlMigration.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _cancel = DefineProperty<PostgreSqlMigrationCancel>("Cancel", ["properties", "cancel"]);
+        _dbsToCancelMigrationOn = DefineListProperty<string>("DbsToCancelMigrationOn", ["properties", "dbsToCancelMigrationOn"]);
+        _dbsToMigrate = DefineListProperty<string>("DbsToMigrate", ["properties", "dbsToMigrate"]);
+        _dbsToTriggerCutoverOn = DefineListProperty<string>("DbsToTriggerCutoverOn", ["properties", "dbsToTriggerCutoverOn"]);
+        _migrationMode = DefineProperty<PostgreSqlMigrationMode>("MigrationMode", ["properties", "migrationMode"]);
+        _migrationWindowEndTimeInUtc = DefineProperty<DateTimeOffset>("MigrationWindowEndTimeInUtc", ["properties", "migrationWindowEndTimeInUtc"]);
+        _migrationWindowStartTimeInUtc = DefineProperty<DateTimeOffset>("MigrationWindowStartTimeInUtc", ["properties", "migrationWindowStartTimeInUtc"]);
+        _overwriteDbsInTarget = DefineProperty<PostgreSqlMigrationOverwriteDbsInTarget>("OverwriteDbsInTarget", ["properties", "overwriteDbsInTarget"]);
+        _secretParameters = DefineModelProperty<PostgreSqlMigrationSecretParameters>("SecretParameters", ["properties", "secretParameters"]);
+        _setupLogicalReplicationOnSourceDbIfNeeded = DefineProperty<PostgreSqlMigrationLogicalReplicationOnSourceDb>("SetupLogicalReplicationOnSourceDbIfNeeded", ["properties", "setupLogicalReplicationOnSourceDbIfNeeded"]);
+        _sourceDbServerFullyQualifiedDomainName = DefineProperty<string>("SourceDbServerFullyQualifiedDomainName", ["properties", "sourceDbServerFullyQualifiedDomainName"]);
+        _sourceDbServerResourceId = DefineProperty<ResourceIdentifier>("SourceDbServerResourceId", ["properties", "sourceDbServerResourceId"]);
+        _startDataMigration = DefineProperty<PostgreSqlMigrationStartDataMigration>("StartDataMigration", ["properties", "startDataMigration"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _targetDbServerFullyQualifiedDomainName = DefineProperty<string>("TargetDbServerFullyQualifiedDomainName", ["properties", "targetDbServerFullyQualifiedDomainName"]);
+        _triggerCutover = DefineProperty<PostgreSqlMigrationTriggerCutover>("TriggerCutover", ["properties", "triggerCutover"]);
+        _currentStatus = DefineModelProperty<PostgreSqlMigrationStatus>("CurrentStatus", ["properties", "currentStatus"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _migrationId = DefineProperty<string>("MigrationId", ["properties", "migrationId"], isOutput: true);
+        _sourceDbServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>("SourceDbServerMetadata", ["properties", "sourceDbServerMetadata"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _targetDbServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>("TargetDbServerMetadata", ["properties", "targetDbServerMetadata"], isOutput: true);
+        _targetDbServerResourceId = DefineProperty<ResourceIdentifier>("TargetDbServerResourceId", ["properties", "targetDbServerResourceId"], isOutput: true);
+        _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -248,7 +352,7 @@ public partial class PostgreSqlMigration : Resource
     /// <summary>
     /// Creates a reference to an existing PostgreSqlMigration.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the PostgreSqlMigration resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -256,6 +360,6 @@ public partial class PostgreSqlMigration : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
     /// <returns>The existing PostgreSqlMigration resource.</returns>
-    public static PostgreSqlMigration FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static PostgreSqlMigration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

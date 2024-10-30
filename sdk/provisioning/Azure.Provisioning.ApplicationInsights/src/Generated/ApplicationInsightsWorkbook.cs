@@ -17,151 +17,225 @@ namespace Azure.Provisioning.ApplicationInsights;
 /// <summary>
 /// ApplicationInsightsWorkbook.
 /// </summary>
-public partial class ApplicationInsightsWorkbook : Resource
+public partial class ApplicationInsightsWorkbook : ProvisionableResource
 {
     /// <summary>
     /// The name of the workbook resource. The value must be an UUID.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Workbook category, as defined by the user at creation time.
     /// </summary>
-    public BicepValue<string> Category { get => _category; set => _category.Assign(value); }
-    private readonly BicepValue<string> _category;
+    public BicepValue<string> Category 
+    {
+        get { Initialize(); return _category!; }
+        set { Initialize(); _category!.Assign(value); }
+    }
+    private BicepValue<string>? _category;
 
     /// <summary>
     /// The description of the workbook.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The user-defined name (display name) of the workbook.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// Resource etag.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Identity used for BYOS.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// The kind of workbook. Only valid value is shared.
     /// </summary>
-    public BicepValue<WorkbookSharedTypeKind> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<WorkbookSharedTypeKind> _kind;
+    public BicepValue<WorkbookSharedTypeKind> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<WorkbookSharedTypeKind>? _kind;
 
     /// <summary>
     /// Configuration of this particular workbook. Configuration data is a
     /// string containing valid JSON.
     /// </summary>
-    public BicepValue<string> SerializedData { get => _serializedData; set => _serializedData.Assign(value); }
-    private readonly BicepValue<string> _serializedData;
+    public BicepValue<string> SerializedData 
+    {
+        get { Initialize(); return _serializedData!; }
+        set { Initialize(); _serializedData!.Assign(value); }
+    }
+    private BicepValue<string>? _serializedData;
 
     /// <summary>
     /// Azure Resource Id that will fetch all linked workbooks.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SourceId { get => _sourceId; set => _sourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _sourceId;
+    public BicepValue<ResourceIdentifier> SourceId 
+    {
+        get { Initialize(); return _sourceId!; }
+        set { Initialize(); _sourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _sourceId;
 
     /// <summary>
     /// The resourceId to the storage account when bring your own storage is
     /// used.
     /// </summary>
-    public BicepValue<Uri> StorageUri { get => _storageUri; set => _storageUri.Assign(value); }
-    private readonly BicepValue<Uri> _storageUri;
+    public BicepValue<Uri> StorageUri 
+    {
+        get { Initialize(); return _storageUri!; }
+        set { Initialize(); _storageUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _storageUri;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Workbook schema version format, like &apos;Notebook/1.0&apos;, which
     /// should match the workbook in serializedData.
     /// </summary>
-    public BicepValue<string> Version { get => _version; set => _version.Assign(value); }
-    private readonly BicepValue<string> _version;
+    public BicepValue<string> Version 
+    {
+        get { Initialize(); return _version!; }
+        set { Initialize(); _version!.Assign(value); }
+    }
+    private BicepValue<string>? _version;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Date and time in UTC of the last modification that was made to this
     /// workbook definition.
     /// </summary>
-    public BicepValue<DateTimeOffset> ModifiedOn { get => _modifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _modifiedOn;
+    public BicepValue<DateTimeOffset> ModifiedOn 
+    {
+        get { Initialize(); return _modifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _modifiedOn;
 
     /// <summary>
     /// The unique revision id for this workbook definition.
     /// </summary>
-    public BicepValue<string> Revision { get => _revision; }
-    private readonly BicepValue<string> _revision;
+    public BicepValue<string> Revision 
+    {
+        get { Initialize(); return _revision!; }
+    }
+    private BicepValue<string>? _revision;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Unique user id of the specific user that owns this workbook.
     /// </summary>
-    public BicepValue<string> UserId { get => _userId; }
-    private readonly BicepValue<string> _userId;
+    public BicepValue<string> UserId 
+    {
+        get { Initialize(); return _userId!; }
+    }
+    private BicepValue<string>? _userId;
 
     /// <summary>
     /// Creates a new ApplicationInsightsWorkbook.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsWorkbook
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbook.</param>
-    public ApplicationInsightsWorkbook(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
+    public ApplicationInsightsWorkbook(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Insights/workbooks", resourceVersion ?? "2023-06-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _category = BicepValue<string>.DefineProperty(this, "Category", ["properties", "category"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _kind = BicepValue<WorkbookSharedTypeKind>.DefineProperty(this, "Kind", ["kind"]);
-        _serializedData = BicepValue<string>.DefineProperty(this, "SerializedData", ["properties", "serializedData"]);
-        _sourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SourceId", ["properties", "sourceId"]);
-        _storageUri = BicepValue<Uri>.DefineProperty(this, "StorageUri", ["properties", "storageUri"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _version = BicepValue<string>.DefineProperty(this, "Version", ["properties", "version"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _modifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ModifiedOn", ["properties", "timeModified"], isOutput: true);
-        _revision = BicepValue<string>.DefineProperty(this, "Revision", ["properties", "revision"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _userId = BicepValue<string>.DefineProperty(this, "UserId", ["properties", "userId"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ApplicationInsightsWorkbook.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _category = DefineProperty<string>("Category", ["properties", "category"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _kind = DefineProperty<WorkbookSharedTypeKind>("Kind", ["kind"]);
+        _serializedData = DefineProperty<string>("SerializedData", ["properties", "serializedData"]);
+        _sourceId = DefineProperty<ResourceIdentifier>("SourceId", ["properties", "sourceId"]);
+        _storageUri = DefineProperty<Uri>("StorageUri", ["properties", "storageUri"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _version = DefineProperty<string>("Version", ["properties", "version"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["properties", "timeModified"], isOutput: true);
+        _revision = DefineProperty<string>("Revision", ["properties", "revision"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _userId = DefineProperty<string>("UserId", ["properties", "userId"], isOutput: true);
     }
 
     /// <summary>
@@ -203,7 +277,7 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// <summary>
     /// Creates a reference to an existing ApplicationInsightsWorkbook.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ApplicationInsightsWorkbook
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -211,6 +285,6 @@ public partial class ApplicationInsightsWorkbook : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ApplicationInsightsWorkbook.</param>
     /// <returns>The existing ApplicationInsightsWorkbook resource.</returns>
-    public static ApplicationInsightsWorkbook FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ApplicationInsightsWorkbook FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

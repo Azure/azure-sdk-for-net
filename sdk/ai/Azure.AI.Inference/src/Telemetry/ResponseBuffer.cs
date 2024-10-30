@@ -36,6 +36,11 @@ namespace Azure.AI.Inference.Telemetry
 
             public void CreateOrUpdateToolCall(StreamingToolCallUpdate call)
             {
+                if (call == null)
+                {
+                    return;
+                }
+
                 _toolCalls ??= new List<ToolCall>();
 
                 StreamingFunctionToolCallUpdate functionCall = call as StreamingFunctionToolCallUpdate;
@@ -59,20 +64,46 @@ namespace Azure.AI.Inference.Telemetry
                 }
             }
 
-            public void CreateOrUpdateToolCall(ChatCompletionsToolCall call)
+            public void CreateOrUpdateToolCall(StreamingChatResponseToolCallUpdate call)
             {
-                _toolCalls ??= new List<ToolCall>();
-
-                ChatCompletionsFunctionToolCall functionCall = call as ChatCompletionsFunctionToolCall;
-
-                if (!_toolCalls.Any())
+                if (call == null)
                 {
-                    _toolCalls.Add(new ToolCall(functionCall?.Name, call.Id, _traceContent) { Type = call.Type });
+                    return;
                 }
 
-                if (_traceContent && functionCall?.Arguments != null)
+                _toolCalls ??= new List<ToolCall>();
+
+                // it's possible to get one or more tool calls in choice.delta
+                // but the StreamingChatResponseToolCallUpdate does not provide
+                // tool call index even though it's available on the wire.
+                // So for now let's try to correlate using tool call id and
+                // when index is available optimize to use index.
+                // and if Id is null, let's assume there is just one tool call
+                // which is obviously wrong, but at least we can support one tool call
+                // this way.
+
+                // TODO: THIS NEEDS TO BE FIXED WHEN INDEX IS SUPPORTED
+                string id = call.Id ?? _toolCalls.FirstOrDefault()?.Id;
+
+                ToolCall callToUpdate = null;
+                foreach (ToolCall c in _toolCalls)
                 {
-                    _toolCalls[0].Content.Append(functionCall.Arguments);
+                    if (c.Id == id)
+                    {
+                        callToUpdate = c;
+                        break;
+                    }
+                }
+
+                if (callToUpdate == null)
+                {
+                    callToUpdate = new ToolCall(call.Function?.Name, id, _traceContent) { Type = "function" };
+                    _toolCalls.Add(callToUpdate);
+                }
+
+                if (_traceContent && call.Function?.Arguments != null)
+                {
+                    callToUpdate.Content.Append(call.Function.Arguments);
                 }
             }
 
@@ -130,12 +161,6 @@ namespace Azure.AI.Inference.Telemetry
                     {
                         choice.Content?.Append(choiceUpdate.Delta?.Content);
                     }
-
-                    // it's possible to get one or more tool calls in choice.delta
-                    // but the types that represents it - ChatCompletionsToolCall
-                    // and ChatCompletionsFunctionToolCall do not provide tool call index
-                    // even though it's available on the wire.
-                    // So for now we'll assume there is just one tool with index 0.
 
                     if (choiceUpdate.Delta?.ToolCalls != null)
                     {

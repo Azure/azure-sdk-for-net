@@ -19,13 +19,21 @@ namespace Azure.Developer.DevCenter.Models
 
         void IJsonModel<StopOnDisconnectConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StopOnDisconnectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(GracePeriodMinutes))
@@ -48,7 +56,6 @@ namespace Azure.Developer.DevCenter.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StopOnDisconnectConfiguration IJsonModel<StopOnDisconnectConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -6,6 +6,8 @@ using System.Threading;
 using System.IO;
 using System.Buffers;
 using Azure.Core.Pipeline;
+using System;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement;
 
@@ -43,7 +45,7 @@ internal class JobBuilder
         StorageResource sourceResource,
         StorageResource destinationResource,
         DataTransferOptions transferOptions,
-        TransferCheckpointer checkpointer,
+        ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
         CancellationToken cancellationToken)
@@ -90,256 +92,126 @@ internal class JobBuilder
         StorageResourceItem sourceResource,
         StorageResourceItem destinationResource,
         DataTransferOptions transferOptions,
-        TransferCheckpointer checkpointer,
+        ITransferCheckpointer checkpointer,
         DataTransfer dataTransfer,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        // If the resource cannot produce a Uri, it means it can only produce a local path
-        // From here we only support an upload job
-        if (sourceResource.IsLocalResource())
+        TransferJobInternal.CreateJobPartSingleAsync single;
+        TransferJobInternal.CreateJobPartMultiAsync multi;
+        Func<TransferJobInternal, JobPartPlanHeader, StorageResourceItem, StorageResourceItem, JobPartInternal> rehydrate;
+        if (sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
         {
-            if (!destinationResource.IsLocalResource())
-            {
-                // Stream to Uri job (Upload Job)
-                StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    checkpointer: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
-
-                if (resumeJob)
-                {
-                    using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                        transferId: dataTransfer.Id,
-                        partNumber: 0,
-                        offset: 0,
-                        length: 0,
-                        cancellationToken: cancellationToken).ConfigureAwait(false))
-                    {
-                        streamToUriJob.AppendJobPart(
-                            streamToUriJob.ToJobPartAsync(
-                                stream,
-                                sourceResource,
-                                destinationResource));
-                    }
-                }
-                return streamToUriJob;
-            }
-            else // Invalid argument that both resources do not produce a Uri
-            {
-                throw Errors.InvalidSourceDestinationParams();
-            }
+            single = StreamToUriJobPart.CreateJobPartAsync;
+            multi = StreamToUriJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToStreamToUriJobPartAsync;
+        }
+        else if (!sourceResource.IsLocalResource() && destinationResource.IsLocalResource())
+        {
+            single = UriToStreamJobPart.CreateJobPartAsync;
+            multi = UriToStreamJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToUriToStreamJobPartAsync;
+        }
+        else if (!sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
+        {
+            single = ServiceToServiceJobPart.CreateJobPartAsync;
+            multi = ServiceToServiceJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToServiceToServiceJobPartAsync;
         }
         else
         {
-            // Source is remote
-            if (!destinationResource.IsLocalResource())
-            {
-                // Service to Service Job (Copy job)
-                ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    CheckPointFolderPath: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
-
-                if (resumeJob)
-                {
-                    using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                        transferId: dataTransfer.Id,
-                        partNumber: 0,
-                        offset: 0,
-                        length: 0,
-                        cancellationToken: cancellationToken).ConfigureAwait(false))
-                    {
-                        serviceToServiceJob.AppendJobPart(
-                            serviceToServiceJob.ToJobPartAsync(
-                                stream,
-                                sourceResource,
-                                destinationResource));
-                    }
-                }
-                return serviceToServiceJob;
-            }
-            else
-            {
-                // Download to local operation
-                // Service to Local job (Download Job)
-                UriToStreamTransferJob uriToStreamJob = new UriToStreamTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    checkpointer: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
-
-                if (resumeJob)
-                {
-                    using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                        transferId: dataTransfer.Id,
-                        partNumber: 0,
-                        offset: 0,
-                        length: 0,
-                        cancellationToken: cancellationToken).ConfigureAwait(false))
-                    {
-                        uriToStreamJob.AppendJobPart(
-                            uriToStreamJob.ToJobPartAsync(
-                                stream,
-                                sourceResource,
-                                destinationResource));
-                    }
-                }
-                return uriToStreamJob;
-            }
+            throw Errors.InvalidSourceDestinationParams();
         }
+
+        TransferJobInternal job = new(
+            dataTransfer: dataTransfer,
+            sourceResource: sourceResource,
+            destinationResource: destinationResource,
+            single,
+            multi,
+            transferOptions: transferOptions,
+            checkpointer: checkpointer,
+            errorHandling: _errorHandling,
+            arrayPool: _arrayPool,
+            clientDiagnostics: ClientDiagnostics);
+
+        if (resumeJob)
+        {
+            JobPartPlanHeader part = await checkpointer.GetJobPartAsync(dataTransfer.Id, partNumber: 0).ConfigureAwait(false);
+            job.AppendJobPart(
+                rehydrate(
+                    job,
+                    part,
+                    sourceResource,
+                    destinationResource));
+        }
+        return job;
     }
 
     private async Task<TransferJobInternal> BuildContainerTransferJob(
         StorageResourceContainer sourceResource,
         StorageResourceContainer destinationResource,
         DataTransferOptions transferOptions,
-        TransferCheckpointer checkpointer,
+        ITransferCheckpointer checkpointer,
         DataTransfer dataTransfer,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        // If the resource cannot produce a Uri, it means it can only produce a local path
-        // From here we only support an upload job
-        if (sourceResource.IsLocalResource())
+        TransferJobInternal.CreateJobPartSingleAsync single;
+        TransferJobInternal.CreateJobPartMultiAsync multi;
+        Func<TransferJobInternal, JobPartPlanHeader, StorageResourceContainer, StorageResourceContainer, JobPartInternal> rehydrate;
+        if (sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
         {
-            if (!destinationResource.IsLocalResource())
-            {
-                // Stream to Uri job (Upload Job)
-                StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    checkpointer: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
-
-                if (resumeJob)
-                {
-                    // Iterate through all job parts and append to the job
-                    int jobPartCount = await checkpointer.CurrentJobPartCountAsync(
-                        transferId: dataTransfer.Id,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                    for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
-                    {
-                        using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                            transferId: dataTransfer.Id,
-                            partNumber: currentJobPart,
-                            offset: 0,
-                            length: 0,
-                            cancellationToken: cancellationToken).ConfigureAwait(false))
-                        {
-                            streamToUriJob.AppendJobPart(
-                                streamToUriJob.ToJobPartAsync(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource));
-                        }
-                    }
-                }
-                return streamToUriJob;
-            }
-            else // Invalid argument that both resources do not produce a Uri
-            {
-                throw Errors.InvalidSourceDestinationParams();
-            }
+            single = StreamToUriJobPart.CreateJobPartAsync;
+            multi = StreamToUriJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToStreamToUriJobPartAsync;
+        }
+        else if (!sourceResource.IsLocalResource() && destinationResource.IsLocalResource())
+        {
+            single = UriToStreamJobPart.CreateJobPartAsync;
+            multi = UriToStreamJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToUriToStreamJobPartAsync;
+        }
+        else if (!sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
+        {
+            single = ServiceToServiceJobPart.CreateJobPartAsync;
+            multi = ServiceToServiceJobPart.CreateJobPartAsync;
+            rehydrate = DataMovementExtensions.ToServiceToServiceJobPartAsync;
         }
         else
         {
-            // Source is remote
-            if (!destinationResource.IsLocalResource())
-            {
-                // Service to Service Job (Copy job)
-                ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    checkpointer: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
+            throw Errors.InvalidSourceDestinationParams();
+        }
 
-                if (resumeJob)
-                {
-                    // Iterate through all job parts and append to the job
-                    int jobPartCount = await checkpointer.CurrentJobPartCountAsync(
-                        transferId: dataTransfer.Id,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                    for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
-                    {
-                        using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                            transferId: dataTransfer.Id,
-                            partNumber: currentJobPart,
-                            offset: 0,
-                            length: 0,
-                            cancellationToken: cancellationToken).ConfigureAwait(false))
-                        {
-                            serviceToServiceJob.AppendJobPart(
-                                serviceToServiceJob.ToJobPartAsync(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource));
-                        }
-                    }
-                }
-                return serviceToServiceJob;
-            }
-            else
-            {
-                // Download to local operation
-                // Service to Local job (Download Job)
-                UriToStreamTransferJob uriToStreamJob = new UriToStreamTransferJob(
-                    dataTransfer: dataTransfer,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource,
-                    transferOptions: transferOptions,
-                    checkpointer: checkpointer,
-                    errorHandling: _errorHandling,
-                    arrayPool: _arrayPool,
-                    clientDiagnostics: ClientDiagnostics);
+        TransferJobInternal job = new(
+            dataTransfer: dataTransfer,
+            sourceResource: sourceResource,
+            destinationResource: destinationResource,
+            single,
+            multi,
+            transferOptions: transferOptions,
+            checkpointer: checkpointer,
+            errorHandling: _errorHandling,
+            arrayPool: _arrayPool,
+            clientDiagnostics: ClientDiagnostics);
 
-                if (resumeJob)
-                {
-                    // Iterate through all job parts and append to the job
-                    int jobPartCount = await checkpointer.CurrentJobPartCountAsync(
-                        transferId: dataTransfer.Id,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                    for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
-                    {
-                        using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                            transferId: dataTransfer.Id,
-                            partNumber: currentJobPart,
-                            offset: 0,
-                            length: 0,
-                            cancellationToken: cancellationToken).ConfigureAwait(false))
-                        {
-                            uriToStreamJob.AppendJobPart(
-                                uriToStreamJob.ToJobPartAsync(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource));
-                        }
-                    }
-                }
-                return uriToStreamJob;
+        if (resumeJob)
+        {
+            // Iterate through all job parts and append to the job
+            int jobPartCount = await checkpointer.GetCurrentJobPartCountAsync(
+                transferId: dataTransfer.Id,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
+            {
+                JobPartPlanHeader part = await checkpointer.GetJobPartAsync(dataTransfer.Id, currentJobPart).ConfigureAwait(false);
+                job.AppendJobPart(
+                    rehydrate(
+                        job,
+                        part,
+                        sourceResource,
+                        destinationResource));
             }
         }
+        return job;
     }
 }

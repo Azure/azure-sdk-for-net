@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallSettings"/>. </summary>
         /// <param name="activationState"> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallSettings(ActivationState? activationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebApplicationFirewallSettings(WebApplicationFirewallActivationState? activationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActivationState = activationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
-        public ActivationState? ActivationState { get; set; }
+        public WebApplicationFirewallActivationState? ActivationState { get; set; }
     }
 }

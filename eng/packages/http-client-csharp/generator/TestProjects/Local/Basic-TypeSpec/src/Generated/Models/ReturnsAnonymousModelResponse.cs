@@ -14,7 +14,7 @@ namespace BasicTypeSpec.Models
     public partial class ReturnsAnonymousModelResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ReturnsAnonymousModelResponse()
         {

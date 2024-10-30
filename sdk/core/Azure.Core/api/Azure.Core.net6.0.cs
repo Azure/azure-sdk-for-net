@@ -95,8 +95,10 @@ namespace Azure
     }
     public partial class JsonPatchDocument
     {
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument() { }
         public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument) { }
         public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument, Azure.Core.Serialization.ObjectSerializer serializer) { }
         public void AppendAddRaw(string path, string rawJsonValue) { }

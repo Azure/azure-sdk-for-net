@@ -153,9 +153,9 @@ AfterStageWaitInSeconds = 3600,
             ContainerServiceFleetUpdateRunResource containerServiceFleetUpdateRun = client.GetContainerServiceFleetUpdateRunResource(containerServiceFleetUpdateRunResourceId);
 
             // invoke the operation
-            SkipProperties body = new SkipProperties(new SkipTarget[]
+            ContainerServiceFleetSkipProperties body = new ContainerServiceFleetSkipProperties(new ContainerServiceFleetSkipTarget[]
             {
-new SkipTarget(TargetType.Member,"member-one"),new SkipTarget(TargetType.AfterStageWait,"stage1")
+new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.Member,"member-one"),new ContainerServiceFleetSkipTarget(ContainerServiceFleetTargetType.AfterStageWait,"stage1")
             });
             ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await containerServiceFleetUpdateRun.SkipAsync(WaitUntil.Completed, body);
             ContainerServiceFleetUpdateRunResource result = lro.Value;

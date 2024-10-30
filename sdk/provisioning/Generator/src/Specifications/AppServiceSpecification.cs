@@ -4,6 +4,7 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -41,6 +42,12 @@ public class AppServiceSpecification() :
         RemoveProperty<StaticSiteUserProvidedFunctionAppData>("ResourceType");
         RemoveProperty<WebAppPushSettings>("ResourceType");
         RemoveProperty<HostNameSslState>("Thumbprint");
+
+        // Patch models
+
+        // Not generated today:
+        // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");
+        // CustomizePropertyIsoDuration<LogSpecification>("BlobDuration");
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);

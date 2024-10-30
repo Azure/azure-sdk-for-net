@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -22,6 +23,7 @@ namespace Azure.Identity
         internal const string TimeoutError = "ManagedIdentityCredential authentication unavailable. The request to the managed identity endpoint timed out.";
         internal const string GatewayError = "ManagedIdentityCredential authentication unavailable. The request failed due to a gateway error.";
         internal const string AggregateError = "ManagedIdentityCredential authentication unavailable. Multiple attempts failed to obtain a token from the managed identity endpoint.";
+        internal const string UnknownError = "ManagedIdentityCredential authentication unavailable. An unexpected error has occurred.";
 
         private readonly ManagedIdentityId _managedIdentityId;
         private readonly Uri _imdsEndpoint;
@@ -97,6 +99,7 @@ namespace Azure.Identity
 
         public async override ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
+            bool continueIMDSRequestAfterProbe;
             try
             {
                 return await base.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
@@ -127,12 +130,29 @@ namespace Azure.Identity
             catch (ProbeRequestResponseException)
             {
                 // This was an expected response from the IMDS endpoint without the Metadata header set.
-                // Re-issue the request (CreateRequest will add the appropriate header).
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                var authResult = await _client.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false);
-                return authResult.ToAccessToken();
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                // Fall-through to the code below to re-issue the request through MsalManagedIdentityClient.
+                continueIMDSRequestAfterProbe = true;
             }
+
+            if (continueIMDSRequestAfterProbe)
+            {
+                try
+                {
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    var authResult = await _client.AcquireTokenForManagedIdentityAsync(context, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    return authResult.ToAccessToken();
+                }
+                catch (MsalServiceException e)
+                {
+                    if (e.Message.Contains("unavailable"))
+                    {
+                        throw new CredentialUnavailableException(IdentityUnavailableError, e);
+                    }
+                    throw new CredentialUnavailableException(UnknownError, e);
+                }
+            }
+            throw new CredentialUnavailableException(UnknownError);
         }
 
         protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, HttpMessage message, CancellationToken cancellationToken)
@@ -144,7 +164,7 @@ namespace Azure.Identity
             // handle error status codes indicating managed identity is not available
             string baseMessage = response.Status switch
             {
-                400 when IsProbeRequest(message) => throw new ProbeRequestResponseException(),
+                400 when IsRetriableProbeRequest(message) => throw new ProbeRequestResponseException(),
                 400 => IdentityUnavailableError,
                 502 => GatewayError,
                 504 => GatewayError,
@@ -169,10 +189,11 @@ namespace Azure.Identity
             return token;
         }
 
-        public static bool IsProbeRequest(HttpMessage message)
+        public static bool IsRetriableProbeRequest(HttpMessage message)
             => message.Request.Uri.Host == s_imdsEndpoint.Host &&
                 message.Request.Uri.Path == s_imdsEndpoint.AbsolutePath &&
-                !message.Request.Headers.TryGetValue(metadataHeaderName, out _);
+                !message.Request.Headers.TryGetValue(metadataHeaderName, out _) &&
+                (message.Response.Content?.ToString().IndexOf("Identity not found", StringComparison.InvariantCulture) < 0);
 
         private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
         {
