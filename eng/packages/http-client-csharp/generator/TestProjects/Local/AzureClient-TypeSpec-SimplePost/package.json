@@ -1,0 +1,23 @@
+{
+  "name": "SimplePost",
+  "version": "0.1.0",
+  "type": "module",
+  "peerDependencies": {
+    "@typespec/compiler": "latest",
+    "@typespec/http": "latest",
+    "@typespec/openapi3": "latest",
+    "@typespec/rest": "latest"
+  },
+  "devDependencies": {
+    "@typespec/compiler": "latest",
+    "@typespec/http": "latest",
+    "@typespec/openapi3": "latest",
+    "@typespec/rest": "latest"
+  },
+  "private": true,
+  "dependencies": {
+    "@azure-tools/typespec-azure-core": "^0.47.0",
+    "@azure-tools/typespec-client-generator-core": "^0.47.3",
+    "@typespec/http-client-csharp": "^0.1.9-alpha.20241029.3"
+  }
+}
