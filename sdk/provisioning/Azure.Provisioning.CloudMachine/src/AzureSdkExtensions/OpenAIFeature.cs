@@ -49,7 +49,7 @@ public class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        CognitiveServicesAccountDeployment chat = new("openai_deployment", "2023-05-01")
+        CognitiveServicesAccountDeployment chat = new("openai_deployment_chat", "2023-05-01")
         {
             Parent = cognitiveServices,
             Name = cloudMachine.Id,
@@ -67,7 +67,7 @@ public class OpenAIFeature : CloudMachineFeature
 
         if (_embeddingsDeployment != null)
         {
-            CognitiveServicesAccountDeployment embeddings = new("openai_deployment", "2023-05-01")
+            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2023-05-01")
             {
                 Parent = cognitiveServices,
                 Name = $"{cloudMachine.Id}-embedding",

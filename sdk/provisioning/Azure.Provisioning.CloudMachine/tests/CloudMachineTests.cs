@@ -17,7 +17,7 @@ namespace Azure.CloudMachine.Tests;
 public class CloudMachineTests
 {
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Provisioning(string[] args)
     {
@@ -37,7 +37,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Storage(string[] args)
     {
@@ -68,7 +68,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void OpenAI(string[] args)
     {
@@ -91,7 +91,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void KeyVault(string[] args)
     {
@@ -108,7 +108,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Messaging(string[] args)
     {
@@ -130,7 +130,7 @@ public class CloudMachineTests
 
     [Ignore("no recordings yet")]
     [Theory]
-    [TestCase([new string[] { "--init" }])]
+    [TestCase([new string[] { "-bicep" }])]
     [TestCase([new string[] { "" }])]
     public void Demo(string[] args)
     {
