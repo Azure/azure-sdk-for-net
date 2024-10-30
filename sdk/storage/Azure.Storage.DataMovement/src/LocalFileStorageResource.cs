@@ -23,22 +23,12 @@ namespace Azure.Storage.DataMovement
 
         public override string ProviderId => "local";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the resource
-        /// </summary>
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
-        /// TODO: consider changing this.
+        protected internal override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxStageBytes;
+
         protected internal override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected internal override long? Length => default;
 
         /// <summary>

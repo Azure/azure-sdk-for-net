@@ -460,6 +460,7 @@ internal static partial class MockExtensions
         items.Source.SetupGet(r => r.Length).Returns(itemSize);
 
         items.Destination.SetupGet(r => r.TransferType).Returns(default(DataTransferOrder));
+        items.Destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
@@ -560,6 +561,7 @@ internal static partial class MockExtensions
     {
         dstResource.VerifyGet(r => r.Uri);
         dstResource.VerifyGet(r => r.ResourceId);
+        dstResource.VerifyGet(r => r.MaxSupportedSingleTransferSize);
         dstResource.VerifyGet(r => r.MaxSupportedChunkSize);
     }
 
