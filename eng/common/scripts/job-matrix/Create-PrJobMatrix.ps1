@@ -63,7 +63,6 @@ $configs = @(
 )
 
 # calculate general targeting information and create our batches prior to generating any matrix
-# this prototype doesn't handle direct and indirect, it just batches for simplicity of the proto
 $packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json `
 | ForEach-Object { Get-Content -Path $_.FullName | ConvertFrom-Json } `
 | ForEach-Object { [PSCustomObject]$_ }
