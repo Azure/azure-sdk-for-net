@@ -1100,5 +1100,8 @@
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft
 
+# ServiceLabel: %CodeGen 
+# AzureSdkOwners:                                                  @JoshLove-msf
+
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
