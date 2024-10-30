@@ -356,24 +356,38 @@ namespace Azure.Storage.DataMovement
             transferOptions ??= new DataTransferOptions();
 
             string transferId = _generateTransferId();
-            await _checkpointer.AddNewJobAsync(
-                transferId,
-                sourceResource,
-                destinationResource,
-                cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await _checkpointer.AddNewJobAsync(
+                    transferId,
+                    sourceResource,
+                    destinationResource,
+                    cancellationToken).ConfigureAwait(false);
 
-            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
-            // That seems not desirable.
+                DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
+                    sourceResource,
+                    destinationResource,
+                    transferOptions,
+                    transferId,
+                    false,
+                    cancellationToken).ConfigureAwait(false);
 
-            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions,
-                transferId,
-                false,
-                cancellationToken).ConfigureAwait(false);
-
-            return dataTransfer;
+                return dataTransfer;
+            }
+            catch (Exception ex)
+            {
+                // cleanup any state for a job that didn't even start
+                try
+                {
+                    _dataTransfers.Remove(transferId);
+                    await _checkpointer.TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception cleanupEx)
+                {
+                    throw new AggregateException(ex, cleanupEx);
+                }
+                throw;
+            }
         }
 
         private async Task<DataTransfer> BuildAndAddTransferJobAsync(
