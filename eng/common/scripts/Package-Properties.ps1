@@ -84,8 +84,7 @@ class PackageProps
         $this.Group = $group
     }
 
-    hidden [HashTable]ParseYmlForArtifact([string]$ymlPath) {
-
+    hidden [PSCustomObject]ParseYmlForArtifact([string]$ymlPath) {
         $content = LoadFrom-Yaml $ymlPath
         if ($content) {
             $artifacts = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "Artifacts")
@@ -95,8 +94,21 @@ class PackageProps
                 $artifactForCurrentPackage = $artifacts | Where-Object { $_["name"] -eq $this.ArtifactName -or $_["name"] -eq $this.Name }
             }
 
+            # if we found an artifact for the current package, we should count this ci file as the source of the matrix for this package
             if ($artifactForCurrentPackage) {
-                return [HashTable]$artifactForCurrentPackage
+                $result = [PSCustomObject]@{
+                    ArtifactConfig = [HashTable]$artifactForCurrentPackage
+                    MatrixConfigs = @()
+                }
+
+                # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
+                $matrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "MatrixConfigs")
+
+                if ($matrixConfigList) {
+                    $result.MatrixConfigs = matrixConfigList
+                }
+
+                return $result
             }
         }
         return $null
@@ -112,7 +124,10 @@ class PackageProps
             foreach($ciFile in $ciFiles) {
                 $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
                 if ($ciArtifactResult) {
-                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult
+                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+                    $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
+                    # if this package appeared in this ci file, then we should
+                    # treat this CI file as the source of the Matrix for this package
                     break
                 }
             }

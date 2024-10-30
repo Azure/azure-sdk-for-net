@@ -177,3 +177,80 @@ function GetValueSafelyFrom-Yaml {
 
   return [object]$current
 }
+
+function Get-ObjectKey {
+  param (
+    [Parameter(Mandatory = $true)]
+    [object]$Object
+  )
+
+  if (-not $Object) {
+    return "unset"
+  }
+
+  if ($Object -is [hashtable] -or $Object -is [System.Collections.Specialized.OrderedDictionary]) {
+    $sortedEntries = $Object.GetEnumerator() | Sort-Object Name
+    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ";"
+    return $hashString.GetHashCode()
+  }
+
+  elseif ($Object -is [PSCustomObject]) {
+    $sortedProperties = $Object.PSObject.Properties | Sort-Object Name
+    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$($_.Value)" }) -join ";"
+    return $propertyString.GetHashCode()
+  }
+
+  elseif ($Object -is [array]) {
+    $arrayString = ($Object | ForEach-Object { Get-ObjectKey $_ }) -join ";"
+    return $arrayString.GetHashCode()
+  }
+
+  else {
+    return $Object.GetHashCode()
+  }
+}
+
+function Group-ByObjectKey {
+  param (
+    [Parameter(Mandatory)]
+    [array]$Items,
+
+    [Parameter(Mandatory)]
+    [string]$GroupByProperty
+  )
+
+  $groupedDictionary = @{}
+
+  foreach ($item in $Items) {
+    $key = Get-ObjectKey $item."$GroupByProperty"
+
+    if (-not $groupedDictionary.ContainsKey($key)) {
+      $groupedDictionary[$key] = @()
+    }
+
+    # Add the current item to the array for this key
+    $groupedDictionary[$key] += $item
+  }
+
+  return $groupedDictionary
+}
+
+function Split-ArrayIntoBatches {
+  param (
+    [Parameter(Mandatory = $true)]
+    [Object[]]$InputArray,
+
+    [Parameter(Mandatory = $true)]
+    [int]$BatchSize
+  )
+
+  $batches = @()
+
+  for ($i = 0; $i -lt $InputArray.Count; $i += $BatchSize) {
+    $batch = $InputArray[$i..[math]::Min($i + $BatchSize - 1, $InputArray.Count - 1)]
+
+    $batches += , $batch
+  }
+
+  return , $batches
+}
