@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ContainerAppDaprComponentData>
+    public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ConnectedEnvironmentDaprComponentData>
     {
-        void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Write(writer, options);
+        void IJsonModel<ConnectedEnvironmentDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedEnvironmentDaprComponentData>)Data).Write(writer, options);
 
-        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Create(ref reader, options);
+        ConnectedEnvironmentDaprComponentData IJsonModel<ConnectedEnvironmentDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedEnvironmentDaprComponentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectedEnvironmentDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerAppDaprComponentData IPersistableModel<ContainerAppDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppDaprComponentData>(data, options);
+        ConnectedEnvironmentDaprComponentData IPersistableModel<ConnectedEnvironmentDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedEnvironmentDaprComponentData>(data, options);
 
-        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDaprComponentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedEnvironmentDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedEnvironmentDaprComponentData>)Data).GetFormatFromOptions(options);
     }
 }

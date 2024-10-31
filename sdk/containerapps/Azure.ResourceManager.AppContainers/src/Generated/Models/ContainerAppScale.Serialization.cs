@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppScale>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
@@ -45,6 +35,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
+            }
+            if (Optional.IsDefined(CooldownPeriod))
+            {
+                writer.WritePropertyName("cooldownPeriod"u8);
+                writer.WriteNumberValue(CooldownPeriod.Value);
+            }
+            if (Optional.IsDefined(PollingInterval))
+            {
+                writer.WritePropertyName("pollingInterval"u8);
+                writer.WriteNumberValue(PollingInterval.Value);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppScale IJsonModel<ContainerAppScale>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -95,6 +96,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             int? minReplicas = default;
             int? maxReplicas = default;
+            int? cooldownPeriod = default;
+            int? pollingInterval = default;
             IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -118,6 +121,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxReplicas = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("cooldownPeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cooldownPeriod = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("pollingInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pollingInterval = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("rules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -138,75 +159,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppScale(minReplicas, maxReplicas, rules ?? new ChangeTrackingList<ContainerAppScaleRule>(), serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinReplicas), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minReplicas: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinReplicas))
-                {
-                    builder.Append("  minReplicas: ");
-                    builder.AppendLine($"{MinReplicas.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxReplicas), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxReplicas: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxReplicas))
-                {
-                    builder.Append("  maxReplicas: ");
-                    builder.AppendLine($"{MaxReplicas.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Rules))
-                {
-                    if (Rules.Any())
-                    {
-                        builder.Append("  rules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Rules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  rules: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ContainerAppScale(
+                minReplicas,
+                maxReplicas,
+                cooldownPeriod,
+                pollingInterval,
+                rules ?? new ChangeTrackingList<ContainerAppScaleRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScale>.Write(ModelReaderWriterOptions options)
@@ -217,8 +176,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{options.Format}' format.");
             }

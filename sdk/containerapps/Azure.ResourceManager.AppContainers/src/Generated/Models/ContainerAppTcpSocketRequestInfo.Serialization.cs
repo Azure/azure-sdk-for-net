@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppTcpSocketRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTcpSocketRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
@@ -57,6 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppTcpSocketRequestInfo IJsonModel<ContainerAppTcpSocketRequestInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -104,56 +96,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppTcpSocketRequestInfo(host, port, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Host), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  host: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Host))
-                {
-                    builder.Append("  host: ");
-                    if (Host.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Host}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Host}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  port: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  port: ");
-                builder.AppendLine($"{Port}");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppTcpSocketRequestInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTcpSocketRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,8 +104,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppTcpSocketRequestInfo)} does not support writing '{options.Format}' format.");
             }

@@ -59,24 +59,24 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="metadata"> Metadata properties to describe the scale rule. </param>
         /// <param name="auth"> Authentication secrets for the scale rule. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the job, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             JobScaleRuleType = jobScaleRuleType;
             Metadata = metadata;
             Auth = auth;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scale Rule Name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Type of the scale rule
         /// eg: azure-servicebus, redis etc.
         /// </summary>
-        [WirePath("type")]
         public string JobScaleRuleType { get; set; }
         /// <summary>
         /// Metadata properties to describe the scale rule.
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> Authentication secrets for the scale rule. </summary>
-        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the job, or 'system' for system-assigned identity. </summary>
+        public string Identity { get; set; }
     }
 }

@@ -62,15 +62,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Peer traffic encryption settings for the Managed Environment. </summary>
         internal ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption Encryption { get; set; }
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
-        [WirePath("encryption.enabled")]
-        public bool? IsEnabled
+        public bool? IsPeerToPeerEncryptionEnabled
         {
-            get => Encryption is null ? default : Encryption.IsEnabled;
+            get => Encryption is null ? default : Encryption.IsPeerToPeerEncryptionEnabled;
             set
             {
                 if (Encryption is null)
                     Encryption = new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption();
-                Encryption.IsEnabled = value;
+                Encryption.IsPeerToPeerEncryptionEnabled = value;
             }
         }
     }

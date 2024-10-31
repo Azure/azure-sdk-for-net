@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -22,22 +21,33 @@ namespace Azure.ResourceManager.AppContainers
 
         void IJsonModel<ContainerAppRevisionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
@@ -75,6 +85,16 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("trafficWeight"u8);
                 writer.WriteNumberValue(TrafficWeight.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Labels)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
@@ -94,6 +114,22 @@ namespace Azure.ResourceManager.AppContainers
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
@@ -129,6 +165,7 @@ namespace Azure.ResourceManager.AppContainers
             bool? active = default;
             int? replicas = default;
             int? trafficWeight = default;
+            IReadOnlyList<string> labels = default;
             string provisioningError = default;
             ContainerAppRevisionHealthState? healthState = default;
             ContainerAppRevisionProvisioningState? provisioningState = default;
@@ -229,6 +266,20 @@ namespace Azure.ResourceManager.AppContainers
                             trafficWeight = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("labels"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            labels = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningError"u8))
                         {
                             provisioningError = property0.Value.GetString();
@@ -282,266 +333,12 @@ namespace Azure.ResourceManager.AppContainers
                 active,
                 replicas,
                 trafficWeight,
+                labels ?? new ChangeTrackingList<string>(),
                 provisioningError,
                 healthState,
                 provisioningState,
                 runningState,
                 serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    createdTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("    createdTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastActiveOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastActiveTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastActiveOn))
-                {
-                    builder.Append("    lastActiveTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastActiveOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    fqdn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Fqdn))
-                {
-                    builder.Append("    fqdn: ");
-                    if (Fqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Fqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Fqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Template), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    template: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Template))
-                {
-                    builder.Append("    template: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Template, options, 4, false, "    template: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsActive), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    active: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsActive))
-                {
-                    builder.Append("    active: ");
-                    var boolValue = IsActive.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Replicas), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replicas: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Replicas))
-                {
-                    builder.Append("    replicas: ");
-                    builder.AppendLine($"{Replicas.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficWeight), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trafficWeight: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrafficWeight))
-                {
-                    builder.Append("    trafficWeight: ");
-                    builder.AppendLine($"{TrafficWeight.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningError), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningError: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningError))
-                {
-                    builder.Append("    provisioningError: ");
-                    if (ProvisioningError.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningError}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningError}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HealthState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    healthState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HealthState))
-                {
-                    builder.Append("    healthState: ");
-                    builder.AppendLine($"'{HealthState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    runningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RunningState))
-                {
-                    builder.Append("    runningState: ");
-                    builder.AppendLine($"'{RunningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ContainerAppRevisionData>.Write(ModelReaderWriterOptions options)
@@ -552,8 +349,6 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{options.Format}' format.");
             }

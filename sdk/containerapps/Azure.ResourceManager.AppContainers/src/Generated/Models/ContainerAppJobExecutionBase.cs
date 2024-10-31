@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Job execution name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> Job execution Id. </summary>
-        [WirePath("id")]
         public string Id { get; }
     }
 }

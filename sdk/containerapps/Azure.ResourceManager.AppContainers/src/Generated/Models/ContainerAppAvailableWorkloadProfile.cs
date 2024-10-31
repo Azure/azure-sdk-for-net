@@ -68,10 +68,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Region of the workload profile. </summary>
-        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Revision resource specific properties. </summary>
-        [WirePath("properties")]
         public ContainerAppAvailableWorkloadProfileProperties Properties { get; set; }
     }
 }

@@ -49,24 +49,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         public ContainerAppServiceBind()
         {
+            CustomizedKeys = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
+        /// <param name="clientType"> Type of the client to be used to connect to the service. </param>
+        /// <param name="customizedKeys"> Customized keys for customizing injected values to the app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name, string clientType, IDictionary<string, string> customizedKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceId = serviceId;
             Name = name;
+            ClientType = clientType;
+            CustomizedKeys = customizedKeys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id of the target service. </summary>
-        [WirePath("serviceId")]
         public ResourceIdentifier ServiceId { get; set; }
         /// <summary> Name of the service bind. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+        /// <summary> Type of the client to be used to connect to the service. </summary>
+        public string ClientType { get; set; }
+        /// <summary> Customized keys for customizing injected values to the app. </summary>
+        public IDictionary<string, string> CustomizedKeys { get; }
     }
 }

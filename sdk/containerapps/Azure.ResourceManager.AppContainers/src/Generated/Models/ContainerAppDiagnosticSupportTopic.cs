@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Unique topic identifier. </summary>
-        [WirePath("id")]
         public string Id { get; }
         /// <summary> PES identifier. </summary>
-        [WirePath("pesId")]
         public string PesId { get; }
     }
 }

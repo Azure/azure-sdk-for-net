@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppCredentials)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -75,6 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppCredentials IJsonModel<ContainerAppCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -150,128 +142,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientId))
-                {
-                    builder.Append("  clientId: ");
-                    if (ClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientSecret: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientSecret))
-                {
-                    builder.Append("  clientSecret: ");
-                    if (ClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantId))
-                {
-                    builder.Append("  tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionId))
-                {
-                    builder.Append("  subscriptionId: ");
-                    if (SubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubscriptionId}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,8 +150,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppCredentials)} does not support writing '{options.Format}' format.");
             }

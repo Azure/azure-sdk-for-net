@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Column name. </summary>
-        [WirePath("columnName")]
         public string ColumnName { get; set; }
         /// <summary> Data type of the column. </summary>
-        [WirePath("dataType")]
         public string DataType { get; set; }
         /// <summary> Column type. </summary>
-        [WirePath("columnType")]
         public string ColumnType { get; set; }
     }
 }

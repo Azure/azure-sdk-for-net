@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ListUsagesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ListUsagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ListUsagesResult)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -66,6 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ListUsagesResult IJsonModel<ListUsagesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<ContainerAppUsage> value = default;
+            IReadOnlyList<AppContainersUsage> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +91,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<ContainerAppUsage> array = new List<ContainerAppUsage>();
+                    List<AppContainersUsage> array = new List<AppContainersUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppUsage.DeserializeContainerAppUsage(item, options));
+                        array.Add(AppContainersUsage.DeserializeAppContainersUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -119,68 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListUsagesResult(value ?? new ChangeTrackingList<ContainerAppUsage>(), nextLink, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Value))
-                {
-                    if (Value.Any())
-                    {
-                        builder.Append("  value: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Value)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextLink))
-                {
-                    builder.Append("  nextLink: ");
-                    if (NextLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextLink}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ListUsagesResult(value ?? new ChangeTrackingList<AppContainersUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListUsagesResult>.Write(ModelReaderWriterOptions options)
@@ -191,8 +121,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ListUsagesResult)} does not support writing '{options.Format}' format.");
             }

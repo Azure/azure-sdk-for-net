@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The version of Dapr. </summary>
-        [WirePath("version")]
         public string Version { get; }
     }
 }

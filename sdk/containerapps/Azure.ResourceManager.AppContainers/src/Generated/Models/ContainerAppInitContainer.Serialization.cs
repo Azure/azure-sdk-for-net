@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,22 +19,89 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppInitContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppInitContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppInitContainer)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Image))
+            {
+                writer.WritePropertyName("image"u8);
+                writer.WriteStringValue(Image);
+            }
+            if (Optional.IsDefined(ImageType))
+            {
+                writer.WritePropertyName("imageType"u8);
+                writer.WriteStringValue(ImageType.Value.ToString());
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Command))
+            {
+                writer.WritePropertyName("command"u8);
+                writer.WriteStartArray();
+                foreach (var item in Command)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Args))
+            {
+                writer.WritePropertyName("args"u8);
+                writer.WriteStartArray();
+                foreach (var item in Args)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Env))
+            {
+                writer.WritePropertyName("env"u8);
+                writer.WriteStartArray();
+                foreach (var item in Env)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Resources))
+            {
+                writer.WritePropertyName("resources"u8);
+                writer.WriteObjectValue(Resources, options);
+            }
+            if (Optional.IsCollectionDefined(VolumeMounts))
+            {
+                writer.WritePropertyName("volumeMounts"u8);
+                writer.WriteStartArray();
+                foreach (var item in VolumeMounts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         ContainerAppInitContainer IJsonModel<ContainerAppInitContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,6 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string image = default;
+            ImageType? imageType = default;
             string name = default;
             IList<string> command = default;
             IList<string> args = default;
@@ -73,6 +139,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("image"u8))
                 {
                     image = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("imageType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageType = new ImageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -153,6 +228,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppInitContainer(
                 image,
+                imageType,
                 name,
                 command ?? new ChangeTrackingList<string>(),
                 args ?? new ChangeTrackingList<string>(),
@@ -160,200 +236,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 resources,
                 volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(),
                 serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  image: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Image))
-                {
-                    builder.Append("  image: ");
-                    if (Image.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Image}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Image}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Command), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  command: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Command))
-                {
-                    if (Command.Any())
-                    {
-                        builder.Append("  command: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Command)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Args), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  args: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Args))
-                {
-                    if (Args.Any())
-                    {
-                        builder.Append("  args: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Args)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Env), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  env: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Env))
-                {
-                    if (Env.Any())
-                    {
-                        builder.Append("  env: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Env)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  env: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Resources))
-                {
-                    builder.Append("  resources: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Resources, options, 2, false, "  resources: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VolumeMounts), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  volumeMounts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VolumeMounts))
-                {
-                    if (VolumeMounts.Any())
-                    {
-                        builder.Append("  volumeMounts: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VolumeMounts)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumeMounts: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ContainerAppInitContainer>.Write(ModelReaderWriterOptions options)
@@ -364,8 +246,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppInitContainer)} does not support writing '{options.Format}' format.");
             }

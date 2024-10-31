@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,25 +19,17 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(IsEnabled))
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsPeerToPeerEncryptionEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsPeerToPeerEncryptionEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,6 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption IJsonModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -100,37 +92,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption(enabled, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEnabled))
-                {
-                    builder.Append("  enabled: ");
-                    var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption>)this).GetFormatFromOptions(options) : options.Format;
@@ -139,8 +100,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption)} does not support writing '{options.Format}' format.");
             }

@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Diagnostics resource specific properties. </summary>
-        [WirePath("properties")]
         public ContainerAppDiagnosticsProperties Properties { get; set; }
     }
 }

@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppDiagnosticDataProviderMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataProviderMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataProviderMetadata)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
@@ -66,6 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppDiagnosticDataProviderMetadata IJsonModel<ContainerAppDiagnosticDataProviderMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -122,67 +113,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppDiagnosticDataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  providerName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProviderName))
-                {
-                    builder.Append("  providerName: ");
-                    if (ProviderName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProviderName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProviderName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyBag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  propertyBag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PropertyBag))
-                {
-                    if (PropertyBag.Any())
-                    {
-                        builder.Append("  propertyBag: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PropertyBag)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  propertyBag: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppDiagnosticDataProviderMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataProviderMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,8 +121,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataProviderMetadata)} does not support writing '{options.Format}' format.");
             }

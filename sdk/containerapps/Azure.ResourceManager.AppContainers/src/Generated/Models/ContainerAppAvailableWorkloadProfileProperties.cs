@@ -70,22 +70,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Used to categorize workload profiles. </summary>
-        [WirePath("category")]
         public string Category { get; set; }
         /// <summary> indicates whether the profile is default for the location. </summary>
-        [WirePath("applicability")]
         public ContainerAppAvailableWorkloadProfileApplicability? Applicability { get; set; }
         /// <summary> Number of cores in CPU. </summary>
-        [WirePath("cores")]
         public int? Cores { get; set; }
         /// <summary> Memory in GiB. </summary>
-        [WirePath("memoryGiB")]
         public int? MemoryInGiB { get; set; }
         /// <summary> Number of GPUs. </summary>
-        [WirePath("gpus")]
         public int? Gpus { get; set; }
         /// <summary> The everyday name of the workload profile. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

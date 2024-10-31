@@ -8,26 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class BlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<BlobStorageTokenStore>
+    public partial class BlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<BlobStorageTokenStore>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobStorageTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BlobStorageTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobStorageTokenStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,8 +25,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("sasUrlSettingName"u8);
-            writer.WriteStringValue(SasUrlSettingName);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SasUrlSettingName))
+            {
+                writer.WritePropertyName("sasUrlSettingName"u8);
+                writer.WriteStringValue(SasUrlSettingName);
+            }
+            if (Optional.IsDefined(BlobContainerUri))
+            {
+                writer.WritePropertyName("blobContainerUri"u8);
+                writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ManagedIdentityResourceId))
+            {
+                writer.WritePropertyName("managedIdentityResourceId"u8);
+                writer.WriteStringValue(ManagedIdentityResourceId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         BlobStorageTokenStore IJsonModel<BlobStorageTokenStore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,6 +85,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string sasUrlSettingName = default;
+            Uri blobContainerUri = default;
+            string clientId = default;
+            string managedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,51 +97,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sasUrlSettingName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("blobContainerUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobContainerUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("managedIdentityResourceId"u8))
+                {
+                    managedIdentityResourceId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BlobStorageTokenStore(sasUrlSettingName, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUrlSettingName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sasUrlSettingName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SasUrlSettingName))
-                {
-                    builder.Append("  sasUrlSettingName: ");
-                    if (SasUrlSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SasUrlSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SasUrlSettingName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new BlobStorageTokenStore(sasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobStorageTokenStore>.Write(ModelReaderWriterOptions options)
@@ -139,8 +133,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BlobStorageTokenStore)} does not support writing '{options.Format}' format.");
             }

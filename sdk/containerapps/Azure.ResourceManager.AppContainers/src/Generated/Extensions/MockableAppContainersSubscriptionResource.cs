@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private AvailableWorkloadProfilesRestOperations _availableWorkloadProfilesRestClient;
         private ClientDiagnostics _billingMetersClientDiagnostics;
         private BillingMetersRestOperations _billingMetersRestClient;
+        private ClientDiagnostics _builderResourceBuildersClientDiagnostics;
+        private BuildersRestOperations _builderResourceBuildersRestClient;
         private ClientDiagnostics _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics;
         private ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private ClientDiagnostics _containerAppClientDiagnostics;
@@ -32,6 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ContainerAppsAPIRestOperations _containerAppJobExecutionRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
         private ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
+        private ClientDiagnostics _sessionPoolContainerAppsSessionPoolsClientDiagnostics;
+        private ContainerAppsSessionPoolsRestOperations _sessionPoolContainerAppsSessionPoolsRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
         private UsagesRestOperations _usagesRestClient;
 
@@ -51,6 +55,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private AvailableWorkloadProfilesRestOperations AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BillingMetersClientDiagnostics => _billingMetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BillingMetersRestOperations BillingMetersRestClient => _billingMetersRestClient ??= new BillingMetersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BuilderResourceBuildersClientDiagnostics => _builderResourceBuildersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuilderResource.ResourceType.Namespace, Diagnostics);
+        private BuildersRestOperations BuilderResourceBuildersRestClient => _builderResourceBuildersRestClient ??= new BuildersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BuilderResource.ResourceType));
         private ClientDiagnostics ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics => _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ConnectedEnvironmentsRestOperations ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppConnectedEnvironmentResource.ResourceType));
         private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
@@ -61,6 +67,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private ContainerAppsAPIRestOperations ContainerAppJobExecutionRestClient => _containerAppJobExecutionRestClient ??= new ContainerAppsAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobExecutionResource.ResourceType));
         private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ManagedEnvironmentsRestOperations ContainerAppManagedEnvironmentManagedEnvironmentsRestClient => _containerAppManagedEnvironmentManagedEnvironmentsRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppManagedEnvironmentResource.ResourceType));
+        private ClientDiagnostics SessionPoolContainerAppsSessionPoolsClientDiagnostics => _sessionPoolContainerAppsSessionPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", SessionPoolResource.ResourceType.Namespace, Diagnostics);
+        private ContainerAppsSessionPoolsRestOperations SessionPoolContainerAppsSessionPoolsRestClient => _sessionPoolContainerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SessionPoolResource.ResourceType));
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -83,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +182,66 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppBillingMeter.DeserializeContainerAppBillingMeter(e), BillingMetersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBillingMeters", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BuilderResource> GetBuilderResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BuilderResourceBuildersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BuilderResourceBuildersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BuilderResource(Client, BuilderResourceData.DeserializeBuilderResourceData(e)), BuilderResourceBuildersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBuilderResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BuilderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BuilderResource> GetBuilderResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BuilderResourceBuildersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BuilderResourceBuildersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BuilderResource(Client, BuilderResourceData.DeserializeBuilderResourceData(e)), BuilderResourceBuildersClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetBuilderResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +287,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +317,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +347,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +377,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -339,7 +407,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +437,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +475,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +513,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,7 +543,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -493,30 +561,63 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
-        /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
+        /// Get the session pools in a given subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/usages</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SessionPoolResource> GetSessionPoolsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerAppUsage.DeserializeContainerAppUsage(e), UsagesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), SessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetSessionPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the session pools in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/sessionPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SessionPoolResource> GetSessionPools(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SessionPoolContainerAppsSessionPoolsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), SessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetSessionPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,18 +633,45 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-10-02-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerAppUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppContainersUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppContainersUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerAppUsage.DeserializeContainerAppUsage(e), UsagesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppContainersUsage.DeserializeAppContainersUsage(e), UsagesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-02-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppContainersUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppContainersUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppContainersUsage.DeserializeAppContainersUsage(e), UsagesClientDiagnostics, Pipeline, "MockableAppContainersSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

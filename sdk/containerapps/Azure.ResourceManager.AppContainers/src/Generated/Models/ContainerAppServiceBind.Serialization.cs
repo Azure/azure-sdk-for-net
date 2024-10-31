@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppServiceBind>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppServiceBind>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
@@ -44,6 +35,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ClientType))
+            {
+                writer.WritePropertyName("clientType"u8);
+                writer.WriteStringValue(ClientType);
+            }
+            if (Optional.IsCollectionDefined(CustomizedKeys))
+            {
+                writer.WritePropertyName("customizedKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomizedKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,6 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppServiceBind IJsonModel<ContainerAppServiceBind>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,6 +92,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             ResourceIdentifier serviceId = default;
             string name = default;
+            string clientType = default;
+            IDictionary<string, string> customizedKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,66 +112,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("clientType"u8))
+                {
+                    clientType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customizedKeys"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    customizedKeys = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppServiceBind(serviceId, name, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceId))
-                {
-                    builder.Append("  serviceId: ");
-                    builder.AppendLine($"'{ServiceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppServiceBind>.Write(ModelReaderWriterOptions options)
@@ -172,8 +148,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppServiceBind)} does not support writing '{options.Format}' format.");
             }

@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         public ContainerAppRevisionData()
         {
+            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
@@ -75,12 +76,13 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
         /// <param name="replicas"> Number of pods currently running for this revision. </param>
         /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
+        /// <param name="labels"> List of labels assigned to this revision. </param>
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="runningState"> Current running state of the revision. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, IReadOnlyList<string> labels, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastActiveOn = lastActiveOn;
@@ -89,6 +91,7 @@ namespace Azure.ResourceManager.AppContainers
             IsActive = isActive;
             Replicas = replicas;
             TrafficWeight = trafficWeight;
+            Labels = labels;
             ProvisioningError = provisioningError;
             HealthState = healthState;
             ProvisioningState = provisioningState;
@@ -100,41 +103,32 @@ namespace Azure.ResourceManager.AppContainers
         /// Timestamp describing when the revision was created
         /// by controller
         /// </summary>
-        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </summary>
-        [WirePath("properties.lastActiveTime")]
         public DateTimeOffset? LastActiveOn { get; }
         /// <summary> Fully qualified domain name of the revision. </summary>
-        [WirePath("properties.fqdn")]
         public string Fqdn { get; }
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
-        [WirePath("properties.template")]
         public ContainerAppTemplate Template { get; }
         /// <summary> Boolean describing if the Revision is Active. </summary>
-        [WirePath("properties.active")]
         public bool? IsActive { get; }
         /// <summary> Number of pods currently running for this revision. </summary>
-        [WirePath("properties.replicas")]
         public int? Replicas { get; }
         /// <summary> Traffic weight assigned to this revision. </summary>
-        [WirePath("properties.trafficWeight")]
         public int? TrafficWeight { get; }
+        /// <summary> List of labels assigned to this revision. </summary>
+        public IReadOnlyList<string> Labels { get; }
         /// <summary> Optional Field - Platform Error Message. </summary>
-        [WirePath("properties.provisioningError")]
         public string ProvisioningError { get; }
         /// <summary> Current health State of the revision. </summary>
-        [WirePath("properties.healthState")]
         public ContainerAppRevisionHealthState? HealthState { get; }
         /// <summary> Current provisioning State of the revision. </summary>
-        [WirePath("properties.provisioningState")]
         public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
         /// <summary> Current running state of the revision. </summary>
-        [WirePath("properties.runningState")]
         public RevisionRunningState? RunningState { get; }
     }
 }

@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

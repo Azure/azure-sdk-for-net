@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppOpenIdConnectClientCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppOpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectClientCredential)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
@@ -60,6 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppOpenIdConnectClientCredential IJsonModel<ContainerAppOpenIdConnectClientCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -111,59 +103,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppOpenIdConnectClientCredential(method, clientSecretSettingName, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  method: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Method))
-                {
-                    builder.Append("  method: ");
-                    builder.AppendLine($"'{Method.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientSecretSettingName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientSecretSettingName))
-                {
-                    builder.Append("  clientSecretSettingName: ");
-                    if (ClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppOpenIdConnectClientCredential>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppOpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
@@ -172,8 +111,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectClientCredential)} does not support writing '{options.Format}' format.");
             }

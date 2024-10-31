@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppJobTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
@@ -81,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppJobTemplate IJsonModel<ContainerAppJobTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,90 +152,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppJobTemplate(initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(), containers ?? new ChangeTrackingList<ContainerAppContainer>(), volumes ?? new ChangeTrackingList<ContainerAppVolume>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitContainers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  initContainers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InitContainers))
-                {
-                    if (InitContainers.Any())
-                    {
-                        builder.Append("  initContainers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in InitContainers)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  initContainers: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Containers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Containers))
-                {
-                    if (Containers.Any())
-                    {
-                        builder.Append("  containers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Containers)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  containers: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Volumes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  volumes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Volumes))
-                {
-                    if (Volumes.Any())
-                    {
-                        builder.Append("  volumes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Volumes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppJobTemplate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobTemplate>)this).GetFormatFromOptions(options) : options.Format;
@@ -253,8 +160,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support writing '{options.Format}' format.");
             }

@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfo)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -76,6 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppCustomDomainVerificationFailureInfo IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -144,113 +135,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainVerificationFailureInfo(code, message, target, details ?? new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Code), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  code: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Code))
-                {
-                    builder.Append("  code: ");
-                    if (Code.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Code}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Code}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  message: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Message))
-                {
-                    builder.Append("  message: ");
-                    if (Message.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Message}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Message}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  target: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Target))
-                {
-                    builder.Append("  target: ");
-                    if (Target.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Target}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Target}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  details: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Details))
-                {
-                    if (Details.Any())
-                    {
-                        builder.Append("  details: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Details)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  details: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -259,8 +143,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfo)} does not support writing '{options.Format}' format.");
             }

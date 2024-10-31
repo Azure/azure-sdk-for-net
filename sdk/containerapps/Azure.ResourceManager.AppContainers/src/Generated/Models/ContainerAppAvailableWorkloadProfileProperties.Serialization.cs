@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -80,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppAvailableWorkloadProfileProperties IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -174,127 +166,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  category: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Category))
-                {
-                    builder.Append("  category: ");
-                    if (Category.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Category}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Category}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Applicability), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  applicability: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Applicability))
-                {
-                    builder.Append("  applicability: ");
-                    builder.AppendLine($"'{Applicability.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cores), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cores: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cores))
-                {
-                    builder.Append("  cores: ");
-                    builder.AppendLine($"{Cores.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryInGiB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryGiB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryInGiB))
-                {
-                    builder.Append("  memoryGiB: ");
-                    builder.AppendLine($"{MemoryInGiB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gpus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Gpus))
-                {
-                    builder.Append("  gpus: ");
-                    builder.AppendLine($"{Gpus.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("  displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -303,8 +174,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{options.Format}' format.");
             }

@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Name of data provider. </summary>
-        [WirePath("providerName")]
         public string ProviderName { get; set; }
         /// <summary> Collection of properties. </summary>
-        [WirePath("propertyBag")]
         public IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> PropertyBag { get; }
     }
 }

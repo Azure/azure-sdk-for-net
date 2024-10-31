@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of resources. </summary>
-        [WirePath("value")]
         public IReadOnlyList<ContainerAppSecret> Value { get; }
     }
 }

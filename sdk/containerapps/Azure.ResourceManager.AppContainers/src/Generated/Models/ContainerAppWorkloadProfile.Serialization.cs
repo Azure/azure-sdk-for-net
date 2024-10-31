@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,23 +19,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppWorkloadProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppWorkloadProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(EnableFips))
+            {
+                writer.WritePropertyName("enableFips"u8);
+                writer.WriteBooleanValue(EnableFips.Value);
+            }
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
             if (Optional.IsDefined(MinimumNodeCount))
@@ -64,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppWorkloadProfile IJsonModel<ContainerAppWorkloadProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,6 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
+            bool? enableFips = default;
             string workloadProfileType = default;
             int? minimumCount = default;
             int? maximumCount = default;
@@ -97,6 +95,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableFips"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableFips = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("workloadProfileType"u8))
@@ -128,98 +135,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumCount, maximumCount, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadProfileType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  workloadProfileType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WorkloadProfileType))
-                {
-                    builder.Append("  workloadProfileType: ");
-                    if (WorkloadProfileType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkloadProfileType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WorkloadProfileType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minimumCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinimumNodeCount))
-                {
-                    builder.Append("  minimumCount: ");
-                    builder.AppendLine($"{MinimumNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maximumCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaximumNodeCount))
-                {
-                    builder.Append("  maximumCount: ");
-                    builder.AppendLine($"{MaximumNodeCount.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new ContainerAppWorkloadProfile(
+                name,
+                enableFips,
+                workloadProfileType,
+                minimumCount,
+                maximumCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfile>.Write(ModelReaderWriterOptions options)
@@ -230,8 +152,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppWorkloadProfile)} does not support writing '{options.Format}' format.");
             }

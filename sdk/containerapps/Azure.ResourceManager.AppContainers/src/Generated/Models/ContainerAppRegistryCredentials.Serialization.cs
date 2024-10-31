@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppRegistryCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
@@ -70,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppRegistryCredentials IJsonModel<ContainerAppRegistryCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,113 +121,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppRegistryCredentials(server, username, passwordSecretRef, identity, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Server), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  server: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Server))
-                {
-                    builder.Append("  server: ");
-                    if (Server.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Server}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Server}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Username), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  username: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Username))
-                {
-                    builder.Append("  username: ");
-                    if (Username.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Username}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Username}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PasswordSecretRef), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  passwordSecretRef: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PasswordSecretRef))
-                {
-                    builder.Append("  passwordSecretRef: ");
-                    if (PasswordSecretRef.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PasswordSecretRef}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PasswordSecretRef}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    if (Identity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Identity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Identity}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppRegistryCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -244,8 +129,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppRegistryCredentials)} does not support writing '{options.Format}' format.");
             }

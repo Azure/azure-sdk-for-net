@@ -60,8 +60,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runningStateDetails"> The details of container current running state. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
+        /// <param name="debugEndpoint"> Container debug endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint, string debugEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ContainerId = containerId;
@@ -72,35 +73,29 @@ namespace Azure.ResourceManager.AppContainers.Models
             RunningStateDetails = runningStateDetails;
             LogStreamEndpoint = logStreamEndpoint;
             ExecEndpoint = execEndpoint;
+            DebugEndpoint = debugEndpoint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Name of the Container. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The Id of the Container. </summary>
-        [WirePath("containerId")]
         public string ContainerId { get; set; }
         /// <summary> The container ready status. </summary>
-        [WirePath("ready")]
         public bool? IsReady { get; set; }
         /// <summary> The container start status. </summary>
-        [WirePath("started")]
         public bool? IsStarted { get; set; }
         /// <summary> The container restart count. </summary>
-        [WirePath("restartCount")]
         public int? RestartCount { get; set; }
         /// <summary> Current running state of the container. </summary>
-        [WirePath("runningState")]
         public ContainerAppContainerRunningState? RunningState { get; }
         /// <summary> The details of container current running state. </summary>
-        [WirePath("runningStateDetails")]
         public string RunningStateDetails { get; }
         /// <summary> Log Stream endpoint. </summary>
-        [WirePath("logStreamEndpoint")]
         public string LogStreamEndpoint { get; }
         /// <summary> Container exec endpoint. </summary>
-        [WirePath("execEndpoint")]
         public string ExecEndpoint { get; }
+        /// <summary> Container debug endpoint. </summary>
+        public string DebugEndpoint { get; }
     }
 }

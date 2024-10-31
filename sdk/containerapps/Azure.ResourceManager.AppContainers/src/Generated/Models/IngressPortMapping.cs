@@ -73,13 +73,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Specifies whether the app port is accessible outside of the environment. </summary>
-        [WirePath("external")]
         public bool External { get; set; }
         /// <summary> Specifies the port user's container listens on. </summary>
-        [WirePath("targetPort")]
         public int TargetPort { get; set; }
         /// <summary> Specifies the exposed port for the target port. If not specified, it defaults to target port. </summary>
-        [WirePath("exposedPort")]
         public int? ExposedPort { get; set; }
     }
 }

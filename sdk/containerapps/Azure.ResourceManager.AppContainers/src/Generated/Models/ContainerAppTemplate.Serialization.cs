@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,21 +19,13 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         void IJsonModel<ContainerAppTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             if (Optional.IsDefined(RevisionSuffix))
             {
                 writer.WritePropertyName("revisionSuffix"u8);
@@ -106,6 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         ContainerAppTemplate IJsonModel<ContainerAppTemplate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -235,166 +226,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionSuffix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  revisionSuffix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RevisionSuffix))
-                {
-                    builder.Append("  revisionSuffix: ");
-                    if (RevisionSuffix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RevisionSuffix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RevisionSuffix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TerminationGracePeriodSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  terminationGracePeriodSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TerminationGracePeriodSeconds))
-                {
-                    builder.Append("  terminationGracePeriodSeconds: ");
-                    builder.AppendLine($"'{TerminationGracePeriodSeconds.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitContainers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  initContainers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InitContainers))
-                {
-                    if (InitContainers.Any())
-                    {
-                        builder.Append("  initContainers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in InitContainers)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  initContainers: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Containers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Containers))
-                {
-                    if (Containers.Any())
-                    {
-                        builder.Append("  containers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Containers)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  containers: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scale), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Scale))
-                {
-                    builder.Append("  scale: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Volumes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  volumes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Volumes))
-                {
-                    if (Volumes.Any())
-                    {
-                        builder.Append("  volumes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Volumes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  volumes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBinds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceBinds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ServiceBinds))
-                {
-                    if (ServiceBinds.Any())
-                    {
-                        builder.Append("  serviceBinds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ServiceBinds)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serviceBinds: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTemplate>)this).GetFormatFromOptions(options) : options.Format;
@@ -403,8 +234,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppTemplate)} does not support writing '{options.Format}' format.");
             }
