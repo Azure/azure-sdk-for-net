@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CosmosDB
         public bool? IsFreeTierEnabled { get; set; }
         /// <summary> API specific properties. </summary>
         internal ApiProperties ApiProperties { get; set; }
-        /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+        /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
         {
