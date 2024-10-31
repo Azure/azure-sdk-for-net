@@ -764,4 +764,4 @@ function GenerateMatrixForConfig {
       -replace $Replace
 
     return , $matrix
-  }
+}
