@@ -60,8 +60,7 @@ namespace Azure.Core.TestFramework
             var sdkDirectory = Path.GetFullPath(Path.Combine(RepositoryRoot, "sdk"));
             _serviceName = Path.GetFullPath(testProject)
                 .Substring(sdkDirectory.Length)
-                .Trim(Path.DirectorySeparatorChar)
-                .Split(Path.DirectorySeparatorChar).FirstOrDefault();
+                .Trim(Path.DirectorySeparatorChar);
 
             if (string.IsNullOrWhiteSpace(_serviceName))
             {
