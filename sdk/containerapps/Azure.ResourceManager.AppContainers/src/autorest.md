@@ -18,6 +18,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -233,6 +235,10 @@ rename-mapping:
   JobScale.pollingInterval: PollingIntervalInSeconds
   JobScaleRule: ContainerAppJobScaleRule
   JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  TokenStore: ContainerAppTokenStore
+  Usage: ContainerAppUsage
+  UsageName: ContainerAppUsageName
+  UsageUnit: ContainerAppUsageUnit
   DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
 
 request-path-to-resource-name:
@@ -244,6 +250,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}: ContainerAppJobDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}: ContainerAppJobDetectorProperty
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
