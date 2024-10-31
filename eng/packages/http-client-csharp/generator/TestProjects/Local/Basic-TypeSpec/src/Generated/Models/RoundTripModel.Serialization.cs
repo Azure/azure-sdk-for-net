@@ -639,6 +639,10 @@ namespace BasicTypeSpec.Models
         /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(RoundTripModel roundTripModel)
         {
+            if (roundTripModel == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
             return content;

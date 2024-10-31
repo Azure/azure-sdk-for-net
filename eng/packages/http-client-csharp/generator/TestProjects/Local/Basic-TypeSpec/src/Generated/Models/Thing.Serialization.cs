@@ -325,6 +325,10 @@ namespace BasicTypeSpec.Models
         /// <param name="thing"> The <see cref="Thing"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Thing thing)
         {
+            if (thing == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(thing, ModelSerializationExtensions.WireOptions);
             return content;
