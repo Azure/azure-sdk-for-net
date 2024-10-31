@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
-    public class ClustersTests : NetworkCloudManagementTestBase
+    public class NetworkCloudClustersTests : NetworkCloudManagementTestBase
     {
-        public ClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ClustersTests(bool isAsync) : base(isAsync) {}
+        public NetworkCloudClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
+        public NetworkCloudClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
         [RecordedTest]
-        public async Task Clusters()
+        public async Task NetworkCloudClusters()
         {
             var clusterName = Recording.GenerateAssetName("cluster");
             NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
