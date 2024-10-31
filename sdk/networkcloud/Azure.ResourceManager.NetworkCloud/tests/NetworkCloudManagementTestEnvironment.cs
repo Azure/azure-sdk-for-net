@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         private TokenCredential _credential;
 
         // Cluster Manager
-        public string ClusterManagedRG => GetRecordedVariable("CLUSTER_MANAGED_RESOURCE_GROUP");
         public string ManagerExtendedLocation => GetRecordedVariable("MANAGER_EXTENDED_LOCATION");
 
         // Cluster
 
+        public string ClusterManagedRG => GetRecordedVariable("CLUSTER_MANAGED_RESOURCE_GROUP");
         public string ClusterName => GetRecordedVariable("CLUSTER_NAME");
         public ResourceIdentifier ClusterId => new ResourceIdentifier(GetRecordedVariable("CLUSTER_ID"));
         public string ClusterExtendedLocation => GetRecordedVariable("CLUSTER_EXTENDED_LOCATION");
