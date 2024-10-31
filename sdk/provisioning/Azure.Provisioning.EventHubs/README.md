@@ -9,7 +9,7 @@ Azure.Provisioning.EventHubs simplifies declarative resource provisioning in .NE
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.EventHubs --prerelease
+dotnet add package Azure.Provisioning.EventHubs
 ```
 
 ### Prerequisites

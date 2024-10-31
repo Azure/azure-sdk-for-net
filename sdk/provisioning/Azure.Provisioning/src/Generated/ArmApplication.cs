@@ -20,51 +20,83 @@ public partial class ArmApplication : ProvisionableResource
     /// <summary>
     /// The name of the managed application.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The kind of the managed application. Allowed values are MarketPlace and
     /// ServiceCatalog.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The fully qualified path of managed application definition Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ApplicationDefinitionId { get => _applicationDefinitionId; set => _applicationDefinitionId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _applicationDefinitionId;
+    public BicepValue<ResourceIdentifier> ApplicationDefinitionId 
+    {
+        get { Initialize(); return _applicationDefinitionId!; }
+        set { Initialize(); _applicationDefinitionId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _applicationDefinitionId;
 
     /// <summary>
     /// The identity of the resource.
     /// </summary>
-    public BicepValue<ArmApplicationManagedIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ArmApplicationManagedIdentity> _identity;
+    public ArmApplicationManagedIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ArmApplicationManagedIdentity? _identity;
 
     /// <summary>
     /// The managed application Jit access policy.
     /// </summary>
-    public BicepValue<ArmApplicationJitAccessPolicy> JitAccessPolicy { get => _jitAccessPolicy; set => _jitAccessPolicy.Assign(value); }
-    private readonly BicepValue<ArmApplicationJitAccessPolicy> _jitAccessPolicy;
+    public ArmApplicationJitAccessPolicy JitAccessPolicy 
+    {
+        get { Initialize(); return _jitAccessPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _jitAccessPolicy, value); }
+    }
+    private ArmApplicationJitAccessPolicy? _jitAccessPolicy;
 
     /// <summary>
     /// ID of the resource that manages this resource.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; set => _managedBy.Assign(value); }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+        set { Initialize(); _managedBy!.Assign(value); }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// The managed resource group Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ManagedResourceGroupId { get => _managedResourceGroupId; set => _managedResourceGroupId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _managedResourceGroupId;
+    public BicepValue<ResourceIdentifier> ManagedResourceGroupId 
+    {
+        get { Initialize(); return _managedResourceGroupId!; }
+        set { Initialize(); _managedResourceGroupId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _managedResourceGroupId;
 
     /// <summary>
     /// Name and value pairs that define the managed application parameters. It
@@ -83,70 +115,107 @@ public partial class ArmApplication : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Parameters { get => _parameters; set => _parameters.Assign(value); }
-    private readonly BicepValue<BinaryData> _parameters;
+    public BicepValue<BinaryData> Parameters 
+    {
+        get { Initialize(); return _parameters!; }
+        set { Initialize(); _parameters!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _parameters;
 
     /// <summary>
     /// The plan information.
     /// </summary>
-    public BicepValue<ArmPlan> Plan { get => _plan; set => _plan.Assign(value); }
-    private readonly BicepValue<ArmPlan> _plan;
+    public ArmPlan Plan 
+    {
+        get { Initialize(); return _plan!; }
+        set { Initialize(); AssignOrReplace(ref _plan, value); }
+    }
+    private ArmPlan? _plan;
 
     /// <summary>
     /// The SKU of the resource.
     /// </summary>
-    public BicepValue<ArmApplicationSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<ArmApplicationSku> _sku;
+    public ArmApplicationSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private ArmApplicationSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The collection of managed application artifacts.
     /// </summary>
-    public BicepList<ArmApplicationArtifact> Artifacts { get => _artifacts; }
-    private readonly BicepList<ArmApplicationArtifact> _artifacts;
+    public BicepList<ArmApplicationArtifact> Artifacts 
+    {
+        get { Initialize(); return _artifacts!; }
+    }
+    private BicepList<ArmApplicationArtifact>? _artifacts;
 
     /// <summary>
     /// The  read-only authorizations property that is retrieved from the
     /// application package.
     /// </summary>
-    public BicepList<ArmApplicationAuthorization> Authorizations { get => _authorizations; }
-    private readonly BicepList<ArmApplicationAuthorization> _authorizations;
+    public BicepList<ArmApplicationAuthorization> Authorizations 
+    {
+        get { Initialize(); return _authorizations!; }
+    }
+    private BicepList<ArmApplicationAuthorization>? _authorizations;
 
     /// <summary>
     /// The managed application resource usage Id.
     /// </summary>
-    public BicepValue<string> BillingDetailsResourceUsageId { get => _billingDetailsResourceUsageId; }
-    private readonly BicepValue<string> _billingDetailsResourceUsageId;
+    public BicepValue<string> BillingDetailsResourceUsageId 
+    {
+        get { Initialize(); return _billingDetailsResourceUsageId!; }
+    }
+    private BicepValue<string>? _billingDetailsResourceUsageId;
 
     /// <summary>
     /// The client entity that created the JIT request.
     /// </summary>
-    public BicepValue<ArmApplicationDetails> CreatedBy { get => _createdBy; }
-    private readonly BicepValue<ArmApplicationDetails> _createdBy;
+    public ArmApplicationDetails CreatedBy 
+    {
+        get { Initialize(); return _createdBy!; }
+    }
+    private ArmApplicationDetails? _createdBy;
 
     /// <summary>
     /// The read-only customer support property that is retrieved from the
     /// application package.
     /// </summary>
-    public BicepValue<ArmApplicationPackageContact> CustomerSupport { get => _customerSupport; }
-    private readonly BicepValue<ArmApplicationPackageContact> _customerSupport;
+    public ArmApplicationPackageContact CustomerSupport 
+    {
+        get { Initialize(); return _customerSupport!; }
+    }
+    private ArmApplicationPackageContact? _customerSupport;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The managed application management mode.
     /// </summary>
-    public BicepValue<ArmApplicationManagementMode> ManagementMode { get => _managementMode; }
-    private readonly BicepValue<ArmApplicationManagementMode> _managementMode;
+    public BicepValue<ArmApplicationManagementMode> ManagementMode 
+    {
+        get { Initialize(); return _managementMode!; }
+    }
+    private BicepValue<ArmApplicationManagementMode>? _managementMode;
 
     /// <summary>
     /// Name and value pairs that define the managed application outputs.
@@ -164,39 +233,57 @@ public partial class ArmApplication : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Outputs { get => _outputs; }
-    private readonly BicepValue<BinaryData> _outputs;
+    public BicepValue<BinaryData> Outputs 
+    {
+        get { Initialize(); return _outputs!; }
+    }
+    private BicepValue<BinaryData>? _outputs;
 
     /// <summary>
     /// The managed application provisioning state.
     /// </summary>
-    public BicepValue<ResourcesProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ResourcesProvisioningState> _provisioningState;
+    public BicepValue<ResourcesProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ResourcesProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The publisher tenant Id.
     /// </summary>
-    public BicepValue<Guid> PublisherTenantId { get => _publisherTenantId; }
-    private readonly BicepValue<Guid> _publisherTenantId;
+    public BicepValue<Guid> PublisherTenantId 
+    {
+        get { Initialize(); return _publisherTenantId!; }
+    }
+    private BicepValue<Guid>? _publisherTenantId;
 
     /// <summary>
     /// The read-only support URLs property that is retrieved from the
     /// application package.
     /// </summary>
-    public BicepValue<ArmApplicationPackageSupportUris> SupportUris { get => _supportUris; }
-    private readonly BicepValue<ArmApplicationPackageSupportUris> _supportUris;
+    public ArmApplicationPackageSupportUris SupportUris 
+    {
+        get { Initialize(); return _supportUris!; }
+    }
+    private ArmApplicationPackageSupportUris? _supportUris;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The client entity that last updated the JIT request.
     /// </summary>
-    public BicepValue<ArmApplicationDetails> UpdatedBy { get => _updatedBy; }
-    private readonly BicepValue<ArmApplicationDetails> _updatedBy;
+    public ArmApplicationDetails UpdatedBy 
+    {
+        get { Initialize(); return _updatedBy!; }
+    }
+    private ArmApplicationDetails? _updatedBy;
 
     /// <summary>
     /// Creates a new ArmApplication.
@@ -211,31 +298,38 @@ public partial class ArmApplication : ProvisionableResource
     public ArmApplication(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Solutions/applications", resourceVersion ?? "2021-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _applicationDefinitionId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ApplicationDefinitionId", ["properties", "applicationDefinitionId"]);
-        _identity = BicepValue<ArmApplicationManagedIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _jitAccessPolicy = BicepValue<ArmApplicationJitAccessPolicy>.DefineProperty(this, "JitAccessPolicy", ["properties", "jitAccessPolicy"]);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"]);
-        _managedResourceGroupId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ManagedResourceGroupId", ["properties", "managedResourceGroupId"]);
-        _parameters = BicepValue<BinaryData>.DefineProperty(this, "Parameters", ["properties", "parameters"]);
-        _plan = BicepValue<ArmPlan>.DefineProperty(this, "Plan", ["plan"]);
-        _sku = BicepValue<ArmApplicationSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _artifacts = BicepList<ArmApplicationArtifact>.DefineProperty(this, "Artifacts", ["properties", "artifacts"], isOutput: true);
-        _authorizations = BicepList<ArmApplicationAuthorization>.DefineProperty(this, "Authorizations", ["properties", "authorizations"], isOutput: true);
-        _billingDetailsResourceUsageId = BicepValue<string>.DefineProperty(this, "BillingDetailsResourceUsageId", ["properties", "billingDetails", "resourceUsageId"], isOutput: true);
-        _createdBy = BicepValue<ArmApplicationDetails>.DefineProperty(this, "CreatedBy", ["properties", "createdBy"], isOutput: true);
-        _customerSupport = BicepValue<ArmApplicationPackageContact>.DefineProperty(this, "CustomerSupport", ["properties", "customerSupport"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _managementMode = BicepValue<ArmApplicationManagementMode>.DefineProperty(this, "ManagementMode", ["properties", "managementMode"], isOutput: true);
-        _outputs = BicepValue<BinaryData>.DefineProperty(this, "Outputs", ["properties", "outputs"], isOutput: true);
-        _provisioningState = BicepValue<ResourcesProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publisherTenantId = BicepValue<Guid>.DefineProperty(this, "PublisherTenantId", ["properties", "publisherTenantId"], isOutput: true);
-        _supportUris = BicepValue<ArmApplicationPackageSupportUris>.DefineProperty(this, "SupportUris", ["properties", "supportUrls"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedBy = BicepValue<ArmApplicationDetails>.DefineProperty(this, "UpdatedBy", ["properties", "updatedBy"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ArmApplication.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _applicationDefinitionId = DefineProperty<ResourceIdentifier>("ApplicationDefinitionId", ["properties", "applicationDefinitionId"]);
+        _identity = DefineModelProperty<ArmApplicationManagedIdentity>("Identity", ["identity"]);
+        _jitAccessPolicy = DefineModelProperty<ArmApplicationJitAccessPolicy>("JitAccessPolicy", ["properties", "jitAccessPolicy"]);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"]);
+        _managedResourceGroupId = DefineProperty<ResourceIdentifier>("ManagedResourceGroupId", ["properties", "managedResourceGroupId"]);
+        _parameters = DefineProperty<BinaryData>("Parameters", ["properties", "parameters"]);
+        _plan = DefineModelProperty<ArmPlan>("Plan", ["plan"]);
+        _sku = DefineModelProperty<ArmApplicationSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _artifacts = DefineListProperty<ArmApplicationArtifact>("Artifacts", ["properties", "artifacts"], isOutput: true);
+        _authorizations = DefineListProperty<ArmApplicationAuthorization>("Authorizations", ["properties", "authorizations"], isOutput: true);
+        _billingDetailsResourceUsageId = DefineProperty<string>("BillingDetailsResourceUsageId", ["properties", "billingDetails", "resourceUsageId"], isOutput: true);
+        _createdBy = DefineModelProperty<ArmApplicationDetails>("CreatedBy", ["properties", "createdBy"], isOutput: true);
+        _customerSupport = DefineModelProperty<ArmApplicationPackageContact>("CustomerSupport", ["properties", "customerSupport"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _managementMode = DefineProperty<ArmApplicationManagementMode>("ManagementMode", ["properties", "managementMode"], isOutput: true);
+        _outputs = DefineProperty<BinaryData>("Outputs", ["properties", "outputs"], isOutput: true);
+        _provisioningState = DefineProperty<ResourcesProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _publisherTenantId = DefineProperty<Guid>("PublisherTenantId", ["properties", "publisherTenantId"], isOutput: true);
+        _supportUris = DefineModelProperty<ArmApplicationPackageSupportUris>("SupportUris", ["properties", "supportUrls"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedBy = DefineModelProperty<ArmApplicationDetails>("UpdatedBy", ["properties", "updatedBy"], isOutput: true);
     }
 
     /// <summary>

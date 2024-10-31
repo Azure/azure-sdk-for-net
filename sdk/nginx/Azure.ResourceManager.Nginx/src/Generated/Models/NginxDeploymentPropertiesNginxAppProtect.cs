@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
         internal WebApplicationFirewallSettings WebApplicationFirewallSettings { get; set; }
         /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
-        public ActivationState? WebApplicationFirewallActivationState
+        public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
         {
             get => WebApplicationFirewallSettings is null ? default : WebApplicationFirewallSettings.ActivationState;
             set

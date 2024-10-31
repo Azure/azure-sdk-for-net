@@ -5,91 +5,70 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DisabledTransferCheckpointer : TransferCheckpointer
+    internal class DisabledTransferCheckpointer : ITransferCheckpointer
     {
-        public DisabledTransferCheckpointer() { }
-
-        public override Task AddNewJobAsync(
-            string transferId,
-            StorageResource source,
-            StorageResource destination,
-            CancellationToken cancellationToken = default)
+        public Task AddNewJobAsync(string transferId, StorageResource source, StorageResource destination, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task AddNewJobPartAsync(
-            string transferId,
-            int partNumber,
-            Stream headerStream,
-            CancellationToken cancellationToken = default)
+        public Task AddNewJobPartAsync(string transferId, int partNumber, Stream headerStream, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task<int> CurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<int> GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(0);
         }
 
-        public override Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
+        public Task<DataTransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+        {
+            throw Errors.CheckpointerDisabled(nameof(GetDataTransferPropertiesAsync));
+        }
+
+        public Task<JobPartPlanHeader> GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken = default)
+        {
+            throw Errors.CheckpointerDisabled(nameof(GetJobPartAsync));
+        }
+
+        public Task<DataTransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
+        {
+            throw Errors.CheckpointerDisabled(nameof(GetJobStatusAsync));
+        }
+
+        public Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(new List<string>());
         }
 
-        public override Task<Stream> ReadJobPartPlanFileAsync(
-            string transferId,
-            int partNumber,
-            int offset,
-            int length,
-            CancellationToken cancellationToken = default)
+        public Task<bool> IsEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            throw Errors.CheckpointerDisabled("ReadJobPartPlanFileAsync");
+            return Task.FromResult(true);
         }
 
-        public override Task<Stream> ReadJobPlanFileAsync(
-            string transferId,
-            int offset,
-            int length,
-            CancellationToken cancellationToken = default)
-        {
-            throw Errors.CheckpointerDisabled("ReadJobPlanFileAsync");
-        }
-
-        public override Task SetJobPartTransferStatusAsync(
-            string transferId,
-            int partNumber,
-            DataTransferStatus status,
-            CancellationToken cancellationToken = default)
+        public Task SetEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task SetJobTransferStatusAsync(
-            string transferId,
-            DataTransferStatus status,
-            CancellationToken cancellationToken = default)
+        public Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(false);
-        }
-
-        public override Task WriteToJobPlanFileAsync(
-            string transferId,
-            int fileOffset,
-            byte[] buffer,
-            int bufferOffset,
-            int length,
-            CancellationToken cancellationToken = default)
+        public Task SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
+        }
+
+        public Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(true);
         }
     }
 }
