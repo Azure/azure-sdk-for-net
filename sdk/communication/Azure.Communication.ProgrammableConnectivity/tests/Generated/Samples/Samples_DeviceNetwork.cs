@@ -20,7 +20,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeviceNetwork_Retrieve_DeviceNetworkRetrieve()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
@@ -39,7 +39,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeviceNetwork_Retrieve_DeviceNetworkRetrieve_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
@@ -58,7 +58,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeviceNetwork_Retrieve_DeviceNetworkRetrieve_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
@@ -70,7 +70,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeviceNetwork_Retrieve_DeviceNetworkRetrieve_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 

@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call VerifyAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -23,7 +23,7 @@ Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("
       <example>
 This sample shows how to call Verify.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -41,7 +41,7 @@ Response<DeviceLocationVerificationResult> response = client.Verify("zdgrzzaxlod
       <example>
 This sample shows how to call VerifyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -81,7 +81,7 @@ Console.WriteLine(result.GetProperty("verificationResult").ToString());
       <example>
 This sample shows how to call Verify and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 

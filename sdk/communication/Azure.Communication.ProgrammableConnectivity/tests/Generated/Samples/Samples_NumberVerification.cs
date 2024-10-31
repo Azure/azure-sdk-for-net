@@ -20,7 +20,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NumberVerification_VerifyWithoutCode_NumberVerificationVerifyWithoutCode()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -44,7 +44,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NumberVerification_VerifyWithoutCode_NumberVerificationVerifyWithoutCode_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -68,7 +68,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NumberVerification_VerifyWithoutCode_NumberVerificationVerifyWithoutCode_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -84,7 +84,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NumberVerification_VerifyWithoutCode_NumberVerificationVerifyWithoutCode_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -100,7 +100,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NumberVerification_VerifyWithCode_NumberVerificationVerifyWithCode()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -118,7 +118,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NumberVerification_VerifyWithCode_NumberVerificationVerifyWithCode_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -136,7 +136,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_NumberVerification_VerifyWithCode_NumberVerificationVerifyWithCode_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -148,7 +148,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_NumberVerification_VerifyWithCode_NumberVerificationVerifyWithCode_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
