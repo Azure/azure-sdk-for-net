@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call AddOrUpdateBlocklistItemsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -23,7 +23,7 @@ Response<AddOrUpdateTextBlocklistItemsResult> response = await client.AddOrUpdat
       <example>
 This sample shows how to call AddOrUpdateBlocklistItems.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -41,7 +41,7 @@ Response<AddOrUpdateTextBlocklistItemsResult> response = client.AddOrUpdateBlock
       <example>
 This sample shows how to call AddOrUpdateBlocklistItemsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -67,7 +67,7 @@ Console.WriteLine(result.GetProperty("blocklistItems")[0].GetProperty("text").To
       <example>
 This sample shows how to call AddOrUpdateBlocklistItems and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -93,7 +93,7 @@ Console.WriteLine(result.GetProperty("blocklistItems")[0].GetProperty("text").To
       <example>
 This sample shows how to call CreateOrUpdateTextBlocklistAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -108,7 +108,7 @@ Console.WriteLine(result.GetProperty("blocklistName").ToString());
       <example>
 This sample shows how to call CreateOrUpdateTextBlocklist and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -123,7 +123,7 @@ Console.WriteLine(result.GetProperty("blocklistName").ToString());
       <example>
 This sample shows how to call DeleteTextBlocklistAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -136,7 +136,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTextBlocklist.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -149,7 +149,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTextBlocklistAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -160,7 +160,7 @@ Response<TextBlocklist> response = await client.GetTextBlocklistAsync("TestBlock
       <example>
 This sample shows how to call GetTextBlocklist.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -171,7 +171,7 @@ Response<TextBlocklist> response = client.GetTextBlocklist("TestBlocklist");
       <example>
 This sample shows how to call GetTextBlocklistAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -185,7 +185,7 @@ Console.WriteLine(result.GetProperty("blocklistName").ToString());
       <example>
 This sample shows how to call GetTextBlocklist and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -199,7 +199,7 @@ Console.WriteLine(result.GetProperty("blocklistName").ToString());
       <example>
 This sample shows how to call GetTextBlocklistItemAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -210,7 +210,7 @@ Response<TextBlocklistItem> response = await client.GetTextBlocklistItemAsync("T
       <example>
 This sample shows how to call GetTextBlocklistItem.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -221,7 +221,7 @@ Response<TextBlocklistItem> response = client.GetTextBlocklistItem("TestBlocklis
       <example>
 This sample shows how to call GetTextBlocklistItemAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -236,7 +236,7 @@ Console.WriteLine(result.GetProperty("text").ToString());
       <example>
 This sample shows how to call GetTextBlocklistItem and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -251,7 +251,7 @@ Console.WriteLine(result.GetProperty("text").ToString());
       <example>
 This sample shows how to call RemoveBlocklistItemsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -263,7 +263,7 @@ Response response = await client.RemoveBlocklistItemsAsync("TestBlocklist", opti
       <example>
 This sample shows how to call RemoveBlocklistItems.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -275,7 +275,7 @@ Response response = client.RemoveBlocklistItems("TestBlocklist", options);
       <example>
 This sample shows how to call RemoveBlocklistItemsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -295,7 +295,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveBlocklistItems.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -315,7 +315,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTextBlocklistItemsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -328,7 +328,7 @@ await foreach (TextBlocklistItem item in client.GetTextBlocklistItemsAsync("Test
       <example>
 This sample shows how to call GetTextBlocklistItems.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -341,7 +341,7 @@ foreach (TextBlocklistItem item in client.GetTextBlocklistItems("TestBlocklist")
       <example>
 This sample shows how to call GetTextBlocklistItemsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -357,7 +357,7 @@ await foreach (BinaryData item in client.GetTextBlocklistItemsAsync("TestBlockli
       <example>
 This sample shows how to call GetTextBlocklistItems and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -373,7 +373,7 @@ foreach (BinaryData item in client.GetTextBlocklistItems("TestBlocklist", null, 
       <example>
 This sample shows how to call GetTextBlocklistsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -386,7 +386,7 @@ await foreach (TextBlocklist item in client.GetTextBlocklistsAsync())
       <example>
 This sample shows how to call GetTextBlocklists.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -399,7 +399,7 @@ foreach (TextBlocklist item in client.GetTextBlocklists())
       <example>
 This sample shows how to call GetTextBlocklistsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -414,7 +414,7 @@ await foreach (BinaryData item in client.GetTextBlocklistsAsync(null))
       <example>
 This sample shows how to call GetTextBlocklists and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 BlocklistClient client = new BlocklistClient(endpoint, credential);
 

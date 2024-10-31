@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call AnalyzeTextAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -17,7 +17,7 @@ Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
       <example>
 This sample shows how to call AnalyzeText.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -29,7 +29,7 @@ Response<AnalyzeTextResult> response = client.AnalyzeText(options);
       <example>
 This sample shows how to call AnalyzeTextAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -47,7 +47,7 @@ Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("categ
       <example>
 This sample shows how to call AnalyzeText and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -65,7 +65,7 @@ Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("categ
       <example>
 This sample shows how to call AnalyzeImageAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -77,7 +77,7 @@ Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
       <example>
 This sample shows how to call AnalyzeImage.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -89,7 +89,7 @@ Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
       <example>
 This sample shows how to call AnalyzeImageAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -110,7 +110,7 @@ Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("categ
       <example>
 This sample shows how to call AnalyzeImage and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 

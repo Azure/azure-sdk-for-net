@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetEnvironmentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Response<DevCenterEnvironment> response = await client.GetEnvironmentAsync("myPr
       <example>
 This sample shows how to call GetEnvironment.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -27,7 +27,7 @@ Response<DevCenterEnvironment> response = client.GetEnvironment("myProject", "me
       <example>
 This sample shows how to call GetEnvironmentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -44,7 +44,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
       <example>
 This sample shows how to call GetEnvironment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -61,7 +61,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
       <example>
 This sample shows how to call GetCatalogAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -72,7 +72,7 @@ Response<DevCenterCatalog> response = await client.GetCatalogAsync("myProject", 
       <example>
 This sample shows how to call GetCatalog.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -83,7 +83,7 @@ Response<DevCenterCatalog> response = client.GetCatalog("myProject", "foo");
       <example>
 This sample shows how to call GetCatalogAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -97,7 +97,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetCatalog and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -111,7 +111,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetEnvironmentDefinitionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -122,7 +122,7 @@ Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinition
       <example>
 This sample shows how to call GetEnvironmentDefinition.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -133,7 +133,7 @@ Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("myPr
       <example>
 This sample shows how to call GetEnvironmentDefinitionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -149,7 +149,7 @@ Console.WriteLine(result.GetProperty("catalogName").ToString());
       <example>
 This sample shows how to call GetEnvironmentDefinition and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -165,7 +165,7 @@ Console.WriteLine(result.GetProperty("catalogName").ToString());
       <example>
 This sample shows how to call GetAllEnvironmentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -178,7 +178,7 @@ await foreach (DevCenterEnvironment item in client.GetAllEnvironmentsAsync("myPr
       <example>
 This sample shows how to call GetAllEnvironments.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -191,7 +191,7 @@ foreach (DevCenterEnvironment item in client.GetAllEnvironments("myProject"))
       <example>
 This sample shows how to call GetAllEnvironmentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -209,7 +209,7 @@ await foreach (BinaryData item in client.GetAllEnvironmentsAsync("myProject", nu
       <example>
 This sample shows how to call GetAllEnvironments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -227,7 +227,7 @@ foreach (BinaryData item in client.GetAllEnvironments("myProject", null))
       <example>
 This sample shows how to call GetEnvironmentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -240,7 +240,7 @@ await foreach (DevCenterEnvironment item in client.GetEnvironmentsAsync("myProje
       <example>
 This sample shows how to call GetEnvironments.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -253,7 +253,7 @@ foreach (DevCenterEnvironment item in client.GetEnvironments("myProject", "me"))
       <example>
 This sample shows how to call GetEnvironmentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -271,7 +271,7 @@ await foreach (BinaryData item in client.GetEnvironmentsAsync("myProject", "me",
       <example>
 This sample shows how to call GetEnvironments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ foreach (BinaryData item in client.GetEnvironments("myProject", "me", null))
       <example>
 This sample shows how to call GetCatalogsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -302,7 +302,7 @@ await foreach (DevCenterCatalog item in client.GetCatalogsAsync("myProject"))
       <example>
 This sample shows how to call GetCatalogs.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -315,7 +315,7 @@ foreach (DevCenterCatalog item in client.GetCatalogs("myProject"))
       <example>
 This sample shows how to call GetCatalogsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -330,7 +330,7 @@ await foreach (BinaryData item in client.GetCatalogsAsync("myProject", null))
       <example>
 This sample shows how to call GetCatalogs and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -345,7 +345,7 @@ foreach (BinaryData item in client.GetCatalogs("myProject", null))
       <example>
 This sample shows how to call GetEnvironmentDefinitionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsy
       <example>
 This sample shows how to call GetEnvironmentDefinitions.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -371,7 +371,7 @@ foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("myProje
       <example>
 This sample shows how to call GetEnvironmentDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -388,7 +388,7 @@ await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("myProje
       <example>
 This sample shows how to call GetEnvironmentDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -405,7 +405,7 @@ foreach (BinaryData item in client.GetEnvironmentDefinitions("myProject", null))
       <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -418,7 +418,7 @@ await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByC
       <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalog.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -431,7 +431,7 @@ foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog
       <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -448,7 +448,7 @@ await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync
       <example>
 This sample shows how to call GetEnvironmentDefinitionsByCatalog and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -465,7 +465,7 @@ foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("myProject
       <example>
 This sample shows how to call GetEnvironmentTypesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -478,7 +478,7 @@ await foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypesAsync(
       <example>
 This sample shows how to call GetEnvironmentTypes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -491,7 +491,7 @@ foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypes("myProject"
       <example>
 This sample shows how to call GetEnvironmentTypesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -508,7 +508,7 @@ await foreach (BinaryData item in client.GetEnvironmentTypesAsync("myProject", n
       <example>
 This sample shows how to call GetEnvironmentTypes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -525,7 +525,7 @@ foreach (BinaryData item in client.GetEnvironmentTypes("myProject", null))
       <example>
 This sample shows how to call CreateOrUpdateEnvironmentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -554,7 +554,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
       <example>
 This sample shows how to call CreateOrUpdateEnvironment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -583,7 +583,7 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
       <example>
 This sample shows how to call DeleteEnvironmentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
@@ -594,7 +594,7 @@ Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "
       <example>
 This sample shows how to call DeleteEnvironment.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 

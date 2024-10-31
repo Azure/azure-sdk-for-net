@@ -20,7 +20,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_BlocklistClient_AddOrUpdateBlocklistItems_AddOrUpdateBlocklistItemsToTextBlocklist()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -46,7 +46,7 @@ text = "hate",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_BlocklistClient_AddOrUpdateBlocklistItems_AddOrUpdateBlocklistItemsToTextBlocklist_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -72,7 +72,7 @@ text = "hate",
         [Ignore("Only validating compilation of examples")]
         public void Example_BlocklistClient_AddOrUpdateBlocklistItems_AddOrUpdateBlocklistItemsToTextBlocklist_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -90,7 +90,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_BlocklistClient_AddOrUpdateBlocklistItems_AddOrUpdateBlocklistItemsToTextBlocklist_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -108,7 +108,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_CreateOrUpdateTextBlocklist_CreateOrUpdateTextBlocklist()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -123,7 +123,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_CreateOrUpdateTextBlocklist_CreateOrUpdateTextBlocklist_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -138,7 +138,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_DeleteTextBlocklist_DeleteTextBlocklistByBlocklistName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -151,7 +151,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_DeleteTextBlocklist_DeleteTextBlocklistByBlocklistName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -164,7 +164,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_GetTextBlocklist_GetTextBlocklistByBlocklistName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -178,7 +178,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_GetTextBlocklist_GetTextBlocklistByBlocklistName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -192,7 +192,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_GetTextBlocklist_GetTextBlocklistByBlocklistName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -203,7 +203,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_GetTextBlocklist_GetTextBlocklistByBlocklistName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -214,7 +214,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklistItem_GetTextBlocklistItem_GetBlockItemByBlocklistNameAndBlocklistItemId()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -229,7 +229,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklistItem_GetTextBlocklistItem_GetBlockItemByBlocklistNameAndBlocklistItemId_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -244,7 +244,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklistItem_GetTextBlocklistItem_GetBlockItemByBlocklistNameAndBlocklistItemId_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -255,7 +255,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklistItem_GetTextBlocklistItem_GetBlockItemByBlocklistNameAndBlocklistItemId_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -266,7 +266,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_BlocklistClient_RemoveBlocklistItems_RemoveBlockItemsFromTextBlocklist()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -286,7 +286,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_BlocklistClient_RemoveBlocklistItems_RemoveBlockItemsFromTextBlocklist_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -306,7 +306,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_BlocklistClient_RemoveBlocklistItems_RemoveBlockItemsFromTextBlocklist_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -318,7 +318,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_BlocklistClient_RemoveBlocklistItems_RemoveBlockItemsFromTextBlocklist_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -330,7 +330,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklistItem_GetTextBlocklistItems_GetAllBlockItemsByBlocklistName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -346,7 +346,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklistItem_GetTextBlocklistItems_GetAllBlockItemsByBlocklistName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -362,7 +362,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklistItem_GetTextBlocklistItems_GetAllBlockItemsByBlocklistName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -375,7 +375,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklistItem_GetTextBlocklistItems_GetAllBlockItemsByBlocklistName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -388,7 +388,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_GetTextBlocklists_GetAllTextBlocklists()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -403,7 +403,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_GetTextBlocklists_GetAllTextBlocklists_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -418,7 +418,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextBlocklist_GetTextBlocklists_GetAllTextBlocklists_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
@@ -431,7 +431,7 @@ Description = "Hate word",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextBlocklist_GetTextBlocklists_GetAllTextBlocklists_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
