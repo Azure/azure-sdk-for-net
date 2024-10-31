@@ -180,7 +180,7 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %CloudMachine
+# PRLabel: %Cloud Machine
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
 # ServiceLabel: %ProvCloudMachineisioning
