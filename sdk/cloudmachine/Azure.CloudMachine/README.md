@@ -20,7 +20,7 @@ dotnet add package Azure.CloudMachine --prerelease
 
 ## Key concepts
 
-TODO
+TODO.
 
 ## Examples
 
