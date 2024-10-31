@@ -36,6 +36,7 @@ namespace Azure.AI.Translation.Document
             {
                 throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support writing '{format}' format.");
             }
+            writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(global::System.BinaryData.FromStream(Document));
