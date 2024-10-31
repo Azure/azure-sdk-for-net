@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="IncrementCountAsync(int,CancellationToken)">
+      <example>
+This sample shows how to call IncrementCountAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response<int> response = await client.IncrementCountAsync(1234);
+]]></code>
+This sample shows how to call IncrementCountAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response<int> response = await client.IncrementCountAsync(1234);
+]]></code></example>
+    </member>
+    <member name="IncrementCount(int,CancellationToken)">
+      <example>
+This sample shows how to call IncrementCount.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response<int> response = client.IncrementCount(1234);
+]]></code>
+This sample shows how to call IncrementCount with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response<int> response = client.IncrementCount(1234);
+]]></code></example>
+    </member>
+    <member name="IncrementCountAsync(int,RequestContext)">
+      <example>
+This sample shows how to call IncrementCountAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response response = await client.IncrementCountAsync(1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call IncrementCountAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response response = await client.IncrementCountAsync(1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="IncrementCount(int,RequestContext)">
+      <example>
+This sample shows how to call IncrementCount and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response response = client.IncrementCount(1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call IncrementCount with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+SimplePostClient client = new SimplePostClient(endpoint);
+
+Response response = client.IncrementCount(1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

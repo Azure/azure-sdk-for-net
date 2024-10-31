@@ -18,6 +18,7 @@
   "dependencies": {
     "@azure-tools/typespec-azure-core": "^0.47.0",
     "@azure-tools/typespec-client-generator-core": "^0.47.3",
+    "@azure-tools/typespec-csharp": "^0.2.0-beta.20241030.1",
     "@typespec/http-client-csharp": "^0.1.9-alpha.20241029.3"
   }
 }
