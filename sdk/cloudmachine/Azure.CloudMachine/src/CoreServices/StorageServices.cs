@@ -43,7 +43,7 @@ public readonly struct StorageServices
         return container;
     }
 
-    public string UploadJson(object json, string? name = default, bool overwrite = false)
+    public string UploadJson(object json, string name = default, bool overwrite = false)
     {
         BlobContainerClient container = GetDefaultContainer();
 
@@ -61,7 +61,7 @@ public readonly struct StorageServices
         return name;
     }
 
-    public string UploadStream(Stream fileStream, string? name = default, bool overwrite = false)
+    public string UploadStream(Stream fileStream, string name = default, bool overwrite = false)
     {
         BlobContainerClient container = GetDefaultContainer();
 
@@ -79,7 +79,7 @@ public readonly struct StorageServices
         return name;
     }
 
-    public string UploadBinaryData(BinaryData data, string? name = default, bool overwrite = false)
+    public string UploadBinaryData(BinaryData data, string name = default, bool overwrite = false)
     {
         BlobContainerClient container = GetDefaultContainer();
         if (name == default)
@@ -96,9 +96,9 @@ public readonly struct StorageServices
         return name;
     }
 
-    public string UploadBytes(byte[] bytes, string? name = default, bool overwrite = false)
+    public string UploadBytes(byte[] bytes, string name = default, bool overwrite = false)
         => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
-    public string UploadBytes(ReadOnlyMemory<byte> bytes, string? name = default, bool overwrite = false)
+    public string UploadBytes(ReadOnlyMemory<byte> bytes, string name = default, bool overwrite = false)
         => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
 
     public BinaryData DownloadBlob(string path)
@@ -114,7 +114,7 @@ public readonly struct StorageServices
         blob.DeleteIfExists();
     }
 
-    private BlobClient GetBlobClientFromPath(string path, string? containerName)
+    private BlobClient GetBlobClientFromPath(string path, string containerName)
     {
         var _blobContainer = GetDefaultContainer();
         var blobPath = ConvertPathToBlobPath(path, _blobContainer);

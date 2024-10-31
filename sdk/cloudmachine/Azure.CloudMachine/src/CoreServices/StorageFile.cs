@@ -9,7 +9,7 @@ namespace Azure.CloudMachine;
 
 public class StorageFile
 {
-    private readonly Response? _response;
+    private readonly Response _response;
 
     private StorageServices _storage;
     public string Path { get; internal set; }
@@ -24,7 +24,7 @@ public class StorageFile
     /// </summary>
     /// <param name="result"></param>
     /// <remarks>returns null if the file is not created as a return value of a service method call.</remarks>
-    public static implicit operator Response?(StorageFile result) => result._response;
+    public static implicit operator Response(StorageFile result) => result._response;
 
     public CancellationToken CancellationToken { get; internal set; }
 
@@ -46,7 +46,7 @@ public class StorageFile
     // public Uri ShareFile(AccessPermissions permissions, TimeSpan expiresAfter)
     //     => _storage.ShareFile(Path, permissions, expiresAfter);
 
-    internal StorageFile(StorageServices storage, string path, string requestId, Response? response = default)
+    internal StorageFile(StorageServices storage, string path, string requestId, Response response = default)
     {
         _storage = storage;
         Path = path;
