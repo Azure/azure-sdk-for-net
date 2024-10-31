@@ -21,7 +21,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_FindSimilar_FindSimilarAmongFaceIDs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -46,7 +46,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_FindSimilar_FindSimilarAmongFaceIDs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -71,7 +71,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_FindSimilar_FindSimilarAmongFaceIDs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_FindSimilar_FindSimilarAmongFaceIDs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_VerifyFaceToFace_VerifyFaceToFace()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -113,7 +113,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_VerifyFaceToFace_VerifyFaceToFace_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -133,7 +133,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_VerifyFaceToFace_VerifyFaceToFace_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -144,7 +144,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_VerifyFaceToFace_VerifyFaceToFace_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -155,7 +155,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_Group_GroupFaceIDs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -184,7 +184,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_Group_GroupFaceIDs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -213,7 +213,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_Group_GroupFaceIDs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -224,7 +224,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_Group_GroupFaceIDs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -235,7 +235,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_FindSimilarFromLargeFaceList_FindSimilarFromLargeFaceList()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -256,7 +256,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_FindSimilarFromLargeFaceList_FindSimilarFromLargeFaceList_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -277,7 +277,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_FindSimilarFromLargeFaceList_FindSimilarFromLargeFaceList_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -288,7 +288,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_FindSimilarFromLargeFaceList_FindSimilarFromLargeFaceList_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -299,7 +299,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_IdentifyFromLargePersonGroup_IdentifyFromLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -325,7 +325,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_IdentifyFromLargePersonGroup_IdentifyFromLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -351,7 +351,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_IdentifyFromLargePersonGroup_IdentifyFromLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -362,7 +362,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_IdentifyFromLargePersonGroup_IdentifyFromLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -373,7 +373,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_VerifyFromLargePersonGroup_VerifyFromLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -394,7 +394,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_VerifyFromLargePersonGroup_VerifyFromLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -415,7 +415,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceClient_VerifyFromLargePersonGroup_VerifyFromLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 
@@ -426,7 +426,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceClient_VerifyFromLargePersonGroup_VerifyFromLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceClient client = new FaceClient(endpoint, credential);
 

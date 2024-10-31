@@ -21,7 +21,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_CreateLivenessSession_CreateLivenessSession()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -44,7 +44,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_CreateLivenessSession_CreateLivenessSession_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -67,7 +67,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_CreateLivenessSession_CreateLivenessSession_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -85,7 +85,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_CreateLivenessSession_CreateLivenessSession_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -103,7 +103,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_DeleteLivenessSession_DeleteLivenessSession()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -116,7 +116,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_DeleteLivenessSession_DeleteLivenessSession_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -129,7 +129,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_GetLivenessSessionResult_GetLivenessSessionResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -146,7 +146,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_GetLivenessSessionResult_GetLivenessSessionResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -163,7 +163,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_GetLivenessSessionResult_GetLivenessSessionResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_GetLivenessSessionResult_GetLivenessSessionResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -185,7 +185,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_GetLivenessSessions_GetLivenessSessions()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -201,7 +201,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -217,7 +217,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -228,7 +228,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessSession_GetLivenessSessions_GetLivenessSessions_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -239,7 +239,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -264,7 +264,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -300,7 +300,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetLivenessSessionAuditEntries_GetLivenessSessionAuditEntries_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -311,7 +311,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessWithVerifySession_DeleteLivenessWithVerifySession_DeleteLivenessWithVerifySession()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -324,7 +324,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessWithVerifySession_DeleteLivenessWithVerifySession_DeleteLivenessWithVerifySession_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -337,7 +337,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_GetLivenessWithVerifySessionResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -354,7 +354,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_GetLivenessWithVerifySessionResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -371,7 +371,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_GetLivenessWithVerifySessionResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -382,7 +382,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessionResult_GetLivenessWithVerifySessionResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -393,7 +393,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -409,7 +409,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -425,7 +425,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -436,7 +436,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LivenessWithVerifySession_GetLivenessWithVerifySessions_GetLivenessWithVerifySessions_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -447,7 +447,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -472,7 +472,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -497,7 +497,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -508,7 +508,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetLivenessWithVerifySessionAuditEntries_GetLivenessWithVerifySessionAuditEntries_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -519,7 +519,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -540,7 +540,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -561,7 +561,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -572,7 +572,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_DetectFromSessionImage_DetectFromSessionImageId_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -583,7 +583,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetSessionImage_GetSessionImage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -597,7 +597,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -611,7 +611,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
@@ -622,7 +622,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_FaceSessionClient_GetSessionImage_GetSessionImage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             FaceSessionClient client = new FaceSessionClient(endpoint, credential);
 
