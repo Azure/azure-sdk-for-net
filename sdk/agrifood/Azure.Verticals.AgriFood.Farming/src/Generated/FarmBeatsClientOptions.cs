@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Azure.Core;
 
 namespace Azure.Verticals.AgriFood.Farming
@@ -33,5 +35,366 @@ namespace Azure.Verticals.AgriFood.Farming
                 _ => throw new NotSupportedException()
             };
         }
+
+        /// <summary> Minimum average amount of material applied during the application (inclusive). </summary>
+        public double? MinAvgMaterial { get; set; }
+
+        /// <summary> Maximum average amount of material applied during the application (inclusive). </summary>
+        public double? MaxAvgMaterial { get; set; }
+
+        /// <summary> Minimum total amount of material applied during the application (inclusive). </summary>
+        public double? MinTotalMaterial { get; set; }
+
+        /// <summary> Maximum total amount of material applied during the application (inclusive). </summary>
+        public double? MaxTotalMaterial { get; set; }
+
+        /// <summary> Sources of the operation data. </summary>
+        public IEnumerable<string> Sources { get; set; }
+
+        /// <summary> Boundary IDs associated with operation data. </summary>
+        public IEnumerable<string> AssociatedBoundaryIds { get; set; }
+
+        /// <summary> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MinOperationStartDateTime { get; set; }
+
+        /// <summary> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MaxOperationStartDateTime { get; set; }
+
+        /// <summary> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MinOperationEndDateTime { get; set; }
+
+        /// <summary> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MaxOperationEndDateTime { get; set; }
+
+        /// <summary> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MinOperationModifiedDateTime { get; set; }
+
+        /// <summary> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </summary>
+        public DateTimeOffset? MaxOperationModifiedDateTime { get; set; }
+
+        /// <summary> Minimum area for which operation was applied (inclusive). </summary>
+        public double? MinArea { get; set; }
+
+        /// <summary> Maximum area for which operation was applied (inclusive). </summary>
+        public double? MaxArea { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> ApplicationIds { get; set; }
+
+        /// <summary> Names of the resource. </summary>
+        public IEnumerable<string> Names { get; set; }
+
+        /// <summary>
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. "{testKey} eq {testValue}".
+        /// </summary>
+        public IEnumerable<string> PropertyFilters { get; set; }
+
+        /// <summary> Statuses of the resource. </summary>
+        public IEnumerable<string> Statuses { get; set; }
+
+        /// <summary> Minimum creation date of resource (inclusive). </summary>
+        public DateTimeOffset? MinCreatedDateTime { get; set; }
+
+        /// <summary> Maximum creation date of resource (inclusive). </summary>
+        public DateTimeOffset? MaxCreatedDateTime { get; set; }
+
+        /// <summary> Minimum last modified date of resource (inclusive). </summary>
+        public DateTimeOffset? MinLastModifiedDateTime { get; set; }
+
+        /// <summary> Maximum last modified date of resource (inclusive). </summary>
+        public DateTimeOffset? MaxLastModifiedDateTime { get; set; }
+
+        /// <summary>
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </summary>
+        public int? MaxPageSize { get; set; }
+
+        /// <summary> Skip token for getting next set of results. </summary>
+        public string SkipToken { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> Ids { get; set; }
+
+        /// <summary> Resource Ids of the resource. </summary>
+        public IEnumerable<string> ResourceIds { get; set; }
+
+        /// <summary>
+        /// Resource Types of the resource.
+        /// i.e. Party, Farm, Field, SeasonalField, Boundary, ApplicationData, HarvestData, TillageData, PlantingData, PlantTissueAnalysis.
+        /// </summary>
+        public IEnumerable<string> ResourceTypes { get; set; }
+
+        /// <summary> File to be uploaded. </summary>
+        public Stream File { get; set; }
+
+        /// <summary> Associated Resource id for this attachment. </summary>
+        public string ResourceId { get; set; }
+
+        /// <summary> Associated Resource type for this attachment. </summary>
+        public string ResourceType { get; set; }
+
+        /// <summary> Original File Name for this attachment. </summary>
+        public string OriginalFileName { get; set; }
+
+        /// <summary> Unique id. </summary>
+        public string Id { get; set; }
+
+        /// <summary> Status of the resource. </summary>
+        public string Status { get; set; }
+
+        /// <summary> Date when resource was created. </summary>
+        public string CreatedDateTime { get; set; }
+
+        /// <summary> Date when resource was last modified. </summary>
+        public string ModifiedDateTime { get; set; }
+
+        /// <summary> Source of the resource. </summary>
+        public string Source { get; set; }
+
+        /// <summary> Name to identify resource. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Textual description of resource. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Created by user/tenant id. </summary>
+        public string CreatedBy { get; set; }
+
+        /// <summary> Modified by user/tenant id. </summary>
+        public string ModifiedBy { get; set; }
+
+        /// <summary> Type of the parent it belongs to. </summary>
+        public string ParentType { get; set; }
+
+        /// <summary> Type it belongs to. </summary>
+        public string Type { get; set; }
+
+        /// <summary> Parent Ids of the resource. </summary>
+        public IEnumerable<string> ParentIds { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> BoundaryIds { get; set; }
+
+        /// <summary> CropIds of the resource. </summary>
+        public IEnumerable<string> CropIds { get; set; }
+
+        /// <summary> Brands of the resource. </summary>
+        public IEnumerable<string> Brands { get; set; }
+
+        /// <summary> Products of the resource. </summary>
+        public IEnumerable<string> Products { get; set; }
+
+        /// <summary> Traits of the resource. </summary>
+        public IEnumerable<string> Traits { get; set; }
+
+        /// <summary> Crop phenotypes of the resource. </summary>
+        public IEnumerable<string> Phenotypes { get; set; }
+
+        /// <summary> Breeding method of the resource. </summary>
+        public IEnumerable<string> BreedingMethods { get; set; }
+
+        /// <summary> Id's of the parent devices. </summary>
+        public IEnumerable<string> ParentDeviceIds { get; set; }
+
+        /// <summary> Id's of the device data models. </summary>
+        public IEnumerable<string> DeviceDataModelIds { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> FarmIds { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> FieldIds { get; set; }
+
+        /// <summary> Minimum Yield value(inclusive). </summary>
+        public double? MinTotalYield { get; set; }
+
+        /// <summary> Maximum Yield value (inclusive). </summary>
+        public double? MaxTotalYield { get; set; }
+
+        /// <summary> Minimum AvgYield value(inclusive). </summary>
+        public double? MinAvgYield { get; set; }
+
+        /// <summary> Maximum AvgYield value (inclusive). </summary>
+        public double? MaxAvgYield { get; set; }
+
+        /// <summary> Minimum Total WetMass value(inclusive). </summary>
+        public double? MinTotalWetMass { get; set; }
+
+        /// <summary> Maximum Total WetMass value (inclusive). </summary>
+        public double? MaxTotalWetMass { get; set; }
+
+        /// <summary> Minimum AvgWetMass value(inclusive). </summary>
+        public double? MinAvgWetMass { get; set; }
+
+        /// <summary> Maximum AvgWetMass value (inclusive). </summary>
+        public double? MaxAvgWetMass { get; set; }
+
+        /// <summary> Minimum AvgMoisture value(inclusive). </summary>
+        public double? MinAvgMoisture { get; set; }
+
+        /// <summary> Maximum AvgMoisture value (inclusive). </summary>
+        public double? MaxAvgMoisture { get; set; }
+
+        /// <summary> Minimum AvgSpeed value(inclusive). </summary>
+        public double? MinAvgSpeed { get; set; }
+
+        /// <summary> Maximum AvgSpeed value (inclusive). </summary>
+        public double? MaxAvgSpeed { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> HarvestDataIds { get; set; }
+
+        /// <summary> List of insight IDs. </summary>
+        public IEnumerable<string> InsightIds { get; set; }
+
+        /// <summary> Minimum insightStartDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MinInsightStartDateTime { get; set; }
+
+        /// <summary> Maximum insightStartDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MaxInsightStartDateTime { get; set; }
+
+        /// <summary> Minimum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MinInsightEndDateTime { get; set; }
+
+        /// <summary> Maximum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MaxInsightEndDateTime { get; set; }
+
+        /// <summary>
+        /// Filters on measureKey.unit/unitValue or measureKey.value/value pairs within the Measures object.
+        /// eg. "measureKey.unit eq {testValue}" where testValue is string.
+        /// eg. "measureKey.value eq {testValue}" where testValue = double.
+        /// </summary>
+        public IEnumerable<string> MeasurementFilters { get; set; }
+
+        /// <summary> Types of the ManagementZone. </summary>
+        public IEnumerable<string> Types { get; set; }
+
+        /// <summary> SeasonIds of the ManagementZone. </summary>
+        public IEnumerable<string> SeasonIds { get; set; }
+
+        /// <summary> Classifications for nutrient analyses. </summary>
+        public IEnumerable<string> Classifications { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> ProviderIds { get; set; }
+
+        /// <summary> Name of AuthProvider. </summary>
+        public IEnumerable<string> AuthProviderIds { get; set; }
+
+        /// <summary> List of parties. </summary>
+        public IEnumerable<string> PartyIds { get; set; }
+
+        /// <summary> If the token object is valid. </summary>
+        public bool? IsValid { get; set; }
+
+        /// <summary> Minimum AvgPlantingRate value(inclusive). </summary>
+        public double? MinAvgPlantingRate { get; set; }
+
+        /// <summary> Maximum AvgPlantingRate value (inclusive). </summary>
+        public double? MaxAvgPlantingRate { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> PlantingDataIds { get; set; }
+
+        /// <summary> Crop products ids of the plant tissue analyses. </summary>
+        public IEnumerable<string> CropProductsIds { get; set; }
+
+        /// <summary> Prescription Map Ids of the resource. </summary>
+        public IEnumerable<string> PrescriptionMapIds { get; set; }
+
+        /// <summary> Product Codes of the resource. </summary>
+        public IEnumerable<string> ProductCodes { get; set; }
+
+        /// <summary> Product Names of the resource. </summary>
+        public IEnumerable<string> ProductNames { get; set; }
+
+        /// <summary> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </summary>
+        public DateTimeOffset? StartDateTime { get; set; }
+
+        /// <summary> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </summary>
+        public DateTimeOffset? EndDateTime { get; set; }
+
+        /// <summary> Filter scenes with cloud coverage percentage less than max value. Range [0 to 100.0]. </summary>
+        public double? MaxCloudCoveragePercentage { get; set; }
+
+        /// <summary> Filter scenes with dark pixel coverage percentage less than max value. Range [0 to 100.0]. </summary>
+        public double? MaxDarkPixelCoveragePercentage { get; set; }
+
+        /// <summary> List of image names to be filtered. </summary>
+        public IEnumerable<string> ImageNames { get; set; }
+
+        /// <summary> List of image resolutions in meters to be filtered. </summary>
+        public IEnumerable<double> ImageResolutions { get; set; }
+
+        /// <summary> List of image formats to be filtered. </summary>
+        public IEnumerable<string> ImageFormats { get; set; }
+
+        /// <summary> Maximum number of features needed (inclusive). Minimum = 1, Maximum = 100, Default value = 10. </summary>
+        public int? Maxpagesize { get; set; }
+
+        /// <summary> Skip token for getting next set of results. </summary>
+        public int? Skip { get; set; }
+
+        /// <summary> CropProductIds of the resource. </summary>
+        public IEnumerable<string> CropProductIds { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> SeasonalFieldIds { get; set; }
+
+        /// <summary> Minimum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MinStartDateTime { get; set; }
+
+        /// <summary> Maximum season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MaxStartDateTime { get; set; }
+
+        /// <summary> Minimum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MinEndDateTime { get; set; }
+
+        /// <summary> Maximum season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        public DateTimeOffset? MaxEndDateTime { get; set; }
+
+        /// <summary> Years of the resource. </summary>
+        public IEnumerable<int> Years { get; set; }
+
+        /// <summary> Flag to exclude duplicate events and take the latest ones only (Default: true). </summary>
+        public bool? ExcludeDuplicateEvents { get; set; }
+
+        /// <summary> Id of the sensors. </summary>
+        public IEnumerable<string> SensorIds { get; set; }
+
+        /// <summary> Id of the sensor partners. </summary>
+        public IEnumerable<string> SensorPartnerIds { get; set; }
+
+        /// <summary> Ids of the partner integration models. </summary>
+        public IEnumerable<string> IntegrationIds { get; set; }
+
+        /// <summary> Id's of the sensor data models. </summary>
+        public IEnumerable<string> SensorDataModelIds { get; set; }
+
+        /// <summary> Ids of the sensor mappings. </summary>
+        public IEnumerable<string> SensorMappingIds { get; set; }
+
+        /// <summary> Id's of the devices. </summary>
+        public IEnumerable<string> DeviceIds { get; set; }
+
+        /// <summary> Minimum measured tillage depth (inclusive). </summary>
+        public double? MinTillageDepth { get; set; }
+
+        /// <summary> Maximum measured tillage depth (inclusive). </summary>
+        public double? MaxTillageDepth { get; set; }
+
+        /// <summary> Minimum pressure applied to a tillage implement (inclusive). </summary>
+        public double? MinTillagePressure { get; set; }
+
+        /// <summary> Maximum pressure applied to a tillage implement (inclusive). </summary>
+        public double? MaxTillagePressure { get; set; }
+
+        /// <summary> Ids of the resource. </summary>
+        public IEnumerable<string> TillageDataIds { get; set; }
+
+        /// <summary> ManagementZoneIds of the Zones. </summary>
+        public IEnumerable<string> ManagementZoneIds { get; set; }
     }
 }

@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call DetectUnivariateEntireSeriesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -275,7 +275,7 @@ Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
       <example>
 This sample shows how to call DetectUnivariateEntireSeries and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -545,7 +545,7 @@ Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
       <example>
 This sample shows how to call DetectUnivariateLastPointAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -758,7 +758,7 @@ Response<UnivariateLastDetectionResult> response = await client.DetectUnivariate
       <example>
 This sample shows how to call DetectUnivariateLastPoint.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -971,7 +971,7 @@ Response<UnivariateLastDetectionResult> response = client.DetectUnivariateLastPo
       <example>
 This sample shows how to call DetectUnivariateLastPointAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -1243,7 +1243,7 @@ Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
       <example>
 This sample shows how to call DetectUnivariateLastPoint and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -1515,7 +1515,7 @@ Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
       <example>
 This sample shows how to call DetectUnivariateChangePointAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -2563,7 +2563,7 @@ Response<UnivariateChangePointDetectionResult> response = await client.DetectUni
       <example>
 This sample shows how to call DetectUnivariateChangePoint.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -3611,7 +3611,7 @@ Response<UnivariateChangePointDetectionResult> response = client.DetectUnivariat
       <example>
 This sample shows how to call DetectUnivariateChangePointAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 
@@ -4921,7 +4921,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DetectUnivariateChangePoint and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Univariate client = new AnomalyDetectorClient(endpoint, credential).GetUnivariateClient();
 

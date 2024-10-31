@@ -21,7 +21,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDetails_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjectDetails_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjectDetails_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjectDetails_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -158,7 +158,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -189,7 +189,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeleteStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -206,7 +206,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeleteStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -223,7 +223,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeleteStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -255,7 +255,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeleteStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -287,7 +287,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -305,7 +305,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -323,7 +323,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetExportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -356,7 +356,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetExportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -389,7 +389,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -406,7 +406,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetImportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -423,7 +423,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetImportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -455,7 +455,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetImportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -487,7 +487,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -504,7 +504,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -521,7 +521,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -553,7 +553,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -585,7 +585,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSynonyms_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -599,7 +599,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSynonyms_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -613,7 +613,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSynonyms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -640,7 +640,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSynonyms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -667,7 +667,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateSourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -684,7 +684,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateSourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -701,7 +701,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateSourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -733,7 +733,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateSourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -765,7 +765,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateQnasStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -782,7 +782,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateQnasStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -799,7 +799,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdateQnasStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -831,7 +831,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdateQnasStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -863,7 +863,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_AddFeedback_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -877,7 +877,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddFeedback_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -891,7 +891,7 @@ alterations = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_AddFeedback_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -916,7 +916,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AddFeedback_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -941,7 +941,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -956,7 +956,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjects_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -971,7 +971,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProjects_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -993,7 +993,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProjects_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1015,7 +1015,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1030,7 +1030,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1045,7 +1045,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1061,7 +1061,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1077,7 +1077,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSynonyms_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1092,7 +1092,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSynonyms_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1107,7 +1107,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSynonyms_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1122,7 +1122,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSynonyms_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1137,7 +1137,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSources_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1153,7 +1153,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1169,7 +1169,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSources_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1189,7 +1189,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1209,7 +1209,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQnas_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1224,7 +1224,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQnas_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1239,7 +1239,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetQnas_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1276,7 +1276,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetQnas_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1313,7 +1313,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1324,7 +1324,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1335,7 +1335,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1346,7 +1346,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1357,7 +1357,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_Export_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1376,7 +1376,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Export_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1395,7 +1395,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_Export_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1429,7 +1429,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Export_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1463,7 +1463,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_Import_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1482,7 +1482,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Import_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1501,7 +1501,7 @@ qnaId = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_Import_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1627,7 +1627,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Import_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1753,7 +1753,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1768,7 +1768,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeployProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1783,7 +1783,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_DeployProject_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1799,7 +1799,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeployProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1815,7 +1815,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSources_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1845,7 +1845,7 @@ sourceKind = "file",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1875,7 +1875,7 @@ sourceKind = "file",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateSources_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1913,7 +1913,7 @@ contentStructureKind = "unstructured",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateSources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1951,7 +1951,7 @@ contentStructureKind = "unstructured",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateQnas_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1976,7 +1976,7 @@ value = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateQnas_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -2001,7 +2001,7 @@ value = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateQnas_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -2090,7 +2090,7 @@ autoSuggestedCount = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateQnas_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 

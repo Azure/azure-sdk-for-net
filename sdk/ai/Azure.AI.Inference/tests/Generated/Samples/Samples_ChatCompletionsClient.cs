@@ -19,7 +19,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client1_GetModelInfo_MaximumSetModelInformation()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -51,7 +51,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -62,7 +62,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client1_GetModelInfo_MaximumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -73,7 +73,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client1_GetModelInfo_MinimumSetModelInformation()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -89,7 +89,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -105,7 +105,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 
@@ -116,7 +116,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client1_GetModelInfo_MinimumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatCompletionsClient client = new ChatCompletionsClient(endpoint, credential);
 

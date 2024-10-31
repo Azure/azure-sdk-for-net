@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetProjectDetailsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetProjectDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -37,7 +37,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call GetProjectDetails and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetProjectDetails with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -69,7 +69,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call CreateProjectAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateProjectAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -115,7 +115,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call CreateProject and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -130,7 +130,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateProject with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -161,7 +161,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call GetDeleteStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -175,7 +175,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeleteStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -207,7 +207,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetDeleteStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -221,7 +221,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeleteStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -253,7 +253,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetExportStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -268,7 +268,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -301,7 +301,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetExportStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -316,7 +316,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -349,7 +349,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetImportStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -363,7 +363,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetImportStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -395,7 +395,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetImportStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -409,7 +409,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetImportStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -441,7 +441,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetDeployStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -455,7 +455,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeployStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -487,7 +487,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetDeployStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -501,7 +501,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeployStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -533,7 +533,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call UpdateSynonymsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -544,7 +544,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -571,7 +571,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateSynonyms.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -582,7 +582,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateSynonyms with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -609,7 +609,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetUpdateSourcesStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -623,7 +623,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUpdateSourcesStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -655,7 +655,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetUpdateSourcesStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -669,7 +669,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUpdateSourcesStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -701,7 +701,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetUpdateQnasStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -715,7 +715,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUpdateQnasStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -747,7 +747,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetUpdateQnasStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -761,7 +761,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUpdateQnasStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -793,7 +793,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call AddFeedbackAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -804,7 +804,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddFeedbackAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -829,7 +829,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddFeedback.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -840,7 +840,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddFeedback with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -865,7 +865,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -877,7 +877,7 @@ await foreach (BinaryData item in client.GetProjectsAsync())
 ]]></code>
 This sample shows how to call GetProjectsAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -899,7 +899,7 @@ await foreach (BinaryData item in client.GetProjectsAsync())
       <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -911,7 +911,7 @@ foreach (BinaryData item in client.GetProjects())
 ]]></code>
 This sample shows how to call GetProjects with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -933,7 +933,7 @@ foreach (BinaryData item in client.GetProjects())
       <example>
 This sample shows how to call GetDeploymentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -945,7 +945,7 @@ await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
 ]]></code>
 This sample shows how to call GetDeploymentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -961,7 +961,7 @@ await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>"))
       <example>
 This sample shows how to call GetDeployments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -973,7 +973,7 @@ foreach (BinaryData item in client.GetDeployments("<projectName>"))
 ]]></code>
 This sample shows how to call GetDeployments with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -989,7 +989,7 @@ foreach (BinaryData item in client.GetDeployments("<projectName>"))
       <example>
 This sample shows how to call GetSynonymsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1001,7 +1001,7 @@ await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
 ]]></code>
 This sample shows how to call GetSynonymsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1016,7 +1016,7 @@ await foreach (BinaryData item in client.GetSynonymsAsync("<projectName>"))
       <example>
 This sample shows how to call GetSynonyms and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1028,7 +1028,7 @@ foreach (BinaryData item in client.GetSynonyms("<projectName>"))
 ]]></code>
 This sample shows how to call GetSynonyms with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1043,7 +1043,7 @@ foreach (BinaryData item in client.GetSynonyms("<projectName>"))
       <example>
 This sample shows how to call GetSourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1056,7 +1056,7 @@ await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
 ]]></code>
 This sample shows how to call GetSourcesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1076,7 +1076,7 @@ await foreach (BinaryData item in client.GetSourcesAsync("<projectName>"))
       <example>
 This sample shows how to call GetSources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1089,7 +1089,7 @@ foreach (BinaryData item in client.GetSources("<projectName>"))
 ]]></code>
 This sample shows how to call GetSources with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1109,7 +1109,7 @@ foreach (BinaryData item in client.GetSources("<projectName>"))
       <example>
 This sample shows how to call GetQnasAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1121,7 +1121,7 @@ await foreach (BinaryData item in client.GetQnasAsync("<projectName>"))
 ]]></code>
 This sample shows how to call GetQnasAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1158,7 +1158,7 @@ await foreach (BinaryData item in client.GetQnasAsync("<projectName>", source: "
       <example>
 This sample shows how to call GetQnas and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1170,7 +1170,7 @@ foreach (BinaryData item in client.GetQnas("<projectName>"))
 ]]></code>
 This sample shows how to call GetQnas with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1207,7 +1207,7 @@ foreach (BinaryData item in client.GetQnas("<projectName>", source: "<source>"))
       <example>
 This sample shows how to call DeleteProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1215,7 +1215,7 @@ Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<pro
 ]]></code>
 This sample shows how to call DeleteProjectAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1226,7 +1226,7 @@ Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<pro
       <example>
 This sample shows how to call DeleteProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1234,7 +1234,7 @@ Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>")
 ]]></code>
 This sample shows how to call DeleteProject with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1245,7 +1245,7 @@ Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>")
       <example>
 This sample shows how to call ExportAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1261,7 +1261,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call ExportAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1295,7 +1295,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call Export and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1311,7 +1311,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call Export with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1345,7 +1345,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call ImportAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1361,7 +1361,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call ImportAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1487,7 +1487,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call Import and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1503,7 +1503,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call Import with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1629,7 +1629,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call DeployProjectAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1641,7 +1641,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1657,7 +1657,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call DeployProject and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1669,7 +1669,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeployProject with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1685,7 +1685,7 @@ Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
       <example>
 This sample shows how to call UpdateSourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1712,7 +1712,7 @@ await foreach (BinaryData item in operation.Value)
 ]]></code>
 This sample shows how to call UpdateSourcesAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1750,7 +1750,7 @@ await foreach (BinaryData item in operation.Value)
       <example>
 This sample shows how to call UpdateSources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1777,7 +1777,7 @@ foreach (BinaryData item in operation.Value)
 ]]></code>
 This sample shows how to call UpdateSources with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1815,7 +1815,7 @@ foreach (BinaryData item in operation.Value)
       <example>
 This sample shows how to call UpdateQnasAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1837,7 +1837,7 @@ await foreach (BinaryData item in operation.Value)
 ]]></code>
 This sample shows how to call UpdateQnasAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1926,7 +1926,7 @@ await foreach (BinaryData item in operation.Value)
       <example>
 This sample shows how to call UpdateQnas and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 
@@ -1948,7 +1948,7 @@ foreach (BinaryData item in operation.Value)
 ]]></code>
 This sample shows how to call UpdateQnas with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 

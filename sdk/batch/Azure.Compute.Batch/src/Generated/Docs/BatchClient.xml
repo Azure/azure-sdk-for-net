@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetApplicationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Response<BatchApplication> response = await client.GetApplicationAsync("my_appli
       <example>
 This sample shows how to call GetApplication.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -27,7 +27,7 @@ Response<BatchApplication> response = client.GetApplication("my_application_id")
       <example>
 This sample shows how to call GetApplicationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -43,7 +43,7 @@ Console.WriteLine(result.GetProperty("versions")[0].ToString());
       <example>
 This sample shows how to call GetApplication and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("versions")[0].ToString());
       <example>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -82,7 +82,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -130,7 +130,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -164,7 +164,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -188,7 +188,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -213,7 +213,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -238,7 +238,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -267,7 +267,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -306,7 +306,7 @@ Response response = await client.CreatePoolAsync(pool);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -335,7 +335,7 @@ Response response = await client.CreatePoolAsync(pool);
       <example>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -406,7 +406,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -440,7 +440,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -464,7 +464,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -489,7 +489,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -514,7 +514,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -543,7 +543,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -582,7 +582,7 @@ Response response = client.CreatePool(pool);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -611,7 +611,7 @@ Response response = client.CreatePool(pool);
       <example>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -642,7 +642,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -720,7 +720,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -763,7 +763,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -795,7 +795,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -831,7 +831,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -874,7 +874,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -916,7 +916,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -977,7 +977,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1015,7 +1015,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1046,7 +1046,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1124,7 +1124,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1167,7 +1167,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1199,7 +1199,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1235,7 +1235,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1278,7 +1278,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1320,7 +1320,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1381,7 +1381,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1419,7 +1419,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeletePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1432,7 +1432,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeletePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1445,7 +1445,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1453,7 +1453,7 @@ Response<BatchPool> response = await client.GetPoolAsync("pool");
 ]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1461,7 +1461,7 @@ Response<BatchPool> response = await client.GetPoolAsync("pool");
 ]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1469,7 +1469,7 @@ Response<BatchPool> response = await client.GetPoolAsync("mypool001");
 ]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1477,7 +1477,7 @@ Response<BatchPool> response = await client.GetPoolAsync("pool");
 ]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1485,7 +1485,7 @@ Response<BatchPool> response = await client.GetPoolAsync("mypool001");
 ]]></code>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1496,7 +1496,7 @@ Response<BatchPool> response = await client.GetPoolAsync("pool");
       <example>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1504,7 +1504,7 @@ Response<BatchPool> response = client.GetPool("pool");
 ]]></code>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1512,7 +1512,7 @@ Response<BatchPool> response = client.GetPool("pool");
 ]]></code>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1520,7 +1520,7 @@ Response<BatchPool> response = client.GetPool("mypool001");
 ]]></code>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1528,7 +1528,7 @@ Response<BatchPool> response = client.GetPool("pool");
 ]]></code>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1536,7 +1536,7 @@ Response<BatchPool> response = client.GetPool("mypool001");
 ]]></code>
 This sample shows how to call GetPool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1547,7 +1547,7 @@ Response<BatchPool> response = client.GetPool("pool");
       <example>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1558,7 +1558,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1569,7 +1569,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1580,7 +1580,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1591,7 +1591,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1602,7 +1602,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1616,7 +1616,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1627,7 +1627,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1638,7 +1638,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1649,7 +1649,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1660,7 +1660,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1671,7 +1671,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1685,7 +1685,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdatePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1705,7 +1705,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdatePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1725,7 +1725,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisablePoolAutoScaleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1738,7 +1738,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisablePoolAutoScale.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1751,7 +1751,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnablePoolAutoScaleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1767,7 +1767,7 @@ Response response = await client.EnablePoolAutoScaleAsync("poolId", content);
       <example>
 This sample shows how to call EnablePoolAutoScale.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1783,7 +1783,7 @@ Response response = client.EnablePoolAutoScale("poolId", content);
       <example>
 This sample shows how to call EnablePoolAutoScaleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1801,7 +1801,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnablePoolAutoScale.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1819,7 +1819,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EvaluatePoolAutoScaleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1831,7 +1831,7 @@ Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("poolI
       <example>
 This sample shows how to call EvaluatePoolAutoScale.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1843,7 +1843,7 @@ Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("poolId", content
       <example>
 This sample shows how to call EvaluatePoolAutoScaleAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1861,7 +1861,7 @@ Console.WriteLine(result.GetProperty("timestamp").ToString());
       <example>
 This sample shows how to call EvaluatePoolAutoScale and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1879,7 +1879,7 @@ Console.WriteLine(result.GetProperty("timestamp").ToString());
       <example>
 This sample shows how to call ResizePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1895,7 +1895,7 @@ Response response = await client.ResizePoolAsync("resizePool", content);
       <example>
 This sample shows how to call ResizePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1911,7 +1911,7 @@ Response response = client.ResizePool("resizePool", content);
       <example>
 This sample shows how to call ResizePoolAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1929,7 +1929,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ResizePool.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1947,7 +1947,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call StopPoolResizeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1960,7 +1960,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call StopPoolResize.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1973,7 +1973,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplacePoolPropertiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -1988,7 +1988,7 @@ Response response = await client.ReplacePoolPropertiesAsync("poolId", pool);
       <example>
 This sample shows how to call ReplacePoolProperties.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2003,7 +2003,7 @@ Response response = client.ReplacePoolProperties("poolId", pool);
       <example>
 This sample shows how to call ReplacePoolPropertiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2025,7 +2025,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplacePoolProperties.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2047,7 +2047,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveNodesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2059,7 +2059,7 @@ Response response = await client.RemoveNodesAsync("poolId", content);
       <example>
 This sample shows how to call RemoveNodes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2071,7 +2071,7 @@ Response response = client.RemoveNodes("poolId", content);
       <example>
 This sample shows how to call RemoveNodesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2092,7 +2092,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveNodes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2113,7 +2113,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2126,7 +2126,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2139,7 +2139,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2150,7 +2150,7 @@ Response<BatchJob> response = await client.GetJobAsync("jobId");
       <example>
 This sample shows how to call GetJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2161,7 +2161,7 @@ Response<BatchJob> response = client.GetJob("jobId");
       <example>
 This sample shows how to call GetJobAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2175,7 +2175,7 @@ Console.WriteLine(result.GetProperty("poolInfo").ToString());
       <example>
 This sample shows how to call GetJob and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2189,7 +2189,7 @@ Console.WriteLine(result.GetProperty("poolInfo").ToString());
       <example>
 This sample shows how to call UpdateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2215,7 +2215,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2241,7 +2241,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2264,7 +2264,7 @@ Response response = await client.ReplaceJobAsync("jobId", job);
       <example>
 This sample shows how to call ReplaceJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2287,7 +2287,7 @@ Response response = client.ReplaceJob("jobId", job);
       <example>
 This sample shows how to call ReplaceJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2313,7 +2313,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2339,7 +2339,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2351,7 +2351,7 @@ Response response = await client.DisableJobAsync("jobId", content);
       <example>
 This sample shows how to call DisableJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2363,7 +2363,7 @@ Response response = client.DisableJob("jobId", content);
       <example>
 This sample shows how to call DisableJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2380,7 +2380,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2397,7 +2397,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2410,7 +2410,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2423,7 +2423,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2434,7 +2434,7 @@ Response response = await client.TerminateJobAsync("jobId");
       <example>
 This sample shows how to call TerminateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2445,7 +2445,7 @@ Response response = client.TerminateJob("jobId");
       <example>
 This sample shows how to call TerminateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2459,7 +2459,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2473,7 +2473,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2488,7 +2488,7 @@ Response response = await client.CreateJobAsync(job);
 ]]></code>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2589,7 +2589,7 @@ Response response = await client.CreateJobAsync(job);
       <example>
 This sample shows how to call CreateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2604,7 +2604,7 @@ Response response = client.CreateJob(job);
 ]]></code>
 This sample shows how to call CreateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2705,7 +2705,7 @@ Response response = client.CreateJob(job);
       <example>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2724,7 +2724,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2870,7 +2870,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -2889,7 +2889,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3035,7 +3035,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetJobTaskCountsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3046,7 +3046,7 @@ Response<BatchTaskCountsResult> response = await client.GetJobTaskCountsAsync("j
       <example>
 This sample shows how to call GetJobTaskCounts.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3057,7 +3057,7 @@ Response<BatchTaskCountsResult> response = client.GetJobTaskCounts("jobId");
       <example>
 This sample shows how to call GetJobTaskCountsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3080,7 +3080,7 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToS
       <example>
 This sample shows how to call GetJobTaskCounts and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3103,7 +3103,7 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToS
       <example>
 This sample shows how to call DeleteJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3116,7 +3116,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3129,7 +3129,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3140,7 +3140,7 @@ Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("jobSched
       <example>
 This sample shows how to call GetJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3151,7 +3151,7 @@ Response<BatchJobSchedule> response = client.GetJobSchedule("jobScheduleId");
       <example>
 This sample shows how to call GetJobScheduleAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3165,7 +3165,7 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
       <example>
 This sample shows how to call GetJobSchedule and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3179,7 +3179,7 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
       <example>
 This sample shows how to call UpdateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3213,7 +3213,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3247,7 +3247,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3277,7 +3277,7 @@ Response response = await client.ReplaceJobScheduleAsync("jobScheduleId", jobSch
       <example>
 This sample shows how to call ReplaceJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3307,7 +3307,7 @@ Response response = client.ReplaceJobSchedule("jobScheduleId", jobSchedule);
       <example>
 This sample shows how to call ReplaceJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3341,7 +3341,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3375,7 +3375,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3388,7 +3388,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3401,7 +3401,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3414,7 +3414,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3427,7 +3427,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3440,7 +3440,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3453,7 +3453,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3468,7 +3468,7 @@ Response response = await client.CreateJobScheduleAsync(jobSchedule);
 ]]></code>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3577,7 +3577,7 @@ Response response = await client.CreateJobScheduleAsync(jobSchedule);
       <example>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3592,7 +3592,7 @@ Response response = client.CreateJobSchedule(jobSchedule);
 ]]></code>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3701,7 +3701,7 @@ Response response = client.CreateJobSchedule(jobSchedule);
       <example>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3726,7 +3726,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3882,7 +3882,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -3907,7 +3907,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4063,7 +4063,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4072,7 +4072,7 @@ Response response = await client.CreateTaskAsync("jobId", task);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4095,7 +4095,7 @@ Response response = await client.CreateTaskAsync("jobId", task);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4121,7 +4121,7 @@ Response response = await client.CreateTaskAsync("jobId", task);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4136,7 +4136,7 @@ Response response = await client.CreateTaskAsync("jobId", task);
       <example>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4145,7 +4145,7 @@ Response response = client.CreateTask("jobId", task);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4168,7 +4168,7 @@ Response response = client.CreateTask("jobId", task);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4194,7 +4194,7 @@ Response response = client.CreateTask("jobId", task);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4209,7 +4209,7 @@ Response response = client.CreateTask("jobId", task);
       <example>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4224,7 +4224,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4252,7 +4252,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4290,7 +4290,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4309,7 +4309,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4324,7 +4324,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4352,7 +4352,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4390,7 +4390,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CreateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4409,7 +4409,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateTaskCollectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4422,7 +4422,7 @@ Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollect
 ]]></code>
 This sample shows how to call CreateTaskCollectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4469,7 +4469,7 @@ Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollect
       <example>
 This sample shows how to call CreateTaskCollection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4482,7 +4482,7 @@ Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("j
 ]]></code>
 This sample shows how to call CreateTaskCollection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4529,7 +4529,7 @@ Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("j
       <example>
 This sample shows how to call CreateTaskCollectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4556,7 +4556,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateTaskCollectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4631,7 +4631,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call CreateTaskCollection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4658,7 +4658,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateTaskCollection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4733,7 +4733,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4746,7 +4746,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4759,7 +4759,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4770,7 +4770,7 @@ Response<BatchTask> response = await client.GetTaskAsync("jobId", "taskId");
       <example>
 This sample shows how to call GetTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4781,7 +4781,7 @@ Response<BatchTask> response = client.GetTask("jobId", "taskId");
       <example>
 This sample shows how to call GetTaskAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4795,7 +4795,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTask and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4809,7 +4809,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ReplaceTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4829,7 +4829,7 @@ Response response = await client.ReplaceTaskAsync("jobId", "taskId", task);
       <example>
 This sample shows how to call ReplaceTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4849,7 +4849,7 @@ Response response = client.ReplaceTask("jobId", "taskId", task);
       <example>
 This sample shows how to call ReplaceTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4871,7 +4871,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4893,7 +4893,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4906,7 +4906,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4919,7 +4919,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReactivateTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4932,7 +4932,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReactivateTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4945,7 +4945,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTaskFileAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4958,7 +4958,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTaskFile.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4971,7 +4971,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTaskFileAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4982,7 +4982,7 @@ Response<BinaryData> response = await client.GetTaskFileAsync("jobId", "task1", 
       <example>
 This sample shows how to call GetTaskFile.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -4993,7 +4993,7 @@ Response<BinaryData> response = client.GetTaskFile("jobId", "task1", "wd\\testFi
       <example>
 This sample shows how to call GetTaskFileAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5007,7 +5007,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTaskFile and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5021,7 +5021,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call CreateNodeUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5038,7 +5038,7 @@ Response response = await client.CreateNodeUserAsync("poolId", "tvm-1695681911_1
       <example>
 This sample shows how to call CreateNodeUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5055,7 +5055,7 @@ Response response = client.CreateNodeUser("poolId", "tvm-1695681911_1-20161121t1
       <example>
 This sample shows how to call CreateNodeUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5075,7 +5075,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateNodeUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5095,7 +5095,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteNodeUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5108,7 +5108,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteNodeUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5121,7 +5121,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceNodeUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5137,7 +5137,7 @@ Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_
       <example>
 This sample shows how to call ReplaceNodeUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5153,7 +5153,7 @@ Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t
       <example>
 This sample shows how to call ReplaceNodeUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5171,7 +5171,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ReplaceNodeUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5189,7 +5189,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetNodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5200,7 +5200,7 @@ Response<BatchNode> response = await client.GetNodeAsync("poolId", "tvm-16956819
       <example>
 This sample shows how to call GetNode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5211,7 +5211,7 @@ Response<BatchNode> response = client.GetNode("poolId", "tvm-1695681911_2-201611
       <example>
 This sample shows how to call GetNodeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5225,7 +5225,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetNode and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5239,7 +5239,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call RebootNodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5250,7 +5250,7 @@ Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-201
       <example>
 This sample shows how to call RebootNode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5261,7 +5261,7 @@ Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t19320
       <example>
 This sample shows how to call RebootNodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5275,7 +5275,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RebootNode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5289,7 +5289,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableNodeSchedulingAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5300,7 +5300,7 @@ Response response = await client.DisableNodeSchedulingAsync("poolId", "tvm-16956
       <example>
 This sample shows how to call DisableNodeScheduling.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5311,7 +5311,7 @@ Response response = client.DisableNodeScheduling("poolId", "tvm-1695681911_1-201
       <example>
 This sample shows how to call DisableNodeSchedulingAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5325,7 +5325,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DisableNodeScheduling.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5339,7 +5339,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableNodeSchedulingAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5352,7 +5352,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call EnableNodeScheduling.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5365,7 +5365,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetNodeRemoteLoginSettingsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5376,7 +5376,7 @@ Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLogi
       <example>
 This sample shows how to call GetNodeRemoteLoginSettings.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5387,7 +5387,7 @@ Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSetti
       <example>
 This sample shows how to call GetNodeRemoteLoginSettingsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5402,7 +5402,7 @@ Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
       <example>
 This sample shows how to call GetNodeRemoteLoginSettings and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5417,7 +5417,7 @@ Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
       <example>
 This sample shows how to call UploadNodeLogsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5429,7 +5429,7 @@ Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsy
       <example>
 This sample shows how to call UploadNodeLogs.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5441,7 +5441,7 @@ Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId"
       <example>
 This sample shows how to call UploadNodeLogsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5461,7 +5461,7 @@ Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
       <example>
 This sample shows how to call UploadNodeLogs and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5481,7 +5481,7 @@ Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
       <example>
 This sample shows how to call GetNodeExtensionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5492,7 +5492,7 @@ Response<BatchNodeVMExtension> response = await client.GetNodeExtensionAsync("po
       <example>
 This sample shows how to call GetNodeExtension.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5503,7 +5503,7 @@ Response<BatchNodeVMExtension> response = client.GetNodeExtension("poolId", "tvm
       <example>
 This sample shows how to call GetNodeExtensionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5517,7 +5517,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetNodeExtension and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5531,7 +5531,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteNodeFileAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5544,7 +5544,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteNodeFile.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5557,7 +5557,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetNodeFileAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5568,7 +5568,7 @@ Response<BinaryData> response = await client.GetNodeFileAsync("poolId", "nodeId"
       <example>
 This sample shows how to call GetNodeFile.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5579,7 +5579,7 @@ Response<BinaryData> response = client.GetNodeFile("poolId", "nodeId", "workitem
       <example>
 This sample shows how to call GetNodeFileAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5593,7 +5593,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetNodeFile and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5607,7 +5607,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetApplicationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5620,7 +5620,7 @@ await foreach (BatchApplication item in client.GetApplicationsAsync())
       <example>
 This sample shows how to call GetApplications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5633,7 +5633,7 @@ foreach (BatchApplication item in client.GetApplications())
       <example>
 This sample shows how to call GetApplicationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5650,7 +5650,7 @@ await foreach (BinaryData item in client.GetApplicationsAsync(null, DateTimeOffs
       <example>
 This sample shows how to call GetApplications and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5667,7 +5667,7 @@ foreach (BinaryData item in client.GetApplications(null, DateTimeOffset.Parse("F
       <example>
 This sample shows how to call GetPoolUsageMetricsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5680,7 +5680,7 @@ await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
       <example>
 This sample shows how to call GetPoolUsageMetrics.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5693,7 +5693,7 @@ foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics())
       <example>
 This sample shows how to call GetPoolUsageMetricsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5712,7 +5712,7 @@ await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(null, DateTime
       <example>
 This sample shows how to call GetPoolUsageMetrics and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5731,7 +5731,7 @@ foreach (BinaryData item in client.GetPoolUsageMetrics(null, DateTimeOffset.Pars
       <example>
 This sample shows how to call GetPoolsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5744,7 +5744,7 @@ await foreach (BatchPool item in client.GetPoolsAsync())
       <example>
 This sample shows how to call GetPools.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5757,7 +5757,7 @@ foreach (BatchPool item in client.GetPools())
       <example>
 This sample shows how to call GetPoolsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5772,7 +5772,7 @@ await foreach (BinaryData item in client.GetPoolsAsync(null, DateTimeOffset.Pars
       <example>
 This sample shows how to call GetPools and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5787,7 +5787,7 @@ foreach (BinaryData item in client.GetPools(null, DateTimeOffset.Parse("Fri, 17 
       <example>
 This sample shows how to call GetSupportedImagesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5800,7 +5800,7 @@ await foreach (BatchSupportedImage item in client.GetSupportedImagesAsync())
       <example>
 This sample shows how to call GetSupportedImages.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5813,7 +5813,7 @@ foreach (BatchSupportedImage item in client.GetSupportedImages())
       <example>
 This sample shows how to call GetSupportedImagesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5831,7 +5831,7 @@ await foreach (BinaryData item in client.GetSupportedImagesAsync(null, DateTimeO
       <example>
 This sample shows how to call GetSupportedImages and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5849,7 +5849,7 @@ foreach (BinaryData item in client.GetSupportedImages(null, DateTimeOffset.Parse
       <example>
 This sample shows how to call GetPoolNodeCountsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5862,7 +5862,7 @@ await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync())
       <example>
 This sample shows how to call GetPoolNodeCounts.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5875,7 +5875,7 @@ foreach (BatchPoolNodeCounts item in client.GetPoolNodeCounts())
       <example>
 This sample shows how to call GetPoolNodeCountsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5890,7 +5890,7 @@ await foreach (BinaryData item in client.GetPoolNodeCountsAsync(null, DateTimeOf
       <example>
 This sample shows how to call GetPoolNodeCounts and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5905,7 +5905,7 @@ foreach (BinaryData item in client.GetPoolNodeCounts(null, DateTimeOffset.Parse(
       <example>
 This sample shows how to call GetJobsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5918,7 +5918,7 @@ await foreach (BatchJob item in client.GetJobsAsync())
       <example>
 This sample shows how to call GetJobs.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5931,7 +5931,7 @@ foreach (BatchJob item in client.GetJobs())
       <example>
 This sample shows how to call GetJobsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5946,7 +5946,7 @@ await foreach (BinaryData item in client.GetJobsAsync(null, DateTimeOffset.Parse
       <example>
 This sample shows how to call GetJobs and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5961,7 +5961,7 @@ foreach (BinaryData item in client.GetJobs(null, DateTimeOffset.Parse("Fri, 17 F
       <example>
 This sample shows how to call GetJobsFromSchedulesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5974,7 +5974,7 @@ await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("jobScheduleId"
       <example>
 This sample shows how to call GetJobsFromSchedules.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -5987,7 +5987,7 @@ foreach (BatchJob item in client.GetJobsFromSchedules("jobScheduleId"))
       <example>
 This sample shows how to call GetJobsFromSchedulesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6002,7 +6002,7 @@ await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("jobScheduleI
       <example>
 This sample shows how to call GetJobsFromSchedules and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6017,7 +6017,7 @@ foreach (BinaryData item in client.GetJobsFromSchedules("jobScheduleId", null, D
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatusesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6030,7 +6030,7 @@ await foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPrep
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatuses.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6043,7 +6043,7 @@ foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparatio
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatusesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6058,7 +6058,7 @@ await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatuses and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6073,7 +6073,7 @@ foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("jobI
       <example>
 This sample shows how to call GetJobSchedulesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6086,7 +6086,7 @@ await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync())
       <example>
 This sample shows how to call GetJobSchedules.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6099,7 +6099,7 @@ foreach (BatchJobSchedule item in client.GetJobSchedules())
       <example>
 This sample shows how to call GetJobSchedulesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6114,7 +6114,7 @@ await foreach (BinaryData item in client.GetJobSchedulesAsync(null, DateTimeOffs
       <example>
 This sample shows how to call GetJobSchedules and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6129,7 +6129,7 @@ foreach (BinaryData item in client.GetJobSchedules(null, DateTimeOffset.Parse("F
       <example>
 This sample shows how to call GetTasksAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6142,7 +6142,7 @@ await foreach (BatchTask item in client.GetTasksAsync("jobId"))
       <example>
 This sample shows how to call GetTasks.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6155,7 +6155,7 @@ foreach (BatchTask item in client.GetTasks("jobId"))
       <example>
 This sample shows how to call GetTasksAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6170,7 +6170,7 @@ await foreach (BinaryData item in client.GetTasksAsync("jobId", null, DateTimeOf
       <example>
 This sample shows how to call GetTasks and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6185,7 +6185,7 @@ foreach (BinaryData item in client.GetTasks("jobId", null, DateTimeOffset.Parse(
       <example>
 This sample shows how to call GetSubTasksAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6198,7 +6198,7 @@ await foreach (BatchSubtask item in client.GetSubTasksAsync("jobId", "taskId"))
       <example>
 This sample shows how to call GetSubTasks.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6211,7 +6211,7 @@ foreach (BatchSubtask item in client.GetSubTasks("jobId", "taskId"))
       <example>
 This sample shows how to call GetSubTasksAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6226,7 +6226,7 @@ await foreach (BinaryData item in client.GetSubTasksAsync("jobId", "taskId", nul
       <example>
 This sample shows how to call GetSubTasks and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6241,7 +6241,7 @@ foreach (BinaryData item in client.GetSubTasks("jobId", "taskId", null, DateTime
       <example>
 This sample shows how to call GetTaskFilesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6254,7 +6254,7 @@ await foreach (BatchNodeFile item in client.GetTaskFilesAsync("jobId", "taskId")
       <example>
 This sample shows how to call GetTaskFiles.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6267,7 +6267,7 @@ foreach (BatchNodeFile item in client.GetTaskFiles("jobId", "taskId"))
       <example>
 This sample shows how to call GetTaskFilesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6282,7 +6282,7 @@ await foreach (BinaryData item in client.GetTaskFilesAsync("jobId", "taskId", nu
       <example>
 This sample shows how to call GetTaskFiles and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6297,7 +6297,7 @@ foreach (BinaryData item in client.GetTaskFiles("jobId", "taskId", null, DateTim
       <example>
 This sample shows how to call GetNodesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6310,7 +6310,7 @@ await foreach (BatchNode item in client.GetNodesAsync("poolId"))
       <example>
 This sample shows how to call GetNodes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6323,7 +6323,7 @@ foreach (BatchNode item in client.GetNodes("poolId"))
       <example>
 This sample shows how to call GetNodesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6338,7 +6338,7 @@ await foreach (BinaryData item in client.GetNodesAsync("poolId", null, DateTimeO
       <example>
 This sample shows how to call GetNodes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6353,7 +6353,7 @@ foreach (BinaryData item in client.GetNodes("poolId", null, DateTimeOffset.Parse
       <example>
 This sample shows how to call GetNodeExtensionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6366,7 +6366,7 @@ await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync("poolI
       <example>
 This sample shows how to call GetNodeExtensions.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6379,7 +6379,7 @@ foreach (BatchNodeVMExtension item in client.GetNodeExtensions("poolId", "tvm-16
       <example>
 This sample shows how to call GetNodeExtensionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6394,7 +6394,7 @@ await foreach (BinaryData item in client.GetNodeExtensionsAsync("poolId", "tvm-1
       <example>
 This sample shows how to call GetNodeExtensions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6409,7 +6409,7 @@ foreach (BinaryData item in client.GetNodeExtensions("poolId", "tvm-1695681911_2
       <example>
 This sample shows how to call GetNodeFilesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6422,7 +6422,7 @@ await foreach (BatchNodeFile item in client.GetNodeFilesAsync("poolId", "tvm-169
       <example>
 This sample shows how to call GetNodeFiles.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6435,7 +6435,7 @@ foreach (BatchNodeFile item in client.GetNodeFiles("poolId", "tvm-1695681911_1-2
       <example>
 This sample shows how to call GetNodeFilesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
@@ -6450,7 +6450,7 @@ await foreach (BinaryData item in client.GetNodeFilesAsync("poolId", "tvm-169568
       <example>
 This sample shows how to call GetNodeFiles and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 

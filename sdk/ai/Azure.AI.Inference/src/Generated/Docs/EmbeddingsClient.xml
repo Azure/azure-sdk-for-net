@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call EmbedAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -14,7 +14,7 @@ Response<EmbeddingsResult> response = await client.EmbedAsync(embeddingsOptions)
 ]]></code>
 This sample shows how to call EmbedAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -26,7 +26,7 @@ Response<EmbeddingsResult> response = await client.EmbedAsync(embeddingsOptions)
       <example>
 This sample shows how to call Embed.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -35,7 +35,7 @@ Response<EmbeddingsResult> response = client.Embed(embeddingsOptions);
 ]]></code>
 This sample shows how to call Embed.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -47,7 +47,7 @@ Response<EmbeddingsResult> response = client.Embed(embeddingsOptions);
       <example>
 This sample shows how to call EmbedAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -64,7 +64,7 @@ Console.WriteLine(result.GetProperty("model").ToString());
 ]]></code>
 This sample shows how to call EmbedAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ Console.WriteLine(result.GetProperty("model").ToString());
       <example>
 This sample shows how to call Embed and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -101,7 +101,7 @@ Console.WriteLine(result.GetProperty("model").ToString());
 ]]></code>
 This sample shows how to call Embed and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -121,7 +121,7 @@ Console.WriteLine(result.GetProperty("model").ToString());
       <example>
 This sample shows how to call GetModelInfoAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -129,7 +129,7 @@ Response<ModelInfo> response = await client.GetModelInfoAsync();
 ]]></code>
 This sample shows how to call GetModelInfoAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -140,7 +140,7 @@ Response<ModelInfo> response = await client.GetModelInfoAsync();
       <example>
 This sample shows how to call GetModelInfo.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -148,7 +148,7 @@ Response<ModelInfo> response = client.GetModelInfo();
 ]]></code>
 This sample shows how to call GetModelInfo.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -159,7 +159,7 @@ Response<ModelInfo> response = client.GetModelInfo();
       <example>
 This sample shows how to call GetModelInfoAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -172,7 +172,7 @@ Console.WriteLine(result.GetProperty("model_provider_name").ToString());
 ]]></code>
 This sample shows how to call GetModelInfoAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -188,7 +188,7 @@ Console.WriteLine(result.GetProperty("model_provider_name").ToString());
       <example>
 This sample shows how to call GetModelInfo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -201,7 +201,7 @@ Console.WriteLine(result.GetProperty("model_provider_name").ToString());
 ]]></code>
 This sample shows how to call GetModelInfo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 

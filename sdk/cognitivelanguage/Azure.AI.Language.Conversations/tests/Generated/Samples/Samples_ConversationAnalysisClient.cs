@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversations()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversations_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -85,7 +85,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversations_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversations_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitration()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitration_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -181,7 +181,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitration_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitration_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitrationDirectTarget()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitrationDirectTarget_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -321,7 +321,7 @@ namespace Azure.AI.Language.Conversations.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitrationDirectTarget_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -351,7 +351,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversation_SuccessfulAnalyzeConversationsArbitrationDirectTarget_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -381,7 +381,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIExclusionTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -402,7 +402,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIExclusionTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -423,7 +423,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIExclusionTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -434,7 +434,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIExclusionTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -445,7 +445,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIRedactionCharTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -466,7 +466,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIRedactionCharTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -487,7 +487,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIRedactionCharTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -498,7 +498,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIIRedactionCharTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -509,7 +509,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIITaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -530,7 +530,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIITaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -551,7 +551,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIITaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -562,7 +562,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationPIITaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -573,7 +573,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -594,7 +594,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -615,7 +615,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -626,7 +626,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -637,7 +637,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -658,7 +658,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -679,7 +679,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -690,7 +690,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulConversationSummarizationTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -701,7 +701,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulCustomConversationSummarizationTaskResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -722,7 +722,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulCustomConversationSummarizationTaskResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -743,7 +743,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulCustomConversationSummarizationTaskResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -754,7 +754,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationJobState_GetAnalyzeConversationJobStatus_SuccessfulCustomConversationSummarizationTaskResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -765,7 +765,7 @@ PreviousQuestion = "Meet Surface Pro 4",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIExclusionSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -850,7 +850,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIExclusionSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -935,7 +935,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIExclusionSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1001,7 +1001,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIExclusionSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1067,7 +1067,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIRedactionCharSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1153,7 +1153,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIRedactionCharSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1239,7 +1239,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIRedactionCharSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1306,7 +1306,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIIRedactionCharSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1373,7 +1373,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIISubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1458,7 +1458,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIISubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1543,7 +1543,7 @@ redactAudioTiming = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIISubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1609,7 +1609,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationPIISubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1675,7 +1675,7 @@ Name = "Conversation PII",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarizationTaskSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1763,7 +1763,7 @@ summaryAspects = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarizationTaskSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1851,7 +1851,7 @@ summaryAspects = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarizationTaskSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1920,7 +1920,7 @@ Name = "Conversation Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarizationTaskSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1989,7 +1989,7 @@ Name = "Conversation Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarySubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2058,7 +2058,7 @@ summaryAspects = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarySubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2127,7 +2127,7 @@ summaryAspects = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarySubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2172,7 +2172,7 @@ Name = "analyze 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulConversationSummarySubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2217,7 +2217,7 @@ Name = "analyze 1",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulCustomConversationSummarizationTaskSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2306,7 +2306,7 @@ deploymentName = "my_deployment",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulCustomConversationSummarizationTaskSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2395,7 +2395,7 @@ deploymentName = "my_deployment",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulCustomConversationSummarizationTaskSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2464,7 +2464,7 @@ Name = "Custom Conversation Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_AnalyzeConversationSubmitOperation_SuccessfulCustomConversationSummarizationTaskSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2533,7 +2533,7 @@ Name = "Custom Conversation Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversations_CancelAnalyzeConversations_SuccessfulAnalyzeConversationsJobsCancelRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2544,7 +2544,7 @@ Name = "Custom Conversation Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversations_CancelAnalyzeConversations_SuccessfulAnalyzeConversationsJobsCancelRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
