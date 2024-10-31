@@ -20,7 +20,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_UpdateAssets_AssetsUpdateAssets()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_UpdateAssets_AssetsUpdateAssets_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_UpdateAssets_AssetsUpdateAssets_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_UpdateAssets_AssetsUpdateAssets_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_GetAssetResource_AssetsGetAssetResource()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_GetAssetResource_AssetsGetAssetResource_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_GetAssetResource_AssetsGetAssetResource_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_GetAssetResource_AssetsGetAssetResource_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_ValidateDataConnection_DataConnectionsValidateDataConnection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -184,7 +184,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_ValidateDataConnection_DataConnectionsValidateDataConnection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_ValidateDataConnection_DataConnectionsValidateDataConnection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_ValidateDataConnection_DataConnectionsValidateDataConnection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_GetDataConnection_DataConnectionsGetDataConnection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_GetDataConnection_DataConnectionsGetDataConnection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -282,7 +282,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_GetDataConnection_DataConnectionsGetDataConnection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_GetDataConnection_DataConnectionsGetDataConnection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -304,7 +304,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_CreateOrReplaceDataConnection_DataConnectionsCreateOrReplaceDataConnection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -330,7 +330,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_CreateOrReplaceDataConnection_DataConnectionsCreateOrReplaceDataConnection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -356,7 +356,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_CreateOrReplaceDataConnection_DataConnectionsCreateOrReplaceDataConnection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -376,7 +376,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_CreateOrReplaceDataConnection_DataConnectionsCreateOrReplaceDataConnection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -396,7 +396,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_DeleteDataConnection_DataConnectionsDeleteDataConnection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -409,7 +409,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_DeleteDataConnection_DataConnectionsDeleteDataConnection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -422,7 +422,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -450,7 +450,7 @@ kind = "host",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -478,7 +478,7 @@ kind = "host",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -500,7 +500,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_ValidateDiscoveryGroup_DiscoveryGroupsValidateDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -522,7 +522,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -536,7 +536,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -550,7 +550,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -561,7 +561,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_GetDiscoveryGroup_DiscoveryGroupsGetDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -572,7 +572,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -600,7 +600,7 @@ kind = "host",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -628,7 +628,7 @@ kind = "host",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -650,7 +650,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_CreateOrReplaceDiscoveryGroup_DiscoveryGroupsCreateOrReplaceDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -672,7 +672,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_RunDiscoveryGroup_DiscoveryGroupsRunDiscoGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -685,7 +685,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_RunDiscoveryGroup_DiscoveryGroupsRunDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -698,7 +698,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -712,7 +712,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -726,7 +726,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -737,7 +737,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoTemplate_GetDiscoveryTemplate_DiscoveryTemplatesGetDiscoTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -748,7 +748,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetBillable_ReportsGetBillable()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -762,7 +762,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetBillable_ReportsGetBillable_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -776,7 +776,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetBillable_ReportsGetBillable_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -787,7 +787,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetBillable_ReportsGetBillable_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -798,7 +798,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetSnapshot_ReportsGetSnapshot()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -818,7 +818,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetSnapshot_ReportsGetSnapshot_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -838,7 +838,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetSnapshot_ReportsGetSnapshot_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -855,7 +855,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetSnapshot_ReportsGetSnapshot_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -872,7 +872,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetSummary_ReportsGetSummary()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -895,7 +895,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetSummary_ReportsGetSummary_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -918,7 +918,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetSummary_ReportsGetSummary_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -933,7 +933,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetSummary_ReportsGetSummary_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -948,7 +948,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_GetSavedFilter_SavedFiltersGetSavedFilter()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -962,7 +962,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_GetSavedFilter_SavedFiltersGetSavedFilter_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -976,7 +976,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_GetSavedFilter_SavedFiltersGetSavedFilter_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -987,7 +987,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_GetSavedFilter_SavedFiltersGetSavedFilter_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -998,7 +998,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_CreateOrReplaceSavedFilter_SavedFiltersCreateOrReplaceSavedFilter()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1017,7 +1017,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_CreateOrReplaceSavedFilter_SavedFiltersCreateOrReplaceSavedFilter_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1036,7 +1036,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_CreateOrReplaceSavedFilter_SavedFiltersCreateOrReplaceSavedFilter_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1048,7 +1048,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_CreateOrReplaceSavedFilter_SavedFiltersCreateOrReplaceSavedFilter_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1060,7 +1060,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_DeleteSavedFilter_SavedFiltersDeleteSavedFilter()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1073,7 +1073,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_DeleteSavedFilter_SavedFiltersDeleteSavedFilter_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1086,7 +1086,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_Task_GetTask_TasksGetTask()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1100,7 +1100,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Task_GetTask_TasksGetTask_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1114,7 +1114,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_Task_GetTask_TasksGetTask_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1125,7 +1125,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Task_GetTask_TasksGetTask_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1136,7 +1136,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_CancelTask_TasksCancelTask()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1150,7 +1150,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_CancelTask_TasksCancelTask_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1164,7 +1164,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_CancelTask_TasksCancelTask_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1175,7 +1175,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_CancelTask_TasksCancelTask_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1186,7 +1186,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_GetAssetResources_AssetsListAssetResource()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1202,7 +1202,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_GetAssetResources_AssetsListAssetResource_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1218,7 +1218,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_AssetResource_GetAssetResources_AssetsListAssetResource_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1231,7 +1231,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AssetResource_GetAssetResources_AssetsListAssetResource_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1244,7 +1244,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_GetDataConnections_DataConnectionsListDataConnection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1260,7 +1260,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_GetDataConnections_DataConnectionsListDataConnection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1276,7 +1276,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DataConnection_GetDataConnections_DataConnectionsListDataConnection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1289,7 +1289,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DataConnection_GetDataConnections_DataConnectionsListDataConnection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1302,7 +1302,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1317,7 +1317,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1332,7 +1332,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1345,7 +1345,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoGroup_GetDiscoveryGroups_DiscoveryGroupsListDiscoGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1358,7 +1358,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1373,7 +1373,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1388,7 +1388,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1401,7 +1401,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_EasmClient_GetDiscoveryGroupRuns_DiscoveryGroupsListRuns_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1414,7 +1414,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1429,7 +1429,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1444,7 +1444,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1457,7 +1457,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DiscoTemplate_GetDiscoveryTemplates_DiscoveryTemplatesListDiscoTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1470,7 +1470,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_GetSavedFilters_SavedFiltersListSavedFilter()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1485,7 +1485,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_GetSavedFilters_SavedFiltersListSavedFilter_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1500,7 +1500,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_SavedFilter_GetSavedFilters_SavedFiltersListSavedFilter_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1513,7 +1513,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SavedFilter_GetSavedFilters_SavedFiltersListSavedFilter_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1526,7 +1526,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_Task_GetTasks_TasksListTask()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1541,7 +1541,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Task_GetTasks_TasksListTask_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1556,7 +1556,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public void Example_Task_GetTasks_TasksListTask_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1569,7 +1569,7 @@ Name = "thisisatest.microsoft.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Task_GetTasks_TasksListTask_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 

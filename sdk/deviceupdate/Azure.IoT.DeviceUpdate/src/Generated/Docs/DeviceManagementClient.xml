@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetDeviceClassAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -17,7 +17,7 @@ Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compa
 ]]></code>
 This sample shows how to call GetDeviceClassAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -40,7 +40,7 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friend
       <example>
 This sample shows how to call GetDeviceClass and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -52,7 +52,7 @@ Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compa
 ]]></code>
 This sample shows how to call GetDeviceClass with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -75,7 +75,7 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friend
       <example>
 This sample shows how to call UpdateDeviceClassAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -91,7 +91,7 @@ Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compa
 ]]></code>
 This sample shows how to call UpdateDeviceClassAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -118,7 +118,7 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friend
       <example>
 This sample shows how to call UpdateDeviceClass and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -134,7 +134,7 @@ Console.WriteLine(result.GetProperty("deviceClassProperties").GetProperty("compa
 ]]></code>
 This sample shows how to call UpdateDeviceClass with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -161,7 +161,7 @@ Console.WriteLine(result.GetProperty("bestCompatibleUpdate").GetProperty("friend
       <example>
 This sample shows how to call DeleteDeviceClassAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -171,7 +171,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -184,7 +184,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteDeviceClass.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -194,7 +194,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClass with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -207,7 +207,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetDeviceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -220,7 +220,7 @@ Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
 ]]></code>
 This sample shows how to call GetDeviceAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -262,7 +262,7 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
       <example>
 This sample shows how to call GetDevice and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -275,7 +275,7 @@ Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
 ]]></code>
 This sample shows how to call GetDevice with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -317,7 +317,7 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
       <example>
 This sample shows how to call GetDeviceModuleAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -330,7 +330,7 @@ Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
 ]]></code>
 This sample shows how to call GetDeviceModuleAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -372,7 +372,7 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
       <example>
 This sample shows how to call GetDeviceModule and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -385,7 +385,7 @@ Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
 ]]></code>
 This sample shows how to call GetDeviceModule with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -427,7 +427,7 @@ Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResul
       <example>
 This sample shows how to call GetUpdateComplianceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -441,7 +441,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetUpdateComplianceAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -458,7 +458,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetUpdateCompliance and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -472,7 +472,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetUpdateCompliance with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -489,7 +489,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -502,7 +502,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetGroupAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -523,7 +523,7 @@ Console.WriteLine(result.GetProperty("deployments")[0].ToString());
       <example>
 This sample shows how to call GetGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -536,7 +536,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetGroup with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -557,7 +557,7 @@ Console.WriteLine(result.GetProperty("deployments")[0].ToString());
       <example>
 This sample shows how to call DeleteGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -567,7 +567,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGroupAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -580,7 +580,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -590,7 +590,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGroup with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -603,7 +603,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetUpdateComplianceForGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -617,7 +617,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetUpdateComplianceForGroupAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -634,7 +634,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetUpdateComplianceForGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -648,7 +648,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetUpdateComplianceForGroup with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -665,7 +665,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetDeploymentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -681,7 +681,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -713,7 +713,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call GetDeployment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -729,7 +729,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call GetDeployment with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -761,7 +761,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call CreateOrUpdateDeploymentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -792,7 +792,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateDeploymentAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -854,7 +854,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call CreateOrUpdateDeployment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -885,7 +885,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateDeployment with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -947,7 +947,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call DeleteDeploymentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -957,7 +957,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -970,7 +970,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteDeployment.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -980,7 +980,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeployment with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -993,7 +993,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetDeploymentStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1008,7 +1008,7 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deploymen
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1045,7 +1045,7 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCa
       <example>
 This sample shows how to call GetDeploymentStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1060,7 +1060,7 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("deploymen
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1097,7 +1097,7 @@ Console.WriteLine(result.GetProperty("subgroupStatus")[0].GetProperty("devicesCa
       <example>
 This sample shows how to call GetDeviceClassSubgroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1110,7 +1110,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1128,7 +1128,7 @@ Console.WriteLine(result.GetProperty("deploymentId").ToString());
       <example>
 This sample shows how to call GetDeviceClassSubgroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1141,7 +1141,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroup with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1159,7 +1159,7 @@ Console.WriteLine(result.GetProperty("deploymentId").ToString());
       <example>
 This sample shows how to call DeleteDeviceClassSubgroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1169,7 +1169,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassSubgroupAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1182,7 +1182,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteDeviceClassSubgroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1192,7 +1192,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeviceClassSubgroup with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1205,7 +1205,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetDeviceClassSubgroupUpdateComplianceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1219,7 +1219,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupUpdateComplianceAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1236,7 +1236,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetDeviceClassSubgroupUpdateCompliance and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1250,7 +1250,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupUpdateCompliance with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1267,7 +1267,7 @@ Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString())
       <example>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1283,7 +1283,7 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
 ]]></code>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroupAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1304,7 +1304,7 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
       <example>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1320,7 +1320,7 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
 ]]></code>
 This sample shows how to call GetBestUpdatesForDeviceClassSubgroup with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1341,7 +1341,7 @@ Console.WriteLine(result.GetProperty("deviceCount").ToString());
       <example>
 This sample shows how to call GetDeploymentForDeviceClassSubgroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1357,7 +1357,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentForDeviceClassSubgroupAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1389,7 +1389,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call GetDeploymentForDeviceClassSubgroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1405,7 +1405,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentForDeviceClassSubgroup with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1437,7 +1437,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1447,7 +1447,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroupAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1460,7 +1460,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1470,7 +1470,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteDeploymentForDeviceClassSubgroup with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1483,7 +1483,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call StopDeploymentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1499,7 +1499,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call StopDeploymentAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1531,7 +1531,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call StopDeployment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1547,7 +1547,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call StopDeployment with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1579,7 +1579,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call RetryDeploymentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1595,7 +1595,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call RetryDeploymentAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1627,7 +1627,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call RetryDeployment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1643,7 +1643,7 @@ Console.WriteLine(result.GetProperty("groupId").ToString());
 ]]></code>
 This sample shows how to call RetryDeployment with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1675,7 +1675,7 @@ Console.WriteLine(result.GetProperty("isCloudInitiatedRollback").ToString());
       <example>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1688,7 +1688,7 @@ Console.WriteLine(result.GetProperty("deploymentState").ToString());
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1716,7 +1716,7 @@ Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
       <example>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1729,7 +1729,7 @@ Console.WriteLine(result.GetProperty("deploymentState").ToString());
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupDeploymentStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1757,7 +1757,7 @@ Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
       <example>
 This sample shows how to call GetOperationStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1771,7 +1771,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetOperationStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1797,7 +1797,7 @@ Console.WriteLine(result.GetProperty("etag").ToString());
       <example>
 This sample shows how to call GetOperationStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1811,7 +1811,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetOperationStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1837,7 +1837,7 @@ Console.WriteLine(result.GetProperty("etag").ToString());
       <example>
 This sample shows how to call StartLogCollectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1858,7 +1858,7 @@ Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").To
 ]]></code>
 This sample shows how to call StartLogCollectionAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1891,7 +1891,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call StartLogCollection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1912,7 +1912,7 @@ Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").To
 ]]></code>
 This sample shows how to call StartLogCollection with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1945,7 +1945,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetLogCollectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1956,7 +1956,7 @@ Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").To
 ]]></code>
 This sample shows how to call GetLogCollectionAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1976,7 +1976,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetLogCollection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -1987,7 +1987,7 @@ Console.WriteLine(result.GetProperty("deviceList")[0].GetProperty("deviceId").To
 ]]></code>
 This sample shows how to call GetLogCollection with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2007,7 +2007,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetLogCollectionDetailedStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2018,7 +2018,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLogCollectionDetailedStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2042,7 +2042,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call GetLogCollectionDetailedStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2053,7 +2053,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLogCollectionDetailedStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2077,7 +2077,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
       <example>
 This sample shows how to call GetDeviceClassesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2090,7 +2090,7 @@ await foreach (BinaryData item in client.GetDeviceClassesAsync())
 ]]></code>
 This sample shows how to call GetDeviceClassesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2114,7 +2114,7 @@ await foreach (BinaryData item in client.GetDeviceClassesAsync(filter: "<filter>
       <example>
 This sample shows how to call GetDeviceClasses and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2127,7 +2127,7 @@ foreach (BinaryData item in client.GetDeviceClasses())
 ]]></code>
 This sample shows how to call GetDeviceClasses with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2151,7 +2151,7 @@ foreach (BinaryData item in client.GetDeviceClasses(filter: "<filter>"))
       <example>
 This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2165,7 +2165,7 @@ await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAs
 ]]></code>
 This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2184,7 +2184,7 @@ await foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClassesAs
       <example>
 This sample shows how to call GetInstallableUpdatesForDeviceClasses and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2198,7 +2198,7 @@ foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClasses("<devic
 ]]></code>
 This sample shows how to call GetInstallableUpdatesForDeviceClasses with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2217,7 +2217,7 @@ foreach (BinaryData item in client.GetInstallableUpdatesForDeviceClasses("<devic
       <example>
 This sample shows how to call GetDevicesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2231,7 +2231,7 @@ await foreach (BinaryData item in client.GetDevicesAsync())
 ]]></code>
 This sample shows how to call GetDevicesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2274,7 +2274,7 @@ await foreach (BinaryData item in client.GetDevicesAsync(filter: "<filter>"))
       <example>
 This sample shows how to call GetDevices and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2288,7 +2288,7 @@ foreach (BinaryData item in client.GetDevices())
 ]]></code>
 This sample shows how to call GetDevices with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2331,7 +2331,7 @@ foreach (BinaryData item in client.GetDevices(filter: "<filter>"))
       <example>
 This sample shows how to call GetGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2345,7 +2345,7 @@ await foreach (BinaryData item in client.GetGroupsAsync())
 ]]></code>
 This sample shows how to call GetGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2367,7 +2367,7 @@ await foreach (BinaryData item in client.GetGroupsAsync(orderBy: "<orderBy>"))
       <example>
 This sample shows how to call GetGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2381,7 +2381,7 @@ foreach (BinaryData item in client.GetGroups())
 ]]></code>
 This sample shows how to call GetGroups with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2403,7 +2403,7 @@ foreach (BinaryData item in client.GetGroups(orderBy: "<orderBy>"))
       <example>
 This sample shows how to call GetBestUpdatesForGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2420,7 +2420,7 @@ await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>
 ]]></code>
 This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2442,7 +2442,7 @@ await foreach (BinaryData item in client.GetBestUpdatesForGroupsAsync("<groupId>
       <example>
 This sample shows how to call GetBestUpdatesForGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2459,7 +2459,7 @@ foreach (BinaryData item in client.GetBestUpdatesForGroups("<groupId>"))
 ]]></code>
 This sample shows how to call GetBestUpdatesForGroups with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2481,7 +2481,7 @@ foreach (BinaryData item in client.GetBestUpdatesForGroups("<groupId>"))
       <example>
 This sample shows how to call GetDeploymentsForGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2498,7 +2498,7 @@ await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>
 ]]></code>
 This sample shows how to call GetDeploymentsForGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2531,7 +2531,7 @@ await foreach (BinaryData item in client.GetDeploymentsForGroupsAsync("<groupId>
       <example>
 This sample shows how to call GetDeploymentsForGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2548,7 +2548,7 @@ foreach (BinaryData item in client.GetDeploymentsForGroups("<groupId>"))
 ]]></code>
 This sample shows how to call GetDeploymentsForGroups with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2581,7 +2581,7 @@ foreach (BinaryData item in client.GetDeploymentsForGroups("<groupId>", orderBy:
       <example>
 This sample shows how to call GetDeviceClassSubgroupsForGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2595,7 +2595,7 @@ await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupsForGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2614,7 +2614,7 @@ await foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroupsAsync("
       <example>
 This sample shows how to call GetDeviceClassSubgroupsForGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2628,7 +2628,7 @@ foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroups("<groupId>")
 ]]></code>
 This sample shows how to call GetDeviceClassSubgroupsForGroups with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2647,7 +2647,7 @@ foreach (BinaryData item in client.GetDeviceClassSubgroupsForGroups("<groupId>",
       <example>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2664,7 +2664,7 @@ await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAs
 ]]></code>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroupsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2697,7 +2697,7 @@ await foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroupsAs
       <example>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2714,7 +2714,7 @@ foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroups("<group
 ]]></code>
 This sample shows how to call GetDeploymentsForDeviceClassSubgroups with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2747,7 +2747,7 @@ foreach (BinaryData item in client.GetDeploymentsForDeviceClassSubgroups("<group
       <example>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2762,7 +2762,7 @@ await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDe
 ]]></code>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2781,7 +2781,7 @@ await foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDe
       <example>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeployments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2796,7 +2796,7 @@ foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeployme
 ]]></code>
 This sample shows how to call GetDeviceStatesForDeviceClassSubgroupDeployments with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2815,7 +2815,7 @@ foreach (BinaryData item in client.GetDeviceStatesForDeviceClassSubgroupDeployme
       <example>
 This sample shows how to call GetOperationStatusesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2830,7 +2830,7 @@ await foreach (BinaryData item in client.GetOperationStatusesAsync())
 ]]></code>
 This sample shows how to call GetOperationStatusesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2857,7 +2857,7 @@ await foreach (BinaryData item in client.GetOperationStatusesAsync(filter: "<fil
       <example>
 This sample shows how to call GetOperationStatuses and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2872,7 +2872,7 @@ foreach (BinaryData item in client.GetOperationStatuses())
 ]]></code>
 This sample shows how to call GetOperationStatuses with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2899,7 +2899,7 @@ foreach (BinaryData item in client.GetOperationStatuses(filter: "<filter>", top:
       <example>
 This sample shows how to call GetLogCollectionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2911,7 +2911,7 @@ await foreach (BinaryData item in client.GetLogCollectionsAsync())
 ]]></code>
 This sample shows how to call GetLogCollectionsAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2932,7 +2932,7 @@ await foreach (BinaryData item in client.GetLogCollectionsAsync())
       <example>
 This sample shows how to call GetLogCollections and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2944,7 +2944,7 @@ foreach (BinaryData item in client.GetLogCollections())
 ]]></code>
 This sample shows how to call GetLogCollections with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2965,7 +2965,7 @@ foreach (BinaryData item in client.GetLogCollections())
       <example>
 This sample shows how to call GetHealthOfDevicesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2979,7 +2979,7 @@ await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
 ]]></code>
 This sample shows how to call GetHealthOfDevicesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -2999,7 +2999,7 @@ await foreach (BinaryData item in client.GetHealthOfDevicesAsync("<filter>"))
       <example>
 This sample shows how to call GetHealthOfDevices and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -3013,7 +3013,7 @@ foreach (BinaryData item in client.GetHealthOfDevices("<filter>"))
 ]]></code>
 This sample shows how to call GetHealthOfDevices with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -3033,7 +3033,7 @@ foreach (BinaryData item in client.GetHealthOfDevices("<filter>"))
       <example>
 This sample shows how to call ImportDevicesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -3042,7 +3042,7 @@ Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, conte
 ]]></code>
 This sample shows how to call ImportDevicesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -3054,7 +3054,7 @@ Operation operation = await client.ImportDevicesAsync(WaitUntil.Completed, conte
       <example>
 This sample shows how to call ImportDevices.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 
@@ -3063,7 +3063,7 @@ Operation operation = client.ImportDevices(WaitUntil.Completed, content);
 ]]></code>
 This sample shows how to call ImportDevices with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceManagementClient client = new DeviceManagementClient(endpoint, "<InstanceId>", credential);
 

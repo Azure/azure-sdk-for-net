@@ -20,7 +20,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -40,7 +40,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -60,7 +60,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -98,7 +98,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -136,7 +136,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFile_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -153,7 +153,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFile_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -170,7 +170,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFile_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -200,7 +200,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFile_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -230,7 +230,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -247,7 +247,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetOperationStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -264,7 +264,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -296,7 +296,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetOperationStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -328,7 +328,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdates_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -349,7 +349,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdates_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -370,7 +370,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetUpdates_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -409,7 +409,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetUpdates_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -448,7 +448,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProviders_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -463,7 +463,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProviders_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -478,7 +478,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProviders_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -493,7 +493,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProviders_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -508,7 +508,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNames_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -523,7 +523,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNames_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -538,7 +538,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetNames_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -553,7 +553,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetNames_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -568,7 +568,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetVersions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -583,7 +583,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetVersions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -598,7 +598,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetVersions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -613,7 +613,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetVersions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -628,7 +628,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFiles_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -643,7 +643,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFiles_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -658,7 +658,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFiles_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -673,7 +673,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFiles_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -688,7 +688,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatuses_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -706,7 +706,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetOperationStatuses_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -724,7 +724,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetOperationStatuses_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -757,7 +757,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetOperationStatuses_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -790,7 +790,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteUpdate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -801,7 +801,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteUpdate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -812,7 +812,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -823,7 +823,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -834,7 +834,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_StartImportUpdate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -860,7 +860,7 @@ key = "<hashes>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_StartImportUpdate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -886,7 +886,7 @@ key = "<hashes>",
         [Ignore("Only validating compilation of examples")]
         public void Example_StartImportUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 
@@ -921,7 +921,7 @@ url = "<url>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_StartImportUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceUpdateClient client = new DeviceUpdateClient(endpoint, "<InstanceId>", credential);
 

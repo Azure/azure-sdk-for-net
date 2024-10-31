@@ -20,7 +20,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -59,7 +59,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -70,7 +70,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -98,7 +98,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -109,7 +109,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -120,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromBase64()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -145,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromBase64_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -170,7 +170,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromBase64_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -182,7 +182,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromBase64_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -194,7 +194,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromUrl()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -219,7 +219,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromUrl_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -244,7 +244,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromUrl_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -256,7 +256,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromUrl_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -268,7 +268,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AnalyzeBatchDocuments()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -298,7 +298,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AnalyzeBatchDocuments_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -328,7 +328,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AnalyzeBatchDocuments_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -340,7 +340,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AnalyzeBatchDocuments_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -352,7 +352,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_ClassifyDocument_ClassifyDocumentFromUrl()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -377,7 +377,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_ClassifyDocument_ClassifyDocumentFromUrl_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -402,7 +402,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_ClassifyDocument_ClassifyDocumentFromUrl_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -418,7 +418,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentIntelligenceClient_ClassifyDocument_ClassifyDocumentFromUrl_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
