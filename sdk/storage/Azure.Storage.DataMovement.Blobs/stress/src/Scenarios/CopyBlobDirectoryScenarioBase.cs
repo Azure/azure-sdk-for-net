@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     }.TransferAndVerifyAsync(
                         sourceResource,
                         destinationResource,
-                        TransferValidator.GetBlobLister(sourceContainerClient, pathPrefix),
+                        TransferValidator.Get(sourceContainerClient, pathPrefix),
                         TransferValidator.GetBlobLister(destinationContainerClient, pathPrefix),
                         _blobCount,
                         _dataTransferOptions,

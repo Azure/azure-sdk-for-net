@@ -8,10 +8,11 @@ using Azure.Storage.Blobs;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using Azure.Storage.DataMovement.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
-    public abstract class BlobScenarioBase : TestScenarioBase
+    public abstract class BlobScenarioBase : DataMovementScenarioBase
     {
         protected internal readonly Uri _destinationBlobUri;
         protected internal int _blobSize;
@@ -19,7 +20,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         protected internal BlobsStorageResourceProvider _blobsStorageResourceProvider;
         protected internal LocalFilesStorageResourceProvider _localFilesStorageResourceProvider;
         protected internal BlobServiceClient _blobServiceClient;
-
 
         public BlobScenarioBase(
             Uri blobUri,
