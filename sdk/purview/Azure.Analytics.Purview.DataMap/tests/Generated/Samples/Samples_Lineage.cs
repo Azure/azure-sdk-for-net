@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetLineage_LineageGet()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetLineage_LineageGet_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetLineage_LineageGet_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetLineage_LineageGet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetNextPage_LineageGetNextPage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetNextPage_LineageGetNextPage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetNextPage_LineageGetNextPage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetNextPage_LineageGetNextPage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Lineage_GetByUniqueAttribute_LineageGetByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 

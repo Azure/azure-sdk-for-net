@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetGlossariesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -16,7 +16,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossariesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -61,7 +61,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaries and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -72,7 +72,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaries with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -117,7 +117,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -129,7 +129,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -239,7 +239,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -251,7 +251,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossary with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -361,7 +361,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryCategoriesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -376,7 +376,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryCategoriesAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -499,7 +499,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryCategories and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -514,7 +514,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryCategories with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -637,7 +637,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryCategoryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -649,7 +649,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryCategoryAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -769,7 +769,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryCategory and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -781,7 +781,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryCategory with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -901,7 +901,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryCategoryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -912,7 +912,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategoryAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -963,7 +963,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryCategory and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -974,7 +974,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategory with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1025,7 +1025,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossaryCategoryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1037,7 +1037,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossaryCategoryAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1157,7 +1157,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossaryCategory and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1169,7 +1169,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossaryCategory with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1289,7 +1289,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call DeleteGlossaryCategoryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1299,7 +1299,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryCategoryAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1312,7 +1312,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteGlossaryCategory.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1322,7 +1322,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryCategory with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1335,7 +1335,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call PartialUpdateGlossaryCategoryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1350,7 +1350,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossaryCategoryAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1405,7 +1405,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call PartialUpdateGlossaryCategory and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1420,7 +1420,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossaryCategory with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1475,7 +1475,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetRelatedCategoriesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1486,7 +1486,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].ToString());
 ]]></code>
 This sample shows how to call GetRelatedCategoriesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1504,7 +1504,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToS
       <example>
 This sample shows how to call GetRelatedCategories and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1515,7 +1515,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].ToString());
 ]]></code>
 This sample shows how to call GetRelatedCategories with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1533,7 +1533,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("relationGuid").ToS
       <example>
 This sample shows how to call GetCategoryTermsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1544,7 +1544,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetCategoryTermsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1565,7 +1565,7 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
       <example>
 This sample shows how to call GetCategoryTerms and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1576,7 +1576,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetCategoryTerms with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1597,7 +1597,7 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
       <example>
 This sample shows how to call CreateGlossaryTermAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1609,7 +1609,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryTermAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1960,7 +1960,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryTerm and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -1972,7 +1972,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryTerm with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2323,7 +2323,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryTermAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2334,7 +2334,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTermAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2501,7 +2501,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryTerm and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2512,7 +2512,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTerm with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2679,7 +2679,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossaryTermAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -2691,7 +2691,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossaryTermAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3042,7 +3042,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossaryTerm and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3054,7 +3054,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossaryTerm with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3405,7 +3405,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call DeleteGlossaryTermAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3415,7 +3415,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryTermAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3428,7 +3428,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteGlossaryTerm.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3438,7 +3438,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryTerm with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3451,7 +3451,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call PartialUpdateGlossaryTermAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3466,7 +3466,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossaryTermAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3637,7 +3637,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call PartialUpdateGlossaryTerm and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3652,7 +3652,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossaryTerm with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3823,7 +3823,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryTermsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -3838,7 +3838,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryTermsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4192,7 +4192,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call CreateGlossaryTerms and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4207,7 +4207,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call CreateGlossaryTerms with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4561,7 +4561,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetEntitiesAssignedWithTermAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4572,7 +4572,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetEntitiesAssignedWithTermAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4596,7 +4596,7 @@ Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<key>")
       <example>
 This sample shows how to call GetEntitiesAssignedWithTerm and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4607,7 +4607,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetEntitiesAssignedWithTerm with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4631,7 +4631,7 @@ Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<key>")
       <example>
 This sample shows how to call AssignTermToEntitiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4645,7 +4645,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AssignTermToEntitiesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4684,7 +4684,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AssignTermToEntities.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4698,7 +4698,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AssignTermToEntities with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4737,7 +4737,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveTermAssignmentFromEntitiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4751,7 +4751,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveTermAssignmentFromEntitiesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4790,7 +4790,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveTermAssignmentFromEntities.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4804,7 +4804,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call RemoveTermAssignmentFromEntities with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4843,7 +4843,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTermAssignmentFromEntitiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4857,7 +4857,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4896,7 +4896,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTermAssignmentFromEntities.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4910,7 +4910,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTermAssignmentFromEntities with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4949,7 +4949,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetRelatedTermsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4960,7 +4960,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].ToString());
 ]]></code>
 This sample shows how to call GetRelatedTermsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4981,7 +4981,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("termGuid").ToStrin
       <example>
 This sample shows how to call GetRelatedTerms and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -4992,7 +4992,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].ToString());
 ]]></code>
 This sample shows how to call GetRelatedTerms with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5013,7 +5013,7 @@ Console.WriteLine(result.GetProperty("<key>")[0].GetProperty("termGuid").ToStrin
       <example>
 This sample shows how to call GetGlossaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5024,7 +5024,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossaryAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5069,7 +5069,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5080,7 +5080,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetGlossary with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5125,7 +5125,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5137,7 +5137,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossaryAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5247,7 +5247,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call UpdateGlossary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5259,7 +5259,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateGlossary with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5369,7 +5369,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call DeleteGlossaryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5379,7 +5379,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossaryAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5392,7 +5392,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteGlossary.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5402,7 +5402,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteGlossary with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5415,7 +5415,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetGlossaryCategoriesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5426,7 +5426,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategoriesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5477,7 +5477,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryCategories and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5488,7 +5488,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategories with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5539,7 +5539,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryCategoriesHeadersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5550,7 +5550,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategoriesHeadersAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5568,7 +5568,7 @@ Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
       <example>
 This sample shows how to call GetGlossaryCategoriesHeaders and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5579,7 +5579,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryCategoriesHeaders with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5597,7 +5597,7 @@ Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
       <example>
 This sample shows how to call GetDetailedGlossaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5608,7 +5608,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetDetailedGlossaryAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5845,7 +5845,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetDetailedGlossary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -5856,7 +5856,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetDetailedGlossary with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6093,7 +6093,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call PartialUpdateGlossaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6108,7 +6108,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossaryAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6157,7 +6157,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call PartialUpdateGlossary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6172,7 +6172,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateGlossary with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6221,7 +6221,7 @@ Console.WriteLine(result.GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryTermsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6232,7 +6232,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTermsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6399,7 +6399,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryTerms and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6410,7 +6410,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTerms with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6577,7 +6577,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetGlossaryTermHeadersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6588,7 +6588,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTermHeadersAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6609,7 +6609,7 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
       <example>
 This sample shows how to call GetGlossaryTermHeaders and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6620,7 +6620,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetGlossaryTermHeaders with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6641,7 +6641,7 @@ Console.WriteLine(result[0].GetProperty("termGuid").ToString());
       <example>
 This sample shows how to call GetImportCsvOperationStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6652,7 +6652,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetImportCsvOperationStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6673,7 +6673,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToStri
       <example>
 This sample shows how to call GetImportCsvOperationStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6684,7 +6684,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetImportCsvOperationStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6705,7 +6705,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToStri
       <example>
 This sample shows how to call ExportGlossaryTermsAsCsvAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6720,7 +6720,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6738,7 +6738,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ExportGlossaryTermsAsCsv and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6753,7 +6753,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6771,7 +6771,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTermsByGlossaryNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6782,7 +6782,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetTermsByGlossaryNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6949,7 +6949,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call GetTermsByGlossaryName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -6960,7 +6960,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetTermsByGlossaryName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7127,7 +7127,7 @@ Console.WriteLine(result[0].GetProperty("guid").ToString());
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7140,7 +7140,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportGlossaryTermsViaCsvAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7163,7 +7163,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToStri
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsv and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7176,7 +7176,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportGlossaryTermsViaCsv with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7199,7 +7199,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToStri
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7212,7 +7212,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7235,7 +7235,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToStri
       <example>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
@@ -7248,7 +7248,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 

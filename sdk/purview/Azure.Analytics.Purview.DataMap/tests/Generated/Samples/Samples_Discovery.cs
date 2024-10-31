@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQuery()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -30,17 +30,17 @@ namespace Azure.Analytics.Purview.DataMap.Samples
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4600",
+                    ["$id"] = "4598",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4601",
+["$id"] = "4599",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4602",
+["$id"] = "4600",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -50,12 +50,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "4606",
+["$id"] = "4604",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4608",
+["$id"] = "4606",
 ["updateTime"] = "DESC"
 }
             },
@@ -118,7 +118,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQuery_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -127,17 +127,17 @@ count = "desc",
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4600",
+                    ["$id"] = "4598",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4601",
+["$id"] = "4599",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4602",
+["$id"] = "4600",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -147,12 +147,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "4606",
+["$id"] = "4604",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4608",
+["$id"] = "4606",
 ["updateTime"] = "DESC"
 }
             },
@@ -215,7 +215,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQuery_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -225,26 +225,26 @@ count = "desc",
                 Limit = 10,
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "4606",
+["$id"] = "4604",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "4608",
+["$id"] = "4606",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4600",
+                    ["$id"] = "4598",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4601",
+["$id"] = "4599",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4602",
+["$id"] = "4600",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -298,7 +298,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQuery_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -308,26 +308,26 @@ Count = SearchSortOrder.Descend,
                 Limit = 10,
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "4606",
+["$id"] = "4604",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "4608",
+["$id"] = "4606",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4600",
+                    ["$id"] = "4598",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4601",
+["$id"] = "4599",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4602",
+["$id"] = "4600",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -381,7 +381,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAnd()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -390,17 +390,17 @@ Count = SearchSortOrder.Descend,
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4685",
+                    ["$id"] = "4683",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4686",
+["$id"] = "4684",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4687",
+["$id"] = "4685",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
@@ -418,7 +418,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAnd_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -427,17 +427,17 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4685",
+                    ["$id"] = "4683",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4686",
+["$id"] = "4684",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4687",
+["$id"] = "4685",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
@@ -455,7 +455,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAnd_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -464,17 +464,17 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4685",
+                    ["$id"] = "4683",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4686",
+["$id"] = "4684",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4687",
+["$id"] = "4685",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
@@ -489,7 +489,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAnd_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -498,17 +498,17 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4685",
+                    ["$id"] = "4683",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4686",
+["$id"] = "4684",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4687",
+["$id"] = "4685",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
@@ -523,7 +523,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAndOrNested()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -532,36 +532,36 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4738",
+                    ["$id"] = "4736",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4739",
+["$id"] = "4737",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4740",
+["$id"] = "4738",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4741",
+["$id"] = "4739",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "4742",
+["$id"] = "4740",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4743",
+["$id"] = "4741",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
@@ -581,7 +581,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAndOrNested_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -590,36 +590,36 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4738",
+                    ["$id"] = "4736",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4739",
+["$id"] = "4737",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4740",
+["$id"] = "4738",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4741",
+["$id"] = "4739",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "4742",
+["$id"] = "4740",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4743",
+["$id"] = "4741",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
@@ -639,7 +639,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAndOrNested_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -648,36 +648,36 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4738",
+                    ["$id"] = "4736",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4739",
+["$id"] = "4737",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4740",
+["$id"] = "4738",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4741",
+["$id"] = "4739",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "4742",
+["$id"] = "4740",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4743",
+["$id"] = "4741",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
@@ -694,7 +694,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAndOrNested_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -703,36 +703,36 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4738",
+                    ["$id"] = "4736",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4739",
+["$id"] = "4737",
 ["entityType"] = "azure_blob_path"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4740",
+["$id"] = "4738",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4741",
+["$id"] = "4739",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "4742",
+["$id"] = "4740",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4743",
+["$id"] = "4741",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
@@ -749,7 +749,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAssetType()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -758,142 +758,142 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4796",
+                    ["$id"] = "4794",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4797",
+["$id"] = "4795",
 ["assetType"] = "SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4798",
+["$id"] = "4796",
 ["assetType"] = "Azure SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4799",
+["$id"] = "4797",
 ["assetType"] = "Azure SQL Database"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4800",
+["$id"] = "4798",
 ["assetType"] = "Azure SQL Data Warehouse"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4801",
+["$id"] = "4799",
 ["assetType"] = "Azure SQL Managed Instance"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4802",
+["$id"] = "4800",
 ["assetType"] = "Azure Storage Account"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4803",
+["$id"] = "4801",
 ["assetType"] = "Azure Blob Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4804",
+["$id"] = "4802",
 ["assetType"] = "Azure Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4805",
+["$id"] = "4803",
 ["assetType"] = "Azure Table Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4806",
+["$id"] = "4804",
 ["assetType"] = "Azure Data Lake Storage Gen1"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4807",
+["$id"] = "4805",
 ["assetType"] = "Azure Data Lake Storage Gen2"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4808",
+["$id"] = "4806",
 ["assetType"] = "Azure Cosmos DB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4809",
+["$id"] = "4807",
 ["assetType"] = "Azure Data Factory"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4810",
+["$id"] = "4808",
 ["assetType"] = "Azure Cognitive Search"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4811",
+["$id"] = "4809",
 ["assetType"] = "Power BI"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4812",
+["$id"] = "4810",
 ["assetType"] = "Azure Data Explorer"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4813",
+["$id"] = "4811",
 ["assetType"] = "Amazon S3"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4814",
+["$id"] = "4812",
 ["assetType"] = "Azure Data Share"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4815",
+["$id"] = "4813",
 ["assetType"] = "Teradata"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4816",
+["$id"] = "4814",
 ["assetType"] = "SAP S4HANA"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4817",
+["$id"] = "4815",
 ["assetType"] = "SAP ECC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4818",
+["$id"] = "4816",
 ["assetType"] = "SQL Server Integration Services"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4819",
+["$id"] = "4817",
 ["assetType"] = "hive"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4820",
+["$id"] = "4818",
 ["assetType"] = "Azure Database for MySQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4821",
+["$id"] = "4819",
 ["assetType"] = "Azure Database for MariaDB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4822",
+["$id"] = "4820",
 ["assetType"] = "Azure Database for PostgreSQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4823",
+["$id"] = "4821",
 ["assetType"] = "Azure Synapse Analytics"
 }
             }
@@ -909,7 +909,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAssetType_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -918,142 +918,142 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4796",
+                    ["$id"] = "4794",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4797",
+["$id"] = "4795",
 ["assetType"] = "SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4798",
+["$id"] = "4796",
 ["assetType"] = "Azure SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4799",
+["$id"] = "4797",
 ["assetType"] = "Azure SQL Database"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4800",
+["$id"] = "4798",
 ["assetType"] = "Azure SQL Data Warehouse"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4801",
+["$id"] = "4799",
 ["assetType"] = "Azure SQL Managed Instance"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4802",
+["$id"] = "4800",
 ["assetType"] = "Azure Storage Account"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4803",
+["$id"] = "4801",
 ["assetType"] = "Azure Blob Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4804",
+["$id"] = "4802",
 ["assetType"] = "Azure Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4805",
+["$id"] = "4803",
 ["assetType"] = "Azure Table Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4806",
+["$id"] = "4804",
 ["assetType"] = "Azure Data Lake Storage Gen1"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4807",
+["$id"] = "4805",
 ["assetType"] = "Azure Data Lake Storage Gen2"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4808",
+["$id"] = "4806",
 ["assetType"] = "Azure Cosmos DB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4809",
+["$id"] = "4807",
 ["assetType"] = "Azure Data Factory"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4810",
+["$id"] = "4808",
 ["assetType"] = "Azure Cognitive Search"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4811",
+["$id"] = "4809",
 ["assetType"] = "Power BI"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4812",
+["$id"] = "4810",
 ["assetType"] = "Azure Data Explorer"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4813",
+["$id"] = "4811",
 ["assetType"] = "Amazon S3"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4814",
+["$id"] = "4812",
 ["assetType"] = "Azure Data Share"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4815",
+["$id"] = "4813",
 ["assetType"] = "Teradata"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4816",
+["$id"] = "4814",
 ["assetType"] = "SAP S4HANA"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4817",
+["$id"] = "4815",
 ["assetType"] = "SAP ECC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4818",
+["$id"] = "4816",
 ["assetType"] = "SQL Server Integration Services"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4819",
+["$id"] = "4817",
 ["assetType"] = "hive"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4820",
+["$id"] = "4818",
 ["assetType"] = "Azure Database for MySQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4821",
+["$id"] = "4819",
 ["assetType"] = "Azure Database for MariaDB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4822",
+["$id"] = "4820",
 ["assetType"] = "Azure Database for PostgreSQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4823",
+["$id"] = "4821",
 ["assetType"] = "Azure Synapse Analytics"
 }
             }
@@ -1069,7 +1069,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAssetType_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1078,142 +1078,142 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4796",
+                    ["$id"] = "4794",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4797",
+["$id"] = "4795",
 ["assetType"] = "SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4798",
+["$id"] = "4796",
 ["assetType"] = "Azure SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4799",
+["$id"] = "4797",
 ["assetType"] = "Azure SQL Database"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4800",
+["$id"] = "4798",
 ["assetType"] = "Azure SQL Data Warehouse"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4801",
+["$id"] = "4799",
 ["assetType"] = "Azure SQL Managed Instance"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4802",
+["$id"] = "4800",
 ["assetType"] = "Azure Storage Account"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4803",
+["$id"] = "4801",
 ["assetType"] = "Azure Blob Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4804",
+["$id"] = "4802",
 ["assetType"] = "Azure Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4805",
+["$id"] = "4803",
 ["assetType"] = "Azure Table Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4806",
+["$id"] = "4804",
 ["assetType"] = "Azure Data Lake Storage Gen1"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4807",
+["$id"] = "4805",
 ["assetType"] = "Azure Data Lake Storage Gen2"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4808",
+["$id"] = "4806",
 ["assetType"] = "Azure Cosmos DB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4809",
+["$id"] = "4807",
 ["assetType"] = "Azure Data Factory"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4810",
+["$id"] = "4808",
 ["assetType"] = "Azure Cognitive Search"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4811",
+["$id"] = "4809",
 ["assetType"] = "Power BI"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4812",
+["$id"] = "4810",
 ["assetType"] = "Azure Data Explorer"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4813",
+["$id"] = "4811",
 ["assetType"] = "Amazon S3"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4814",
+["$id"] = "4812",
 ["assetType"] = "Azure Data Share"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4815",
+["$id"] = "4813",
 ["assetType"] = "Teradata"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4816",
+["$id"] = "4814",
 ["assetType"] = "SAP S4HANA"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4817",
+["$id"] = "4815",
 ["assetType"] = "SAP ECC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4818",
+["$id"] = "4816",
 ["assetType"] = "SQL Server Integration Services"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4819",
+["$id"] = "4817",
 ["assetType"] = "hive"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4820",
+["$id"] = "4818",
 ["assetType"] = "Azure Database for MySQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4821",
+["$id"] = "4819",
 ["assetType"] = "Azure Database for MariaDB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4822",
+["$id"] = "4820",
 ["assetType"] = "Azure Database for PostgreSQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4823",
+["$id"] = "4821",
 ["assetType"] = "Azure Synapse Analytics"
 }
             }
@@ -1226,7 +1226,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAssetType_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1235,142 +1235,142 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4796",
+                    ["$id"] = "4794",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4797",
+["$id"] = "4795",
 ["assetType"] = "SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4798",
+["$id"] = "4796",
 ["assetType"] = "Azure SQL Server"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4799",
+["$id"] = "4797",
 ["assetType"] = "Azure SQL Database"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4800",
+["$id"] = "4798",
 ["assetType"] = "Azure SQL Data Warehouse"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4801",
+["$id"] = "4799",
 ["assetType"] = "Azure SQL Managed Instance"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4802",
+["$id"] = "4800",
 ["assetType"] = "Azure Storage Account"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4803",
+["$id"] = "4801",
 ["assetType"] = "Azure Blob Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4804",
+["$id"] = "4802",
 ["assetType"] = "Azure Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4805",
+["$id"] = "4803",
 ["assetType"] = "Azure Table Storage"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4806",
+["$id"] = "4804",
 ["assetType"] = "Azure Data Lake Storage Gen1"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4807",
+["$id"] = "4805",
 ["assetType"] = "Azure Data Lake Storage Gen2"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4808",
+["$id"] = "4806",
 ["assetType"] = "Azure Cosmos DB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4809",
+["$id"] = "4807",
 ["assetType"] = "Azure Data Factory"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4810",
+["$id"] = "4808",
 ["assetType"] = "Azure Cognitive Search"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4811",
+["$id"] = "4809",
 ["assetType"] = "Power BI"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4812",
+["$id"] = "4810",
 ["assetType"] = "Azure Data Explorer"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4813",
+["$id"] = "4811",
 ["assetType"] = "Amazon S3"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4814",
+["$id"] = "4812",
 ["assetType"] = "Azure Data Share"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4815",
+["$id"] = "4813",
 ["assetType"] = "Teradata"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4816",
+["$id"] = "4814",
 ["assetType"] = "SAP S4HANA"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4817",
+["$id"] = "4815",
 ["assetType"] = "SAP ECC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4818",
+["$id"] = "4816",
 ["assetType"] = "SQL Server Integration Services"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4819",
+["$id"] = "4817",
 ["assetType"] = "hive"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4820",
+["$id"] = "4818",
 ["assetType"] = "Azure Database for MySQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4821",
+["$id"] = "4819",
 ["assetType"] = "Azure Database for MariaDB"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4822",
+["$id"] = "4820",
 ["assetType"] = "Azure Database for PostgreSQL"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4823",
+["$id"] = "4821",
 ["assetType"] = "Azure Synapse Analytics"
 }
             }
@@ -1383,7 +1383,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1392,26 +1392,26 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4865",
+                    ["$id"] = "4863",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4866",
+["$id"] = "4864",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4867",
+["$id"] = "4865",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "4868",
+["$id"] = "4866",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1429,7 +1429,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1438,26 +1438,26 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4865",
+                    ["$id"] = "4863",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4866",
+["$id"] = "4864",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4867",
+["$id"] = "4865",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "4868",
+["$id"] = "4866",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1475,7 +1475,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1484,26 +1484,26 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4865",
+                    ["$id"] = "4863",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4866",
+["$id"] = "4864",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4867",
+["$id"] = "4865",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "4868",
+["$id"] = "4866",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1518,7 +1518,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1527,26 +1527,26 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4865",
+                    ["$id"] = "4863",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4866",
+["$id"] = "4864",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4867",
+["$id"] = "4865",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "4868",
+["$id"] = "4866",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1561,7 +1561,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1570,33 +1570,33 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4930",
+                    ["$id"] = "4928",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4931",
+["$id"] = "4929",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4932",
+["$id"] = "4930",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "4933",
+["$id"] = "4931",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "4934",
+["$id"] = "4932",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1614,7 +1614,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1623,33 +1623,33 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4930",
+                    ["$id"] = "4928",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4931",
+["$id"] = "4929",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4932",
+["$id"] = "4930",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "4933",
+["$id"] = "4931",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "4934",
+["$id"] = "4932",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1667,7 +1667,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1676,33 +1676,33 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4930",
+                    ["$id"] = "4928",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4931",
+["$id"] = "4929",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4932",
+["$id"] = "4930",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "4933",
+["$id"] = "4931",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "4934",
+["$id"] = "4932",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1717,7 +1717,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryBusinessMetadataAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1726,33 +1726,33 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4930",
+                    ["$id"] = "4928",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "4931",
+["$id"] = "4929",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "4932",
+["$id"] = "4930",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "4933",
+["$id"] = "4931",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "4934",
+["$id"] = "4932",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
@@ -1767,7 +1767,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1776,7 +1776,7 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4957",
+                    ["$id"] = "4955",
                     ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
                     ["includeSubClassifications"] = true
                 },
@@ -1791,7 +1791,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryClassification_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1800,7 +1800,7 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "4957",
+                    ["$id"] = "4955",
                     ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
                     ["includeSubClassifications"] = true
                 },
@@ -1815,7 +1815,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryClassification_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1824,7 +1824,7 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4957",
+                    ["$id"] = "4955",
                     ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
                     ["includeSubClassifications"] = true
                 }),
@@ -1836,7 +1836,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryClassification_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1845,7 +1845,7 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "4957",
+                    ["$id"] = "4955",
                     ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
                     ["includeSubClassifications"] = true
                 }),
@@ -1857,7 +1857,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryCollection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1866,7 +1866,7 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5007",
+                    ["$id"] = "5005",
                     ["collectionId"] = "collectionName"
                 },
             });
@@ -1880,7 +1880,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryCollection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1889,7 +1889,7 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5007",
+                    ["$id"] = "5005",
                     ["collectionId"] = "collectionName"
                 },
             });
@@ -1903,7 +1903,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryCollection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1912,7 +1912,7 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5007",
+                    ["$id"] = "5005",
                     ["collectionId"] = "collectionName"
                 }),
             };
@@ -1923,7 +1923,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryCollection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1932,7 +1932,7 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5007",
+                    ["$id"] = "5005",
                     ["collectionId"] = "collectionName"
                 }),
             };
@@ -1943,7 +1943,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryFacet()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1951,7 +1951,7 @@ new Dictionary<string, object>
             {
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5056",
+                    ["$id"] = "5054",
                     ["objectType"] = "Tables"
                 },
                 limit = 10,
@@ -1989,7 +1989,7 @@ count = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryFacet_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -1997,7 +1997,7 @@ count = 10,
             {
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5056",
+                    ["$id"] = "5054",
                     ["objectType"] = "Tables"
                 },
                 limit = 10,
@@ -2035,7 +2035,7 @@ count = 10,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryFacet_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2044,7 +2044,7 @@ count = 10,
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5056",
+                    ["$id"] = "5054",
                     ["objectType"] = "Tables"
                 }),
                 Facets = {new SearchFacetItem
@@ -2072,7 +2072,7 @@ Facet = "label",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryFacet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2081,7 +2081,7 @@ Facet = "label",
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5056",
+                    ["$id"] = "5054",
                     ["objectType"] = "Tables"
                 }),
                 Facets = {new SearchFacetItem
@@ -2109,7 +2109,7 @@ Facet = "label",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryFileExtension()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2118,12 +2118,12 @@ Facet = "label",
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5186",
+                    ["$id"] = "5184",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5187",
+["$id"] = "5185",
 ["fileExtension"] = "txt"
 }
             }
@@ -2139,7 +2139,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryFileExtension_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2148,12 +2148,12 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5186",
+                    ["$id"] = "5184",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5187",
+["$id"] = "5185",
 ["fileExtension"] = "txt"
 }
             }
@@ -2169,7 +2169,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryFileExtension_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2178,12 +2178,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5186",
+                    ["$id"] = "5184",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5187",
+["$id"] = "5185",
 ["fileExtension"] = "txt"
 }
             }
@@ -2196,7 +2196,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryFileExtension_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2205,12 +2205,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5186",
+                    ["$id"] = "5184",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5187",
+["$id"] = "5185",
 ["fileExtension"] = "txt"
 }
             }
@@ -2223,7 +2223,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryGlossaryTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2233,27 +2233,27 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5230",
+                    ["$id"] = "5228",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5231",
+["$id"] = "5229",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5232",
+["$id"] = "5230",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5233",
+["$id"] = "5231",
 ["glossaryType"] = "AtlasGlossary"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5234",
+["$id"] = "5232",
 ["glossaryType"] = "AtlasGlossaryTerm"
 }
 }
@@ -2292,7 +2292,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2302,27 +2302,27 @@ count = "desc",
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5230",
+                    ["$id"] = "5228",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5231",
+["$id"] = "5229",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5232",
+["$id"] = "5230",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5233",
+["$id"] = "5231",
 ["glossaryType"] = "AtlasGlossary"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5234",
+["$id"] = "5232",
 ["glossaryType"] = "AtlasGlossaryTerm"
 }
 }
@@ -2361,7 +2361,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2371,27 +2371,27 @@ count = "desc",
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5230",
+                    ["$id"] = "5228",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5231",
+["$id"] = "5229",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5232",
+["$id"] = "5230",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5233",
+["$id"] = "5231",
 ["glossaryType"] = "AtlasGlossary"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5234",
+["$id"] = "5232",
 ["glossaryType"] = "AtlasGlossaryTerm"
 }
 }
@@ -2423,7 +2423,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryGlossaryTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2433,27 +2433,27 @@ Count = SearchSortOrder.Descend,
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5230",
+                    ["$id"] = "5228",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5231",
+["$id"] = "5229",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5232",
+["$id"] = "5230",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5233",
+["$id"] = "5231",
 ["glossaryType"] = "AtlasGlossary"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5234",
+["$id"] = "5232",
 ["glossaryType"] = "AtlasGlossaryTerm"
 }
 }
@@ -2485,7 +2485,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryId()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2494,12 +2494,12 @@ Count = SearchSortOrder.Descend,
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5302",
+                    ["$id"] = "5300",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5303",
+["$id"] = "5301",
 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
 }
             }
@@ -2515,7 +2515,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryId_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2524,12 +2524,12 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5302",
+                    ["$id"] = "5300",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5303",
+["$id"] = "5301",
 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
 }
             }
@@ -2545,7 +2545,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryId_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2554,12 +2554,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5302",
+                    ["$id"] = "5300",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5303",
+["$id"] = "5301",
 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
 }
             }
@@ -2572,7 +2572,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryId_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2581,12 +2581,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5302",
+                    ["$id"] = "5300",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5303",
+["$id"] = "5301",
 ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
 }
             }
@@ -2599,7 +2599,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryNot()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2608,10 +2608,10 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5331",
+                    ["$id"] = "5329",
                     ["not"] = new Dictionary<string, object>
                     {
-                        ["$id"] = "5332",
+                        ["$id"] = "5330",
                         ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                     }
                 },
@@ -2626,7 +2626,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryNot_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2635,10 +2635,10 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5331",
+                    ["$id"] = "5329",
                     ["not"] = new Dictionary<string, object>
                     {
-                        ["$id"] = "5332",
+                        ["$id"] = "5330",
                         ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                     }
                 },
@@ -2653,7 +2653,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryNot_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2662,10 +2662,10 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5331",
+                    ["$id"] = "5329",
                     ["not"] = new Dictionary<string, object>
                     {
-                        ["$id"] = "5332",
+                        ["$id"] = "5330",
                         ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                     }
                 }),
@@ -2677,7 +2677,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryNot_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2686,10 +2686,10 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5331",
+                    ["$id"] = "5329",
                     ["not"] = new Dictionary<string, object>
                     {
-                        ["$id"] = "5332",
+                        ["$id"] = "5330",
                         ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
                     }
                 }),
@@ -2701,7 +2701,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryObjectType()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2710,47 +2710,47 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5374",
+                    ["$id"] = "5372",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5375",
+["$id"] = "5373",
 ["objectType"] = "Dashboards"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5376",
+["$id"] = "5374",
 ["objectType"] = "Data pipelines"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5377",
+["$id"] = "5375",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5378",
+["$id"] = "5376",
 ["objectType"] = "Folders"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5379",
+["$id"] = "5377",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5380",
+["$id"] = "5378",
 ["objectType"] = "Reports"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5381",
+["$id"] = "5379",
 ["objectType"] = "Stored procedures"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5382",
+["$id"] = "5380",
 ["objectType"] = "Tables"
 }
             }
@@ -2766,7 +2766,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryObjectType_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2775,47 +2775,47 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5374",
+                    ["$id"] = "5372",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5375",
+["$id"] = "5373",
 ["objectType"] = "Dashboards"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5376",
+["$id"] = "5374",
 ["objectType"] = "Data pipelines"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5377",
+["$id"] = "5375",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5378",
+["$id"] = "5376",
 ["objectType"] = "Folders"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5379",
+["$id"] = "5377",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5380",
+["$id"] = "5378",
 ["objectType"] = "Reports"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5381",
+["$id"] = "5379",
 ["objectType"] = "Stored procedures"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5382",
+["$id"] = "5380",
 ["objectType"] = "Tables"
 }
             }
@@ -2831,7 +2831,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryObjectType_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2840,47 +2840,47 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5374",
+                    ["$id"] = "5372",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5375",
+["$id"] = "5373",
 ["objectType"] = "Dashboards"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5376",
+["$id"] = "5374",
 ["objectType"] = "Data pipelines"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5377",
+["$id"] = "5375",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5378",
+["$id"] = "5376",
 ["objectType"] = "Folders"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5379",
+["$id"] = "5377",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5380",
+["$id"] = "5378",
 ["objectType"] = "Reports"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5381",
+["$id"] = "5379",
 ["objectType"] = "Stored procedures"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5382",
+["$id"] = "5380",
 ["objectType"] = "Tables"
 }
             }
@@ -2893,7 +2893,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryObjectType_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2902,47 +2902,47 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5374",
+                    ["$id"] = "5372",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5375",
+["$id"] = "5373",
 ["objectType"] = "Dashboards"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5376",
+["$id"] = "5374",
 ["objectType"] = "Data pipelines"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5377",
+["$id"] = "5375",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5378",
+["$id"] = "5376",
 ["objectType"] = "Folders"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5379",
+["$id"] = "5377",
 ["objectType"] = "Glossary terms"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5380",
+["$id"] = "5378",
 ["objectType"] = "Reports"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5381",
+["$id"] = "5379",
 ["objectType"] = "Stored procedures"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5382",
+["$id"] = "5380",
 ["objectType"] = "Tables"
 }
             }
@@ -2955,7 +2955,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -2964,17 +2964,17 @@ new Dictionary<string, object>
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5420",
+                    ["$id"] = "5418",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5421",
+["$id"] = "5419",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5422",
+["$id"] = "5420",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -2985,12 +2985,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5427",
+["$id"] = "5425",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5429",
+["$id"] = "5427",
 ["updateTime"] = "DESC"
 }
             },
@@ -3053,7 +3053,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3062,17 +3062,17 @@ count = "desc",
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5420",
+                    ["$id"] = "5418",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5421",
+["$id"] = "5419",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5422",
+["$id"] = "5420",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3083,12 +3083,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5427",
+["$id"] = "5425",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5429",
+["$id"] = "5427",
 ["updateTime"] = "DESC"
 }
             },
@@ -3151,7 +3151,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3162,26 +3162,26 @@ count = "desc",
                 ContinuationToken = "<token>",
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5427",
+["$id"] = "5425",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5429",
+["$id"] = "5427",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5420",
+                    ["$id"] = "5418",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5421",
+["$id"] = "5419",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5422",
+["$id"] = "5420",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3235,7 +3235,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationContinuationPage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3246,26 +3246,26 @@ Count = SearchSortOrder.Descend,
                 ContinuationToken = "<token>",
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5427",
+["$id"] = "5425",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5429",
+["$id"] = "5427",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5420",
+                    ["$id"] = "5418",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5421",
+["$id"] = "5419",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5422",
+["$id"] = "5420",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3319,7 +3319,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationFirstPage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3328,17 +3328,17 @@ Count = SearchSortOrder.Descend,
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5507",
+                    ["$id"] = "5505",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5508",
+["$id"] = "5506",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5509",
+["$id"] = "5507",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3348,12 +3348,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5513",
+["$id"] = "5511",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5515",
+["$id"] = "5513",
 ["updateTime"] = "DESC"
 }
             },
@@ -3416,7 +3416,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3425,17 +3425,17 @@ count = "desc",
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5507",
+                    ["$id"] = "5505",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5508",
+["$id"] = "5506",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5509",
+["$id"] = "5507",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3445,12 +3445,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5513",
+["$id"] = "5511",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5515",
+["$id"] = "5513",
 ["updateTime"] = "DESC"
 }
             },
@@ -3513,7 +3513,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3523,26 +3523,26 @@ count = "desc",
                 Limit = 2,
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5513",
+["$id"] = "5511",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5515",
+["$id"] = "5513",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5507",
+                    ["$id"] = "5505",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5508",
+["$id"] = "5506",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5509",
+["$id"] = "5507",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3596,7 +3596,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationFirstPage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3606,26 +3606,26 @@ Count = SearchSortOrder.Descend,
                 Limit = 2,
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5513",
+["$id"] = "5511",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5515",
+["$id"] = "5513",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5507",
+                    ["$id"] = "5505",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5508",
+["$id"] = "5506",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5509",
+["$id"] = "5507",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3679,7 +3679,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationLastPage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3688,17 +3688,17 @@ Count = SearchSortOrder.Descend,
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5593",
+                    ["$id"] = "5591",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5594",
+["$id"] = "5592",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5595",
+["$id"] = "5593",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3709,12 +3709,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5600",
+["$id"] = "5598",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5602",
+["$id"] = "5600",
 ["updateTime"] = "DESC"
 }
             },
@@ -3777,7 +3777,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3786,17 +3786,17 @@ count = "desc",
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5593",
+                    ["$id"] = "5591",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5594",
+["$id"] = "5592",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5595",
+["$id"] = "5593",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3807,12 +3807,12 @@ new Dictionary<string, object>
             {
 new Dictionary<string, object>
 {
-["$id"] = "5600",
+["$id"] = "5598",
 ["name"] = "ASC"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5602",
+["$id"] = "5600",
 ["updateTime"] = "DESC"
 }
             },
@@ -3875,7 +3875,7 @@ count = "desc",
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3886,26 +3886,26 @@ count = "desc",
                 ContinuationToken = "<token>",
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5600",
+["$id"] = "5598",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5602",
+["$id"] = "5600",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5593",
+                    ["$id"] = "5591",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5594",
+["$id"] = "5592",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5595",
+["$id"] = "5593",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -3959,7 +3959,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryPaginationLastPage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -3970,26 +3970,26 @@ Count = SearchSortOrder.Descend,
                 ContinuationToken = "<token>",
                 Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5600",
+["$id"] = "5598",
 ["name"] = "ASC"
 }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["$id"] = "5602",
+["$id"] = "5600",
 ["updateTime"] = "DESC"
 })},
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5593",
+                    ["$id"] = "5591",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5594",
+["$id"] = "5592",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5595",
+["$id"] = "5593",
 ["entityType"] = "azure_blob_path"
 }
             }
@@ -4043,7 +4043,7 @@ Count = SearchSortOrder.Descend,
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQuerySystemTime()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4052,22 +4052,22 @@ Count = SearchSortOrder.Descend,
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5679",
+                    ["$id"] = "5677",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5680",
+["$id"] = "5678",
 ["createTime"] = new Dictionary<string, object>
 {
-["$id"] = "5681",
+["$id"] = "5679",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
 }
 },
 new Dictionary<string, object>
 {
-["$id"] = "5682",
+["$id"] = "5680",
 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
             }
@@ -4083,7 +4083,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQuerySystemTime_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4092,22 +4092,22 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5679",
+                    ["$id"] = "5677",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5680",
+["$id"] = "5678",
 ["createTime"] = new Dictionary<string, object>
 {
-["$id"] = "5681",
+["$id"] = "5679",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
 }
 },
 new Dictionary<string, object>
 {
-["$id"] = "5682",
+["$id"] = "5680",
 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
             }
@@ -4123,7 +4123,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQuerySystemTime_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4132,22 +4132,22 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5679",
+                    ["$id"] = "5677",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5680",
+["$id"] = "5678",
 ["createTime"] = new Dictionary<string, object>
 {
-["$id"] = "5681",
+["$id"] = "5679",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
 }
 },
 new Dictionary<string, object>
 {
-["$id"] = "5682",
+["$id"] = "5680",
 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
             }
@@ -4160,7 +4160,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQuerySystemTime_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4169,22 +4169,22 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5679",
+                    ["$id"] = "5677",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5680",
+["$id"] = "5678",
 ["createTime"] = new Dictionary<string, object>
 {
-["$id"] = "5681",
+["$id"] = "5679",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
 }
 },
 new Dictionary<string, object>
 {
-["$id"] = "5682",
+["$id"] = "5680",
 ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
             }
@@ -4197,7 +4197,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryTaxonomy()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4206,32 +4206,32 @@ new Dictionary<string, object>
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5715",
+                    ["$id"] = "5713",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5716",
+["$id"] = "5714",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5717",
+["$id"] = "5715",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5718",
+["$id"] = "5716",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5719",
+["$id"] = "5717",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "5720",
+["$id"] = "5718",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
@@ -4241,10 +4241,10 @@ new Dictionary<string, object>
 },
 new Dictionary<string, object>
 {
-["$id"] = "5721",
+["$id"] = "5719",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5722",
+["$id"] = "5720",
 ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
 }
 }
@@ -4277,7 +4277,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryTaxonomy_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4286,32 +4286,32 @@ new Dictionary<string, object>
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5715",
+                    ["$id"] = "5713",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5716",
+["$id"] = "5714",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5717",
+["$id"] = "5715",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5718",
+["$id"] = "5716",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5719",
+["$id"] = "5717",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "5720",
+["$id"] = "5718",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
@@ -4321,10 +4321,10 @@ new Dictionary<string, object>
 },
 new Dictionary<string, object>
 {
-["$id"] = "5721",
+["$id"] = "5719",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5722",
+["$id"] = "5720",
 ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
 }
 }
@@ -4357,7 +4357,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryTaxonomy_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4367,32 +4367,32 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5715",
+                    ["$id"] = "5713",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5716",
+["$id"] = "5714",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5717",
+["$id"] = "5715",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5718",
+["$id"] = "5716",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5719",
+["$id"] = "5717",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "5720",
+["$id"] = "5718",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
@@ -4402,10 +4402,10 @@ new Dictionary<string, object>
 },
 new Dictionary<string, object>
 {
-["$id"] = "5721",
+["$id"] = "5719",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5722",
+["$id"] = "5720",
 ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
 }
 }
@@ -4431,7 +4431,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryTaxonomy_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4441,32 +4441,32 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5715",
+                    ["$id"] = "5713",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5716",
+["$id"] = "5714",
 ["objectType"] = "Files"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5717",
+["$id"] = "5715",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5718",
+["$id"] = "5716",
 ["or"] = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "5719",
+["$id"] = "5717",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "5720",
+["$id"] = "5718",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
@@ -4476,10 +4476,10 @@ new Dictionary<string, object>
 },
 new Dictionary<string, object>
 {
-["$id"] = "5721",
+["$id"] = "5719",
 ["not"] = new Dictionary<string, object>
 {
-["$id"] = "5722",
+["$id"] = "5720",
 ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
 }
 }
@@ -4505,7 +4505,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryTermAssignment()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4515,23 +4515,23 @@ new Dictionary<string, object>
                 limit = 3,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5776",
+                    ["$id"] = "5774",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5777",
+["$id"] = "5775",
 ["term"] = "ExampleTerm"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5778",
+["$id"] = "5776",
 ["term"] = "ExampleTerm",
 ["glossary"] = "GlossaryName"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5779",
+["$id"] = "5777",
 ["termGuid"] = "<term guid>"
 }
             }
@@ -4547,7 +4547,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryTermAssignment_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4557,23 +4557,23 @@ new Dictionary<string, object>
                 limit = 3,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5776",
+                    ["$id"] = "5774",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5777",
+["$id"] = "5775",
 ["term"] = "ExampleTerm"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5778",
+["$id"] = "5776",
 ["term"] = "ExampleTerm",
 ["glossary"] = "GlossaryName"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5779",
+["$id"] = "5777",
 ["termGuid"] = "<term guid>"
 }
             }
@@ -4589,7 +4589,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryTermAssignment_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4599,23 +4599,23 @@ new Dictionary<string, object>
                 Limit = 3,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5776",
+                    ["$id"] = "5774",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5777",
+["$id"] = "5775",
 ["term"] = "ExampleTerm"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5778",
+["$id"] = "5776",
 ["term"] = "ExampleTerm",
 ["glossary"] = "GlossaryName"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5779",
+["$id"] = "5777",
 ["termGuid"] = "<term guid>"
 }
             }
@@ -4628,7 +4628,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryTermAssignment_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4638,23 +4638,23 @@ new Dictionary<string, object>
                 Limit = 3,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5776",
+                    ["$id"] = "5774",
                     ["or"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5777",
+["$id"] = "5775",
 ["term"] = "ExampleTerm"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5778",
+["$id"] = "5776",
 ["term"] = "ExampleTerm",
 ["glossary"] = "GlossaryName"
 },
 new Dictionary<string, object>
 {
-["$id"] = "5779",
+["$id"] = "5777",
 ["termGuid"] = "<term guid>"
 }
             }
@@ -4667,7 +4667,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryType()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4676,12 +4676,12 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5812",
+                    ["$id"] = "5810",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5813",
+["$id"] = "5811",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4698,7 +4698,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryType_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4707,12 +4707,12 @@ new Dictionary<string, object>
                 limit = 10,
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5812",
+                    ["$id"] = "5810",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5813",
+["$id"] = "5811",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4729,7 +4729,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_DiscoveryQueryType_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4738,12 +4738,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5812",
+                    ["$id"] = "5810",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5813",
+["$id"] = "5811",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4757,7 +4757,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Query_DiscoveryQueryType_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4766,12 +4766,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5812",
+                    ["$id"] = "5810",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5813",
+["$id"] = "5811",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4785,7 +4785,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Suggest_DiscoverySuggest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4794,12 +4794,12 @@ new Dictionary<string, object>
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5869",
+                    ["$id"] = "5867",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5870",
+["$id"] = "5868",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4817,7 +4817,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Suggest_DiscoverySuggest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4826,12 +4826,12 @@ new Dictionary<string, object>
                 keywords = "exampledata",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5869",
+                    ["$id"] = "5867",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5870",
+["$id"] = "5868",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4849,7 +4849,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Suggest_DiscoverySuggest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4859,12 +4859,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5869",
+                    ["$id"] = "5867",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5870",
+["$id"] = "5868",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4878,7 +4878,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_Suggest_DiscoverySuggest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4888,12 +4888,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5869",
+                    ["$id"] = "5867",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5870",
+["$id"] = "5868",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4907,7 +4907,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_AutoComplete_DiscoveryAutoComplete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4916,12 +4916,12 @@ new Dictionary<string, object>
                 keywords = "exa",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5924",
+                    ["$id"] = "5922",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5925",
+["$id"] = "5923",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4939,7 +4939,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_AutoComplete_DiscoveryAutoComplete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4948,12 +4948,12 @@ new Dictionary<string, object>
                 keywords = "exa",
                 filter = new Dictionary<string, object>
                 {
-                    ["$id"] = "5924",
+                    ["$id"] = "5922",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5925",
+["$id"] = "5923",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -4971,7 +4971,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_AutoComplete_DiscoveryAutoComplete_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -4981,12 +4981,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5924",
+                    ["$id"] = "5922",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5925",
+["$id"] = "5923",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }
@@ -5000,7 +5000,7 @@ new Dictionary<string, object>
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Discovery_AutoComplete_DiscoveryAutoComplete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
@@ -5010,12 +5010,12 @@ new Dictionary<string, object>
                 Limit = 10,
                 Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["$id"] = "5924",
+                    ["$id"] = "5922",
                     ["and"] = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "5925",
+["$id"] = "5923",
 ["entityType"] = "azure_blob_path",
 ["includeSubTypes"] = false
 }

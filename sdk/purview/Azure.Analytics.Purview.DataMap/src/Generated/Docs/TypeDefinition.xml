@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetBusinessMetadataByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -16,7 +16,7 @@ Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataBy
       <example>
 This sample shows how to call GetBusinessMetadataById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -27,7 +27,7 @@ Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("d8
       <example>
 This sample shows how to call GetBusinessMetadataByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -41,7 +41,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetBusinessMetadataById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -55,7 +55,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetBusinessMetadataByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -66,7 +66,7 @@ Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataBy
       <example>
 This sample shows how to call GetBusinessMetadataByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -77,7 +77,7 @@ Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("
       <example>
 This sample shows how to call GetBusinessMetadataByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -91,7 +91,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetBusinessMetadataByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -105,7 +105,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassificationByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -116,7 +116,7 @@ Response<AtlasClassificationDef> response = await client.GetClassificationByIdAs
       <example>
 This sample shows how to call GetClassificationById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -127,7 +127,7 @@ Response<AtlasClassificationDef> response = client.GetClassificationById("e79878
       <example>
 This sample shows how to call GetClassificationByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassificationById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -155,7 +155,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassificationByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -166,7 +166,7 @@ Response<AtlasClassificationDef> response = await client.GetClassificationByName
       <example>
 This sample shows how to call GetClassificationByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -177,7 +177,7 @@ Response<AtlasClassificationDef> response = client.GetClassificationByName("MICR
       <example>
 This sample shows how to call GetClassificationByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -191,7 +191,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassificationByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -205,7 +205,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEntityByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -216,7 +216,7 @@ Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("4bc54c37-98
       <example>
 This sample shows how to call GetEntityById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -227,7 +227,7 @@ Response<AtlasEntityDef> response = client.GetEntityById("4bc54c37-98a8-4de8-9ee
       <example>
 This sample shows how to call GetEntityByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -241,7 +241,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEntityById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -255,7 +255,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEntityByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -266,7 +266,7 @@ Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("DataSet")
       <example>
 This sample shows how to call GetEntityByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -277,7 +277,7 @@ Response<AtlasEntityDef> response = client.GetEntityByName("DataSet");
       <example>
 This sample shows how to call GetEntityByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -291,7 +291,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEntityByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -305,7 +305,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEnumByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -316,7 +316,7 @@ Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("644ab9c7-893a-4
       <example>
 This sample shows how to call GetEnumById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -327,7 +327,7 @@ Response<AtlasEnumDef> response = client.GetEnumById("644ab9c7-893a-4a4d-8e0a-59
       <example>
 This sample shows how to call GetEnumByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -341,7 +341,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEnumById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -355,7 +355,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEnumByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -366,7 +366,7 @@ Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("hive_principa
       <example>
 This sample shows how to call GetEnumByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -377,7 +377,7 @@ Response<AtlasEnumDef> response = client.GetEnumByName("hive_principal_type");
       <example>
 This sample shows how to call GetEnumByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -391,7 +391,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEnumByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -405,7 +405,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetRelationshipByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -416,7 +416,7 @@ Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync(
       <example>
 This sample shows how to call GetRelationshipById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -427,7 +427,7 @@ Response<AtlasRelationshipDef> response = client.GetRelationshipById("695edde1-2
       <example>
 This sample shows how to call GetRelationshipByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -441,7 +441,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetRelationshipById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -455,7 +455,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetRelationshipByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -466,7 +466,7 @@ Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsyn
       <example>
 This sample shows how to call GetRelationshipByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -477,7 +477,7 @@ Response<AtlasRelationshipDef> response = client.GetRelationshipByName("storm_to
       <example>
 This sample shows how to call GetRelationshipByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -491,7 +491,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetRelationshipByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -505,7 +505,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetStructByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -516,7 +516,7 @@ Response<AtlasStructDef> response = await client.GetStructByIdAsync("f1571b6e-ad
       <example>
 This sample shows how to call GetStructById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -527,7 +527,7 @@ Response<AtlasStructDef> response = client.GetStructById("f1571b6e-ad08-4040-a9a
       <example>
 This sample shows how to call GetStructByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -541,7 +541,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetStructById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -555,7 +555,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetStructByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -566,7 +566,7 @@ Response<AtlasStructDef> response = await client.GetStructByNameAsync("hive_orde
       <example>
 This sample shows how to call GetStructByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -577,7 +577,7 @@ Response<AtlasStructDef> response = client.GetStructByName("hive_order");
       <example>
 This sample shows how to call GetStructByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -591,7 +591,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetStructByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -605,7 +605,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -616,7 +616,7 @@ Response<AtlasTypeDef> response = await client.GetByIdAsync("0ddc2fcf-ad17-4d06-
       <example>
 This sample shows how to call GetById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -627,7 +627,7 @@ Response<AtlasTypeDef> response = client.GetById("0ddc2fcf-ad17-4d06-984a-ffb2ff
       <example>
 This sample shows how to call GetByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -641,7 +641,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -655,7 +655,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -666,7 +666,7 @@ Response<AtlasTypeDef> response = await client.GetByNameAsync("glossary_term_sta
       <example>
 This sample shows how to call GetByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -677,7 +677,7 @@ Response<AtlasTypeDef> response = client.GetByName("glossary_term_status_value")
       <example>
 This sample shows how to call GetByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -691,7 +691,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -705,7 +705,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -718,7 +718,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -731,7 +731,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTypeDefinitionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -739,7 +739,7 @@ Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
 ]]></code>
 This sample shows how to call GetTypeDefinitionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -747,7 +747,7 @@ Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
 ]]></code>
 This sample shows how to call GetTypeDefinitionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -758,7 +758,7 @@ Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
       <example>
 This sample shows how to call GetTypeDefinition.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -766,7 +766,7 @@ Response<AtlasTypesDef> response = client.GetTypeDefinition();
 ]]></code>
 This sample shows how to call GetTypeDefinition.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -774,7 +774,7 @@ Response<AtlasTypesDef> response = client.GetTypeDefinition();
 ]]></code>
 This sample shows how to call GetTypeDefinition.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -785,7 +785,7 @@ Response<AtlasTypesDef> response = client.GetTypeDefinition();
       <example>
 This sample shows how to call GetTypeDefinitionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -796,7 +796,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -807,7 +807,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -821,7 +821,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTypeDefinition and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -832,7 +832,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinition and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -843,7 +843,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinition and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -857,7 +857,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchCreateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -887,7 +887,7 @@ Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
 ]]></code>
 This sample shows how to call BatchCreateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -925,7 +925,7 @@ Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
       <example>
 This sample shows how to call BatchCreate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -955,7 +955,7 @@ Response<AtlasTypesDef> response = client.BatchCreate(body);
 ]]></code>
 This sample shows how to call BatchCreate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -993,7 +993,7 @@ Response<AtlasTypesDef> response = client.BatchCreate(body);
       <example>
 This sample shows how to call BatchCreateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1035,7 +1035,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call BatchCreateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1082,7 +1082,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchCreate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1124,7 +1124,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call BatchCreate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1171,7 +1171,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1292,7 +1292,7 @@ Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
       <example>
 This sample shows how to call BatchUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1413,7 +1413,7 @@ Response<AtlasTypesDef> response = client.BatchUpdate(body);
       <example>
 This sample shows how to call BatchUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1563,7 +1563,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1713,7 +1713,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1746,7 +1746,7 @@ Response response = await client.BatchDeleteAsync(body);
       <example>
 This sample shows how to call BatchDelete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1779,7 +1779,7 @@ Response response = client.BatchDelete(body);
       <example>
 This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1823,7 +1823,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call BatchDelete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1867,7 +1867,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetHeadersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1878,7 +1878,7 @@ Response<IReadOnlyList<AtlasTypeDefHeader>> response = await client.GetHeadersAs
       <example>
 This sample shows how to call GetHeaders.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1889,7 +1889,7 @@ Response<IReadOnlyList<AtlasTypeDefHeader>> response = client.GetHeaders();
       <example>
 This sample shows how to call GetHeadersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1903,7 +1903,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call GetHeaders and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1917,7 +1917,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call GetTermTemplateByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1928,7 +1928,7 @@ Response<TermTemplateDef> response = await client.GetTermTemplateByIdAsync("d776
       <example>
 This sample shows how to call GetTermTemplateById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1939,7 +1939,7 @@ Response<TermTemplateDef> response = client.GetTermTemplateById("d776af9c-985c-4
       <example>
 This sample shows how to call GetTermTemplateByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1953,7 +1953,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTermTemplateById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1967,7 +1967,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTermTemplateByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1978,7 +1978,7 @@ Response<TermTemplateDef> response = await client.GetTermTemplateByNameAsync("MS
       <example>
 This sample shows how to call GetTermTemplateByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1989,7 +1989,7 @@ Response<TermTemplateDef> response = client.GetTermTemplateByName("MS KPI");
       <example>
 This sample shows how to call GetTermTemplateByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2003,7 +2003,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetTermTemplateByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 

@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetLineageGraphAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLineageGraphAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -73,7 +73,7 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
       <example>
 This sample shows how to call GetLineageGraph and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -84,7 +84,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLineageGraph with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
       <example>
 This sample shows how to call NextPageLineageAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -152,7 +152,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call NextPageLineageAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -209,7 +209,7 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
       <example>
 This sample shows how to call NextPageLineage and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -220,7 +220,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call NextPageLineage with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -277,7 +277,7 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
       <example>
 This sample shows how to call GetLineageByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -288,7 +288,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLineageByUniqueAttributeAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -345,7 +345,7 @@ Console.WriteLine(result.GetProperty("relations")[0].GetProperty("toEntityId").T
       <example>
 This sample shows how to call GetLineageByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 
@@ -356,7 +356,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetLineageByUniqueAttribute with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewLineages client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
 

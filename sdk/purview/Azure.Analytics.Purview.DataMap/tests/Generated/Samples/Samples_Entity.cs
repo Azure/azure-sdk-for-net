@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityAddCustomAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityAddCustomAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityAddCustomAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityAddCustomAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityCreate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -212,7 +212,7 @@ info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityCreate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -265,7 +265,7 @@ info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityCreate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -311,7 +311,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityCreate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -357,7 +357,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityCreateOrUpdateWithRichText()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -396,7 +396,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityCreateOrUpdateWithRichText_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -435,7 +435,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityCreateOrUpdateWithRichText_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -473,7 +473,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityCreateOrUpdateWithRichText_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -511,7 +511,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -564,7 +564,7 @@ info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityUpdate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -617,7 +617,7 @@ info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_CreateOrUpdate_EntityUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -663,7 +663,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_CreateOrUpdate_EntityUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -709,7 +709,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetByIds_EntityListByGuids()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -723,7 +723,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetByIds_EntityListByGuids_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -737,7 +737,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetByIds_EntityListByGuids_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -748,7 +748,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetByIds_EntityListByGuids_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -759,7 +759,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchCreateOrUpdate_EntityBulkCreateOrUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -851,7 +851,7 @@ version = 0L,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchCreateOrUpdate_EntityBulkCreateOrUpdate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -943,7 +943,7 @@ version = 0L,
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchCreateOrUpdate_EntityBulkCreateOrUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1019,7 +1019,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchCreateOrUpdate_EntityBulkCreateOrUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1095,7 +1095,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchDelete_EntityBulkDelete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1109,7 +1109,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchDelete_EntityBulkDelete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1123,7 +1123,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchDelete_EntityBulkDelete_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1134,7 +1134,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchDelete_EntityBulkDelete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1145,7 +1145,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassification_EntityAddClassificationToEntityByGuids()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1172,7 +1172,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassification_EntityAddClassificationToEntityByGuids_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1199,7 +1199,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassification_EntityAddClassificationToEntityByGuids_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1220,7 +1220,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassification_EntityAddClassificationToEntityByGuids_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1241,7 +1241,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetEntity_EntityGet()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1255,7 +1255,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetEntity_EntityGet_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1269,7 +1269,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetEntity_EntityGet_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1280,7 +1280,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetEntity_EntityGet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1291,7 +1291,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateAttributeById_EntityPartialUpdateAttributeByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1306,7 +1306,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateAttributeById_EntityPartialUpdateAttributeByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1321,7 +1321,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateAttributeById_EntityPartialUpdateAttributeByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1332,7 +1332,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateAttributeById_EntityPartialUpdateAttributeByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1343,7 +1343,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_Delete_EntityDelete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1357,7 +1357,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_Delete_EntityDelete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1371,7 +1371,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_Delete_EntityDelete_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1382,7 +1382,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_Delete_EntityDelete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1393,7 +1393,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetClassification_EntityGetClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1407,7 +1407,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetClassification_EntityGetClassification_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1421,7 +1421,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetClassification_EntityGetClassification_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1432,7 +1432,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetClassification_EntityGetClassification_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1443,7 +1443,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveClassification_EntityRemoveClassification()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1456,7 +1456,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveClassification_EntityRemoveClassification_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1469,7 +1469,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetClassifications_EntityGetClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1483,7 +1483,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetClassifications_EntityGetClassifications_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1497,7 +1497,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetClassifications_EntityGetClassifications_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1508,7 +1508,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetClassifications_EntityGetClassifications_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1519,7 +1519,7 @@ Info = "Example Owner Info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassifications_EntityAddClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1545,7 +1545,7 @@ entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassifications_EntityAddClassifications_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1571,7 +1571,7 @@ entityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassifications_EntityAddClassifications_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1594,7 +1594,7 @@ EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassifications_EntityAddClassifications_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1617,7 +1617,7 @@ EntityGuid = "cc0730ba-9b30-41f0-6953-559d17626d2b",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateClassifications_EntityUpdateClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1643,7 +1643,7 @@ entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateClassifications_EntityUpdateClassifications_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1669,7 +1669,7 @@ entityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateClassifications_EntityUpdateClassifications_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1692,7 +1692,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateClassifications_EntityUpdateClassifications_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1715,7 +1715,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetByUniqueAttribute_EntityGetByUniqueAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1729,7 +1729,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetByUniqueAttribute_EntityGetByUniqueAttributes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1743,7 +1743,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetByUniqueAttribute_EntityGetByUniqueAttributes_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1754,7 +1754,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetByUniqueAttribute_EntityGetByUniqueAttributes_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1765,7 +1765,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateByUniqueAttribute_EntityPartialUpdateByUniqueAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1805,7 +1805,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateByUniqueAttribute_EntityPartialUpdateByUniqueAttributes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1845,7 +1845,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateByUniqueAttribute_EntityPartialUpdateByUniqueAttributes_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1884,7 +1884,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateByUniqueAttribute_EntityPartialUpdateByUniqueAttributes_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1923,7 +1923,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_DeleteByUniqueAttribute_EntityDeleteByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1937,7 +1937,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_DeleteByUniqueAttribute_EntityDeleteByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1951,7 +1951,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_DeleteByUniqueAttribute_EntityDeleteByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1962,7 +1962,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_DeleteByUniqueAttribute_EntityDeleteByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1973,7 +1973,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveClassificationByUniqueAttribute_EntityRemoveClassificationByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1986,7 +1986,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveClassificationByUniqueAttribute_EntityRemoveClassificationByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1999,7 +1999,7 @@ EntityGuid = "45dd4404-e897-b7e2-ca3c-f6e6b11b4f24",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassificationsByUniqueAttribute_EntityAddClassificationsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2023,7 +2023,7 @@ typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassificationsByUniqueAttribute_EntityAddClassificationsByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2047,7 +2047,7 @@ typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddClassificationsByUniqueAttribute_EntityAddClassificationsByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2068,7 +2068,7 @@ TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddClassificationsByUniqueAttribute_EntityAddClassificationsByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2089,7 +2089,7 @@ TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateClassificationsUniqueByAttribute_EntityUpdateClassificationsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2113,7 +2113,7 @@ typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateClassificationsUniqueByAttribute_EntityUpdateClassificationsByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2137,7 +2137,7 @@ typeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_UpdateClassificationsUniqueByAttribute_EntityUpdateClassificationsByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2158,7 +2158,7 @@ TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_UpdateClassificationsUniqueByAttribute_EntityUpdateClassificationsByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2179,7 +2179,7 @@ TypeName = "MICROSOFT.FINANCIAL.CREDIT_CARD_NUMBER",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchSetClassifications_EntityBulkSetClassifications()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2229,7 +2229,7 @@ typeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchSetClassifications_EntityBulkSetClassifications_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2279,7 +2279,7 @@ typeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchSetClassifications_EntityBulkSetClassifications_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2320,7 +2320,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchSetClassifications_EntityBulkSetClassifications_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2361,7 +2361,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchGetByUniqueAttributes_EntityListByUniqueAttributes()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2375,7 +2375,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchGetByUniqueAttributes_EntityListByUniqueAttributes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2389,7 +2389,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_BatchGetByUniqueAttributes_EntityListByUniqueAttributes_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2400,7 +2400,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_BatchGetByUniqueAttributes_EntityListByUniqueAttributes_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2411,7 +2411,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetHeader_EntityGetHeader()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2425,7 +2425,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetHeader_EntityGetHeader_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2439,7 +2439,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetHeader_EntityGetHeader_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2450,7 +2450,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetHeader_EntityGetHeader_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2461,7 +2461,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveBusinessMetadata_EntityRemoveBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2481,7 +2481,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveBusinessMetadata_EntityRemoveBusinessMetadata_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2501,7 +2501,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveBusinessMetadata_EntityRemoveBusinessMetadata_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2518,7 +2518,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveBusinessMetadata_EntityRemoveBusinessMetadata_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2535,7 +2535,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddOrUpdateBusinessMetadata_EntityAddOrUpdateBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2555,7 +2555,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddOrUpdateBusinessMetadata_EntityAddOrUpdateBusinessMetadata_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2575,7 +2575,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddOrUpdateBusinessMetadata_EntityAddOrUpdateBusinessMetadata_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2592,7 +2592,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddOrUpdateBusinessMetadata_EntityAddOrUpdateBusinessMetadata_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2609,7 +2609,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveBusinessMetadataAttributes_EntityRemoveBusinessAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2626,7 +2626,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveBusinessMetadataAttributes_EntityRemoveBusinessAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2643,7 +2643,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveBusinessMetadataAttributes_EntityRemoveBusinessAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2657,7 +2657,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveBusinessMetadataAttributes_EntityRemoveBusinessAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2671,7 +2671,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddOrUpdateBusinessMetadataAttributes_EntityAddOrUpdateBusinessAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2688,7 +2688,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddOrUpdateBusinessMetadataAttributes_EntityAddOrUpdateBusinessAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2705,7 +2705,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddOrUpdateBusinessMetadataAttributes_EntityAddOrUpdateBusinessAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2719,7 +2719,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddOrUpdateBusinessMetadataAttributes_EntityAddOrUpdateBusinessAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2733,7 +2733,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetBusinessMetadataTemplate_EntityGetSampleBusinessMetadataTemplate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2747,7 +2747,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetBusinessMetadataTemplate_EntityGetSampleBusinessMetadataTemplate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2761,7 +2761,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_GetBusinessMetadataTemplate_EntityGetSampleBusinessMetadataTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2772,7 +2772,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_GetBusinessMetadataTemplate_EntityGetSampleBusinessMetadataTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2783,7 +2783,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_ImportBusinessMetadata_EntityImportBusinessMetadata()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2798,7 +2798,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_ImportBusinessMetadata_EntityImportBusinessMetadata_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2813,7 +2813,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_ImportBusinessMetadata_EntityImportBusinessMetadata_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2825,7 +2825,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_ImportBusinessMetadata_EntityImportBusinessMetadata_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2837,7 +2837,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveLabels_EntityRemoveLabels()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2855,7 +2855,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveLabels_EntityRemoveLabels_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2873,7 +2873,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveLabels_EntityRemoveLabels_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2884,7 +2884,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveLabels_EntityRemoveLabels_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2895,7 +2895,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_SetLabels_EntitySetLabels()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2913,7 +2913,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_SetLabels_EntitySetLabels_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2931,7 +2931,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_SetLabels_EntitySetLabels_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2942,7 +2942,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_SetLabels_EntitySetLabels_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2953,7 +2953,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddLabel_EntityAddLabel()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2971,7 +2971,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddLabel_EntityAddLabel_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2989,7 +2989,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddLabel_EntityAddLabel_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3000,7 +3000,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddLabel_EntityAddLabel_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3011,7 +3011,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveLabelsByUniqueAttribute_EntityRemoveLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3028,7 +3028,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveLabelsByUniqueAttribute_EntityRemoveLabelsByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3045,7 +3045,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_RemoveLabelsByUniqueAttribute_EntityRemoveLabelsByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3056,7 +3056,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_RemoveLabelsByUniqueAttribute_EntityRemoveLabelsByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3067,7 +3067,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_SetLabelsByUniqueAttribute_EntitySetLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3085,7 +3085,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_SetLabelsByUniqueAttribute_EntitySetLabelsByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3103,7 +3103,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_SetLabelsByUniqueAttribute_EntitySetLabelsByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3114,7 +3114,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_SetLabelsByUniqueAttribute_EntitySetLabelsByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3125,7 +3125,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddLabelsByUniqueAttribute_EntityAddLabelsByUniqueAttribute()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3142,7 +3142,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddLabelsByUniqueAttribute_EntityAddLabelsByUniqueAttribute_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3159,7 +3159,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_AddLabelsByUniqueAttribute_EntityAddLabelsByUniqueAttribute_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3170,7 +3170,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_AddLabelsByUniqueAttribute_EntityAddLabelsByUniqueAttribute_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3181,7 +3181,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_MoveEntitiesToCollection_EntityMoveEntitiesToCollection()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3203,7 +3203,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_MoveEntitiesToCollection_EntityMoveEntitiesToCollection_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3225,7 +3225,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public void Example_Entity_MoveEntitiesToCollection_EntityMoveEntitiesToCollection_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3240,7 +3240,7 @@ TypeName = "MICROSOFT.PERSONAL.IPADDRESS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Entity_MoveEntitiesToCollection_EntityMoveEntitiesToCollection_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 

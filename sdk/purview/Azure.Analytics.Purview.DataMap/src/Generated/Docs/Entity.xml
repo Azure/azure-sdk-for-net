@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call CreateOrUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -36,7 +36,7 @@ Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body)
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -79,7 +79,7 @@ Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body)
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -114,7 +114,7 @@ Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body)
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -160,7 +160,7 @@ Response<EntityMutationResult> response = await client.CreateOrUpdateAsync(body)
       <example>
 This sample shows how to call CreateOrUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -191,7 +191,7 @@ Response<EntityMutationResult> response = client.CreateOrUpdate(body);
 ]]></code>
 This sample shows how to call CreateOrUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -234,7 +234,7 @@ Response<EntityMutationResult> response = client.CreateOrUpdate(body);
 ]]></code>
 This sample shows how to call CreateOrUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -269,7 +269,7 @@ Response<EntityMutationResult> response = client.CreateOrUpdate(body);
 ]]></code>
 This sample shows how to call CreateOrUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -315,7 +315,7 @@ Response<EntityMutationResult> response = client.CreateOrUpdate(body);
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -347,7 +347,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -397,7 +397,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -433,7 +433,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -486,7 +486,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -518,7 +518,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -568,7 +568,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -604,7 +604,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -657,7 +657,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByIdsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -668,7 +668,7 @@ Response<AtlasEntitiesWithExtInfo> response = await client.GetByIdsAsync(new str
       <example>
 This sample shows how to call GetByIds.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -679,7 +679,7 @@ Response<AtlasEntitiesWithExtInfo> response = client.GetByIds(new string[] { "78
       <example>
 This sample shows how to call GetByIdsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -693,7 +693,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByIds and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -707,7 +707,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchCreateOrUpdateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -783,7 +783,7 @@ Response<EntityMutationResult> response = await client.BatchCreateOrUpdateAsync(
       <example>
 This sample shows how to call BatchCreateOrUpdate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -859,7 +859,7 @@ Response<EntityMutationResult> response = client.BatchCreateOrUpdate(body);
       <example>
 This sample shows how to call BatchCreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -951,7 +951,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchCreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1043,7 +1043,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1054,7 +1054,7 @@ Response<EntityMutationResult> response = await client.BatchDeleteAsync(new stri
       <example>
 This sample shows how to call BatchDelete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1065,7 +1065,7 @@ Response<EntityMutationResult> response = client.BatchDelete(new string[] { "18e
       <example>
 This sample shows how to call BatchDeleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1079,7 +1079,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchDelete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1093,7 +1093,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call AddClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1114,7 +1114,7 @@ Response response = await client.AddClassificationAsync(body);
       <example>
 This sample shows how to call AddClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1135,7 +1135,7 @@ Response response = client.AddClassification(body);
       <example>
 This sample shows how to call AddClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1162,7 +1162,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1189,7 +1189,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetEntityAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1200,7 +1200,7 @@ Response<AtlasEntityWithExtInfo> response = await client.GetEntityAsync("5cf8a9e
       <example>
 This sample shows how to call GetEntity.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1211,7 +1211,7 @@ Response<AtlasEntityWithExtInfo> response = client.GetEntity("5cf8a9e5-c9fd-abe0
       <example>
 This sample shows how to call GetEntityAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1225,7 +1225,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetEntity and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1239,7 +1239,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateAttributeByIdAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1250,7 +1250,7 @@ Response<EntityMutationResult> response = await client.UpdateAttributeByIdAsync(
       <example>
 This sample shows how to call UpdateAttributeById.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1261,7 +1261,7 @@ Response<EntityMutationResult> response = client.UpdateAttributeById("394d9a03-9
       <example>
 This sample shows how to call UpdateAttributeByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1276,7 +1276,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateAttributeById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1291,7 +1291,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1302,7 +1302,7 @@ Response<EntityMutationResult> response = await client.DeleteAsync("fd279eb4-f6c
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1313,7 +1313,7 @@ Response<EntityMutationResult> response = client.Delete("fd279eb4-f6c3-1b0b-ad67
       <example>
 This sample shows how to call DeleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1327,7 +1327,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call Delete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1341,7 +1341,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1352,7 +1352,7 @@ Response<AtlasClassification> response = await client.GetClassificationAsync("93
       <example>
 This sample shows how to call GetClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1363,7 +1363,7 @@ Response<AtlasClassification> response = client.GetClassification("9347abc5-7b86
       <example>
 This sample shows how to call GetClassificationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1377,7 +1377,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassification and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1391,7 +1391,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call RemoveClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1404,7 +1404,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1417,7 +1417,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1428,7 +1428,7 @@ Response<AtlasClassifications> response = await client.GetClassificationsAsync("
       <example>
 This sample shows how to call GetClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1439,7 +1439,7 @@ Response<AtlasClassifications> response = client.GetClassifications("67d26de6-77
       <example>
 This sample shows how to call GetClassificationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1453,7 +1453,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetClassifications and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1467,7 +1467,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call AddClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1490,7 +1490,7 @@ Response response = await client.AddClassificationsAsync("cc0730ba-9b30-41f0-695
       <example>
 This sample shows how to call AddClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1513,7 +1513,7 @@ Response response = client.AddClassifications("cc0730ba-9b30-41f0-6953-559d17626
       <example>
 This sample shows how to call AddClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1539,7 +1539,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1565,7 +1565,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1588,7 +1588,7 @@ Response response = await client.UpdateClassificationsAsync("45dd4404-e897-b7e2-
       <example>
 This sample shows how to call UpdateClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1611,7 +1611,7 @@ Response response = client.UpdateClassifications("45dd4404-e897-b7e2-ca3c-f6e6b1
       <example>
 This sample shows how to call UpdateClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1637,7 +1637,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1663,7 +1663,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1674,7 +1674,7 @@ Response<AtlasEntityWithExtInfo> response = await client.GetByUniqueAttributeAsy
       <example>
 This sample shows how to call GetByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1685,7 +1685,7 @@ Response<AtlasEntityWithExtInfo> response = client.GetByUniqueAttribute("azure_s
       <example>
 This sample shows how to call GetByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1699,7 +1699,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1713,7 +1713,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1752,7 +1752,7 @@ Response<EntityMutationResult> response = await client.UpdateByUniqueAttributeAs
       <example>
 This sample shows how to call UpdateByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1791,7 +1791,7 @@ Response<EntityMutationResult> response = client.UpdateByUniqueAttribute("azure_
       <example>
 This sample shows how to call UpdateByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1831,7 +1831,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1871,7 +1871,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1882,7 +1882,7 @@ Response<EntityMutationResult> response = await client.DeleteByUniqueAttributeAs
       <example>
 This sample shows how to call DeleteByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1893,7 +1893,7 @@ Response<EntityMutationResult> response = client.DeleteByUniqueAttribute("azure_
       <example>
 This sample shows how to call DeleteByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1907,7 +1907,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call DeleteByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1921,7 +1921,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call RemoveClassificationByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1934,7 +1934,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveClassificationByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1947,7 +1947,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1968,7 +1968,7 @@ Response response = await client.AddClassificationsByUniqueAttributeAsync("azure
       <example>
 This sample shows how to call AddClassificationsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -1989,7 +1989,7 @@ Response response = client.AddClassificationsByUniqueAttribute("azure_storage_ac
       <example>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2013,7 +2013,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassificationsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2037,7 +2037,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsUniqueByAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2058,7 +2058,7 @@ Response response = await client.UpdateClassificationsUniqueByAttributeAsync("az
       <example>
 This sample shows how to call UpdateClassificationsUniqueByAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2079,7 +2079,7 @@ Response response = client.UpdateClassificationsUniqueByAttribute("azure_storage
       <example>
 This sample shows how to call UpdateClassificationsUniqueByAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2103,7 +2103,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsUniqueByAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2127,7 +2127,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call BatchSetClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2168,7 +2168,7 @@ Response<IReadOnlyList<string>> response = await client.BatchSetClassificationsA
       <example>
 This sample shows how to call BatchSetClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2209,7 +2209,7 @@ Response<IReadOnlyList<string>> response = client.BatchSetClassifications(body);
       <example>
 This sample shows how to call BatchSetClassificationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2259,7 +2259,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call BatchSetClassifications and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2309,7 +2309,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call BatchGetByUniqueAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2320,7 +2320,7 @@ Response<AtlasEntitiesWithExtInfo> response = await client.BatchGetByUniqueAttri
       <example>
 This sample shows how to call BatchGetByUniqueAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2331,7 +2331,7 @@ Response<AtlasEntitiesWithExtInfo> response = client.BatchGetByUniqueAttributes(
       <example>
 This sample shows how to call BatchGetByUniqueAttributesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2345,7 +2345,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call BatchGetByUniqueAttributes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2359,7 +2359,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetHeaderAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2370,7 +2370,7 @@ Response<AtlasEntityHeader> response = await client.GetHeaderAsync("9fb74c11-ac4
       <example>
 This sample shows how to call GetHeader.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2381,7 +2381,7 @@ Response<AtlasEntityHeader> response = client.GetHeader("9fb74c11-ac48-4650-95bc
       <example>
 This sample shows how to call GetHeaderAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2395,7 +2395,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetHeader and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2409,7 +2409,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call RemoveBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2426,7 +2426,7 @@ Response response = await client.RemoveBusinessMetadataAsync("02c373fe-2823-4be3
       <example>
 This sample shows how to call RemoveBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2443,7 +2443,7 @@ Response response = client.RemoveBusinessMetadata("02c373fe-2823-4be3-97fa-55180
       <example>
 This sample shows how to call RemoveBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2463,7 +2463,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2483,7 +2483,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2500,7 +2500,7 @@ Response response = await client.AddOrUpdateBusinessMetadataAsync("02c373fe-2823
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2517,7 +2517,7 @@ Response response = client.AddOrUpdateBusinessMetadata("02c373fe-2823-4be3-97fa-
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2537,7 +2537,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2557,7 +2557,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2571,7 +2571,7 @@ Response response = await client.RemoveBusinessMetadataAttributesAsync("02c373fe
       <example>
 This sample shows how to call RemoveBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2585,7 +2585,7 @@ Response response = client.RemoveBusinessMetadataAttributes("02c373fe-2823-4be3-
       <example>
 This sample shows how to call RemoveBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2602,7 +2602,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2619,7 +2619,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2633,7 +2633,7 @@ Response response = await client.AddOrUpdateBusinessMetadataAttributesAsync("02c
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2647,7 +2647,7 @@ Response response = client.AddOrUpdateBusinessMetadataAttributes("02c373fe-2823-
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2664,7 +2664,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2681,7 +2681,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetBusinessMetadataTemplateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2692,7 +2692,7 @@ Response<BinaryData> response = await client.GetBusinessMetadataTemplateAsync();
       <example>
 This sample shows how to call GetBusinessMetadataTemplate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2703,7 +2703,7 @@ Response<BinaryData> response = client.GetBusinessMetadataTemplate();
       <example>
 This sample shows how to call GetBusinessMetadataTemplateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2717,7 +2717,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetBusinessMetadataTemplate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2731,7 +2731,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ImportBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2743,7 +2743,7 @@ Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(b
       <example>
 This sample shows how to call ImportBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2755,7 +2755,7 @@ Response<BulkImportResult> response = client.ImportBusinessMetadata(body);
       <example>
 This sample shows how to call ImportBusinessMetadataAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2770,7 +2770,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ImportBusinessMetadata and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2785,7 +2785,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call RemoveLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2796,7 +2796,7 @@ Response response = await client.RemoveLabelsAsync("02c373fe-2823-4be3-97fa-5518
       <example>
 This sample shows how to call RemoveLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2807,7 +2807,7 @@ Response response = client.RemoveLabels("02c373fe-2823-4be3-97fa-55180a9faa06");
       <example>
 This sample shows how to call RemoveLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2825,7 +2825,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2843,7 +2843,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2854,7 +2854,7 @@ Response response = await client.SetLabelsAsync("02c373fe-2823-4be3-97fa-55180a9
       <example>
 This sample shows how to call SetLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2865,7 +2865,7 @@ Response response = client.SetLabels("02c373fe-2823-4be3-97fa-55180a9faa06");
       <example>
 This sample shows how to call SetLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2883,7 +2883,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2901,7 +2901,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2912,7 +2912,7 @@ Response response = await client.AddLabelAsync("02c373fe-2823-4be3-97fa-55180a9f
       <example>
 This sample shows how to call AddLabel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2923,7 +2923,7 @@ Response response = client.AddLabel("02c373fe-2823-4be3-97fa-55180a9faa06");
       <example>
 This sample shows how to call AddLabelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2941,7 +2941,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2959,7 +2959,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2970,7 +2970,7 @@ Response response = await client.RemoveLabelsByUniqueAttributeAsync("Asset");
       <example>
 This sample shows how to call RemoveLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2981,7 +2981,7 @@ Response response = client.RemoveLabelsByUniqueAttribute("Asset");
       <example>
 This sample shows how to call RemoveLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -2998,7 +2998,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RemoveLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3015,7 +3015,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3026,7 +3026,7 @@ Response response = await client.SetLabelsByUniqueAttributeAsync("Asset");
       <example>
 This sample shows how to call SetLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3037,7 +3037,7 @@ Response response = client.SetLabelsByUniqueAttribute("Asset");
       <example>
 This sample shows how to call SetLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3055,7 +3055,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3073,7 +3073,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3084,7 +3084,7 @@ Response response = await client.AddLabelsByUniqueAttributeAsync("Asset");
       <example>
 This sample shows how to call AddLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3095,7 +3095,7 @@ Response response = client.AddLabelsByUniqueAttribute("Asset");
       <example>
 This sample shows how to call AddLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3112,7 +3112,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
@@ -3129,7 +3129,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call MoveEntitiesToCollectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3144,7 +3144,7 @@ Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionA
       <example>
 This sample shows how to call MoveEntitiesToCollection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3159,7 +3159,7 @@ Response<EntityMutationResult> response = client.MoveEntitiesToCollection("Examp
       <example>
 This sample shows how to call MoveEntitiesToCollectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
@@ -3181,7 +3181,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call MoveEntitiesToCollection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 

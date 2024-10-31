@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -17,7 +17,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -194,7 +194,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -206,7 +206,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -383,7 +383,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call GetByGuidsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -394,7 +394,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByGuidsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -493,7 +493,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call GetByGuids and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -504,7 +504,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByGuids with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -603,7 +603,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call CreateOrUpdateEntitiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -615,7 +615,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEntitiesAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -795,7 +795,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call CreateOrUpdateEntities and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -807,7 +807,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateEntities with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -987,7 +987,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByGuidsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -998,7 +998,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByGuidsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1074,7 +1074,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByGuids and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1085,7 +1085,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByGuids with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1161,7 +1161,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call AddClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1172,7 +1172,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassificationAsync with all request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1218,7 +1218,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1229,7 +1229,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassification with all request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1275,7 +1275,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1286,7 +1286,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1385,7 +1385,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call GetByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1396,7 +1396,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1495,7 +1495,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1507,7 +1507,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateEntityAttributeByGuidAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1584,7 +1584,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call PartialUpdateEntityAttributeByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1596,7 +1596,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateEntityAttributeByGuid with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1673,7 +1673,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1684,7 +1684,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1760,7 +1760,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1771,7 +1771,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1847,7 +1847,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call GetClassificationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1858,7 +1858,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1882,7 +1882,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetClassification and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1893,7 +1893,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassification with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1917,7 +1917,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call DeleteClassificationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1927,7 +1927,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteClassificationAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1940,7 +1940,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteClassification.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1950,7 +1950,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteClassification with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1963,7 +1963,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetClassificationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1974,7 +1974,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -1993,7 +1993,7 @@ Console.WriteLine(result.GetProperty("totalCount").ToString());
       <example>
 This sample shows how to call GetClassifications and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2004,7 +2004,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassifications with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2023,7 +2023,7 @@ Console.WriteLine(result.GetProperty("totalCount").ToString());
       <example>
 This sample shows how to call AddClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2037,7 +2037,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassificationsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2079,7 +2079,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2093,7 +2093,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassifications with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2135,7 +2135,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2149,7 +2149,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateClassificationsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2191,7 +2191,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassifications.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2205,7 +2205,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateClassifications with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2247,7 +2247,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetByUniqueAttributesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2258,7 +2258,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByUniqueAttributesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2357,7 +2357,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call GetByUniqueAttributes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2368,7 +2368,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetByUniqueAttributes with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2467,7 +2467,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2479,7 +2479,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2656,7 +2656,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call PartialUpdateEntityByUniqueAttributes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2668,7 +2668,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call PartialUpdateEntityByUniqueAttributes with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2845,7 +2845,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2856,7 +2856,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByUniqueAttributeAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2932,7 +2932,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -2943,7 +2943,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteByUniqueAttribute with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3019,7 +3019,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("l
       <example>
 This sample shows how to call DeleteClassificationByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3029,7 +3029,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteClassificationByUniqueAttributeAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3042,7 +3042,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteClassificationByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3052,7 +3052,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteClassificationByUniqueAttribute with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3065,7 +3065,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3079,7 +3079,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassificationsByUniqueAttributeAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3121,7 +3121,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddClassificationsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3135,7 +3135,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddClassificationsByUniqueAttribute with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3177,7 +3177,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3191,7 +3191,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3233,7 +3233,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call UpdateClassificationsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3247,7 +3247,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call UpdateClassificationsByUniqueAttribute with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3289,7 +3289,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetClassificationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3301,7 +3301,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call SetClassificationsAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3391,7 +3391,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call SetClassifications and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3403,7 +3403,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call SetClassifications with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3493,7 +3493,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call GetEntitiesByUniqueAttributesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3504,7 +3504,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntitiesByUniqueAttributesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3603,7 +3603,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call GetEntitiesByUniqueAttributes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3614,7 +3614,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntitiesByUniqueAttributes with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3713,7 +3713,7 @@ Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<key>").Ge
       <example>
 This sample shows how to call GetHeaderAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3724,7 +3724,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetHeaderAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3768,7 +3768,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetHeader and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3779,7 +3779,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetHeader with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3823,7 +3823,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call DeleteBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3834,7 +3834,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteBusinessMetadataAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3851,7 +3851,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3862,7 +3862,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteBusinessMetadata with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3879,7 +3879,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3890,7 +3890,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddOrUpdateBusinessMetadataAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3907,7 +3907,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadata.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3918,7 +3918,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddOrUpdateBusinessMetadata with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3935,7 +3935,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3946,7 +3946,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteBusinessMetadataAttributesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3963,7 +3963,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3974,7 +3974,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteBusinessMetadataAttributes with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -3991,7 +3991,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4002,7 +4002,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4019,7 +4019,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4030,7 +4030,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddOrUpdateBusinessMetadataAttributes with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4047,7 +4047,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetSampleBusinessMetadataTemplateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4061,7 +4061,7 @@ if (response.ContentStream != null)
 ]]></code>
 This sample shows how to call GetSampleBusinessMetadataTemplateAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4078,7 +4078,7 @@ if (response.ContentStream != null)
       <example>
 This sample shows how to call GetSampleBusinessMetadataTemplate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4092,7 +4092,7 @@ if (response.ContentStream != null)
 ]]></code>
 This sample shows how to call GetSampleBusinessMetadataTemplate with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4109,7 +4109,7 @@ if (response.ContentStream != null)
       <example>
 This sample shows how to call ImportBusinessMetadataAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4121,7 +4121,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportBusinessMetadataAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4143,7 +4143,7 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("re
       <example>
 This sample shows how to call ImportBusinessMetadata and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4155,7 +4155,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call ImportBusinessMetadata with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4177,7 +4177,7 @@ Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("re
       <example>
 This sample shows how to call DeleteLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4188,7 +4188,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteLabelsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4205,7 +4205,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4216,7 +4216,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteLabels with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4233,7 +4233,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4244,7 +4244,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SetLabelsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4261,7 +4261,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4272,7 +4272,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SetLabels with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4289,7 +4289,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4300,7 +4300,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddLabelAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4317,7 +4317,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4328,7 +4328,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddLabel with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4345,7 +4345,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4356,7 +4356,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteLabelsByUniqueAttributeAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4373,7 +4373,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4384,7 +4384,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteLabelsByUniqueAttribute with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4401,7 +4401,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4412,7 +4412,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SetLabelsByUniqueAttributeAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4429,7 +4429,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call SetLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4440,7 +4440,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call SetLabelsByUniqueAttribute with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4457,7 +4457,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelsByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4468,7 +4468,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddLabelsByUniqueAttributeAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4485,7 +4485,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call AddLabelsByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
@@ -4496,7 +4496,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call AddLabelsByUniqueAttribute with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 

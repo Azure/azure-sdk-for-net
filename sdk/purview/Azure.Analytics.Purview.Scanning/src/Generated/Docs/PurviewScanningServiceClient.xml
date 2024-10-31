@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetKeyVaultReferenceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetKeyVaultReferenceAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -33,7 +33,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetKeyVaultReference and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -44,7 +44,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetKeyVaultReference with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -61,7 +61,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -73,7 +73,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -98,7 +98,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdateKeyVaultReference and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -110,7 +110,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateKeyVaultReference with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -135,7 +135,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteKeyVaultReferenceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -146,7 +146,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteKeyVaultReferenceAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -163,7 +163,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteKeyVaultReference and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call DeleteKeyVaultReference with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -191,7 +191,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetScanRulesetAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -202,7 +202,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -221,7 +221,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetScanRuleset and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -232,7 +232,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetScanRuleset with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -251,7 +251,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdateScanRulesetAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -263,7 +263,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -299,7 +299,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdateScanRuleset and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -311,7 +311,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -347,7 +347,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteScanRulesetAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call DeleteScanRulesetAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -377,7 +377,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteScanRuleset and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -388,7 +388,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call DeleteScanRuleset with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -407,7 +407,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetSystemRulesetsForDataSourceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -418,7 +418,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSourceAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -437,7 +437,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetSystemRulesetsForDataSource and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -448,7 +448,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForDataSource with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -467,7 +467,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetSystemRulesetsForVersionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -478,7 +478,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -497,7 +497,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetSystemRulesetsForVersion and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -508,7 +508,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetSystemRulesetsForVersion with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -527,7 +527,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetLatestSystemRulesetsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -538,7 +538,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesetsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -557,7 +557,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetLatestSystemRulesets and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -568,7 +568,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetLatestSystemRulesets with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -587,7 +587,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetKeyVaultReferencesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -599,7 +599,7 @@ await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
 ]]></code>
 This sample shows how to call GetKeyVaultReferencesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -617,7 +617,7 @@ await foreach (BinaryData item in client.GetKeyVaultReferencesAsync(null))
       <example>
 This sample shows how to call GetKeyVaultReferences and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -629,7 +629,7 @@ foreach (BinaryData item in client.GetKeyVaultReferences(null))
 ]]></code>
 This sample shows how to call GetKeyVaultReferences with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -647,7 +647,7 @@ foreach (BinaryData item in client.GetKeyVaultReferences(null))
       <example>
 This sample shows how to call GetClassificationRulesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -659,7 +659,7 @@ await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
 ]]></code>
 This sample shows how to call GetClassificationRulesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -676,7 +676,7 @@ await foreach (BinaryData item in client.GetClassificationRulesAsync(null))
       <example>
 This sample shows how to call GetClassificationRules and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -688,7 +688,7 @@ foreach (BinaryData item in client.GetClassificationRules(null))
 ]]></code>
 This sample shows how to call GetClassificationRules with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -705,7 +705,7 @@ foreach (BinaryData item in client.GetClassificationRules(null))
       <example>
 This sample shows how to call GetDataSourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -717,7 +717,7 @@ await foreach (BinaryData item in client.GetDataSourcesAsync(null))
 ]]></code>
 This sample shows how to call GetDataSourcesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -762,7 +762,7 @@ await foreach (BinaryData item in client.GetDataSourcesAsync(null))
       <example>
 This sample shows how to call GetDataSources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -774,7 +774,7 @@ foreach (BinaryData item in client.GetDataSources(null))
 ]]></code>
 This sample shows how to call GetDataSources with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -819,7 +819,7 @@ foreach (BinaryData item in client.GetDataSources(null))
       <example>
 This sample shows how to call GetScanRulesetsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -831,7 +831,7 @@ await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
 ]]></code>
 This sample shows how to call GetScanRulesetsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -851,7 +851,7 @@ await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
       <example>
 This sample shows how to call GetScanRulesets and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -863,7 +863,7 @@ foreach (BinaryData item in client.GetScanRulesets(null))
 ]]></code>
 This sample shows how to call GetScanRulesets with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -883,7 +883,7 @@ foreach (BinaryData item in client.GetScanRulesets(null))
       <example>
 This sample shows how to call GetSystemRulesetsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -895,7 +895,7 @@ await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
 ]]></code>
 This sample shows how to call GetSystemRulesetsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -915,7 +915,7 @@ await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
       <example>
 This sample shows how to call GetSystemRulesets and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -927,7 +927,7 @@ foreach (BinaryData item in client.GetSystemRulesets(null))
 ]]></code>
 This sample shows how to call GetSystemRulesets with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -947,7 +947,7 @@ foreach (BinaryData item in client.GetSystemRulesets(null))
       <example>
 This sample shows how to call GetSystemRulesetsVersionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -959,7 +959,7 @@ await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync(null, nu
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -979,7 +979,7 @@ await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync("None", 
       <example>
 This sample shows how to call GetSystemRulesetsVersions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
@@ -991,7 +991,7 @@ foreach (BinaryData item in client.GetSystemRulesetsVersions(null, null))
 ]]></code>
 This sample shows how to call GetSystemRulesetsVersions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 

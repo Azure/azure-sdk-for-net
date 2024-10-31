@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetBusinessMetadataDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetBusinessMetadataDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -73,7 +73,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetBusinessMetadataDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -84,7 +84,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetBusinessMetadataDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetBusinessMetadataDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -152,7 +152,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetBusinessMetadataDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -209,7 +209,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetBusinessMetadataDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -220,7 +220,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetBusinessMetadataDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -277,7 +277,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetClassificationDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -288,7 +288,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -348,7 +348,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetClassificationDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -359,7 +359,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -419,7 +419,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetClassificationDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -430,7 +430,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -490,7 +490,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetClassificationDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -501,7 +501,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetClassificationDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -561,7 +561,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEntityDefinitionByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -572,7 +572,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntityDefinitionByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -647,7 +647,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEntityDefinitionByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -658,7 +658,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntityDefinitionByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -733,7 +733,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEntityDefinitionByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -744,7 +744,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntityDefinitionByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -819,7 +819,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEntityDefinitionByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -830,7 +830,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEntityDefinitionByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -905,7 +905,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEnumDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -916,7 +916,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnumDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -963,7 +963,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEnumDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -974,7 +974,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnumDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1021,7 +1021,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEnumDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1032,7 +1032,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnumDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1079,7 +1079,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetEnumDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1090,7 +1090,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetEnumDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1137,7 +1137,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetRelationshipDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1148,7 +1148,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRelationshipDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1219,7 +1219,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetRelationshipDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1230,7 +1230,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRelationshipDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1301,7 +1301,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetRelationshipDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1312,7 +1312,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRelationshipDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1383,7 +1383,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetRelationshipDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1394,7 +1394,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRelationshipDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1465,7 +1465,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetStructDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1476,7 +1476,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetStructDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1533,7 +1533,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetStructDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1544,7 +1544,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetStructDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1601,7 +1601,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetStructDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1612,7 +1612,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetStructDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1669,7 +1669,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetStructDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1680,7 +1680,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetStructDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1737,7 +1737,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTypeDefinitionByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1748,7 +1748,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1842,7 +1842,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTypeDefinitionByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1853,7 +1853,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1947,7 +1947,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTypeDefinitionByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1958,7 +1958,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2052,7 +2052,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTypeDefinitionByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2063,7 +2063,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2157,7 +2157,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call DeleteTypeByNameAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2167,7 +2167,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeByNameAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2180,7 +2180,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTypeByName.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2190,7 +2190,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeByName with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2203,7 +2203,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetAllTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2214,7 +2214,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAllTypeDefinitionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2560,7 +2560,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call GetAllTypeDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2571,7 +2571,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetAllTypeDefinitions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2917,7 +2917,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call CreateTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2929,7 +2929,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateTypeDefinitionsAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3588,7 +3588,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call CreateTypeDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3600,7 +3600,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateTypeDefinitions with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4259,7 +4259,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call UpdateAtlasTypeDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4271,7 +4271,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateAtlasTypeDefinitionsAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4930,7 +4930,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call UpdateAtlasTypeDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4942,7 +4942,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call UpdateAtlasTypeDefinitions with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5601,7 +5601,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastMod
       <example>
 This sample shows how to call DeleteTypeDefinitionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5612,7 +5612,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5938,7 +5938,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTypeDefinitions.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5949,7 +5949,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTypeDefinitions with all request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6275,7 +6275,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTypeDefinitionHeadersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6286,7 +6286,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionHeadersAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6302,7 +6302,7 @@ Console.WriteLine(result[0].GetProperty("name").ToString());
       <example>
 This sample shows how to call GetTypeDefinitionHeaders and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6313,7 +6313,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetTypeDefinitionHeaders with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6329,7 +6329,7 @@ Console.WriteLine(result[0].GetProperty("name").ToString());
       <example>
 This sample shows how to call GetTermTemplateDefByGuidAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6340,7 +6340,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTermTemplateDefByGuidAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6397,7 +6397,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTermTemplateDefByGuid and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6408,7 +6408,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTermTemplateDefByGuid with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6465,7 +6465,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTermTemplateDefByNameAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6476,7 +6476,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTermTemplateDefByNameAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6533,7 +6533,7 @@ Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
       <example>
 This sample shows how to call GetTermTemplateDefByName and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6544,7 +6544,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTermTemplateDefByName with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
