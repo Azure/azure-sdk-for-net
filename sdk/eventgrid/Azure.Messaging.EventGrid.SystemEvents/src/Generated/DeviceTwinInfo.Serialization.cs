@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<DeviceTwinInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceTwinInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeviceTwinInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -90,7 +98,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeviceTwinInfo IJsonModel<DeviceTwinInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
