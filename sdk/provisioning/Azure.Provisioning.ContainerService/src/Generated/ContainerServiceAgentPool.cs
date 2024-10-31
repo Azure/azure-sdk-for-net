@@ -22,23 +22,35 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The name of the agent pool.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The list of Availability zones to use for nodes. This can only be
     /// specified if the AgentPoolType property is
     /// &apos;VirtualMachineScaleSets&apos;.
     /// </summary>
-    public BicepList<string> AvailabilityZones { get => _availabilityZones; set => _availabilityZones.Assign(value); }
-    private readonly BicepList<string> _availabilityZones;
+    public BicepList<string> AvailabilityZones 
+    {
+        get { Initialize(); return _availabilityZones!; }
+        set { Initialize(); _availabilityZones!.Assign(value); }
+    }
+    private BicepList<string>? _availabilityZones;
 
     /// <summary>
     /// AKS will associate the specified agent pool with the Capacity
     /// Reservation Group.
     /// </summary>
-    public BicepValue<ResourceIdentifier> CapacityReservationGroupId { get => _capacityReservationGroupId; set => _capacityReservationGroupId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _capacityReservationGroupId;
+    public BicepValue<ResourceIdentifier> CapacityReservationGroupId 
+    {
+        get { Initialize(); return _capacityReservationGroupId!; }
+        set { Initialize(); _capacityReservationGroupId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _capacityReservationGroupId;
 
     /// <summary>
     /// Number of agents (VMs) to host docker containers. Allowed values must
@@ -46,37 +58,57 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// range of 1 to 1000 (inclusive) for system pools. The default value is
     /// 1.
     /// </summary>
-    public BicepValue<int> Count { get => _count; set => _count.Assign(value); }
-    private readonly BicepValue<int> _count;
+    public BicepValue<int> Count 
+    {
+        get { Initialize(); return _count!; }
+        set { Initialize(); _count!.Assign(value); }
+    }
+    private BicepValue<int>? _count;
 
     /// <summary>
     /// This is the ARM ID of the source object to be used to create the target
     /// object.
     /// </summary>
-    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId { get => _creationDataSourceResourceId; set => _creationDataSourceResourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _creationDataSourceResourceId;
+    public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
+    {
+        get { Initialize(); return _creationDataSourceResourceId!; }
+        set { Initialize(); _creationDataSourceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
 
     /// <summary>
     /// Whether to enable auto-scaler.
     /// </summary>
-    public BicepValue<bool> EnableAutoScaling { get => _enableAutoScaling; set => _enableAutoScaling.Assign(value); }
-    private readonly BicepValue<bool> _enableAutoScaling;
+    public BicepValue<bool> EnableAutoScaling 
+    {
+        get { Initialize(); return _enableAutoScaling!; }
+        set { Initialize(); _enableAutoScaling!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableAutoScaling;
 
     /// <summary>
     /// This is only supported on certain VM sizes and in certain Azure
     /// regions. For more information, see:
     /// https://docs.microsoft.com/azure/aks/enable-host-encryption.
     /// </summary>
-    public BicepValue<bool> EnableEncryptionAtHost { get => _enableEncryptionAtHost; set => _enableEncryptionAtHost.Assign(value); }
-    private readonly BicepValue<bool> _enableEncryptionAtHost;
+    public BicepValue<bool> EnableEncryptionAtHost 
+    {
+        get { Initialize(); return _enableEncryptionAtHost!; }
+        set { Initialize(); _enableEncryptionAtHost!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableEncryptionAtHost;
 
     /// <summary>
     /// See [Add a FIPS-enabled node
     /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview)
     /// for more details.
     /// </summary>
-    public BicepValue<bool> EnableFips { get => _enableFips; set => _enableFips.Assign(value); }
-    private readonly BicepValue<bool> _enableFips;
+    public BicepValue<bool> EnableFips 
+    {
+        get { Initialize(); return _enableFips!; }
+        set { Initialize(); _enableFips!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableFips;
 
     /// <summary>
     /// Some scenarios may require nodes in a node pool to receive their own
@@ -87,21 +119,33 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools).
     /// The default is false.
     /// </summary>
-    public BicepValue<bool> EnableNodePublicIP { get => _enableNodePublicIP; set => _enableNodePublicIP.Assign(value); }
-    private readonly BicepValue<bool> _enableNodePublicIP;
+    public BicepValue<bool> EnableNodePublicIP 
+    {
+        get { Initialize(); return _enableNodePublicIP!; }
+        set { Initialize(); _enableNodePublicIP!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableNodePublicIP;
 
     /// <summary>
     /// Whether to enable UltraSSD.
     /// </summary>
-    public BicepValue<bool> EnableUltraSsd { get => _enableUltraSsd; set => _enableUltraSsd.Assign(value); }
-    private readonly BicepValue<bool> _enableUltraSsd;
+    public BicepValue<bool> EnableUltraSsd 
+    {
+        get { Initialize(); return _enableUltraSsd!; }
+        set { Initialize(); _enableUltraSsd!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableUltraSsd;
 
     /// <summary>
     /// GPUInstanceProfile to be used to specify GPU MIG instance profile for
     /// supported GPU VM SKU.
     /// </summary>
-    public BicepValue<GpuInstanceProfile> GpuInstanceProfile { get => _gpuInstanceProfile; set => _gpuInstanceProfile.Assign(value); }
-    private readonly BicepValue<GpuInstanceProfile> _gpuInstanceProfile;
+    public BicepValue<GpuInstanceProfile> GpuInstanceProfile 
+    {
+        get { Initialize(); return _gpuInstanceProfile!; }
+        set { Initialize(); _gpuInstanceProfile!.Assign(value); }
+    }
+    private BicepValue<GpuInstanceProfile>? _gpuInstanceProfile;
 
     /// <summary>
     /// This is of the form:
@@ -109,79 +153,127 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// For more information see [Azure dedicated
     /// hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts).
     /// </summary>
-    public BicepValue<ResourceIdentifier> HostGroupId { get => _hostGroupId; set => _hostGroupId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _hostGroupId;
+    public BicepValue<ResourceIdentifier> HostGroupId 
+    {
+        get { Initialize(); return _hostGroupId!; }
+        set { Initialize(); _hostGroupId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _hostGroupId;
 
     /// <summary>
     /// The Kubelet configuration on the agent pool nodes.
     /// </summary>
-    public BicepValue<KubeletConfig> KubeletConfig { get => _kubeletConfig; set => _kubeletConfig.Assign(value); }
-    private readonly BicepValue<KubeletConfig> _kubeletConfig;
+    public KubeletConfig KubeletConfig 
+    {
+        get { Initialize(); return _kubeletConfig!; }
+        set { Initialize(); AssignOrReplace(ref _kubeletConfig, value); }
+    }
+    private KubeletConfig? _kubeletConfig;
 
     /// <summary>
     /// Determines the placement of emptyDir volumes, container runtime data
     /// root, and Kubelet ephemeral storage.
     /// </summary>
-    public BicepValue<KubeletDiskType> KubeletDiskType { get => _kubeletDiskType; set => _kubeletDiskType.Assign(value); }
-    private readonly BicepValue<KubeletDiskType> _kubeletDiskType;
+    public BicepValue<KubeletDiskType> KubeletDiskType 
+    {
+        get { Initialize(); return _kubeletDiskType!; }
+        set { Initialize(); _kubeletDiskType!.Assign(value); }
+    }
+    private BicepValue<KubeletDiskType>? _kubeletDiskType;
 
     /// <summary>
     /// The OS configuration of Linux agent nodes.
     /// </summary>
-    public BicepValue<LinuxOSConfig> LinuxOSConfig { get => _linuxOSConfig; set => _linuxOSConfig.Assign(value); }
-    private readonly BicepValue<LinuxOSConfig> _linuxOSConfig;
+    public LinuxOSConfig LinuxOSConfig 
+    {
+        get { Initialize(); return _linuxOSConfig!; }
+        set { Initialize(); AssignOrReplace(ref _linuxOSConfig, value); }
+    }
+    private LinuxOSConfig? _linuxOSConfig;
 
     /// <summary>
     /// The maximum number of nodes for auto-scaling.
     /// </summary>
-    public BicepValue<int> MaxCount { get => _maxCount; set => _maxCount.Assign(value); }
-    private readonly BicepValue<int> _maxCount;
+    public BicepValue<int> MaxCount 
+    {
+        get { Initialize(); return _maxCount!; }
+        set { Initialize(); _maxCount!.Assign(value); }
+    }
+    private BicepValue<int>? _maxCount;
 
     /// <summary>
     /// The maximum number of pods that can run on a node.
     /// </summary>
-    public BicepValue<int> MaxPods { get => _maxPods; set => _maxPods.Assign(value); }
-    private readonly BicepValue<int> _maxPods;
+    public BicepValue<int> MaxPods 
+    {
+        get { Initialize(); return _maxPods!; }
+        set { Initialize(); _maxPods!.Assign(value); }
+    }
+    private BicepValue<int>? _maxPods;
 
     /// <summary>
     /// The minimum number of nodes for auto-scaling.
     /// </summary>
-    public BicepValue<int> MinCount { get => _minCount; set => _minCount.Assign(value); }
-    private readonly BicepValue<int> _minCount;
+    public BicepValue<int> MinCount 
+    {
+        get { Initialize(); return _minCount!; }
+        set { Initialize(); _minCount!.Assign(value); }
+    }
+    private BicepValue<int>? _minCount;
 
     /// <summary>
     /// A cluster must have at least one &apos;System&apos; Agent Pool at all
     /// times. For additional information on agent pool restrictions and best
     /// practices, see: https://docs.microsoft.com/azure/aks/use-system-pools.
     /// </summary>
-    public BicepValue<AgentPoolMode> Mode { get => _mode; set => _mode.Assign(value); }
-    private readonly BicepValue<AgentPoolMode> _mode;
+    public BicepValue<AgentPoolMode> Mode 
+    {
+        get { Initialize(); return _mode!; }
+        set { Initialize(); _mode!.Assign(value); }
+    }
+    private BicepValue<AgentPoolMode>? _mode;
 
     /// <summary>
     /// Network-related settings of an agent pool.
     /// </summary>
-    public BicepValue<AgentPoolNetworkProfile> NetworkProfile { get => _networkProfile; set => _networkProfile.Assign(value); }
-    private readonly BicepValue<AgentPoolNetworkProfile> _networkProfile;
+    public AgentPoolNetworkProfile NetworkProfile 
+    {
+        get { Initialize(); return _networkProfile!; }
+        set { Initialize(); AssignOrReplace(ref _networkProfile, value); }
+    }
+    private AgentPoolNetworkProfile? _networkProfile;
 
     /// <summary>
     /// The node labels to be persisted across all nodes in agent pool.
     /// </summary>
-    public BicepDictionary<string> NodeLabels { get => _nodeLabels; set => _nodeLabels.Assign(value); }
-    private readonly BicepDictionary<string> _nodeLabels;
+    public BicepDictionary<string> NodeLabels 
+    {
+        get { Initialize(); return _nodeLabels!; }
+        set { Initialize(); _nodeLabels!.Assign(value); }
+    }
+    private BicepDictionary<string>? _nodeLabels;
 
     /// <summary>
     /// This is of the form:
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> NodePublicIPPrefixId { get => _nodePublicIPPrefixId; set => _nodePublicIPPrefixId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _nodePublicIPPrefixId;
+    public BicepValue<ResourceIdentifier> NodePublicIPPrefixId 
+    {
+        get { Initialize(); return _nodePublicIPPrefixId!; }
+        set { Initialize(); _nodePublicIPPrefixId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _nodePublicIPPrefixId;
 
     /// <summary>
     /// The taints added to new nodes during node pool create and scale. For
     /// example, key=value:NoSchedule.
     /// </summary>
-    public BicepList<string> NodeTaints { get => _nodeTaints; set => _nodeTaints.Assign(value); }
-    private readonly BicepList<string> _nodeTaints;
+    public BicepList<string> NodeTaints 
+    {
+        get { Initialize(); return _nodeTaints!; }
+        set { Initialize(); _nodeTaints!.Assign(value); }
+    }
+    private BicepList<string>? _nodeTaints;
 
     /// <summary>
     /// Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and
@@ -198,16 +290,24 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// plane version. For more information see [upgrading a node
     /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool).
     /// </summary>
-    public BicepValue<string> OrchestratorVersion { get => _orchestratorVersion; set => _orchestratorVersion.Assign(value); }
-    private readonly BicepValue<string> _orchestratorVersion;
+    public BicepValue<string> OrchestratorVersion 
+    {
+        get { Initialize(); return _orchestratorVersion!; }
+        set { Initialize(); _orchestratorVersion!.Assign(value); }
+    }
+    private BicepValue<string>? _orchestratorVersion;
 
     /// <summary>
     /// OS Disk Size in GB to be used to specify the disk size for every
     /// machine in the master/agent pool. If you specify 0, it will apply the
     /// default osDisk size according to the vmSize specified.
     /// </summary>
-    public BicepValue<int> OSDiskSizeInGB { get => _oSDiskSizeInGB; set => _oSDiskSizeInGB.Assign(value); }
-    private readonly BicepValue<int> _oSDiskSizeInGB;
+    public BicepValue<int> OSDiskSizeInGB 
+    {
+        get { Initialize(); return _oSDiskSizeInGB!; }
+        set { Initialize(); _oSDiskSizeInGB!.Assign(value); }
+    }
+    private BicepValue<int>? _oSDiskSizeInGB;
 
     /// <summary>
     /// The default is &apos;Ephemeral&apos; if the VM supports it and has a
@@ -216,63 +316,99 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// information see [Ephemeral
     /// OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
     /// </summary>
-    public BicepValue<ContainerServiceOSDiskType> OSDiskType { get => _oSDiskType; set => _oSDiskType.Assign(value); }
-    private readonly BicepValue<ContainerServiceOSDiskType> _oSDiskType;
+    public BicepValue<ContainerServiceOSDiskType> OSDiskType 
+    {
+        get { Initialize(); return _oSDiskType!; }
+        set { Initialize(); _oSDiskType!.Assign(value); }
+    }
+    private BicepValue<ContainerServiceOSDiskType>? _oSDiskType;
 
     /// <summary>
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
     /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24
     /// or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
     /// </summary>
-    public BicepValue<ContainerServiceOSSku> OSSku { get => _oSSku; set => _oSSku.Assign(value); }
-    private readonly BicepValue<ContainerServiceOSSku> _oSSku;
+    public BicepValue<ContainerServiceOSSku> OSSku 
+    {
+        get { Initialize(); return _oSSku!; }
+        set { Initialize(); _oSSku!.Assign(value); }
+    }
+    private BicepValue<ContainerServiceOSSku>? _oSSku;
 
     /// <summary>
     /// The operating system type. The default is Linux.
     /// </summary>
-    public BicepValue<ContainerServiceOSType> OSType { get => _oSType; set => _oSType.Assign(value); }
-    private readonly BicepValue<ContainerServiceOSType> _oSType;
+    public BicepValue<ContainerServiceOSType> OSType 
+    {
+        get { Initialize(); return _oSType!; }
+        set { Initialize(); _oSType!.Assign(value); }
+    }
+    private BicepValue<ContainerServiceOSType>? _oSType;
 
     /// <summary>
     /// If omitted, pod IPs are statically assigned on the node subnet (see
     /// vnetSubnetID for more details). This is of the form:
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PodSubnetId { get => _podSubnetId; set => _podSubnetId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _podSubnetId;
+    public BicepValue<ResourceIdentifier> PodSubnetId 
+    {
+        get { Initialize(); return _podSubnetId!; }
+        set { Initialize(); _podSubnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _podSubnetId;
 
     /// <summary>
     /// Tells whether the cluster is Running or Stopped.
     /// </summary>
-    public BicepValue<ContainerServiceStateCode> PowerStateCode { get => _powerStateCode; set => _powerStateCode.Assign(value); }
-    private readonly BicepValue<ContainerServiceStateCode> _powerStateCode;
+    public BicepValue<ContainerServiceStateCode> PowerStateCode 
+    {
+        get { Initialize(); return _powerStateCode!; }
+        set { Initialize(); _powerStateCode!.Assign(value); }
+    }
+    private BicepValue<ContainerServiceStateCode>? _powerStateCode;
 
     /// <summary>
     /// The ID for Proximity Placement Group.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ProximityPlacementGroupId { get => _proximityPlacementGroupId; set => _proximityPlacementGroupId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _proximityPlacementGroupId;
+    public BicepValue<ResourceIdentifier> ProximityPlacementGroupId 
+    {
+        get { Initialize(); return _proximityPlacementGroupId!; }
+        set { Initialize(); _proximityPlacementGroupId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _proximityPlacementGroupId;
 
     /// <summary>
     /// This also effects the cluster autoscaler behavior. If not specified, it
     /// defaults to Delete.
     /// </summary>
-    public BicepValue<ScaleDownMode> ScaleDownMode { get => _scaleDownMode; set => _scaleDownMode.Assign(value); }
-    private readonly BicepValue<ScaleDownMode> _scaleDownMode;
+    public BicepValue<ScaleDownMode> ScaleDownMode 
+    {
+        get { Initialize(); return _scaleDownMode!; }
+        set { Initialize(); _scaleDownMode!.Assign(value); }
+    }
+    private BicepValue<ScaleDownMode>? _scaleDownMode;
 
     /// <summary>
     /// This cannot be specified unless the scaleSetPriority is
     /// &apos;Spot&apos;. If not specified, the default is &apos;Delete&apos;.
     /// </summary>
-    public BicepValue<ScaleSetEvictionPolicy> ScaleSetEvictionPolicy { get => _scaleSetEvictionPolicy; set => _scaleSetEvictionPolicy.Assign(value); }
-    private readonly BicepValue<ScaleSetEvictionPolicy> _scaleSetEvictionPolicy;
+    public BicepValue<ScaleSetEvictionPolicy> ScaleSetEvictionPolicy 
+    {
+        get { Initialize(); return _scaleSetEvictionPolicy!; }
+        set { Initialize(); _scaleSetEvictionPolicy!.Assign(value); }
+    }
+    private BicepValue<ScaleSetEvictionPolicy>? _scaleSetEvictionPolicy;
 
     /// <summary>
     /// The Virtual Machine Scale Set priority. If not specified, the default
     /// is &apos;Regular&apos;.
     /// </summary>
-    public BicepValue<ScaleSetPriority> ScaleSetPriority { get => _scaleSetPriority; set => _scaleSetPriority.Assign(value); }
-    private readonly BicepValue<ScaleSetPriority> _scaleSetPriority;
+    public BicepValue<ScaleSetPriority> ScaleSetPriority 
+    {
+        get { Initialize(); return _scaleSetPriority!; }
+        set { Initialize(); _scaleSetPriority!.Assign(value); }
+    }
+    private BicepValue<ScaleSetPriority>? _scaleSetPriority;
 
     /// <summary>
     /// Possible values are any decimal value greater than zero or -1 which
@@ -280,26 +416,42 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// on spot pricing, see [spot VMs
     /// pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing).
     /// </summary>
-    public BicepValue<float> SpotMaxPrice { get => _spotMaxPrice; set => _spotMaxPrice.Assign(value); }
-    private readonly BicepValue<float> _spotMaxPrice;
+    public BicepValue<float> SpotMaxPrice 
+    {
+        get { Initialize(); return _spotMaxPrice!; }
+        set { Initialize(); _spotMaxPrice!.Assign(value); }
+    }
+    private BicepValue<float>? _spotMaxPrice;
 
     /// <summary>
     /// The tags to be persisted on the agent pool virtual machine scale set.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The type of Agent Pool.
     /// </summary>
-    public BicepValue<AgentPoolType> TypePropertiesType { get => _typePropertiesType; set => _typePropertiesType.Assign(value); }
-    private readonly BicepValue<AgentPoolType> _typePropertiesType;
+    public BicepValue<AgentPoolType> TypePropertiesType 
+    {
+        get { Initialize(); return _typePropertiesType!; }
+        set { Initialize(); _typePropertiesType!.Assign(value); }
+    }
+    private BicepValue<AgentPoolType>? _typePropertiesType;
 
     /// <summary>
     /// Settings for upgrading the agentpool.
     /// </summary>
-    public BicepValue<AgentPoolUpgradeSettings> UpgradeSettings { get => _upgradeSettings; set => _upgradeSettings.Assign(value); }
-    private readonly BicepValue<AgentPoolUpgradeSettings> _upgradeSettings;
+    public AgentPoolUpgradeSettings UpgradeSettings 
+    {
+        get { Initialize(); return _upgradeSettings!; }
+        set { Initialize(); AssignOrReplace(ref _upgradeSettings, value); }
+    }
+    private AgentPoolUpgradeSettings? _upgradeSettings;
 
     /// <summary>
     /// VM size availability varies by region. If a node contains insufficient
@@ -307,8 +459,12 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// For more details on restricted VM sizes, see:
     /// https://docs.microsoft.com/azure/aks/quotas-skus-regions.
     /// </summary>
-    public BicepValue<string> VmSize { get => _vmSize; set => _vmSize.Assign(value); }
-    private readonly BicepValue<string> _vmSize;
+    public BicepValue<string> VmSize 
+    {
+        get { Initialize(); return _vmSize!; }
+        set { Initialize(); _vmSize!.Assign(value); }
+    }
+    private BicepValue<string>? _vmSize;
 
     /// <summary>
     /// If this is not specified, a VNET and subnet will be generated and used.
@@ -316,14 +472,22 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// otherwise it applies to just nodes. This is of the form:
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> VnetSubnetId { get => _vnetSubnetId; set => _vnetSubnetId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _vnetSubnetId;
+    public BicepValue<ResourceIdentifier> VnetSubnetId 
+    {
+        get { Initialize(); return _vnetSubnetId!; }
+        set { Initialize(); _vnetSubnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _vnetSubnetId;
 
     /// <summary>
     /// Determines the type of workload a node can run.
     /// </summary>
-    public BicepValue<WorkloadRuntime> WorkloadRuntime { get => _workloadRuntime; set => _workloadRuntime.Assign(value); }
-    private readonly BicepValue<WorkloadRuntime> _workloadRuntime;
+    public BicepValue<WorkloadRuntime> WorkloadRuntime 
+    {
+        get { Initialize(); return _workloadRuntime!; }
+        set { Initialize(); _workloadRuntime!.Assign(value); }
+    }
+    private BicepValue<WorkloadRuntime>? _workloadRuntime;
 
     /// <summary>
     /// If orchestratorVersion is a fully specified version
@@ -331,38 +495,57 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// orchestratorVersion is &lt;major.minor&gt;, this field will contain
     /// the full &lt;major.minor.patch&gt; version being used.
     /// </summary>
-    public BicepValue<string> CurrentOrchestratorVersion { get => _currentOrchestratorVersion; }
-    private readonly BicepValue<string> _currentOrchestratorVersion;
+    public BicepValue<string> CurrentOrchestratorVersion 
+    {
+        get { Initialize(); return _currentOrchestratorVersion!; }
+    }
+    private BicepValue<string>? _currentOrchestratorVersion;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The version of node image.
     /// </summary>
-    public BicepValue<string> NodeImageVersion { get => _nodeImageVersion; }
-    private readonly BicepValue<string> _nodeImageVersion;
+    public BicepValue<string> NodeImageVersion 
+    {
+        get { Initialize(); return _nodeImageVersion!; }
+    }
+    private BicepValue<string>? _nodeImageVersion;
 
     /// <summary>
     /// The current deployment or provisioning state.
     /// </summary>
-    public BicepValue<string> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<string> _provisioningState;
+    public BicepValue<string> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<string>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent ContainerServiceManagedCluster.
     /// </summary>
-    public ContainerServiceManagedCluster? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ContainerServiceManagedCluster> _parent;
+    public ContainerServiceManagedCluster? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ContainerServiceManagedCluster>? _parent;
 
     /// <summary>
     /// Creates a new ContainerServiceAgentPool.
@@ -377,53 +560,60 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     public ContainerServiceAgentPool(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools", resourceVersion ?? "2024-08-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _availabilityZones = BicepList<string>.DefineProperty(this, "AvailabilityZones", ["properties", "availabilityZones"]);
-        _capacityReservationGroupId = BicepValue<ResourceIdentifier>.DefineProperty(this, "CapacityReservationGroupId", ["properties", "capacityReservationGroupID"]);
-        _count = BicepValue<int>.DefineProperty(this, "Count", ["properties", "count"]);
-        _creationDataSourceResourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
-        _enableAutoScaling = BicepValue<bool>.DefineProperty(this, "EnableAutoScaling", ["properties", "enableAutoScaling"]);
-        _enableEncryptionAtHost = BicepValue<bool>.DefineProperty(this, "EnableEncryptionAtHost", ["properties", "enableEncryptionAtHost"]);
-        _enableFips = BicepValue<bool>.DefineProperty(this, "EnableFips", ["properties", "enableFIPS"]);
-        _enableNodePublicIP = BicepValue<bool>.DefineProperty(this, "EnableNodePublicIP", ["properties", "enableNodePublicIP"]);
-        _enableUltraSsd = BicepValue<bool>.DefineProperty(this, "EnableUltraSsd", ["properties", "enableUltraSSD"]);
-        _gpuInstanceProfile = BicepValue<GpuInstanceProfile>.DefineProperty(this, "GpuInstanceProfile", ["properties", "gpuInstanceProfile"]);
-        _hostGroupId = BicepValue<ResourceIdentifier>.DefineProperty(this, "HostGroupId", ["properties", "hostGroupID"]);
-        _kubeletConfig = BicepValue<KubeletConfig>.DefineProperty(this, "KubeletConfig", ["properties", "kubeletConfig"]);
-        _kubeletDiskType = BicepValue<KubeletDiskType>.DefineProperty(this, "KubeletDiskType", ["properties", "kubeletDiskType"]);
-        _linuxOSConfig = BicepValue<LinuxOSConfig>.DefineProperty(this, "LinuxOSConfig", ["properties", "linuxOSConfig"]);
-        _maxCount = BicepValue<int>.DefineProperty(this, "MaxCount", ["properties", "maxCount"]);
-        _maxPods = BicepValue<int>.DefineProperty(this, "MaxPods", ["properties", "maxPods"]);
-        _minCount = BicepValue<int>.DefineProperty(this, "MinCount", ["properties", "minCount"]);
-        _mode = BicepValue<AgentPoolMode>.DefineProperty(this, "Mode", ["properties", "mode"]);
-        _networkProfile = BicepValue<AgentPoolNetworkProfile>.DefineProperty(this, "NetworkProfile", ["properties", "networkProfile"]);
-        _nodeLabels = BicepDictionary<string>.DefineProperty(this, "NodeLabels", ["properties", "nodeLabels"]);
-        _nodePublicIPPrefixId = BicepValue<ResourceIdentifier>.DefineProperty(this, "NodePublicIPPrefixId", ["properties", "nodePublicIPPrefixID"]);
-        _nodeTaints = BicepList<string>.DefineProperty(this, "NodeTaints", ["properties", "nodeTaints"]);
-        _orchestratorVersion = BicepValue<string>.DefineProperty(this, "OrchestratorVersion", ["properties", "orchestratorVersion"]);
-        _oSDiskSizeInGB = BicepValue<int>.DefineProperty(this, "OSDiskSizeInGB", ["properties", "osDiskSizeGB"]);
-        _oSDiskType = BicepValue<ContainerServiceOSDiskType>.DefineProperty(this, "OSDiskType", ["properties", "osDiskType"]);
-        _oSSku = BicepValue<ContainerServiceOSSku>.DefineProperty(this, "OSSku", ["properties", "osSKU"]);
-        _oSType = BicepValue<ContainerServiceOSType>.DefineProperty(this, "OSType", ["properties", "osType"]);
-        _podSubnetId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PodSubnetId", ["properties", "podSubnetID"]);
-        _powerStateCode = BicepValue<ContainerServiceStateCode>.DefineProperty(this, "PowerStateCode", ["properties", "powerState", "code"]);
-        _proximityPlacementGroupId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ProximityPlacementGroupId", ["properties", "proximityPlacementGroupID"]);
-        _scaleDownMode = BicepValue<ScaleDownMode>.DefineProperty(this, "ScaleDownMode", ["properties", "scaleDownMode"]);
-        _scaleSetEvictionPolicy = BicepValue<ScaleSetEvictionPolicy>.DefineProperty(this, "ScaleSetEvictionPolicy", ["properties", "scaleSetEvictionPolicy"]);
-        _scaleSetPriority = BicepValue<ScaleSetPriority>.DefineProperty(this, "ScaleSetPriority", ["properties", "scaleSetPriority"]);
-        _spotMaxPrice = BicepValue<float>.DefineProperty(this, "SpotMaxPrice", ["properties", "spotMaxPrice"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["properties", "tags"]);
-        _typePropertiesType = BicepValue<AgentPoolType>.DefineProperty(this, "TypePropertiesType", ["properties", "type"]);
-        _upgradeSettings = BicepValue<AgentPoolUpgradeSettings>.DefineProperty(this, "UpgradeSettings", ["properties", "upgradeSettings"]);
-        _vmSize = BicepValue<string>.DefineProperty(this, "VmSize", ["properties", "vmSize"]);
-        _vnetSubnetId = BicepValue<ResourceIdentifier>.DefineProperty(this, "VnetSubnetId", ["properties", "vnetSubnetID"]);
-        _workloadRuntime = BicepValue<WorkloadRuntime>.DefineProperty(this, "WorkloadRuntime", ["properties", "workloadRuntime"]);
-        _currentOrchestratorVersion = BicepValue<string>.DefineProperty(this, "CurrentOrchestratorVersion", ["properties", "currentOrchestratorVersion"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _nodeImageVersion = BicepValue<string>.DefineProperty(this, "NodeImageVersion", ["properties", "nodeImageVersion"], isOutput: true);
-        _provisioningState = BicepValue<string>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<ContainerServiceManagedCluster>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerServiceAgentPool.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _availabilityZones = DefineListProperty<string>("AvailabilityZones", ["properties", "availabilityZones"]);
+        _capacityReservationGroupId = DefineProperty<ResourceIdentifier>("CapacityReservationGroupId", ["properties", "capacityReservationGroupID"]);
+        _count = DefineProperty<int>("Count", ["properties", "count"]);
+        _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
+        _enableAutoScaling = DefineProperty<bool>("EnableAutoScaling", ["properties", "enableAutoScaling"]);
+        _enableEncryptionAtHost = DefineProperty<bool>("EnableEncryptionAtHost", ["properties", "enableEncryptionAtHost"]);
+        _enableFips = DefineProperty<bool>("EnableFips", ["properties", "enableFIPS"]);
+        _enableNodePublicIP = DefineProperty<bool>("EnableNodePublicIP", ["properties", "enableNodePublicIP"]);
+        _enableUltraSsd = DefineProperty<bool>("EnableUltraSsd", ["properties", "enableUltraSSD"]);
+        _gpuInstanceProfile = DefineProperty<GpuInstanceProfile>("GpuInstanceProfile", ["properties", "gpuInstanceProfile"]);
+        _hostGroupId = DefineProperty<ResourceIdentifier>("HostGroupId", ["properties", "hostGroupID"]);
+        _kubeletConfig = DefineModelProperty<KubeletConfig>("KubeletConfig", ["properties", "kubeletConfig"]);
+        _kubeletDiskType = DefineProperty<KubeletDiskType>("KubeletDiskType", ["properties", "kubeletDiskType"]);
+        _linuxOSConfig = DefineModelProperty<LinuxOSConfig>("LinuxOSConfig", ["properties", "linuxOSConfig"]);
+        _maxCount = DefineProperty<int>("MaxCount", ["properties", "maxCount"]);
+        _maxPods = DefineProperty<int>("MaxPods", ["properties", "maxPods"]);
+        _minCount = DefineProperty<int>("MinCount", ["properties", "minCount"]);
+        _mode = DefineProperty<AgentPoolMode>("Mode", ["properties", "mode"]);
+        _networkProfile = DefineModelProperty<AgentPoolNetworkProfile>("NetworkProfile", ["properties", "networkProfile"]);
+        _nodeLabels = DefineDictionaryProperty<string>("NodeLabels", ["properties", "nodeLabels"]);
+        _nodePublicIPPrefixId = DefineProperty<ResourceIdentifier>("NodePublicIPPrefixId", ["properties", "nodePublicIPPrefixID"]);
+        _nodeTaints = DefineListProperty<string>("NodeTaints", ["properties", "nodeTaints"]);
+        _orchestratorVersion = DefineProperty<string>("OrchestratorVersion", ["properties", "orchestratorVersion"]);
+        _oSDiskSizeInGB = DefineProperty<int>("OSDiskSizeInGB", ["properties", "osDiskSizeGB"]);
+        _oSDiskType = DefineProperty<ContainerServiceOSDiskType>("OSDiskType", ["properties", "osDiskType"]);
+        _oSSku = DefineProperty<ContainerServiceOSSku>("OSSku", ["properties", "osSKU"]);
+        _oSType = DefineProperty<ContainerServiceOSType>("OSType", ["properties", "osType"]);
+        _podSubnetId = DefineProperty<ResourceIdentifier>("PodSubnetId", ["properties", "podSubnetID"]);
+        _powerStateCode = DefineProperty<ContainerServiceStateCode>("PowerStateCode", ["properties", "powerState", "code"]);
+        _proximityPlacementGroupId = DefineProperty<ResourceIdentifier>("ProximityPlacementGroupId", ["properties", "proximityPlacementGroupID"]);
+        _scaleDownMode = DefineProperty<ScaleDownMode>("ScaleDownMode", ["properties", "scaleDownMode"]);
+        _scaleSetEvictionPolicy = DefineProperty<ScaleSetEvictionPolicy>("ScaleSetEvictionPolicy", ["properties", "scaleSetEvictionPolicy"]);
+        _scaleSetPriority = DefineProperty<ScaleSetPriority>("ScaleSetPriority", ["properties", "scaleSetPriority"]);
+        _spotMaxPrice = DefineProperty<float>("SpotMaxPrice", ["properties", "spotMaxPrice"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["properties", "tags"]);
+        _typePropertiesType = DefineProperty<AgentPoolType>("TypePropertiesType", ["properties", "type"]);
+        _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>("UpgradeSettings", ["properties", "upgradeSettings"]);
+        _vmSize = DefineProperty<string>("VmSize", ["properties", "vmSize"]);
+        _vnetSubnetId = DefineProperty<ResourceIdentifier>("VnetSubnetId", ["properties", "vnetSubnetID"]);
+        _workloadRuntime = DefineProperty<WorkloadRuntime>("WorkloadRuntime", ["properties", "workloadRuntime"]);
+        _currentOrchestratorVersion = DefineProperty<string>("CurrentOrchestratorVersion", ["properties", "currentOrchestratorVersion"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _nodeImageVersion = DefineProperty<string>("NodeImageVersion", ["properties", "nodeImageVersion"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<ContainerServiceManagedCluster>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

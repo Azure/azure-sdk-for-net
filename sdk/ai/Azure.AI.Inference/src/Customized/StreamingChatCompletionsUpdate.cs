@@ -69,64 +69,18 @@ namespace Azure.AI.Inference
         public string ContentUpdate { get; }
 
         /// <summary>
-        /// Gets the name of a function to be called.
-        /// </summary>
-        /// <remarks>
-        /// Corresponds to e.g. $.choices[0].delta.function_call.name in the underlying REST schema.
-        /// </remarks>
-        public string FunctionName { get; }
-
-        /// <summary>
-        /// Gets a function arguments fragment associated with this update.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Corresponds to e.g. $.choices[0].delta.function_call.arguments in the underlying REST schema.
-        /// </para>
-        ///
-        /// <para>
-        /// Each update contains only a small number of tokens. When presenting or reconstituting a full, streamed
-        /// arguments body, all <see cref="FunctionArgumentsUpdate"/> values for the same index should be combined.
-        /// </para>
-        ///
-        /// <para>
-        /// As is the case for non-streaming <see cref="FunctionCall.Arguments"/>, the content provided for function
-        /// arguments is not guaranteed to be well-formed JSON or to contain expected data. Callers should validate
-        /// function arguments before using them.
-        /// </para>
-        /// </remarks>
-        public string FunctionArgumentsUpdate { get; }
-
-        /// <summary>
         /// An incremental update payload for a tool call that is part of this response.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Corresponds to e.g. $.choices[0].delta.tool_calls[0].index in the REST API schema.
+        /// Corresponds to e.g. $.choices[0].delta.tool_calls[0] in the REST API schema.
         /// </para>
         /// <para>
         /// To differentiate between parallel streaming tool calls within a single streaming choice, use the value of the
-        /// <see cref="StreamingToolCallUpdate.ToolCallIndex"/> property.
-        /// </para>
-        /// <para>
-        /// Please note <see cref="StreamingToolCallUpdate"/> is the base class. According to the scenario, a derived class
-        /// of the base class might need to be assigned here, or this property needs to be casted to one of the possible
-        /// derived classes.
-        /// The available derived classes include: <see cref="StreamingFunctionToolCallUpdate"/>.
+        /// <see cref="StreamingChatResponseToolCallUpdate.Id"/> property.
         /// </para>
         /// </remarks>
-        public StreamingToolCallUpdate ToolCallUpdate { get; }
-
-        /// <summary>
-        /// Gets an optional name associated with the role of the streamed Chat Completion, typically as previously
-        /// specified in a system message.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Corresponds to e.g. $.choices[0].delta.name in the underlying REST schema.
-        /// </para>
-        /// </remarks>
-        public string AuthorName { get; }
+        public StreamingChatResponseToolCallUpdate ToolCallUpdate { get; }
 
         /// <summary>
         /// Gets the <see cref="CompletionsFinishReason"/> associated with this update.
@@ -147,23 +101,17 @@ namespace Azure.AI.Inference
             string model,
             DateTimeOffset created,
             ChatRole? role = null,
-            string authorName = null,
             string contentUpdate = null,
             CompletionsFinishReason? finishReason = null,
-            string functionName = null,
-            string functionArgumentsUpdate = null,
-            StreamingToolCallUpdate toolCallUpdate = null,
+            StreamingChatResponseToolCallUpdate toolCallUpdate = null,
             CompletionsUsage usage = null)
         {
             Id = id;
             Model = model;
             Created = created;
             Role = role;
-            AuthorName = authorName;
             ContentUpdate = contentUpdate;
             FinishReason = finishReason;
-            FunctionName = functionName;
-            FunctionArgumentsUpdate = functionArgumentsUpdate;
             ToolCallUpdate = toolCallUpdate;
             Usage = usage;
         }

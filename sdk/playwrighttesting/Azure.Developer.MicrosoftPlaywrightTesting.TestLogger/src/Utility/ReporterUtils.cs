@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -113,6 +114,15 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 return OSConstants.s_mACOS;
             else
                 return OSConstants.s_wINDOWS;
+        }
+        internal static string? GetCloudFileName(string filePath, string testExecutionId)
+        {
+            var fileName = Path.GetFileName(filePath);
+            if (fileName == null)
+            {
+                return null;
+            }
+            return $"{testExecutionId}/{fileName}"; // TODO check if we need to add {Guid.NewGuid()} for file with same name
         }
 
         internal TokenDetails ParseWorkspaceIdFromAccessToken(JsonWebTokenHandler? jsonWebTokenHandler, string? accessToken)

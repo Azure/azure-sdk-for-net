@@ -11,8 +11,10 @@ public partial class CloudMachineClient : CloudMachineWorkspace
     public CloudMachineClient(TokenCredential? credential = default, IConfiguration? configuration = default)
         : base(credential, configuration)
     {
+        Messaging = new MessagingServices(this);
+        Storage = new StorageServices(this);
     }
 
-    public MessagingServices Messaging => new(this);
-    public StorageServices Storage => new(this);
+    public MessagingServices Messaging { get; }
+    public StorageServices Storage { get; }
 }

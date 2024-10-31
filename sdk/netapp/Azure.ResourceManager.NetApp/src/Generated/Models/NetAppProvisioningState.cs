@@ -7,46 +7,22 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Gets the status of the VolumeQuotaRule at the time the operation was called.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
     public enum NetAppProvisioningState
     {
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: ProvisioningState.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         Accepted,
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         Creating,
-        /// <summary>
-        /// Patching
-        /// Serialized Name: ProvisioningState.Patching
-        /// </summary>
+        /// <summary> Patching. </summary>
         Patching,
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ProvisioningState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         Moving,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         Succeeded
     }
 }

@@ -21,44 +21,70 @@ public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
     /// Name of the gateway. Currently, the only supported string is
     /// &quot;primary&quot;.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The Virtual Network name.
     /// </summary>
-    public BicepValue<string> VnetName { get => _vnetName; set => _vnetName.Assign(value); }
-    private readonly BicepValue<string> _vnetName;
+    public BicepValue<string> VnetName 
+    {
+        get { Initialize(); return _vnetName!; }
+        set { Initialize(); _vnetName!.Assign(value); }
+    }
+    private BicepValue<string>? _vnetName;
 
     /// <summary>
     /// The URI where the VPN package can be downloaded.
     /// </summary>
-    public BicepValue<Uri> VpnPackageUri { get => _vpnPackageUri; set => _vpnPackageUri.Assign(value); }
-    private readonly BicepValue<Uri> _vpnPackageUri;
+    public BicepValue<Uri> VpnPackageUri 
+    {
+        get { Initialize(); return _vpnPackageUri!; }
+        set { Initialize(); _vpnPackageUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _vpnPackageUri;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SiteVirtualNetworkConnection.
     /// </summary>
-    public SiteVirtualNetworkConnection? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SiteVirtualNetworkConnection> _parent;
+    public SiteVirtualNetworkConnection? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SiteVirtualNetworkConnection>? _parent;
 
     /// <summary>
     /// Creates a new SiteVirtualNetworkConnectionGateway.
@@ -73,13 +99,21 @@ public partial class SiteVirtualNetworkConnectionGateway : ProvisionableResource
     public SiteVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Web/sites/virtualNetworkConnections/gateways", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _vnetName = BicepValue<string>.DefineProperty(this, "VnetName", ["properties", "vnetName"]);
-        _vpnPackageUri = BicepValue<Uri>.DefineProperty(this, "VpnPackageUri", ["properties", "vpnPackageUri"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SiteVirtualNetworkConnection>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// SiteVirtualNetworkConnectionGateway.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _vnetName = DefineProperty<string>("VnetName", ["properties", "vnetName"]);
+        _vpnPackageUri = DefineProperty<Uri>("VpnPackageUri", ["properties", "vpnPackageUri"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SiteVirtualNetworkConnection>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

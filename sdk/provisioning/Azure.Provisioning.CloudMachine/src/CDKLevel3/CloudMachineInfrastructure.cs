@@ -14,6 +14,7 @@ using Azure.Provisioning.Storage;
 using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using System.Security.Principal;
+using System.ClientModel.TypeSpec;
 
 namespace Azure.Provisioning.CloudMachine;
 
@@ -25,6 +26,7 @@ public class CloudMachineInfrastructure
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
+    private List<Type> _endpoints = new();
 
     // storage
     private StorageAccount _storage;
@@ -213,6 +215,13 @@ public class CloudMachineInfrastructure
         resource.AddTo(this);
     }
 
+    public void AddEndpoints<T>()
+    {
+        Type endpointsType = typeof(T);
+        if (!endpointsType.IsInterface) throw new InvalidOperationException("Endpoints type must be an interface.");
+        _endpoints.Add(endpointsType);
+    }
+
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
     {
         // Always add a default location parameter.
@@ -272,21 +281,38 @@ public class CloudMachineInfrastructure
 
     public static bool Configure(string[] args, Action<CloudMachineInfrastructure>? configure = default)
     {
-        if (args.Length < 1 || args[0] != "--init")
-        {
-            return false;
-        }
+        if (args.Length < 1) return false;
 
-        string cmid = Azd.ReadOrCreateCmid();
-
+        string cmid = AzdHelpers.ReadOrCreateCmid();
         CloudMachineInfrastructure cmi = new(cmid);
         if (configure != default)
         {
             configure(cmi);
         }
 
-        string infraDirectory = Path.Combine(".", "infra");
-        Azd.Init(infraDirectory, cmi);
-        return true;
+        if (args[0] == "-bicep")
+        {
+            string infraDirectory = Path.Combine(".", "infra");
+            AzdHelpers.Init(infraDirectory, cmi);
+            return true;
+        }
+
+        if (args[0] == "-tsp")
+        {
+            foreach (Type endpoints in cmi._endpoints)
+            {
+                string name = endpoints.Name;
+                if (name.StartsWith("I")) name = name.Substring(1);
+                string directory = Path.Combine(".", "tsp");
+                string tspFile = Path.Combine(directory, $"{name}.tsp");
+                Directory.CreateDirectory(Path.GetDirectoryName(tspFile));
+                if (File.Exists(tspFile)) File.Delete(tspFile);
+                using FileStream stream = File.OpenWrite(tspFile);
+                TypeSpecWriter.WriteServer(stream, endpoints);
+            }
+            return true;
+        }
+
+        return false;
     }
 }

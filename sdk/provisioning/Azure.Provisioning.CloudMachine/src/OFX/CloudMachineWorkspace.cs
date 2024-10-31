@@ -32,7 +32,7 @@ public class CloudMachineWorkspace : ClientWorkspace
         string? cmid;
         if (configuration == default)
         {
-            cmid = Azd.ReadOrCreateCmid();
+            cmid = AzdHelpers.ReadOrCreateCmid();
         }
         else
         {
@@ -64,6 +64,8 @@ public class CloudMachineWorkspace : ClientWorkspace
                 return new ClientConnectionOptions(new($"https://{this.Id}.openai.azure.com"), Credential);
             case "OpenAI.Chat.ChatClient":
                 return new ClientConnectionOptions(Id);
+            case "OpenAI.Embeddings.EmbeddingClient":
+                return new ClientConnectionOptions($"{Id}-embedding");
             default:
                 throw new Exception($"unknown client {clientId}");
         }
