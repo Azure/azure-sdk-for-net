@@ -183,7 +183,7 @@
 # PRLabel: %Cloud Machine
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
-# ServiceLabel: %ProvCloudMachineisioning
+# ServiceLabel: %Cloud Machine
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Cognitive - Language
