@@ -1,18 +1,15 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.2 (2024-10-31)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Exposed 'DnsRecordType' property in DnsRecordData.cs and added factory method for DnsRecordData. Issue:https://github.com/Azure/azure-sdk-for-net/issues/45423
-
-### Other Changes
+- Fixed the NAPTR record type serialization issue and added relevant tests and recordings.
 
 ## 1.2.0-beta.1 (2024-06-01)
 
