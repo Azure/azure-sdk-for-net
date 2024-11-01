@@ -20,7 +20,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeviceLocation_Verify_DeviceLocationVerify()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -60,7 +60,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeviceLocation_Verify_DeviceLocationVerify_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -100,7 +100,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeviceLocation_Verify_DeviceLocationVerify_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
@@ -118,7 +118,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeviceLocation_Verify_DeviceLocationVerify_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 

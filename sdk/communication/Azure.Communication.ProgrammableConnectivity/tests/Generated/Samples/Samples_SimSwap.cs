@@ -20,7 +20,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_SimSwap_Retrieve_SimSwapRetrieve()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -43,7 +43,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SimSwap_Retrieve_SimSwapRetrieve_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -66,7 +66,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_SimSwap_Retrieve_SimSwapRetrieve_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -81,7 +81,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SimSwap_Retrieve_SimSwapRetrieve_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -96,7 +96,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_SimSwap_Verify_SimSwapVerify()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -119,7 +119,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SimSwap_Verify_SimSwapVerify_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -142,7 +142,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_SimSwap_Verify_SimSwapVerify_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
@@ -157,7 +157,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_SimSwap_Verify_SimSwapVerify_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 

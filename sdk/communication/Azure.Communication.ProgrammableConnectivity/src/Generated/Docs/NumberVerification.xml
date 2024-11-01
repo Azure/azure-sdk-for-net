@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call VerifyWithoutCodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -21,7 +21,7 @@ Response response = await client.VerifyWithoutCodeAsync("zdgrzzaxlodrvewbksn", b
       <example>
 This sample shows how to call VerifyWithoutCode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -37,7 +37,7 @@ Response response = client.VerifyWithoutCode("zdgrzzaxlodrvewbksn", body);
       <example>
 This sample shows how to call VerifyWithoutCodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -61,7 +61,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call VerifyWithoutCode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -85,7 +85,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call VerifyWithCodeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -97,7 +97,7 @@ Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync("
       <example>
 This sample shows how to call VerifyWithCode.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -109,7 +109,7 @@ Response<NumberVerificationResult> response = client.VerifyWithCode("zdgrzzaxlod
       <example>
 This sample shows how to call VerifyWithCodeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
@@ -127,7 +127,7 @@ Console.WriteLine(result.GetProperty("verificationResult").ToString());
       <example>
 This sample shows how to call VerifyWithCode and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 NumberVerification client = new ProgrammableConnectivityClient(endpoint, credential).GetNumberVerificationClient(apiVersion: "2024-02-09-preview");
 
