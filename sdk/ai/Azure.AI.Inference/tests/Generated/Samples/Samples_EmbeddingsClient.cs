@@ -20,7 +20,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_Embed_MaximumSetEmbeddings()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -40,7 +40,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_Embed_MaximumSetEmbeddings_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -60,7 +60,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_Embed_MaximumSetEmbeddings_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -72,7 +72,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_Embed_MaximumSetEmbeddings_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_Embed_MinimumSetEmbeddings()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -104,7 +104,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_Embed_MinimumSetEmbeddings_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -124,7 +124,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_Embed_MinimumSetEmbeddings_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -136,7 +136,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_Embed_MinimumSetEmbeddings_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -148,7 +148,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_GetModelInfo_MaximumSetModelInformation()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -164,7 +164,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_GetModelInfo_MaximumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -180,7 +180,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_GetModelInfo_MaximumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -191,7 +191,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_GetModelInfo_MaximumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -202,7 +202,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_GetModelInfo_MinimumSetModelInformation()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -218,7 +218,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_GetModelInfo_MinimumSetModelInformation_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -234,7 +234,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Client2_GetModelInfo_MinimumSetModelInformation_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 
@@ -245,7 +245,7 @@ namespace Azure.AI.Inference.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Client2_GetModelInfo_MinimumSetModelInformation_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EmbeddingsClient client = new EmbeddingsClient(endpoint, credential);
 

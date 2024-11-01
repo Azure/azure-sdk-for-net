@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -68,7 +68,7 @@ text = "Mo Salah plays in Liverpool FC in England.",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -116,7 +116,7 @@ text = "Mo Salah plays in Liverpool FC in England.",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -145,7 +145,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -214,7 +214,7 @@ text = "Pike place market is my favorite Seattle attraction.",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -254,7 +254,7 @@ text = "Pike place market is my favorite Seattle attraction.",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -282,7 +282,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -310,7 +310,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ text = "When we flew from LAX it seemed like we were moving at 10 meters per sec
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -406,7 +406,7 @@ text = "When we flew from LAX it seemed like we were moving at 10 meters per sec
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -436,7 +436,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionExclusionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -466,7 +466,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -510,7 +510,7 @@ text = "When we flew from LAX it seemed like we were moving at 10 meters per sec
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -554,7 +554,7 @@ text = "When we flew from LAX it seemed like we were moving at 10 meters per sec
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -583,7 +583,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInclusionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -612,7 +612,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -650,7 +650,7 @@ text = "When I was 5 years old I had $90.00 dollars to my name.",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -688,7 +688,7 @@ text = "When I was 5 years old I had $90.00 dollars to my name.",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -717,7 +717,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionInferenceOptionsRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -746,7 +746,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -784,7 +784,7 @@ text = "25th April Meeting was an intresting one. At least we gont to experience
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -822,7 +822,7 @@ text = "25th April Meeting was an intresting one. At least we gont to experience
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -848,7 +848,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionOverlapPolicy_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -874,7 +874,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -930,7 +930,7 @@ text = "My IP is 127.12.1.1 and my phone   number is 5555555555",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -986,7 +986,7 @@ text = "My IP is 127.12.1.1 and my phone   number is 5555555555",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1021,7 +1021,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulEntityRecognitionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1056,7 +1056,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1102,7 +1102,7 @@ text = "My cat might need to see a veterinarian.",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1148,7 +1148,7 @@ text = "My cat might need to see a veterinarian.",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1179,7 +1179,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulKeyPhraseExtractionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1210,7 +1210,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1258,7 +1258,7 @@ text = "Tumhara naam kya hai?",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1306,7 +1306,7 @@ text = "Tumhara naam kya hai?",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1328,7 +1328,7 @@ text = "Tumhara naam kya hai?",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulLanguageDetectionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1350,7 +1350,7 @@ text = "Tumhara naam kya hai?",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1400,7 +1400,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1450,7 +1450,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1482,7 +1482,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionExclusionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1514,7 +1514,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1561,7 +1561,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1608,7 +1608,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1640,7 +1640,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1672,7 +1672,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1718,7 +1718,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1764,7 +1764,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1795,7 +1795,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1826,7 +1826,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1860,7 +1860,7 @@ text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! S
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1894,7 +1894,7 @@ text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! S
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1919,7 +1919,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeText_SuccessfulSentimentAnalysisRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1944,7 +1944,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1965,7 +1965,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1986,7 +1986,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -1997,7 +1997,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2008,7 +2008,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2029,7 +2029,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2050,7 +2050,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2061,7 +2061,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAnalyzeTextJobsMultipleTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2072,7 +2072,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2093,7 +2093,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2114,7 +2114,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2125,7 +2125,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2136,7 +2136,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2157,7 +2157,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2178,7 +2178,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2189,7 +2189,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2200,7 +2200,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2221,7 +2221,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2242,7 +2242,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2253,7 +2253,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2264,7 +2264,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2285,7 +2285,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2306,7 +2306,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2317,7 +2317,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2328,7 +2328,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2349,7 +2349,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2370,7 +2370,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2381,7 +2381,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareTaskStatusRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2392,7 +2392,7 @@ Language = "en",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2431,7 +2431,7 @@ sentenceCount = 1,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2470,7 +2470,7 @@ sentenceCount = 1,
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2498,7 +2498,7 @@ Name = "Document Abstractive Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationTaskSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2526,7 +2526,7 @@ Name = "Document Abstractive Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2581,7 +2581,7 @@ deploymentName = "MyDeployment",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2636,7 +2636,7 @@ deploymentName = "MyDeployment",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2672,7 +2672,7 @@ Name = "Recognize US Regions",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAnalyzeTextJobsMultipleTaskSubmitRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2708,7 +2708,7 @@ Name = "Recognize US Regions",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2748,7 +2748,7 @@ deploymentName = "my_deployment",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2788,7 +2788,7 @@ deploymentName = "my_deployment",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2812,7 +2812,7 @@ Name = "Custom Document Abstractive Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2836,7 +2836,7 @@ Name = "Custom Document Abstractive Summarization Task 1",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2874,7 +2874,7 @@ deploymentName = "{DEPLOYMENT-NAME}",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2912,7 +2912,7 @@ deploymentName = "{DEPLOYMENT-NAME}",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2936,7 +2936,7 @@ ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2960,7 +2960,7 @@ ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -2998,7 +2998,7 @@ deploymentName = "{DEPLOYMENT-NAME}",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3036,7 +3036,7 @@ deploymentName = "{DEPLOYMENT-NAME}",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3060,7 +3060,7 @@ ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEP
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3084,7 +3084,7 @@ ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEP
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3123,7 +3123,7 @@ documentType = "DischargeSummary",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3162,7 +3162,7 @@ documentType = "DischargeSummary",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3191,7 +3191,7 @@ DocumentType = HealthcareDocumentType.DischargeSummary,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcareDocumentTypePostRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3220,7 +3220,7 @@ DocumentType = HealthcareDocumentType.DischargeSummary,
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3257,7 +3257,7 @@ modelVersion = "latest",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3294,7 +3294,7 @@ modelVersion = "latest",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3321,7 +3321,7 @@ ModelVersion = "latest",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulHealthcarePostRequest_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3348,7 +3348,7 @@ ModelVersion = "latest",
         [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeTextCancelOperation_SuccessfulAnalyzeTextJobsCancelRequest()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
@@ -3359,7 +3359,7 @@ ModelVersion = "latest",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Text_AnalyzeTextCancelOperation_SuccessfulAnalyzeTextJobsCancelRequest_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 

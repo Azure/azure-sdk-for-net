@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call AnalyzeConversationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -14,7 +14,7 @@ Response<AnalyzeConversationActionResult> response = await client.AnalyzeConvers
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -31,7 +31,7 @@ Response<AnalyzeConversationActionResult> response = await client.AnalyzeConvers
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -61,7 +61,7 @@ Response<AnalyzeConversationActionResult> response = await client.AnalyzeConvers
       <example>
 This sample shows how to call AnalyzeConversation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -70,7 +70,7 @@ Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(
 ]]></code>
 This sample shows how to call AnalyzeConversation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -87,7 +87,7 @@ Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(
 ]]></code>
 This sample shows how to call AnalyzeConversation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -117,7 +117,7 @@ Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(
       <example>
 This sample shows how to call AnalyzeConversationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -146,7 +146,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -179,7 +179,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -229,7 +229,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <example>
 This sample shows how to call AnalyzeConversation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -258,7 +258,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -291,7 +291,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -341,7 +341,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
       <example>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -349,7 +349,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -357,7 +357,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -365,7 +365,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -373,7 +373,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -381,7 +381,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -392,7 +392,7 @@ Response<AnalyzeConversationOperationState> response = await client.GetAnalyzeCo
       <example>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -400,7 +400,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -408,7 +408,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -416,7 +416,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -424,7 +424,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -432,7 +432,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -443,7 +443,7 @@ Response<AnalyzeConversationOperationState> response = client.GetAnalyzeConversa
       <example>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -461,7 +461,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -479,7 +479,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -497,7 +497,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -515,7 +515,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -533,7 +533,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -554,7 +554,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
       <example>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -572,7 +572,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -590,7 +590,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -608,7 +608,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -626,7 +626,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -644,7 +644,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
 ]]></code>
 This sample shows how to call GetAnalyzeConversationJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -665,7 +665,7 @@ Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -728,7 +728,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -792,7 +792,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -855,7 +855,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -921,7 +921,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -963,7 +963,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1032,7 +1032,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1095,7 +1095,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1159,7 +1159,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1222,7 +1222,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1288,7 +1288,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1330,7 +1330,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1399,7 +1399,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1481,7 +1481,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1564,7 +1564,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1646,7 +1646,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1731,7 +1731,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1797,7 +1797,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1886,7 +1886,7 @@ Operation operation = await client.AnalyzeConversationSubmitOperationAsync(WaitU
       <example>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -1968,7 +1968,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2051,7 +2051,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2133,7 +2133,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2218,7 +2218,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2284,7 +2284,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
 ]]></code>
 This sample shows how to call AnalyzeConversationSubmitOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2373,7 +2373,7 @@ Operation operation = client.AnalyzeConversationSubmitOperation(WaitUntil.Comple
       <example>
 This sample shows how to call CancelAnalyzeConversationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
@@ -2384,7 +2384,7 @@ Operation operation = await client.CancelAnalyzeConversationsAsync(WaitUntil.Com
       <example>
 This sample shows how to call CancelAnalyzeConversations.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 
