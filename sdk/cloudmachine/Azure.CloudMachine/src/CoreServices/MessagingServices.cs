@@ -26,7 +26,7 @@ public readonly struct MessagingServices
 
     public void WhenMessageReceived(Action<string> received)
     {
-        var processor = _cm.Messaging.GetServiceBusProcessor();
+        var processor = _cm.Messaging.GetServiceBusProcessor(default);
         var cm = _cm;
 
         // TODO: How to unsubscribe?
@@ -56,10 +56,10 @@ public readonly struct MessagingServices
         return sender;
     }
 
-    internal ServiceBusProcessor GetServiceBusProcessor()
+    internal ServiceBusProcessor GetServiceBusProcessor(string id)
     {
         MessagingServices messagingServices = this;
-        ServiceBusProcessor sender = _cm.Subclients.Get(() => messagingServices.CreateProcessor());
+        ServiceBusProcessor sender = _cm.Subclients.Get(() => messagingServices.CreateProcessor(id), id);
         return sender;
     }
 
@@ -67,24 +67,26 @@ public readonly struct MessagingServices
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender), default);
         ServiceBusSender sender = client.CreateSender(connection.Id);
         return sender;
     }
     private ServiceBusClient CreateClient()
     {
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient));
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient), default);
         ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, connection.TokenCredential);
         return client;
     }
-    private ServiceBusProcessor CreateProcessor()
+    private ServiceBusProcessor CreateProcessor(string id)
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender));
+        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusProcessor), id);
+        string[] topicAndSubscription = connection.Id.Split('/');
+
         ServiceBusProcessor processor = client.CreateProcessor(
-            connection.Id,
-            "cm_servicebus_subscription_private",
+            topicAndSubscription[0],
+            topicAndSubscription[1],
             new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
