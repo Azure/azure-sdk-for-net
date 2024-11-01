@@ -44,7 +44,7 @@ public class OpenAIFeature : CloudMachineFeature
         CognitiveServicesAccountDeployment? chat = default;
         if (Chat != default)
         {
-            chat = new("openai_deployment_chat", "2023-05-01")
+            chat = new("openai_deployment_chat", "2024-06-01-preview")
             {
                 Parent = cognitiveServices,
                 Name = cloudMachine.Id,
@@ -55,15 +55,22 @@ public class OpenAIFeature : CloudMachineFeature
                         Name = Chat.Model,
                         Format = "OpenAI",
                         Version = Chat.ModelVersion
-                    }
+                    },
+                    VersionUpgradeOption = DeploymentModelVersionUpgradeOption.OnceNewDefaultVersionAvailable,
+                    RaiPolicyName = "Microsoft.DefaultV2",
                 },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
+                }
             };
             cloudMachine.AddResource(chat);
         }
 
         if (Embeddings != null)
         {
-            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2023-05-01")
+            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2024-06-01-preview")
             {
                 Parent = cognitiveServices,
                 Name = $"{cloudMachine.Id}-embedding",
@@ -76,6 +83,11 @@ public class OpenAIFeature : CloudMachineFeature
                         Version = Embeddings.ModelVersion
                     }
                 },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
+                }
             };
 
             // Ensure that additional deployments, are chained using DependsOn.

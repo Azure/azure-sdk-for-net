@@ -18,7 +18,7 @@ public class CloudMachineTests
 {
     [Theory]
     [TestCase([new string[] { "-bicep" }])]
-    [TestCase([new string[] { "" }])]
+    [TestCase([new string[] { }])]
     public void Provisioning(string[] args)
     {
         CloudMachineInfrastructure.Configure(args, (cm) =>
