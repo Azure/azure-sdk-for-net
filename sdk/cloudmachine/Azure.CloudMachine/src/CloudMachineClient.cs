@@ -8,7 +8,11 @@ namespace Azure.CloudMachine;
 
 public partial class CloudMachineClient : CloudMachineWorkspace
 {
-    public CloudMachineClient(TokenCredential? credential = default, IConfiguration? configuration = default)
+    protected CloudMachineClient()
+    { }
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+    public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(credential, configuration)
     {
         Messaging = new MessagingServices(this);

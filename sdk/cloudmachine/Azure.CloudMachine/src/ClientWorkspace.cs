@@ -8,7 +8,7 @@ namespace Azure.Core;
 
 public abstract class ClientWorkspace
 {
-    public abstract ClientConnectionOptions GetConnectionOptions(Type clientType, string? instanceId = default);
+    public abstract ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId = default);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ClientCache Subclients { get; } = new ClientCache();
@@ -36,10 +36,10 @@ public readonly struct ClientConnectionOptions
 
     public ClientConnectionKind ConnectionKind { get; }
 
-    public Uri? Endpoint { get; }
-    public string? Id { get; }
-    public string? ApiKeyCredential { get; }
-    public TokenCredential? TokenCredential { get; }
+    public Uri Endpoint { get; }
+    public string Id { get; }
+    public string ApiKeyCredential { get; }
+    public TokenCredential TokenCredential { get; }
 }
 
 public enum ClientConnectionKind

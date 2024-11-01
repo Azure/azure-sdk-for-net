@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
-using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 
@@ -85,7 +84,7 @@ public readonly struct MessagingServices
         ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender));
         ServiceBusProcessor processor = client.CreateProcessor(
             connection.Id,
-            CloudMachineInfrastructure.SB_PRIVATE_SUB,
+            "cm_servicebus_subscription_private",
             new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
