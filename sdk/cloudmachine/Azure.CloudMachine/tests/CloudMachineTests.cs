@@ -165,7 +165,7 @@ public class CloudMachineTests
         cm.Messaging.SendMessage("Tell me something about Redmond, WA.");
     }
 
-    // [Ignore("no recordings yet")]
+    [Ignore("no recordings yet")]
     [Test]
     public void EmbeddingsDemo()
     {
