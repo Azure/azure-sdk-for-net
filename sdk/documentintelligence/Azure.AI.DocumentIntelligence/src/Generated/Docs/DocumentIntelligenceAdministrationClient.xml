@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call AuthorizeModelCopyAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -20,7 +20,7 @@ Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(auth
       <example>
 This sample shows how to call AuthorizeModelCopy.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -35,7 +35,7 @@ Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRe
       <example>
 This sample shows how to call AuthorizeModelCopyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call AuthorizeModelCopy and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -83,7 +83,7 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call GetModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -91,7 +91,7 @@ Response<DocumentModelDetails> response = await client.GetModelAsync("myCustomMo
 ]]></code>
 This sample shows how to call GetModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -102,7 +102,7 @@ Response<DocumentModelDetails> response = await client.GetModelAsync("prebuilt-i
       <example>
 This sample shows how to call GetModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -110,7 +110,7 @@ Response<DocumentModelDetails> response = client.GetModel("myCustomModel");
 ]]></code>
 This sample shows how to call GetModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -121,7 +121,7 @@ Response<DocumentModelDetails> response = client.GetModel("prebuilt-invoice");
       <example>
 This sample shows how to call GetModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -133,7 +133,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -148,7 +148,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call GetModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -160,7 +160,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
 This sample shows how to call GetModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -175,7 +175,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call DeleteModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -188,7 +188,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -201,7 +201,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetResourceInfoAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -212,7 +212,7 @@ Response<ResourceDetails> response = await client.GetResourceInfoAsync();
       <example>
 This sample shows how to call GetResourceInfo.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -223,7 +223,7 @@ Response<ResourceDetails> response = client.GetResourceInfo();
       <example>
 This sample shows how to call GetResourceInfoAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -238,7 +238,7 @@ Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit"
       <example>
 This sample shows how to call GetResourceInfo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -253,7 +253,7 @@ Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit"
       <example>
 This sample shows how to call GetOperationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -264,7 +264,7 @@ Response<OperationDetails> response = await client.GetOperationAsync("b704bb00-d
       <example>
 This sample shows how to call GetOperation.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -275,7 +275,7 @@ Response<OperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1
       <example>
 This sample shows how to call GetOperationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -294,7 +294,7 @@ Console.WriteLine(result.GetProperty("resourceLocation").ToString());
       <example>
 This sample shows how to call GetOperation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -313,7 +313,7 @@ Console.WriteLine(result.GetProperty("resourceLocation").ToString());
       <example>
 This sample shows how to call AuthorizeClassifierCopyAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -328,7 +328,7 @@ Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifie
       <example>
 This sample shows how to call AuthorizeClassifierCopy.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -343,7 +343,7 @@ Response<ClassifierCopyAuthorization> response = client.AuthorizeClassifierCopy(
       <example>
 This sample shows how to call AuthorizeClassifierCopyAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -367,7 +367,7 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call AuthorizeClassifierCopy and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -391,7 +391,7 @@ Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
       <example>
 This sample shows how to call GetClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -402,7 +402,7 @@ Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("
       <example>
 This sample shows how to call GetClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -413,7 +413,7 @@ Response<DocumentClassifierDetails> response = client.GetClassifier("myClassifie
       <example>
 This sample shows how to call GetClassifierAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -430,7 +430,7 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString()
       <example>
 This sample shows how to call GetClassifier and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -447,7 +447,7 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString()
       <example>
 This sample shows how to call DeleteClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -460,7 +460,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -473,7 +473,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetModelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -486,7 +486,7 @@ await foreach (DocumentModelDetails item in client.GetModelsAsync())
       <example>
 This sample shows how to call GetModels.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -499,7 +499,7 @@ foreach (DocumentModelDetails item in client.GetModels())
       <example>
 This sample shows how to call GetModelsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -515,7 +515,7 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
       <example>
 This sample shows how to call GetModels and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -531,7 +531,7 @@ foreach (BinaryData item in client.GetModels(null))
       <example>
 This sample shows how to call GetOperationsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -544,7 +544,7 @@ await foreach (OperationDetails item in client.GetOperationsAsync())
       <example>
 This sample shows how to call GetOperations.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -557,7 +557,7 @@ foreach (OperationDetails item in client.GetOperations())
       <example>
 This sample shows how to call GetOperationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -577,7 +577,7 @@ await foreach (BinaryData item in client.GetOperationsAsync(null))
       <example>
 This sample shows how to call GetOperations and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -597,7 +597,7 @@ foreach (BinaryData item in client.GetOperations(null))
       <example>
 This sample shows how to call GetClassifiersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -610,7 +610,7 @@ await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
       <example>
 This sample shows how to call GetClassifiers.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -623,7 +623,7 @@ foreach (DocumentClassifierDetails item in client.GetClassifiers())
       <example>
 This sample shows how to call GetClassifiersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -641,7 +641,7 @@ await foreach (BinaryData item in client.GetClassifiersAsync(null))
       <example>
 This sample shows how to call GetClassifiers and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -659,7 +659,7 @@ foreach (BinaryData item in client.GetClassifiers(null))
       <example>
 This sample shows how to call BuildDocumentModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -683,7 +683,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildDocumentModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -707,7 +707,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildDocumentModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -738,7 +738,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call BuildDocumentModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -769,7 +769,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call ComposeModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -795,7 +795,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call ComposeModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -821,7 +821,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call ComposeModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -854,7 +854,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call ComposeModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -887,7 +887,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call CopyModelToAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -906,7 +906,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyModelTo.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -925,7 +925,7 @@ DocumentModelDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyModelToAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -950,7 +950,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call CopyModelTo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -975,7 +975,7 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
       <example>
 This sample shows how to call BuildClassifierAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1004,7 +1004,7 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildClassifier.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1033,7 +1033,7 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call BuildClassifierAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1075,7 +1075,7 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString()
       <example>
 This sample shows how to call BuildClassifier and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1117,7 +1117,7 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString()
       <example>
 This sample shows how to call CopyClassifierToAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1136,7 +1136,7 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyClassifierTo.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1155,7 +1155,7 @@ DocumentClassifierDetails responseData = operation.Value;
       <example>
 This sample shows how to call CopyClassifierToAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
@@ -1182,7 +1182,7 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").ToString()
       <example>
 This sample shows how to call CopyClassifierTo and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 

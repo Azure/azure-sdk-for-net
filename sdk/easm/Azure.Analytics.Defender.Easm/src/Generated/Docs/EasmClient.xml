@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call UpdateAssetsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -25,7 +25,7 @@ Response<TaskResource> response = await client.UpdateAssetsAsync("state%20%3D%20
       <example>
 This sample shows how to call UpdateAssets.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -45,7 +45,7 @@ Response<TaskResource> response = client.UpdateAssets("state%20%3D%20%22confirme
       <example>
 This sample shows how to call UpdateAssetsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -68,7 +68,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call UpdateAssets and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -91,7 +91,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetAssetResourceAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -102,7 +102,7 @@ Response<AssetResource> response = await client.GetAssetResourceAsync("aG9zdCQkY
       <example>
 This sample shows how to call GetAssetResource.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -113,7 +113,7 @@ Response<AssetResource> response = client.GetAssetResource("aG9zdCQkY29udG9zby5j
       <example>
 This sample shows how to call GetAssetResourceAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -128,7 +128,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetAssetResource and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -143,7 +143,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call ValidateDataConnectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -164,7 +164,7 @@ Response<ValidateResult> response = await client.ValidateDataConnectionAsync(bod
       <example>
 This sample shows how to call ValidateDataConnection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -185,7 +185,7 @@ Response<ValidateResult> response = client.ValidateDataConnection(body);
       <example>
 This sample shows how to call ValidateDataConnectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -211,7 +211,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ValidateDataConnection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -237,7 +237,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetDataConnectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -248,7 +248,7 @@ Response<DataConnection> response = await client.GetDataConnectionAsync("Thisisa
       <example>
 This sample shows how to call GetDataConnection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -259,7 +259,7 @@ Response<DataConnection> response = client.GetDataConnection("ThisisaDataConnect
       <example>
 This sample shows how to call GetDataConnectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -274,7 +274,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetDataConnection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceDataConnectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -309,7 +309,7 @@ Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAs
       <example>
 This sample shows how to call CreateOrReplaceDataConnection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -329,7 +329,7 @@ Response<DataConnection> response = client.CreateOrReplaceDataConnection("Thisis
       <example>
 This sample shows how to call CreateOrReplaceDataConnectionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -355,7 +355,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceDataConnection and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -381,7 +381,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteDataConnectionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -394,7 +394,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteDataConnection.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -407,7 +407,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call ValidateDiscoveryGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -429,7 +429,7 @@ Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(bod
       <example>
 This sample shows how to call ValidateDiscoveryGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -451,7 +451,7 @@ Response<ValidateResult> response = client.ValidateDiscoveryGroup(body);
       <example>
 This sample shows how to call ValidateDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -479,7 +479,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call ValidateDiscoveryGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -507,7 +507,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetDiscoveryGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -518,7 +518,7 @@ Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("Thisisa
       <example>
 This sample shows how to call GetDiscoveryGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -529,7 +529,7 @@ Response<DiscoveryGroup> response = client.GetDiscoveryGroup("ThisisaDiscoGroup"
       <example>
 This sample shows how to call GetDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -543,7 +543,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetDiscoveryGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -557,7 +557,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -579,7 +579,7 @@ Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAs
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -601,7 +601,7 @@ Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("Thisis
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -629,7 +629,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroup and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -657,7 +657,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call RunDiscoveryGroupAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -670,7 +670,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call RunDiscoveryGroup.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -683,7 +683,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetDiscoveryTemplateAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -694,7 +694,7 @@ Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("1
       <example>
 This sample shows how to call GetDiscoveryTemplate.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -705,7 +705,7 @@ Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("12345");
       <example>
 This sample shows how to call GetDiscoveryTemplateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -719,7 +719,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetDiscoveryTemplate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -733,7 +733,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetBillableAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -744,7 +744,7 @@ Response<ReportBillableAssetSummaryResult> response = await client.GetBillableAs
       <example>
 This sample shows how to call GetBillable.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -755,7 +755,7 @@ Response<ReportBillableAssetSummaryResult> response = client.GetBillable();
       <example>
 This sample shows how to call GetBillableAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -769,7 +769,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetBillable and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -783,7 +783,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSnapshotAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -800,7 +800,7 @@ Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(bod
       <example>
 This sample shows how to call GetSnapshot.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -817,7 +817,7 @@ Response<ReportAssetSnapshotResult> response = client.GetSnapshot(body);
       <example>
 This sample shows how to call GetSnapshotAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -837,7 +837,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSnapshot and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -857,7 +857,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSummaryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -872,7 +872,7 @@ Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(body)
       <example>
 This sample shows how to call GetSummary.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -887,7 +887,7 @@ Response<ReportAssetSummaryResult> response = client.GetSummary(body);
       <example>
 This sample shows how to call GetSummaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -910,7 +910,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSummary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -933,7 +933,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSavedFilterAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -944,7 +944,7 @@ Response<SavedFilter> response = await client.GetSavedFilterAsync("ThisisaSavedF
       <example>
 This sample shows how to call GetSavedFilter.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -955,7 +955,7 @@ Response<SavedFilter> response = client.GetSavedFilter("ThisisaSavedFilter");
       <example>
 This sample shows how to call GetSavedFilterAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -969,7 +969,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetSavedFilter and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -983,7 +983,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceSavedFilterAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -995,7 +995,7 @@ Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("T
       <example>
 This sample shows how to call CreateOrReplaceSavedFilter.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1007,7 +1007,7 @@ Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("ThisisaSaved
       <example>
 This sample shows how to call CreateOrReplaceSavedFilterAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1026,7 +1026,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrReplaceSavedFilter and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1045,7 +1045,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteSavedFilterAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1058,7 +1058,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteSavedFilter.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1071,7 +1071,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1082,7 +1082,7 @@ Response<TaskResource> response = await client.GetTaskAsync("ThisisaTaskId");
       <example>
 This sample shows how to call GetTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1093,7 +1093,7 @@ Response<TaskResource> response = client.GetTask("ThisisaTaskId");
       <example>
 This sample shows how to call GetTaskAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1107,7 +1107,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetTask and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1121,7 +1121,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call CancelTaskAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1132,7 +1132,7 @@ Response<TaskResource> response = await client.CancelTaskAsync("ThisisaTaskId");
       <example>
 This sample shows how to call CancelTask.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1143,7 +1143,7 @@ Response<TaskResource> response = client.CancelTask("ThisisaTaskId");
       <example>
 This sample shows how to call CancelTaskAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1157,7 +1157,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call CancelTask and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1171,7 +1171,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
       <example>
 This sample shows how to call GetAssetResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1184,7 +1184,7 @@ await foreach (AssetResource item in client.GetAssetResourcesAsync())
       <example>
 This sample shows how to call GetAssetResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1197,7 +1197,7 @@ foreach (AssetResource item in client.GetAssetResources())
       <example>
 This sample shows how to call GetAssetResourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1213,7 +1213,7 @@ await foreach (BinaryData item in client.GetAssetResourcesAsync("state%20%3D%20%
       <example>
 This sample shows how to call GetAssetResources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1229,7 +1229,7 @@ foreach (BinaryData item in client.GetAssetResources("state%20%3D%20%22confirmed
       <example>
 This sample shows how to call GetDataConnectionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1242,7 +1242,7 @@ await foreach (DataConnection item in client.GetDataConnectionsAsync())
       <example>
 This sample shows how to call GetDataConnections.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1255,7 +1255,7 @@ foreach (DataConnection item in client.GetDataConnections())
       <example>
 This sample shows how to call GetDataConnectionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1271,7 +1271,7 @@ await foreach (BinaryData item in client.GetDataConnectionsAsync(null, null, nul
       <example>
 This sample shows how to call GetDataConnections and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1287,7 +1287,7 @@ foreach (BinaryData item in client.GetDataConnections(null, null, null))
       <example>
 This sample shows how to call GetDiscoveryGroupsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1300,7 +1300,7 @@ await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync())
       <example>
 This sample shows how to call GetDiscoveryGroups.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1313,7 +1313,7 @@ foreach (DiscoveryGroup item in client.GetDiscoveryGroups())
       <example>
 This sample shows how to call GetDiscoveryGroupsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1328,7 +1328,7 @@ await foreach (BinaryData item in client.GetDiscoveryGroupsAsync(null, null, nul
       <example>
 This sample shows how to call GetDiscoveryGroups and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1343,7 +1343,7 @@ foreach (BinaryData item in client.GetDiscoveryGroups(null, null, null, null))
       <example>
 This sample shows how to call GetDiscoveryGroupRunsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1356,7 +1356,7 @@ await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("Thi
       <example>
 This sample shows how to call GetDiscoveryGroupRuns.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1369,7 +1369,7 @@ foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("ThisisaDiscoGr
       <example>
 This sample shows how to call GetDiscoveryGroupRunsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1384,7 +1384,7 @@ await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("ThisisaDisc
       <example>
 This sample shows how to call GetDiscoveryGroupRuns and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1399,7 +1399,7 @@ foreach (BinaryData item in client.GetDiscoveryGroupRuns("ThisisaDiscoGroup", nu
       <example>
 This sample shows how to call GetDiscoveryTemplatesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1412,7 +1412,7 @@ await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync())
       <example>
 This sample shows how to call GetDiscoveryTemplates.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1425,7 +1425,7 @@ foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates())
       <example>
 This sample shows how to call GetDiscoveryTemplatesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1440,7 +1440,7 @@ await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync(null, null, 
       <example>
 This sample shows how to call GetDiscoveryTemplates and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1455,7 +1455,7 @@ foreach (BinaryData item in client.GetDiscoveryTemplates(null, null, null, null)
       <example>
 This sample shows how to call GetSavedFiltersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1468,7 +1468,7 @@ await foreach (SavedFilter item in client.GetSavedFiltersAsync())
       <example>
 This sample shows how to call GetSavedFilters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1481,7 +1481,7 @@ foreach (SavedFilter item in client.GetSavedFilters())
       <example>
 This sample shows how to call GetSavedFiltersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1496,7 +1496,7 @@ await foreach (BinaryData item in client.GetSavedFiltersAsync(null, null, null, 
       <example>
 This sample shows how to call GetSavedFilters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1511,7 +1511,7 @@ foreach (BinaryData item in client.GetSavedFilters(null, null, null, null))
       <example>
 This sample shows how to call GetTasksAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1524,7 +1524,7 @@ await foreach (TaskResource item in client.GetTasksAsync())
       <example>
 This sample shows how to call GetTasks.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1537,7 +1537,7 @@ foreach (TaskResource item in client.GetTasks())
       <example>
 This sample shows how to call GetTasksAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
@@ -1552,7 +1552,7 @@ await foreach (BinaryData item in client.GetTasksAsync(null, null, null, null, n
       <example>
 This sample shows how to call GetTasks and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 

@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetAnalyzeResultPdfAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Response<BinaryData> response = await client.GetAnalyzeResultPdfAsync("prebuilt-
       <example>
 This sample shows how to call GetAnalyzeResultPdf.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -27,7 +27,7 @@ Response<BinaryData> response = client.GetAnalyzeResultPdf("prebuilt-invoice", G
       <example>
 This sample shows how to call GetAnalyzeResultPdfAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -41,7 +41,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetAnalyzeResultPdf and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -55,7 +55,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetAnalyzeResultFigureAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -66,7 +66,7 @@ Response<BinaryData> response = await client.GetAnalyzeResultFigureAsync("prebui
       <example>
 This sample shows how to call GetAnalyzeResultFigure.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -77,7 +77,7 @@ Response<BinaryData> response = client.GetAnalyzeResultFigure("prebuilt-invoice"
       <example>
 This sample shows how to call GetAnalyzeResultFigureAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -91,7 +91,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetAnalyzeResultFigure and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -105,7 +105,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call AnalyzeDocumentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -114,7 +114,7 @@ AnalyzeResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call AnalyzeDocumentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -126,7 +126,7 @@ AnalyzeResult responseData = operation.Value;
       <example>
 This sample shows how to call AnalyzeDocument.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -135,7 +135,7 @@ AnalyzeResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call AnalyzeDocument.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -147,7 +147,7 @@ AnalyzeResult responseData = operation.Value;
       <example>
 This sample shows how to call AnalyzeDocumentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -169,7 +169,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
 ]]></code>
 This sample shows how to call AnalyzeDocumentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -194,7 +194,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
       <example>
 This sample shows how to call AnalyzeDocument and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -216,7 +216,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
 ]]></code>
 This sample shows how to call AnalyzeDocument and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -241,7 +241,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
       <example>
 This sample shows how to call AnalyzeBatchDocumentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -253,7 +253,7 @@ AnalyzeBatchResult responseData = operation.Value;
       <example>
 This sample shows how to call AnalyzeBatchDocuments.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -265,7 +265,7 @@ AnalyzeBatchResult responseData = operation.Value;
       <example>
 This sample shows how to call AnalyzeBatchDocumentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -295,7 +295,7 @@ Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToSt
       <example>
 This sample shows how to call AnalyzeBatchDocuments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -325,7 +325,7 @@ Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToSt
       <example>
 This sample shows how to call ClassifyDocumentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -341,7 +341,7 @@ AnalyzeResult responseData = operation.Value;
       <example>
 This sample shows how to call ClassifyDocument.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -357,7 +357,7 @@ AnalyzeResult responseData = operation.Value;
       <example>
 This sample shows how to call ClassifyDocumentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
@@ -382,7 +382,7 @@ Console.WriteLine(result.GetProperty("pages")[0].GetProperty("spans")[0].GetProp
       <example>
 This sample shows how to call ClassifyDocument and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
