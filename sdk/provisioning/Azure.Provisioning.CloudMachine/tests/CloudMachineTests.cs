@@ -23,12 +23,12 @@ public class CloudMachineTests
     {
         CloudMachineInfrastructure.Configure(args, (cm) =>
         {
-            //cm.AddFeature(new KeyVaultFeature());
-            //cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
-            //{
-            //    Chat = new AIModel("gpt-35-turbo", "0125"),
-            //    Embeddings = new AIModel("text-embedding-ada-002", "2")
-            //});
+            cm.AddFeature(new KeyVaultFeature());
+            cm.AddFeature(new OpenAIFeature() // TODO: rework it such that models can be added as features
+            {
+                Chat = new AIModel("gpt-35-turbo", "0125"),
+                Embeddings = new AIModel("text-embedding-ada-002", "2")
+            });
         });
     }
 }

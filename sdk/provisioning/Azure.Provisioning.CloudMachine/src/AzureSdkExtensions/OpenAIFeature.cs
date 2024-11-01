@@ -2,13 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using Azure.AI.OpenAI;
-using Azure.Core;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
 
 namespace Azure.Provisioning.CloudMachine.OpenAI;
 
