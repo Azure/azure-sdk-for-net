@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -110,7 +110,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -171,7 +171,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -260,7 +260,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -271,7 +271,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -285,7 +285,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -299,7 +299,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -310,7 +310,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -321,7 +321,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -349,7 +349,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -360,7 +360,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -371,7 +371,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -385,7 +385,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -399,7 +399,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -410,7 +410,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -421,7 +421,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -449,7 +449,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -460,7 +460,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -471,7 +471,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -499,7 +499,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -510,7 +510,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -521,7 +521,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -535,7 +535,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -549,7 +549,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -560,7 +560,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -571,7 +571,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetStructByName_TypeGetStructDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -585,7 +585,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -599,7 +599,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -610,7 +610,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -621,7 +621,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetById_TypeGetByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -635,7 +635,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetById_TypeGetByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -649,7 +649,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetById_TypeGetByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -660,7 +660,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetById_TypeGetByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -671,7 +671,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetByName_TypeGetByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -685,7 +685,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetByName_TypeGetByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetByName_TypeGetByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -710,7 +710,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetByName_TypeGetByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -721,7 +721,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_Delete_TypeDelete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -734,7 +734,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_Delete_TypeDelete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -747,7 +747,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeList()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -761,7 +761,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeList_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -775,7 +775,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeList_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -786,7 +786,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeList_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -797,7 +797,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -811,7 +811,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -825,7 +825,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -836,7 +836,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -847,7 +847,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -861,7 +861,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -875,7 +875,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -886,7 +886,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -897,7 +897,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchCreate_TypeBulkCreate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -942,7 +942,7 @@ isUnique = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -987,7 +987,7 @@ isUnique = false,
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchCreate_TypeBulkCreate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1020,7 +1020,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1053,7 +1053,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1100,7 +1100,7 @@ applicableEntityTypes = "[\"Path\"]",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1147,7 +1147,7 @@ applicableEntityTypes = "[\"Path\"]",
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1185,7 +1185,7 @@ TypeName = "string",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1223,7 +1223,7 @@ TypeName = "string",
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchUpdate_TypeBulkUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1373,7 +1373,7 @@ isLegacyAttribute = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1523,7 +1523,7 @@ isLegacyAttribute = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1644,7 +1644,7 @@ RelationshipCategory = RelationshipCategory.Composition,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1765,7 +1765,7 @@ RelationshipCategory = RelationshipCategory.Composition,
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchDelete_TypeBulkDelete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1809,7 +1809,7 @@ isUnique = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchDelete_TypeBulkDelete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1853,7 +1853,7 @@ isUnique = false,
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_BatchDelete_TypeBulkDelete_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1886,7 +1886,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_BatchDelete_TypeBulkDelete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1919,7 +1919,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetHeaders_TypeListHeaders()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1933,7 +1933,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetHeaders_TypeListHeaders_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1947,7 +1947,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetHeaders_TypeListHeaders_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1958,7 +1958,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetHeaders_TypeListHeaders_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -1969,7 +1969,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1983,7 +1983,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -1997,7 +1997,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2008,7 +2008,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2019,7 +2019,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2033,7 +2033,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2047,7 +2047,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public void Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
@@ -2058,7 +2058,7 @@ SuperTypes = {"azure_resource"},
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 

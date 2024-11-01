@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetSentShareAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.GetProperty("shareKind").ToString());
 ]]></code>
 This sample shows how to call GetSentShareAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -32,7 +32,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetSentShare and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -43,7 +43,7 @@ Console.WriteLine(result.GetProperty("shareKind").ToString());
 ]]></code>
 This sample shows how to call GetSentShare with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetSentShareInvitationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -70,7 +70,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call GetSentShareInvitationAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -86,7 +86,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetSentShareInvitation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -97,7 +97,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call GetSentShareInvitation with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -113,7 +113,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call CreateSentShareInvitationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -133,7 +133,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call CreateSentShareInvitationAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -160,7 +160,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call CreateSentShareInvitation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -180,7 +180,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call CreateSentShareInvitation with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -207,7 +207,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call NotifyUserSentShareInvitationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -218,7 +218,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call NotifyUserSentShareInvitationAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -234,7 +234,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call NotifyUserSentShareInvitation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -245,7 +245,7 @@ Console.WriteLine(result.GetProperty("invitationKind").ToString());
 ]]></code>
 This sample shows how to call NotifyUserSentShareInvitation with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -261,7 +261,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call GetAllSentSharesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -273,7 +273,7 @@ await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>"
 ]]></code>
 This sample shows how to call GetAllSentSharesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -290,7 +290,7 @@ await foreach (BinaryData item in client.GetAllSentSharesAsync("<referenceName>"
       <example>
 This sample shows how to call GetAllSentShares and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -302,7 +302,7 @@ foreach (BinaryData item in client.GetAllSentShares("<referenceName>", null, nul
 ]]></code>
 This sample shows how to call GetAllSentShares with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -319,7 +319,7 @@ foreach (BinaryData item in client.GetAllSentShares("<referenceName>", "<filter>
       <example>
 This sample shows how to call GetAllSentShareInvitationsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -331,7 +331,7 @@ await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentS
 ]]></code>
 This sample shows how to call GetAllSentShareInvitationsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -348,7 +348,7 @@ await foreach (BinaryData item in client.GetAllSentShareInvitationsAsync("<sentS
       <example>
 This sample shows how to call GetAllSentShareInvitations and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -360,7 +360,7 @@ foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", n
 ]]></code>
 This sample shows how to call GetAllSentShareInvitations with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -377,7 +377,7 @@ foreach (BinaryData item in client.GetAllSentShareInvitations("<sentShareId>", "
       <example>
 This sample shows how to call CreateOrReplaceSentShareAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -412,7 +412,7 @@ Console.WriteLine(result.GetProperty("shareKind").ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceSentShareAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -459,7 +459,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call CreateOrReplaceSentShare and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -494,7 +494,7 @@ Console.WriteLine(result.GetProperty("shareKind").ToString());
 ]]></code>
 This sample shows how to call CreateOrReplaceSentShare with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -541,7 +541,7 @@ Console.WriteLine(result.GetProperty("type").ToString());
       <example>
 This sample shows how to call DeleteSentShareAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -553,7 +553,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteSentShareAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -574,7 +574,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call DeleteSentShare and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -586,7 +586,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteSentShare with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -607,7 +607,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call DeleteSentShareInvitationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -619,7 +619,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteSentShareInvitationAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -640,7 +640,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call DeleteSentShareInvitation and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 
@@ -652,7 +652,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call DeleteSentShareInvitation with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SentSharesClient client = new SentSharesClient(endpoint, credential);
 

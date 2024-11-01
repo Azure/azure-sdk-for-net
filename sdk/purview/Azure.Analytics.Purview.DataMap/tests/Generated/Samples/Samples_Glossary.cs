@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_BatchGet_GlossaryList()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_BatchGet_GlossaryList_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_BatchGet_GlossaryList_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_BatchGet_GlossaryList_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_Create_GlossaryCreate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_Create_GlossaryCreate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_Create_GlossaryCreate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -134,7 +134,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_Create_GlossaryCreate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateCategories_GlossaryCreateCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -186,7 +186,7 @@ glossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateCategories_GlossaryCreateCategories_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -219,7 +219,7 @@ glossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateCategories_GlossaryCreateCategories_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -248,7 +248,7 @@ GlossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateCategories_GlossaryCreateCategories_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -277,7 +277,7 @@ GlossaryGuid = "c018ddaf-7c21-4b37-a838-dae5f110c3d8",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateCategory_GlossaryCreateCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -306,7 +306,7 @@ termGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateCategory_GlossaryCreateCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -335,7 +335,7 @@ termGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateCategory_GlossaryCreateCategory_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -358,7 +358,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateCategory_GlossaryCreateCategory_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -381,7 +381,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategory_GlossaryGetCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -395,7 +395,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategory_GlossaryGetCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -409,7 +409,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategory_GlossaryGetCategory_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -420,7 +420,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategory_GlossaryGetCategory_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -431,7 +431,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_UpdateCategory_GlossaryUpdateCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -476,7 +476,7 @@ categoryGuid = "0d6766f6-f4b6-435b-bda2-d3edc358998e",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_UpdateCategory_GlossaryUpdateCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -521,7 +521,7 @@ categoryGuid = "0d6766f6-f4b6-435b-bda2-d3edc358998e",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_UpdateCategory_GlossaryUpdateCategory_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -557,7 +557,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_UpdateCategory_GlossaryUpdateCategory_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -593,7 +593,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_DeleteCategory_GlossaryDeleteCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -606,7 +606,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_DeleteCategory_GlossaryDeleteCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -619,7 +619,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdateCategory_GlossaryPartialUpdateCategory()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -637,7 +637,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdateCategory_GlossaryPartialUpdateCategory_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -655,7 +655,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdateCategory_GlossaryPartialUpdateCategory_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -669,7 +669,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdateCategory_GlossaryPartialUpdateCategory_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -683,7 +683,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetRelatedCategories_GlossaryListRelatedCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -697,7 +697,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetRelatedCategories_GlossaryListRelatedCategories_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -711,7 +711,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetRelatedCategories_GlossaryListRelatedCategories_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -722,7 +722,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetRelatedCategories_GlossaryListRelatedCategories_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -733,7 +733,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategoryTerms_GlossaryListCategoryTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -747,7 +747,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategoryTerms_GlossaryListCategoryTerms_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -761,7 +761,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategoryTerms_GlossaryListCategoryTerms_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -772,7 +772,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategoryTerms_GlossaryListCategoryTerms_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -783,7 +783,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerm_GlossaryCreateTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -836,7 +836,7 @@ info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerm_GlossaryCreateTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -889,7 +889,7 @@ info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerm_GlossaryCreateTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -930,7 +930,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerm_GlossaryCreateTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -971,7 +971,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerm_GlossaryCreateTermWithTemplate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1007,7 +1007,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerm_GlossaryCreateTermWithTemplate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1043,7 +1043,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerm_GlossaryCreateTermWithTemplate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1076,7 +1076,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerm_GlossaryCreateTermWithTemplate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1109,7 +1109,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerm_GlossaryGetTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1123,7 +1123,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerm_GlossaryGetTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1137,7 +1137,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerm_GlossaryGetTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1148,7 +1148,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerm_GlossaryGetTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1159,7 +1159,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerm_GlossaryGetTermWithoutAssets()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1173,7 +1173,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerm_GlossaryGetTermWithoutAssets_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1187,7 +1187,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerm_GlossaryGetTermWithoutAssets_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1198,7 +1198,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerm_GlossaryGetTermWithoutAssets_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1209,7 +1209,7 @@ Info = "Example Steward info",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_UpdateTerm_GlossaryUpdateTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1268,7 +1268,7 @@ termGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_UpdateTerm_GlossaryUpdateTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1327,7 +1327,7 @@ termGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_UpdateTerm_GlossaryUpdateTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1372,7 +1372,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_UpdateTerm_GlossaryUpdateTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1417,7 +1417,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_DeleteTerm_GlossaryDeleteTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1430,7 +1430,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_DeleteTerm_GlossaryDeleteTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1443,7 +1443,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdateTerm_GlossaryPartialUpdateTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1461,7 +1461,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdateTerm_GlossaryPartialUpdateTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1479,7 +1479,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdateTerm_GlossaryPartialUpdateTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1493,7 +1493,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdateTerm_GlossaryPartialUpdateTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1507,7 +1507,7 @@ TermGuid = "821beef0-ced9-47ba-8f7f-c4f3459f4d18",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerms_GlossaryCreateTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1564,7 +1564,7 @@ url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerms_GlossaryCreateTerms_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1621,7 +1621,7 @@ url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_CreateTerms_GlossaryCreateTerms_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1668,7 +1668,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_CreateTerms_GlossaryCreateTerms_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1715,7 +1715,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetEntitiesAssignedWithTerm_GlossaryListEntitiesAssignedWithTerm()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1729,7 +1729,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetEntitiesAssignedWithTerm_GlossaryListEntitiesAssignedWithTerm_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1743,7 +1743,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetEntitiesAssignedWithTerm_GlossaryListEntitiesAssignedWithTerm_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1754,7 +1754,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetEntitiesAssignedWithTerm_GlossaryListEntitiesAssignedWithTerm_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1765,7 +1765,7 @@ Url = "Example Url",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_AssignTermToEntities_GlossaryAssignTermToEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1795,7 +1795,7 @@ source = "ExampleSource",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_AssignTermToEntities_GlossaryAssignTermToEntities_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1825,7 +1825,7 @@ source = "ExampleSource",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_AssignTermToEntities_GlossaryAssignTermToEntities_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1852,7 +1852,7 @@ Attributes =
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_AssignTermToEntities_GlossaryAssignTermToEntities_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1879,7 +1879,7 @@ Attributes =
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_DeleteTermAssignmentFromEntities_GlossaryRemoveTermAssignmentFromEntities()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1900,7 +1900,7 @@ relationshipGuid = "624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_DeleteTermAssignmentFromEntities_GlossaryRemoveTermAssignmentFromEntities_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1921,7 +1921,7 @@ relationshipGuid = "624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_DeleteTermAssignmentFromEntities_GlossaryRemoveTermAssignmentFromEntities_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1939,7 +1939,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_DeleteTermAssignmentFromEntities_GlossaryRemoveTermAssignmentFromEntities_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1957,7 +1957,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetRelatedTerms_GlossaryListRelatedTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1971,7 +1971,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetRelatedTerms_GlossaryListRelatedTerms_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1985,7 +1985,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetRelatedTerms_GlossaryListRelatedTerms_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -1996,7 +1996,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetRelatedTerms_GlossaryListRelatedTerms_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2007,7 +2007,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetGlossary_GlossaryGet()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2021,7 +2021,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetGlossary_GlossaryGet_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2035,7 +2035,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetGlossary_GlossaryGet_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2046,7 +2046,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetGlossary_GlossaryGet_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2057,7 +2057,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_Update_GlossaryUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2120,7 +2120,7 @@ displayText = "ExampleCategory2",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_Update_GlossaryUpdate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2183,7 +2183,7 @@ displayText = "ExampleCategory2",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_Update_GlossaryUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2234,7 +2234,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_Update_GlossaryUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2285,7 +2285,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_Delete_GlossaryDelete()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2298,7 +2298,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_Delete_GlossaryDelete_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2311,7 +2311,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategories_GlossaryListCategories()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2325,7 +2325,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategories_GlossaryListCategories_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2339,7 +2339,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategories_GlossaryListCategories_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2350,7 +2350,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategories_GlossaryListCategories_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2361,7 +2361,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategoriesHeaders_GlossaryListCategoriesHeaders()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2375,7 +2375,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategoriesHeaders_GlossaryListCategoriesHeaders_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2389,7 +2389,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetCategoriesHeaders_GlossaryListCategoriesHeaders_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2400,7 +2400,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetCategoriesHeaders_GlossaryListCategoriesHeaders_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2411,7 +2411,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetDetailed_GlossaryGetDetailed()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2425,7 +2425,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetDetailed_GlossaryGetDetailed_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2439,7 +2439,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetDetailed_GlossaryGetDetailed_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2450,7 +2450,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetDetailed_GlossaryGetDetailed_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2461,7 +2461,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdate_GlossaryPartialUpdate()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2479,7 +2479,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdate_GlossaryPartialUpdate_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2497,7 +2497,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_PartialUpdate_GlossaryPartialUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2511,7 +2511,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_PartialUpdate_GlossaryPartialUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2525,7 +2525,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerms_GlossaryListTerms()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2539,7 +2539,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerms_GlossaryListTerms_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2553,7 +2553,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTerms_GlossaryListTerms_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2564,7 +2564,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTerms_GlossaryListTerms_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2575,7 +2575,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTermHeaders_GlossaryListTermHeaders()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2589,7 +2589,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTermHeaders_GlossaryListTermHeaders_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2603,7 +2603,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public void Example_Glossary_GetTermHeaders_GlossaryListTermHeaders_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
@@ -2614,7 +2614,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Glossary_GetTermHeaders_GlossaryListTermHeaders_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 

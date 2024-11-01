@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFilter_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetFilter_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateFilter_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateFilter_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -422,7 +422,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -504,7 +504,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -518,7 +518,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -532,7 +532,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -573,7 +573,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -614,7 +614,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RunScan_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -628,7 +628,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RunScan_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RunScan_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -665,7 +665,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_RunScan_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -688,7 +688,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -702,7 +702,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelScan_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -716,7 +716,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -739,7 +739,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancelScan_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -762,7 +762,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -776,7 +776,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrigger_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -790,7 +790,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -824,7 +824,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTrigger_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -858,7 +858,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTrigger_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -873,7 +873,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateTrigger_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -888,7 +888,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTrigger_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -974,7 +974,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateTrigger_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1060,7 +1060,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1074,7 +1074,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrigger_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1088,7 +1088,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1122,7 +1122,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrigger_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1156,7 +1156,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1171,7 +1171,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRuns_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1186,7 +1186,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
@@ -1225,7 +1225,7 @@ occurrence = 1234,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRuns_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 

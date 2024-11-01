@@ -21,7 +21,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBusinessMetadataDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -248,7 +248,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBusinessMetadataDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -319,7 +319,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -333,7 +333,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -393,7 +393,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -453,7 +453,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -467,7 +467,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -481,7 +481,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetClassificationDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -541,7 +541,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetClassificationDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -615,7 +615,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -629,7 +629,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -704,7 +704,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -779,7 +779,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -793,7 +793,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -807,7 +807,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEntityDefinitionByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -882,7 +882,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEntityDefinitionByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -957,7 +957,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -971,7 +971,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -985,7 +985,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1032,7 +1032,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1079,7 +1079,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1093,7 +1093,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1107,7 +1107,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetEnumDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1154,7 +1154,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetEnumDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1201,7 +1201,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1215,7 +1215,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1229,7 +1229,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1300,7 +1300,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1371,7 +1371,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1385,7 +1385,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1399,7 +1399,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRelationshipDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1470,7 +1470,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRelationshipDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1541,7 +1541,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1555,7 +1555,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1569,7 +1569,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1626,7 +1626,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1683,7 +1683,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1697,7 +1697,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1711,7 +1711,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetStructDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1768,7 +1768,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetStructDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1825,7 +1825,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1839,7 +1839,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1853,7 +1853,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -1947,7 +1947,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2041,7 +2041,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2055,7 +2055,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2069,7 +2069,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2163,7 +2163,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2257,7 +2257,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2270,7 +2270,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2283,7 +2283,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2296,7 +2296,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2309,7 +2309,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTypeDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2323,7 +2323,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllTypeDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2337,7 +2337,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetAllTypeDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -2683,7 +2683,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetAllTypeDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3029,7 +3029,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateTypeDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3044,7 +3044,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateTypeDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3059,7 +3059,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateTypeDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -3718,7 +3718,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateTypeDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4377,7 +4377,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAtlasTypeDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4392,7 +4392,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateAtlasTypeDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -4407,7 +4407,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateAtlasTypeDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5066,7 +5066,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateAtlasTypeDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5725,7 +5725,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeDefinitions_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5739,7 +5739,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeDefinitions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -5753,7 +5753,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTypeDefinitions_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6079,7 +6079,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTypeDefinitions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6405,7 +6405,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionHeaders_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6419,7 +6419,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionHeaders_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6433,7 +6433,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTypeDefinitionHeaders_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6449,7 +6449,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTypeDefinitionHeaders_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6465,7 +6465,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByGuid_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6479,7 +6479,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByGuid_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6493,7 +6493,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByGuid_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6550,7 +6550,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByGuid_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6607,7 +6607,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByName_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6621,7 +6621,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByName_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6635,7 +6635,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTermTemplateDefByName_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
@@ -6692,7 +6692,7 @@ lastModifiedTS = "<lastModifiedTS>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetTermTemplateDefByName_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 

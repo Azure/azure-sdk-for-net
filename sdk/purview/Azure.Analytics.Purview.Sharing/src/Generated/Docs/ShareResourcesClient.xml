@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetAllShareResourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
 
@@ -17,7 +17,7 @@ await foreach (BinaryData item in client.GetAllShareResourcesAsync(null, null, n
 ]]></code>
 This sample shows how to call GetAllShareResourcesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
 
@@ -38,7 +38,7 @@ await foreach (BinaryData item in client.GetAllShareResourcesAsync("<filter>", "
       <example>
 This sample shows how to call GetAllShareResources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
 
@@ -50,7 +50,7 @@ foreach (BinaryData item in client.GetAllShareResources(null, null, null))
 ]]></code>
 This sample shows how to call GetAllShareResources with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 ShareResourcesClient client = new ShareResourcesClient(endpoint, credential);
 

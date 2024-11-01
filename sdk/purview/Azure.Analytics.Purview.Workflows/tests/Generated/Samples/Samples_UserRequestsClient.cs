@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Submit_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
@@ -49,7 +49,7 @@ payload = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Submit_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
@@ -78,7 +78,7 @@ payload = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_Submit_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 
@@ -110,7 +110,7 @@ payload = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Submit_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             UserRequestsClient client = new UserRequestsClient(endpoint, credential);
 

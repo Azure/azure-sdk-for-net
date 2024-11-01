@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetPropertiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetPropertiesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -32,7 +32,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetProperties and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -43,7 +43,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetProperties with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -71,7 +71,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -97,7 +97,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -109,7 +109,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -135,7 +135,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -146,7 +146,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -162,7 +162,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call Delete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -173,7 +173,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call Delete with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -189,7 +189,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call TagVersionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -200,7 +200,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call TagVersionAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -223,7 +223,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetPrope
       <example>
 This sample shows how to call TagVersion and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -234,7 +234,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call TagVersion with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -257,7 +257,7 @@ Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetPrope
       <example>
 This sample shows how to call GetVersionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -269,7 +269,7 @@ await foreach (BinaryData item in client.GetVersionsAsync(null))
 ]]></code>
 This sample shows how to call GetVersionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -286,7 +286,7 @@ await foreach (BinaryData item in client.GetVersionsAsync(null))
       <example>
 This sample shows how to call GetVersions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
@@ -298,7 +298,7 @@ foreach (BinaryData item in client.GetVersions(null))
 ]]></code>
 This sample shows how to call GetVersions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 

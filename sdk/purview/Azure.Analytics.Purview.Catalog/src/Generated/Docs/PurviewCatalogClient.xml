@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call SearchAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -17,7 +17,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call SearchAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -90,7 +90,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToS
       <example>
 This sample shows how to call Search and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -102,7 +102,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Search with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -175,7 +175,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToS
       <example>
 This sample shows how to call SuggestAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -187,7 +187,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call SuggestAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -223,7 +223,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToS
       <example>
 This sample shows how to call Suggest and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -235,7 +235,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Suggest with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -271,7 +271,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToS
       <example>
 This sample shows how to call BrowseAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -283,7 +283,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call BrowseAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -314,7 +314,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").To
       <example>
 This sample shows how to call Browse and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -326,7 +326,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call Browse with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -357,7 +357,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").To
       <example>
 This sample shows how to call AutoCompleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -369,7 +369,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call AutoCompleteAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -390,7 +390,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").To
       <example>
 This sample shows how to call AutoComplete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 
@@ -402,7 +402,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call AutoComplete with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewCatalogClient client = new PurviewCatalogClient(endpoint, credential);
 

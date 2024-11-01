@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetLineageAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -16,7 +16,7 @@ Response<AtlasLineageInfo> response = await client.GetLineageAsync("a6894eb3-81f
       <example>
 This sample shows how to call GetLineage.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -27,7 +27,7 @@ Response<AtlasLineageInfo> response = client.GetLineage("a6894eb3-81f3-829b-2adc
       <example>
 This sample shows how to call GetLineageAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -41,7 +41,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetLineage and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -55,7 +55,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetNextPageAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -66,7 +66,7 @@ Response<AtlasLineageInfo> response = await client.GetNextPageAsync("a6894eb3-81
       <example>
 This sample shows how to call GetNextPage.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -77,7 +77,7 @@ Response<AtlasLineageInfo> response = client.GetNextPage("a6894eb3-81f3-829b-2ad
       <example>
 This sample shows how to call GetNextPageAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -91,7 +91,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetNextPage and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient(apiVersion: "2023-09-01");
 
@@ -105,7 +105,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByUniqueAttributeAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -116,7 +116,7 @@ Response<AtlasLineageInfo> response = await client.GetByUniqueAttributeAsync("az
       <example>
 This sample shows how to call GetByUniqueAttribute.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -127,7 +127,7 @@ Response<AtlasLineageInfo> response = client.GetByUniqueAttribute("azure_blob_pa
       <example>
 This sample shows how to call GetByUniqueAttributeAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetByUniqueAttribute and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Lineage client = new DataMapClient(endpoint, credential).GetLineageClient();
 

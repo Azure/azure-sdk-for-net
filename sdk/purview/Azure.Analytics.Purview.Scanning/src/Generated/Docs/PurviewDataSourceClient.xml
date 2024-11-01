@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -17,7 +17,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -73,7 +73,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -85,7 +85,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetPropertiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -152,7 +152,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetPropertiesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -196,7 +196,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetProperties and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -207,7 +207,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call GetProperties with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -251,7 +251,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -262,7 +262,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -306,7 +306,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call Delete and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -317,7 +317,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 ]]></code>
 This sample shows how to call Delete with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -361,7 +361,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetScansAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -373,7 +373,7 @@ await foreach (BinaryData item in client.GetScansAsync(null))
 ]]></code>
 This sample shows how to call GetScansAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -415,7 +415,7 @@ await foreach (BinaryData item in client.GetScansAsync(null))
       <example>
 This sample shows how to call GetScans and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 
@@ -427,7 +427,7 @@ foreach (BinaryData item in client.GetScans(null))
 ]]></code>
 This sample shows how to call GetScans with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewDataSourceClient client = new PurviewDataSourceClient(endpoint, "<DataSourceName>", credential);
 

@@ -20,7 +20,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateMetadataPolicy_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateMetadataPolicy_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_UpdateMetadataPolicy_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -143,7 +143,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_UpdateMetadataPolicy_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -236,7 +236,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicy_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -250,7 +250,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicy_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -264,7 +264,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicy_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -299,7 +299,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicy_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, (string)null, credential);
 
@@ -334,7 +334,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicies_ShortVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
@@ -349,7 +349,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicies_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
@@ -364,7 +364,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public void Example_GetMetadataPolicies_AllParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
@@ -400,7 +400,7 @@ null
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetMetadataPolicies_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewMetadataPolicyClient client = new PurviewMetadataPolicyClient(endpoint, "<CollectionName>", credential);
 
