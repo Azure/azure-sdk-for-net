@@ -14,117 +14,344 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotDeployment.
 /// </summary>
-public partial class SiteSlotDeployment : Resource
+public partial class SiteSlotDeployment : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Who authored the deployment.
     /// </summary>
-    public BicepValue<string> Author { get => _author; set => _author.Assign(value); }
-    private readonly BicepValue<string> _author;
+    public BicepValue<string> Author 
+    {
+        get { Initialize(); return _author!; }
+        set { Initialize(); _author!.Assign(value); }
+    }
+    private BicepValue<string>? _author;
 
     /// <summary>
     /// Author email.
     /// </summary>
-    public BicepValue<string> AuthorEmail { get => _authorEmail; set => _authorEmail.Assign(value); }
-    private readonly BicepValue<string> _authorEmail;
+    public BicepValue<string> AuthorEmail 
+    {
+        get { Initialize(); return _authorEmail!; }
+        set { Initialize(); _authorEmail!.Assign(value); }
+    }
+    private BicepValue<string>? _authorEmail;
 
     /// <summary>
     /// Who performed the deployment.
     /// </summary>
-    public BicepValue<string> Deployer { get => _deployer; set => _deployer.Assign(value); }
-    private readonly BicepValue<string> _deployer;
+    public BicepValue<string> Deployer 
+    {
+        get { Initialize(); return _deployer!; }
+        set { Initialize(); _deployer!.Assign(value); }
+    }
+    private BicepValue<string>? _deployer;
 
     /// <summary>
     /// Details on deployment.
     /// </summary>
-    public BicepValue<string> Details { get => _details; set => _details.Assign(value); }
-    private readonly BicepValue<string> _details;
+    public BicepValue<string> Details 
+    {
+        get { Initialize(); return _details!; }
+        set { Initialize(); _details!.Assign(value); }
+    }
+    private BicepValue<string>? _details;
 
     /// <summary>
     /// End time.
     /// </summary>
-    public BicepValue<DateTimeOffset> EndOn { get => _endOn; set => _endOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _endOn;
+    public BicepValue<DateTimeOffset> EndOn 
+    {
+        get { Initialize(); return _endOn!; }
+        set { Initialize(); _endOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _endOn;
 
     /// <summary>
     /// True if deployment is currently active, false if completed and null if
     /// not started.
     /// </summary>
-    public BicepValue<bool> IsActive { get => _isActive; set => _isActive.Assign(value); }
-    private readonly BicepValue<bool> _isActive;
+    public BicepValue<bool> IsActive 
+    {
+        get { Initialize(); return _isActive!; }
+        set { Initialize(); _isActive!.Assign(value); }
+    }
+    private BicepValue<bool>? _isActive;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Details about deployment status.
     /// </summary>
-    public BicepValue<string> Message { get => _message; set => _message.Assign(value); }
-    private readonly BicepValue<string> _message;
+    public BicepValue<string> Message 
+    {
+        get { Initialize(); return _message!; }
+        set { Initialize(); _message!.Assign(value); }
+    }
+    private BicepValue<string>? _message;
 
     /// <summary>
     /// Start time.
     /// </summary>
-    public BicepValue<DateTimeOffset> StartOn { get => _startOn; set => _startOn.Assign(value); }
-    private readonly BicepValue<DateTimeOffset> _startOn;
+    public BicepValue<DateTimeOffset> StartOn 
+    {
+        get { Initialize(); return _startOn!; }
+        set { Initialize(); _startOn!.Assign(value); }
+    }
+    private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
     /// Deployment status.
     /// </summary>
-    public BicepValue<int> Status { get => _status; set => _status.Assign(value); }
-    private readonly BicepValue<int> _status;
+    public BicepValue<int> Status 
+    {
+        get { Initialize(); return _status!; }
+        set { Initialize(); _status!.Assign(value); }
+    }
+    private BicepValue<int>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new SiteSlotDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotDeployment resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDeployment.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotDeployment(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/deployments", resourceVersion, context)
+    public SiteSlotDeployment(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/deployments", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"]);
-        _authorEmail = BicepValue<string>.DefineProperty(this, "AuthorEmail", ["properties", "author_email"]);
-        _deployer = BicepValue<string>.DefineProperty(this, "Deployer", ["properties", "deployer"]);
-        _details = BicepValue<string>.DefineProperty(this, "Details", ["properties", "details"]);
-        _endOn = BicepValue<DateTimeOffset>.DefineProperty(this, "EndOn", ["properties", "end_time"]);
-        _isActive = BicepValue<bool>.DefineProperty(this, "IsActive", ["properties", "active"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _message = BicepValue<string>.DefineProperty(this, "Message", ["properties", "message"]);
-        _startOn = BicepValue<DateTimeOffset>.DefineProperty(this, "StartOn", ["properties", "start_time"]);
-        _status = BicepValue<int>.DefineProperty(this, "Status", ["properties", "status"]);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteSlotDeployment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _author = DefineProperty<string>("Author", ["properties", "author"]);
+        _authorEmail = DefineProperty<string>("AuthorEmail", ["properties", "author_email"]);
+        _deployer = DefineProperty<string>("Deployer", ["properties", "deployer"]);
+        _details = DefineProperty<string>("Details", ["properties", "details"]);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["properties", "end_time"]);
+        _isActive = DefineProperty<bool>("IsActive", ["properties", "active"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _message = DefineProperty<string>("Message", ["properties", "message"]);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "start_time"]);
+        _status = DefineProperty<int>("Status", ["properties", "status"]);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SiteSlotDeployment resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
+        /// <summary>
+        /// 2023-12-01.
+        /// </summary>
+        public static readonly string V2023_12_01 = "2023-12-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-15.
+        /// </summary>
+        public static readonly string V2021_01_15 = "2021-01-15";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-08-01.
+        /// </summary>
+        public static readonly string V2016_08_01 = "2016-08-01";
+
+        /// <summary>
+        /// 2016-03-01.
+        /// </summary>
+        public static readonly string V2016_03_01 = "2016-03-01";
+
+        /// <summary>
+        /// 2015-11-01.
+        /// </summary>
+        public static readonly string V2015_11_01 = "2015-11-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2015-07-01.
+        /// </summary>
+        public static readonly string V2015_07_01 = "2015-07-01";
+
+        /// <summary>
+        /// 2015-06-01.
+        /// </summary>
+        public static readonly string V2015_06_01 = "2015-06-01";
+
+        /// <summary>
+        /// 2015-05-01.
+        /// </summary>
+        public static readonly string V2015_05_01 = "2015-05-01";
+
+        /// <summary>
+        /// 2015-04-01.
+        /// </summary>
+        public static readonly string V2015_04_01 = "2015-04-01";
+
+        /// <summary>
+        /// 2015-02-01.
+        /// </summary>
+        public static readonly string V2015_02_01 = "2015-02-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+
+        /// <summary>
+        /// 2014-11-01.
+        /// </summary>
+        public static readonly string V2014_11_01 = "2014-11-01";
+
+        /// <summary>
+        /// 2014-06-01.
+        /// </summary>
+        public static readonly string V2014_06_01 = "2014-06-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing SiteSlotDeployment.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotDeployment.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotDeployment resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotDeployment.</param>
     /// <returns>The existing SiteSlotDeployment resource.</returns>
-    public static SiteSlotDeployment FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

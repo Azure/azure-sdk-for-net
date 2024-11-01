@@ -15,114 +15,177 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotHybridConnectionNamespaceRelay.
 /// </summary>
-public partial class SiteSlotHybridConnectionNamespaceRelay : Resource
+public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResource
 {
     /// <summary>
     /// The namespace for this hybrid connection.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The relay name for this hybrid connection.
     /// </summary>
-    public BicepValue<string> RelayName { get => _relayName; set => _relayName.Assign(value); }
-    private readonly BicepValue<string> _relayName;
+    public BicepValue<string> RelayName 
+    {
+        get { Initialize(); return _relayName!; }
+        set { Initialize(); _relayName!.Assign(value); }
+    }
+    private BicepValue<string>? _relayName;
 
     /// <summary>
     /// The hostname of the endpoint.
     /// </summary>
-    public BicepValue<string> Hostname { get => _hostname; set => _hostname.Assign(value); }
-    private readonly BicepValue<string> _hostname;
+    public BicepValue<string> Hostname 
+    {
+        get { Initialize(); return _hostname!; }
+        set { Initialize(); _hostname!.Assign(value); }
+    }
+    private BicepValue<string>? _hostname;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The port of the endpoint.
     /// </summary>
-    public BicepValue<int> Port { get => _port; set => _port.Assign(value); }
-    private readonly BicepValue<int> _port;
+    public BicepValue<int> Port 
+    {
+        get { Initialize(); return _port!; }
+        set { Initialize(); _port!.Assign(value); }
+    }
+    private BicepValue<int>? _port;
 
     /// <summary>
     /// The ARM URI to the Service Bus relay.
     /// </summary>
-    public BicepValue<ResourceIdentifier> RelayArmId { get => _relayArmId; set => _relayArmId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _relayArmId;
+    public BicepValue<ResourceIdentifier> RelayArmId 
+    {
+        get { Initialize(); return _relayArmId!; }
+        set { Initialize(); _relayArmId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _relayArmId;
 
     /// <summary>
     /// The name of the Service Bus key which has Send permissions. This is
     /// used to authenticate to Service Bus.
     /// </summary>
-    public BicepValue<string> SendKeyName { get => _sendKeyName; set => _sendKeyName.Assign(value); }
-    private readonly BicepValue<string> _sendKeyName;
+    public BicepValue<string> SendKeyName 
+    {
+        get { Initialize(); return _sendKeyName!; }
+        set { Initialize(); _sendKeyName!.Assign(value); }
+    }
+    private BicepValue<string>? _sendKeyName;
 
     /// <summary>
     /// The value of the Service Bus key. This is used to authenticate to
     /// Service Bus. In ARM this key will not be returned
     /// normally, use the POST /listKeys API instead.
     /// </summary>
-    public BicepValue<string> SendKeyValue { get => _sendKeyValue; set => _sendKeyValue.Assign(value); }
-    private readonly BicepValue<string> _sendKeyValue;
+    public BicepValue<string> SendKeyValue 
+    {
+        get { Initialize(); return _sendKeyValue!; }
+        set { Initialize(); _sendKeyValue!.Assign(value); }
+    }
+    private BicepValue<string>? _sendKeyValue;
 
     /// <summary>
     /// The name of the Service Bus namespace.
     /// </summary>
-    public BicepValue<string> ServiceBusNamespace { get => _serviceBusNamespace; set => _serviceBusNamespace.Assign(value); }
-    private readonly BicepValue<string> _serviceBusNamespace;
+    public BicepValue<string> ServiceBusNamespace 
+    {
+        get { Initialize(); return _serviceBusNamespace!; }
+        set { Initialize(); _serviceBusNamespace!.Assign(value); }
+    }
+    private BicepValue<string>? _serviceBusNamespace;
 
     /// <summary>
     /// The suffix for the service bus endpoint. By default this is
     /// .servicebus.windows.net.
     /// </summary>
-    public BicepValue<string> ServiceBusSuffix { get => _serviceBusSuffix; set => _serviceBusSuffix.Assign(value); }
-    private readonly BicepValue<string> _serviceBusSuffix;
+    public BicepValue<string> ServiceBusSuffix 
+    {
+        get { Initialize(); return _serviceBusSuffix!; }
+        set { Initialize(); _serviceBusSuffix!.Assign(value); }
+    }
+    private BicepValue<string>? _serviceBusSuffix;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new SiteSlotHybridConnectionNamespaceRelay.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotHybridConnectionNamespaceRelay.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// SiteSlotHybridConnectionNamespaceRelay resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotHybridConnectionNamespaceRelay.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotHybridConnectionNamespaceRelay(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays", resourceVersion, context)
+    public SiteSlotHybridConnectionNamespaceRelay(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _relayName = BicepValue<string>.DefineProperty(this, "RelayName", ["properties", "relayName"], isRequired: true);
-        _hostname = BicepValue<string>.DefineProperty(this, "Hostname", ["properties", "hostname"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _port = BicepValue<int>.DefineProperty(this, "Port", ["properties", "port"]);
-        _relayArmId = BicepValue<ResourceIdentifier>.DefineProperty(this, "RelayArmId", ["properties", "relayArmUri"]);
-        _sendKeyName = BicepValue<string>.DefineProperty(this, "SendKeyName", ["properties", "sendKeyName"]);
-        _sendKeyValue = BicepValue<string>.DefineProperty(this, "SendKeyValue", ["properties", "sendKeyValue"]);
-        _serviceBusNamespace = BicepValue<string>.DefineProperty(this, "ServiceBusNamespace", ["properties", "serviceBusNamespace"]);
-        _serviceBusSuffix = BicepValue<string>.DefineProperty(this, "ServiceBusSuffix", ["properties", "serviceBusSuffix"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// SiteSlotHybridConnectionNamespaceRelay.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"], isRequired: true);
+        _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _port = DefineProperty<int>("Port", ["properties", "port"]);
+        _relayArmId = DefineProperty<ResourceIdentifier>("RelayArmId", ["properties", "relayArmUri"]);
+        _sendKeyName = DefineProperty<string>("SendKeyName", ["properties", "sendKeyName"]);
+        _sendKeyValue = DefineProperty<string>("SendKeyValue", ["properties", "sendKeyValue"]);
+        _serviceBusNamespace = DefineProperty<string>("ServiceBusNamespace", ["properties", "serviceBusNamespace"]);
+        _serviceBusSuffix = DefineProperty<string>("ServiceBusSuffix", ["properties", "serviceBusSuffix"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing
     /// SiteSlotHybridConnectionNamespaceRelay.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotHybridConnectionNamespaceRelay.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the
+    /// SiteSlotHybridConnectionNamespaceRelay resource.  This can be used to
+    /// refer to the resource in expressions, but is not the Azure name of the
+    /// resource.  This value can contain letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotHybridConnectionNamespaceRelay.</param>
     /// <returns>The existing SiteSlotHybridConnectionNamespaceRelay resource.</returns>
-    public static SiteSlotHybridConnectionNamespaceRelay FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotHybridConnectionNamespaceRelay FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

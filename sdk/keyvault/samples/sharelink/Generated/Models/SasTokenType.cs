@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         public static bool operator ==(SasTokenType left, SasTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SasTokenType"/> values are not the same. </summary>
         public static bool operator !=(SasTokenType left, SasTokenType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SasTokenType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SasTokenType"/>. </summary>
         public static implicit operator SasTokenType(string value) => new SasTokenType(value);
 
         /// <inheritdoc />

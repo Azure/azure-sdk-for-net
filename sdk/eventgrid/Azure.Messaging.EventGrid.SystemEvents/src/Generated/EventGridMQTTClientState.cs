@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(EventGridMQTTClientState left, EventGridMQTTClientState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridMQTTClientState"/> values are not the same. </summary>
         public static bool operator !=(EventGridMQTTClientState left, EventGridMQTTClientState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridMQTTClientState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridMQTTClientState"/>. </summary>
         public static implicit operator EventGridMQTTClientState(string value) => new EventGridMQTTClientState(value);
 
         /// <inheritdoc />

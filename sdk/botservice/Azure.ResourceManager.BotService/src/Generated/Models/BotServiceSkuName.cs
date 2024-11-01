@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static bool operator ==(BotServiceSkuName left, BotServiceSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotServiceSkuName"/> values are not the same. </summary>
         public static bool operator !=(BotServiceSkuName left, BotServiceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BotServiceSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BotServiceSkuName"/>. </summary>
         public static implicit operator BotServiceSkuName(string value) => new BotServiceSkuName(value);
 
         /// <inheritdoc />

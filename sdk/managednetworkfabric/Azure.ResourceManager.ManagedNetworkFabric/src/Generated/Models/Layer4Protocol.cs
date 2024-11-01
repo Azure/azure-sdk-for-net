@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(Layer4Protocol left, Layer4Protocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Layer4Protocol"/> values are not the same. </summary>
         public static bool operator !=(Layer4Protocol left, Layer4Protocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Layer4Protocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Layer4Protocol"/>. </summary>
         public static implicit operator Layer4Protocol(string value) => new Layer4Protocol(value);
 
         /// <inheritdoc />

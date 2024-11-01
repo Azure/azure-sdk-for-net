@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         void IJsonModel<SingleScopeBenefitRecommendationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SingleScopeBenefitRecommendationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SingleScopeBenefitRecommendationProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -36,84 +45,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstConsumptionOn))
-            {
-                writer.WritePropertyName("firstConsumptionDate"u8);
-                writer.WriteStringValue(FirstConsumptionOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastConsumptionOn))
-            {
-                writer.WritePropertyName("lastConsumptionDate"u8);
-                writer.WriteStringValue(LastConsumptionOn.Value, "O");
-            }
-            if (Optional.IsDefined(LookBackPeriod))
-            {
-                writer.WritePropertyName("lookBackPeriod"u8);
-                writer.WriteStringValue(LookBackPeriod.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalHours))
-            {
-                writer.WritePropertyName("totalHours"u8);
-                writer.WriteNumberValue(TotalHours.Value);
-            }
-            if (Optional.IsDefined(Usage))
-            {
-                writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
-            {
-                writer.WritePropertyName("armSkuName"u8);
-                writer.WriteStringValue(ArmSkuName);
-            }
-            if (Optional.IsDefined(Term))
-            {
-                writer.WritePropertyName("term"u8);
-                writer.WriteStringValue(Term.Value.ToString());
-            }
-            if (Optional.IsDefined(CommitmentGranularity))
-            {
-                writer.WritePropertyName("commitmentGranularity"u8);
-                writer.WriteStringValue(CommitmentGranularity.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
-            {
-                writer.WritePropertyName("currencyCode"u8);
-                writer.WriteStringValue(CurrencyCode);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CostWithoutBenefit))
-            {
-                writer.WritePropertyName("costWithoutBenefit"u8);
-                writer.WriteNumberValue(CostWithoutBenefit.Value);
-            }
-            if (Optional.IsDefined(RecommendationDetails))
-            {
-                writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue(RecommendationDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
-            {
-                writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue(AllRecommendationDetails, options);
-            }
-            writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         SingleScopeBenefitRecommendationProperties IJsonModel<SingleScopeBenefitRecommendationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

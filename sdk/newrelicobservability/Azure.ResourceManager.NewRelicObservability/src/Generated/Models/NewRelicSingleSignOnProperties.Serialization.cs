@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         void IJsonModel<NewRelicSingleSignOnProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicSingleSignOnProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicSingleSignOnProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
@@ -62,7 +70,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NewRelicSingleSignOnProperties IJsonModel<NewRelicSingleSignOnProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

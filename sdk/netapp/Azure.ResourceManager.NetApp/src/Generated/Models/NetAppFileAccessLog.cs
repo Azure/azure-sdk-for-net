@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppFileAccessLog left, NetAppFileAccessLog right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppFileAccessLog"/> values are not the same. </summary>
         public static bool operator !=(NetAppFileAccessLog left, NetAppFileAccessLog right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppFileAccessLog"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppFileAccessLog"/>. </summary>
         public static implicit operator NetAppFileAccessLog(string value) => new NetAppFileAccessLog(value);
 
         /// <inheritdoc />

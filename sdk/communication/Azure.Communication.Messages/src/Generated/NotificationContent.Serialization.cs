@@ -19,13 +19,21 @@ namespace Azure.Communication.Messages
 
         void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -52,7 +60,6 @@ namespace Azure.Communication.Messages
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NotificationContent IJsonModel<NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,26 +72,6 @@ namespace Azure.Communication.Messages
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationContent(document.RootElement, options);
-        }
-
-        internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "image": return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
-                    case "template": return TemplateNotificationContent.DeserializeTemplateNotificationContent(element, options);
-                    case "text": return TextNotificationContent.DeserializeTextNotificationContent(element, options);
-                }
-            }
-            return UnknownNotificationContent.DeserializeUnknownNotificationContent(element, options);
         }
 
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)

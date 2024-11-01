@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_09_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_09_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -44,6 +45,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             QueryCaption = new(QueryCaptionType.Extractive),
                             QueryAnswer = new(QueryAnswerType.Extractive)
                         },
+                        QueryLanguage = QueryLanguage.EnUs,
                         QueryType = SearchQueryType.Semantic
                     });
 
@@ -112,6 +114,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             QueryAnswer = new(QueryAnswerType.Extractive),
                             SemanticQuery = "Is there any hotel located on the main commercial artery of the city in the heart of New York?"
                         },
+                        QueryLanguage = QueryLanguage.EnUs,
                     });
 
                 int count = 0;

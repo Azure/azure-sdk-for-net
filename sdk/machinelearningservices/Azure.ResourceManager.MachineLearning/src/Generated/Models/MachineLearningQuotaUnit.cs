@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningQuotaUnit left, MachineLearningQuotaUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningQuotaUnit"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningQuotaUnit left, MachineLearningQuotaUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningQuotaUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningQuotaUnit"/>. </summary>
         public static implicit operator MachineLearningQuotaUnit(string value) => new MachineLearningQuotaUnit(value);
 
         /// <inheritdoc />

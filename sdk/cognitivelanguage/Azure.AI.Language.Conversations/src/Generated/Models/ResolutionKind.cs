@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(ResolutionKind left, ResolutionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResolutionKind"/> values are not the same. </summary>
         public static bool operator !=(ResolutionKind left, ResolutionKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResolutionKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResolutionKind"/>. </summary>
         public static implicit operator ResolutionKind(string value) => new ResolutionKind(value);
 
         /// <inheritdoc />

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OracleDatabaseDayOfWeekName left, OracleDatabaseDayOfWeekName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleDatabaseDayOfWeekName"/> values are not the same. </summary>
         public static bool operator !=(OracleDatabaseDayOfWeekName left, OracleDatabaseDayOfWeekName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseDayOfWeekName"/>. </summary>
         public static implicit operator OracleDatabaseDayOfWeekName(string value) => new OracleDatabaseDayOfWeekName(value);
 
         /// <inheritdoc />

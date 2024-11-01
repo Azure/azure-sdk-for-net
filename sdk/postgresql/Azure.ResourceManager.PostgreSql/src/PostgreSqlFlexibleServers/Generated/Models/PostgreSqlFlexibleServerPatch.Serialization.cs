@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         void IJsonModel<PostgreSqlFlexibleServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -54,6 +62,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                writer.WritePropertyName("administratorLogin"u8);
+                writer.WriteStringValue(AdministratorLogin);
+            }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
@@ -104,6 +117,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
+            if (Optional.IsDefined(Replica))
+            {
+                writer.WritePropertyName("replica"u8);
+                writer.WriteObjectValue(Replica, options);
+            }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
@@ -125,7 +143,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlFlexibleServerPatch IJsonModel<PostgreSqlFlexibleServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -152,6 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation? location = default;
+            string administratorLogin = default;
             string administratorLoginPassword = default;
             PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
@@ -162,6 +180,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
+            PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -217,6 +236,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("administratorLogin"u8))
+                        {
+                            administratorLogin = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("administratorLoginPassword"u8))
                         {
                             administratorLoginPassword = property0.Value.GetString();
@@ -303,6 +327,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             replicationRole = new PostgreSqlFlexibleServerReplicationRole(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("replica"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replica = PostgreSqlFlexibleServersReplica.DeserializePostgreSqlFlexibleServersReplica(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("network"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -326,6 +359,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                administratorLogin,
                 administratorLoginPassword,
                 version,
                 storage,
@@ -336,6 +370,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataEncryption,
                 createMode,
                 replicationRole,
+                replica,
                 network,
                 serializedAdditionalRawData);
         }

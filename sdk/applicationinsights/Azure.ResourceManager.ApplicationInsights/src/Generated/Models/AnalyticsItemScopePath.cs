@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(AnalyticsItemScopePath left, AnalyticsItemScopePath right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyticsItemScopePath"/> values are not the same. </summary>
         public static bool operator !=(AnalyticsItemScopePath left, AnalyticsItemScopePath right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyticsItemScopePath"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyticsItemScopePath"/>. </summary>
         public static implicit operator AnalyticsItemScopePath(string value) => new AnalyticsItemScopePath(value);
 
         /// <inheritdoc />

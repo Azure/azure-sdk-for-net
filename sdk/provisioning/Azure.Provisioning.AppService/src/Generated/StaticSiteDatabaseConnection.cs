@@ -16,13 +16,17 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSiteDatabaseConnection.
 /// </summary>
-public partial class StaticSiteDatabaseConnection : Resource
+public partial class StaticSiteDatabaseConnection : ProvisionableResource
 {
     /// <summary>
     /// Name of the database connection.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// If present, the identity is used in conjunction with connection string
@@ -31,76 +35,120 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// while use of a user-assigned managed identity is indicated with the
     /// resource id of the managed identity resource.
     /// </summary>
-    public BicepValue<string> ConnectionIdentity { get => _connectionIdentity; set => _connectionIdentity.Assign(value); }
-    private readonly BicepValue<string> _connectionIdentity;
+    public BicepValue<string> ConnectionIdentity 
+    {
+        get { Initialize(); return _connectionIdentity!; }
+        set { Initialize(); _connectionIdentity!.Assign(value); }
+    }
+    private BicepValue<string>? _connectionIdentity;
 
     /// <summary>
     /// The connection string to use to connect to the database.
     /// </summary>
-    public BicepValue<string> ConnectionString { get => _connectionString; set => _connectionString.Assign(value); }
-    private readonly BicepValue<string> _connectionString;
+    public BicepValue<string> ConnectionString 
+    {
+        get { Initialize(); return _connectionString!; }
+        set { Initialize(); _connectionString!.Assign(value); }
+    }
+    private BicepValue<string>? _connectionString;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The region of the database resource.
     /// </summary>
-    public BicepValue<string> Region { get => _region; set => _region.Assign(value); }
-    private readonly BicepValue<string> _region;
+    public BicepValue<string> Region 
+    {
+        get { Initialize(); return _region!; }
+        set { Initialize(); _region!.Assign(value); }
+    }
+    private BicepValue<string>? _region;
 
     /// <summary>
     /// The resource id of the database.
     /// </summary>
-    public BicepValue<ResourceIdentifier> ResourceId { get => _resourceId; set => _resourceId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _resourceId;
+    public BicepValue<ResourceIdentifier> ResourceId 
+    {
+        get { Initialize(); return _resourceId!; }
+        set { Initialize(); _resourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
     /// A list of configuration files associated with this database connection.
     /// </summary>
-    public BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get => _configurationFiles; }
-    private readonly BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview> _configurationFiles;
+    public BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles 
+    {
+        get { Initialize(); return _configurationFiles!; }
+    }
+    private BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview>? _configurationFiles;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StaticSite.
     /// </summary>
-    public StaticSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StaticSite> _parent;
+    public StaticSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
     /// Creates a new StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteDatabaseConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public StaticSiteDatabaseConnection(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2020-06-01", context)
+    public StaticSiteDatabaseConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/databaseConnections", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionIdentity = BicepValue<string>.DefineProperty(this, "ConnectionIdentity", ["properties", "connectionIdentity"]);
-        _connectionString = BicepValue<string>.DefineProperty(this, "ConnectionString", ["properties", "connectionString"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _region = BicepValue<string>.DefineProperty(this, "Region", ["properties", "region"]);
-        _resourceId = BicepValue<ResourceIdentifier>.DefineProperty(this, "ResourceId", ["properties", "resourceId"]);
-        _configurationFiles = BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview>.DefineProperty(this, "ConfigurationFiles", ["properties", "configurationFiles"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StaticSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StaticSiteDatabaseConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionIdentity = DefineProperty<string>("ConnectionIdentity", ["properties", "connectionIdentity"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["properties", "connectionString"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _region = DefineProperty<string>("Region", ["properties", "region"]);
+        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["properties", "resourceId"]);
+        _configurationFiles = DefineListProperty<StaticSiteDatabaseConnectionConfigurationFileOverview>("ConfigurationFiles", ["properties", "configurationFiles"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StaticSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -108,6 +156,11 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2023-12-01.
         /// </summary>
@@ -177,9 +230,14 @@ public partial class StaticSiteDatabaseConnection : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSiteDatabaseConnection.
     /// </summary>
-    /// <param name="resourceName">Name of the StaticSiteDatabaseConnection.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the StaticSiteDatabaseConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteDatabaseConnection.</param>
     /// <returns>The existing StaticSiteDatabaseConnection resource.</returns>
-    public static StaticSiteDatabaseConnection FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static StaticSiteDatabaseConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

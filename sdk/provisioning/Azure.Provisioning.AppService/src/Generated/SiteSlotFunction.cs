@@ -16,13 +16,17 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SiteSlotFunction.
 /// </summary>
-public partial class SiteSlotFunction : Resource
+public partial class SiteSlotFunction : ProvisionableResource
 {
     /// <summary>
     /// Function name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Config information.                          To assign an object to
@@ -40,140 +44,383 @@ public partial class SiteSlotFunction : Resource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Config { get => _config; set => _config.Assign(value); }
-    private readonly BicepValue<BinaryData> _config;
+    public BicepValue<BinaryData> Config 
+    {
+        get { Initialize(); return _config!; }
+        set { Initialize(); _config!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _config;
 
     /// <summary>
     /// Config URI.
     /// </summary>
-    public BicepValue<string> ConfigHref { get => _configHref; set => _configHref.Assign(value); }
-    private readonly BicepValue<string> _configHref;
+    public BicepValue<string> ConfigHref 
+    {
+        get { Initialize(); return _configHref!; }
+        set { Initialize(); _configHref!.Assign(value); }
+    }
+    private BicepValue<string>? _configHref;
 
     /// <summary>
     /// File list.
     /// </summary>
-    public BicepDictionary<string> Files { get => _files; set => _files.Assign(value); }
-    private readonly BicepDictionary<string> _files;
+    public BicepDictionary<string> Files 
+    {
+        get { Initialize(); return _files!; }
+        set { Initialize(); _files!.Assign(value); }
+    }
+    private BicepDictionary<string>? _files;
 
     /// <summary>
     /// Function App ID.
     /// </summary>
-    public BicepValue<string> FunctionAppId { get => _functionAppId; set => _functionAppId.Assign(value); }
-    private readonly BicepValue<string> _functionAppId;
+    public BicepValue<string> FunctionAppId 
+    {
+        get { Initialize(); return _functionAppId!; }
+        set { Initialize(); _functionAppId!.Assign(value); }
+    }
+    private BicepValue<string>? _functionAppId;
 
     /// <summary>
     /// Function URI.
     /// </summary>
-    public BicepValue<string> Href { get => _href; set => _href.Assign(value); }
-    private readonly BicepValue<string> _href;
+    public BicepValue<string> Href 
+    {
+        get { Initialize(); return _href!; }
+        set { Initialize(); _href!.Assign(value); }
+    }
+    private BicepValue<string>? _href;
 
     /// <summary>
     /// The invocation URL.
     /// </summary>
-    public BicepValue<string> InvokeUrlTemplate { get => _invokeUrlTemplate; set => _invokeUrlTemplate.Assign(value); }
-    private readonly BicepValue<string> _invokeUrlTemplate;
+    public BicepValue<string> InvokeUrlTemplate 
+    {
+        get { Initialize(); return _invokeUrlTemplate!; }
+        set { Initialize(); _invokeUrlTemplate!.Assign(value); }
+    }
+    private BicepValue<string>? _invokeUrlTemplate;
 
     /// <summary>
     /// Gets or sets a value indicating whether the function is disabled.
     /// </summary>
-    public BicepValue<bool> IsDisabled { get => _isDisabled; set => _isDisabled.Assign(value); }
-    private readonly BicepValue<bool> _isDisabled;
+    public BicepValue<bool> IsDisabled 
+    {
+        get { Initialize(); return _isDisabled!; }
+        set { Initialize(); _isDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDisabled;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The function language.
     /// </summary>
-    public BicepValue<string> Language { get => _language; set => _language.Assign(value); }
-    private readonly BicepValue<string> _language;
+    public BicepValue<string> Language 
+    {
+        get { Initialize(); return _language!; }
+        set { Initialize(); _language!.Assign(value); }
+    }
+    private BicepValue<string>? _language;
 
     /// <summary>
     /// Script URI.
     /// </summary>
-    public BicepValue<string> ScriptHref { get => _scriptHref; set => _scriptHref.Assign(value); }
-    private readonly BicepValue<string> _scriptHref;
+    public BicepValue<string> ScriptHref 
+    {
+        get { Initialize(); return _scriptHref!; }
+        set { Initialize(); _scriptHref!.Assign(value); }
+    }
+    private BicepValue<string>? _scriptHref;
 
     /// <summary>
     /// Script root path URI.
     /// </summary>
-    public BicepValue<string> ScriptRootPathHref { get => _scriptRootPathHref; set => _scriptRootPathHref.Assign(value); }
-    private readonly BicepValue<string> _scriptRootPathHref;
+    public BicepValue<string> ScriptRootPathHref 
+    {
+        get { Initialize(); return _scriptRootPathHref!; }
+        set { Initialize(); _scriptRootPathHref!.Assign(value); }
+    }
+    private BicepValue<string>? _scriptRootPathHref;
 
     /// <summary>
     /// Secrets file URI.
     /// </summary>
-    public BicepValue<string> SecretsFileHref { get => _secretsFileHref; set => _secretsFileHref.Assign(value); }
-    private readonly BicepValue<string> _secretsFileHref;
+    public BicepValue<string> SecretsFileHref 
+    {
+        get { Initialize(); return _secretsFileHref!; }
+        set { Initialize(); _secretsFileHref!.Assign(value); }
+    }
+    private BicepValue<string>? _secretsFileHref;
 
     /// <summary>
     /// Test data used when testing via the Azure Portal.
     /// </summary>
-    public BicepValue<string> TestData { get => _testData; set => _testData.Assign(value); }
-    private readonly BicepValue<string> _testData;
+    public BicepValue<string> TestData 
+    {
+        get { Initialize(); return _testData!; }
+        set { Initialize(); _testData!.Assign(value); }
+    }
+    private BicepValue<string>? _testData;
 
     /// <summary>
     /// Test data URI.
     /// </summary>
-    public BicepValue<string> TestDataHref { get => _testDataHref; set => _testDataHref.Assign(value); }
-    private readonly BicepValue<string> _testDataHref;
+    public BicepValue<string> TestDataHref 
+    {
+        get { Initialize(); return _testDataHref!; }
+        set { Initialize(); _testDataHref!.Assign(value); }
+    }
+    private BicepValue<string>? _testDataHref;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSiteSlot.
     /// </summary>
-    public WebSiteSlot? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSiteSlot> _parent;
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
 
     /// <summary>
     /// Creates a new SiteSlotFunction.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotFunction.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotFunction resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotFunction.</param>
-    /// <param name="context">Provisioning context for this resource.</param>
-    public SiteSlotFunction(string resourceName, string? resourceVersion = default, ProvisioningContext? context = default)
-        : base(resourceName, "Microsoft.Web/sites/slots/functions", resourceVersion, context)
+    public SiteSlotFunction(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/functions", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _config = BicepValue<BinaryData>.DefineProperty(this, "Config", ["properties", "config"]);
-        _configHref = BicepValue<string>.DefineProperty(this, "ConfigHref", ["properties", "config_href"]);
-        _files = BicepDictionary<string>.DefineProperty(this, "Files", ["properties", "files"]);
-        _functionAppId = BicepValue<string>.DefineProperty(this, "FunctionAppId", ["properties", "function_app_id"]);
-        _href = BicepValue<string>.DefineProperty(this, "Href", ["properties", "href"]);
-        _invokeUrlTemplate = BicepValue<string>.DefineProperty(this, "InvokeUrlTemplate", ["properties", "invoke_url_template"]);
-        _isDisabled = BicepValue<bool>.DefineProperty(this, "IsDisabled", ["properties", "isDisabled"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _language = BicepValue<string>.DefineProperty(this, "Language", ["properties", "language"]);
-        _scriptHref = BicepValue<string>.DefineProperty(this, "ScriptHref", ["properties", "script_href"]);
-        _scriptRootPathHref = BicepValue<string>.DefineProperty(this, "ScriptRootPathHref", ["properties", "script_root_path_href"]);
-        _secretsFileHref = BicepValue<string>.DefineProperty(this, "SecretsFileHref", ["properties", "secrets_file_href"]);
-        _testData = BicepValue<string>.DefineProperty(this, "TestData", ["properties", "test_data"]);
-        _testDataHref = BicepValue<string>.DefineProperty(this, "TestDataHref", ["properties", "test_data_href"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSiteSlot>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SiteSlotFunction.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _config = DefineProperty<BinaryData>("Config", ["properties", "config"]);
+        _configHref = DefineProperty<string>("ConfigHref", ["properties", "config_href"]);
+        _files = DefineDictionaryProperty<string>("Files", ["properties", "files"]);
+        _functionAppId = DefineProperty<string>("FunctionAppId", ["properties", "function_app_id"]);
+        _href = DefineProperty<string>("Href", ["properties", "href"]);
+        _invokeUrlTemplate = DefineProperty<string>("InvokeUrlTemplate", ["properties", "invoke_url_template"]);
+        _isDisabled = DefineProperty<bool>("IsDisabled", ["properties", "isDisabled"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _language = DefineProperty<string>("Language", ["properties", "language"]);
+        _scriptHref = DefineProperty<string>("ScriptHref", ["properties", "script_href"]);
+        _scriptRootPathHref = DefineProperty<string>("ScriptRootPathHref", ["properties", "script_root_path_href"]);
+        _secretsFileHref = DefineProperty<string>("SecretsFileHref", ["properties", "secrets_file_href"]);
+        _testData = DefineProperty<string>("TestData", ["properties", "test_data"]);
+        _testDataHref = DefineProperty<string>("TestDataHref", ["properties", "test_data_href"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported SiteSlotFunction resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
+        /// <summary>
+        /// 2023-12-01.
+        /// </summary>
+        public static readonly string V2023_12_01 = "2023-12-01";
+
+        /// <summary>
+        /// 2023-01-01.
+        /// </summary>
+        public static readonly string V2023_01_01 = "2023-01-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-03-01.
+        /// </summary>
+        public static readonly string V2022_03_01 = "2022-03-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-15.
+        /// </summary>
+        public static readonly string V2021_01_15 = "2021-01-15";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-12-01.
+        /// </summary>
+        public static readonly string V2020_12_01 = "2020-12-01";
+
+        /// <summary>
+        /// 2020-10-01.
+        /// </summary>
+        public static readonly string V2020_10_01 = "2020-10-01";
+
+        /// <summary>
+        /// 2020-09-01.
+        /// </summary>
+        public static readonly string V2020_09_01 = "2020-09-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-08-01.
+        /// </summary>
+        public static readonly string V2016_08_01 = "2016-08-01";
+
+        /// <summary>
+        /// 2016-03-01.
+        /// </summary>
+        public static readonly string V2016_03_01 = "2016-03-01";
+
+        /// <summary>
+        /// 2015-11-01.
+        /// </summary>
+        public static readonly string V2015_11_01 = "2015-11-01";
+
+        /// <summary>
+        /// 2015-08-01.
+        /// </summary>
+        public static readonly string V2015_08_01 = "2015-08-01";
+
+        /// <summary>
+        /// 2015-07-01.
+        /// </summary>
+        public static readonly string V2015_07_01 = "2015-07-01";
+
+        /// <summary>
+        /// 2015-06-01.
+        /// </summary>
+        public static readonly string V2015_06_01 = "2015-06-01";
+
+        /// <summary>
+        /// 2015-05-01.
+        /// </summary>
+        public static readonly string V2015_05_01 = "2015-05-01";
+
+        /// <summary>
+        /// 2015-04-01.
+        /// </summary>
+        public static readonly string V2015_04_01 = "2015-04-01";
+
+        /// <summary>
+        /// 2015-02-01.
+        /// </summary>
+        public static readonly string V2015_02_01 = "2015-02-01";
+
+        /// <summary>
+        /// 2015-01-01.
+        /// </summary>
+        public static readonly string V2015_01_01 = "2015-01-01";
+
+        /// <summary>
+        /// 2014-11-01.
+        /// </summary>
+        public static readonly string V2014_11_01 = "2014-11-01";
+
+        /// <summary>
+        /// 2014-06-01.
+        /// </summary>
+        public static readonly string V2014_06_01 = "2014-06-01";
+
+        /// <summary>
+        /// 2014-04-01.
+        /// </summary>
+        public static readonly string V2014_04_01 = "2014-04-01";
     }
 
     /// <summary>
     /// Creates a reference to an existing SiteSlotFunction.
     /// </summary>
-    /// <param name="resourceName">Name of the SiteSlotFunction.</param>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the SiteSlotFunction resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
     /// <param name="resourceVersion">Version of the SiteSlotFunction.</param>
     /// <returns>The existing SiteSlotFunction resource.</returns>
-    public static SiteSlotFunction FromExisting(string resourceName, string? resourceVersion = default) =>
-        new(resourceName, resourceVersion) { IsExistingResource = true };
+    public static SiteSlotFunction FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

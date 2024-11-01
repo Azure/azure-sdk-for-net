@@ -9,6 +9,7 @@ using System.Threading;
 using System.Buffers;
 using Azure.Storage.Shared;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -23,7 +24,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
+        private StreamToUriJobPart(TransferJobInternal job, int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -49,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private StreamToUriJobPart(
-            StreamToUriTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -81,7 +82,7 @@ namespace Azure.Storage.DataMovement
         /// Creating transfer job based on a checkpoint file.
         /// </summary>
         private StreamToUriJobPart(
-            StreamToUriTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -120,8 +121,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a single transfer.
         /// </summary>
-        public static async Task<StreamToUriJobPart> CreateJobPartAsync(
-            StreamToUriTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
@@ -133,20 +134,21 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
-        public static async Task<StreamToUriJobPart> CreateJobPartAsync(
-            StreamToUriTransferJob job,
+        public static async Task<JobPartInternal> CreateJobPartAsync(
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            long? length = default)
+            StorageResourceItem destinationResource)
         {
+            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
+            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+
             // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
                 partNumber: partNumber,
                 sourceResource: sourceResource,
-                destinationResource: destinationResource,
-                length: length);
+                destinationResource: destinationResource);
             await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
@@ -155,7 +157,7 @@ namespace Azure.Storage.DataMovement
         /// Called when creating a job part from a checkpoint file on resume.
         /// </summary>
         public static StreamToUriJobPart CreateJobPartFromCheckpoint(
-            StreamToUriTransferJob job,
+            TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
@@ -304,8 +306,9 @@ namespace Azure.Storage.DataMovement
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                using Stream stream = result.Content;
-                await _destinationResource.CopyFromStreamAsync(
+                using (Stream stream = result.Content)
+                {
+                    await _destinationResource.CopyFromStreamAsync(
                         stream: stream,
                         overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                         streamLength: blockSize,
@@ -315,6 +318,7 @@ namespace Azure.Storage.DataMovement
                             SourceProperties = sourceProperties
                         },
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
+                }
 
                 // Report bytes written before completion
                 ReportBytesWritten(blockSize);
@@ -324,19 +328,19 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                Stream slicedStream = Stream.Null;
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     position: 0,
                     length: blockSize,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                using (Stream stream = result.Content)
+
+                using (Stream contentStream = result.Content)
+                using (Stream slicedStream = await GetOffsetPartitionInternal(
+                    contentStream,
+                    0L,
+                    blockSize,
+                    UploadArrayPool,
+                    _cancellationToken).ConfigureAwait(false))
                 {
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        0L,
-                        blockSize,
-                        UploadArrayPool,
-                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockSize,
@@ -390,19 +394,19 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
-                Stream slicedStream = Stream.Null;
                 StorageResourceReadStreamResult result = await _sourceResource.ReadStreamAsync(
                     position: offset,
                     length: blockLength,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
-                using (Stream stream = result.Content)
+
+                using (Stream contentStream = result.Content)
+                using (Stream slicedStream = await GetOffsetPartitionInternal(
+                    contentStream,
+                    offset,
+                    blockLength,
+                    UploadArrayPool,
+                    _cancellationToken).ConfigureAwait(false))
                 {
-                    slicedStream = await GetOffsetPartitionInternal(
-                        stream,
-                        offset,
-                        blockLength,
-                        UploadArrayPool,
-                        _cancellationToken).ConfigureAwait(false);
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockLength,

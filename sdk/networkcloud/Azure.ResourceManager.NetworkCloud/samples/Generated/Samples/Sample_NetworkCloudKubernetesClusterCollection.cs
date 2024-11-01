@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string kubernetesClusterName = "kubernetesClusterName";
-            NetworkCloudKubernetesClusterData data = new NetworkCloudKubernetesClusterData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), new ControlPlaneNodeConfiguration(3, "NC_G4_v1")
+            NetworkCloudKubernetesClusterData data = new NetworkCloudKubernetesClusterData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), new ControlPlaneNodeConfiguration(3L, "NC_G4_v1")
             {
                 AdministratorConfiguration = new AdministratorConfiguration()
                 {
@@ -200,7 +200,7 @@ new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHT
 },
             }, new InitialAgentPoolConfiguration[]
             {
-new InitialAgentPoolConfiguration(3,NetworkCloudAgentPoolMode.System,"SystemPool-1","NC_M16_v1")
+new InitialAgentPoolConfiguration(3L,NetworkCloudAgentPoolMode.System,"SystemPool-1","NC_M16_v1")
 {
 AdministratorConfiguration = new AdministratorConfiguration()
 {
@@ -210,7 +210,7 @@ SshPublicKeys =
 new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm")
 },
 },
-AgentOptions = new NetworkCloudAgentConfiguration(96)
+AgentOptions = new NetworkCloudAgentConfiguration(96L)
 {
 HugepagesSize = HugepagesSize.OneG,
 },
@@ -302,14 +302,14 @@ Peers =
             },
                     BgpPeers =
             {
-new ServiceLoadBalancerBgpPeer("peer1","203.0.113.254",64497)
+new ServiceLoadBalancerBgpPeer("peer1","203.0.113.254",64497L)
 {
 BfdEnabled = BfdEnabled.False,
 BgpMultiHop = BgpMultiHop.False,
 HoldTime = "P300s",
 KeepAliveTime = "P300s",
-MyAsn = 64512,
-PeerPort = 179,
+MyAsn = 64512L,
+PeerPort = 179L,
 }
             },
                     FabricPeeringEnabled = FabricPeeringEnabled.True,

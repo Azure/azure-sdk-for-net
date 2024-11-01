@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(LastAccessTimeTrackingPolicyName left, LastAccessTimeTrackingPolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LastAccessTimeTrackingPolicyName"/> values are not the same. </summary>
         public static bool operator !=(LastAccessTimeTrackingPolicyName left, LastAccessTimeTrackingPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
         public static implicit operator LastAccessTimeTrackingPolicyName(string value) => new LastAccessTimeTrackingPolicyName(value);
 
         /// <inheritdoc />

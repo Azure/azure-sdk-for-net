@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static bool operator ==(IngestionSourceType left, IngestionSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IngestionSourceType"/> values are not the same. </summary>
         public static bool operator !=(IngestionSourceType left, IngestionSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IngestionSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IngestionSourceType"/>. </summary>
         public static implicit operator IngestionSourceType(string value) => new IngestionSourceType(value);
 
         /// <inheritdoc />

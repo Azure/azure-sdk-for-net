@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SalesforceSourceReadBehavior left, SalesforceSourceReadBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SalesforceSourceReadBehavior"/> values are not the same. </summary>
         public static bool operator !=(SalesforceSourceReadBehavior left, SalesforceSourceReadBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SalesforceSourceReadBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SalesforceSourceReadBehavior"/>. </summary>
         public static implicit operator SalesforceSourceReadBehavior(string value) => new SalesforceSourceReadBehavior(value);
 
         /// <inheritdoc />

@@ -1189,7 +1189,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 },
                 CreateMode = SqlDatabaseCreateMode.Default,
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
-                MaxSizeBytes = 1073741824,
+                MaxSizeBytes = 1073741824L,
                 AvailabilityZone = SqlAvailabilityZoneType.One,
             };
             ArmOperation<SqlDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 },
                 CreateMode = SqlDatabaseCreateMode.Default,
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
-                MaxSizeBytes = 1073741824,
+                MaxSizeBytes = 1073741824L,
                 Keys =
 {
 ["https://your-key-vault-name.vault.azure.net/yourKey/yourKeyVersion"] = new SqlDatabaseKey(),
@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 },
                 CreateMode = SqlDatabaseCreateMode.Default,
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
-                MaxSizeBytes = 1073741824,
+                MaxSizeBytes = 1073741824L,
             };
             ArmOperation<SqlDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
             SqlDatabaseResource result = lro.Value;
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 },
                 CreateMode = SqlDatabaseCreateMode.Default,
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
-                MaxSizeBytes = 1073741824,
+                MaxSizeBytes = 1073741824L,
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_SouthEastAsia_1"),
             };
             ArmOperation<SqlDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
