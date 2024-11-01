@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
+
 using System;
 using Azure.Core;
 using Azure.Storage.Stress;
-using Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;

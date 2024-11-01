@@ -1,15 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Stress;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Blobs.Tests;
+using Azure.Storage.DataMovement.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
@@ -35,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             while (!cancellationToken.IsCancellationRequested)
             {
                 string destinationContainerName = TestSetupHelper.Randomize("container");
-                DisposingContainer dipsosingContainer = new(_blobServiceClient.GetBlobContainerClient(destinationContainerName));
+                DisposingBlobContainer dipsosingContainer = new(_blobServiceClient.GetBlobContainerClient(destinationContainerName));
                 try
                 {
                     // Create test local directory

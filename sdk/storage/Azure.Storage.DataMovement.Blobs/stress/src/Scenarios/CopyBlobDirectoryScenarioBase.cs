@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Tests;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.DataMovement.Blobs.Tests;
 using Azure.Storage.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
@@ -40,9 +42,9 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             while (!cancellationToken.IsCancellationRequested)
             {
                 string sourceContainerName = TestSetupHelper.Randomize("container");
-                DisposingContainer sourceDisposingContainer = new(_sourceServiceClient.GetBlobContainerClient(sourceContainerName));
+                DisposingBlobContainer sourceDisposingContainer = new(_sourceServiceClient.GetBlobContainerClient(sourceContainerName));
                 string destinationContainerName = TestSetupHelper.Randomize("container");
-                DisposingContainer destinationDisposingContainer = new(_blobServiceClient.GetBlobContainerClient(destinationContainerName));
+                DisposingBlobContainer destinationDisposingContainer = new(_blobServiceClient.GetBlobContainerClient(destinationContainerName));
                 try
                 {
                     string pathPrefix = TestSetupHelper.Randomize("dir");
@@ -78,7 +80,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     }.TransferAndVerifyAsync(
                         sourceResource,
                         destinationResource,
-                        TransferValidator.Get(sourceContainerClient, pathPrefix),
+                        TransferValidator.GetBlobLister(sourceContainerClient, pathPrefix),
                         TransferValidator.GetBlobLister(destinationContainerClient, pathPrefix),
                         _blobCount,
                         _dataTransferOptions,

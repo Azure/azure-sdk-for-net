@@ -55,9 +55,6 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.Local.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestConstants.cs" LinkBase="Shared\DataMovement" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Resources\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
