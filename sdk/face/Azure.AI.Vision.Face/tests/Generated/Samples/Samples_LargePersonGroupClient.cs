@@ -21,7 +21,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_Create_CreateLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -40,7 +40,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_Create_CreateLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_Create_CreateLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_Create_CreateLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_Delete_DeleteLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -94,7 +94,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_Delete_DeleteLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -107,7 +107,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetLargePersonGroup_GetLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -122,7 +122,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetLargePersonGroup_GetLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -137,7 +137,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetLargePersonGroup_GetLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -148,7 +148,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetLargePersonGroup_GetLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -159,7 +159,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_Update_UpdateLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -177,7 +177,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_Update_UpdateLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -195,7 +195,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetLargePersonGroups_GetLargePersonGroups()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
@@ -210,7 +210,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetLargePersonGroups_GetLargePersonGroups_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
@@ -225,7 +225,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetLargePersonGroups_GetLargePersonGroups_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
@@ -236,7 +236,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetLargePersonGroups_GetLargePersonGroups_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient(null);
 
@@ -247,7 +247,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetTrainingStatus_GetTrainingStatusOfLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -264,7 +264,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetTrainingStatus_GetTrainingStatusOfLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -281,7 +281,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_GetTrainingStatus_GetTrainingStatusOfLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -292,7 +292,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_GetTrainingStatus_GetTrainingStatusOfLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -303,7 +303,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_CreatePerson_CreatePersonInLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -322,7 +322,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_CreatePerson_CreatePersonInLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -341,7 +341,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_CreatePerson_CreatePersonInLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -352,7 +352,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_CreatePerson_CreatePersonInLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -363,7 +363,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_DeletePerson_DeletePersonFromLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -376,7 +376,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_DeletePerson_DeletePersonFromLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -389,7 +389,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_GetPerson_GetPersonFromLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -404,7 +404,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_GetPerson_GetPersonFromLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -419,7 +419,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_GetPerson_GetPersonFromLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -430,7 +430,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_GetPerson_GetPersonFromLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -441,7 +441,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_UpdatePerson_UpdatePersonInLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -459,7 +459,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_UpdatePerson_UpdatePersonInLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -477,7 +477,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_GetPersons_GetPersonsFromLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -492,7 +492,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_GetPersons_GetPersonsFromLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -507,7 +507,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPerson_GetPersons_GetPersonsFromLargePersonGroup_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -518,7 +518,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPerson_GetPersons_GetPersonsFromLargePersonGroup_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -529,7 +529,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPersonFace_DeleteFace_DeleteFaceFromLargePersonGroupPerson()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -542,7 +542,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPersonFace_DeleteFace_DeleteFaceFromLargePersonGroupPerson_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -555,7 +555,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPersonFace_GetFace_GetFaceFromLargePersonGroupPerson()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -569,7 +569,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPersonFace_GetFace_GetFaceFromLargePersonGroupPerson_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -583,7 +583,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPersonFace_GetFace_GetFaceFromLargePersonGroupPerson_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -594,7 +594,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPersonFace_GetFace_GetFaceFromLargePersonGroupPerson_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -605,7 +605,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroupPersonFace_UpdateFace_UpdateFaceInLargePersonGroupPerson()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -622,7 +622,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroupPersonFace_UpdateFace_UpdateFaceInLargePersonGroupPerson_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -639,7 +639,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_LargePersonGroup_Train_TrainLargePersonGroup()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 
@@ -650,7 +650,7 @@ namespace Azure.AI.Vision.Face.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_LargePersonGroup_Train_TrainLargePersonGroup_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             LargePersonGroupClient client = new FaceAdministrationClient(endpoint, credential).GetLargePersonGroupClient("your_large_person_group_id");
 

@@ -20,7 +20,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_GetJob_GetADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -41,7 +41,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -62,7 +62,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -73,7 +73,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_GetJob_GetADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidServices_CancelJob_CancelADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -105,7 +105,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidServices_CancelJob_CancelADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -126,7 +126,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidServices_CancelJob_CancelADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -137,7 +137,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidServices_CancelJob_CancelADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -148,7 +148,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_DeleteJob_DeleteADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -161,7 +161,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_DeleteJob_DeleteADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidServices_Deidentify_DeIdentifyText()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -195,7 +195,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidServices_Deidentify_DeIdentifyText_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -216,7 +216,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidServices_Deidentify_DeIdentifyText_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -233,7 +233,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidServices_Deidentify_DeIdentifyText_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -250,7 +250,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_GetJobs_ListDeIdentificationJobs()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -272,7 +272,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_GetJobs_ListDeIdentificationJobs_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -294,7 +294,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_GetJobs_ListDeIdentificationJobs_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -307,7 +307,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_GetJobs_ListDeIdentificationJobs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -320,7 +320,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -338,7 +338,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -356,7 +356,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -369,7 +369,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -382,7 +382,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_CreateJob_CreateADeIdentificationJob()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -425,7 +425,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_CreateJob_CreateADeIdentificationJob_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -468,7 +468,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeidentificationJob_CreateJob_CreateADeIdentificationJob_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
@@ -489,7 +489,7 @@ namespace Azure.Health.Deidentification.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeidentificationJob_CreateJob_CreateADeIdentificationJob_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
