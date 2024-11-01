@@ -5,14 +5,14 @@
       <example>
 This sample shows how to call GetSupportedLanguagesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
 ]]></code>
 This sample shows how to call GetSupportedLanguagesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
@@ -22,14 +22,14 @@ Response<GetSupportedLanguagesResult> response = await client.GetSupportedLangua
       <example>
 This sample shows how to call GetSupportedLanguages.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
 ]]></code>
 This sample shows how to call GetSupportedLanguages.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
@@ -39,7 +39,7 @@ Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
       <example>
 This sample shows how to call GetSupportedLanguagesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response response = await client.GetSupportedLanguagesAsync("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
@@ -49,7 +49,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSupportedLanguagesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response response = await client.GetSupportedLanguagesAsync(null, null, null, null, null);
@@ -62,7 +62,7 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetSupportedLanguages and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response response = client.GetSupportedLanguages("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
@@ -72,7 +72,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetSupportedLanguages and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TextTranslationClient client = new TextTranslationClient(endpoint);
 
 Response response = client.GetSupportedLanguages(null, null, null, null, null);

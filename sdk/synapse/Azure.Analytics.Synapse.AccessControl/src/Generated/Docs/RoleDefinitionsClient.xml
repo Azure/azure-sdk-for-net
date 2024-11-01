@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetRoleDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetRoleDefinitionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -39,7 +39,7 @@ Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
       <example>
 This sample shows how to call GetRoleDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -50,7 +50,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetRoleDefinitions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -73,7 +73,7 @@ Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
       <example>
 This sample shows how to call GetRoleDefinitionByIdAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -84,7 +84,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleDefinitionByIdAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -107,7 +107,7 @@ Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
       <example>
 This sample shows how to call GetRoleDefinitionById and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -118,7 +118,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetRoleDefinitionById with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -141,7 +141,7 @@ Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
       <example>
 This sample shows how to call GetScopesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -152,7 +152,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetScopesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -166,7 +166,7 @@ Console.WriteLine(result[0].ToString());
       <example>
 This sample shows how to call GetScopes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
@@ -177,7 +177,7 @@ Console.WriteLine(result[0].ToString());
 ]]></code>
 This sample shows how to call GetScopes with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 

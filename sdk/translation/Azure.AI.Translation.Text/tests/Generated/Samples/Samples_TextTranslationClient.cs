@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = client.GetSupportedLanguages("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = await client.GetSupportedLanguagesAsync("kayfnugjec", "translation,transliteration,dictionary", "en", new ETag("fpnhruttllvc"), null);
@@ -45,7 +45,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
@@ -55,7 +55,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslator_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
@@ -65,7 +65,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = client.GetSupportedLanguages(null, null, null, null, null);
@@ -78,7 +78,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response response = await client.GetSupportedLanguagesAsync(null, null, null, null, null);
@@ -91,7 +91,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
@@ -101,7 +101,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextTranslation_GetSupportedLanguages_GetsTheSetOfLanguagesCurrentlySupportedByOtherOperationsOfTheTranslatorWithMinimumProperties_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TextTranslationClient client = new TextTranslationClient(endpoint);
 
             Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
