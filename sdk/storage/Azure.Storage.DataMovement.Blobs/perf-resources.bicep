@@ -6,7 +6,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   location: location
   kind: 'StorageV2'
   sku: {
-    name: 'Premium_LRS'
+    name: 'Standard_LRS'
   }
 }
 

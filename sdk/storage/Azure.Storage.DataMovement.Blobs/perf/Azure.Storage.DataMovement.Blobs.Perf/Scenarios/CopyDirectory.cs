@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -26,8 +27,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         public override async Task GlobalCleanupAsync()
         {
-            await _sourceContainer.DeleteIfExistsAsync();
-            await _destinationContainer.DeleteIfExistsAsync();
+            if (_sourceContainer != null)
+            {
+                await _sourceContainer.DeleteIfExistsAsync();
+            }
+            if (_destinationContainer != null)
+            {
+                await _destinationContainer.DeleteIfExistsAsync();
+            }
             await base.GlobalCleanupAsync();
         }
 
