@@ -13,27 +13,27 @@ using System.Text.Json;
 namespace OpenAI.Chat;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
-public class ChatFunctions
+public class ChatTools
 {
     private static readonly BinaryData s_noparams = BinaryData.FromString("""{ "type" : "object", "properties" : {} }""");
 
     private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
-    private readonly List<ToolDefinition> _definitions = new List<ToolDefinition>();
+    private readonly List<ChatTool> _definitions = new List<ChatTool>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChatFunctions"/> class.
+    /// Initializes a new instance of the <see cref="ChatTools"/> class.
     /// </summary>
-    /// <param name="functions"></param>
-    public ChatFunctions(params Type[] functions)
+    /// <param name="tools"></param>
+    public ChatTools(params Type[] tools)
     {
-        foreach (var functionHolder in functions)
+        foreach (var functionHolder in tools)
             Add(functionHolder);
     }
 
     /// <summary>
     /// Gets the tool definitions.
     /// </summary>
-    public IList<ToolDefinition> Definitions => _definitions;
+    public IList<ChatTool> Definitions => _definitions;
 
     /// <summary>
     /// Adds a set of functions to the chat functions.
@@ -53,12 +53,9 @@ public class ChatFunctions
     /// <param name="function"></param>
     public void Add(MethodInfo function)
     {
-        var name = GetMethodInfoToName(function);
-        var tool = new FunctionToolDefinition(name);
-        tool.Parameters = ParametersToJson(function.GetParameters());
-        tool.Description = GetMethodInfoToDescription(function);
-
-        _definitions.Add(tool);
+        var name = function.Name;
+        var chatTool = ChatTool.CreateFunctionTool(name, GetMethodInfoToDescription(function), ParametersToJson(function.GetParameters()));
+        _definitions.Add(chatTool);
         _methods[name] = function;
     }
 
@@ -233,7 +230,8 @@ public class ChatFunctions
             writer.WriteString("type"u8, ClrToJsonTypeUtf8(parameter.ParameterType));
             writer.WriteString("description"u8, GetParameterInfoToDescription(parameter));
             writer.WriteEndObject();
-            required.Add(parameter.Name!);
+            if (!parameter.IsOptional || (parameter.HasDefaultValue && parameter.DefaultValue is not null))
+                required.Add(parameter.Name!);
         }
         writer.WriteEndObject(); // properties
         writer.WriteStartArray("required");

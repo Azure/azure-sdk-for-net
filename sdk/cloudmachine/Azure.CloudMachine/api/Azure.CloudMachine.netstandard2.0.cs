@@ -110,3 +110,54 @@ namespace Azure.Core
         public abstract Azure.Core.ClientConnectionOptions GetConnectionOptions(System.Type clientType, string instanceId = null);
     }
 }
+namespace OpenAI.Chat
+{
+    public partial class ChatTools
+    {
+        public ChatTools(params System.Type[] tools) { }
+        public System.Collections.Generic.IList<OpenAI.Chat.ChatTool> Definitions { get { throw null; } }
+        public void Add(System.Reflection.MethodInfo function) { }
+        public void Add(System.Type functions) { }
+        public string Call(OpenAI.Chat.ChatToolCall call) { throw null; }
+        public string Call(string name, object[] arguments) { throw null; }
+        public System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> CallAll(System.Collections.Generic.IEnumerable<OpenAI.Chat.ChatToolCall> toolCalls) { throw null; }
+        protected string ClrToJsonTypeUtf16(System.Type clrType) { throw null; }
+        protected System.ReadOnlySpan<byte> ClrToJsonTypeUtf8(System.Type clrType) { throw null; }
+        protected virtual string GetMethodInfoToDescription(System.Reflection.MethodInfo function) { throw null; }
+        protected virtual string GetMethodInfoToName(System.Reflection.MethodInfo function) { throw null; }
+        protected virtual string GetParameterInfoToDescription(System.Reflection.ParameterInfo parameter) { throw null; }
+    }
+}
+namespace OpenAI.Embeddings
+{
+    public partial class EmbeddingsVectorbase
+    {
+        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, OpenAI.Embeddings.VectorbaseStore store = null, int factChunkSize = 0) { }
+        public void Add(string text) { }
+        public System.Collections.Generic.IEnumerable<OpenAI.Embeddings.VectorbaseEntry> Find(string text, OpenAI.Embeddings.FindOptions options = null) { throw null; }
+    }
+    public partial class FindOptions
+    {
+        public FindOptions() { }
+        public int MaxEntries { get { throw null; } set { } }
+        public float Threshold { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VectorbaseEntry
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VectorbaseEntry(System.ReadOnlyMemory<float> vector, System.BinaryData data, int? id = default(int?)) { throw null; }
+        public System.BinaryData Data { get { throw null; } }
+        public int? Id { get { throw null; } }
+        public System.ReadOnlyMemory<float> Vector { get { throw null; } }
+    }
+    public abstract partial class VectorbaseStore
+    {
+        protected VectorbaseStore() { }
+        public abstract int Add(OpenAI.Embeddings.VectorbaseEntry entry);
+        public abstract void Add(System.Collections.Generic.IReadOnlyList<OpenAI.Embeddings.VectorbaseEntry> entry);
+        public static float CosineSimilarity(System.ReadOnlySpan<float> x, System.ReadOnlySpan<float> y) { throw null; }
+        public abstract System.Collections.Generic.IEnumerable<OpenAI.Embeddings.VectorbaseEntry> Find(System.ReadOnlyMemory<float> vector, OpenAI.Embeddings.FindOptions options);
+    }
+}

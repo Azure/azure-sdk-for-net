@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.Embeddings;
 using System.Collections.Generic;
 using System;
 
@@ -14,18 +13,20 @@ public class EmbeddingsVectorbase
 {
     private readonly EmbeddingClient _client;
     private readonly VectorbaseStore _store;
-
     private readonly List<string> _todo = new List<string>();
+    private readonly int _chuckSize;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmbeddingsVectorbase"/> class.
     /// </summary>
     /// <param name="client"></param>
     /// <param name="store"></param>
-    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore store = default)
+    /// <param name="factChunkSize"></param>
+    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore store = default, int factChunkSize = 0)
     {
         _client = client;
         _store = store ?? new MemoryVectorbaseStore();
+        _chuckSize = factChunkSize;
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public class EmbeddingsVectorbase
     {
         lock (_todo)
         {
-            _todo.Add(text);
+            ChunkFactAndAddToTodo(text, _chuckSize);
         }
     }
 
@@ -77,6 +78,47 @@ public class EmbeddingsVectorbase
         var embedding = _client.GenerateEmbedding(fact);
         return embedding.Value.ToFloats();
     }
+
+    private void ChunkFactAndAddToTodo(string text, int chunkSize)
+    {
+        if (chunkSize <= 100)
+        {
+            _todo.Add(text);
+            return;
+        }
+
+        int overlapSize = (int)(chunkSize * 0.15);
+        int stepSize = chunkSize - overlapSize;
+        ReadOnlySpan<char> textSpan = text.AsSpan();
+
+        for (int i = 0; i < text.Length; i += stepSize)
+        {
+            while (i > 0 && !char.IsWhiteSpace(textSpan[i]))
+            {
+                i--;
+            }
+            if (i + chunkSize > text.Length)
+            {
+                _todo.Add(textSpan.Slice(i).ToString());
+            }
+            else
+            {
+                int end = i + chunkSize;
+                if (end > text.Length)
+                {
+                    _todo.Add(textSpan.Slice(i).ToString());
+                }
+                else
+                {
+                    while (end < text.Length && !char.IsWhiteSpace(textSpan[end]))
+                    {
+                        end++;
+                    }
+                    _todo.Add(textSpan.Slice(i, end - i).ToString());
+                }
+            }
+        }
+    }
 }
 
 /// <summary>
@@ -92,5 +134,5 @@ public class FindOptions
     /// <summary>
     /// The threshold for the cosine similarity.
     /// </summary>
-    public float Threshold { get; set; } = 0.25f;
+    public float Threshold { get; set; } = 0.29f;
 }
