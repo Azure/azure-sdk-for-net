@@ -20,7 +20,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ContentSafetyClient_AnalyzeText_AnalyzeText()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -38,7 +38,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ContentSafetyClient_AnalyzeText_AnalyzeText_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ContentSafetyClient_AnalyzeText_AnalyzeText_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -68,7 +68,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ContentSafetyClient_AnalyzeText_AnalyzeText_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -80,7 +80,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ContentSafetyClient_AnalyzeImage_AnalyzeImage()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -101,7 +101,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ContentSafetyClient_AnalyzeImage_AnalyzeImage_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -122,7 +122,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ContentSafetyClient_AnalyzeImage_AnalyzeImage_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
@@ -134,7 +134,7 @@ namespace Azure.AI.ContentSafety.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ContentSafetyClient_AnalyzeImage_AnalyzeImage_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 

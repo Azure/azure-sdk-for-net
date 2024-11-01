@@ -21,7 +21,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Pool_GetPool_GetsAPool()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Pool_GetPool_GetsAPool_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Pool_GetPool_GetsAPool_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -64,7 +64,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Pool_GetPool_GetsAPool_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -75,7 +75,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Schedule_GetSchedule_GetsASchedule()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -93,7 +93,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Schedule_GetSchedule_GetsASchedule_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -111,7 +111,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Schedule_GetSchedule_GetsASchedule_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -122,7 +122,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Schedule_GetSchedule_GetsASchedule_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -133,7 +133,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBox_GetDevBox_GetsADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -148,7 +148,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBox_GetDevBox_GetsADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -163,7 +163,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBox_GetDevBox_GetsADevBox_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -174,7 +174,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBox_GetDevBox_GetsADevBox_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -185,7 +185,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetRemoteConnection_GetsRDPConnectionInfo()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -199,7 +199,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetRemoteConnection_GetsRDPConnectionInfo_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -213,7 +213,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetRemoteConnection_GetsRDPConnectionInfo_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -224,7 +224,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetRemoteConnection_GetsRDPConnectionInfo_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -235,7 +235,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxAction_GetDevBoxAction_GetsAnAction()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -251,7 +251,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxAction_GetDevBoxAction_GetsAnAction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -267,7 +267,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxAction_GetDevBoxAction_GetsAnAction_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -278,7 +278,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxAction_GetDevBoxAction_GetsAnAction_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_SkipAction_SkipsAnOccurrenceOfAnAction()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -302,7 +302,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_SkipAction_SkipsAnOccurrenceOfAnAction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -315,7 +315,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_DelayAction_DelaysTheOccurrenceOfAnAction()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -331,7 +331,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_DelayAction_DelaysTheOccurrenceOfAnAction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -347,7 +347,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_DelayAction_DelaysTheOccurrenceOfAnAction_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -358,7 +358,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_DelayAction_DelaysTheOccurrenceOfAnAction_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -369,7 +369,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Pool_GetPools_ListsAvailablePools()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -386,7 +386,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Pool_GetPools_ListsAvailablePools_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -403,7 +403,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Pool_GetPools_ListsAvailablePools_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -416,7 +416,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Pool_GetPools_ListsAvailablePools_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -429,7 +429,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -448,7 +448,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -467,7 +467,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -480,7 +480,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -493,7 +493,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -509,7 +509,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -525,7 +525,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -538,7 +538,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -551,7 +551,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -567,7 +567,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -583,7 +583,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -596,7 +596,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -609,7 +609,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -625,7 +625,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -641,7 +641,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -654,7 +654,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -667,7 +667,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxAction_GetDevBoxActions_ListsActionsOnADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -684,7 +684,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxAction_GetDevBoxActions_ListsActionsOnADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -701,7 +701,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxAction_GetDevBoxActions_ListsActionsOnADevBox_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -714,7 +714,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxAction_GetDevBoxActions_ListsActionsOnADevBox_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -727,7 +727,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -743,7 +743,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -759,7 +759,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -772,7 +772,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -785,7 +785,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_CreateDevBox_CreatesOrReplacesADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -805,7 +805,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_CreateDevBox_CreatesOrReplacesADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -825,7 +825,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_DeleteDevBox_DeletesADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -836,7 +836,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_DeleteDevBox_DeletesADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -847,7 +847,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_StartDevBox_StartsADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -858,7 +858,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_StartDevBox_StartsADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -869,7 +869,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_StopDevBox_StopsADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -880,7 +880,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_StopDevBox_StopsADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -891,7 +891,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_RestartDevBox_RestartsADevBox()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
@@ -902,7 +902,7 @@ namespace Azure.Developer.DevCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DevBoxesClientOperations_RestartDevBox_RestartsADevBox_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 

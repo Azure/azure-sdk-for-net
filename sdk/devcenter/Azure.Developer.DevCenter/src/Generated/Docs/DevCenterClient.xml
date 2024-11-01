@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Response<DevCenterProject> response = await client.GetProjectAsync("myProject");
       <example>
 This sample shows how to call GetProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -27,7 +27,7 @@ Response<DevCenterProject> response = client.GetProject("myProject");
       <example>
 This sample shows how to call GetProjectAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -41,7 +41,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetProject and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -55,7 +55,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetProjectsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -68,7 +68,7 @@ await foreach (DevCenterProject item in client.GetProjectsAsync())
       <example>
 This sample shows how to call GetProjects.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -81,7 +81,7 @@ foreach (DevCenterProject item in client.GetProjects())
       <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
@@ -96,7 +96,7 @@ await foreach (BinaryData item in client.GetProjectsAsync(null))
       <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 

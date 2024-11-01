@@ -19,7 +19,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryStatus_GetEntryStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -34,7 +34,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryStatus_GetEntryStatus_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -49,7 +49,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryStatus_GetEntryStatus_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -60,7 +60,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryStatus_GetEntryStatus_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -71,7 +71,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryStatuses_ListEntryStatuses()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -86,7 +86,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryStatuses_ListEntryStatuses_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -101,7 +101,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryStatuses_ListEntryStatuses_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -112,7 +112,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryStatuses_ListEntryStatuses_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -123,7 +123,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntry_GetEntry()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -137,7 +137,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntry_GetEntry_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -151,7 +151,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntry_GetEntry_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -162,7 +162,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntry_GetEntry_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -173,7 +173,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryReceipt_GetEntryReceipt()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -187,7 +187,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryReceipt_GetEntryReceipt_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -201,7 +201,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryReceipt_GetEntryReceipt_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -212,7 +212,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryReceipt_GetEntryReceipt_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -223,7 +223,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetParameters_GetParameters()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -240,7 +240,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetParameters_GetParameters_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -257,7 +257,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetParameters_GetParameters_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -268,7 +268,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetParameters_GetParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -279,7 +279,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetDidConfig_GetDidConfig()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -297,7 +297,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetDidConfig_GetDidConfig_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -315,7 +315,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetDidConfig_GetDidConfig_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -326,7 +326,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetDidConfig_GetDidConfig_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -337,7 +337,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetCodeTransparencyConfig_GetCodeTransparencyConfig()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -351,7 +351,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetCodeTransparencyConfig_GetCodeTransparencyConfig_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -365,7 +365,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetCodeTransparencyConfig_GetCodeTransparencyConfig_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -376,7 +376,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetCodeTransparencyConfig_GetCodeTransparencyConfig_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -387,7 +387,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetCodeTransparencyVersion_GetCodeTransparencyVersion()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -401,7 +401,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetCodeTransparencyVersion_GetCodeTransparencyVersion_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -415,7 +415,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetCodeTransparencyVersion_GetCodeTransparencyVersion_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -426,7 +426,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetCodeTransparencyVersion_GetCodeTransparencyVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -437,7 +437,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryIds_ListEntryIds()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -452,7 +452,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryIds_ListEntryIds_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -467,7 +467,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntryIds_ListEntryIds_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
@@ -480,7 +480,7 @@ namespace Azure.Security.CodeTransparency.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CodeTransparency_GetEntryIds_ListEntryIds_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
