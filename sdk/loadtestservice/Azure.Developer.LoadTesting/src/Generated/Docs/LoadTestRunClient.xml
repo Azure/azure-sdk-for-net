@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetTestRunAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -16,7 +16,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTestRunAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -124,7 +124,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetTestRun and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -135,7 +135,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTestRun with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -243,7 +243,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call DeleteTestRunAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -253,7 +253,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRunAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -266,7 +266,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTestRun.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -276,7 +276,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTestRun with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -289,7 +289,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetTestRunFileAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -300,7 +300,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTestRunFileAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -319,7 +319,7 @@ Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
       <example>
 This sample shows how to call GetTestRunFile and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -330,7 +330,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetTestRunFile with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -349,7 +349,7 @@ Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
       <example>
 This sample shows how to call StopTestRunAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -360,7 +360,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call StopTestRunAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -468,7 +468,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call StopTestRun and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -479,7 +479,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call StopTestRun with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -587,7 +587,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetMetricNamespacesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -598,7 +598,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetMetricNamespacesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -613,7 +613,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString())
       <example>
 This sample shows how to call GetMetricNamespaces and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -624,7 +624,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetMetricNamespaces with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -639,7 +639,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString())
       <example>
 This sample shows how to call GetMetricDefinitionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -650,7 +650,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetMetricDefinitionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -672,7 +672,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabiliti
       <example>
 This sample shows how to call GetMetricDefinitions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -683,7 +683,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetMetricDefinitions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -705,7 +705,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("metricAvailabiliti
       <example>
 This sample shows how to call CreateOrUpdateAppComponentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -723,7 +723,7 @@ Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString
 ]]></code>
 This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -761,7 +761,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call CreateOrUpdateAppComponents and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -779,7 +779,7 @@ Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString
 ]]></code>
 This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -817,7 +817,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetAppComponentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -828,7 +828,7 @@ Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString
 ]]></code>
 This sample shows how to call GetAppComponentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -853,7 +853,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetAppComponents and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -864,7 +864,7 @@ Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString
 ]]></code>
 This sample shows how to call GetAppComponents with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -889,7 +889,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -901,7 +901,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -943,7 +943,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call CreateOrUpdateServerMetricsConfig and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -955,7 +955,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -997,7 +997,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetServerMetricsConfigAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1008,7 +1008,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetServerMetricsConfigAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1034,7 +1034,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetServerMetricsConfig and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1045,7 +1045,7 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetServerMetricsConfig with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1071,7 +1071,7 @@ Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
       <example>
 This sample shows how to call GetMetricsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1084,7 +1084,7 @@ await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metric
 ]]></code>
 This sample shows how to call GetMetricsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1116,7 +1116,7 @@ await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metric
       <example>
 This sample shows how to call GetMetrics and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1129,7 +1129,7 @@ foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<m
 ]]></code>
 This sample shows how to call GetMetrics with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1161,7 +1161,7 @@ foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<m
       <example>
 This sample shows how to call GetMetricDimensionValuesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1173,7 +1173,7 @@ await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRun
 ]]></code>
 This sample shows how to call GetMetricDimensionValuesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1188,7 +1188,7 @@ await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("<testRun
       <example>
 This sample shows how to call GetMetricDimensionValues and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
@@ -1200,7 +1200,7 @@ foreach (BinaryData item in client.GetMetricDimensionValues("<testRunId>", "<nam
 ]]></code>
 This sample shows how to call GetMetricDimensionValues with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
