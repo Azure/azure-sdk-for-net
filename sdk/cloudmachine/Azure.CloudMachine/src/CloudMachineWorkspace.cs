@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
+/// <summary>
+/// The cloud machine workspace.
+/// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
     private TokenCredential Credential { get; } = new ChainedTokenCredential(
@@ -20,9 +23,18 @@ public class CloudMachineWorkspace : ClientWorkspace
         new AzureDeveloperCliCredential()
     );
 
+    /// <summary>
+    /// The cloud machine ID.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public string Id { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CloudMachineWorkspace"/> class.
+    /// </summary>
+    /// <param name="credential"></param>
+    /// <param name="configuration"></param>
+    /// <exception cref="Exception"></exception>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
     public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default)
     {
@@ -46,6 +58,13 @@ public class CloudMachineWorkspace : ClientWorkspace
         Id = cmid!;
     }
 
+    /// <summary>
+    /// Retrieves the connection options for a specified client type and instance ID.
+    /// </summary>
+    /// <param name="clientType"></param>
+    /// <param name="instanceId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId = default)
     {
@@ -75,10 +94,15 @@ public class CloudMachineWorkspace : ClientWorkspace
         }
     }
 
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
 
