@@ -1,14 +1,10 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2024-11-05)
 
 ### Features Added
 
 - Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
