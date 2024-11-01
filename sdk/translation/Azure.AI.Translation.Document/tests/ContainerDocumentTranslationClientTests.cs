@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,6 +47,24 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.IsNotEmpty(responseString);
             Assert.IsNotNull(responseString);
             Assert.AreNotEqual(requestString, responseString);
+        }
+
+        [Test]
+        public void DocumentTranslationSerializationTest()
+        {
+            string filePath = Path.Combine("TestData", "test-input-2.txt");
+            using Stream fileStream = File.OpenRead(filePath);
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
+
+            filePath = Path.Combine("TestData", "test-glossary-2.csv");
+            using Stream glossaryStream = File.OpenRead(filePath);
+            var sourceGlossaries = new List<MultipartFormFileData>()
+            {
+                new(Path.GetFileName(filePath), glossaryStream, "text/csv")
+            };
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries);
+            BinaryData result = ModelReaderWriter.Write<DocumentTranslateContent>(content);
+            Assert.IsNotNull(result);
         }
     }
 }
