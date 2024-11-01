@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(clusterName, getResult.Value.Data.Name);
             NetworkCloudClusterResource clusterResource = Client.GetNetworkCloudClusterResource(getResult.Value.Data.Id);
 
-            // Update
+            // Update cluster location
             NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
             {
                 ClusterLocation = "Foo floor",
@@ -117,6 +117,37 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
             Assert.IsNotEmpty(listBySubscription);
 
+            // Patch Upgrade Strategy
+             NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            {
+                Tags =
+                {
+                    ["key1"] = "myvalue1",
+                    ["key2"] = "myvalue2",
+                },
+                UpdateStrategy = new ClusterUpdateStrategy(ClusterUpdateStrategyType.PauseAfterRack, ValidationThresholdType.PercentSuccess, 100)
+                {
+                    MaxUnavailable = 2,
+                    WaitTimeMinutes = 0,
+                },
+            };
+            var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch);
+            Assert.AreEqual(patch.Tags, strategyResult.Value.Data.Tags);
+            Assert.AreEqual("PauseAfterRack", strategyResult.Value.Data.UpdateStrategy.ClusterUpdateStrategyType);
+
+            // Cluster Update Version
+            ClusterUpdateVersionContent content = new ClusterUpdateVersionContent("3.15.0");
+            var updatedClusterResult = await clusterResource.ContinueUpdateVersionAsync(WaitUntil.Completed, content);
+            Assert.IsNotNull(updatedClusterResult.HasCompleted);
+
+            // Continue Update Version
+            ClusterContinueUpdateVersionContent content = new ClusterContinueUpdateVersionContent()
+            {
+                MachineGroupTargetingMode = ClusterContinueUpdateVersionMachineGroupTargetingMode.AlphaByRack,
+            };
+            var continueUpdateClusterResult = await clusterResource.ContinueUpdateVersionAsync(WaitUntil.Completed, content);
+            Assert.IsNotNull(continueUpdateClusterResult.HasCompleted);
+            
             // Delete
             var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResult.HasCompleted);
