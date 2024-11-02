@@ -46,22 +46,22 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
-        /// <param name="path"> Path of document in storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        internal DocumentLocation(string path)
+        /// <param name="location"> Location of document in storage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        internal DocumentLocation(Uri location)
         {
-            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(location, nameof(location));
 
-            Path = path;
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
-        /// <param name="path"> Path of document in storage. </param>
+        /// <param name="location"> Location of document in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLocation(string path, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Path = path;
+            Location = location;
             Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,8 +71,8 @@ namespace Azure.Health.Deidentification
         {
         }
 
-        /// <summary> Path of document in storage. </summary>
-        public string Path { get; }
+        /// <summary> Location of document in storage. </summary>
+        public Uri Location { get; }
         /// <summary> The entity tag for this resource. </summary>
         public ETag Etag { get; }
     }

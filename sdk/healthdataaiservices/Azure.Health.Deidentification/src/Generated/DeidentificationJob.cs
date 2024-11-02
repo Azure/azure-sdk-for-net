@@ -60,11 +60,10 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
         /// <param name="name"> The name of a job. </param>
+        /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
-        /// <param name="operation"> Operation to perform on the input documents. </param>
-        /// <param name="dataType"> Data type of the input documents. </param>
-        /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
+        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <param name="status"> Current status of a job. </param>
         /// <param name="error"> Error when job fails in it's entirety. </param>
         /// <param name="lastUpdatedAt">
@@ -78,14 +77,13 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(string name, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, OperationType? operation, DocumentDataType? dataType, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(string name, OperationType? operation, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, JobCustomizationOptions customizations, JobStatus status, ResponseError error, DateTimeOffset lastUpdatedAt, DateTimeOffset createdAt, DateTimeOffset? startedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            Operation = operation;
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
-            Operation = operation;
-            DataType = dataType;
-            RedactionFormat = redactionFormat;
+            Customizations = customizations;
             Status = status;
             Error = error;
             LastUpdatedAt = lastUpdatedAt;
@@ -102,16 +100,14 @@ namespace Azure.Health.Deidentification
 
         /// <summary> The name of a job. </summary>
         public string Name { get; }
+        /// <summary> Operation to perform on the input documents. </summary>
+        public OperationType? Operation { get; set; }
         /// <summary> Storage location to perform the operation on. </summary>
         public SourceStorageLocation SourceLocation { get; set; }
         /// <summary> Target location to store output of operation. </summary>
         public TargetStorageLocation TargetLocation { get; set; }
-        /// <summary> Operation to perform on the input documents. </summary>
-        public OperationType? Operation { get; set; }
-        /// <summary> Data type of the input documents. </summary>
-        public DocumentDataType? DataType { get; set; }
-        /// <summary> Format of the redacted output. Only valid when Operation is Redact. </summary>
-        public string RedactionFormat { get; set; }
+        /// <summary> Customization parameters to override default service behaviors. </summary>
+        public JobCustomizationOptions Customizations { get; set; }
         /// <summary> Current status of a job. </summary>
         public JobStatus Status { get; }
         /// <summary> Error when job fails in it's entirety. </summary>

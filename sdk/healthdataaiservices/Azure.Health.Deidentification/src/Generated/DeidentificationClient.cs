@@ -374,14 +374,14 @@ namespace Azure.Health.Deidentification
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyAsync(DeidentificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<DeidentificationResult>> DeidentifyAsync(DeidentificationContent body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyTextAsync(DeidentificationContent,CancellationToken)']/*" />
+        public virtual async Task<Response<DeidentificationResult>> DeidentifyTextAsync(DeidentificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeidentifyAsync(content, context).ConfigureAwait(false);
+            Response response = await DeidentifyTextAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(DeidentificationResult.FromResponse(response), response);
         }
 
@@ -390,14 +390,14 @@ namespace Azure.Health.Deidentification
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> A remote procedure call (RPC) operation. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='Deidentify(DeidentificationContent,CancellationToken)']/*" />
-        public virtual Response<DeidentificationResult> Deidentify(DeidentificationContent body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyText(DeidentificationContent,CancellationToken)']/*" />
+        public virtual Response<DeidentificationResult> DeidentifyText(DeidentificationContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Deidentify(content, context);
+            Response response = DeidentifyText(content, context);
             return Response.FromValue(DeidentificationResult.FromResponse(response), response);
         }
 
@@ -411,7 +411,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeidentifyAsync(DeidentificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeidentifyTextAsync(DeidentificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -421,16 +421,16 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> DeidentifyAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyTextAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> DeidentifyTextAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.Deidentify");
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyText");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeidentifyRequest(content, context);
+                using HttpMessage message = CreateDeidentifyTextRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -450,7 +450,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Deidentify(DeidentificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeidentifyText(DeidentificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -460,16 +460,16 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='Deidentify(RequestContent,RequestContext)']/*" />
-        public virtual Response Deidentify(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyText(RequestContent,RequestContext)']/*" />
+        public virtual Response DeidentifyText(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.Deidentify");
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyText");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeidentifyRequest(content, context);
+                using HttpMessage message = CreateDeidentifyTextRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -675,16 +675,16 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Long-running resource create or replace operation template. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='CreateJobAsync(WaitUntil,string,DeidentificationJob,CancellationToken)']/*" />
-        public virtual async Task<Operation<DeidentificationJob>> CreateJobAsync(WaitUntil waitUntil, string name, DeidentificationJob resource, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyDocumentsAsync(WaitUntil,string,DeidentificationJob,CancellationToken)']/*" />
+        public virtual async Task<Operation<DeidentificationJob>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string name, DeidentificationJob resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
             using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await CreateJobAsync(waitUntil, name, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DeidentificationJob.FromResponse, ClientDiagnostics, "DeidentificationClient.CreateJob");
+            Operation<BinaryData> response = await DeidentifyDocumentsAsync(waitUntil, name, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, DeidentificationJob.FromResponse, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments");
         }
 
         /// <summary> Create a de-identification job. </summary>
@@ -695,16 +695,16 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Long-running resource create or replace operation template. </remarks>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='CreateJob(WaitUntil,string,DeidentificationJob,CancellationToken)']/*" />
-        public virtual Operation<DeidentificationJob> CreateJob(WaitUntil waitUntil, string name, DeidentificationJob resource, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyDocuments(WaitUntil,string,DeidentificationJob,CancellationToken)']/*" />
+        public virtual Operation<DeidentificationJob> DeidentifyDocuments(WaitUntil waitUntil, string name, DeidentificationJob resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(resource, nameof(resource));
 
             using RequestContent content = resource.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = CreateJob(waitUntil, name, content, context);
-            return ProtocolOperationHelpers.Convert(response, DeidentificationJob.FromResponse, ClientDiagnostics, "DeidentificationClient.CreateJob");
+            Operation<BinaryData> response = DeidentifyDocuments(waitUntil, name, content, context);
+            return ProtocolOperationHelpers.Convert(response, DeidentificationJob.FromResponse, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments");
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJobAsync(WaitUntil,string,DeidentificationJob,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeidentifyDocumentsAsync(WaitUntil,string,DeidentificationJob,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -730,18 +730,18 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='CreateJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateJobAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyDocumentsAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> DeidentifyDocumentsAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.CreateJob");
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyDocuments");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobRequest(name, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeidentificationClient.CreateJob", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeidentifyDocumentsRequest(name, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -760,7 +760,7 @@ namespace Azure.Health.Deidentification
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateJob(WaitUntil,string,DeidentificationJob,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeidentifyDocuments(WaitUntil,string,DeidentificationJob,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -773,18 +773,18 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='CreateJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateJob(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='DeidentifyDocuments(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> DeidentifyDocuments(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.CreateJob");
+            using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.DeidentifyDocuments");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateJobRequest(name, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeidentificationClient.CreateJob", OperationFinalStateVia.OriginalUri, context, waitUntil);
+                using HttpMessage message = CreateDeidentifyDocumentsRequest(name, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeidentificationClient.DeidentifyDocuments", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -809,7 +809,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateCreateJobRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeidentifyDocumentsRequest(string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -908,7 +908,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateDeidentifyRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeidentifyTextRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
