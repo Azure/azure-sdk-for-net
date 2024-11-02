@@ -155,9 +155,9 @@ Response response = client.DeleteJob("documents_smith_1");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeidentifyAsync(DeidentificationContent,CancellationToken)">
+    <member name="DeidentifyTextAsync(DeidentificationContent,CancellationToken)">
       <example>
-This sample shows how to call DeidentifyAsync.
+This sample shows how to call DeidentifyTextAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -165,16 +165,18 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Operation = OperationType.Redact,
-    DataType = DocumentDataType.Plaintext,
-    RedactionFormat = "[{type}]",
+    Customizations = new CustomizationOptions
+    {
+        RedactionFormat = "[{type}]",
+        SurrogateLocale = "en-US",
+    },
 };
-Response<DeidentificationResult> response = await client.DeidentifyAsync(body);
+Response<DeidentificationResult> response = await client.DeidentifyTextAsync(body);
 ]]></code></example>
     </member>
-    <member name="Deidentify(DeidentificationContent,CancellationToken)">
+    <member name="DeidentifyText(DeidentificationContent,CancellationToken)">
       <example>
-This sample shows how to call Deidentify.
+This sample shows how to call DeidentifyText.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -182,16 +184,18 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Operation = OperationType.Redact,
-    DataType = DocumentDataType.Plaintext,
-    RedactionFormat = "[{type}]",
+    Customizations = new CustomizationOptions
+    {
+        RedactionFormat = "[{type}]",
+        SurrogateLocale = "en-US",
+    },
 };
-Response<DeidentificationResult> response = client.Deidentify(body);
+Response<DeidentificationResult> response = client.DeidentifyText(body);
 ]]></code></example>
     </member>
-    <member name="DeidentifyAsync(RequestContent,RequestContext)">
+    <member name="DeidentifyTextAsync(RequestContent,RequestContext)">
       <example>
-This sample shows how to call DeidentifyAsync and parse the result.
+This sample shows how to call DeidentifyTextAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -200,19 +204,21 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 using RequestContent content = RequestContent.Create(new
 {
     inputText = "Hello my name is John Smith.",
-    operation = "Redact",
-    dataType = "Plaintext",
-    redactionFormat = "[{type}]",
+    customizations = new
+    {
+        redactionFormat = "[{type}]",
+        surrogateLocale = "en-US",
+    },
 });
-Response response = await client.DeidentifyAsync(content);
+Response response = await client.DeidentifyTextAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="Deidentify(RequestContent,RequestContext)">
+    <member name="DeidentifyText(RequestContent,RequestContext)">
       <example>
-This sample shows how to call Deidentify and parse the result.
+This sample shows how to call DeidentifyText and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -221,11 +227,13 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 using RequestContent content = RequestContent.Create(new
 {
     inputText = "Hello my name is John Smith.",
-    operation = "Redact",
-    dataType = "Plaintext",
-    redactionFormat = "[{type}]",
+    customizations = new
+    {
+        redactionFormat = "[{type}]",
+        surrogateLocale = "en-US",
+    },
 });
-Response response = client.Deidentify(content);
+Response response = client.DeidentifyText(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -339,7 +347,7 @@ await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
@@ -357,57 +365,69 @@ foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1J
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("input").GetProperty("path").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
     Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
-    <member name="CreateJobAsync(WaitUntil,string,DeidentificationJob,CancellationToken)">
+    <member name="DeidentifyDocumentsAsync(WaitUntil,string,DeidentificationJob,CancellationToken)">
       <example>
-This sample shows how to call CreateJobAsync.
+This sample shows how to call DeidentifyDocumentsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D"), "/documents")
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "/documents")
 {
     Extensions = { "*" },
-}, new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D"), "/documents"))
+}, new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "/documents")
+{
+    Overwrite = true,
+})
 {
     Operation = OperationType.Redact,
-    DataType = DocumentDataType.Plaintext,
-    RedactionFormat = "[{type}]",
+    Customizations = new JobCustomizationOptions
+    {
+        RedactionFormat = "[{type}]",
+        SurrogateLocale = "en-US",
+    },
 };
-Operation<DeidentificationJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "documents_smith_1", resource);
+Operation<DeidentificationJob> operation = await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "documents_smith_1", resource);
 DeidentificationJob responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="CreateJob(WaitUntil,string,DeidentificationJob,CancellationToken)">
+    <member name="DeidentifyDocuments(WaitUntil,string,DeidentificationJob,CancellationToken)">
       <example>
-This sample shows how to call CreateJob.
+This sample shows how to call DeidentifyDocuments.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D"), "/documents")
+DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "/documents")
 {
     Extensions = { "*" },
-}, new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D"), "/documents"))
+}, new TargetStorageLocation(new Uri("https://blobtest.blob.core.windows.net/container"), "/documents")
+{
+    Overwrite = true,
+})
 {
     Operation = OperationType.Redact,
-    DataType = DocumentDataType.Plaintext,
-    RedactionFormat = "[{type}]",
+    Customizations = new JobCustomizationOptions
+    {
+        RedactionFormat = "[{type}]",
+        SurrogateLocale = "en-US",
+    },
 };
-Operation<DeidentificationJob> operation = client.CreateJob(WaitUntil.Completed, "documents_smith_1", resource);
+Operation<DeidentificationJob> operation = client.DeidentifyDocuments(WaitUntil.Completed, "documents_smith_1", resource);
 DeidentificationJob responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="CreateJobAsync(WaitUntil,string,RequestContent,RequestContext)">
+    <member name="DeidentifyDocumentsAsync(WaitUntil,string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateJobAsync and parse the result.
+This sample shows how to call DeidentifyDocumentsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -415,9 +435,10 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 using RequestContent content = RequestContent.Create(new
 {
+    operation = "Redact",
     sourceLocation = new
     {
-        location = "https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D",
+        location = "https://blobtest.blob.core.windows.net/container",
         prefix = "/documents",
         extensions = new object[]
         {
@@ -426,15 +447,33 @@ using RequestContent content = RequestContent.Create(new
     },
     targetLocation = new
     {
-        location = "https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D",
+        location = "https://blobtest.blob.core.windows.net/container",
         prefix = "/documents",
+        overwrite = true,
     },
-    operation = "Redact",
-    dataType = "Plaintext",
-    redactionFormat = "[{type}]",
+    customizations = new
+    {
+        redactionFormat = "[{type}]",
+        surrogateLocale = "en-US",
+    },
     status = "NotStarted",
+    error = new
+    {
+        code = "FileNotFound",
+        message = "File was moved after job started.",
+        target = "SourceFile",
+        details = Array.Empty<object>(),
+    },
+    summary = new
+    {
+        successful = 10,
+        failed = 0,
+        canceled = 0,
+        total = 10,
+        bytesProcessed = 4096L,
+    },
 });
-Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "documents_smith_1", content);
+Operation<BinaryData> operation = await client.DeidentifyDocumentsAsync(WaitUntil.Completed, "documents_smith_1", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -448,9 +487,9 @@ Console.WriteLine(result.GetProperty("lastUpdatedAt").ToString());
 Console.WriteLine(result.GetProperty("createdAt").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateJob(WaitUntil,string,RequestContent,RequestContext)">
+    <member name="DeidentifyDocuments(WaitUntil,string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateJob and parse the result.
+This sample shows how to call DeidentifyDocuments and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
@@ -458,9 +497,10 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 using RequestContent content = RequestContent.Create(new
 {
+    operation = "Redact",
     sourceLocation = new
     {
-        location = "https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D",
+        location = "https://blobtest.blob.core.windows.net/container",
         prefix = "/documents",
         extensions = new object[]
         {
@@ -469,15 +509,33 @@ using RequestContent content = RequestContent.Create(new
     },
     targetLocation = new
     {
-        location = "https://blobtest.blob.core.windows.net/container?sp=r&st=2024-01-24T18:11:10Z&se=2024-01-25T02:11:10Z&spr=https&sv=2022-11-02&sr=c&sig=signature%3D",
+        location = "https://blobtest.blob.core.windows.net/container",
         prefix = "/documents",
+        overwrite = true,
     },
-    operation = "Redact",
-    dataType = "Plaintext",
-    redactionFormat = "[{type}]",
+    customizations = new
+    {
+        redactionFormat = "[{type}]",
+        surrogateLocale = "en-US",
+    },
     status = "NotStarted",
+    error = new
+    {
+        code = "FileNotFound",
+        message = "File was moved after job started.",
+        target = "SourceFile",
+        details = Array.Empty<object>(),
+    },
+    summary = new
+    {
+        successful = 10,
+        failed = 0,
+        canceled = 0,
+        total = 10,
+        bytesProcessed = 4096L,
+    },
 });
-Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "documents_smith_1", content);
+Operation<BinaryData> operation = client.DeidentifyDocuments(WaitUntil.Completed, "documents_smith_1", content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

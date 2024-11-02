@@ -19,23 +19,15 @@ namespace Azure.Health.Deidentification
 
         void IJsonModel<DocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentLocation)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("path"u8);
-            writer.WriteStringValue(Path);
+            writer.WriteStartObject();
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location.AbsoluteUri);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
@@ -56,6 +48,7 @@ namespace Azure.Health.Deidentification
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         DocumentLocation IJsonModel<DocumentLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,15 +71,15 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            string path = default;
+            Uri location = default;
             ETag etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    path = property.Value.GetString();
+                    location = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -100,7 +93,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentLocation(path, etag, serializedAdditionalRawData);
+            return new DocumentLocation(location, etag, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentLocation>.Write(ModelReaderWriterOptions options)

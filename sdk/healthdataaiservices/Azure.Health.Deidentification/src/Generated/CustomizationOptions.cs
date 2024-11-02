@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Request body for de-identification operation. </summary>
-    public partial class DeidentificationContent
+    /// <summary> Customizations options to override default service behaviors for synchronous usage. </summary>
+    public partial class CustomizationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,25 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
-        /// <param name="inputText"> Input text to de-identify. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputText"/> is null. </exception>
-        public DeidentificationContent(string inputText)
+        /// <summary> Initializes a new instance of <see cref="CustomizationOptions"/>. </summary>
+        public CustomizationOptions()
         {
-            Argument.AssertNotNull(inputText, nameof(inputText));
-
-            InputText = inputText;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
-        /// <param name="inputText"> Input text to de-identify. </param>
-        /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
+        /// <summary> Initializes a new instance of <see cref="CustomizationOptions"/>. </summary>
+        /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
+        /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, CustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InputText = inputText;
-            Customizations = customizations;
+            RedactionFormat = redactionFormat;
+            SurrogateLocale = surrogateLocale;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/> for deserialization. </summary>
-        internal DeidentificationContent()
-        {
-        }
-
-        /// <summary> Input text to de-identify. </summary>
-        public string InputText { get; }
-        /// <summary> Customization parameters to override default service behaviors. </summary>
-        public CustomizationOptions Customizations { get; set; }
+        /// <summary> Format of the redacted output. Only valid when Operation is Redact. </summary>
+        public string RedactionFormat { get; set; }
+        /// <summary> Locale in which the output surrogates are written. </summary>
+        public string SurrogateLocale { get; set; }
     }
 }
