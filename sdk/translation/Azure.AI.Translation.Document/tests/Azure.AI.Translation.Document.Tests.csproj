@@ -25,13 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\test-glossary-2.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\test-glossary.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\test-input-2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\test-input.txt">
