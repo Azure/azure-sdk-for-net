@@ -10,13 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary>
-    /// An abstract representation of a tool call that must be resolved in a subsequent request to perform the requested
-    /// chat completion.
-    /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
-    /// </summary>
-    public abstract partial class ChatCompletionsToolCall
+    /// <summary> A function tool call requested by the AI model. </summary>
+    public partial class ChatCompletionsToolCall
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,26 +43,31 @@ namespace Azure.AI.Inference
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        protected ChatCompletionsToolCall(string id)
+        /// <param name="function"> The details of the function call requested by the AI model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="function"/> is null. </exception>
+        public ChatCompletionsToolCall(string id, FunctionCall function)
         {
             Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(function, nameof(function));
 
             Id = id;
+            Function = function;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolCall"/>. </summary>
-        /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="type"> The type of tool call. Currently, only `function` is supported. </param>
+        /// <param name="function"> The details of the function call requested by the AI model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsToolCall(string id, ChatCompletionsToolCallType type, FunctionCall function, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
             Id = id;
+            Type = type;
+            Function = function;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,9 +76,12 @@ namespace Azure.AI.Inference
         {
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
         /// <summary> The ID of the tool call. </summary>
         public string Id { get; set; }
+        /// <summary> The type of tool call. Currently, only `function` is supported. </summary>
+        public ChatCompletionsToolCallType Type { get; } = ChatCompletionsToolCallType.Function;
+
+        /// <summary> The details of the function call requested by the AI model. </summary>
+        public FunctionCall Function { get; set; }
     }
 }

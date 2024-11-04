@@ -41,9 +41,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            if (_databaseAccountIdentifier != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                if (_databaseAccountIdentifier != null)
+                {
+                    await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 
@@ -56,12 +59,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await TableCollection.ExistsAsync(_databaseName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = TableCollection.Id;
-                id = CosmosDBTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
-                CosmosDBTableResource table = this.ArmClient.GetCosmosDBTableResource(id);
-                await table.DeleteAsync(WaitUntil.Completed);
+                if (await TableCollection.ExistsAsync(_databaseName))
+                {
+                    var id = TableCollection.Id;
+                    id = CosmosDBTableResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Name, _databaseName);
+                    CosmosDBTableResource table = this.ArmClient.GetCosmosDBTableResource(id);
+                    await table.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

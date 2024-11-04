@@ -34,26 +34,12 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the storage resource.
-        /// </summary>
         protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
-        /// <summary>
-        /// Store Max Initial Size that a Put Blob can get to.
-        /// </summary>
-        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
@@ -168,7 +154,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     DataMovementBlobsExtensions.GetBlobUploadOptions(
                         _options,
                         overwrite,
-                        _maxInitialSize,
+                        MaxSupportedSingleTransferSize,  // We don't want any internal partioning
                         options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;

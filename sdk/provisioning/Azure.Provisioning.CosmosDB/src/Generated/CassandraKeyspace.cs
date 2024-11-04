@@ -22,63 +22,100 @@ public partial class CassandraKeyspace : ProvisionableResource
     /// <summary>
     /// Cosmos DB keyspace name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Identity for the resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// A key-value pair of options to be applied for the request. This
     /// corresponds to the headers sent with the request.
     /// </summary>
-    public BicepValue<CosmosDBCreateUpdateConfig> Options { get => _options; set => _options.Assign(value); }
-    private readonly BicepValue<CosmosDBCreateUpdateConfig> _options;
+    public CosmosDBCreateUpdateConfig Options 
+    {
+        get { Initialize(); return _options!; }
+        set { Initialize(); AssignOrReplace(ref _options, value); }
+    }
+    private CosmosDBCreateUpdateConfig? _options;
 
     /// <summary>
     /// Name of the Cosmos DB Cassandra keyspace.
     /// </summary>
-    public BicepValue<string> ResourceKeyspaceName { get => _resourceKeyspaceName; set => _resourceKeyspaceName.Assign(value); }
-    private readonly BicepValue<string> _resourceKeyspaceName;
+    public BicepValue<string> ResourceKeyspaceName 
+    {
+        get { Initialize(); return _resourceKeyspaceName!; }
+        set { Initialize(); _resourceKeyspaceName!.Assign(value); }
+    }
+    private BicepValue<string>? _resourceKeyspaceName;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets or sets the resource.
     /// </summary>
-    public BicepValue<ExtendedCassandraKeyspaceResourceInfo> Resource { get => _resource; }
-    private readonly BicepValue<ExtendedCassandraKeyspaceResourceInfo> _resource;
+    public ExtendedCassandraKeyspaceResourceInfo Resource 
+    {
+        get { Initialize(); return _resource!; }
+    }
+    private ExtendedCassandraKeyspaceResourceInfo? _resource;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent CosmosDBAccount.
     /// </summary>
-    public CosmosDBAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<CosmosDBAccount> _parent;
+    public CosmosDBAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<CosmosDBAccount>? _parent;
 
     /// <summary>
     /// Creates a new CassandraKeyspace.
@@ -93,16 +130,23 @@ public partial class CassandraKeyspace : ProvisionableResource
     public CassandraKeyspace(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces", resourceVersion ?? "2024-08-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _options = BicepValue<CosmosDBCreateUpdateConfig>.DefineProperty(this, "Options", ["properties", "options"]);
-        _resourceKeyspaceName = BicepValue<string>.DefineProperty(this, "ResourceKeyspaceName", ["properties", "resource", "id"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _resource = BicepValue<ExtendedCassandraKeyspaceResourceInfo>.DefineProperty(this, "Resource", ["properties", "resource"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<CosmosDBAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of CassandraKeyspace.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _options = DefineModelProperty<CosmosDBCreateUpdateConfig>("Options", ["properties", "options"]);
+        _resourceKeyspaceName = DefineProperty<string>("ResourceKeyspaceName", ["properties", "resource", "id"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _resource = DefineModelProperty<ExtendedCassandraKeyspaceResourceInfo>("Resource", ["properties", "resource"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<CosmosDBAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

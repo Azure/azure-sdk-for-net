@@ -21,50 +21,80 @@ public partial class EventGridDomainPrivateEndpointConnection : ProvisionableRes
     /// <summary>
     /// The name of the private endpoint connection connection.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Details about the state of the connection.
     /// </summary>
-    public BicepValue<EventGridPrivateEndpointConnectionState> ConnectionState { get => _connectionState; set => _connectionState.Assign(value); }
-    private readonly BicepValue<EventGridPrivateEndpointConnectionState> _connectionState;
+    public EventGridPrivateEndpointConnectionState ConnectionState 
+    {
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
+    }
+    private EventGridPrivateEndpointConnectionState? _connectionState;
 
     /// <summary>
     /// GroupIds from the private link service resource.
     /// </summary>
-    public BicepList<string> GroupIds { get => _groupIds; set => _groupIds.Assign(value); }
-    private readonly BicepList<string> _groupIds;
+    public BicepList<string> GroupIds 
+    {
+        get { Initialize(); return _groupIds!; }
+        set { Initialize(); _groupIds!.Assign(value); }
+    }
+    private BicepList<string>? _groupIds;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> PrivateEndpointId { get => _privateEndpointId; set => _privateEndpointId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _privateEndpointId;
+    public BicepValue<ResourceIdentifier> PrivateEndpointId 
+    {
+        get { Initialize(); return _privateEndpointId!; }
+        set { Initialize(); _privateEndpointId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _privateEndpointId;
 
     /// <summary>
     /// Provisioning state of the Private Endpoint Connection.
     /// </summary>
-    public BicepValue<EventGridResourceProvisioningState> ProvisioningState { get => _provisioningState; set => _provisioningState.Assign(value); }
-    private readonly BicepValue<EventGridResourceProvisioningState> _provisioningState;
+    public BicepValue<EventGridResourceProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+        set { Initialize(); _provisioningState!.Assign(value); }
+    }
+    private BicepValue<EventGridResourceProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridDomain.
     /// </summary>
-    public EventGridDomain? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridDomain> _parent;
+    public EventGridDomain? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridDomain>? _parent;
 
     /// <summary>
     /// Creates a new EventGridDomainPrivateEndpointConnection.
@@ -80,14 +110,22 @@ public partial class EventGridDomainPrivateEndpointConnection : ProvisionableRes
     public EventGridDomainPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.EventGrid/domains/privateEndpointConnections", resourceVersion ?? "2022-06-15")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _connectionState = BicepValue<EventGridPrivateEndpointConnectionState>.DefineProperty(this, "ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
-        _groupIds = BicepList<string>.DefineProperty(this, "GroupIds", ["properties", "groupIds"]);
-        _privateEndpointId = BicepValue<ResourceIdentifier>.DefineProperty(this, "PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
-        _provisioningState = BicepValue<EventGridResourceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridDomain>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// EventGridDomainPrivateEndpointConnection.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _connectionState = DefineModelProperty<EventGridPrivateEndpointConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _groupIds = DefineListProperty<string>("GroupIds", ["properties", "groupIds"]);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);
+        _provisioningState = DefineProperty<EventGridResourceProvisioningState>("ProvisioningState", ["properties", "provisioningState"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridDomain>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

@@ -51,7 +51,7 @@ internal class SampleTests(bool async)
                 infra.Add(blobs);
 
                 // Grab the endpoint
-                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.Value!.BlobUri };
+                endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri };
                 infra.Add(endpoint);
 
                 return infra;
