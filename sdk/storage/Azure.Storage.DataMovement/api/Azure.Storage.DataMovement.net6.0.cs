@@ -177,6 +177,7 @@ namespace Azure.Storage.DataMovement
         protected internal override bool IsContainer { get { throw null; } }
         protected internal abstract long? Length { get; }
         protected internal abstract long MaxSupportedChunkSize { get; }
+        protected internal abstract long MaxSupportedSingleTransferSize { get; }
         protected internal abstract string ResourceId { get; }
         protected internal Azure.Storage.DataMovement.StorageResourceItemProperties ResourceProperties { get { throw null; } set { } }
         protected internal abstract Azure.Storage.DataMovement.DataTransferOrder TransferType { get; }

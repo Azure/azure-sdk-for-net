@@ -47,6 +47,8 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns("BlockBlob");
             mock.Setup(b => b.ProviderId)
                 .Returns("blob");
+            mock.Setup(b => b.MaxSupportedSingleTransferSize)
+                .Returns(Constants.GB);
             mock.Setup(b => b.MaxSupportedChunkSize)
                 .Returns(Constants.GB);
             mock.Setup(b => b.GetSourceCheckpointData())
@@ -114,7 +116,8 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
+            destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Once());
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
             destMock.Verify(b => b.SetPermissionsAsync(
                 sourceMock.Object,
@@ -157,7 +160,8 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
+            destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Once());
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
             destMock.Verify(b => b.SetPermissionsAsync(
                 sourceMock.Object,

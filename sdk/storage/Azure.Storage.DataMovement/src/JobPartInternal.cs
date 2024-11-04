@@ -185,11 +185,11 @@ namespace Azure.Storage.DataMovement
             SingleTransferCompletedEventHandler = singleTransferEventHandler;
             ClientDiagnostics = clientDiagnostics;
 
-            // Set transfer sizes to user specified values or default
+            // Set transfer sizes to user specified values or default,
             // clamped to max supported chunk size for the destination.
             _initialTransferSize = Math.Min(
                 initialTransferSize ?? DataMovementConstants.DefaultInitialTransferSize,
-                _destinationResource.MaxSupportedChunkSize);
+                _destinationResource.MaxSupportedSingleTransferSize);
             _transferChunkSize = Math.Min(
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);

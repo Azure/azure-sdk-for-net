@@ -2,34 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.Linq;
-using Azure.AI.OpenAI;
-using Azure.Core;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
 
 namespace Azure.Provisioning.CloudMachine.OpenAI;
 
 public class OpenAIFeature : CloudMachineFeature
 {
-    private AiModel _chatDeployment;
-    private AiModel? _embeddingsDeployment;
-
-    public OpenAIFeature(AiModel chatDeployment, AiModel? embeddingsDeployment = default)
+    public OpenAIFeature()
     {
-        if (chatDeployment == null)
-        {
-            throw new ArgumentNullException(nameof(chatDeployment));
-        }
-        _chatDeployment = chatDeployment;
-        _embeddingsDeployment = embeddingsDeployment;
     }
+
+    public AIModel? Chat { get; set; }
+    public AIModel? Embeddings { get; set; }
 
     public override void AddTo(CloudMachineInfrastructure cloudMachine)
     {
+        if (Chat == default && Embeddings == default)
+        {
+            throw new InvalidOperationException("At least one of Chat or Embeddings must be specified.");
+        }
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
             Name = cloudMachine.Id,
@@ -49,25 +41,36 @@ public class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        CognitiveServicesAccountDeployment chat = new("openai_deployment", "2023-05-01")
+        CognitiveServicesAccountDeployment? chat = default;
+        if (Chat != default)
         {
-            Parent = cognitiveServices,
-            Name = cloudMachine.Id,
-            Properties = new CognitiveServicesAccountDeploymentProperties()
+            chat = new("openai_deployment_chat", "2024-06-01-preview")
             {
-                Model = new CognitiveServicesAccountDeploymentModel()
+                Parent = cognitiveServices,
+                Name = cloudMachine.Id,
+                Properties = new CognitiveServicesAccountDeploymentProperties()
                 {
-                    Name = _chatDeployment.Model,
-                    Format = "OpenAI",
-                    Version = _chatDeployment.ModelVersion
+                    Model = new CognitiveServicesAccountDeploymentModel()
+                    {
+                        Name = Chat.Model,
+                        Format = "OpenAI",
+                        Version = Chat.ModelVersion
+                    },
+                    VersionUpgradeOption = DeploymentModelVersionUpgradeOption.OnceNewDefaultVersionAvailable,
+                    RaiPolicyName = "Microsoft.DefaultV2",
+                },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
                 }
-            },
-        };
-        cloudMachine.AddResource(chat);
+            };
+            cloudMachine.AddResource(chat);
+        }
 
-        if (_embeddingsDeployment != null)
+        if (Embeddings != null)
         {
-            CognitiveServicesAccountDeployment embeddings = new("openai_deployment", "2023-05-01")
+            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2024-06-01-preview")
             {
                 Parent = cognitiveServices,
                 Name = $"{cloudMachine.Id}-embedding",
@@ -75,82 +78,25 @@ public class OpenAIFeature : CloudMachineFeature
                 {
                     Model = new CognitiveServicesAccountDeploymentModel()
                     {
-                        Name = _embeddingsDeployment.Model,
+                        Name = Embeddings.Model,
                         Format = "OpenAI",
-                        Version = _embeddingsDeployment.ModelVersion
+                        Version = Embeddings.ModelVersion
                     }
                 },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
+                }
             };
 
             // Ensure that additional deployments, are chained using DependsOn.
             // The reason is that deployments need to be deployed/created serially.
-            embeddings.DependsOn.Add(chat);
+            if (chat != default)
+            {
+                embeddings.DependsOn.Add(chat);
+            }
             cloudMachine.AddResource(embeddings);
         }
-    }
-}
-
-public static class AzureOpenAIExtensions
-{
-    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
-    {
-        ChatClient chatClient = workspace.Subclients.Get(() =>
-        {
-            AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateChatClient(aoiaClient);
-        });
-
-        return chatClient;
-    }
-
-    public static EmbeddingClient GetOpenAIEmbeddingsClient(this ClientWorkspace workspace)
-    {
-        EmbeddingClient embeddingsClient = workspace.Subclients.Get(() =>
-        {
-            AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateEmbeddingsClient(aoiaClient);
-        });
-
-        return embeddingsClient;
-    }
-
-    public static EmbeddingKnowledgebase CreateEmbeddingKnowledgebase(this ClientWorkspace workspace)
-    {
-        EmbeddingClient embeddingsClient = workspace.GetOpenAIEmbeddingsClient();
-        return new EmbeddingKnowledgebase(embeddingsClient);
-    }
-
-    public static OpenAIConversation CreateOpenAIConversation(this ClientWorkspace workspace)
-    {
-        ChatClient chatClient = workspace.GetOpenAIChatClient();
-        EmbeddingKnowledgebase knowledgebase = workspace.CreateEmbeddingKnowledgebase();
-        return new OpenAIConversation(chatClient, [], knowledgebase);
-    }
-
-    private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
-        {
-            return new(connection.Endpoint, connection.TokenCredential);
-        }
-        else
-        {
-            return new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
-        }
-    }
-
-    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.Id);
-        return chat;
-    }
-
-    private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(EmbeddingClient));
-        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Id);
-        return embeddings;
     }
 }

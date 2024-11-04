@@ -168,7 +168,11 @@ public class CloudMachineInfrastructure
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
             Source = _storage.Id,
-            Identity = managedServiceIdentity,
+            Identity = new()
+            {
+                ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
+                UserAssignedIdentities = { { BicepFunction.Interpolate($"{Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
+            },
             Name = _cmid
         };
         _eventGridSubscription_blobs = new("cm_eventgrid_subscription_blob", "2022-06-15")
