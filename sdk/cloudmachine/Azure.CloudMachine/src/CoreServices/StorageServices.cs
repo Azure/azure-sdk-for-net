@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Messaging.ServiceBus;
 
 namespace Azure.CloudMachine;
 
@@ -19,6 +20,7 @@ namespace Azure.CloudMachine;
 public readonly struct StorageServices
 {
     private readonly CloudMachineClient _cm;
+
     internal StorageServices(CloudMachineClient cm) => _cm = cm;
 
     private BlobContainerClient GetDefaultContainer()
@@ -26,7 +28,7 @@ public readonly struct StorageServices
         CloudMachineClient cm = _cm;
         BlobContainerClient container = _cm.Subclients.Get(() =>
         {
-            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient));
+            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), default);
             BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
             return container;
         });
@@ -198,9 +200,9 @@ public readonly struct StorageServices
     /// <param name="function"></param>
     public void WhenBlobUploaded(Action<StorageFile> function)
     {
-        var processor = _cm.Messaging.GetServiceBusProcessor();
-        var cm = _cm;
-
+        CloudMachineClient cm = _cm;
+        // TODO (Pri 0): once the cache gets GCed, we will stop receiving events
+        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("$private");
         // TODO: How to unsubscribe?
         processor.ProcessMessageAsync += async (args) =>
         {
