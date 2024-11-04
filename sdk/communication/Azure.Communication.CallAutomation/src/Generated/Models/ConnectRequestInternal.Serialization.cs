@@ -29,6 +29,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
+            if (Optional.IsDefined(MediaStreamingOptions))
+            {
+                writer.WritePropertyName("mediaStreamingOptions"u8);
+                writer.WriteObjectValue(MediaStreamingOptions);
+            }
+            if (Optional.IsDefined(TranscriptionOptions))
+            {
+                writer.WritePropertyName("transcriptionOptions"u8);
+                writer.WriteObjectValue(TranscriptionOptions);
+            }
             writer.WriteEndObject();
         }
 

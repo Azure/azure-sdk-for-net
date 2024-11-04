@@ -10,6 +10,15 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class AudioData : StreamingData
     {
+        /// <summary>
+        /// Creates the new AudioData object
+        /// </summary>
+        /// <param name="data"></param>
+        public AudioData(string data)
+        {
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
+        }
+
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {
             Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
@@ -22,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The audio data in base64 string.
+        /// The audio data in base64 byte.
         /// </summary>
         public byte[] Data { get; }
 

@@ -591,22 +591,10 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (connectCallOptions == null) throw new ArgumentNullException(nameof(connectCallOptions));
+                if (connectCallOptions == null)
+                    throw new ArgumentNullException(nameof(connectCallOptions));
 
-                CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(connectCallOptions.CallLocator);
-
-                ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, connectCallOptions.CallbackUri?.AbsoluteUri);
-                connectRequest.OperationContext = connectCallOptions.OperationContext;
-
-                if (connectCallOptions.CallIntelligenceOptions != null && connectCallOptions.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
-                {
-                    CallIntelligenceOptionsInternal callIntelligenceOptionsInternal = new CallIntelligenceOptionsInternal
-                    {
-                        CognitiveServicesEndpoint = connectCallOptions.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-                    };
-                    connectRequest.CallIntelligenceOptions = callIntelligenceOptionsInternal;
-                }
-
+                ConnectRequestInternal connectRequest = ConnectRequest(connectCallOptions);
                 Response<CallConnectionPropertiesInternal> response = await AzureCommunicationServicesRestClient.ConnectAsync(connectRequest).ConfigureAwait(false);
 
                 var callConnection = GetCallConnection(response.Value.CallConnectionId);
@@ -654,23 +642,11 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (connectCallOptions == null) throw new ArgumentNullException(nameof(connectCallOptions));
+                if (connectCallOptions == null)
+                    throw new ArgumentNullException(nameof(connectCallOptions));
 
-                CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(connectCallOptions.CallLocator);
-
-                ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, connectCallOptions.CallbackUri?.AbsoluteUri);
-                connectRequest.OperationContext = connectCallOptions.OperationContext;
-
-                if (connectCallOptions.CallIntelligenceOptions != null && connectCallOptions.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
-                {
-                    CallIntelligenceOptionsInternal callIntelligenceOptionsInternal = new CallIntelligenceOptionsInternal
-                    {
-                        CognitiveServicesEndpoint = connectCallOptions.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-                    };
-                    connectRequest.CallIntelligenceOptions = callIntelligenceOptionsInternal;
-                }
-
-                Response<CallConnectionPropertiesInternal> response =  AzureCommunicationServicesRestClient.Connect(connectRequest);
+                ConnectRequestInternal connectRequest = ConnectRequest(connectCallOptions);
+                Response<CallConnectionPropertiesInternal> response = AzureCommunicationServicesRestClient.Connect(connectRequest);
 
                 var callConnection = GetCallConnection(response.Value.CallConnectionId);
                 ConnectCallResult connectResult = new ConnectCallResult(new CallConnectionProperties(response.Value), callConnection);
@@ -744,6 +720,27 @@ namespace Azure.Communication.CallAutomation
             return request;
         }
 
+        private ConnectRequestInternal ConnectRequest(ConnectCallOptions options)
+        {
+            CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(options.CallLocator);
+            ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, options.CallbackUri?.AbsoluteUri);
+            connectRequest.OperationContext = options.OperationContext;
+            connectRequest.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+            connectRequest.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+
+            if (options.CallIntelligenceOptions != null && options.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
+            {
+                CallIntelligenceOptionsInternal callIntelligenceOptionsInternal = new CallIntelligenceOptionsInternal
+                {
+                    CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
+                };
+                connectRequest.CallIntelligenceOptions = callIntelligenceOptionsInternal;
+            }
+
+            return connectRequest;
+
+        }
+
         /// <summary>
         /// Validates an Https Uri.
         /// </summary>
@@ -762,7 +759,7 @@ namespace Azure.Communication.CallAutomation
             return configuration == default
                 ? default
                 : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
-                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming);
+                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming, configuration.EnableBidirectional, configuration.AudioFormat);
         }
         private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {

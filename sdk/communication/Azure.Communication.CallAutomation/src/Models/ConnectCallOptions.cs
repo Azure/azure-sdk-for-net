@@ -37,6 +37,16 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
+
+        /// <summary>
+        /// Live Transcription Configuration.
+        /// </summary>
+        public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
         /// AI options for the call.
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }

@@ -29,5 +29,9 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingAudioChannel MediaStreamingAudioChannel { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
         public bool? StartMediaStreaming { get; set; }
+        /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
+        public bool? EnableBidirectional { get; set; }
+        /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+        public AudioFormat? AudioFormat { get; set; }
     }
 }

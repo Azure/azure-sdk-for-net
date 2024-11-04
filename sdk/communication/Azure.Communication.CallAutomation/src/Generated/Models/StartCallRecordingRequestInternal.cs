@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </param>
         /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
-        /// <param name="externalStorage"></param>
+        /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
         internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
         {
             CallLocator = callLocator;
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallAutomation
         public IList<ChannelAffinityInternal> ChannelAffinity { get; }
         /// <summary> When set to true will start recording in Pause mode, which can be resumed. </summary>
         public bool? PauseOnStart { get; set; }
-        /// <summary> Gets or sets the external storage. </summary>
+        /// <summary> Optional property to specify location where recording will be stored. </summary>
         public RecordingStorageInternal ExternalStorage { get; set; }
     }
 }
