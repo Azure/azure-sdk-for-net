@@ -2,24 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using Azure.AI.OpenAI;
-using Azure.Core;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
-using OpenAI.Chat;
 
 namespace Azure.Provisioning.CloudMachine.OpenAI;
 
 public class OpenAIFeature : CloudMachineFeature
 {
-    public string Model { get; }
-    public string ModelVersion { get; }
+    public OpenAIFeature()
+    {
+    }
 
-    public OpenAIFeature(string model, string modelVersion) {  Model = model; ModelVersion = modelVersion; }
+    public AIModel? Chat { get; set; }
+    public AIModel? Embeddings { get; set; }
 
     public override void AddTo(CloudMachineInfrastructure cloudMachine)
     {
+        if (Chat == default && Embeddings == default)
+        {
+            throw new InvalidOperationException("At least one of Chat or Embeddings must be specified.");
+        }
         CognitiveServicesAccount cognitiveServices = new("openai")
         {
             Name = cloudMachine.Id,
@@ -31,6 +33,7 @@ public class OpenAIFeature : CloudMachineFeature
                 CustomSubDomainName = cloudMachine.Id
             },
         };
+        cloudMachine.AddResource(cognitiveServices);
 
         cloudMachine.AddResource(cognitiveServices.CreateRoleAssignment(
             CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor,
@@ -38,57 +41,62 @@ public class OpenAIFeature : CloudMachineFeature
             cloudMachine.PrincipalIdParameter)
         );
 
-        // TODO: if we every support more than one deployment, they need to be chained using DependsOn.
-        // The reason is that deployments need to be deployed/created serially.
-        CognitiveServicesAccountDeployment deployment = new("openai_deployment", "2023-05-01")
+        CognitiveServicesAccountDeployment? chat = default;
+        if (Chat != default)
         {
-            Parent = cognitiveServices,
-            Name = cloudMachine.Id,
-            Properties = new CognitiveServicesAccountDeploymentProperties()
+            chat = new("openai_deployment_chat", "2024-06-01-preview")
             {
-                Model = new CognitiveServicesAccountDeploymentModel() {
-                    Name = this.Model,
-                    Format = "OpenAI",
-                    Version = this.ModelVersion,
+                Parent = cognitiveServices,
+                Name = cloudMachine.Id,
+                Properties = new CognitiveServicesAccountDeploymentProperties()
+                {
+                    Model = new CognitiveServicesAccountDeploymentModel()
+                    {
+                        Name = Chat.Model,
+                        Format = "OpenAI",
+                        Version = Chat.ModelVersion
+                    },
+                    VersionUpgradeOption = DeploymentModelVersionUpgradeOption.OnceNewDefaultVersionAvailable,
+                    RaiPolicyName = "Microsoft.DefaultV2",
+                },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
                 }
-            },
-        };
-
-        cloudMachine.AddResource(cognitiveServices);
-        cloudMachine.AddResource(deployment);
-    }
-}
-
-public static class AzureOpenAIExtensions
-{
-    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
-    {
-        ChatClient chatClient = workspace.Subclients.Get(() =>
-        {
-            AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateChatClient(aoiaClient);
-        });
-
-        return chatClient;
-    }
-
-    private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
-        {
-            return new(connection.Endpoint, connection.TokenCredential);
+            };
+            cloudMachine.AddResource(chat);
         }
-        else
-        {
-            return  new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
-        }
-    }
 
-    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
-    {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.Id);
-        return chat;
+        if (Embeddings != null)
+        {
+            CognitiveServicesAccountDeployment embeddings = new("openai_deployment_embedding", "2024-06-01-preview")
+            {
+                Parent = cognitiveServices,
+                Name = $"{cloudMachine.Id}-embedding",
+                Properties = new CognitiveServicesAccountDeploymentProperties()
+                {
+                    Model = new CognitiveServicesAccountDeploymentModel()
+                    {
+                        Name = Embeddings.Model,
+                        Format = "OpenAI",
+                        Version = Embeddings.ModelVersion
+                    }
+                },
+                Sku = new CognitiveServicesSku
+                {
+                    Capacity = 120,
+                    Name = "Standard"
+                }
+            };
+
+            // Ensure that additional deployments, are chained using DependsOn.
+            // The reason is that deployments need to be deployed/created serially.
+            if (chat != default)
+            {
+                embeddings.DependsOn.Add(chat);
+            }
+            cloudMachine.AddResource(embeddings);
+        }
     }
 }

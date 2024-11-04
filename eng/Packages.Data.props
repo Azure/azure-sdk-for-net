@@ -120,7 +120,7 @@
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0-beta.2" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.12.0" />
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
@@ -157,6 +157,7 @@
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.0.0" />
+    <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
@@ -260,7 +261,7 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Identity" Version="1.12.0" />
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.18.2" />
