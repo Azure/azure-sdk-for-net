@@ -49,6 +49,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreNotEqual(requestString, responseString);
         }
 
+		//It is for serialization sanity test, not for functional test
         [Test]
         public void DocumentTranslationSerializationTest()
         {
