@@ -67,10 +67,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             }
             catch (Exception)
             {
-                if (File.Exists(jobPlanFile.FilePath))
-                {
-                    File.Delete(jobPlanFile.FilePath);
-                }
+                // will handle if file has not been created yet
+                File.Delete(jobPlanFile.FilePath);
                 throw;
             }
 
