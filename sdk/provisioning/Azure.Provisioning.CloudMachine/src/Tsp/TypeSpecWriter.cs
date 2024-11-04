@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.TypeSpec;
 public static class TypeSpecWriter
@@ -104,7 +105,9 @@ public static class TypeSpecWriter
     {
         string httpVerb = ReadHttpVerb(method);
 
-        writer.Write($"{httpVerb} @route(\"{ToCamel(method.Name)}\") {method.Name}(");
+        var methodName = method.Name;
+        if (methodName.EndsWith("Async")) methodName = methodName.Substring(0, methodName.Length - "Async".Length);
+        writer.Write($"{httpVerb} @route(\"{ToCamel(methodName)}\") {methodName}(");
 
         bool first = true;
         foreach (var parameter in method.GetParameters())
@@ -136,11 +139,16 @@ public static class TypeSpecWriter
         }
         writer.WriteLine(") : {");
         writer.WriteLine($"    @statusCode statusCode: 200;");
-        if (method.ReflectedType != typeof(void))
-            writer.WriteLine($"    @body response : {method.ReturnType.ToTspType()};");
+
+        var returnType = method.ReturnType;
+        if (returnType == typeof(Task)) returnType = typeof(void);
+        else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
+            returnType = returnType.GetGenericArguments()[0];
+
+        writer.WriteLine($"    @body response : {returnType.ToTspType()};");
         writer.WriteLine("  };");
-        if (method.ReturnType.IsModel())
-            models.Add(method.ReturnType);
+        if (returnType.IsModel())
+            models.Add(returnType);
     }
 
     private static string ReadParameterLocation(ParameterInfo parameter)

@@ -3,6 +3,9 @@
     <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core"/>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.Provisioning.CloudMachine.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>

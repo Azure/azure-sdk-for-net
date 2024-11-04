@@ -295,6 +295,7 @@
     <PackageReference Update="Microsoft.ApplicationInsights" Version="2.20.0" />
     <PackageReference Update="Microsoft.Azure.ApplicationInsights.Query" Version="1.0.0" />
     <PackageReference Update="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.1.25" />
