@@ -18,12 +18,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         protected BlobsStorageResourceProvider BlobResourceProvider { get; }
 
         private TransferManager _transferManager;
+        private TimeSpan _transferTimeout;
 
         public DirectoryTransferTest(TOptions options) : base(options)
         {
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.StorageEndpoint, PerfTestEnvironment.Instance.Credential);
             LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
+            _transferTimeout = TimeSpan.FromSeconds(Options.Duration);
 
             TransferManagerOptions managerOptions = new()
             {
@@ -102,9 +104,9 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             // The cancellation token we specify for WaitForCompletion should not
             // be the one passed to the test as we don't want this code to exit until
             // the transfer is complete or paused so it can be properly cleaned up.
-            // However, we pass a token with the test duration to prevent the transfer
+            // However, we pass a token with a generous time to prevent the transfer
             // from hanging forever if there is an issue.
-            CancellationTokenSource ctx = new(Options.Duration);
+            CancellationTokenSource ctx = new(_transferTimeout);
             await transfer.WaitForCompletionAsync(ctx.Token);
 
             if (!transfer.TransferStatus.HasCompletedSuccessfully &&
