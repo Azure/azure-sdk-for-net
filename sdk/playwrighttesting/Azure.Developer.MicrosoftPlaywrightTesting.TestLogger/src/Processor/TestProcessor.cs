@@ -338,7 +338,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
 ![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {SkippedTestCount}
 
-#### For more details, visit the [service dashboard]({Uri.EscapeDataString(_cloudRunMetadata.PortalUrl!)}).
+#### For more details, visit the [service dashboard]({_cloudRunMetadata.PortalUrl}).
 ";
 
                 string? filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
