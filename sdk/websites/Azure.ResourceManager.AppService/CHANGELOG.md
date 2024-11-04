@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Add status code 202 and allow some properties to be empty. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/46854.
+
 ### Other Changes
 
 ## 1.3.0-beta.1 (2024-10-14)
