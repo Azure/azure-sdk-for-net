@@ -4,7 +4,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Base class for Streaming Data
+    /// Base class for Out Streaming Data
     /// </summary>
     public class OutStreamingData
     {

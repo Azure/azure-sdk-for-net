@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// Creates the new AudioData object
         /// </summary>
         /// <param name="data"></param>
-        public AudioData(string data)
+        public AudioData(byte[] data)
         {
-            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
+            Data = data;
         }
 
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
