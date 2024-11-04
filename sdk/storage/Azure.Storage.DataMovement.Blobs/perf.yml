@@ -25,7 +25,7 @@ parameters:
 - name: AdditionalArguments
   displayName: AdditionalArguments (passed to PerfAutomation)
   type: string
-  default: ' '
+  default: '--no-sync'
 
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml

@@ -9,10 +9,9 @@ Tests:
 - Test: download
   Class: DownloadDirectory
   Arguments: &sizes
-  - --size 100
-  - --size 1024 --count 10000 --duration 60
-  - --size 10485760 --count 1000 --duration 60
-  - --size 1073741824 --count 10 --duration 120
+  - --size 1024 --count 5000 --duration 60 --concurrency 64
+  - --size 10485760 --count 500 --duration 90 --concurrency 64
+  - --size 1073741824 --count 5 --duration 120 --concurrency 64
 
 - Test: upload
   Class: UploadDireactory
