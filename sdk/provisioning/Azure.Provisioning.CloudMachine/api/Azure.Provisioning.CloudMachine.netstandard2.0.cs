@@ -1,16 +1,3 @@
-namespace Azure.CloudMachine.OpenAI
-{
-    public partial class EmbeddingKnowledgebase
-    {
-        internal EmbeddingKnowledgebase() { }
-        public void Add(string fact) { }
-    }
-    public partial class OpenAIConversation
-    {
-        internal OpenAIConversation() { }
-        public string Say(string message) { throw null; }
-    }
-}
 namespace Azure.Provisioning.CloudMachine
 {
     public abstract partial class CloudMachineFeature

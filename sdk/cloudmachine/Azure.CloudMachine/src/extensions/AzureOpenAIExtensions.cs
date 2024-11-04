@@ -9,8 +9,16 @@ using OpenAI.Embeddings;
 
 namespace Azure.CloudMachine.OpenAI;
 
+/// <summary>
+/// The Azure OpenAI extensions.
+/// </summary>
 public static class AzureOpenAIExtensions
 {
+    /// <summary>
+    /// Gets the OpenAI chat client.
+    /// </summary>
+    /// <param name="workspace"></param>
+    /// <returns></returns>
     public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
     {
         ChatClient chatClient = workspace.Subclients.Get(() =>
@@ -22,6 +30,11 @@ public static class AzureOpenAIExtensions
         return chatClient;
     }
 
+    /// <summary>
+    /// Gets the OpenAI embeddings client.
+    /// </summary>
+    /// <param name="workspace"></param>
+    /// <returns></returns>
     public static EmbeddingClient GetOpenAIEmbeddingsClient(this ClientWorkspace workspace)
     {
         EmbeddingClient embeddingsClient = workspace.Subclients.Get(() =>
@@ -32,19 +45,6 @@ public static class AzureOpenAIExtensions
 
         return embeddingsClient;
     }
-
-    //public static EmbeddingKnowledgebase CreateEmbeddingKnowledgebase(this ClientWorkspace workspace)
-    //{
-    //    EmbeddingClient embeddingsClient = workspace.GetOpenAIEmbeddingsClient();
-    //    return new EmbeddingKnowledgebase(embeddingsClient);
-    //}
-
-    //public static OpenAIConversation CreateOpenAIConversation(this ClientWorkspace workspace)
-    //{
-    //    ChatClient chatClient = workspace.GetOpenAIChatClient();
-    //    EmbeddingKnowledgebase knowledgebase = workspace.CreateEmbeddingKnowledgebase();
-    //    return new OpenAIConversation(chatClient, [], knowledgebase);
-    //}
 
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
     {

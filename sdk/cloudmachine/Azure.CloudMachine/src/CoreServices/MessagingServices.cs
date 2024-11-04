@@ -8,11 +8,18 @@ using Azure.Messaging.ServiceBus;
 
 namespace Azure.CloudMachine;
 
+/// <summary>
+/// The messaging services for the cloud machine.
+/// </summary>
 public readonly struct MessagingServices
 {
     private readonly CloudMachineClient _cm;
     internal MessagingServices(CloudMachineClient cm) => _cm = cm;
 
+    /// <summary>
+    /// Sends a message to the service bus.
+    /// </summary>
+    /// <param name="serializable"></param>
     public void SendMessage(object serializable)
     {
         ServiceBusSender sender = GetServiceBusSender();
@@ -24,6 +31,10 @@ public readonly struct MessagingServices
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
+    /// <summary>
+    /// Adds a function to be called when a message is received.
+    /// </summary>
+    /// <param name="received"></param>
     public void WhenMessageReceived(Action<string> received)
     {
         var processor = _cm.Messaging.GetServiceBusProcessor();
