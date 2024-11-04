@@ -1,8 +1,12 @@
 # Release History
 
-## 2.1.0-beta.2 (Unreleased)
+## 2.1.0-beta.2 (2024-11-04)
 
 This update brings compatibility with the Azure OpenAI `2024-10-01-preview` service API version as well as the `2.1.0-beta.2` release of the `OpenAI` library.
+
+### Breaking Changes
+
+- `[Experimental]` `ChatCitation` and `ChatRetrievedDocument` have each replaced the `Uri` property of type `System.Uri` with a `string` property named `Url`. This aligns with the REST specification and accounts for the wire value of `url` not always providing a valid RFC 3986 identifier [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
 
 ### Features Added
 
@@ -11,15 +15,20 @@ This update brings compatibility with the Azure OpenAI `2024-10-01-preview` serv
   - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
 - `2024-10-01-preview` further adds support for ungrounded content detection in chat completion content filter results via the `UngroundedMaterial` property on `ResponseContentFilterResult`, as retrieved from a chat completion via the `GetResponseContentFilterResult()` extension method.
 
-## 2.0.1 (Unreleased)
+Via `OpenAI 2.0.0-beta.2`:
 
-## Breaking Changes
+- Made improvements to the experimental Realtime API. Please note this features area is currently under rapid development and not all changes may be reflected here.
+  - Several types have been renamed for consistency and clarity.
+  - ConversationRateLimitsUpdate (previously ConversationRateLimitsUpdatedUpdate) now includes named RequestDetails and TokenDetails properties, mapping to the corresponding named items in the underlying rate_limits command payload.
 
-- `[Experimental]` `ChatCitation` and `ChatRetrievedDocument` have each replaced the `Uri` property of type `System.Uri` with a `string` property named `Url`. This aligns with the REST specification and accounts for the wire value of `url` not always providing a valid RFC 3986 identifier [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
+### Bugs Fixed
 
-## Bugs Fixed
-
+- Addressed an HTTP 401 issue that caused certain connection retry attempts, such as those triggered for HTTP 429 rate limiting errors, to sometimes generate a malformed request with multiple `Authorization` headers that would then be rejected. [#46401](https://github.com/Azure/azure-sdk-for-net/pull/46401)
 - Addressed an issue that caused `ChatCitation` and `ChatRetrievedDocument` to sometimes throw on deserialization, specifically when a returned value in the `url` JSON field was not populated with an RFC 3986 compliant identifier for `System.Uri` [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
+
+Via `OpenAI 2.0.0-beta.2`:
+
+- Fixed serialization and deserialization of ConversationToolChoice literal values (such as "required").
 
 ## 2.1.0-beta.1 (2024-10-01)
 
