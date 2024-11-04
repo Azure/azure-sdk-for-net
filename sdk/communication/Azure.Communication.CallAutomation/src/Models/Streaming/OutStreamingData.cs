@@ -9,9 +9,18 @@ namespace Azure.Communication.CallAutomation
     public class OutStreamingData
     {
         /// <summary>
+        /// Create the new instance of outstreamingdata with kind
+        /// </summary>
+        /// <param name="kind"></param>
+        public OutStreamingData(MediaKind kind)
+        {
+            this.Kind = kind;
+        }
+
+        /// <summary>
         /// Out streaming data kind ex. StopAudio, AudioData
         /// </summary>
-        public MediaKind Kind { get; set; }
+        public MediaKind Kind { get; }
 
         /// <summary>
         /// Out streaming Audio Data
