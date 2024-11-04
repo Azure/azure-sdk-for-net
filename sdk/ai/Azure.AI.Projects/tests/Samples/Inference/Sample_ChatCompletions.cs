@@ -12,13 +12,23 @@ namespace Azure.AI.Projects.Tests;
 public class Sample_ChatCompletions
 {
     [Test]
-    public void InferenceChatCompletions()
+    public void ChatCompletions()
     {
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
         InferenceClient client = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetInferenceClient();
 
-        ChatCompletionsClient test = client.GetChatCompletionsClient();
+        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
-        // Call ChatCompletionsClient Operations
+        var requestOptions = new ChatCompletionsOptions()
+        {
+            Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("How many feet are in a mile?"),
+                },
+        };
+
+        Response<ChatCompletions> response = chatClient.Complete(requestOptions);
+        Console.WriteLine(response.Value.Content);
     }
 }

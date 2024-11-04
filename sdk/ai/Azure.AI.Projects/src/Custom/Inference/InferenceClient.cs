@@ -124,16 +124,58 @@ namespace Azure.AI.Projects
             _apiVersion = apiVersion;
         }
 
-        // <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
+        /// <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
         public virtual ChatCompletionsClient GetChatCompletionsClient()
         {
-            ConnectionsListSecretsResponse secret = AIProjectClient.GetConnectionsClient().GetConnection(ConnectionType.Serverless, true);
+            var connectionsClient = AIProjectClient.GetConnectionsClient();
+            ConnectionsListSecretsResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
 
-            // Get the URI and Key from the secret
-            var endpoint = new Uri("uri");
-            var credential = new AzureKeyCredential("key");
+            if (connectionSecret.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            {
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
+                }
 
-            return new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
+                if (!Uri.TryCreate(apiKeyAuthProperties.Target, UriKind.Absolute, out var endpoint))
+                {
+                    throw new UriFormatException("Invalid URI format in API key authentication target.");
+                }
+
+                var credential = new AzureKeyCredential(apiKeyAuthProperties.Credentials.Key);
+                return new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
+            }
+            else
+            {
+                throw new ArgumentException("Cannot connect with Inference! Ensure valid ConnectionPropertiesApiKeyAuth.");
+            }
+        }
+
+        /// <summary> Initializes a new instance of Inference's EmbeddingsClient. </summary>
+        public virtual EmbeddingsClient GetEmbeddingsClient()
+        {
+            var connectionsClient = AIProjectClient.GetConnectionsClient();
+            ConnectionsListSecretsResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
+
+            if (connectionSecret.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            {
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
+                }
+
+                if (!Uri.TryCreate(apiKeyAuthProperties.Target, UriKind.Absolute, out var endpoint))
+                {
+                    throw new UriFormatException("Invalid URI format in API key authentication target.");
+                }
+
+                var credential = new AzureKeyCredential(apiKeyAuthProperties.Credentials.Key);
+                return new EmbeddingsClient(endpoint, credential, new AzureAIInferenceClientOptions());
+            }
+            else
+            {
+                throw new ArgumentException("Cannot connect with Inference! Ensure valid ConnectionPropertiesApiKeyAuth.");
+            }
         }
     }
 }
