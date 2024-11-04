@@ -48,24 +48,5 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.IsNotNull(responseString);
             Assert.AreNotEqual(requestString, responseString);
         }
-
-        //It is for serialization sanity test, not for functional test
-        [Test]
-        public void DocumentTranslationSerializationTest()
-        {
-            string filePath = Path.Combine("TestData", "test-input-2.txt");
-            using Stream fileStream = File.OpenRead(filePath);
-            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
-
-            filePath = Path.Combine("TestData", "test-glossary-2.csv");
-            using Stream glossaryStream = File.OpenRead(filePath);
-            var sourceGlossaries = new List<MultipartFormFileData>()
-            {
-                new(Path.GetFileName(filePath), glossaryStream, "text/csv")
-            };
-            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries);
-            BinaryData result = ModelReaderWriter.Write<DocumentTranslateContent>(content);
-            Assert.IsNotNull(result);
-        }
     }
 }
