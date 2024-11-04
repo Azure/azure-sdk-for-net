@@ -303,8 +303,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
             var result = FailedTestCount > 0 ? TestCaseResultStatus.s_fAILED : TestCaseResultStatus.s_pASSED;
 
-            testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
-            durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
+#pragma warning disable CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
+            if (e.ElapsedTimeInRunningTests != null)
+            {
+                testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
+                durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
+            }
+#pragma warning restore CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
 
             TestRunShardDto? testRunShard = _testRunShard;
             // Update Shard End
@@ -347,6 +352,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
             }
         }
-        #endregion
+#endregion
     }
 }

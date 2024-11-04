@@ -91,10 +91,10 @@ public readonly struct StorageServices
                 return blobUri.AbsoluteUri.Substring(container.Uri.AbsoluteUri.Length);
             if (!string.IsNullOrEmpty(blobUri.LocalPath))
             {
-                return blobUri.LocalPath.Substring(Path.GetPathRoot(path)?.Length ?? 0).Replace('\\', '/');
+                return blobUri.LocalPath.Substring(Path.GetPathRoot(path)!.Length).Replace('\\', '/');
             }
         }
-        return path.Substring(Path.GetPathRoot(path)?.Length ?? 0).Replace('\\', '/');
+        return path.Substring(Path.GetPathRoot(path)!.Length).Replace('\\', '/');
     }
 
     public void WhenBlobUploaded(Action<StorageFile> function)

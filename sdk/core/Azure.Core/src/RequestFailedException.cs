@@ -129,7 +129,7 @@ namespace Azure
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
         [Obsolete(DiagnosticId = "SYSLIB0051")]
 #endif
         protected RequestFailedException(SerializationInfo info, StreamingContext context)

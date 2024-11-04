@@ -40,7 +40,7 @@ namespace Azure.Identity
         /// <param name="info">The <see cref="SerializationInfo"/>.</param>
         /// <param name="context">The <see cref="StreamingContext"/>.</param>
         /// <returns></returns>
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
         [Obsolete(DiagnosticId = "SYSLIB0051")]
 #endif
         protected AuthenticationFailedException(SerializationInfo info, StreamingContext context) : base(info, context)

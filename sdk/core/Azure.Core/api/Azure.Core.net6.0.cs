@@ -236,7 +236,6 @@ namespace Azure
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
-        [System.ObsoleteAttribute(DiagnosticId="SYSLIB0051")]
         protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public RequestFailedException(string message) { }
         public RequestFailedException(string message, System.Exception? innerException) { }

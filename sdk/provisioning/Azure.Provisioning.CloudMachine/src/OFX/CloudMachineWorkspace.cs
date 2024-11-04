@@ -65,7 +65,7 @@ public class CloudMachineWorkspace : ClientWorkspace
             case "OpenAI.Chat.ChatClient":
                 return new ClientConnectionOptions(Id);
             default:
-                throw new Exception($"unknown client {clientId}");
+                throw new Exception($"unknown client '{clientId}'");
         }
     }
 

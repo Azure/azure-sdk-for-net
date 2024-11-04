@@ -56,11 +56,9 @@ internal static class GuidUtilities
 
         if (BitConverter.IsLittleEndian)
         {
-#if NET6_0_OR_GREATER
-            MemoryMarshal.Write(buffer, in guid);
-#else
+#pragma warning disable CS9191 // The ref modifier for argument 2 corresponding to 'in' parameter is equivalent. Consider using 'in' instead
             MemoryMarshal.Write(buffer, ref guid);
-#endif
+#pragma warning restore CS9191
             return;
         }
 
