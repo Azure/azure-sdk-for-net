@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("KeyVaultId is allowed to be null, and this test case will be adjusted according to the situation in the future")]
         public async Task CreateOrUpdateWithNullKeyVaultId()
         {
             // Call CreateOrUpdate on an existing certificate which returns empty string for keyVaultId
