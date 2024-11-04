@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Plan file writer for the respective job.
         /// </summary>
-        internal TransferCheckpointer _checkpointer { get; set; }
+        internal ITransferCheckpointer _checkpointer { get; set; }
 
         private TransferProgressTracker _progressTracker;
 
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
             long? initialTransferSize,
             DataTransferErrorMode errorHandling,
             StorageResourceCreationPreference createMode,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
@@ -185,11 +185,11 @@ namespace Azure.Storage.DataMovement
             SingleTransferCompletedEventHandler = singleTransferEventHandler;
             ClientDiagnostics = clientDiagnostics;
 
-            // Set transfer sizes to user specified values or default
+            // Set transfer sizes to user specified values or default,
             // clamped to max supported chunk size for the destination.
             _initialTransferSize = Math.Min(
                 initialTransferSize ?? DataMovementConstants.DefaultInitialTransferSize,
-                _destinationResource.MaxSupportedChunkSize);
+                _destinationResource.MaxSupportedSingleTransferSize);
             _transferChunkSize = Math.Min(
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);
@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement
                 {
                     try
                     {
-                        await Task.Run(chunkTask).ConfigureAwait(false);
+                        await Task.Run(chunkTask, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -464,7 +464,7 @@ namespace Azure.Storage.DataMovement
                 // If the job part is paused or ended with failures
                 // delete the destination resource because it could be unfinished or corrupted
                 // If we resume we would have to start from the beginning anyways.
-                await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
+                await _destinationResource.DeleteIfExistsAsync(_cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -487,7 +487,7 @@ namespace Azure.Storage.DataMovement
 
         internal async virtual Task SetCheckpointerStatus()
         {
-            await _checkpointer.SetJobPartTransferStatusAsync(
+            await _checkpointer.SetJobPartStatusAsync(
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
                 status: JobPartStatus).ConfigureAwait(false);

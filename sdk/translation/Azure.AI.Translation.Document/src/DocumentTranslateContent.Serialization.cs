@@ -27,15 +27,15 @@ namespace Azure.AI.Translation.Document
             return content;
         }
 
-        void global::System.ClientModel.Primitives.IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support writing '{format}' format.");
             }
-
-            writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(global::System.BinaryData.FromStream(MultipartDocument.Content));
@@ -82,7 +82,6 @@ namespace Azure.AI.Translation.Document
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         internal static DocumentTranslateContent DeserializeDocumentTranslateContent(JsonElement element, ModelReaderWriterOptions options = null)

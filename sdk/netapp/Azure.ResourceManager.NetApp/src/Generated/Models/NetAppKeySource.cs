@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault
-    /// Serialized Name: KeySource
-    /// </summary>
+    /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
     public readonly partial struct NetAppKeySource : IEquatable<NetAppKeySource>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MicrosoftNetAppValue = "Microsoft.NetApp";
         private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
-        /// <summary>
-        /// Microsoft-managed key encryption
-        /// Serialized Name: KeySource.Microsoft.NetApp
-        /// </summary>
+        /// <summary> Microsoft-managed key encryption. </summary>
         public static NetAppKeySource MicrosoftNetApp { get; } = new NetAppKeySource(MicrosoftNetAppValue);
-        /// <summary>
-        /// Customer-managed key encryption
-        /// Serialized Name: KeySource.Microsoft.KeyVault
-        /// </summary>
+        /// <summary> Customer-managed key encryption. </summary>
         public static NetAppKeySource MicrosoftKeyVault { get; } = new NetAppKeySource(MicrosoftKeyVaultValue);
         /// <summary> Determines if two <see cref="NetAppKeySource"/> values are the same. </summary>
         public static bool operator ==(NetAppKeySource left, NetAppKeySource right) => left.Equals(right);

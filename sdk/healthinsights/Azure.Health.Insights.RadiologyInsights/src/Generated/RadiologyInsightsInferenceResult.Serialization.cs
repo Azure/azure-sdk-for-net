@@ -19,13 +19,21 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<RadiologyInsightsInferenceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RadiologyInsightsInferenceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RadiologyInsightsInferenceResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("patientResults"u8);
             writer.WriteStartArray();
             foreach (var item in PatientResults)
@@ -50,7 +58,6 @@ namespace Azure.Health.Insights.RadiologyInsights
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RadiologyInsightsInferenceResult IJsonModel<RadiologyInsightsInferenceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

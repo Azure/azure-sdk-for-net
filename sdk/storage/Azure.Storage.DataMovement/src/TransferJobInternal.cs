@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Plan file writer for the respective job
         /// </summary>
-        internal TransferCheckpointer _checkpointer { get; set; }
+        internal ITransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
         /// Internal progress tracker for tracking and reporting progress of the transfer
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             CreateJobPartSingleAsync createJobPartSingleAsync,
             CreateJobPartMultiAsync createJobPartMultiAsync,
-            TransferCheckpointer checkPointer,
+            ITransferCheckpointer checkPointer,
             DataTransferErrorMode errorHandling,
             long? initialTransferSize,
             long? maximumTransferChunkSize,
@@ -202,7 +202,7 @@ namespace Azure.Storage.DataMovement
             CreateJobPartSingleAsync createJobPartSingleAsync,
             CreateJobPartMultiAsync createJobPartMultiAsync,
             DataTransferOptions transferOptions,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement
             CreateJobPartSingleAsync createJobPartSingleAsync,
             CreateJobPartMultiAsync createJobPartMultiAsync,
             DataTransferOptions transferOptions,
-            TransferCheckpointer checkpointer,
+            ITransferCheckpointer checkpointer,
             DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
@@ -600,7 +600,7 @@ namespace Azure.Storage.DataMovement
 
         internal async virtual Task SetCheckpointerStatus()
         {
-            await _checkpointer.SetJobTransferStatusAsync(
+            await _checkpointer.SetJobStatusAsync(
                 transferId: _dataTransfer.Id,
                 status: _dataTransfer.TransferStatus).ConfigureAwait(false);
         }
@@ -636,7 +636,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected async Task OnAllResourcesEnumerated()
         {
-            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
+            await _checkpointer.SetEnumerationCompleteAsync(_dataTransfer.Id, _cancellationToken).ConfigureAwait(false);
         }
 
         internal async Task CheckAndUpdateStatusAsync()

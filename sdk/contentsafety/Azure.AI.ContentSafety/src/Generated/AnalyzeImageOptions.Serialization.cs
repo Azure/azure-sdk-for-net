@@ -19,13 +19,21 @@ namespace Azure.AI.ContentSafety
 
         void IJsonModel<AnalyzeImageOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeImageOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image, options);
             if (Optional.IsCollectionDefined(Categories))
@@ -58,7 +66,6 @@ namespace Azure.AI.ContentSafety
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AnalyzeImageOptions IJsonModel<AnalyzeImageOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
