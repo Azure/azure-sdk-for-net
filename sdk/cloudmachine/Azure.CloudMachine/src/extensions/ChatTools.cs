@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI.Assistants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,8 +8,9 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using OpenAI.Chat;
 
-namespace OpenAI.Chat;
+namespace Azure.CloudMachine.OpenAI.Chat;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
 public class ChatTools

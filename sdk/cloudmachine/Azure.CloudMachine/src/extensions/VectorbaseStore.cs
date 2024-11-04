@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace OpenAI.Embeddings;
+namespace Azure.CloudMachine.OpenAI.Embeddings;
 
 /// <summary>
 /// The base class for a vectorbase store.

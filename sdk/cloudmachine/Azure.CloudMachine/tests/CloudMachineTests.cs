@@ -19,6 +19,8 @@ using Microsoft.Extensions.Primitives;
 using OpenAI.Embeddings;
 using System.Linq;
 using System.IO;
+using Azure.CloudMachine.OpenAI.Chat;
+using Azure.CloudMachine.OpenAI.Embeddings;
 
 namespace Azure.CloudMachine.Tests;
 

@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using System;
+using OpenAI.Embeddings;
 
-namespace OpenAI.Embeddings;
+namespace Azure.CloudMachine.OpenAI.Embeddings;
 
 /// <summary>
 /// The vectorbase for storing embeddings.
