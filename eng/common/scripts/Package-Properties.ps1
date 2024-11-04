@@ -168,7 +168,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $lookup[$lookupKey] = $pkg
 
         foreach ($file in $targetedFiles) {
-            $filePath = Resolve-Path (Join-Path $RepoRoot $file)
+            $filePath = (Join-Path $RepoRoot $file)
             $shouldInclude = $filePath -like "$pkgDirectory*"
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
