@@ -1052,4 +1052,25 @@ directive:
         $.properties.properties.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
+  - from: Certificates.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}'].put
+    transform: >
+        $["x-ms-long-running-operation"] = true;
+        $['responses'] = {
+            "200": {
+                "description": "OK.",
+                "schema": {
+                    "$ref": "#/definitions/Certificate"
+                }
+            },
+            "202": {
+                "description": "OK.",
+            },
+            "default": {
+                "description": "App Service error response.",
+                "schema": {
+                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                }
+            }
+        };
 ```
