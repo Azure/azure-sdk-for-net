@@ -224,8 +224,11 @@ public class PlaywrightService
 
     internal static void SetReportingUrlAndWorkspaceId()
     {
-        // Service Endpoint null check happens prior to this method being called
-        Match match = Regex.Match(ServiceEndpoint!, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
+        Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
         if (!match.Success)
             return;
         var region = match.Groups["region"].Value;
@@ -244,13 +247,16 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
         string authToken = GetAuthToken()!;
         if (string.IsNullOrEmpty(authToken))
             throw new Exception(Constants.s_no_auth_error);
         JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
         var tokenaWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
-        // Service Endpoint null check happens prior to this method being called
-        Match match = Regex.Match(ServiceEndpoint!, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+        Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
         if (!match.Success)
             throw new Exception(Constants.s_invalid_service_endpoint_error_message);
         var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
