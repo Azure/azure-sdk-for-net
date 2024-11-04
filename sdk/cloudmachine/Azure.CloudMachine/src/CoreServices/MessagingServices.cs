@@ -59,8 +59,8 @@ public readonly struct MessagingServices
     internal ServiceBusProcessor GetServiceBusProcessor(string id)
     {
         MessagingServices messagingServices = this;
-        ServiceBusProcessor sender = _cm.Subclients.Get(() => messagingServices.CreateProcessor(id), id);
-        return sender;
+        ServiceBusProcessor processor = _cm.Subclients.Get(() => messagingServices.CreateProcessor(id), id);
+        return processor;
     }
 
     private ServiceBusSender CreateSender()
@@ -83,11 +83,7 @@ public readonly struct MessagingServices
 
         ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusProcessor), id);
         string[] topicAndSubscription = connection.Id.Split('/');
-
-        ServiceBusProcessor processor = client.CreateProcessor(
-            topicAndSubscription[0],
-            topicAndSubscription[1],
-            new() { ReceiveMode = ServiceBusReceiveMode.PeekLock, MaxConcurrentCalls = 5 });
+        ServiceBusProcessor processor = client.CreateProcessor(topicAndSubscription[0], topicAndSubscription[1], new() { MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
     }
