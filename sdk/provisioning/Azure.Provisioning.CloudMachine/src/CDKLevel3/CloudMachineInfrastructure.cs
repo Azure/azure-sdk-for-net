@@ -309,7 +309,7 @@ public class CloudMachineInfrastructure
                 if (name.StartsWith("I")) name = name.Substring(1);
                 string directory = Path.Combine(".", "tsp");
                 string tspFile = Path.Combine(directory, $"{name}.tsp");
-                Directory.CreateDirectory(Path.GetDirectoryName(tspFile));
+                Directory.CreateDirectory(Path.GetDirectoryName(tspFile)!);
                 if (File.Exists(tspFile)) File.Delete(tspFile);
                 using FileStream stream = File.OpenWrite(tspFile);
                 TypeSpecWriter.WriteServer(stream, endpoints);

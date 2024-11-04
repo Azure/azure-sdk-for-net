@@ -111,7 +111,7 @@ public static class TypeSpecWriter
         {
             Type parameterType = parameter.ParameterType;
 
-            if (parameterType.FullName.Equals("Microsoft.AspNetCore.Http.HttpRequest", StringComparison.Ordinal))
+            if (parameterType.FullName!.Equals("Microsoft.AspNetCore.Http.HttpRequest", StringComparison.Ordinal))
             {
                 parameterType = typeof(byte[]);
             }
