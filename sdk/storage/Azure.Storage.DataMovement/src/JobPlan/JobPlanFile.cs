@@ -58,9 +58,20 @@ namespace Azure.Storage.DataMovement.JobPlan
             string filePath = Path.Combine(checkpointerPath, fileName);
 
             JobPlanFile jobPlanFile = new(id, filePath);
-            using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+            try
             {
-                await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+                {
+                    await headerStream.CopyToAsync(fileStream, DefaultBufferSize, cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                if (File.Exists(jobPlanFile.FilePath))
+                {
+                    File.Delete(jobPlanFile.FilePath);
+                }
+                throw;
             }
 
             return jobPlanFile;
