@@ -6,19 +6,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Identity;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
-public partial class Sample_Agent_Basics
+public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     public async Task BasicExample()
     {
         #region Snippet:OverviewCreateClient
+#if SNIPPET
         var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+#else
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+#endif
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
         #endregion
 

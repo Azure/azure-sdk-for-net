@@ -7,17 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
 
-public partial class Sample_Agent_FileSearch
+public partial class Sample_Agent_FileSearch : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     public async Task FilesSearchExample()
     {
-        var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:UploadAgentFilesToUse

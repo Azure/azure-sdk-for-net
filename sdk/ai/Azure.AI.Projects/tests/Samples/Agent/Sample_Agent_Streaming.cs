@@ -4,17 +4,18 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class Sample_Agent_Streaming
+    public class Sample_Agent_Streaming : SamplesBase<AIProjectsTestEnvironment>
     {
         [Test]
         public async Task Streaming()
         {
-            var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+            var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
             Response<Agent> agentResponse = await client.CreateAgentAsync(

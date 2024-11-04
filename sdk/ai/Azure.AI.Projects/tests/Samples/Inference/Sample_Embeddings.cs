@@ -6,16 +6,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Inference;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
-public class Sample_Embeddings
+public class Sample_Embeddings : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
+    [Ignore("Model deployment needed to run this sample")]
     public void BasicEmbedding()
     {
-        var connectionString = Environment.GetEnvironmentVariable("AZURE_AI_CONNECTION_STRING");
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         InferenceClient client = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetInferenceClient();
 
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
