@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -71,6 +73,59 @@ namespace Azure.ResourceManager.TestFramework
 
             Assert.IsEmpty(exceptionList, "InheritanceCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
             Assert.IsEmpty(errorList, "InheritanceCheck failed with Type: " + string.Join(",", errorList));
+        }
+        [Test]
+        public void ValidateIJsonModelImpCompliance()
+        {
+            const string TestAssemblySuffix = ".Tests";
+            const string TestFrameworkAssembly = "Azure.ResourceManager.TestFramework";
+            var testAssembly = Assembly.GetExecutingAssembly();
+            var assemblyName = testAssembly.GetName().Name;
+            var rpNamespace = assemblyName.Substring(0, assemblyName.Length - TestAssemblySuffix.Length);
+            if (rpNamespace == TestFrameworkAssembly)
+            {
+                return;
+            }
+            TestContext.WriteLine($"Testing assembly {rpNamespace}");
+            var sdkAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == rpNamespace) ?? Assembly.Load(rpNamespace);
+            Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
+            var types = sdkAssembly.GetTypes();
+            List<string> nonCompliantClasses = new List<string>();
+            foreach (var type in types)
+            {
+                // Check if the type implements IJsonModel<T>
+                var jsonModelInterface = type.GetInterfaces().FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IJsonModel<>));
+                if (jsonModelInterface == null)
+                {
+                    continue;
+                }
+                // Get the generic type argument T
+                var genericArguments = jsonModelInterface.GetGenericArguments();
+                if (genericArguments.Length == 1)
+                {
+                    var genericArgumentType = genericArguments[0];
+                    bool isCompliant = false;
+                    if (genericArgumentType == type)
+                    {
+                        isCompliant = HasJsonModelWriteCoreMethod(type);
+                    }
+                    else
+                    {
+                        isCompliant = HasJsonModelWriteCoreMethod(genericArgumentType);
+                    }
+                    if (!isCompliant)
+                    {
+                        nonCompliantClasses.Add(type.Name);
+                    }
+                }
+            }
+            Assert.IsEmpty(nonCompliantClasses, "The following classes implement IJsonModel<T> but do not have a protected JsonModelWriteCore method:" + string.Join(",", nonCompliantClasses));
+        }
+
+        private static bool HasJsonModelWriteCoreMethod(Type type)
+        {
+            var method = type.GetMethod("JsonModelWriteCore", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return method != null && method.IsFamily; // IsFamily checks for protected access
         }
     }
 }
