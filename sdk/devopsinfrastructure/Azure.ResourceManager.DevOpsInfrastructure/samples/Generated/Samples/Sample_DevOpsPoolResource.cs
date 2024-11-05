@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
     public partial class Sample_DevOpsPoolResource
     {
-        // Pools_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PoolsGet()
         {
             // Generated from example definition: 2024-10-19/GetPool.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pools_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PoolsUpdate()
         {
             // Generated from example definition: 2024-10-19/UpdatePool.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pools_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PoolsDelete()
         {
             // Generated from example definition: 2024-10-19/DeletePool.json
@@ -104,12 +102,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
             // invoke the operation
             await devOpsPool.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Pools_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDevOpsPools_PoolsListBySubscription()
         {
             // Generated from example definition: 2024-10-19/ListPoolsBySubscription.json
@@ -136,12 +133,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ResourceDetails_ListByPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceDetails_ResourceDetailsListByPool()
         {
             // Generated from example definition: 2024-10-19/ResourceDetails_ListByPool.json
@@ -166,7 +162,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

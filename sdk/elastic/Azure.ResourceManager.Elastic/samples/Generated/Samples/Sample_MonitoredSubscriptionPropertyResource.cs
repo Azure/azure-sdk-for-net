@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
     public partial class Sample_MonitoredSubscriptionPropertyResource
     {
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_UpdateMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_MonitorsUpdateMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Update.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_DeleteMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Delete.json
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.Elastic.Samples
             // invoke the operation
             await monitoredSubscriptionProperty.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

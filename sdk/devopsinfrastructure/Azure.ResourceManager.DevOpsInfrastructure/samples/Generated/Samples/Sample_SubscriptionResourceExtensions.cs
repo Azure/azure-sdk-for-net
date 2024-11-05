@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Sku_ListByLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkusByLocation_SkuListByLocation()
         {
             // Generated from example definition: 2024-10-19/Sku_ListByLocation.json
@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SubscriptionUsages_Usages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_SubscriptionUsagesUsages()
         {
             // Generated from example definition: 2024-10-19/SubscriptionUsages_Usages.json
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

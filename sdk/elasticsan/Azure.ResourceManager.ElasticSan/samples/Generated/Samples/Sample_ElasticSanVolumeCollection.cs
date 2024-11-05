@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ElasticSan.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanVolumeCollection
     {
-        // Volumes_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumesCreateMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Create_MaximumSet_Gen.json
@@ -61,9 +61,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Create_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumesCreateMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Create_MinimumSet_Gen.json
@@ -99,9 +98,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumesGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MaximumSet_Gen.json
@@ -135,9 +133,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumesGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MaximumSet_Gen.json
@@ -167,9 +164,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumesGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MaximumSet_Gen.json
@@ -199,7 +195,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -211,9 +207,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             }
         }
 
-        // Volumes_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumesGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MinimumSet_Gen.json
@@ -247,9 +242,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumesGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MinimumSet_Gen.json
@@ -279,9 +273,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumesGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_Get_MinimumSet_Gen.json
@@ -311,7 +304,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -323,9 +316,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             }
         }
 
-        // Volumes_ListByVolumeGroup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumesListByVolumeGroupMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_ListByVolumeGroup_MaximumSet_Gen.json
@@ -358,12 +350,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ListByVolumeGroup_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VolumesListByVolumeGroupMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/Volumes_ListByVolumeGroup_MinimumSet_Gen.json
@@ -396,7 +387,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

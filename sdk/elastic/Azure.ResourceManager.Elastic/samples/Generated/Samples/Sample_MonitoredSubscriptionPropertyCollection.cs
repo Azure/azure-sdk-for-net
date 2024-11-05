@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
     public partial class Sample_MonitoredSubscriptionPropertyCollection
     {
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_List.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Elastic.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Get.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Get.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MonitorsGetMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_Get.json
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.Elastic.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.Elastic.Samples
             }
         }
 
-        // Monitors_AddMonitoredSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_MonitorsAddMonitoredSubscriptions()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredSubscriptions_CreateorUpdate.json

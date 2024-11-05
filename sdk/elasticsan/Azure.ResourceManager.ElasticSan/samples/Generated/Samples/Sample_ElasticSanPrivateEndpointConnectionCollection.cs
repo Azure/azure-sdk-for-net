@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ElasticSan.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanPrivateEndpointConnectionCollection
     {
-        // PrivateEndpointConnections_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PrivateEndpointConnectionsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Create_MaximumSet_Gen.json
@@ -63,9 +63,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Create_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PrivateEndpointConnectionsCreateMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Create_MinimumSet_Gen.json
@@ -100,9 +99,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MaximumSet_Gen.json
@@ -135,9 +133,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateEndpointConnectionsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MaximumSet_Gen.json
@@ -166,9 +163,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateEndpointConnections_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateEndpointConnectionsGetMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MaximumSet_Gen.json
@@ -197,7 +193,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -209,9 +205,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             }
         }
 
-        // PrivateEndpointConnections_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MinimumSet_Gen.json
@@ -244,9 +239,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateEndpointConnectionsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MinimumSet_Gen.json
@@ -275,9 +269,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateEndpointConnections_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateEndpointConnectionsGetMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_Get_MinimumSet_Gen.json
@@ -306,7 +299,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -318,9 +311,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             }
         }
 
-        // PrivateEndpointConnections_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateEndpointConnectionsListMaximumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_List_MaximumSet_Gen.json
@@ -352,12 +344,11 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateEndpointConnections_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_PrivateEndpointConnectionsListMinimumSetGen()
         {
             // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/PrivateEndpointConnections_List_MinimumSet_Gen.json
@@ -389,7 +380,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
