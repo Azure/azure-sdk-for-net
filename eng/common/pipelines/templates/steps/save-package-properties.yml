@@ -36,6 +36,8 @@ steps:
       # However, the public identity does not have the permissions to attach tags to the build.
       # Instead, we will save the changed services to a file, attach it as an attachment named tags.json, and pipeline
       - pwsh: |
+          $changedServices = (Get-Content -Path '${{ parameters.DiffDirectory }}/diff.json' -Raw | ConvertFrom-Json).ChangedServices
+
           if ($changedServices) {
             Write-Host "Attaching changed service names to the build for additional tag generation."
             $changedServices | ConvertTo-Json | Out-File -FilePath $(System.DefaultWorkingDirectory)/tags.json -Encoding utf8
