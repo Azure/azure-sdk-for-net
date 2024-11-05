@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.FrontDoor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Samples
 {
     public partial class Sample_FrontendEndpointResource
     {
-        // Get Frontend Endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontendEndpoint()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorFrontendEndpointGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FrontendEndpoints_EnableHttps
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableHttps_FrontendEndpointsEnableHttps()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorEnableHttps.json
@@ -76,14 +75,13 @@ namespace Azure.ResourceManager.FrontDoor.Samples
                 SecretName = "secret1",
                 SecretVersion = "00000000-0000-0000-0000-000000000000",
             };
-            await frontendEndpoint.EnableHttpsAsync(WaitUntil.Completed, customHttpsConfiguration);
+            await frontendEndpoint.EnableHttpsAsync(WaitUntil.Completed, customHttpsConfiguration).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // FrontendEndpoints_DisableHttps
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableHttps_FrontendEndpointsDisableHttps()
         {
             // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2021-06-01/examples/FrontdoorDisableHttps.json
@@ -104,9 +102,9 @@ namespace Azure.ResourceManager.FrontDoor.Samples
             FrontendEndpointResource frontendEndpoint = client.GetFrontendEndpointResource(frontendEndpointResourceId);
 
             // invoke the operation
-            await frontendEndpoint.DisableHttpsAsync(WaitUntil.Completed);
+            await frontendEndpoint.DisableHttpsAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

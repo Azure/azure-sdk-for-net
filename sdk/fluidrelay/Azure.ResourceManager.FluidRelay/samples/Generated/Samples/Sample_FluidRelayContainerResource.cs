@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.FluidRelay.Samples
 {
     public partial class Sample_FluidRelayContainerResource
     {
-        // Get Fluid Relay container details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFluidRelayContainerDetails()
         {
             // Generated from example definition: specification/fluidrelay/resource-manager/Microsoft.FluidRelay/stable/2022-06-01/examples/FluidRelayContainers_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.FluidRelay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Fluid Relay container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAFluidRelayContainer()
         {
             // Generated from example definition: specification/fluidrelay/resource-manager/Microsoft.FluidRelay/stable/2022-06-01/examples/FluidRelayContainers_Delete.json
@@ -69,9 +68,9 @@ namespace Azure.ResourceManager.FluidRelay.Samples
             FluidRelayContainerResource fluidRelayContainer = client.GetFluidRelayContainerResource(fluidRelayContainerResourceId);
 
             // invoke the operation
-            await fluidRelayContainer.DeleteAsync(WaitUntil.Completed);
+            await fluidRelayContainer.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

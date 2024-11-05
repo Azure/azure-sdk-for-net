@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Samples
 {
     public partial class Sample_DeletedManagedHsmResource
     {
-        // Retrieve a deleted managed HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveADeletedManagedHSM()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-07-01/examples/DeletedManagedHsm_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.KeyVault.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Purge a managed HSM Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PurgeDeleted_PurgeAManagedHSMPool()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-07-01/examples/DeletedManagedHsm_Purge.json
@@ -67,9 +66,9 @@ namespace Azure.ResourceManager.KeyVault.Samples
             DeletedManagedHsmResource deletedManagedHsm = client.GetDeletedManagedHsmResource(deletedManagedHsmResourceId);
 
             // invoke the operation
-            await deletedManagedHsm.PurgeDeletedAsync(WaitUntil.Completed);
+            await deletedManagedHsm.PurgeDeletedAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

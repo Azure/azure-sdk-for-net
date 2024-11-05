@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 {
     public partial class Sample_IotFirmwareResource
     {
-        // BinaryHardening_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_FirmwaresGetMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MaximumSet_Gen.json
-            // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,29 +30,29 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            IotFirmwareResource result = await iotFirmware.GetAsync();
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BinaryHardening_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_FirmwaresGetMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MinimumSet_Gen.json
-            // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            IotFirmwareResource result = await iotFirmware.GetAsync();
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CryptoCertificates_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCryptoCertificates_CryptoCertificatesListByFirmwareMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirmwaresDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoCertificates_ListByFirmware_MaximumSet_Gen.json
-            // this example is just showing the usage of "CryptoCertificates_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,29 +92,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            await iotFirmware.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CryptoCertificates_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCryptoCertificates_CryptoCertificatesListByFirmwareMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirmwaresDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoCertificates_ListByFirmware_MinimumSet_Gen.json
-            // this example is just showing the usage of "CryptoCertificates_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -123,149 +119,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            await iotFirmware.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CryptoKeys_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCryptoKeys_CryptoKeysListByFirmwareMaximumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoKeys_ListByFirmware_MaximumSet_Gen.json
-            // this example is just showing the usage of "CryptoKeys_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // CryptoKeys_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCryptoKeys_CryptoKeysListByFirmwareMinimumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoKeys_ListByFirmware_MinimumSet_Gen.json
-            // this example is just showing the usage of "CryptoKeys_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Cves_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCves_CvesListByFirmwareMaximumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Cves_ListByFirmware_MaximumSet_Gen.json
-            // this example is just showing the usage of "Cves_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CveResult item in iotFirmware.GetCvesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Cves_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCves_CvesListByFirmwareMinimumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Cves_ListByFirmware_MinimumSet_Gen.json
-            // this example is just showing the usage of "Cves_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "FirmwareAnalysisRG";
-            string workspaceName = "default";
-            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CveResult item in iotFirmware.GetCvesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Firmwares_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FirmwaresUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MaximumSet_Gen.json
@@ -286,7 +154,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
             // invoke the operation
-            IotFirmwarePatch patch = new IotFirmwarePatch()
+            IotFirmwarePatch patch = new IotFirmwarePatch
             {
                 FileName = "wresexxulcdsdd",
                 Vendor = "vycmdhgtmepcptyoubztiuudpkcpd",
@@ -295,13 +163,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
                 Description = "uz",
                 FileSize = 17L,
                 Status = FirmwareAnalysisStatus.Pending,
-                StatusMessages =
-{
-new FirmwareAnalysisStatusMessage()
+                StatusMessages = {new FirmwareAnalysisStatusMessage
 {
 Message = "ulvhmhokezathzzauiitu",
-}
-},
+}},
             };
             IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
 
@@ -312,9 +177,8 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmwares_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FirmwaresUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MinimumSet_Gen.json
@@ -345,13 +209,12 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Firmwares_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_FirmwaresDeleteMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MaximumSet_Gen.json
+            // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -360,26 +223,28 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation
-            await iotFirmware.DeleteAsync(WaitUntil.Completed);
+            // invoke the operation and iterate over the result
+            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firmwares_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_FirmwaresDeleteMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MinimumSet_Gen.json
+            // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -388,26 +253,28 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation
-            await iotFirmware.DeleteAsync(WaitUntil.Completed);
+            // invoke the operation and iterate over the result
+            await foreach (BinaryHardeningResult item in iotFirmware.GetBinaryHardeningResultsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firmwares_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_FirmwaresGetMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCryptoCertificates_CryptoCertificatesListByFirmwareMaximumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoCertificates_ListByFirmware_MaximumSet_Gen.json
+            // this example is just showing the usage of "CryptoCertificates_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -416,30 +283,28 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation
-            IotFirmwareResource result = await iotFirmware.GetAsync();
+            // invoke the operation and iterate over the result
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firmwares_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_FirmwaresGetMinimumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCryptoCertificates_CryptoCertificatesListByFirmwareMinimumSetGen()
         {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoCertificates_ListByFirmware_MinimumSet_Gen.json
+            // this example is just showing the usage of "CryptoCertificates_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -448,26 +313,144 @@ Message = "ulvhmhokezathzzauiitu",
 
             // this example assumes you already have this IotFirmwareResource created on azure
             // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
             ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
             IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
 
-            // invoke the operation
-            IotFirmwareResource result = await iotFirmware.GetAsync();
+            // invoke the operation and iterate over the result
+            await foreach (CryptoCertificateResult item in iotFirmware.GetCryptoCertificatesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
-        // Firmwares_GenerateDownloadUrl_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCryptoKeys_CryptoKeysListByFirmwareMaximumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoKeys_ListByFirmware_MaximumSet_Gen.json
+            // this example is just showing the usage of "CryptoKeys_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCryptoKeys_CryptoKeysListByFirmwareMinimumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/CryptoKeys_ListByFirmware_MinimumSet_Gen.json
+            // this example is just showing the usage of "CryptoKeys_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CryptoKeyResult item in iotFirmware.GetCryptoKeysAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCves_CvesListByFirmwareMaximumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Cves_ListByFirmware_MaximumSet_Gen.json
+            // this example is just showing the usage of "Cves_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CveResult item in iotFirmware.GetCvesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCves_CvesListByFirmwareMinimumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Cves_ListByFirmware_MinimumSet_Gen.json
+            // this example is just showing the usage of "Cves_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "FirmwareAnalysisRG";
+            string workspaceName = "default";
+            string firmwareId = "109a9886-50bf-85a8-9d75-000000000000";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CveResult item in iotFirmware.GetCvesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateDownloadUri_FirmwaresGenerateDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateDownloadUrl_MaximumSet_Gen.json
@@ -493,9 +476,8 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firmwares_GenerateDownloadUrl_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateDownloadUri_FirmwaresGenerateDownloadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateDownloadUrl_MinimumSet_Gen.json
@@ -521,9 +503,8 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firmwares_GenerateFilesystemDownloadUrl_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateFilesystemDownloadUri_FirmwaresGenerateFilesystemDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateFilesystemDownloadUrl_MaximumSet_Gen.json
@@ -549,9 +530,8 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Firmwares_GenerateFilesystemDownloadUrl_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateFilesystemDownloadUri_FirmwaresGenerateFilesystemDownloadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_GenerateFilesystemDownloadUrl_MinimumSet_Gen.json
@@ -577,9 +557,8 @@ Message = "ulvhmhokezathzzauiitu",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PasswordHashes_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPasswordHashes_PasswordHashesListByFirmwareMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/PasswordHashes_ListByFirmware_MaximumSet_Gen.json
@@ -605,12 +584,11 @@ Message = "ulvhmhokezathzzauiitu",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PasswordHashes_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPasswordHashes_PasswordHashesListByFirmwareMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/PasswordHashes_ListByFirmware_MinimumSet_Gen.json
@@ -636,12 +614,11 @@ Message = "ulvhmhokezathzzauiitu",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SbomComponents_ListByFirmware_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSbomComponents_SbomComponentsListByFirmwareMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/SbomComponents_ListByFirmware_MaximumSet_Gen.json
@@ -667,12 +644,11 @@ Message = "ulvhmhokezathzzauiitu",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SbomComponents_ListByFirmware_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSbomComponents_SbomComponentsListByFirmwareMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/SbomComponents_ListByFirmware_MinimumSet_Gen.json
@@ -698,7 +674,7 @@ Message = "ulvhmhokezathzzauiitu",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

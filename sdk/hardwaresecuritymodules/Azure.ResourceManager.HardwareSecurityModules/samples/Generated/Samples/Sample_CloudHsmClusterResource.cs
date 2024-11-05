@@ -11,63 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_CloudHsmClusterResource
     {
-        // CloudHsmCluster_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CloudHsmClusterUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            CloudHsmClusterPatch patch = new CloudHsmClusterPatch()
-            {
-                Tags =
-{
-["Dept"] = "hsm",
-["Environment"] = "dogfood",
-["Slice"] = "A",
-},
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-1")] = new UserAssignedIdentity(),
-},
-                },
-            };
-            ArmOperation<CloudHsmClusterResource> lro = await cloudHsmCluster.UpdateAsync(WaitUntil.Completed, patch);
-            CloudHsmClusterResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CloudHsmClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CloudHsmCluster_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudHsmClusterGetMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
@@ -96,9 +47,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CloudHsmCluster_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CloudHsmClusterDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Delete_MaximumSet_Gen.json
@@ -118,46 +68,60 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            await cloudHsmCluster.DeleteAsync(WaitUntil.Completed);
+            await cloudHsmCluster.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudHsmCluster_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudHsmClusters_CloudHsmClusterListBySubscriptionMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CloudHsmClusterUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this CloudHsmClusterResource created on azure
+            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "rgcloudhsm";
+            string cloudHsmClusterName = "chsm1";
+            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
+            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (CloudHsmClusterResource item in subscriptionResource.GetCloudHsmClustersAsync())
+            // invoke the operation
+            CloudHsmClusterPatch patch = new CloudHsmClusterPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CloudHsmClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["Dept"] = "hsm",
+["Environment"] = "dogfood",
+["Slice"] = "A"
+},
+                Identity = new ManagedServiceIdentity(default)
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-1")] = null
+},
+                },
+            };
+            ArmOperation<CloudHsmClusterResource> lro = await cloudHsmCluster.UpdateAsync(WaitUntil.Completed, patch);
+            CloudHsmClusterResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudHsmClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CloudHsmCluster_ValidateBackup_Validation_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateBackupProperties_CloudHsmClusterValidateBackupValidationMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_CreateOrValidate_Backup_MaximumSet_Gen.json
@@ -183,9 +147,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmCluster_Create_Backup_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_CloudHsmClusterCreateBackupMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_CreateOrValidate_Backup_MaximumSet_Gen.json
@@ -211,9 +174,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmCluster_ValidateRestore_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateRestoreProperties_CloudHsmClusterValidateRestoreMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_RequestOrValidate_Restore_MaximumSet_Gen.json
@@ -234,15 +196,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             CloudHsmClusterRestoreContent content = new CloudHsmClusterRestoreContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
-            ArmOperation<CloudHsmClusterRestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<CloudHsmClusterRestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, content);
             CloudHsmClusterRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmCluster_Restore_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restore_CloudHsmClusterRestoreMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_RequestOrValidate_Restore_MaximumSet_Gen.json
@@ -269,9 +230,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmClusterPrivateLinkResources_ListByResource_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusterPrivateLinkResources_CloudHsmClusterPrivateLinkResourcesListByResourceMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateLinkResource_ListByCloudHsmCluster_MaximumSet_Gen.json
@@ -296,12 +256,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CloudHsmCluster_Get_Backup_Status_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusterBackupStatus_CloudHsmClusterGetBackupStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Backup_Pending_MaximumSet_Gen.json
@@ -327,9 +286,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CloudHsmCluster_Get_Restore_Status_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusterRestoreStatus_CloudHsmClusterGetRestoreStatusMaximumSetGen()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_Restore_Pending_MaximumSet_Gen.json

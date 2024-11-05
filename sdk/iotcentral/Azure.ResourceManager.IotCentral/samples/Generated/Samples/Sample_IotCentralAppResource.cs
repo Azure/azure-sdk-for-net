@@ -11,15 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.IotCentral.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotCentral.Samples
 {
     public partial class Sample_IotCentralAppResource
     {
-        // Apps_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AppsGet()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Get.json
@@ -48,41 +47,8 @@ namespace Azure.ResourceManager.IotCentral.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_AppsUpdate()
-        {
-            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Update.json
-            // this example is just showing the usage of "Apps_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotCentralAppResource created on azure
-            // for more information of creating IotCentralAppResource, please refer to the document of IotCentralAppResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resRg";
-            string resourceName = "myIoTCentralApp";
-            ResourceIdentifier iotCentralAppResourceId = IotCentralAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            IotCentralAppResource iotCentralApp = client.GetIotCentralAppResource(iotCentralAppResourceId);
-
-            // invoke the operation
-            IotCentralAppPatch patch = new IotCentralAppPatch()
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-                DisplayName = "My IoT Central App 2",
-            };
-            await iotCentralApp.UpdateAsync(WaitUntil.Completed, patch);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Apps_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AppsDelete()
         {
             // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Delete.json
@@ -102,127 +68,40 @@ namespace Azure.ResourceManager.IotCentral.Samples
             IotCentralAppResource iotCentralApp = client.GetIotCentralAppResource(iotCentralAppResourceId);
 
             // invoke the operation
-            await iotCentralApp.DeleteAsync(WaitUntil.Completed);
+            await iotCentralApp.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Apps_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIotCentralApps_AppsListBySubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AppsUpdate()
         {
-            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_ListBySubscription.json
-            // this example is just showing the usage of "Apps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Update.json
+            // this example is just showing the usage of "Apps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this IotCentralAppResource created on azure
+            // for more information of creating IotCentralAppResource, please refer to the document of IotCentralAppResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (IotCentralAppResource item in subscriptionResource.GetIotCentralAppsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                IotCentralAppData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Apps_CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckIotCentralAppNameAvailability_AppsCheckNameAvailability()
-        {
-            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_CheckNameAvailability.json
-            // this example is just showing the usage of "Apps_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "resRg";
+            string resourceName = "myIoTCentralApp";
+            ResourceIdentifier iotCentralAppResourceId = IotCentralAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            IotCentralAppResource iotCentralApp = client.GetIotCentralAppResource(iotCentralAppResourceId);
 
             // invoke the operation
-            IotCentralAppNameAvailabilityContent content = new IotCentralAppNameAvailabilityContent("myiotcentralapp")
+            IotCentralAppPatch patch = new IotCentralAppPatch
             {
-                ResourceType = "IoTApps",
+                Identity = new ManagedServiceIdentity(default),
+                DisplayName = "My IoT Central App 2",
             };
-            IotCentralAppNameAvailabilityResponse result = await subscriptionResource.CheckIotCentralAppNameAvailabilityAsync(content);
+            await iotCentralApp.UpdateAsync(WaitUntil.Completed, patch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Apps_SubdomainAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckIotCentralAppSubdomainAvailability_AppsSubdomainAvailability()
-        {
-            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_CheckSubdomainAvailability.json
-            // this example is just showing the usage of "Apps_CheckSubdomainAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            IotCentralAppNameAvailabilityContent content = new IotCentralAppNameAvailabilityContent("myiotcentralapp")
-            {
-                ResourceType = "IoTApps",
-            };
-            IotCentralAppNameAvailabilityResponse result = await subscriptionResource.CheckIotCentralAppSubdomainAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Apps_ListTemplates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetTemplatesApps_AppsListTemplates()
-        {
-            // Generated from example definition: specification/iotcentral/resource-manager/Microsoft.IoTCentral/preview/2021-11-01-preview/examples/Apps_Templates.json
-            // this example is just showing the usage of "Apps_ListTemplates" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (IotCentralAppTemplate item in subscriptionResource.GetTemplatesAppsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
