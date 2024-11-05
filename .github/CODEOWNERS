@@ -1084,10 +1084,10 @@
 # ServiceLabel: %Compute - Fleet %Mgmt
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
-# PRLabel: %Hybrid Connectivity
+# PRLabel: %HybridConnectivity
 /sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
 
-# ServiceLabel: %%Hybrid Connectivity %Mgmt
+# ServiceLabel: %%HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic
 
 # ######## Eng Sys ########
