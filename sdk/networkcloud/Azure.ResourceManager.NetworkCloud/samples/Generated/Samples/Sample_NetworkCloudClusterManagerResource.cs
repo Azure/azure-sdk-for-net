@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudClusterManagerResource
     {
-        // List cluster managers for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNetworkCloudClusterManagers_ListClusterManagersForSubscription()
-        {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterManagers_ListBySubscription.json
-            // this example is just showing the usage of "ClusterManagers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetworkCloudClusterManagerResource item in subscriptionResource.GetNetworkCloudClusterManagersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkCloudClusterManagerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get cluster manager
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetClusterManager()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterManagers_Get.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete cluster manager
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteClusterManager()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterManagers_Delete.json
@@ -101,14 +67,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterManagerResource networkCloudClusterManager = client.GetNetworkCloudClusterManagerResource(networkCloudClusterManagerResourceId);
 
             // invoke the operation
-            await networkCloudClusterManager.DeleteAsync(WaitUntil.Completed);
+            await networkCloudClusterManager.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch cluster manager
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterManager()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterManagers_Patch.json
@@ -128,12 +93,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterManagerResource networkCloudClusterManager = client.GetNetworkCloudClusterManagerResource(networkCloudClusterManagerResourceId);
 
             // invoke the operation
-            NetworkCloudClusterManagerPatch patch = new NetworkCloudClusterManagerPatch()
+            NetworkCloudClusterManagerPatch patch = new NetworkCloudClusterManagerPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
             };
             NetworkCloudClusterManagerResource result = await networkCloudClusterManager.UpdateAsync(patch);

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudClusterMetricsConfigurationResource
     {
-        // Get metrics configuration of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMetricsConfigurationOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterMetricsConfigurations_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete metrics configuration of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteMetricsConfigurationOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterMetricsConfigurations_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterMetricsConfigurationResource networkCloudClusterMetricsConfiguration = client.GetNetworkCloudClusterMetricsConfigurationResource(networkCloudClusterMetricsConfigurationResourceId);
 
             // invoke the operation
-            await networkCloudClusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed);
+            await networkCloudClusterMetricsConfiguration.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch metrics configuration of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchMetricsConfigurationOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/ClusterMetricsConfigurations_Patch.json
@@ -98,18 +96,15 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterMetricsConfigurationResource networkCloudClusterMetricsConfiguration = client.GetNetworkCloudClusterMetricsConfigurationResource(networkCloudClusterMetricsConfigurationResourceId);
 
             // invoke the operation
-            NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch()
+            NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 CollectionInterval = 15L,
-                EnabledMetrics =
-{
-"metric1","metric2"
-},
+                EnabledMetrics = { "metric1", "metric2" },
             };
             ArmOperation<NetworkCloudClusterMetricsConfigurationResource> lro = await networkCloudClusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudClusterMetricsConfigurationResource result = lro.Value;

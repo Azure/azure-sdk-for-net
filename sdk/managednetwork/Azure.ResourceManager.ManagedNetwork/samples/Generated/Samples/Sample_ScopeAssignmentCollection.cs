@@ -9,114 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetwork.Samples
 {
     public partial class Sample_ScopeAssignmentCollection
     {
-        // ScopeAssignmentsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ScopeAssignmentsGet()
-        {
-            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
-            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ScopeAssignmentResource
-            string scope = "subscriptions/subscriptionC";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ScopeAssignmentCollection collection = client.GetScopeAssignments(scopeId);
-
-            // invoke the operation
-            string scopeAssignmentName = "subscriptionCAssignment";
-            ScopeAssignmentResource result = await collection.GetAsync(scopeAssignmentName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ScopeAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ScopeAssignmentsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_ScopeAssignmentsGet()
-        {
-            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
-            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ScopeAssignmentResource
-            string scope = "subscriptions/subscriptionC";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ScopeAssignmentCollection collection = client.GetScopeAssignments(scopeId);
-
-            // invoke the operation
-            string scopeAssignmentName = "subscriptionCAssignment";
-            bool result = await collection.ExistsAsync(scopeAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ScopeAssignmentsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_ScopeAssignmentsGet()
-        {
-            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
-            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ScopeAssignmentResource
-            string scope = "subscriptions/subscriptionC";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ScopeAssignmentCollection collection = client.GetScopeAssignments(scopeId);
-
-            // invoke the operation
-            string scopeAssignmentName = "subscriptionCAssignment";
-            NullableResponse<ScopeAssignmentResource> response = await collection.GetIfExistsAsync(scopeAssignmentName);
-            ScopeAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ScopeAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ScopeAssignmentsPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ScopeAssignmentsPut()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsPut.json
@@ -127,17 +27,13 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ScopeAssignmentResource
             string scope = "subscriptions/subscriptionC";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ScopeAssignmentCollection collection = client.GetScopeAssignments(scopeId);
+            ScopeAssignmentCollection collection = client.GetScopeAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string scopeAssignmentName = "subscriptionCAssignment";
-            ScopeAssignmentData data = new ScopeAssignmentData()
+            ScopeAssignmentData data = new ScopeAssignmentData
             {
                 AssignedManagedNetwork = "/subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.ManagedNetwork/managedNetworks/myManagedNetwork",
             };
@@ -151,9 +47,35 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScopeAssignmentsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ScopeAssignmentsGet()
+        {
+            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
+            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ScopeAssignmentResource
+            string scope = "subscriptions/subscriptionC";
+            ScopeAssignmentCollection collection = client.GetScopeAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string scopeAssignmentName = "subscriptionCAssignment";
+            ScopeAssignmentResource result = await collection.GetAsync(scopeAssignmentName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScopeAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScopeAssignmentsList()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsList.json
@@ -164,13 +86,9 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ScopeAssignmentResource
             string scope = "subscriptions/subscriptionC";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ScopeAssignmentCollection collection = client.GetScopeAssignments(scopeId);
+            ScopeAssignmentCollection collection = client.GetScopeAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
             await foreach (ScopeAssignmentResource item in collection.GetAllAsync())
@@ -182,7 +100,65 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ScopeAssignmentsGet()
+        {
+            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
+            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ScopeAssignmentResource
+            string scope = "subscriptions/subscriptionC";
+            ScopeAssignmentCollection collection = client.GetScopeAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string scopeAssignmentName = "subscriptionCAssignment";
+            bool result = await collection.ExistsAsync(scopeAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ScopeAssignmentsGet()
+        {
+            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ScopeAssignment/ScopeAssignmentsGet.json
+            // this example is just showing the usage of "ScopeAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ScopeAssignmentResource
+            string scope = "subscriptions/subscriptionC";
+            ScopeAssignmentCollection collection = client.GetScopeAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string scopeAssignmentName = "subscriptionCAssignment";
+            NullableResponse<ScopeAssignmentResource> response = await collection.GetIfExistsAsync(scopeAssignmentName);
+            ScopeAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ScopeAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

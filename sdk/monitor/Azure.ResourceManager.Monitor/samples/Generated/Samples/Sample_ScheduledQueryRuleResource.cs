@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_ScheduledQueryRuleResource
     {
-        // List scheduled query rules by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetScheduledQueryRules_ListScheduledQueryRulesBySubscription()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/listScheduledQueryRulesBySubscription.json
-            // this example is just showing the usage of "ScheduledQueryRules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "dd4bfc94-a096-412b-9c43-4bd13e35afbc";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ScheduledQueryRuleResource item in subscriptionResource.GetScheduledQueryRulesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ScheduledQueryRuleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a scheduled query rule for single resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAScheduledQueryRuleForSingleResource()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/getScheduledQueryRule.json
@@ -79,44 +46,8 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a scheduled query rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateOrUpdateAScheduledQueryRule()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/patchScheduledQueryRule.json
-            // this example is just showing the usage of "ScheduledQueryRules_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScheduledQueryRuleResource created on azure
-            // for more information of creating ScheduledQueryRuleResource, please refer to the document of ScheduledQueryRuleResource
-            string subscriptionId = "dd4bfc94-a096-412b-9c43-4bd13e35afbc";
-            string resourceGroupName = "QueryResourceGroupName";
-            string ruleName = "heartbeat";
-            ResourceIdentifier scheduledQueryRuleResourceId = ScheduledQueryRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
-            ScheduledQueryRuleResource scheduledQueryRule = client.GetScheduledQueryRuleResource(scheduledQueryRuleResourceId);
-
-            // invoke the operation
-            ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch()
-            {
-                IsEnabled = false,
-            };
-            ScheduledQueryRuleResource result = await scheduledQueryRule.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ScheduledQueryRuleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete a scheduled query rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAScheduledQueryRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/deleteScheduledQueryRule.json
@@ -136,9 +67,43 @@ namespace Azure.ResourceManager.Monitor.Samples
             ScheduledQueryRuleResource scheduledQueryRule = client.GetScheduledQueryRuleResource(scheduledQueryRuleResourceId);
 
             // invoke the operation
-            await scheduledQueryRule.DeleteAsync(WaitUntil.Completed);
+            await scheduledQueryRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateOrUpdateAScheduledQueryRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/patchScheduledQueryRule.json
+            // this example is just showing the usage of "ScheduledQueryRules_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScheduledQueryRuleResource created on azure
+            // for more information of creating ScheduledQueryRuleResource, please refer to the document of ScheduledQueryRuleResource
+            string subscriptionId = "dd4bfc94-a096-412b-9c43-4bd13e35afbc";
+            string resourceGroupName = "QueryResourceGroupName";
+            string ruleName = "heartbeat";
+            ResourceIdentifier scheduledQueryRuleResourceId = ScheduledQueryRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ruleName);
+            ScheduledQueryRuleResource scheduledQueryRule = client.GetScheduledQueryRuleResource(scheduledQueryRuleResourceId);
+
+            // invoke the operation
+            ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch
+            {
+                IsEnabled = false,
+            };
+            ScheduledQueryRuleResource result = await scheduledQueryRule.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScheduledQueryRuleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

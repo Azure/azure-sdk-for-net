@@ -7,46 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_AutoscaleSettingResource
     {
-        // Delete an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAnAutoscaleSetting()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/deleteAutoscaleSetting.json
-            // this example is just showing the usage of "AutoscaleSettings_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutoscaleSettingResource created on azure
-            // for more information of creating AutoscaleSettingResource, please refer to the document of AutoscaleSettingResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
-            string resourceGroupName = "TestingMetricsScaleSet";
-            string autoscaleSettingName = "MySetting";
-            ResourceIdentifier autoscaleSettingResourceId = AutoscaleSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autoscaleSettingName);
-            AutoscaleSettingResource autoscaleSetting = client.GetAutoscaleSettingResource(autoscaleSettingResourceId);
-
-            // invoke the operation
-            await autoscaleSetting.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAutoscaleSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/getAutoscaleSetting.json
@@ -75,9 +46,34 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch an autoscale setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAnAutoscaleSetting()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/deleteAutoscaleSetting.json
+            // this example is just showing the usage of "AutoscaleSettings_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutoscaleSettingResource created on azure
+            // for more information of creating AutoscaleSettingResource, please refer to the document of AutoscaleSettingResource
+            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string resourceGroupName = "TestingMetricsScaleSet";
+            string autoscaleSettingName = "MySetting";
+            ResourceIdentifier autoscaleSettingResourceId = AutoscaleSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, autoscaleSettingName);
+            AutoscaleSettingResource autoscaleSetting = client.GetAutoscaleSettingResource(autoscaleSettingResourceId);
+
+            // invoke the operation
+            await autoscaleSetting.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAnAutoscaleSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/patchAutoscaleSetting.json
@@ -97,89 +93,100 @@ namespace Azure.ResourceManager.Monitor.Samples
             AutoscaleSettingResource autoscaleSetting = client.GetAutoscaleSettingResource(autoscaleSettingResourceId);
 
             // invoke the operation
-            AutoscaleSettingPatch patch = new AutoscaleSettingPatch()
+            AutoscaleSettingPatch patch = new AutoscaleSettingPatch
             {
                 Tags =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
-                Profiles =
+                Profiles = {new AutoscaleProfile("adios", new MonitorScaleCapacity(1, 10, 1), new AutoscaleRule[]
 {
-new AutoscaleProfile("adios",new MonitorScaleCapacity(1,10,1),new AutoscaleRule[]
-{
-new AutoscaleRule(new MetricTrigger("Percentage CPU",new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),XmlConvert.ToTimeSpan("PT1M"),MetricStatisticType.Average,XmlConvert.ToTimeSpan("PT5M"),MetricTriggerTimeAggregationType.Average,MetricTriggerComparisonOperation.GreaterThan,10)
+new AutoscaleRule(new MetricTrigger(
+    "Percentage CPU",
+    new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),
+    default,
+    MetricStatisticType.Average,
+    default,
+    MetricTriggerTimeAggregationType.Average,
+    MetricTriggerComparisonOperation.GreaterThan,
+    10)
 {
 IsDividedPerInstance = false,
-},new MonitorScaleAction(MonitorScaleDirection.Increase,MonitorScaleType.ChangeCount,XmlConvert.ToTimeSpan("PT5M"))
+}, new MonitorScaleAction(MonitorScaleDirection.Increase, MonitorScaleType.ChangeCount, default)
 {
 Value = "1",
-}),new AutoscaleRule(new MetricTrigger("Percentage CPU",new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),XmlConvert.ToTimeSpan("PT2M"),MetricStatisticType.Average,XmlConvert.ToTimeSpan("PT5M"),MetricTriggerTimeAggregationType.Average,MetricTriggerComparisonOperation.GreaterThan,15)
+}),
+new AutoscaleRule(new MetricTrigger(
+    "Percentage CPU",
+    new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),
+    default,
+    MetricStatisticType.Average,
+    default,
+    MetricTriggerTimeAggregationType.Average,
+    MetricTriggerComparisonOperation.GreaterThan,
+    15)
 {
 IsDividedPerInstance = false,
-},new MonitorScaleAction(MonitorScaleDirection.Decrease,MonitorScaleType.ChangeCount,XmlConvert.ToTimeSpan("PT6M"))
+}, new MonitorScaleAction(MonitorScaleDirection.Decrease, MonitorScaleType.ChangeCount, default)
 {
 Value = "2",
 })
 })
 {
-FixedDate = new MonitorTimeWindow(DateTimeOffset.Parse("2015-03-05T14:00:00Z"),DateTimeOffset.Parse("2015-03-05T14:30:00Z"))
+FixedDate = new MonitorTimeWindow(default, default)
 {
 TimeZone = "UTC",
 },
-},new AutoscaleProfile("saludos",new MonitorScaleCapacity(1,10,1),new AutoscaleRule[]
+}, new AutoscaleProfile("saludos", new MonitorScaleCapacity(1, 10, 1), new AutoscaleRule[]
 {
-new AutoscaleRule(new MetricTrigger("Percentage CPU",new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),XmlConvert.ToTimeSpan("PT1M"),MetricStatisticType.Average,XmlConvert.ToTimeSpan("PT5M"),MetricTriggerTimeAggregationType.Average,MetricTriggerComparisonOperation.GreaterThan,10)
+new AutoscaleRule(new MetricTrigger(
+    "Percentage CPU",
+    new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),
+    default,
+    MetricStatisticType.Average,
+    default,
+    MetricTriggerTimeAggregationType.Average,
+    MetricTriggerComparisonOperation.GreaterThan,
+    10)
 {
 IsDividedPerInstance = false,
-},new MonitorScaleAction(MonitorScaleDirection.Increase,MonitorScaleType.ChangeCount,XmlConvert.ToTimeSpan("PT5M"))
+}, new MonitorScaleAction(MonitorScaleDirection.Increase, MonitorScaleType.ChangeCount, default)
 {
 Value = "1",
-}),new AutoscaleRule(new MetricTrigger("Percentage CPU",new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),XmlConvert.ToTimeSpan("PT2M"),MetricStatisticType.Average,XmlConvert.ToTimeSpan("PT5M"),MetricTriggerTimeAggregationType.Average,MetricTriggerComparisonOperation.GreaterThan,15)
+}),
+new AutoscaleRule(new MetricTrigger(
+    "Percentage CPU",
+    new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),
+    default,
+    MetricStatisticType.Average,
+    default,
+    MetricTriggerTimeAggregationType.Average,
+    MetricTriggerComparisonOperation.GreaterThan,
+    15)
 {
 IsDividedPerInstance = false,
-},new MonitorScaleAction(MonitorScaleDirection.Decrease,MonitorScaleType.ChangeCount,XmlConvert.ToTimeSpan("PT6M"))
+}, new MonitorScaleAction(MonitorScaleDirection.Decrease, MonitorScaleType.ChangeCount, default)
 {
 Value = "2",
 })
 })
 {
-Recurrence = new MonitorRecurrence(RecurrenceFrequency.Week,new RecurrentSchedule("UTC",new MonitorDayOfWeek[]
+Recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, new RecurrentSchedule("UTC", new MonitorDayOfWeek[]{new MonitorDayOfWeek("1")}, new int[]{5}, new int[]{15})),
+}},
+                Notifications = {new AutoscaleNotification
 {
-new MonitorDayOfWeek("1")
-},new int[]
-{
-5
-},new int[]
-{
-15
-})),
-}
-},
-                Notifications =
-{
-new AutoscaleNotification()
-{
-Email = new EmailNotification()
+Email = new EmailNotification
 {
 SendToSubscriptionAdministrator = true,
 SendToSubscriptionCoAdministrators = true,
-CustomEmails =
-{
-"gu@ms.com","ge@ns.net"
+CustomEmails = {"gu@ms.com", "ge@ns.net"},
 },
-},
-Webhooks =
-{
-new WebhookNotification()
+Webhooks = {new WebhookNotification
 {
 ServiceUri = new Uri("http://myservice.com"),
-Properties =
-{
-},
-}
-},
-}
-},
+Properties = {},
+}},
+}},
                 IsEnabled = true,
                 PredictiveAutoscalePolicy = new PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode.Enabled),
                 TargetResourceId = new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/TestingMetricsScaleSet/providers/Microsoft.Compute/virtualMachineScaleSets/testingsc"),
@@ -193,41 +200,8 @@ Properties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List autoscale settings by subs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAutoscaleSettings_ListAutoscaleSettingsBySubs()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/listAutoscaleSettingBySubscription.json
-            // this example is just showing the usage of "AutoscaleSettings_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AutoscaleSettingResource item in subscriptionResource.GetAutoscaleSettingsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutoscaleSettingData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Metric for data
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPredictiveMetric_GetMetricForData()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/examples/GetPredictiveMetric.json
@@ -248,7 +222,7 @@ Properties =
 
             // invoke the operation
             string timespan = "2021-10-14T22:00:00.000Z/2021-10-16T22:00:00.000Z";
-            TimeSpan interval = XmlConvert.ToTimeSpan("PT1H");
+            TimeSpan interval = default;
             string metricNamespace = "Microsoft.Compute/virtualMachineScaleSets";
             string metricName = "PercentageCPU";
             string aggregation = "Total";

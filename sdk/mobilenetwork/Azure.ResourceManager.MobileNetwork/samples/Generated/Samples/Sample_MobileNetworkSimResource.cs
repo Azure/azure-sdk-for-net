@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MobileNetwork.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MobileNetwork.Samples
 {
     public partial class Sample_MobileNetworkSimResource
     {
-        // Delete SIM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteSIM()
-        {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimDelete.json
-            // this example is just showing the usage of "Sims_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MobileNetworkSimResource created on azure
-            // for more information of creating MobileNetworkSimResource, please refer to the document of MobileNetworkSimResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "testResourceGroupName";
-            string simGroupName = "testSimGroup";
-            string simName = "testSim";
-            ResourceIdentifier mobileNetworkSimResourceId = MobileNetworkSimResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, simGroupName, simName);
-            MobileNetworkSimResource mobileNetworkSim = client.GetMobileNetworkSimResource(mobileNetworkSimResourceId);
-
-            // invoke the operation
-            await mobileNetworkSim.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get SIM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSIM()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimGet.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create SIM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteSIM()
+        {
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimDelete.json
+            // this example is just showing the usage of "Sims_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MobileNetworkSimResource created on azure
+            // for more information of creating MobileNetworkSimResource, please refer to the document of MobileNetworkSimResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "testResourceGroupName";
+            string simGroupName = "testSimGroup";
+            string simName = "testSim";
+            ResourceIdentifier mobileNetworkSimResourceId = MobileNetworkSimResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, simGroupName, simName);
+            MobileNetworkSimResource mobileNetworkSim = client.GetMobileNetworkSimResource(mobileNetworkSimResourceId);
+
+            // invoke the operation
+            await mobileNetworkSim.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSIM()
         {
             // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/SimCreate.json
@@ -103,15 +101,12 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
                 IntegratedCircuitCardIdentifier = "8900000000000000000",
                 DeviceType = "Video camera",
                 SimPolicyId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/mobileNetworks/testMobileNetwork/simPolicies/MySimPolicy"),
-                StaticIPConfiguration =
-{
-new SimStaticIPProperties()
+                StaticIPConfiguration = {new SimStaticIPProperties
 {
 AttachedDataNetworkId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/TestPacketCoreCP/packetCoreDataPlanes/TestPacketCoreDP/attachedDataNetworks/TestAttachedDataNetwork"),
 SliceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.MobileNetwork/mobileNetworks/testMobileNetwork/slices/testSlice"),
 StaticIPIPv4Address = "2.4.0.1",
-}
-},
+}},
                 AuthenticationKey = "00000000000000000000000000000000",
                 OperatorKeyCode = "00000000000000000000000000000000",
             };

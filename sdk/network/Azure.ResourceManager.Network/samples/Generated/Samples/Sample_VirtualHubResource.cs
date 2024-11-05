@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualHubResource
     {
-        // VirtualHubGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualHubGet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubGet.json
@@ -47,48 +46,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualHubUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_VirtualHubUpdate()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubUpdateTags.json
-            // this example is just showing the usage of "VirtualHubs_UpdateTags" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualHubResource created on azure
-            // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualHubName = "virtualHub2";
-            ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
-            VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
-
-            // invoke the operation
-            NetworkTagsObject virtualHubParameters = new NetworkTagsObject()
-            {
-                Tags =
-{
-["key1"] = "value1",
-["key2"] = "value2",
-},
-            };
-            VirtualHubResource result = await virtualHub.UpdateAsync(virtualHubParameters);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualHubData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // VirtualHubDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualHubDelete()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubDelete.json
@@ -108,46 +67,51 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            await virtualHub.DeleteAsync(WaitUntil.Completed);
+            await virtualHub.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualHubList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualHubs_VirtualHubList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VirtualHubUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubList.json
-            // this example is just showing the usage of "VirtualHubs_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubUpdateTags.json
+            // this example is just showing the usage of "VirtualHubs_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VirtualHubResource created on azure
+            // for more information of creating VirtualHubResource, please refer to the document of VirtualHubResource
             string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "rg1";
+            string virtualHubName = "virtualHub2";
+            ResourceIdentifier virtualHubResourceId = VirtualHubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName);
+            VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (VirtualHubResource item in subscriptionResource.GetVirtualHubsAsync())
+            // invoke the operation
+            NetworkTagsObject virtualHubParameters = new NetworkTagsObject
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualHubData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["key1"] = "value1",
+["key2"] = "value2"
+},
+            };
+            VirtualHubResource result = await virtualHub.UpdateAsync(virtualHubParameters);
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualHubData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Effective Routes for a Connection resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubEffectiveRoutes_EffectiveRoutesForAConnectionResource()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/EffectiveRoutesListForConnection.json
@@ -167,20 +131,19 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            EffectiveRoutesContent content = new EffectiveRoutesContent()
+            EffectiveRoutesContent content = new EffectiveRoutesContent
             {
                 ResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteGateways/expressRouteGatewayName/expressRouteConnections/connectionName"),
                 VirtualWanResourceType = "ExpressRouteConnection",
             };
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Effective Routes for a Route Table resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubEffectiveRoutes_EffectiveRoutesForARouteTableResource()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/EffectiveRoutesListForRouteTable.json
@@ -200,20 +163,19 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            EffectiveRoutesContent content = new EffectiveRoutesContent()
+            EffectiveRoutesContent content = new EffectiveRoutesContent
             {
                 ResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
                 VirtualWanResourceType = "RouteTable",
             };
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Effective Routes for the Virtual Hub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubEffectiveRoutes_EffectiveRoutesForTheVirtualHub()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/EffectiveRoutesListForVirtualHub.json
@@ -233,16 +195,15 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            EffectiveRoutesContent content = null;
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            EffectiveRoutesContent content = default;
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Inbound Routes for the Virtual Hub on a Particular Connection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubInboundRoutes_InboundRoutesForTheVirtualHubOnAParticularConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/GetInboundRoutes.json
@@ -262,7 +223,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            VirtualHubInboundRoutesContent content = new VirtualHubInboundRoutesContent()
+            VirtualHubInboundRoutesContent content = new VirtualHubInboundRoutesContent
             {
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",
@@ -273,9 +234,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Outbound Routes for the Virtual Hub on a Particular Connection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVirtualHubOutboundRoutes_OutboundRoutesForTheVirtualHubOnAParticularConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/GetOutboundRoutes.json
@@ -295,7 +255,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            VirtualHubOutboundRoutesContent content = new VirtualHubOutboundRoutesContent()
+            VirtualHubOutboundRoutesContent content = new VirtualHubOutboundRoutesContent
             {
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudVirtualMachineConsoleResource
     {
-        // Get virtual machine console
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualMachineConsole()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/Consoles_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete virtual machine console
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualMachineConsole()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/Consoles_Delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineConsoleResource networkCloudVirtualMachineConsole = client.GetNetworkCloudVirtualMachineConsoleResource(networkCloudVirtualMachineConsoleResourceId);
 
             // invoke the operation
-            await networkCloudVirtualMachineConsole.DeleteAsync(WaitUntil.Completed);
+            await networkCloudVirtualMachineConsole.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch virtual machine console
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchVirtualMachineConsole()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/Consoles_Patch.json
@@ -98,15 +96,15 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineConsoleResource networkCloudVirtualMachineConsole = client.GetNetworkCloudVirtualMachineConsoleResource(networkCloudVirtualMachineConsoleResourceId);
 
             // invoke the operation
-            NetworkCloudVirtualMachineConsolePatch patch = new NetworkCloudVirtualMachineConsolePatch()
+            NetworkCloudVirtualMachineConsolePatch patch = new NetworkCloudVirtualMachineConsolePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 Enabled = ConsoleEnabled.True,
-                ExpireOn = DateTimeOffset.Parse("2022-06-01T01:27:03.008Z"),
+                ExpireOn = default,
                 KeyData = "ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm",
             };
             ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await networkCloudVirtualMachineConsole.UpdateAsync(WaitUntil.Completed, patch);

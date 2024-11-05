@@ -10,86 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_UserAssignedIdentityResource
     {
-        // IdentityListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetUserAssignedIdentities_IdentityListBySubscription()
-        {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityListBySubscription.json
-            // this example is just showing the usage of "UserAssignedIdentities_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (UserAssignedIdentityResource item in subscriptionResource.GetUserAssignedIdentitiesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                UserAssignedIdentityData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // IdentityUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_IdentityUpdate()
-        {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityUpdate.json
-            // this example is just showing the usage of "UserAssignedIdentities_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this UserAssignedIdentityResource created on azure
-            // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rgName";
-            string resourceName = "resourceName";
-            ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
-
-            // invoke the operation
-            UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(new AzureLocation("eastus"))
-            {
-                Tags =
-{
-["key1"] = "value1",
-["key2"] = "value2",
-},
-            };
-            UserAssignedIdentityResource result = await userAssignedIdentity.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            UserAssignedIdentityData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // IdentityGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IdentityGet()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityGet.json
@@ -118,9 +46,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IdentityDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IdentityDelete()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityDelete.json
@@ -140,9 +67,47 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
 
             // invoke the operation
-            await userAssignedIdentity.DeleteAsync(WaitUntil.Completed);
+            await userAssignedIdentity.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_IdentityUpdate()
+        {
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/IdentityUpdate.json
+            // this example is just showing the usage of "UserAssignedIdentities_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this UserAssignedIdentityResource created on azure
+            // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rgName";
+            string resourceName = "resourceName";
+            ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
+
+            // invoke the operation
+            UserAssignedIdentityPatch patch = new UserAssignedIdentityPatch(new AzureLocation("eastus"))
+            {
+                Tags =
+{
+["key1"] = "value1",
+["key2"] = "value2"
+},
+            };
+            UserAssignedIdentityResource result = await userAssignedIdentity.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            UserAssignedIdentityData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

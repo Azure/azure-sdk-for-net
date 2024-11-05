@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaJobResource
     {
-        // Get a Job by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAJobByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/jobs-get-by-name.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAJob()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/jobs-delete.json
@@ -72,14 +71,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaJobResource mediaJob = client.GetMediaJobResource(mediaJobResourceId);
 
             // invoke the operation
-            await mediaJob.DeleteAsync(WaitUntil.Completed);
+            await mediaJob.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a Job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAJob()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/jobs-update.json
@@ -101,14 +99,11 @@ namespace Azure.ResourceManager.Media.Samples
             MediaJobResource mediaJob = client.GetMediaJobResource(mediaJobResourceId);
 
             // invoke the operation
-            MediaJobData data = new MediaJobData()
+            MediaJobData data = new MediaJobData
             {
                 Description = "Example job to illustrate update.",
                 Input = new MediaJobInputAsset("job1-InputAsset"),
-                Outputs =
-{
-new MediaJobOutputAsset("job1-OutputAsset")
-},
+                Outputs = { new MediaJobOutputAsset("job1-OutputAsset") },
                 Priority = MediaJobPriority.High,
             };
             MediaJobResource result = await mediaJob.UpdateAsync(data);
@@ -120,9 +115,8 @@ new MediaJobOutputAsset("job1-OutputAsset")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Cancel a Job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelJob_CancelAJob()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/jobs-cancel.json
@@ -144,9 +138,9 @@ new MediaJobOutputAsset("job1-OutputAsset")
             MediaJobResource mediaJob = client.GetMediaJobResource(mediaJobResourceId);
 
             // invoke the operation
-            await mediaJob.CancelJobAsync();
+            await mediaJob.CancelJobAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,40 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_LogProfileResource
     {
-        // Delete log profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteLogProfile()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/examples/deleteLogProfile.json
-            // this example is just showing the usage of "LogProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LogProfileResource created on azure
-            // for more information of creating LogProfileResource, please refer to the document of LogProfileResource
-            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
-            string logProfileName = "Rac46PostSwapRG";
-            ResourceIdentifier logProfileResourceId = LogProfileResource.CreateResourceIdentifier(subscriptionId, logProfileName);
-            LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);
-
-            // invoke the operation
-            await logProfile.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get log profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLogProfile()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/examples/getLogProfile.json
@@ -71,9 +45,33 @@ namespace Azure.ResourceManager.Monitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch a log profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteLogProfile()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/examples/deleteLogProfile.json
+            // this example is just showing the usage of "LogProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LogProfileResource created on azure
+            // for more information of creating LogProfileResource, please refer to the document of LogProfileResource
+            string subscriptionId = "b67f7fec-69fc-4974-9099-a26bd6ffeda3";
+            string logProfileName = "Rac46PostSwapRG";
+            ResourceIdentifier logProfileResourceId = LogProfileResource.CreateResourceIdentifier(subscriptionId, logProfileName);
+            LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);
+
+            // invoke the operation
+            await logProfile.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchALogProfile()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/examples/patchLogProfile.json
@@ -92,22 +90,16 @@ namespace Azure.ResourceManager.Monitor.Samples
             LogProfileResource logProfile = client.GetLogProfileResource(logProfileResourceId);
 
             // invoke the operation
-            LogProfilePatch patch = new LogProfilePatch()
+            LogProfilePatch patch = new LogProfilePatch
             {
                 Tags =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
                 StorageAccountId = new ResourceIdentifier("/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/JohnKemTest/providers/Microsoft.Storage/storageAccounts/johnkemtest8162"),
                 ServiceBusRuleId = new ResourceIdentifier(""),
-                Locations =
-{
-new AzureLocation("global")
-},
-                Categories =
-{
-"Write","Delete","Action"
-},
+                Locations = { new AzureLocation("global") },
+                Categories = { "Write", "Delete", "Action" },
                 RetentionPolicy = new RetentionPolicy(true, 3),
             };
             LogProfileResource result = await logProfile.UpdateAsync(patch);

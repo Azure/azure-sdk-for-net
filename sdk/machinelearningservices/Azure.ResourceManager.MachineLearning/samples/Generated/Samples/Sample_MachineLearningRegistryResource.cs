@@ -11,108 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningRegistryResource
     {
-        // GetBlobReferenceSAS Data Reference.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBlobReferenceSasRegistryDataReference_GetBlobReferenceSASDataReference()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/DataReference/getBlobReferenceSAS.json
-            // this example is just showing the usage of "RegistryDataReferences_GetBlobReferenceSas" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningRegistryResource created on azure
-            // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "registryName";
-            ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
-
-            // invoke the operation
-            string name = "string";
-            string version = "string";
-            BlobReferenceSasContent content = new BlobReferenceSasContent()
-            {
-                AssetId = "string",
-                BlobUri = new Uri("https://www.contoso.com/example"),
-            };
-            BlobReferenceSasResult result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // List registries by subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetMachineLearningRegistries_ListRegistriesBySubscription()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/listBySubscription.json
-            // this example is just showing the usage of "Registries_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (MachineLearningRegistryResource item in subscriptionResource.GetMachineLearningRegistriesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MachineLearningRegistryData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Delete Registry.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteRegistry()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/delete.json
-            // this example is just showing the usage of "Registries_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningRegistryResource created on azure
-            // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "string";
-            ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
-
-            // invoke the operation
-            await machineLearningRegistry.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Registry with system created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistryWithSystemCreatedAccounts()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/get-SystemCreated.json
@@ -141,9 +47,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Registry with user created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistryWithUserCreatedAccounts()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/get-UserCreated.json
@@ -172,9 +77,34 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Registry with system created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteRegistry()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/delete.json
+            // this example is just showing the usage of "Registries_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningRegistryResource created on azure
+            // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string registryName = "string";
+            ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
+
+            // invoke the operation
+            await machineLearningRegistry.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateRegistryWithSystemCreatedAccounts()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/update-SystemCreated.json
@@ -194,16 +124,16 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
             // invoke the operation
-            MachineLearningRegistryPatch patch = new MachineLearningRegistryPatch()
+            MachineLearningRegistryPatch patch = new MachineLearningRegistryPatch
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("string")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("string")] = null
 },
                 },
-                Sku = new MachineLearningSkuPatch()
+                Sku = new MachineLearningSkuPatch
                 {
                     Name = "string",
                     Tier = MachineLearningSkuTier.Basic,
@@ -211,9 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                     Family = "string",
                     Capacity = 1,
                 },
-                Tags =
-{
-},
+                Tags = { },
             };
             MachineLearningRegistryResource result = await machineLearningRegistry.UpdateAsync(patch);
 
@@ -224,9 +152,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Registry with user created accounts.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateRegistryWithUserCreatedAccounts()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/update-UserCreated.json
@@ -246,16 +173,16 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
             // invoke the operation
-            MachineLearningRegistryPatch patch = new MachineLearningRegistryPatch()
+            MachineLearningRegistryPatch patch = new MachineLearningRegistryPatch
             {
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("string")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("string")] = null
 },
                 },
-                Sku = new MachineLearningSkuPatch()
+                Sku = new MachineLearningSkuPatch
                 {
                     Name = "string",
                     Tier = MachineLearningSkuTier.Basic,
@@ -263,9 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                     Family = "string",
                     Capacity = 1,
                 },
-                Tags =
-{
-},
+                Tags = { },
             };
             MachineLearningRegistryResource result = await machineLearningRegistry.UpdateAsync(patch);
 
@@ -276,9 +201,41 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Remove regions from registry
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBlobReferenceSasRegistryDataReference_GetBlobReferenceSASDataReference()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/DataReference/getBlobReferenceSAS.json
+            // this example is just showing the usage of "RegistryDataReferences_GetBlobReferenceSas" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningRegistryResource created on azure
+            // for more information of creating MachineLearningRegistryResource, please refer to the document of MachineLearningRegistryResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string registryName = "registryName";
+            ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
+
+            // invoke the operation
+            string name = "string";
+            string version = "string";
+            BlobReferenceSasContent content = new BlobReferenceSasContent
+            {
+                AssetId = "string",
+                BlobUri = new Uri("https://www.contoso.com/example"),
+            };
+            BlobReferenceSasResult result = await machineLearningRegistry.GetBlobReferenceSasRegistryDataReferenceAsync(name, version, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemoveRegions_RemoveRegionsFromRegistry()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/removeRegions.json
@@ -300,11 +257,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // invoke the operation
             MachineLearningRegistryData data = new MachineLearningRegistryData(new AzureLocation("string"))
             {
-                Identity = new ManagedServiceIdentity("None")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("string")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("string")] = null
 },
                 },
                 Kind = "string",
@@ -319,53 +276,40 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 IntellectualPropertyPublisher = "string",
                 ManagedResourceId = new ResourceIdentifier("string"),
                 MlFlowRegistryUri = new Uri("string"),
-                RegistryPrivateEndpointConnections =
-{
-new RegistryPrivateEndpointConnection()
+                RegistryPrivateEndpointConnections = {new RegistryPrivateEndpointConnection
 {
 Id = new ResourceIdentifier("string"),
 Location = new AzureLocation("string"),
-GroupIds =
-{
-"string"
-},
-PrivateEndpoint = new RegistryPrivateEndpoint()
+GroupIds = {"string"},
+PrivateEndpoint = new RegistryPrivateEndpoint
 {
 SubnetArmId = new ResourceIdentifier("string"),
 },
-RegistryPrivateLinkServiceConnectionState = new RegistryPrivateLinkServiceConnectionState()
+RegistryPrivateLinkServiceConnectionState = new RegistryPrivateLinkServiceConnectionState
 {
 ActionsRequired = "string",
 Description = "string",
 Status = EndpointServiceConnectionStatus.Approved,
 },
 ProvisioningState = "string",
-}
-},
+}},
                 PublicNetworkAccess = "string",
-                RegionDetails =
+                RegionDetails = {new RegistryRegionArmDetails
 {
-new RegistryRegionArmDetails()
+AcrDetails = {new RegistryAcrDetails
 {
-AcrDetails =
-{
-new RegistryAcrDetails()
-{
-SystemCreatedAcrAccount = new SystemCreatedAcrAccount()
+SystemCreatedAcrAccount = new SystemCreatedAcrAccount
 {
 AcrAccountName = "string",
 AcrAccountSku = "string",
 ArmResourceId = new ResourceIdentifier("string"),
 },
 ArmResourceId = new ResourceIdentifier("string"),
-}
-},
+}},
 Location = new AzureLocation("string"),
-StorageAccountDetails =
+StorageAccountDetails = {new StorageAccountDetails
 {
-new StorageAccountDetails()
-{
-SystemCreatedStorageAccount = new SystemCreatedStorageAccount()
+SystemCreatedStorageAccount = new SystemCreatedStorageAccount
 {
 AllowBlobPublicAccess = false,
 ArmResourceId = new ResourceIdentifier("string"),
@@ -374,13 +318,9 @@ StorageAccountName = "string",
 StorageAccountType = "string",
 },
 ArmResourceId = new ResourceIdentifier("string"),
-}
-},
-}
-},
-                Tags =
-{
-},
+}},
+}},
+                Tags = { },
             };
             ArmOperation<MachineLearningRegistryResource> lro = await machineLearningRegistry.RemoveRegionsAsync(WaitUntil.Completed, data);
             MachineLearningRegistryResource result = lro.Value;

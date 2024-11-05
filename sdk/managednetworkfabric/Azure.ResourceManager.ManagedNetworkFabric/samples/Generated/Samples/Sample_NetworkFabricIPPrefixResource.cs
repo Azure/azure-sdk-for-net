@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricIPPrefixResource
     {
-        // IpPrefixes_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IpPrefixesGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Get_MaximumSet_Gen.json
@@ -47,57 +46,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IpPrefixes_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_IpPrefixesUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "IpPrefixes_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
-            // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string ipPrefixName = "example-ipPrefix";
-            ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
-            NetworkFabricIPPrefixResource networkFabricIPPrefix = client.GetNetworkFabricIPPrefixResource(networkFabricIPPrefixResourceId);
-
-            // invoke the operation
-            NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch()
-            {
-                Annotation = "annotation",
-                IPPrefixRules =
-{
-new IPPrefixRule(CommunityActionType.Permit,4155123341L,"10.10.10.10/30")
-{
-Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
-SubnetMaskLength = "10",
-}
-},
-                Tags =
-{
-["keyID"] = "KeyValue",
-},
-            };
-            ArmOperation<NetworkFabricIPPrefixResource> lro = await networkFabricIPPrefix.UpdateAsync(WaitUntil.Completed, patch);
-            NetworkFabricIPPrefixResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFabricIPPrefixData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // IpPrefixes_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IpPrefixesDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Delete_MaximumSet_Gen.json
@@ -117,41 +67,53 @@ SubnetMaskLength = "10",
             NetworkFabricIPPrefixResource networkFabricIPPrefix = client.GetNetworkFabricIPPrefixResource(networkFabricIPPrefixResourceId);
 
             // invoke the operation
-            await networkFabricIPPrefix.DeleteAsync(WaitUntil.Completed);
+            await networkFabricIPPrefix.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IpPrefixes_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNetworkFabricIPPrefixes_IpPrefixesListBySubscriptionMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_IpPrefixesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "IpPrefixes_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/IpPrefixes_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "IpPrefixes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetworkFabricIPPrefixResource created on azure
+            // for more information of creating NetworkFabricIPPrefixResource, please refer to the document of NetworkFabricIPPrefixResource
             string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "example-rg";
+            string ipPrefixName = "example-ipPrefix";
+            ResourceIdentifier networkFabricIPPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, ipPrefixName);
+            NetworkFabricIPPrefixResource networkFabricIPPrefix = client.GetNetworkFabricIPPrefixResource(networkFabricIPPrefixResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (NetworkFabricIPPrefixResource item in subscriptionResource.GetNetworkFabricIPPrefixesAsync())
+            // invoke the operation
+            NetworkFabricIPPrefixPatch patch = new NetworkFabricIPPrefixPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkFabricIPPrefixData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Annotation = "annotation",
+                IPPrefixRules = {new IPPrefixRule(CommunityActionType.Permit, 4155123341L, "10.10.10.10/30")
+{
+Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
+SubnetMaskLength = "10",
+}},
+                Tags =
+{
+["keyID"] = "KeyValue"
+},
+            };
+            ArmOperation<NetworkFabricIPPrefixResource> lro = await networkFabricIPPrefix.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkFabricIPPrefixResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFabricIPPrefixData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -11,43 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningComponentVersionResource
     {
-        // Delete Workspace Component Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteWorkspaceComponentVersion()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ComponentVersion/delete.json
-            // this example is just showing the usage of "ComponentVersions_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningComponentVersionResource created on azure
-            // for more information of creating MachineLearningComponentVersionResource, please refer to the document of MachineLearningComponentVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string workspaceName = "my-aml-workspace";
-            string name = "string";
-            string version = "string";
-            ResourceIdentifier machineLearningComponentVersionResourceId = MachineLearningComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name, version);
-            MachineLearningComponentVersionResource machineLearningComponentVersion = client.GetMachineLearningComponentVersionResource(machineLearningComponentVersionResourceId);
-
-            // invoke the operation
-            await machineLearningComponentVersion.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Workspace Component Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceComponentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ComponentVersion/get.json
@@ -78,9 +49,36 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateOrUpdate Workspace Component Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteWorkspaceComponentVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ComponentVersion/delete.json
+            // this example is just showing the usage of "ComponentVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComponentVersionResource created on azure
+            // for more information of creating MachineLearningComponentVersionResource, please refer to the document of MachineLearningComponentVersionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string name = "string";
+            string version = "string";
+            ResourceIdentifier machineLearningComponentVersionResourceId = MachineLearningComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name, version);
+            MachineLearningComponentVersionResource machineLearningComponentVersion = client.GetMachineLearningComponentVersionResource(machineLearningComponentVersionResourceId);
+
+            // invoke the operation
+            await machineLearningComponentVersion.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateWorkspaceComponentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ComponentVersion/createOrUpdate.json
@@ -102,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningComponentVersionResource machineLearningComponentVersion = client.GetMachineLearningComponentVersionResource(machineLearningComponentVersionResourceId);
 
             // invoke the operation
-            MachineLearningComponentVersionData data = new MachineLearningComponentVersionData(new MachineLearningComponentVersionProperties()
+            MachineLearningComponentVersionData data = new MachineLearningComponentVersionData(new MachineLearningComponentVersionProperties
             {
-                ComponentSpec = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                ComponentSpec = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     ["8ced901b-d826-477d-bfef-329da9672513"] = null
                 }),
@@ -112,11 +110,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningComponentVersionResource> lro = await machineLearningComponentVersion.UpdateAsync(WaitUntil.Completed, data);
@@ -129,9 +127,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Publish Workspace Component Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Publish_PublishWorkspaceComponentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/ComponentVersion/publish.json
@@ -153,15 +150,15 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningComponentVersionResource machineLearningComponentVersion = client.GetMachineLearningComponentVersionResource(machineLearningComponentVersionResourceId);
 
             // invoke the operation
-            DestinationAssetContent content = new DestinationAssetContent()
+            DestinationAssetContent content = new DestinationAssetContent
             {
                 RegistryName = "string",
                 DestinationName = "string",
                 DestinationVersion = "string",
             };
-            await machineLearningComponentVersion.PublishAsync(WaitUntil.Completed, content);
+            await machineLearningComponentVersion.PublishAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Marketplace.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Marketplace.Samples
 {
     public partial class Sample_MarketplaceAdminApprovalRequestResource
     {
-        // GetAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAdminRequestApproval()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/GetAdminRequestApproval.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Marketplace.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateAdminRequestApproval
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAdminRequestApproval()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/UpdateAdminRequestApproval.json
@@ -67,19 +66,13 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceAdminApprovalRequestResource marketplaceAdminApprovalRequest = client.GetMarketplaceAdminApprovalRequestResource(marketplaceAdminApprovalRequestResourceId);
 
             // invoke the operation
-            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData()
+            MarketplaceAdminApprovalRequestData data = new MarketplaceAdminApprovalRequestData
             {
                 PublisherId = "marketplacetestthirdparty",
                 AdminAction = MarketplaceAdminAction.Approved,
-                ApprovedPlans =
-{
-"testPlan"
-},
+                ApprovedPlans = { "testPlan" },
                 Comment = "I'm ok with that",
-                CollectionIds =
-{
-Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"),Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f")
-},
+                CollectionIds = { Guid.Parse("f8ee227e-85d7-477d-abbf-854d6decaf70"), Guid.Parse("39246ad6-c521-4fed-8de7-77dede2e873f") },
             };
             ArmOperation<MarketplaceAdminApprovalRequestResource> lro = await marketplaceAdminApprovalRequest.UpdateAsync(WaitUntil.Completed, data);
             MarketplaceAdminApprovalRequestResource result = lro.Value;

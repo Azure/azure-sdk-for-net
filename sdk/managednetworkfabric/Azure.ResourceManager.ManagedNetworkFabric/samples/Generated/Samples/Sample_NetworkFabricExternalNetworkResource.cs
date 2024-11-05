@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkFabricExternalNetworkResource
     {
-        // ExternalNetworks_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ExternalNetworksGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Get_MaximumSet_Gen.json
@@ -47,9 +47,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExternalNetworks_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ExternalNetworksDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "ExternalNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
+            // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-l3domain";
+            string externalNetworkName = "example-externalnetwork";
+            ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
+            NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
+
+            // invoke the operation
+            await networkFabricExternalNetwork.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ExternalNetworksUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Update_MaximumSet_Gen.json
@@ -70,58 +96,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
-            NetworkFabricExternalNetworkPatch patch = new NetworkFabricExternalNetworkPatch()
+            NetworkFabricExternalNetworkPatch patch = new NetworkFabricExternalNetworkPatch
             {
                 Annotation = "annotation1",
                 ImportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                 ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ImportRoutePolicy = new ImportRoutePolicy()
+                ImportRoutePolicy = new ImportRoutePolicy
                 {
                     ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                     ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                 },
-                ExportRoutePolicy = new ExportRoutePolicy()
+                ExportRoutePolicy = new ExportRoutePolicy
                 {
                     ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                     ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                 },
                 PeeringOption = PeeringOption.OptionA,
-                OptionBProperties = new L3OptionBProperties()
+                OptionBProperties = new L3OptionBProperties
                 {
-                    ImportRouteTargets =
-{
-"65046:10039"
-},
-                    ExportRouteTargets =
-{
-"65046:10039"
-},
-                    RouteTargets = new RouteTargetInformation()
+                    ImportRouteTargets = { "65046:10039" },
+                    ExportRouteTargets = { "65046:10039" },
+                    RouteTargets = new RouteTargetInformation
                     {
-                        ImportIPv4RouteTargets =
-{
-"65046:10039"
-},
-                        ImportIPv6RouteTargets =
-{
-"65046:10039"
-},
-                        ExportIPv4RouteTargets =
-{
-"65046:10039"
-},
-                        ExportIPv6RouteTargets =
-{
-"65046:10039"
-},
+                        ImportIPv4RouteTargets = { "65046:10039" },
+                        ImportIPv6RouteTargets = { "65046:10039" },
+                        ExportIPv4RouteTargets = { "65046:10039" },
+                        ExportIPv6RouteTargets = { "65046:10039" },
                     },
                 },
-                OptionAProperties = new ExternalNetworkPatchOptionAProperties()
+                OptionAProperties = new ExternalNetworkPatchOptionAProperties
                 {
                     Mtu = 1500,
                     VlanId = 1001,
                     PeerAsn = 65047L,
-                    BfdConfiguration = new BfdConfiguration()
+                    BfdConfiguration = new BfdConfiguration
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
@@ -144,37 +152,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ExternalNetworks_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ExternalNetworksDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "ExternalNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricExternalNetworkResource created on azure
-            // for more information of creating NetworkFabricExternalNetworkResource, please refer to the document of NetworkFabricExternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string externalNetworkName = "example-externalnetwork";
-            ResourceIdentifier networkFabricExternalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName);
-            NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
-
-            // invoke the operation
-            await networkFabricExternalNetwork.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ExternalNetworks_UpdateAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_ExternalNetworksUpdateAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_UpdateAdministrativeState_MaximumSet_Gen.json
@@ -195,13 +174,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
                 State = AdministrativeEnableState.Enable,
-                ResourceIds =
-{
-new ResourceIdentifier("")
-},
+                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricExternalNetwork.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;
@@ -209,9 +185,8 @@ new ResourceIdentifier("")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalNetworks_UpdateStaticRouteBfdAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateStaticRouteBfdAdministrativeState_ExternalNetworksUpdateStaticRouteBfdAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/ExternalNetworks_UpdateStaticRouteBfdAdministrativeState_MaximumSet_Gen.json
@@ -232,13 +207,10 @@ new ResourceIdentifier("")
             NetworkFabricExternalNetworkResource networkFabricExternalNetwork = client.GetNetworkFabricExternalNetworkResource(networkFabricExternalNetworkResourceId);
 
             // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
                 State = AdministrativeEnableState.Enable,
-                ResourceIds =
-{
-new ResourceIdentifier("")
-},
+                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricExternalNetwork.UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;

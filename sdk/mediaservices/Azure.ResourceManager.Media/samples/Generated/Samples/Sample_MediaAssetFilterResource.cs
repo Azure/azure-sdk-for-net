@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaAssetFilterResource
     {
-        // Get an Asset Filter by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAssetFilterByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-get-by-name.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an Asset Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAssetFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-delete.json
@@ -72,14 +71,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetFilterResource mediaAssetFilter = client.GetMediaAssetFilterResource(mediaAssetFilterResourceId);
 
             // invoke the operation
-            await mediaAssetFilter.DeleteAsync(WaitUntil.Completed);
+            await mediaAssetFilter.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update an Asset Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAnAssetFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/assetFilters-update.json
@@ -101,9 +99,9 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetFilterResource mediaAssetFilter = client.GetMediaAssetFilterResource(mediaAssetFilterResourceId);
 
             // invoke the operation
-            MediaAssetFilterData data = new MediaAssetFilterData()
+            MediaAssetFilterData data = new MediaAssetFilterData
             {
-                PresentationTimeRange = new PresentationTimeRange()
+                PresentationTimeRange = new PresentationTimeRange
                 {
                     StartTimestamp = 10L,
                     EndTimestamp = 170000000L,

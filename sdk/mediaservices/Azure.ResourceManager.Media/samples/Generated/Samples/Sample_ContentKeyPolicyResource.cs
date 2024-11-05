@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_ContentKeyPolicyResource
     {
-        // Get a Content Key Policy by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAContentKeyPolicyByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-by-name.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Key Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAKeyPolicy()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Media.Samples
             ContentKeyPolicyResource contentKeyPolicy = client.GetContentKeyPolicyResource(contentKeyPolicyResourceId);
 
             // invoke the operation
-            await contentKeyPolicy.DeleteAsync(WaitUntil.Completed);
+            await contentKeyPolicy.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a Content Key Policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAContentKeyPolicy()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-update.json
@@ -98,16 +96,13 @@ namespace Azure.ResourceManager.Media.Samples
             ContentKeyPolicyResource contentKeyPolicy = client.GetContentKeyPolicyResource(contentKeyPolicyResourceId);
 
             // invoke the operation
-            ContentKeyPolicyData data = new ContentKeyPolicyData()
+            ContentKeyPolicyData data = new ContentKeyPolicyData
             {
                 Description = "Updated Policy",
-                Options =
-{
-new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(),new ContentKeyPolicyOpenRestriction())
+                Options = {new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction())
 {
 Name = "ClearKeyOption",
-}
-},
+}},
             };
             ContentKeyPolicyResource result = await contentKeyPolicy.UpdateAsync(data);
 
@@ -118,9 +113,8 @@ Name = "ClearKeyOption",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Content Key Policy with secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyPropertiesWithSecrets_GetAnContentKeyPolicyWithSecrets()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-with-secrets.json

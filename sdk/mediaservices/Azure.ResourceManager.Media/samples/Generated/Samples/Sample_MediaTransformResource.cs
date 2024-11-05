@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaTransformResource
     {
-        // Get a Transform by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATransformByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/transforms-get-by-name.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Transform
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteATransform()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/transforms-delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaTransformResource mediaTransform = client.GetMediaTransformResource(mediaTransformResourceId);
 
             // invoke the operation
-            await mediaTransform.DeleteAsync(WaitUntil.Completed);
+            await mediaTransform.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a Transform.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateATransform()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Encoding/stable/2022-07-01/examples/transforms-update.json
@@ -98,16 +96,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaTransformResource mediaTransform = client.GetMediaTransformResource(mediaTransformResourceId);
 
             // invoke the operation
-            MediaTransformData data = new MediaTransformData()
+            MediaTransformData data = new MediaTransformData
             {
                 Description = "Example transform to illustrate update.",
-                Outputs =
-{
-new MediaTransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720P))
+                Outputs = {new MediaTransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720P))
 {
 RelativePriority = MediaJobPriority.High,
-}
-},
+}},
             };
             MediaTransformResource result = await mediaTransform.UpdateAsync(data);
 

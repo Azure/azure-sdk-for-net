@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MySql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlPrivateEndpointConnectionResource
     {
-        // Gets private endpoint connection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateEndpointConnectionGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateEndpointConnectionDelete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlPrivateEndpointConnectionResource mySqlPrivateEndpointConnection = client.GetMySqlPrivateEndpointConnectionResource(mySqlPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await mySqlPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await mySqlPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update private endpoint connection Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePrivateEndpointConnectionTags()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/PrivateEndpointConnectionUpdateTags.json
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlPrivateEndpointConnectionResource mySqlPrivateEndpointConnection = client.GetMySqlPrivateEndpointConnectionResource(mySqlPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            MySqlPrivateEndpointConnectionPatch patch = new MySqlPrivateEndpointConnectionPatch()
+            MySqlPrivateEndpointConnectionPatch patch = new MySqlPrivateEndpointConnectionPatch
             {
                 Tags =
 {
 ["key1"] = "val1",
-["key2"] = "val2",
+["key2"] = "val2"
 },
             };
             ArmOperation<MySqlPrivateEndpointConnectionResource> lro = await mySqlPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, patch);

@@ -11,47 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Logic.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Logic.Samples
 {
     public partial class Sample_IntegrationServiceEnvironmentResource
     {
-        // List integration service environments by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIntegrationServiceEnvironments_ListIntegrationServiceEnvironmentsBySubscription()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_ListBySubscription.json
-            // this example is just showing the usage of "IntegrationServiceEnvironments_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (IntegrationServiceEnvironmentResource item in subscriptionResource.GetIntegrationServiceEnvironmentsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                IntegrationServiceEnvironmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get integration service environment by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetIntegrationServiceEnvironmentByName()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Get.json
@@ -80,53 +47,8 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Patch an integration service environment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PatchAnIntegrationServiceEnvironment()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Patch.json
-            // this example is just showing the usage of "IntegrationServiceEnvironments_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
-            // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
-            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
-            string resourceGroup = "testResourceGroup";
-            string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
-            ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
-            IntegrationServiceEnvironmentResource integrationServiceEnvironment = client.GetIntegrationServiceEnvironmentResource(integrationServiceEnvironmentResourceId);
-
-            // invoke the operation
-            IntegrationServiceEnvironmentData data = new IntegrationServiceEnvironmentData(new AzureLocation("placeholder"))
-            {
-                Sku = new IntegrationServiceEnvironmentSku()
-                {
-                    Name = IntegrationServiceEnvironmentSkuName.Developer,
-                    Capacity = 0,
-                },
-                Tags =
-{
-["tag1"] = "value1",
-},
-            };
-            ArmOperation<IntegrationServiceEnvironmentResource> lro = await integrationServiceEnvironment.UpdateAsync(WaitUntil.Completed, data);
-            IntegrationServiceEnvironmentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IntegrationServiceEnvironmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete an integration account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnIntegrationAccount()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Delete.json
@@ -146,14 +68,56 @@ namespace Azure.ResourceManager.Logic.Samples
             IntegrationServiceEnvironmentResource integrationServiceEnvironment = client.GetIntegrationServiceEnvironmentResource(integrationServiceEnvironmentResourceId);
 
             // invoke the operation
-            await integrationServiceEnvironment.DeleteAsync(WaitUntil.Completed);
+            await integrationServiceEnvironment.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restarts an integration service environment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchAnIntegrationServiceEnvironment()
+        {
+            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Patch.json
+            // this example is just showing the usage of "IntegrationServiceEnvironments_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IntegrationServiceEnvironmentResource created on azure
+            // for more information of creating IntegrationServiceEnvironmentResource, please refer to the document of IntegrationServiceEnvironmentResource
+            string subscriptionId = "f34b22a3-2202-4fb1-b040-1332bd928c84";
+            string resourceGroup = "testResourceGroup";
+            string integrationServiceEnvironmentName = "testIntegrationServiceEnvironment";
+            ResourceIdentifier integrationServiceEnvironmentResourceId = IntegrationServiceEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
+            IntegrationServiceEnvironmentResource integrationServiceEnvironment = client.GetIntegrationServiceEnvironmentResource(integrationServiceEnvironmentResourceId);
+
+            // invoke the operation
+            IntegrationServiceEnvironmentData data = new IntegrationServiceEnvironmentData(default)
+            {
+                Sku = new IntegrationServiceEnvironmentSku
+                {
+                    Name = IntegrationServiceEnvironmentSkuName.Developer,
+                    Capacity = 0,
+                },
+                Tags =
+{
+["tag1"] = "value1"
+},
+            };
+            ArmOperation<IntegrationServiceEnvironmentResource> lro = await integrationServiceEnvironment.UpdateAsync(WaitUntil.Completed, data);
+            IntegrationServiceEnvironmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IntegrationServiceEnvironmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartsAnIntegrationServiceEnvironment()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Restart.json
@@ -173,14 +137,13 @@ namespace Azure.ResourceManager.Logic.Samples
             IntegrationServiceEnvironmentResource integrationServiceEnvironment = client.GetIntegrationServiceEnvironmentResource(integrationServiceEnvironmentResourceId);
 
             // invoke the operation
-            await integrationServiceEnvironment.RestartAsync();
+            await integrationServiceEnvironment.RestartAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List integration service environment skus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIntegrationServiceEnvironmentSkus_ListIntegrationServiceEnvironmentSkus()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_Skus.json
@@ -205,12 +168,11 @@ namespace Azure.ResourceManager.Logic.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the integration service environment network health
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIntegrationServiceEnvironmentNetworkHealth_GetsTheIntegrationServiceEnvironmentNetworkHealth()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationServiceEnvironments_NetworkHealth.json

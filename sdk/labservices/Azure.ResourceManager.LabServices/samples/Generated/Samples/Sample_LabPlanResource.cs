@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.LabServices.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.LabServices.Samples
 {
     public partial class Sample_LabPlanResource
     {
-        // listLabPlans
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLabPlans_ListLabPlans()
-        {
-            // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/listLabPlans.json
-            // this example is just showing the usage of "LabPlans_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LabPlanResource item in subscriptionResource.GetLabPlansAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LabPlanData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // getLabPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLabPlan()
         {
             // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/getLabPlan.json
@@ -79,51 +46,8 @@ namespace Azure.ResourceManager.LabServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // patchLabPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PatchLabPlan()
-        {
-            // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/patchLabPlan.json
-            // this example is just showing the usage of "LabPlans_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LabPlanResource created on azure
-            // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string labPlanName = "testlabplan";
-            ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
-            LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
-
-            // invoke the operation
-            LabPlanPatch patch = new LabPlanPatch()
-            {
-                DefaultConnectionProfile = new LabConnectionProfile()
-                {
-                    WebSshAccess = LabVirtualMachineConnectionType.None,
-                    WebRdpAccess = LabVirtualMachineConnectionType.None,
-                    ClientSshAccess = LabVirtualMachineConnectionType.Public,
-                    ClientRdpAccess = LabVirtualMachineConnectionType.Public,
-                },
-            };
-            ArmOperation<LabPlanResource> lro = await labPlan.UpdateAsync(WaitUntil.Completed, patch);
-            LabPlanResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            LabPlanData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // deleteLabPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteLabPlan()
         {
             // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/deleteLabPlan.json
@@ -143,14 +67,54 @@ namespace Azure.ResourceManager.LabServices.Samples
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
             // invoke the operation
-            await labPlan.DeleteAsync(WaitUntil.Completed);
+            await labPlan.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // saveImageVirtualMachine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchLabPlan()
+        {
+            // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/patchLabPlan.json
+            // this example is just showing the usage of "LabPlans_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LabPlanResource created on azure
+            // for more information of creating LabPlanResource, please refer to the document of LabPlanResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string labPlanName = "testlabplan";
+            ResourceIdentifier labPlanResourceId = LabPlanResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labPlanName);
+            LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
+
+            // invoke the operation
+            LabPlanPatch patch = new LabPlanPatch
+            {
+                DefaultConnectionProfile = new LabConnectionProfile
+                {
+                    WebSshAccess = LabVirtualMachineConnectionType.None,
+                    WebRdpAccess = LabVirtualMachineConnectionType.None,
+                    ClientSshAccess = LabVirtualMachineConnectionType.Public,
+                    ClientRdpAccess = LabVirtualMachineConnectionType.Public,
+                },
+            };
+            ArmOperation<LabPlanResource> lro = await labPlan.UpdateAsync(WaitUntil.Completed, patch);
+            LabPlanResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LabPlanData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SaveImage_SaveImageVirtualMachine()
         {
             // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/LabPlans/saveImageVirtualMachine.json
@@ -170,14 +134,14 @@ namespace Azure.ResourceManager.LabServices.Samples
             LabPlanResource labPlan = client.GetLabPlanResource(labPlanResourceId);
 
             // invoke the operation
-            LabVirtualMachineImageContent content = new LabVirtualMachineImageContent()
+            LabVirtualMachineImageContent content = new LabVirtualMachineImageContent
             {
                 Name = "Test Image",
                 LabVirtualMachineId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.LabServices/labs/testlab/virtualMachines/template"),
             };
-            await labPlan.SaveImageAsync(WaitUntil.Completed, content);
+            await labPlan.SaveImageAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

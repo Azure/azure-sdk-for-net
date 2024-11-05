@@ -7,18 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedServices.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServices.Samples
 {
     public partial class Sample_ManagedServicesRegistrationResource
     {
-        // Get Registration Definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistrationDefinition()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/GetRegistrationDefinition.json
@@ -46,9 +45,8 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Registration Definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRegistrationDefinition()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/DeleteRegistrationDefinition.json
@@ -67,14 +65,13 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             ManagedServicesRegistrationResource managedServicesRegistration = client.GetManagedServicesRegistrationResource(managedServicesRegistrationResourceId);
 
             // invoke the operation
-            await managedServicesRegistration.DeleteAsync(WaitUntil.Completed);
+            await managedServicesRegistration.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Put Registration Definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PutRegistrationDefinition()
         {
             // Generated from example definition: specification/managedservices/resource-manager/Microsoft.ManagedServices/stable/2022-10-01/examples/PutRegistrationDefinition.json
@@ -93,42 +90,34 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             ManagedServicesRegistrationResource managedServicesRegistration = client.GetManagedServicesRegistrationResource(managedServicesRegistrationResourceId);
 
             // invoke the operation
-            ManagedServicesRegistrationData data = new ManagedServicesRegistrationData()
+            ManagedServicesRegistrationData data = new ManagedServicesRegistrationData
             {
                 Properties = new ManagedServicesRegistrationProperties(new ManagedServicesAuthorization[]
             {
-new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),"acdd72a7-3385-48ef-bd42-f606fba81ae7")
+new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"), "acdd72a7-3385-48ef-bd42-f606fba81ae7")
 {
 PrincipalIdDisplayName = "Support User",
-},new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),"18d7d88d-d35e-4fb5-a5c3-7773c20a72d9")
+},
+new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"), "18d7d88d-d35e-4fb5-a5c3-7773c20a72d9")
 {
 PrincipalIdDisplayName = "User Access Administrator",
-DelegatedRoleDefinitionIds =
-{
-Guid.Parse("b24988ac-6180-42a0-ab88-20f7382dd24c")
-},
+DelegatedRoleDefinitionIds = {Guid.Parse("b24988ac-6180-42a0-ab88-20f7382dd24c")},
 }
             }, Guid.Parse("83abe5cd-bcc3-441a-bd86-e6a75360cecc"))
                 {
                     Description = "Tes1t",
-                    EligibleAuthorizations =
-{
-new ManagedServicesEligibleAuthorization(Guid.Parse("3e0ed8c6-e902-4fc5-863c-e3ddbb2ae2a2"),"ae349356-3a1b-4a5e-921d-050484c6347e")
+                    EligibleAuthorizations = {new ManagedServicesEligibleAuthorization(Guid.Parse("3e0ed8c6-e902-4fc5-863c-e3ddbb2ae2a2"), "ae349356-3a1b-4a5e-921d-050484c6347e")
 {
 PrincipalIdDisplayName = "Support User",
 JustInTimeAccessPolicy = new ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider.Azure)
 {
-MaximumActivationDuration = XmlConvert.ToTimeSpan("PT8H"),
-ManagedByTenantApprovers =
-{
-new ManagedServicesEligibleApprover(Guid.Parse("d9b22cd6-6407-43cc-8c60-07c56df0b51a"))
+MaximumActivationDuration = default,
+ManagedByTenantApprovers = {new ManagedServicesEligibleApprover(Guid.Parse("d9b22cd6-6407-43cc-8c60-07c56df0b51a"))
 {
 PrincipalIdDisplayName = "Approver Group",
-}
+}},
 },
-},
-}
-},
+}},
                     RegistrationDefinitionName = "DefinitionName",
                 },
                 Plan = new ManagedServicesPlan("addesai-plan", "marketplace-test", "test", "1.0.0"),

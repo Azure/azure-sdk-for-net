@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_SubnetResource
     {
-        // Delete subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteSubnet()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetDelete.json
-            // this example is just showing the usage of "Subnets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubnetResource created on azure
-            // for more information of creating SubnetResource, please refer to the document of SubnetResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "subnet-test";
-            string virtualNetworkName = "vnetname";
-            string subnetName = "subnet1";
-            ResourceIdentifier subnetResourceId = SubnetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
-            SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
-
-            // invoke the operation
-            await subnet.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetGet.json
@@ -75,9 +47,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get subnet with a delegation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnetWithADelegation()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetGetWithDelegation.json
@@ -107,9 +78,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get subnet with sharing scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnetWithSharingScope()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetGetWithSharingScope.json
@@ -139,9 +109,35 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteSubnet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetDelete.json
+            // this example is just showing the usage of "Subnets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubnetResource created on azure
+            // for more information of creating SubnetResource, please refer to the document of SubnetResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "subnet-test";
+            string virtualNetworkName = "vnetname";
+            string subnetName = "subnet1";
+            ResourceIdentifier subnetResourceId = SubnetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
+            SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
+
+            // invoke the operation
+            await subnet.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreate.json
@@ -162,7 +158,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -176,9 +172,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create subnet with a delegation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnetWithADelegation()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreateWithDelegation.json
@@ -199,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -213,9 +208,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create subnet with service endpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnetWithServiceEndpoints()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreateServiceEndpoint.json
@@ -236,16 +230,13 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
-                ServiceEndpoints =
-{
-new ServiceEndpointProperties()
+                ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
-}
-},
+}},
             };
             ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
             SubnetResource result = lro.Value;
@@ -257,9 +248,8 @@ Service = "Microsoft.Storage",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create subnet with service endpoints with network identifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnetWithServiceEndpointsWithNetworkIdentifier()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreateServiceEndpointNetworkIdentifier.json
@@ -280,17 +270,14 @@ Service = "Microsoft.Storage",
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
-                ServiceEndpoints =
-{
-new ServiceEndpointProperties()
+                ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
 NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/subnet-test/providers/Microsoft.Network/publicIPAddresses/test-ip"),
-}
-},
+}},
             };
             ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
             SubnetResource result = lro.Value;
@@ -302,9 +289,8 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create subnet with sharing scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnetWithSharingScope()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreateWithSharingScope.json
@@ -325,7 +311,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -339,9 +325,8 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Prepare Network Policies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PrepareNetworkPolicies_PrepareNetworkPolicies()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetPrepareNetworkPolicies.json
@@ -362,18 +347,17 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            PrepareNetworkPoliciesContent content = new PrepareNetworkPoliciesContent()
+            PrepareNetworkPoliciesContent content = new PrepareNetworkPoliciesContent
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };
-            await subnet.PrepareNetworkPoliciesAsync(WaitUntil.Completed, content);
+            await subnet.PrepareNetworkPoliciesAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Unprepare Network Policies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UnprepareNetworkPolicies_UnprepareNetworkPolicies()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetUnprepareNetworkPolicies.json
@@ -394,18 +378,17 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            UnprepareNetworkPoliciesContent content = new UnprepareNetworkPoliciesContent()
+            UnprepareNetworkPoliciesContent content = new UnprepareNetworkPoliciesContent
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };
-            await subnet.UnprepareNetworkPoliciesAsync(WaitUntil.Completed, content);
+            await subnet.UnprepareNetworkPoliciesAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Resource Navigation Links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceNavigationLinks_GetResourceNavigationLinks()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetResourceNavigationLinks.json
@@ -431,12 +414,11 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Service Association Links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServiceAssociationLinks_GetServiceAssociationLinks()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetServiceAssociationLinks.json
@@ -462,7 +444,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

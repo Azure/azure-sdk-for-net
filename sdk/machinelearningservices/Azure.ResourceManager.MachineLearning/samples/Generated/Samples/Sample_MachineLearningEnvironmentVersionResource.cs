@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningEnvironmentVersionResource
     {
-        // Delete Workspace Environment Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteWorkspaceEnvironmentVersion()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/EnvironmentVersion/delete.json
-            // this example is just showing the usage of "EnvironmentVersions_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningEnvironmentVersionResource created on azure
-            // for more information of creating MachineLearningEnvironmentVersionResource, please refer to the document of MachineLearningEnvironmentVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string workspaceName = "my-aml-workspace";
-            string name = "string";
-            string version = "string";
-            ResourceIdentifier machineLearningEnvironmentVersionResourceId = MachineLearningEnvironmentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name, version);
-            MachineLearningEnvironmentVersionResource machineLearningEnvironmentVersion = client.GetMachineLearningEnvironmentVersionResource(machineLearningEnvironmentVersionResourceId);
-
-            // invoke the operation
-            await machineLearningEnvironmentVersion.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Workspace Environment Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceEnvironmentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/EnvironmentVersion/get.json
@@ -77,9 +48,36 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateOrUpdate Workspace Environment Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteWorkspaceEnvironmentVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/EnvironmentVersion/delete.json
+            // this example is just showing the usage of "EnvironmentVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningEnvironmentVersionResource created on azure
+            // for more information of creating MachineLearningEnvironmentVersionResource, please refer to the document of MachineLearningEnvironmentVersionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string name = "string";
+            string version = "string";
+            ResourceIdentifier machineLearningEnvironmentVersionResourceId = MachineLearningEnvironmentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name, version);
+            MachineLearningEnvironmentVersionResource machineLearningEnvironmentVersion = client.GetMachineLearningEnvironmentVersionResource(machineLearningEnvironmentVersionResourceId);
+
+            // invoke the operation
+            await machineLearningEnvironmentVersion.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateWorkspaceEnvironmentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/EnvironmentVersion/createOrUpdate.json
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningEnvironmentVersionResource machineLearningEnvironmentVersion = client.GetMachineLearningEnvironmentVersionResource(machineLearningEnvironmentVersionResourceId);
 
             // invoke the operation
-            MachineLearningEnvironmentVersionData data = new MachineLearningEnvironmentVersionData(new MachineLearningEnvironmentVersionProperties()
+            MachineLearningEnvironmentVersionData data = new MachineLearningEnvironmentVersionData(new MachineLearningEnvironmentVersionProperties
             {
                 Image = "docker.io/tensorflow/serving:latest",
                 CondaFile = "string",
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 {
                     DockerfilePath = "prod/Dockerfile",
                 },
-                InferenceConfig = new MachineLearningInferenceContainerProperties()
+                InferenceConfig = new MachineLearningInferenceContainerProperties
                 {
                     LivenessRoute = new MachineLearningInferenceContainerRoute("string", 1),
                     ReadinessRoute = new MachineLearningInferenceContainerRoute("string", 1),
@@ -119,11 +117,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningEnvironmentVersionResource> lro = await machineLearningEnvironmentVersion.UpdateAsync(WaitUntil.Completed, data);
@@ -136,9 +134,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Publish Workspace Environment Version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Publish_PublishWorkspaceEnvironmentVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/EnvironmentVersion/publish.json
@@ -160,15 +157,15 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningEnvironmentVersionResource machineLearningEnvironmentVersion = client.GetMachineLearningEnvironmentVersionResource(machineLearningEnvironmentVersionResourceId);
 
             // invoke the operation
-            DestinationAssetContent content = new DestinationAssetContent()
+            DestinationAssetContent content = new DestinationAssetContent
             {
                 RegistryName = "string",
                 DestinationName = "string",
                 DestinationVersion = "string",
             };
-            await machineLearningEnvironmentVersion.PublishAsync(WaitUntil.Completed, content);
+            await machineLearningEnvironmentVersion.PublishAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,79 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MySql.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlServerResource
     {
-        // ServerUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ServerUpdate()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerUpdate.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "mysqltestsvc4";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // invoke the operation
-            MySqlServerPatch patch = new MySqlServerPatch()
-            {
-                AdministratorLoginPassword = "<administratorLoginPassword>",
-                SslEnforcement = MySqlSslEnforcementEnum.Disabled,
-            };
-            ArmOperation<MySqlServerResource> lro = await mySqlServer.UpdateAsync(WaitUntil.Completed, patch);
-            MySqlServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MySqlServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ServerDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ServerDelete()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerDelete.json
-            // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // invoke the operation
-            await mySqlServer.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ServerGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerGet.json
@@ -111,41 +46,70 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetMySqlServers_ServerList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ServerDelete()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerList.json
-            // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerDelete.json
+            // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "TestGroup";
+            string serverName = "testserver";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (MySqlServerResource item in subscriptionResource.GetMySqlServersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MySqlServerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            await mySqlServer.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ServerRestart
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdate()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerUpdate.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "mysqltestsvc4";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+
+            // invoke the operation
+            MySqlServerPatch patch = new MySqlServerPatch
+            {
+                AdministratorLoginPassword = "<administratorLoginPassword>",
+                SslEnforcement = MySqlSslEnforcementEnum.Disabled,
+            };
+            ArmOperation<MySqlServerResource> lro = await mySqlServer.UpdateAsync(WaitUntil.Completed, patch);
+            MySqlServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restart_ServerRestart()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerRestart.json
@@ -165,14 +129,13 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
 
             // invoke the operation
-            await mySqlServer.RestartAsync(WaitUntil.Completed);
+            await mySqlServer.RestartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ConfigurationList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateConfigurations_ConfigurationList()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ConfigurationsUpdateByServer.json
@@ -199,9 +162,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // LogFileList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLogFiles_LogFileList()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/LogFileListByServer.json
@@ -226,12 +188,11 @@ namespace Azure.ResourceManager.MySql.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ReplicasListByServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRecoverableServer_ReplicasListByServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/RecoverableServersGet.json
@@ -256,9 +217,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PerformanceTiersList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerBasedPerformanceTiers_PerformanceTiersList()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/PerformanceTiersListByServer.json
@@ -283,12 +243,11 @@ namespace Azure.ResourceManager.MySql.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // QueryPerformanceInsightResetData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetQueryPerformanceInsightData_QueryPerformanceInsightResetData()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/QueryPerformanceInsightResetData.json
@@ -313,9 +272,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerStart
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_ServerStart()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerStart.json
@@ -335,14 +293,13 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
 
             // invoke the operation
-            await mySqlServer.StartAsync(WaitUntil.Completed);
+            await mySqlServer.StartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ServerStop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_ServerStop()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerStop.json
@@ -362,14 +319,13 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
 
             // invoke the operation
-            await mySqlServer.StopAsync(WaitUntil.Completed);
+            await mySqlServer.StopAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ServerUpgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_ServerUpgrade()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2020-01-01/examples/ServerUpgrade.json
@@ -389,13 +345,13 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
 
             // invoke the operation
-            MySqlServerUpgradeContent content = new MySqlServerUpgradeContent()
+            MySqlServerUpgradeContent content = new MySqlServerUpgradeContent
             {
                 TargetServerVersion = "5.7",
             };
-            await mySqlServer.UpgradeAsync(WaitUntil.Completed, content);
+            await mySqlServer.UpgradeAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

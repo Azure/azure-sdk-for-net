@@ -8,22 +8,21 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaLiveEventCollection
     {
-        // List all LiveEvents
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAllLiveEvents()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateALiveEvent()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-all.json
-            // this example is just showing the usage of "LiveEvents_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-create.json
+            // this example is just showing the usage of "LiveEvents_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,22 +40,48 @@ namespace Azure.ResourceManager.Media.Samples
             // get the collection of this MediaLiveEventResource
             MediaLiveEventCollection collection = mediaServicesAccount.GetMediaLiveEvents();
 
-            // invoke the operation and iterate over the result
-            await foreach (MediaLiveEventResource item in collection.GetAllAsync())
+            // invoke the operation
+            string liveEventName = "myLiveEvent1";
+            MediaLiveEventData data = new MediaLiveEventData(new AzureLocation("West US"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MediaLiveEventData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Description = "test event 1",
+                Input = new LiveEventInput(LiveEventInputProtocol.Rtmp)
+                {
+                    IPAllowedIPs = {new IPRange
+{
+Name = "AllowAll",
+Address = IPAddress.Parse("0.0.0.0"),
+SubnetPrefixLength = 0,
+}},
+                    KeyFrameIntervalDuration = (TimeSpan)default,
+                },
+                Preview = new LiveEventPreview
+                {
+                    IPAllowedIPs = {new IPRange
+{
+Name = "AllowAll",
+Address = IPAddress.Parse("0.0.0.0"),
+SubnetPrefixLength = 0,
+}},
+                },
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+            };
+            ArmOperation<MediaLiveEventResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
+            MediaLiveEventResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MediaLiveEventData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a LiveEvent by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetALiveEventByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-by-name.json
@@ -89,9 +114,44 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a LiveEvent by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAllLiveEvents()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-all.json
+            // this example is just showing the usage of "LiveEvents_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MediaServicesAccountResource created on azure
+            // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
+            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string resourceGroupName = "mediaresources";
+            string accountName = "slitestmedia10";
+            ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
+
+            // get the collection of this MediaLiveEventResource
+            MediaLiveEventCollection collection = mediaServicesAccount.GetMediaLiveEvents();
+
+            // invoke the operation and iterate over the result
+            await foreach (MediaLiveEventResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MediaLiveEventData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetALiveEventByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-by-name.json
@@ -120,9 +180,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a LiveEvent by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetALiveEventByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-list-by-name.json
@@ -151,7 +210,7 @@ namespace Azure.ResourceManager.Media.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -161,76 +220,6 @@ namespace Azure.ResourceManager.Media.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create a LiveEvent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateALiveEvent()
-        {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/liveevent-create.json
-            // this example is just showing the usage of "LiveEvents_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MediaServicesAccountResource created on azure
-            // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
-            string resourceGroupName = "mediaresources";
-            string accountName = "slitestmedia10";
-            ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
-
-            // get the collection of this MediaLiveEventResource
-            MediaLiveEventCollection collection = mediaServicesAccount.GetMediaLiveEvents();
-
-            // invoke the operation
-            string liveEventName = "myLiveEvent1";
-            MediaLiveEventData data = new MediaLiveEventData(new AzureLocation("West US"))
-            {
-                Description = "test event 1",
-                Input = new LiveEventInput(LiveEventInputProtocol.Rtmp)
-                {
-                    IPAllowedIPs =
-{
-new IPRange()
-{
-Name = "AllowAll",
-Address = IPAddress.Parse("0.0.0.0"),
-SubnetPrefixLength = 0,
-}
-},
-                    KeyFrameIntervalDuration = XmlConvert.ToTimeSpan("PT6S"),
-                },
-                Preview = new LiveEventPreview()
-                {
-                    IPAllowedIPs =
-{
-new IPRange()
-{
-Name = "AllowAll",
-Address = IPAddress.Parse("0.0.0.0"),
-SubnetPrefixLength = 0,
-}
-},
-                },
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
-            ArmOperation<MediaLiveEventResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
-            MediaLiveEventResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MediaLiveEventData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

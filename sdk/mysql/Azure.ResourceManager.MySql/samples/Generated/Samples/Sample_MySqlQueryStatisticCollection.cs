@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MySql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_MySqlQueryStatisticCollection
     {
-        // TopQueryStatisticsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TopQueryStatisticsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/TopQueryStatisticsGet.json
@@ -50,9 +50,51 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TopQueryStatisticsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_TopQueryStatisticsListByServer()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/TopQueryStatisticsListByServer.json
+            // this example is just showing the usage of "TopQueryStatistics_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testResourceGroupName";
+            string serverName = "testServerName";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+
+            // get the collection of this MySqlQueryStatisticResource
+            MySqlQueryStatisticCollection collection = mySqlServer.GetMySqlQueryStatistics();
+
+            // invoke the operation and iterate over the result
+            MySqlTopQueryStatisticsInput input = new MySqlTopQueryStatisticsInput(
+                5,
+                "avg",
+                "duration",
+                default,
+                default,
+                "PT15M");
+            await foreach (MySqlQueryStatisticResource item in collection.GetAllAsync(input))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MySqlQueryStatisticData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_TopQueryStatisticsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/TopQueryStatisticsGet.json
@@ -81,9 +123,8 @@ namespace Azure.ResourceManager.MySql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // TopQueryStatisticsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TopQueryStatisticsGet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/TopQueryStatisticsGet.json
@@ -112,7 +153,7 @@ namespace Azure.ResourceManager.MySql.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -122,44 +163,6 @@ namespace Azure.ResourceManager.MySql.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // TopQueryStatisticsListByServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_TopQueryStatisticsListByServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2018-06-01/examples/TopQueryStatisticsListByServer.json
-            // this example is just showing the usage of "TopQueryStatistics_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testResourceGroupName";
-            string serverName = "testServerName";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // get the collection of this MySqlQueryStatisticResource
-            MySqlQueryStatisticCollection collection = mySqlServer.GetMySqlQueryStatistics();
-
-            // invoke the operation and iterate over the result
-            MySqlTopQueryStatisticsInput input = new MySqlTopQueryStatisticsInput(5, "avg", "duration", DateTimeOffset.Parse("2019-05-01T20:00:00.000Z"), DateTimeOffset.Parse("2019-05-07T20:00:00.000Z"), "PT15M");
-            await foreach (MySqlQueryStatisticResource item in collection.GetAllAsync(input))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MySqlQueryStatisticData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Media.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Samples
 {
     public partial class Sample_MediaServicesAccountFilterResource
     {
-        // Get an Account Filter by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAccountFilterByName()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/accountFilters-get-by-name.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an Account Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnAccountFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/accountFilters-delete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaServicesAccountFilterResource mediaServicesAccountFilter = client.GetMediaServicesAccountFilterResource(mediaServicesAccountFilterResourceId);
 
             // invoke the operation
-            await mediaServicesAccountFilter.DeleteAsync(WaitUntil.Completed);
+            await mediaServicesAccountFilter.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update an Account Filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAnAccountFilter()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/accountFilters-update.json
@@ -98,9 +96,9 @@ namespace Azure.ResourceManager.Media.Samples
             MediaServicesAccountFilterResource mediaServicesAccountFilter = client.GetMediaServicesAccountFilterResource(mediaServicesAccountFilterResourceId);
 
             // invoke the operation
-            MediaServicesAccountFilterData data = new MediaServicesAccountFilterData()
+            MediaServicesAccountFilterData data = new MediaServicesAccountFilterData
             {
-                PresentationTimeRange = new PresentationTimeRange()
+                PresentationTimeRange = new PresentationTimeRange
                 {
                     StartTimestamp = 10L,
                     EndTimestamp = 170000000L,

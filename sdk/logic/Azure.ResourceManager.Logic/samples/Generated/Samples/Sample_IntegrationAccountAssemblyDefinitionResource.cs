@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Logic.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Logic.Samples
 {
     public partial class Sample_IntegrationAccountAssemblyDefinitionResource
     {
-        // Get an integration account assembly
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnIntegrationAccountAssembly()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationAccountAssemblies_Get.json
@@ -48,9 +47,35 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an account assembly
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAnIntegrationAccountAssembly()
+        {
+            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationAccountAssemblies_Delete.json
+            // this example is just showing the usage of "IntegrationAccountAssemblies_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
+            // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testResourceGroup";
+            string integrationAccountName = "testIntegrationAccount";
+            string assemblyArtifactName = "testAssembly";
+            ResourceIdentifier integrationAccountAssemblyDefinitionResourceId = IntegrationAccountAssemblyDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName, assemblyArtifactName);
+            IntegrationAccountAssemblyDefinitionResource integrationAccountAssemblyDefinition = client.GetIntegrationAccountAssemblyDefinitionResource(integrationAccountAssemblyDefinitionResourceId);
+
+            // invoke the operation
+            await integrationAccountAssemblyDefinition.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAnAccountAssembly()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationAccountAssemblies_CreateOrUpdate.json
@@ -73,10 +98,8 @@ namespace Azure.ResourceManager.Logic.Samples
             // invoke the operation
             IntegrationAccountAssemblyDefinitionData data = new IntegrationAccountAssemblyDefinitionData(new AzureLocation("westus"), new IntegrationAccountAssemblyProperties("System.IdentityModel.Tokens.Jwt")
             {
-                Content = BinaryData.FromString("\"Base64 encoded Assembly Content\""),
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
+                Content = BinaryData.FromObjectAsJson("Base64 encoded Assembly Content"),
+                Metadata = BinaryData.FromObjectAsJson(new object()),
             });
             ArmOperation<IntegrationAccountAssemblyDefinitionResource> lro = await integrationAccountAssemblyDefinition.UpdateAsync(WaitUntil.Completed, data);
             IntegrationAccountAssemblyDefinitionResource result = lro.Value;
@@ -88,37 +111,8 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an integration account assembly
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAnIntegrationAccountAssembly()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationAccountAssemblies_Delete.json
-            // this example is just showing the usage of "IntegrationAccountAssemblies_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IntegrationAccountAssemblyDefinitionResource created on azure
-            // for more information of creating IntegrationAccountAssemblyDefinitionResource, please refer to the document of IntegrationAccountAssemblyDefinitionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testResourceGroup";
-            string integrationAccountName = "testIntegrationAccount";
-            string assemblyArtifactName = "testAssembly";
-            ResourceIdentifier integrationAccountAssemblyDefinitionResourceId = IntegrationAccountAssemblyDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, integrationAccountName, assemblyArtifactName);
-            IntegrationAccountAssemblyDefinitionResource integrationAccountAssemblyDefinition = client.GetIntegrationAccountAssemblyDefinitionResource(integrationAccountAssemblyDefinitionResourceId);
-
-            // invoke the operation
-            await integrationAccountAssemblyDefinition.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get the callback url for an integration account assembly
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentCallbackUrl_GetTheCallbackUrlForAnIntegrationAccountAssembly()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/IntegrationAccountAssemblies_ListContentCallbackUrl.json

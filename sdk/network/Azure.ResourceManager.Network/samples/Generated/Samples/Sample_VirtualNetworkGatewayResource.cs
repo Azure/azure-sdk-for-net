@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkGatewayResource
     {
-        // GetVirtualNetworkGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGet.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetVirtualNetworkScalableGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkScalableGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkScalableGatewayGet.json
@@ -77,9 +76,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteVirtualNetworkGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetworkGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayDelete.json
@@ -99,14 +97,13 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpdateVirtualNetworkGatewayTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetworkGatewayTags()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayUpdateTags.json
@@ -126,12 +123,12 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.UpdateAsync(WaitUntil.Completed, networkTagsObject);
@@ -144,9 +141,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualNetworkGatewaysListConnections
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnections_VirtualNetworkGatewaysListConnections()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewaysListConnections.json
@@ -171,12 +167,11 @@ namespace Azure.ResourceManager.Network.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ResetVirtualNetworkGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetVirtualNetworkGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayReset.json
@@ -206,9 +201,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ResetVpnClientSharedKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetVpnClientSharedKey_ResetVpnClientSharedKey()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
@@ -228,14 +222,13 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.ResetVpnClientSharedKeyAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.ResetVpnClientSharedKeyAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GenerateVPNClientPackage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
@@ -262,9 +255,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateVirtualNetworkGatewayVPNProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateVpnProfile_GenerateVirtualNetworkGatewayVPNProfile()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
@@ -291,9 +283,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayVPNProfilePackageURL
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVpnProfilePackageUrl_GetVirtualNetworkGatewayVPNProfilePackageURL()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
@@ -319,9 +310,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayBGPPeerStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBgpPeerStatus_GetVirtualNetworkGatewayBGPPeerStatus()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
@@ -347,9 +337,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListVirtualNetworkGatewaySupportedVPNDevices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SupportedVpnDevices_ListVirtualNetworkGatewaySupportedVPNDevices()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
@@ -374,9 +363,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayLearnedRoutes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayLearnedRoutes.json
@@ -402,9 +390,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayAdvertisedRoutes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAdvertisedRoutes_GetVirtualNetworkGatewayAdvertisedRoutes()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
@@ -431,9 +418,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Set VirtualNetworkGateway VpnClientIpsecParameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SetVpnclientIPsecParameters_SetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
@@ -453,16 +439,23 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientIPsecParameters vpnclientIPsecParams = new VpnClientIPsecParameters(86473, 429497, IPsecEncryption.Aes256, IPsecIntegrity.Sha256, IkeEncryption.Aes256, IkeIntegrity.Sha384, DHGroup.DHGroup2, PfsGroup.Pfs2);
+            VpnClientIPsecParameters vpnclientIPsecParams = new VpnClientIPsecParameters(
+                86473,
+                429497,
+                IPsecEncryption.Aes256,
+                IPsecIntegrity.Sha256,
+                IkeEncryption.Aes256,
+                IkeIntegrity.Sha384,
+                DHGroup.DHGroup2,
+                PfsGroup.Pfs2);
             ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.SetVpnclientIPsecParametersAsync(WaitUntil.Completed, vpnclientIPsecParams);
             VpnClientIPsecParameters result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get VirtualNetworkGateway VpnClientIpsecParameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
@@ -488,9 +481,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Start packet capture on virtual network gateway with filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithFilter()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
@@ -510,19 +502,18 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent()
+            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Start packet capture on virtual network gateway without filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithoutFilter()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayStartPacketCapture.json
@@ -548,9 +539,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop packet capture on virtual network gateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopPacketCapture_StopPacketCaptureOnVirtualNetworkGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayStopPacketCapture.json
@@ -570,7 +560,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent()
+            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
@@ -580,9 +570,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetVirtualNetworkGatewayVpnclientConnectionHealth
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVpnclientConnectionHealth_GetVirtualNetworkGatewayVpnclientConnectionHealth()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
@@ -608,9 +597,8 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Disconnect VpnConnections from Virtual Network Gateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisconnectVirtualNetworkGatewayVpnConnections_DisconnectVpnConnectionsFromVirtualNetworkGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
@@ -630,16 +618,13 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest()
+            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
             {
-                VpnConnectionIds =
-{
-"vpnconnId1","vpnconnId2"
-},
+                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
             };
-            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request);
+            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

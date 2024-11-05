@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 {
     public partial class Sample_NetworkTapResource
     {
-        // NetworkTaps_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkTapsGetMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Get_MaximumSet_Gen.json
@@ -47,68 +46,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTaps_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_NetworkTapsUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkTaps_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkTapResource created on azure
-            // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string networkTapName = "example-networkTap";
-            ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
-            NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
-
-            // invoke the operation
-            NetworkTapPatch patch = new NetworkTapPatch()
-            {
-                Annotation = "annotation1",
-                PollingType = NetworkTapPollingType.Pull,
-                Destinations =
-{
-new NetworkTapPatchableParametersDestinationsItem()
-{
-Name = "example-destinaionName",
-DestinationType = NetworkTapDestinationType.IsolationDomain,
-DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
-IsolationDomainProperties = new IsolationDomainProperties()
-{
-Encapsulation = IsolationDomainEncapsulationType.None,
-NeighborGroupIds =
-{
-new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")
-},
-},
-DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/example-destinationTapRule"),
-}
-},
-                Tags =
-{
-["key6024"] = "1234",
-},
-            };
-            ArmOperation<NetworkTapResource> lro = await networkTap.UpdateAsync(WaitUntil.Completed, patch);
-            NetworkTapResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkTapData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // NetworkTaps_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_NetworkTapsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Delete_MaximumSet_Gen.json
@@ -128,46 +67,65 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
 
             // invoke the operation
-            await networkTap.DeleteAsync(WaitUntil.Completed);
+            await networkTap.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // NetworkTaps_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNetworkTaps_NetworkTapsListBySubscriptionMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_NetworkTapsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkTaps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "NetworkTaps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this NetworkTapResource created on azure
+            // for more information of creating NetworkTapResource, please refer to the document of NetworkTapResource
             string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "example-rg";
+            string networkTapName = "example-networkTap";
+            ResourceIdentifier networkTapResourceId = NetworkTapResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkTapName);
+            NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (NetworkTapResource item in subscriptionResource.GetNetworkTapsAsync())
+            // invoke the operation
+            NetworkTapPatch patch = new NetworkTapPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkTapData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Annotation = "annotation1",
+                PollingType = NetworkTapPollingType.Pull,
+                Destinations = {new NetworkTapPatchableParametersDestinationsItem
+{
+Name = "example-destinaionName",
+DestinationType = NetworkTapDestinationType.IsolationDomain,
+DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
+IsolationDomainProperties = new IsolationDomainProperties
+{
+Encapsulation = IsolationDomainEncapsulationType.None,
+NeighborGroupIds = {new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")},
+},
+DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/example-destinationTapRule"),
+}},
+                Tags =
+{
+["key6024"] = "1234"
+},
+            };
+            ArmOperation<NetworkTapResource> lro = await networkTap.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkTapResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkTapData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NetworkTaps_UpdateAdministrativeState_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_NetworkTapsUpdateAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_UpdateAdministrativeState_MaximumSet_Gen.json
@@ -187,13 +145,10 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
 
             // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
                 State = AdministrativeEnableState.Enable,
-                ResourceIds =
-{
-new ResourceIdentifier("")
-},
+                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkTap.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             DeviceUpdateCommonPostActionResult result = lro.Value;
@@ -201,9 +156,8 @@ new ResourceIdentifier("")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkTaps_Resync_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resync_NetworkTapsResyncMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTaps_Resync_MaximumSet_Gen.json

@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudBareMetalMachineKeySetResource
     {
-        // Get bare metal machine key set of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBareMetalMachineKeySetOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/BareMetalMachineKeySets_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete bare metal machine key set of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteBareMetalMachineKeySetOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/BareMetalMachineKeySets_Delete.json
@@ -71,14 +70,13 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineKeySetResource networkCloudBareMetalMachineKeySet = client.GetNetworkCloudBareMetalMachineKeySetResource(networkCloudBareMetalMachineKeySetResourceId);
 
             // invoke the operation
-            await networkCloudBareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed);
+            await networkCloudBareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch bare metal machine key set of cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchBareMetalMachineKeySetOfCluster()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/BareMetalMachineKeySets_Patch.json
@@ -99,28 +97,22 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineKeySetResource networkCloudBareMetalMachineKeySet = client.GetNetworkCloudBareMetalMachineKeySetResource(networkCloudBareMetalMachineKeySetResourceId);
 
             // invoke the operation
-            NetworkCloudBareMetalMachineKeySetPatch patch = new NetworkCloudBareMetalMachineKeySetPatch()
+            NetworkCloudBareMetalMachineKeySetPatch patch = new NetworkCloudBareMetalMachineKeySetPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
-                ExpireOn = DateTimeOffset.Parse("2022-12-31T23:59:59.008Z"),
-                JumpHostsAllowed =
-{
-IPAddress.Parse("192.0.2.1"),IPAddress.Parse("192.0.2.5")
-},
-                UserList =
-{
-new KeySetUser("userABC",new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
+                ExpireOn = default,
+                JumpHostsAllowed = { IPAddress.Parse("192.0.2.1"), IPAddress.Parse("192.0.2.5") },
+                UserList = {new KeySetUser("userABC", new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
 {
 Description = "Needs access for troubleshooting as a part of the support team",
-},new KeySetUser("userXYZ",new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
+}, new KeySetUser("userXYZ", new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
 {
 Description = "Needs access for troubleshooting as a part of the support team",
-}
-},
+}},
             };
             ArmOperation<NetworkCloudBareMetalMachineKeySetResource> lro = await networkCloudBareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudBareMetalMachineKeySetResource result = lro.Value;

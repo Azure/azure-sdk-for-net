@@ -11,47 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Logic.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Logic.Samples
 {
     public partial class Sample_LogicWorkflowResource
     {
-        // List all workflows in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLogicWorkflows_ListAllWorkflowsInASubscription()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListBySubscription.json
-            // this example is just showing the usage of "Workflows_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LogicWorkflowResource item in subscriptionResource.GetLogicWorkflowsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LogicWorkflowData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Get.json
@@ -80,9 +47,34 @@ namespace Azure.ResourceManager.Logic.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAWorkflow()
+        {
+            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Delete.json
+            // this example is just showing the usage of "Workflows_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LogicWorkflowResource created on azure
+            // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "test-resource-group";
+            string workflowName = "test-workflow";
+            ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
+            LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
+
+            // invoke the operation
+            await logicWorkflow.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_CreateOrUpdate.json
@@ -104,80 +96,72 @@ namespace Azure.ResourceManager.Logic.Samples
             // invoke the operation
             LogicWorkflowData data = new LogicWorkflowData(new AzureLocation("brazilsouth"))
             {
-                IntegrationAccount = new LogicResourceReference()
+                IntegrationAccount = new LogicResourceReference
                 {
                     Id = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-resource-group/providers/Microsoft.Logic/integrationAccounts/test-integration-account"),
                 },
-                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    ["actions"] = new Dictionary<string, object>()
+                    ["actions"] = new
                     {
-                        ["Find_pet_by_ID"] = new Dictionary<string, object>()
+                        Find_pet_by_ID = new
                         {
-                            ["type"] = "ApiConnection",
-                            ["inputs"] = new Dictionary<string, object>()
+                            type = "ApiConnection",
+                            inputs = new
                             {
-                                ["path"] = "/pet/@{encodeURIComponent('1')}",
-                                ["method"] = "get",
-                                ["host"] = new Dictionary<string, object>()
+                                path = "/pet/@{encodeURIComponent('1')}",
+                                method = "get",
+                                host = new
                                 {
-                                    ["connection"] = new Dictionary<string, object>()
+                                    connection = new
                                     {
-                                        ["name"] = "@parameters('$connections')['test-custom-connector']['connectionId']"
-                                    }
-                                }
+                                        name = "@parameters('$connections')['test-custom-connector']['connectionId']",
+                                    },
+                                },
                             },
-                            ["runAfter"] = new Dictionary<string, object>()
-                            {
-                            }
-                        }
+                            runAfter = new object(),
+                        },
                     },
                     ["contentVersion"] = "1.0.0.0",
-                    ["outputs"] = new Dictionary<string, object>()
+                    ["outputs"] = new object(),
+                    ["parameters"] = new Dictionary<string, object>
                     {
-                    },
-                    ["parameters"] = new Dictionary<string, object>()
-                    {
-                        ["$connections"] = new Dictionary<string, object>()
+                        ["$connections"] = new
                         {
-                            ["type"] = "Object",
-                            ["defaultValue"] = new Dictionary<string, object>()
-                            {
-                            }
+                            type = "Object",
+                            defaultValue = new object(),
                         }
                     },
-                    ["triggers"] = new Dictionary<string, object>()
+                    ["triggers"] = new
                     {
-                        ["manual"] = new Dictionary<string, object>()
+                        manual = new
                         {
-                            ["type"] = "Request",
-                            ["inputs"] = new Dictionary<string, object>()
+                            type = "Request",
+                            inputs = new
                             {
-                                ["schema"] = new Dictionary<string, object>()
-                                {
-                                }
+                                schema = new object(),
                             },
-                            ["kind"] = "Http"
-                        }
+                            kind = "Http",
+                        },
                     }
                 }),
                 Parameters =
 {
-["$connections"] = new LogicWorkflowParameterInfo()
+["$connections"] = new LogicWorkflowParameterInfo
 {
-Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["test-custom-connector"] = new Dictionary<string, object>()
+["test-custom-connector"] = new
 {
-["connectionId"] = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-resource-group/providers/Microsoft.Web/connections/test-custom-connector",
-["connectionName"] = "test-custom-connector",
-["id"] = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/providers/Microsoft.Web/locations/brazilsouth/managedApis/test-custom-connector"}}),
+connectionId = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-resource-group/providers/Microsoft.Web/connections/test-custom-connector",
+connectionName = "test-custom-connector",
+id = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/providers/Microsoft.Web/locations/brazilsouth/managedApis/test-custom-connector",
+}
+}),
+}
 },
-},
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<LogicWorkflowResource> lro = await logicWorkflow.UpdateAsync(WaitUntil.Completed, data);
             LogicWorkflowResource result = lro.Value;
@@ -189,36 +173,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAWorkflow()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Delete.json
-            // this example is just showing the usage of "Workflows_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LogicWorkflowResource created on azure
-            // for more information of creating LogicWorkflowResource, please refer to the document of LogicWorkflowResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "test-resource-group";
-            string workflowName = "test-workflow";
-            ResourceIdentifier logicWorkflowResourceId = LogicWorkflowResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workflowName);
-            LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
-
-            // invoke the operation
-            await logicWorkflow.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Disable a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Disable_DisableAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Disable.json
@@ -238,14 +194,13 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            await logicWorkflow.DisableAsync();
+            await logicWorkflow.DisableAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Enable a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Enable_EnableAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Enable.json
@@ -265,14 +220,13 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            await logicWorkflow.EnableAsync();
+            await logicWorkflow.EnableAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Generate an upgraded definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateUpgradedDefinition_GenerateAnUpgradedDefinition()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_GenerateUpgradedDefinition.json
@@ -292,7 +246,7 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            GenerateUpgradedDefinitionContent content = new GenerateUpgradedDefinitionContent()
+            GenerateUpgradedDefinitionContent content = new GenerateUpgradedDefinitionContent
             {
                 TargetSchemaVersion = "2016-06-01",
             };
@@ -301,9 +255,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get callback url
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCallbackUrl_GetCallbackUrl()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListCallbackUrl.json
@@ -323,9 +276,9 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            ListOperationCallbackUrlParameterInfo info = new ListOperationCallbackUrlParameterInfo()
+            ListOperationCallbackUrlParameterInfo info = new ListOperationCallbackUrlParameterInfo
             {
-                NotAfter = DateTimeOffset.Parse("2018-04-19T16:00:00Z"),
+                NotAfter = default,
                 KeyType = LogicKeyType.Primary,
             };
             LogicWorkflowTriggerCallbackUri result = await logicWorkflow.GetCallbackUrlAsync(info);
@@ -333,9 +286,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the swagger for a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSwagger_GetTheSwaggerForAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ListSwagger.json
@@ -360,9 +312,8 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Move a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Move_MoveAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_Move.json
@@ -382,18 +333,17 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            LogicWorkflowReference move = new LogicWorkflowReference()
+            LogicWorkflowReference move = new LogicWorkflowReference
             {
                 Id = new ResourceIdentifier("subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/newResourceGroup/providers/Microsoft.Logic/workflows/newWorkflowName"),
             };
-            await logicWorkflow.MoveAsync(WaitUntil.Completed, move);
+            await logicWorkflow.MoveAsync(WaitUntil.Completed, move).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Regenerate the callback URL access key for request triggers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAccessKey_RegenerateTheCallbackURLAccessKeyForRequestTriggers()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_RegenerateAccessKey.json
@@ -413,18 +363,17 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             LogicWorkflowResource logicWorkflow = client.GetLogicWorkflowResource(logicWorkflowResourceId);
 
             // invoke the operation
-            LogicWorkflowRegenerateActionContent content = new LogicWorkflowRegenerateActionContent()
+            LogicWorkflowRegenerateActionContent content = new LogicWorkflowRegenerateActionContent
             {
                 KeyType = LogicKeyType.Primary,
             };
-            await logicWorkflow.RegenerateAccessKeyAsync(content);
+            await logicWorkflow.RegenerateAccessKeyAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateByResourceGroup_ValidateAWorkflow()
         {
             // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ValidateByResourceGroup.json
@@ -446,89 +395,24 @@ Value = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             // invoke the operation
             LogicWorkflowData data = new LogicWorkflowData(new AzureLocation("brazilsouth"))
             {
-                IntegrationAccount = new LogicResourceReference()
+                IntegrationAccount = new LogicResourceReference
                 {
                     Id = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-resource-group/providers/Microsoft.Logic/integrationAccounts/test-integration-account"),
                 },
-                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    ["actions"] = new Dictionary<string, object>()
-                    {
-                    },
+                    ["actions"] = new object(),
                     ["contentVersion"] = "1.0.0.0",
-                    ["outputs"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["parameters"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["triggers"] = new Dictionary<string, object>()
-                    {
-                    }
+                    ["outputs"] = new object(),
+                    ["parameters"] = new object(),
+                    ["triggers"] = new object()
                 }),
-                Tags =
-{
-},
+                Tags = { },
             };
-            await logicWorkflow.ValidateByResourceGroupAsync(data);
+            await logicWorkflow.ValidateByResourceGroupAsync(data).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ValidateByLocationWorkflow_ValidateAWorkflow()
-        {
-            // Generated from example definition: specification/logic/resource-manager/Microsoft.Logic/stable/2019-05-01/examples/Workflows_ValidateByLocation.json
-            // this example is just showing the usage of "Workflows_ValidateByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "test-resource-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("brazilsouth");
-            string workflowName = "test-workflow";
-            LogicWorkflowData data = new LogicWorkflowData(new AzureLocation("brazilsouth"))
-            {
-                IntegrationAccount = new LogicResourceReference()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/test-resource-group/providers/Microsoft.Logic/integrationAccounts/test-integration-account"),
-                },
-                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    ["actions"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["contentVersion"] = "1.0.0.0",
-                    ["outputs"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["parameters"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["triggers"] = new Dictionary<string, object>()
-                    {
-                    }
-                }),
-                Tags =
-{
-},
-            };
-            await resourceGroupResource.ValidateByLocationWorkflowAsync(location, workflowName, data);
-
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
