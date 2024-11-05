@@ -104,8 +104,7 @@ namespace Azure.ResourceManager.TestFramework
                 if (genericArguments.Length == 1)
                 {
                     var genericArgumentType = genericArguments[0];
-                    bool isCompliant = false;
-                        isCompliant = HasJsonModelWriteCoreMethod(genericArgumentType);
+                    bool isCompliant = HasJsonModelWriteCoreMethod(genericArgumentType);
                     if (!isCompliant)
                     {
                         nonCompliantClasses.Add(type.Name);
