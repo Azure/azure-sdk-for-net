@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Paginated details of all documents in a job. </summary>
+    /// <summary> Details of a single document in a job. </summary>
     public partial class DocumentDetails
     {
         /// <summary>
@@ -46,24 +46,31 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        internal DocumentDetails(string nextLink)
+        /// <param name="input"> Location for the input. </param>
+        /// <param name="status"> Status of the document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        internal DocumentDetails(DocumentLocation input, OperationState status)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(input, nameof(input));
 
-            Value = new ChangeTrackingList<DocumentDetail>();
-            NextLink = nextLink;
+            Input = input;
+            Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
-        /// <param name="value"> List of documents. </param>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
+        /// <param name="id"> Id of the document details. </param>
+        /// <param name="input"> Location for the input. </param>
+        /// <param name="output"> Location for the output. </param>
+        /// <param name="status"> Status of the document. </param>
+        /// <param name="error"> Error when document fails. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentDetails(IReadOnlyList<DocumentDetail> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentDetails(string id, DocumentLocation input, DocumentLocation output, OperationState status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Id = id;
+            Input = input;
+            Output = output;
+            Status = status;
+            Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,9 +79,15 @@ namespace Azure.Health.Deidentification
         {
         }
 
-        /// <summary> List of documents. </summary>
-        public IReadOnlyList<DocumentDetail> Value { get; }
-        /// <summary> Token to continue a previous query. </summary>
-        public string NextLink { get; }
+        /// <summary> Id of the document details. </summary>
+        public string Id { get; }
+        /// <summary> Location for the input. </summary>
+        public DocumentLocation Input { get; }
+        /// <summary> Location for the output. </summary>
+        public DocumentLocation Output { get; }
+        /// <summary> Status of the document. </summary>
+        public OperationState Status { get; }
+        /// <summary> Error when document fails. </summary>
+        public ResponseError Error { get; }
     }
 }

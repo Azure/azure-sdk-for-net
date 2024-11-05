@@ -165,7 +165,7 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Customizations = new CustomizationOptions
+    Customizations = new CustomizationConfig
     {
         RedactionFormat = "[{type}]",
         SurrogateLocale = "en-US",
@@ -184,7 +184,7 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 
 DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
 {
-    Customizations = new CustomizationOptions
+    Customizations = new CustomizationConfig
     {
         RedactionFormat = "[{type}]",
         SurrogateLocale = "en-US",
@@ -239,7 +239,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetJobsAsync(int?,string,CancellationToken)">
+    <member name="GetJobsAsync(int?,CancellationToken)">
       <example>
 This sample shows how to call GetJobsAsync.
 <code><![CDATA[
@@ -252,7 +252,7 @@ await foreach (DeidentificationJob item in client.GetJobsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobs(int?,string,CancellationToken)">
+    <member name="GetJobs(int?,CancellationToken)">
       <example>
 This sample shows how to call GetJobs.
 <code><![CDATA[
@@ -265,7 +265,7 @@ foreach (DeidentificationJob item in client.GetJobs())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsAsync(int?,string,RequestContext)">
+    <member name="GetJobsAsync(int?,RequestContext)">
       <example>
 This sample shows how to call GetJobsAsync and parse the result.
 <code><![CDATA[
@@ -273,7 +273,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobsAsync(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+await foreach (BinaryData item in client.GetJobsAsync(10, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -287,7 +287,7 @@ await foreach (BinaryData item in client.GetJobsAsync(10, "K1JJRDpzOEtaQWZabUQrQ
 }
 ]]></code></example>
     </member>
-    <member name="GetJobs(int?,string,RequestContext)">
+    <member name="GetJobs(int?,RequestContext)">
       <example>
 This sample shows how to call GetJobs and parse the result.
 <code><![CDATA[
@@ -295,7 +295,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobs(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+foreach (BinaryData item in client.GetJobs(10, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -309,7 +309,7 @@ foreach (BinaryData item in client.GetJobs(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFB
 }
 ]]></code></example>
     </member>
-    <member name="GetJobDocumentsAsync(string,int?,string,CancellationToken)">
+    <member name="GetJobDocumentsAsync(string,int?,CancellationToken)">
       <example>
 This sample shows how to call GetJobDocumentsAsync.
 <code><![CDATA[
@@ -317,12 +317,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (DocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
+await foreach (DocumentDetails item in client.GetJobDocumentsAsync(null))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetJobDocuments(string,int?,string,CancellationToken)">
+    <member name="GetJobDocuments(string,int?,CancellationToken)">
       <example>
 This sample shows how to call GetJobDocuments.
 <code><![CDATA[
@@ -330,12 +330,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (DocumentDetails item in client.GetJobDocuments("documents_smith_1"))
+foreach (DocumentDetails item in client.GetJobDocuments(null))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetJobDocumentsAsync(string,int?,string,RequestContext)">
+    <member name="GetJobDocumentsAsync(string,int?,RequestContext)">
       <example>
 This sample shows how to call GetJobDocumentsAsync and parse the result.
 <code><![CDATA[
@@ -343,18 +343,17 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+await foreach (BinaryData item in client.GetJobDocumentsAsync(null, 10, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("nextLink").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
-    <member name="GetJobDocuments(string,int?,string,RequestContext)">
+    <member name="GetJobDocuments(string,int?,RequestContext)">
       <example>
 This sample shows how to call GetJobDocuments and parse the result.
 <code><![CDATA[
@@ -362,14 +361,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+foreach (BinaryData item in client.GetJobDocuments(null, 10, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("nextLink").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
@@ -390,7 +388,7 @@ DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation
 })
 {
     Operation = OperationType.Redact,
-    Customizations = new JobCustomizationOptions
+    Customizations = new JobCustomizationConfig
     {
         RedactionFormat = "[{type}]",
         SurrogateLocale = "en-US",
@@ -417,7 +415,7 @@ DeidentificationJob resource = new DeidentificationJob(new SourceStorageLocation
 })
 {
     Operation = OperationType.Redact,
-    Customizations = new JobCustomizationOptions
+    Customizations = new JobCustomizationConfig
     {
         RedactionFormat = "[{type}]",
         SurrogateLocale = "en-US",

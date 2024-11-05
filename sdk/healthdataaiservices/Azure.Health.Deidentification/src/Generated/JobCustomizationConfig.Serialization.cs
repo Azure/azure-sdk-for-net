@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class JobCustomizationOptions : IUtf8JsonSerializable, IJsonModel<JobCustomizationOptions>
+    public partial class JobCustomizationConfig : IUtf8JsonSerializable, IJsonModel<JobCustomizationConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobCustomizationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobCustomizationConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<JobCustomizationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<JobCustomizationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobCustomizationOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(JobCustomizationConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        JobCustomizationOptions IJsonModel<JobCustomizationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        JobCustomizationConfig IJsonModel<JobCustomizationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobCustomizationOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(JobCustomizationConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobCustomizationOptions(document.RootElement, options);
+            return DeserializeJobCustomizationConfig(document.RootElement, options);
         }
 
-        internal static JobCustomizationOptions DeserializeJobCustomizationOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static JobCustomizationConfig DeserializeJobCustomizationConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +96,46 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JobCustomizationOptions(redactionFormat, surrogateLocale, serializedAdditionalRawData);
+            return new JobCustomizationConfig(redactionFormat, surrogateLocale, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<JobCustomizationOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<JobCustomizationConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobCustomizationOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobCustomizationConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        JobCustomizationOptions IPersistableModel<JobCustomizationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        JobCustomizationConfig IPersistableModel<JobCustomizationConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JobCustomizationConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeJobCustomizationOptions(document.RootElement, options);
+                        return DeserializeJobCustomizationConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobCustomizationOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobCustomizationConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<JobCustomizationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<JobCustomizationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static JobCustomizationOptions FromResponse(Response response)
+        internal static JobCustomizationConfig FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeJobCustomizationOptions(document.RootElement);
+            return DeserializeJobCustomizationConfig(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
