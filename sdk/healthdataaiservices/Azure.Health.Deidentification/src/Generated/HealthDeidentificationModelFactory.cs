@@ -69,30 +69,14 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetails"/>. </summary>
-        /// <param name="id"> Id of the document details. </param>
-        /// <param name="input"> Location for the input. </param>
-        /// <param name="output"> Location for the output. </param>
-        /// <param name="status"> Status of the document. </param>
-        /// <param name="error"> Error when document fails. </param>
+        /// <param name="value"> List of documents. </param>
+        /// <param name="nextLink"> Token to continue a previous query. </param>
         /// <returns> A new <see cref="Deidentification.DocumentDetails"/> instance for mocking. </returns>
-        public static DocumentDetails DocumentDetails(string id = null, DocumentLocation input = null, DocumentLocation output = null, OperationState status = default, ResponseError error = null)
+        public static DocumentDetails DocumentDetails(IEnumerable<DocumentDetails> value = null, string nextLink = null)
         {
-            return new DocumentDetails(
-                id,
-                input,
-                output,
-                status,
-                error,
-                serializedAdditionalRawData: null);
-        }
+            value ??= new List<DocumentDetails>();
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentLocation"/>. </summary>
-        /// <param name="location"> Location of document in storage. </param>
-        /// <param name="etag"> The entity tag for this resource. </param>
-        /// <returns> A new <see cref="Deidentification.DocumentLocation"/> instance for mocking. </returns>
-        public static DocumentLocation DocumentLocation(Uri location = null, ETag etag = default)
-        {
-            return new DocumentLocation(location, etag, serializedAdditionalRawData: null);
+            return new DocumentDetails(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>

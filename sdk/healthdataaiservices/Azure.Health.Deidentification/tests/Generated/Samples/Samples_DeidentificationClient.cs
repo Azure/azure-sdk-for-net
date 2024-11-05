@@ -335,10 +335,8 @@ namespace Azure.Health.Deidentification.Samples
             foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("nextLink").ToString());
+                Console.WriteLine(result.GetProperty("nextLink").ToString());
             }
         }
 
@@ -353,10 +351,8 @@ namespace Azure.Health.Deidentification.Samples
             await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("nextLink").ToString());
+                Console.WriteLine(result.GetProperty("nextLink").ToString());
             }
         }
 
