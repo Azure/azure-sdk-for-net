@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Inference;
 using Azure.Core;
 
 namespace Azure.AI.Projects
@@ -35,6 +36,50 @@ namespace Azure.AI.Projects
                   credential,
                   options)
         {
+        }
+
+        private ChatCompletionsClient _chatCompletionsClient;
+        private EmbeddingsClient _embeddingsClient;
+
+        /// <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
+        public virtual ChatCompletionsClient GetChatCompletionsClient()
+        {
+            return _chatCompletionsClient ??= InitializeInferenceClient((endpoint, credential) =>
+                new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
+        }
+
+        /// <summary> Initializes a new instance of Inference's EmbeddingsClient. </summary>
+        public virtual EmbeddingsClient GetEmbeddingsClient()
+        {
+            return _embeddingsClient ??= InitializeInferenceClient((endpoint, credential) =>
+                new EmbeddingsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
+        }
+
+        /// <summary> Initializes a new instance of Inference client. </summary>
+        private T InitializeInferenceClient<T>(Func<Uri, AzureKeyCredential, T> clientFactory)
+        {
+            var connectionsClient = GetConnectionsClient();
+            ConnectionsListSecretsResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
+
+            if (connectionSecret.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            {
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
+                }
+
+                if (!Uri.TryCreate(apiKeyAuthProperties.Target, UriKind.Absolute, out var endpoint))
+                {
+                    throw new UriFormatException("Invalid URI format in API key authentication target.");
+                }
+
+                var credential = new AzureKeyCredential(apiKeyAuthProperties.Credentials.Key);
+                return clientFactory(endpoint, credential);
+            }
+            else
+            {
+                throw new ArgumentException("Cannot connect with Inference! Ensure valid ConnectionPropertiesApiKeyAuth.");
+            }
         }
     }
 }

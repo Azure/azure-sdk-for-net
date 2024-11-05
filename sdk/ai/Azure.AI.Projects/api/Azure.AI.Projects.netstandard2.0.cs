@@ -457,7 +457,9 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.AI.Projects.AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient() { throw null; }
         public virtual Azure.AI.Projects.ConnectionsClient GetConnectionsClient(string apiVersion = "2024-07-01-preview") { throw null; }
+        public virtual Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(string apiVersion = "2024-07-01-preview") { throw null; }
     }
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
