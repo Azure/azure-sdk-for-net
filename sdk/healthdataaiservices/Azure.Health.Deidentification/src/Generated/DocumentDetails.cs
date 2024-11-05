@@ -46,16 +46,13 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentDetails"/>. </summary>
-        /// <param name="id"> Id of the document details. </param>
         /// <param name="input"> Location for the input. </param>
         /// <param name="status"> Status of the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="input"/> is null. </exception>
-        internal DocumentDetails(string id, DocumentLocation input, OperationState status)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        internal DocumentDetails(DocumentLocation input, OperationState status)
         {
-            Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(input, nameof(input));
 
-            Id = id;
             Input = input;
             Status = status;
         }

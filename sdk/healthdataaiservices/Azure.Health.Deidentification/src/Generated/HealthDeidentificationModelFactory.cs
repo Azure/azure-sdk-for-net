@@ -68,17 +68,6 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.PagedDocumentDetails"/>. </summary>
-        /// <param name="value"> List of documents. </param>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
-        /// <returns> A new <see cref="Deidentification.PagedDocumentDetails"/> instance for mocking. </returns>
-        public static PagedDocumentDetails PagedDocumentDetails(IEnumerable<DocumentDetails> value = null, string nextLink = null)
-        {
-            value ??= new List<DocumentDetails>();
-
-            return new PagedDocumentDetails(value?.ToList(), nextLink, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetails"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="input"> Location for the input. </param>

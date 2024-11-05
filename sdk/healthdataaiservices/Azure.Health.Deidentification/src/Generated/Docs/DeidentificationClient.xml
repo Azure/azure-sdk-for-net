@@ -317,7 +317,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-await foreach (PagedDocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
+await foreach (DocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
 {
 }
 ]]></code></example>
@@ -330,7 +330,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-foreach (PagedDocumentDetails item in client.GetJobDocuments("documents_smith_1"))
+foreach (DocumentDetails item in client.GetJobDocuments("documents_smith_1"))
 {
 }
 ]]></code></example>
@@ -346,11 +346,10 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("nextLink").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
@@ -365,11 +364,10 @@ DeidentificationClient client = new DeidentificationClient(endpoint, credential)
 foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-    Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("nextLink").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+    Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>
