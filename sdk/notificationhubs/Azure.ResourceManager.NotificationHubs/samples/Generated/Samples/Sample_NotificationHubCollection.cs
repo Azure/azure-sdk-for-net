@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubCollection
     {
-        // NotificationHubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NotificationHubsGet()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NotificationHubsGet()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NotificationHubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NotificationHubsGet()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/Get.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             }
         }
 
-        // NotificationHubs_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NotificationHubsCreateOrUpdate()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/CreateOrUpdate.json
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NotificationHubs_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NotificationHubsList()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/NotificationHubs/List.json
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

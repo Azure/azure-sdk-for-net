@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Samples
 {
     public partial class Sample_NginxConfigurationCollection
     {
-        // Configurations_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConfigurationsList()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_List.json
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Nginx.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Configurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationsGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Get.json
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Configurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConfigurationsGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Get.json
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Configurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConfigurationsGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Get.json
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.Nginx.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             }
         }
 
-        // Configurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_CreateOrUpdate.json

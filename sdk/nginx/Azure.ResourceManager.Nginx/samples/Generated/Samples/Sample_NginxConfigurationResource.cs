@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Nginx.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Samples
 {
     public partial class Sample_NginxConfigurationResource
     {
-        // Configurations_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationsGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Configurations_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationsCreateOrUpdate()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_CreateOrUpdate.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Configurations_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationsDelete()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Delete.json
@@ -106,12 +104,11 @@ namespace Azure.ResourceManager.Nginx.Samples
             // invoke the operation
             await nginxConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Configurations_Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Analysis_ConfigurationsAnalysis()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Analysis.json

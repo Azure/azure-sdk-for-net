@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PlaywrightTesting.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
     public partial class Sample_PlaywrightTestingAccountResource
     {
-        // Accounts_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPlaywrightTestingAccounts_AccountsListBySubscription()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_ListBySubscription.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Accounts_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AccountsGet()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Accounts_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AccountsUpdate()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Update.json
@@ -119,9 +117,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Accounts_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AccountsDelete()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Delete.json
@@ -143,7 +140,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // invoke the operation
             await playwrightTestingAccount.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

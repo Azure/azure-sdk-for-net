@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Samples
 {
     public partial class Sample_NginxCertificateCollection
     {
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificatesGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_Get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificatesGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_Get.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificatesGet()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_Get.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Nginx.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             }
         }
 
-        // Certificates_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificatesCreateOrUpdate()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_CreateOrUpdate.json
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Certificates_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificatesList()
         {
             // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_List.json
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.Nginx.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
