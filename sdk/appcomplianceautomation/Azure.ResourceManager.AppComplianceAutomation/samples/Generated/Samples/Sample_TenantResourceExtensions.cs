@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // Report_CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAppComplianceReportNameAvailability_ReportCheckNameAvailability()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_CheckNameAvailability.json
@@ -28,9 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             AppComplianceReportNameAvailabilityContent content = new AppComplianceReportNameAvailabilityContent();
@@ -39,9 +38,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_GetCollectionCount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCollectionCountProviderAction_ReportGetCollectionCount()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_GetCollectionCount.json
@@ -52,9 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ReportCollectionGetCountContent content = new ReportCollectionGetCountContent();
@@ -63,9 +59,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_GetOverviewStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOverviewStatusProviderAction_ReportGetOverviewStatus()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_GetOverviewStatus.json
@@ -76,9 +71,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             AppComplianceGetOverviewStatusContent content = new AppComplianceGetOverviewStatusContent();
@@ -87,9 +80,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListInUseStorageAccountsWithSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInUseStorageAccountsProviderAction_ListInUseStorageAccountsWithSubscriptions()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/ListInUseStorageAccountsWithSubscriptions.json
@@ -100,9 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ReportListInUseStorageAccountsContent content = new ReportListInUseStorageAccountsContent();
@@ -111,9 +101,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListInUseStorageAccountsWithoutSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInUseStorageAccountsProviderAction_ListInUseStorageAccountsWithoutSubscriptions()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/ListInUseStorageAccountsWithoutSubscriptions.json
@@ -124,9 +113,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ReportListInUseStorageAccountsContent content = new ReportListInUseStorageAccountsContent();
@@ -135,9 +122,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Onboard
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task OnboardProviderAction_Onboard()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Onboard.json
@@ -148,23 +134,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            AppComplianceOnboardContent content = new AppComplianceOnboardContent(new string[]
-            {
-            });
+            AppComplianceOnboardContent content = new AppComplianceOnboardContent(null);
             ArmOperation<AppComplianceOnboardResult> lro = await tenantResource.OnboardProviderActionAsync(WaitUntil.Completed, content);
             AppComplianceOnboardResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // TriggerEvaluation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerEvaluationProviderAction_TriggerEvaluation()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/TriggerEvaluation.json
@@ -175,14 +156,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            TriggerEvaluationContent content = new TriggerEvaluationContent(new string[]
-            {
-            });
+            TriggerEvaluationContent content = new TriggerEvaluationContent(null);
             ArmOperation<TriggerEvaluationResult> lro = await tenantResource.TriggerEvaluationProviderActionAsync(WaitUntil.Completed, content);
             TriggerEvaluationResult result = lro.Value;
 

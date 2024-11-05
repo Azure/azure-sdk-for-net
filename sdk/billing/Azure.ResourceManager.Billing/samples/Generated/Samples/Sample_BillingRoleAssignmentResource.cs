@@ -10,40 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingRoleAssignmentResource
     {
-        // BillingRoleAssignmentDeleteByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_BillingRoleAssignmentDeleteByBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentDeleteByBillingAccount.json
-            // this example is just showing the usage of "BillingRoleAssignments_DeleteByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingRoleAssignmentResource created on azure
-            // for more information of creating BillingRoleAssignmentResource, please refer to the document of BillingRoleAssignmentResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30";
-            string billingRoleAssignmentName = "10000000-aaaa-bbbb-cccc-100000000000_6fd330f6-7d26-4aff-b9cf-7bd699f965b9";
-            ResourceIdentifier billingRoleAssignmentResourceId = BillingRoleAssignmentResource.CreateResourceIdentifier(billingAccountName, billingRoleAssignmentName);
-            BillingRoleAssignmentResource billingRoleAssignment = client.GetBillingRoleAssignmentResource(billingRoleAssignmentResourceId);
-
-            // invoke the operation
-            await billingRoleAssignment.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // BillingRoleAssignmentGetByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingRoleAssignmentGetByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentGetByBillingAccount.json
@@ -71,9 +45,33 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingRoleAssignmentCreateOrUpdateByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_BillingRoleAssignmentDeleteByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentDeleteByBillingAccount.json
+            // this example is just showing the usage of "BillingRoleAssignments_DeleteByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingRoleAssignmentResource created on azure
+            // for more information of creating BillingRoleAssignmentResource, please refer to the document of BillingRoleAssignmentResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2018-09-30";
+            string billingRoleAssignmentName = "10000000-aaaa-bbbb-cccc-100000000000_6fd330f6-7d26-4aff-b9cf-7bd699f965b9";
+            ResourceIdentifier billingRoleAssignmentResourceId = BillingRoleAssignmentResource.CreateResourceIdentifier(billingAccountName, billingRoleAssignmentName);
+            BillingRoleAssignmentResource billingRoleAssignment = client.GetBillingRoleAssignmentResource(billingRoleAssignmentResourceId);
+
+            // invoke the operation
+            await billingRoleAssignment.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingRoleAssignmentCreateOrUpdateByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentCreateOrUpdateByBillingAccount.json
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingRoleAssignmentResource billingRoleAssignment = client.GetBillingRoleAssignmentResource(billingRoleAssignmentResourceId);
 
             // invoke the operation
-            BillingRoleAssignmentData data = new BillingRoleAssignmentData()
+            BillingRoleAssignmentData data = new BillingRoleAssignmentData
             {
                 Properties = new BillingRoleAssignmentProperties(new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/7898901/billingRoleDefinitions/9f1983cb-2574-400c-87e9-34cf8e2280db"))
                 {

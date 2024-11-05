@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementProductResource
     {
-        // ApiManagementHeadProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadProduct()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadProduct.json
-            // this example is just showing the usage of "Product_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementProductResource created on azure
-            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string productId = "unlimited";
-            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementProduct.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetProduct()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetProduct.json
@@ -75,46 +47,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateProduct()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateProduct.json
-            // this example is just showing the usage of "Product_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementProductResource created on azure
-            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string productId = "testproduct";
-            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementProductPatch patch = new ApiManagementProductPatch()
-            {
-                DisplayName = "Test Template ProductName 4",
-            };
-            ApiManagementProductResource result = await apiManagementProduct.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementProductData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteProduct()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteProduct.json
@@ -137,14 +71,49 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // invoke the operation
             ETag ifMatch = new ETag("*");
             bool? deleteSubscriptions = true;
-            await apiManagementProduct.DeleteAsync(WaitUntil.Completed, ifMatch, deleteSubscriptions: deleteSubscriptions);
+            await apiManagementProduct.DeleteAsync(WaitUntil.Completed, ifMatch, deleteSubscriptions).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListProductApis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateProduct()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateProduct.json
+            // this example is just showing the usage of "Product_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string productId = "testproduct";
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementProductPatch patch = new ApiManagementProductPatch
+            {
+                DisplayName = "Test Template ProductName 4",
+            };
+            ApiManagementProductResource result = await apiManagementProduct.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementProductData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductApis_ApiManagementListProductApis()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListProductApis.json
@@ -170,12 +139,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadProductApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckProductApiEntityExists_ApiManagementHeadProductApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadProductApi.json
@@ -202,9 +170,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateProductApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateProductApi_ApiManagementCreateProductApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateProductApi.json
@@ -231,9 +198,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteProductApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteProductApi_ApiManagementDeleteProductApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteProductApi.json
@@ -255,14 +221,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string apiId = "echo-api";
-            await apiManagementProduct.DeleteProductApiAsync(apiId);
+            await apiManagementProduct.DeleteProductApiAsync(apiId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListProductGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductGroups_ApiManagementListProductGroups()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListProductGroups.json
@@ -288,12 +253,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadProductGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckProductGroupEntityExists_ApiManagementHeadProductGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadProductGroup.json
@@ -320,9 +284,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateProductGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateProductGroup_ApiManagementCreateProductGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateProductGroup.json
@@ -349,9 +312,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteProductGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteProductGroup_ApiManagementDeleteProductGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteProductGroup.json
@@ -373,14 +335,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string groupId = "templateGroup";
-            await apiManagementProduct.DeleteProductGroupAsync(groupId);
+            await apiManagementProduct.DeleteProductGroupAsync(groupId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListProductSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllProductSubscriptionData_ApiManagementListProductSubscriptions()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListProductSubscriptions.json
@@ -407,7 +368,34 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadProduct()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadProduct.json
+            // this example is just showing the usage of "Product_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string productId = "unlimited";
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementProduct.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

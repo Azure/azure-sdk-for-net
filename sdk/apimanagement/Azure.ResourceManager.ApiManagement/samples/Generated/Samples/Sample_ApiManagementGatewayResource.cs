@@ -8,46 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementGatewayResource
     {
-        // ApiManagementHeadGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadGateway()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadGateway.json
-            // this example is just showing the usage of "Gateway_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string gatewayId = "mygateway";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementGateway.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetGateway()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetGateway.json
@@ -77,47 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateGateway()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateGateway.json
-            // this example is just showing the usage of "Gateway_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementGatewayResource created on azure
-            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string gatewayId = "gw1";
-            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
-            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementGatewayData data = new ApiManagementGatewayData()
-            {
-                LocationData = new ResourceLocationDataContract("my location"),
-                Description = "my gateway 1",
-            };
-            ApiManagementGatewayResource result = await apiManagementGateway.UpdateAsync(ifMatch, data);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteGateway
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteGateway()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteGateway.json
@@ -139,14 +71,50 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await apiManagementGateway.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await apiManagementGateway.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGatewayListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateGateway()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateGateway.json
+            // this example is just showing the usage of "Gateway_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementGatewayResource created on azure
+            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string gatewayId = "gw1";
+            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementGatewayData data = new ApiManagementGatewayData
+            {
+                LocationData = new ResourceLocationDataContract("my location"),
+                Description = "my gateway 1",
+            };
+            ApiManagementGatewayResource result = await apiManagementGateway.UpdateAsync(ifMatch, data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementGatewayData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ApiManagementGatewayListKeys()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayListKeys.json
@@ -172,9 +140,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGatewayRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_ApiManagementGatewayRegenerateKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayRegenerateKey.json
@@ -196,14 +163,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             GatewayKeyRegenerateContent content = new GatewayKeyRegenerateContent(GatewayRegenerateKeyType.Primary);
-            await apiManagementGateway.RegenerateKeyAsync(content);
+            await apiManagementGateway.RegenerateKeyAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGatewayGenerateToken
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateToken_ApiManagementGatewayGenerateToken()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayGenerateToken.json
@@ -224,15 +190,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            GatewayTokenRequestContract gatewayTokenRequestContract = new GatewayTokenRequestContract(TokenGenerationUsedKeyType.Primary, DateTimeOffset.Parse("2020-04-21T00:44:24.2845269Z"));
+            GatewayTokenRequestContract gatewayTokenRequestContract = new GatewayTokenRequestContract(TokenGenerationUsedKeyType.Primary, default);
             GatewayTokenContract result = await apiManagementGateway.GenerateTokenAsync(gatewayTokenRequestContract);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGatewayInvalidateDebugCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InvalidateDebugCredentials_ApiManagementGatewayInvalidateDebugCredentials()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayInvalidateDebugCredentials.json
@@ -253,14 +218,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            await apiManagementGateway.InvalidateDebugCredentialsAsync();
+            await apiManagementGateway.InvalidateDebugCredentialsAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGatewayListDebugCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDebugCredentials_ApiManagementGatewayListDebugCredentials()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayListDebugCredentials.json
@@ -281,21 +245,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            GatewayListDebugCredentialsContract gatewayListDebugCredentialsContract = new GatewayListDebugCredentialsContract(new GatewayListDebugCredentialsContractPurpose[]
+            GatewayListDebugCredentialsContract gatewayListDebugCredentialsContract = new GatewayListDebugCredentialsContract(new GatewayListDebugCredentialsContractPurpose[] { GatewayListDebugCredentialsContractPurpose.Tracing }, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/a1"))
             {
-GatewayListDebugCredentialsContractPurpose.Tracing
-            }, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/a1"))
-            {
-                CredentialsExpireAfter = XmlConvert.ToTimeSpan("PT1H"),
+                CredentialsExpireAfter = default,
             };
             GatewayDebugCredentialsContract result = await apiManagementGateway.GetDebugCredentialsAsync(gatewayListDebugCredentialsContract);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGatewayListTrace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTrace_ApiManagementGatewayListTrace()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGatewayListTrace.json
@@ -316,7 +276,7 @@ GatewayListDebugCredentialsContractPurpose.Tracing
             ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
 
             // invoke the operation
-            GatewayListTraceContract gatewayListTraceContract = new GatewayListTraceContract()
+            GatewayListTraceContract gatewayListTraceContract = new GatewayListTraceContract
             {
                 TraceId = "CrDvXXXXXXXXXXXXXVU3ZA2-1",
             };
@@ -326,9 +286,8 @@ GatewayListDebugCredentialsContractPurpose.Tracing
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListGatewayApis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGatewayApisByService_ApiManagementListGatewayApis()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListGatewayApis.json
@@ -354,12 +313,11 @@ GatewayListDebugCredentialsContractPurpose.Tracing
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadGatewayApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGatewayApiEntityTag_ApiManagementHeadGatewayApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadGatewayApi.json
@@ -386,9 +344,8 @@ GatewayListDebugCredentialsContractPurpose.Tracing
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateGatewayApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateGatewayApi_ApiManagementCreateGatewayApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateGatewayApi.json
@@ -410,18 +367,17 @@ GatewayListDebugCredentialsContractPurpose.Tracing
 
             // invoke the operation
             string apiId = "echo-api";
-            AssociationContract associationContract = new AssociationContract()
+            AssociationContract associationContract = new AssociationContract
             {
                 ProvisioningState = AssociationEntityProvisioningState.Created,
             };
-            GatewayApiData result = await apiManagementGateway.CreateOrUpdateGatewayApiAsync(apiId, associationContract: associationContract);
+            GatewayApiData result = await apiManagementGateway.CreateOrUpdateGatewayApiAsync(apiId, associationContract);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteGatewayApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteGatewayApi_ApiManagementDeleteGatewayApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteGatewayApi.json
@@ -443,9 +399,36 @@ GatewayListDebugCredentialsContractPurpose.Tracing
 
             // invoke the operation
             string apiId = "echo-api";
-            await apiManagementGateway.DeleteGatewayApiAsync(apiId);
+            await apiManagementGateway.DeleteGatewayApiAsync(apiId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadGateway()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadGateway.json
+            // this example is just showing the usage of "Gateway_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementGatewayResource created on azure
+            // for more information of creating ApiManagementGatewayResource, please refer to the document of ApiManagementGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string gatewayId = "mygateway";
+            ResourceIdentifier apiManagementGatewayResourceId = ApiManagementGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, gatewayId);
+            ApiManagementGatewayResource apiManagementGateway = client.GetApiManagementGatewayResource(apiManagementGatewayResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementGateway.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

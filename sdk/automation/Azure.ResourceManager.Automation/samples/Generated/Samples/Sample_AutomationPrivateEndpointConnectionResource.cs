@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationPrivateEndpointConnectionResource
     {
-        // Gets private endpoint connection.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionGet.json
@@ -47,50 +47,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Approve or reject a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationPrivateEndpointConnectionResource created on azure
-            // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "rg1";
-            string automationAccountName = "ddb1";
-            string privateEndpointConnectionName = "privateEndpointConnectionName";
-            ResourceIdentifier automationPrivateEndpointConnectionResourceId = AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, privateEndpointConnectionName);
-            AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);
-
-            // invoke the operation
-            AutomationPrivateEndpointConnectionData data = new AutomationPrivateEndpointConnectionData()
-            {
-                ConnectionState = new AutomationPrivateLinkServiceConnectionStateProperty()
-                {
-                    Status = "Approved",
-                    Description = "Approved by johndoe@contoso.com",
-                },
-            };
-            ArmOperation<AutomationPrivateEndpointConnectionResource> lro = await automationPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            AutomationPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Deletes a private endpoint connection with a given name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionDelete.json
@@ -111,9 +69,49 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await automationPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await automationPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationPrivateEndpointConnectionResource created on azure
+            // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "rg1";
+            string automationAccountName = "ddb1";
+            string privateEndpointConnectionName = "privateEndpointConnectionName";
+            ResourceIdentifier automationPrivateEndpointConnectionResourceId = AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, privateEndpointConnectionName);
+            AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);
+
+            // invoke the operation
+            AutomationPrivateEndpointConnectionData data = new AutomationPrivateEndpointConnectionData
+            {
+                ConnectionState = new AutomationPrivateLinkServiceConnectionStateProperty
+                {
+                    Status = "Approved",
+                    Description = "Approved by johndoe@contoso.com",
+                },
+            };
+            ArmOperation<AutomationPrivateEndpointConnectionResource> lro = await automationPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            AutomationPrivateEndpointConnectionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

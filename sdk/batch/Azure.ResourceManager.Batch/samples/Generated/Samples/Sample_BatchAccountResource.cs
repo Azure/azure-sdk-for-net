@@ -10,77 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Batch.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountResource
     {
-        // BatchAccountUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_BatchAccountUpdate()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountUpdate.json
-            // this example is just showing the usage of "BatchAccount_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // invoke the operation
-            BatchAccountPatch patch = new BatchAccountPatch()
-            {
-                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Storage/storageAccounts/samplestorage")),
-            };
-            BatchAccountResource result = await batchAccount.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // BatchAccountDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_BatchAccountDelete()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountDelete.json
-            // this example is just showing the usage of "BatchAccount_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // invoke the operation
-            await batchAccount.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // BatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
@@ -109,9 +46,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateBatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateBatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
@@ -140,41 +76,68 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBatchAccounts_BatchAccountList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_BatchAccountDelete()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountList.json
-            // this example is just showing the usage of "BatchAccount_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountDelete.json
+            // this example is just showing the usage of "BatchAccount_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
             string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (BatchAccountResource item in subscriptionResource.GetBatchAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BatchAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            await batchAccount.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BatchAccountSynchronizeAutoStorageKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_BatchAccountUpdate()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountUpdate.json
+            // this example is just showing the usage of "BatchAccount_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // invoke the operation
+            BatchAccountPatch patch = new BatchAccountPatch
+            {
+                AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Storage/storageAccounts/samplestorage")),
+            };
+            BatchAccountResource result = await batchAccount.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SynchronizeAutoStorageKeys_BatchAccountSynchronizeAutoStorageKeys()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountSynchronizeAutoStorageKeys.json
@@ -194,14 +157,13 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
 
             // invoke the operation
-            await batchAccount.SynchronizeAutoStorageKeysAsync();
+            await batchAccount.SynchronizeAutoStorageKeysAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BatchAccountRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_BatchAccountRegenerateKey()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountRegenerateKey.json
@@ -227,9 +189,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BatchAccountGetKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_BatchAccountGetKeys()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGetKeys.json
@@ -254,9 +215,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListOutboundNetworkDependencies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependencies()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountListOutboundNetworkDependenciesEndpoints.json
@@ -281,7 +241,7 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

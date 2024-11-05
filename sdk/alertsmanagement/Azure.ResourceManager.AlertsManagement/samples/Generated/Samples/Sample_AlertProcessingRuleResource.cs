@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AlertsManagement.Samples
 {
     public partial class Sample_AlertProcessingRuleResource
     {
-        // GetAlertProcessingRulesSubscriptionWide
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAlertProcessingRules_GetAlertProcessingRulesSubscriptionWide()
-        {
-            // Generated from example definition: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/stable/2021-08-08/examples/AlertProcessingRules_List_Subscription.json
-            // this example is just showing the usage of "AlertProcessingRules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1e3ff1c0-771a-4119-a03b-be82a51e232d";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AlertProcessingRuleResource item in subscriptionResource.GetAlertProcessingRulesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AlertProcessingRuleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // GetAlertProcessingRuleById
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAlertProcessingRuleById()
         {
             // Generated from example definition: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/stable/2021-08-08/examples/AlertProcessingRules_GetById.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteAlertProcessingRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAlertProcessingRule()
         {
             // Generated from example definition: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/stable/2021-08-08/examples/AlertProcessingRules_Delete.json
@@ -101,14 +67,13 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             AlertProcessingRuleResource alertProcessingRule = client.GetAlertProcessingRuleResource(alertProcessingRuleResourceId);
 
             // invoke the operation
-            await alertProcessingRule.DeleteAsync(WaitUntil.Completed);
+            await alertProcessingRule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PatchAlertProcessingRule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAlertProcessingRule()
         {
             // Generated from example definition: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/stable/2021-08-08/examples/AlertProcessingRules_Patch.json
@@ -128,12 +93,12 @@ namespace Azure.ResourceManager.AlertsManagement.Samples
             AlertProcessingRuleResource alertProcessingRule = client.GetAlertProcessingRuleResource(alertProcessingRuleResourceId);
 
             // invoke the operation
-            AlertProcessingRulePatch patch = new AlertProcessingRulePatch()
+            AlertProcessingRulePatch patch = new AlertProcessingRulePatch
             {
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 IsEnabled = false,
             };

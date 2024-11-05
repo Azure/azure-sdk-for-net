@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_HybridRunbookWorkerResource
     {
-        // Delete a V2 hybrid runbook worker
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAV2HybridRunbookWorker()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/deleteHybridRunbookWorker.json
-            // this example is just showing the usage of "HybridRunbookWorkers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HybridRunbookWorkerResource created on azure
-            // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount20";
-            string hybridRunbookWorkerGroupName = "myGroup";
-            string hybridRunbookWorkerId = "c010ad12-ef14-4a2a-aa9e-ef22c4745ddd";
-            ResourceIdentifier hybridRunbookWorkerResourceId = HybridRunbookWorkerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
-            HybridRunbookWorkerResource hybridRunbookWorker = client.GetHybridRunbookWorkerResource(hybridRunbookWorkerResourceId);
-
-            // invoke the operation
-            await hybridRunbookWorker.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a V2 hybrid runbook worker
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAV2HybridRunbookWorker()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/getHybridRunbookWorker.json
@@ -77,9 +48,36 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a V2 hybrid runbook worker
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAV2HybridRunbookWorker()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/deleteHybridRunbookWorker.json
+            // this example is just showing the usage of "HybridRunbookWorkers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HybridRunbookWorkerResource created on azure
+            // for more information of creating HybridRunbookWorkerResource, please refer to the document of HybridRunbookWorkerResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount20";
+            string hybridRunbookWorkerGroupName = "myGroup";
+            string hybridRunbookWorkerId = "c010ad12-ef14-4a2a-aa9e-ef22c4745ddd";
+            ResourceIdentifier hybridRunbookWorkerResourceId = HybridRunbookWorkerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
+            HybridRunbookWorkerResource hybridRunbookWorker = client.GetHybridRunbookWorkerResource(hybridRunbookWorkerResourceId);
+
+            // invoke the operation
+            await hybridRunbookWorker.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAV2HybridRunbookWorker()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/putHybridRunbookWorker.json
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Samples
             HybridRunbookWorkerResource hybridRunbookWorker = client.GetHybridRunbookWorkerResource(hybridRunbookWorkerResourceId);
 
             // invoke the operation
-            HybridRunbookWorkerCreateOrUpdateContent content = new HybridRunbookWorkerCreateOrUpdateContent()
+            HybridRunbookWorkerCreateOrUpdateContent content = new HybridRunbookWorkerCreateOrUpdateContent
             {
                 VmResourceId = new ResourceIdentifier("/subscriptions/vmsubid/resourceGroups/vmrg/providers/Microsoft.Compute/virtualMachines/vmname"),
             };
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Move a V2 hybrid worker to a different group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Move_MoveAV2HybridWorkerToADifferentGroup()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/moveHybridRunbookWorker.json
@@ -139,13 +136,13 @@ namespace Azure.ResourceManager.Automation.Samples
             HybridRunbookWorkerResource hybridRunbookWorker = client.GetHybridRunbookWorkerResource(hybridRunbookWorkerResourceId);
 
             // invoke the operation
-            HybridRunbookWorkerMoveContent content = new HybridRunbookWorkerMoveContent()
+            HybridRunbookWorkerMoveContent content = new HybridRunbookWorkerMoveContent
             {
                 HybridRunbookWorkerGroupName = "TestHybridGroup2",
             };
-            await hybridRunbookWorker.MoveAsync(content);
+            await hybridRunbookWorker.MoveAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

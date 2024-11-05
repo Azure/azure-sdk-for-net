@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationJobScheduleResource
     {
-        // Delete a job schedule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAJobSchedule()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteJobSchedule.json
-            // this example is just showing the usage of "JobSchedule_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationJobScheduleResource created on azure
-            // for more information of creating AutomationJobScheduleResource, please refer to the document of AutomationJobScheduleResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "ContoseAutomationAccount";
-            Guid jobScheduleId = Guid.Parse("0fa462ba-3aa2-4138-83ca-9ebc3bc55cdc");
-            ResourceIdentifier automationJobScheduleResourceId = AutomationJobScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobScheduleId);
-            AutomationJobScheduleResource automationJobSchedule = client.GetAutomationJobScheduleResource(automationJobScheduleResourceId);
-
-            // invoke the operation
-            await automationJobSchedule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a job schedule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAJobSchedule()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getJobSchedule.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a job schedule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAJobSchedule()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteJobSchedule.json
+            // this example is just showing the usage of "JobSchedule_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationJobScheduleResource created on azure
+            // for more information of creating AutomationJobScheduleResource, please refer to the document of AutomationJobScheduleResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "ContoseAutomationAccount";
+            Guid jobScheduleId = Guid.Parse("0fa462ba-3aa2-4138-83ca-9ebc3bc55cdc");
+            ResourceIdentifier automationJobScheduleResourceId = AutomationJobScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobScheduleId);
+            AutomationJobScheduleResource automationJobSchedule = client.GetAutomationJobScheduleResource(automationJobScheduleResourceId);
+
+            // invoke the operation
+            await automationJobSchedule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAJobSchedule()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/createJobSchedule.json
@@ -98,10 +96,10 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationJobScheduleResource automationJobSchedule = client.GetAutomationJobScheduleResource(automationJobScheduleResourceId);
 
             // invoke the operation
-            AutomationJobScheduleCreateOrUpdateContent content = new AutomationJobScheduleCreateOrUpdateContent(new ScheduleAssociationProperty()
+            AutomationJobScheduleCreateOrUpdateContent content = new AutomationJobScheduleCreateOrUpdateContent(new ScheduleAssociationProperty
             {
                 Name = "ScheduleNameGoesHere332204b5-debe-4348-a5c7-6357457189f2",
-            }, new RunbookAssociationProperty()
+            }, new RunbookAssociationProperty
             {
                 Name = "TestRunbook",
             })
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Automation.Samples
                 Parameters =
 {
 ["jobscheduletag01"] = "jobschedulevalue01",
-["jobscheduletag02"] = "jobschedulevalue02",
+["jobscheduletag02"] = "jobschedulevalue02"
 },
             };
             ArmOperation<AutomationJobScheduleResource> lro = await automationJobSchedule.UpdateAsync(WaitUntil.Completed, content);

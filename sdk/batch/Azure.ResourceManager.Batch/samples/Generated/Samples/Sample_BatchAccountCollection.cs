@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountCollection
     {
-        // BatchAccountCreate_BYOS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BatchAccountCreateBYOS()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountCreate_BYOS.json
@@ -58,9 +58,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountCreate_Default
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BatchAccountCreateDefault()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountCreate_Default.json
@@ -97,9 +96,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountCreate_SystemAssignedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BatchAccountCreateSystemAssignedIdentity()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountCreate_SystemAssignedIdentity.json
@@ -124,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Samples
             string accountName = "sampleacct";
             BatchAccountCreateOrUpdateContent content = new BatchAccountCreateOrUpdateContent(new AzureLocation("japaneast"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Identity = new ManagedServiceIdentity(default),
                 AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Storage/storageAccounts/samplestorage")),
             };
             ArmOperation<BatchAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, content);
@@ -137,9 +135,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountCreate_UserAssignedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BatchAccountCreateUserAssignedIdentity()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountCreate_UserAssignedIdentity.json
@@ -164,11 +161,11 @@ namespace Azure.ResourceManager.Batch.Samples
             string accountName = "sampleacct";
             BatchAccountCreateOrUpdateContent content = new BatchAccountCreateOrUpdateContent(new AzureLocation("japaneast"))
             {
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = null
 },
                 },
                 AutoStorage = new BatchAccountAutoStorageBaseConfiguration(new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.Storage/storageAccounts/samplestorage")),
@@ -183,9 +180,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateBatchAccountCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PrivateBatchAccountCreate()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountCreate.json
@@ -224,9 +220,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
@@ -258,81 +253,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_BatchAccountGet()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
-            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this BatchAccountResource
-            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
-
-            // invoke the operation
-            string accountName = "sampleacct";
-            bool result = await collection.ExistsAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // BatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_BatchAccountGet()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
-            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this BatchAccountResource
-            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
-
-            // invoke the operation
-            string accountName = "sampleacct";
-            NullableResponse<BatchAccountResource> response = await collection.GetIfExistsAsync(accountName);
-            BatchAccountResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BatchAccountData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // PrivateBatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateBatchAccountGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
@@ -364,81 +286,8 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateBatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_PrivateBatchAccountGet()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
-            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this BatchAccountResource
-            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
-
-            // invoke the operation
-            string accountName = "sampleacct";
-            bool result = await collection.ExistsAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // PrivateBatchAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_PrivateBatchAccountGet()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
-            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this BatchAccountResource
-            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
-
-            // invoke the operation
-            string accountName = "sampleacct";
-            NullableResponse<BatchAccountResource> response = await collection.GetIfExistsAsync(accountName);
-            BatchAccountResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BatchAccountData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // BatchAccountListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BatchAccountListByResourceGroup()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountListByResourceGroup.json
@@ -469,7 +318,147 @@ namespace Azure.ResourceManager.Batch.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_BatchAccountGet()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
+            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this BatchAccountResource
+            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
+
+            // invoke the operation
+            string accountName = "sampleacct";
+            bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_PrivateBatchAccountGet()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
+            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this BatchAccountResource
+            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
+
+            // invoke the operation
+            string accountName = "sampleacct";
+            bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_BatchAccountGet()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/BatchAccountGet.json
+            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this BatchAccountResource
+            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
+
+            // invoke the operation
+            string accountName = "sampleacct";
+            NullableResponse<BatchAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            BatchAccountResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_PrivateBatchAccountGet()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateBatchAccountGet.json
+            // this example is just showing the usage of "BatchAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this BatchAccountResource
+            BatchAccountCollection collection = resourceGroupResource.GetBatchAccounts();
+
+            // invoke the operation
+            string accountName = "sampleacct";
+            NullableResponse<BatchAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            BatchAccountResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchAccountData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

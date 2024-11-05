@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_DscConfigurationResource
     {
-        // Delete DSC Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteDSCConfiguration()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/deleteDscConfiguration.json
-            // this example is just showing the usage of "DscConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DscConfigurationResource created on azure
-            // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount33";
-            string configurationName = "TemplateBasic";
-            ResourceIdentifier dscConfigurationResourceId = DscConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, configurationName);
-            DscConfigurationResource dscConfiguration = client.GetDscConfigurationResource(dscConfigurationResourceId);
-
-            // invoke the operation
-            await dscConfiguration.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a DSC Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADSCConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/getDscConfiguration.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteDSCConfiguration()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/deleteDscConfiguration.json
+            // this example is just showing the usage of "DscConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DscConfigurationResource created on azure
+            // for more information of creating DscConfigurationResource, please refer to the document of DscConfigurationResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount33";
+            string configurationName = "TemplateBasic";
+            ResourceIdentifier dscConfigurationResourceId = DscConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, configurationName);
+            DscConfigurationResource dscConfiguration = client.GetDscConfigurationResource(dscConfigurationResourceId);
+
+            // invoke the operation
+            await dscConfiguration.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/updateDscConfiguration.json
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.Automation.Samples
             DscConfigurationResource dscConfiguration = client.GetDscConfigurationResource(dscConfigurationResourceId);
 
             // invoke the operation
-            DscConfigurationPatch patch = new DscConfigurationPatch()
+            DscConfigurationPatch patch = new DscConfigurationPatch
             {
                 Name = "SetupServer",
                 Tags =
 {
-["Hello"] = "World",
+["Hello"] = "World"
 },
             };
             DscConfigurationResource result = await dscConfiguration.UpdateAsync(patch);
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get DSC Configuration content
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContent_GetDSCConfigurationContent()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/getDscConfigurationContent.json

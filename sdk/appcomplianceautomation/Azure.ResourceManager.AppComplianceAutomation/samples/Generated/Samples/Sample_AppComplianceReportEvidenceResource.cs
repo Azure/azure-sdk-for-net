@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_AppComplianceReportEvidenceResource
     {
-        // Evidence_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EvidenceGet()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Evidence_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Evidence_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_EvidenceDelete()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Evidence_Delete.json
@@ -66,14 +65,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             AppComplianceReportEvidenceResource appComplianceReportEvidence = client.GetAppComplianceReportEvidenceResource(appComplianceReportEvidenceResourceId);
 
             // invoke the operation
-            await appComplianceReportEvidence.DeleteAsync(WaitUntil.Completed);
+            await appComplianceReportEvidence.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Evidence_Download
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Download_EvidenceDownload()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Evidence_Download.json

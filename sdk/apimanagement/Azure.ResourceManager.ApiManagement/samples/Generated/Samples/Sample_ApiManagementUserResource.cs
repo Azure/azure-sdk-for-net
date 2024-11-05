@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementUserResource
     {
-        // ApiManagementHeadUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadUser.json
-            // this example is just showing the usage of "User_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementUserResource created on azure
-            // for more information of creating ApiManagementUserResource, please refer to the document of ApiManagementUserResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string userId = "5931a75ae4bbd512a88c680b";
-            ResourceIdentifier apiManagementUserResourceId = ApiManagementUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, userId);
-            ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementUser.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetUser.json
@@ -75,48 +47,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateUser()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateUser.json
-            // this example is just showing the usage of "User_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementUserResource created on azure
-            // for more information of creating ApiManagementUserResource, please refer to the document of ApiManagementUserResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string userId = "5931a75ae4bbd512a88c680b";
-            ResourceIdentifier apiManagementUserResourceId = ApiManagementUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, userId);
-            ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementUserPatch patch = new ApiManagementUserPatch()
-            {
-                Email = "foobar@outlook.com",
-                FirstName = "foo",
-                LastName = "bar",
-            };
-            ApiManagementUserResource result = await apiManagementUser.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            UserContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteUser.json
@@ -138,14 +70,51 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await apiManagementUser.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await apiManagementUser.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementUserGenerateSsoUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateUser.json
+            // this example is just showing the usage of "User_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementUserResource created on azure
+            // for more information of creating ApiManagementUserResource, please refer to the document of ApiManagementUserResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string userId = "5931a75ae4bbd512a88c680b";
+            ResourceIdentifier apiManagementUserResourceId = ApiManagementUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, userId);
+            ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementUserPatch patch = new ApiManagementUserPatch
+            {
+                Email = "foobar@outlook.com",
+                FirstName = "foo",
+                LastName = "bar",
+            };
+            ApiManagementUserResource result = await apiManagementUser.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            UserContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateSsoUri_ApiManagementUserGenerateSsoUrl()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUserGenerateSsoUrl.json
@@ -171,9 +140,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementUserToken
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSharedAccessToken_ApiManagementUserToken()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUserToken.json
@@ -194,19 +162,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
 
             // invoke the operation
-            UserTokenContent content = new UserTokenContent()
+            UserTokenContent content = new UserTokenContent
             {
                 KeyType = TokenGenerationUsedKeyType.Primary,
-                ExpireOn = DateTimeOffset.Parse("2019-04-21T00:44:24.2845269Z"),
+                ExpireOn = default,
             };
             UserTokenResult result = await apiManagementUser.GetSharedAccessTokenAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListUserIdentities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUserIdentities_ApiManagementListUserIdentities()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListUserIdentities.json
@@ -232,12 +199,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementUserConfirmationPasswordSend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SendUserConfirmationPassword_ApiManagementUserConfirmationPasswordSend()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUserConfirmationPasswordSend.json
@@ -258,9 +224,36 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
 
             // invoke the operation
-            await apiManagementUser.SendUserConfirmationPasswordAsync();
+            await apiManagementUser.SendUserConfirmationPasswordAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadUser()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadUser.json
+            // this example is just showing the usage of "User_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementUserResource created on azure
+            // for more information of creating ApiManagementUserResource, please refer to the document of ApiManagementUserResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string userId = "5931a75ae4bbd512a88c680b";
+            ResourceIdentifier apiManagementUserResourceId = ApiManagementUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, userId);
+            ApiManagementUserResource apiManagementUser = client.GetApiManagementUserResource(apiManagementUserResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementUser.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_DscNodeConfigurationResource
     {
-        // Delete a DSC node configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteADSCNodeConfiguration()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteDscNodeConfiguration.json
-            // this example is just showing the usage of "DscNodeConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DscNodeConfigurationResource created on azure
-            // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount20";
-            string nodeConfigurationName = "configName.nodeConfigName";
-            ResourceIdentifier dscNodeConfigurationResourceId = DscNodeConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, nodeConfigurationName);
-            DscNodeConfigurationResource dscNodeConfiguration = client.GetDscNodeConfigurationResource(dscNodeConfigurationResourceId);
-
-            // invoke the operation
-            await dscNodeConfiguration.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get a DSC node configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADSCNodeConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getDscNodeConfiguration.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create node configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteADSCNodeConfiguration()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteDscNodeConfiguration.json
+            // this example is just showing the usage of "DscNodeConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DscNodeConfigurationResource created on azure
+            // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount20";
+            string nodeConfigurationName = "configName.nodeConfigName";
+            ResourceIdentifier dscNodeConfigurationResourceId = DscNodeConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, nodeConfigurationName);
+            DscNodeConfigurationResource dscNodeConfiguration = client.GetDscNodeConfigurationResource(dscNodeConfigurationResourceId);
+
+            // invoke the operation
+            await dscNodeConfiguration.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateNodeConfiguration()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/createOrUpdateDscNodeConfiguration.json
@@ -98,10 +96,10 @@ namespace Azure.ResourceManager.Automation.Samples
             DscNodeConfigurationResource dscNodeConfiguration = client.GetDscNodeConfigurationResource(dscNodeConfigurationResourceId);
 
             // invoke the operation
-            DscNodeConfigurationCreateOrUpdateContent content = new DscNodeConfigurationCreateOrUpdateContent()
+            DscNodeConfigurationCreateOrUpdateContent content = new DscNodeConfigurationCreateOrUpdateContent
             {
                 Name = "configName.nodeConfigName",
-                Source = new AutomationContentSource()
+                Source = new AutomationContentSource
                 {
                     Hash = new AutomationContentHash("sha256", "6DE256A57F01BFA29B88696D5E77A383D6E61484C7686E8DB955FA10ACE9FFE5"),
                     SourceType = AutomationContentSourceType.EmbeddedContent,
@@ -111,9 +109,9 @@ namespace Azure.ResourceManager.Automation.Samples
                 ConfigurationName = "configName",
                 IsIncrementNodeConfigurationBuildRequired = true,
             };
-            await dscNodeConfiguration.UpdateAsync(WaitUntil.Completed, content);
+            await dscNodeConfiguration.UpdateAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

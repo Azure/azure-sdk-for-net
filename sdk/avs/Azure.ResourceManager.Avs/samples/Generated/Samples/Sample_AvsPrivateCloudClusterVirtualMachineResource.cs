@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_AvsPrivateCloudClusterVirtualMachineResource
     {
-        // VirtualMachines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachinesGet()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachines_RestrictMovement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestrictMovement_VirtualMachinesRestrictMovement()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_RestrictMovement.json
@@ -72,13 +71,13 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudClusterVirtualMachineResource avsPrivateCloudClusterVirtualMachine = client.GetAvsPrivateCloudClusterVirtualMachineResource(avsPrivateCloudClusterVirtualMachineResourceId);
 
             // invoke the operation
-            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement()
+            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement
             {
                 RestrictMovement = VirtualMachineRestrictMovementState.Enabled,
             };
-            await avsPrivateCloudClusterVirtualMachine.RestrictMovementAsync(WaitUntil.Completed, restrictMovement);
+            await avsPrivateCloudClusterVirtualMachine.RestrictMovementAsync(WaitUntil.Completed, restrictMovement).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

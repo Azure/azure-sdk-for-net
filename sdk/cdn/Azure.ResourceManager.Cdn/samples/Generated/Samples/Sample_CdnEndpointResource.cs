@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Cdn.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
     public partial class Sample_CdnEndpointResource
     {
-        // Endpoints_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EndpointsGet()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Get.json
@@ -47,49 +47,8 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoints_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_EndpointsUpdate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Update.json
-            // this example is just showing the usage of "CdnEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
-
-            // invoke the operation
-            CdnEndpointPatch patch = new CdnEndpointPatch()
-            {
-                Tags =
-{
-["additionalProperties"] = "Tag1",
-},
-            };
-            ArmOperation<CdnEndpointResource> lro = await cdnEndpoint.UpdateAsync(WaitUntil.Completed, patch);
-            CdnEndpointResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CdnEndpointData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Endpoints_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_EndpointsDelete()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Delete.json
@@ -110,14 +69,52 @@ namespace Azure.ResourceManager.Cdn.Samples
             CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
 
             // invoke the operation
-            await cdnEndpoint.DeleteAsync(WaitUntil.Completed);
+            await cdnEndpoint.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Endpoints_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_EndpointsUpdate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Update.json
+            // this example is just showing the usage of "CdnEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CdnEndpointResource created on azure
+            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            string endpointName = "endpoint1";
+            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+
+            // invoke the operation
+            CdnEndpointPatch patch = new CdnEndpointPatch
+            {
+                Tags =
+{
+["additionalProperties"] = "Tag1"
+},
+            };
+            ArmOperation<CdnEndpointResource> lro = await cdnEndpoint.UpdateAsync(WaitUntil.Completed, patch);
+            CdnEndpointResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CdnEndpointData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_EndpointsStart()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Start.json
@@ -148,9 +145,8 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoints_Stop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_EndpointsStop()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_Stop.json
@@ -181,9 +177,8 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Endpoints_PurgeContent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PurgeContent_EndpointsPurgeContent()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_PurgeContent.json
@@ -204,18 +199,14 @@ namespace Azure.ResourceManager.Cdn.Samples
             CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
 
             // invoke the operation
-            PurgeContent content = new PurgeContent(new string[]
-            {
-"/folder1"
-            });
-            await cdnEndpoint.PurgeContentAsync(WaitUntil.Completed, content);
+            PurgeContent content = new PurgeContent(new string[] { "/folder1" });
+            await cdnEndpoint.PurgeContentAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Endpoints_LoadContent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task LoadContent_EndpointsLoadContent()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_LoadContent.json
@@ -236,18 +227,14 @@ namespace Azure.ResourceManager.Cdn.Samples
             CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
 
             // invoke the operation
-            LoadContent content = new LoadContent(new string[]
-            {
-"/folder1"
-            });
-            await cdnEndpoint.LoadContentAsync(WaitUntil.Completed, content);
+            LoadContent content = new LoadContent(new string[] { "/folder1" });
+            await cdnEndpoint.LoadContentAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Endpoints_ValidateCustomDomain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateCustomDomain_EndpointsValidateCustomDomain()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_ValidateCustomDomain.json
@@ -274,9 +261,8 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Endpoints_ListResourceUsage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceUsages_EndpointsListResourceUsage()
         {
             // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Endpoints_ListResourceUsage.json
@@ -302,7 +288,7 @@ namespace Azure.ResourceManager.Cdn.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

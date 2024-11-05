@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
     public partial class Sample_ChaosTargetResource
     {
-        // Get a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DeleteTarget.json
@@ -74,14 +73,13 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetResource chaosTarget = client.GetChaosTargetResource(chaosTargetResourceId);
 
             // invoke the operation
-            await chaosTarget.DeleteAsync(WaitUntil.Completed);
+            await chaosTarget.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create/update a Target that extends a virtual machine resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
             // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateTarget.json
@@ -104,12 +102,16 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetResource chaosTarget = client.GetChaosTargetResource(chaosTargetResourceId);
 
             // invoke the operation
-            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>()
+            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>
             {
-                ["identities"] = BinaryData.FromObjectAsJson(new object[] { new Dictionary<string, object>()
+                ["identities"] = BinaryData.FromObjectAsJson(new object[]
+            {
+new
 {
-["type"] = "CertificateSubjectIssuer",
-["subject"] = "CN=example.subject"} }),
+type = "CertificateSubjectIssuer",
+subject = "CN=example.subject",
+}
+            })
             });
             ArmOperation<ChaosTargetResource> lro = await chaosTarget.UpdateAsync(WaitUntil.Completed, data);
             ChaosTargetResource result = lro.Value;

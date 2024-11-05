@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_AppComplianceReportResource
     {
-        // Report_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ReportGet()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Get.json
@@ -44,9 +44,32 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Report_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ReportDelete()
+        {
+            // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Delete.json
+            // this example is just showing the usage of "Report_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AppComplianceReportResource created on azure
+            // for more information of creating AppComplianceReportResource, please refer to the document of AppComplianceReportResource
+            string reportName = "testReportName";
+            ResourceIdentifier appComplianceReportResourceId = AppComplianceReportResource.CreateResourceIdentifier(reportName);
+            AppComplianceReportResource appComplianceReport = client.GetAppComplianceReportResource(appComplianceReportResourceId);
+
+            // invoke the operation
+            await appComplianceReport.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ReportUpdate()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Update.json
@@ -75,34 +98,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Report_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ReportDelete()
-        {
-            // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Delete.json
-            // this example is just showing the usage of "Report_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AppComplianceReportResource created on azure
-            // for more information of creating AppComplianceReportResource, please refer to the document of AppComplianceReportResource
-            string reportName = "testReportName";
-            ResourceIdentifier appComplianceReportResourceId = AppComplianceReportResource.CreateResourceIdentifier(reportName);
-            AppComplianceReportResource appComplianceReport = client.GetAppComplianceReportResource(appComplianceReportResourceId);
-
-            // invoke the operation
-            await appComplianceReport.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Report_EvidenceCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAppComplianceReportNestedResourceNameAvailability_ReportEvidenceCheckNameAvailability()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_NestedResourceCheckNameAvailability_Report_Evidence_Check_Name_Availability.json
@@ -126,9 +123,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_SnapshotCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAppComplianceReportNestedResourceNameAvailability_ReportSnapshotCheckNameAvailability()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_NestedResourceCheckNameAvailability_Report_Snapshot_Check_Name_Availability.json
@@ -152,9 +148,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_WebhookCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAppComplianceReportNestedResourceNameAvailability_ReportWebhookCheckNameAvailability()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_NestedResourceCheckNameAvailability_Report_Webhook_Check_Name_Availability.json
@@ -178,9 +173,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_Fix
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Fix_ReportFix()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Fix.json
@@ -204,9 +198,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_GetScopingQuestions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScopingQuestions_ReportGetScopingQuestions()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_GetScopingQuestions.json
@@ -229,9 +222,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Report_Verify
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Verify_ReportVerify()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/Report_Verify.json

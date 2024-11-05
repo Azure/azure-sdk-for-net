@@ -7,19 +7,258 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementServiceResource
     {
-        // ApiManagementListApisByTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementServiceGetMultiRegionInternalVnet()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceResource result = await apiManagementService.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementServiceGetService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetService.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceResource result = await apiManagementService.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementServiceGetServiceHavingMsi()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetServiceHavingMsi.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServiceResource result = await apiManagementService.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementServiceDeleteService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceDeleteService.json
+            // this example is just showing the usage of "ApiManagementService_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            await apiManagementService.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateServiceDisableTls10()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceDisableTls10.json
+            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServicePatch patch = new ApiManagementServicePatch
+            {
+                CustomProperties =
+{
+["Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10"] = "false"
+},
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateServicePublisherDetails()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServicePublisherDetails.json
+            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServicePatch patch = new ApiManagementServicePatch
+            {
+                PublisherEmail = "foobar@live.com",
+                PublisherName = "Contoso Vnext",
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateServiceToNewVnetAndAvailabilityZones()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
+            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementServiceResource created on azure
+            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
+
+            // invoke the operation
+            ApiManagementServicePatch patch = new ApiManagementServicePatch
+            {
+                Sku = new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 3),
+                Zones = { "1", "2", "3" },
+                PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/publicip-apim-japan-east"),
+                VirtualNetworkConfiguration = new VirtualNetworkConfiguration
+                {
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-apim-japaneast/subnets/apim2"),
+                },
+                AdditionalLocations = {new AdditionalLocation(new AzureLocation("Australia East"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 3))
+{
+Zones = {"1", "2", "3"},
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/apim-australia-east-publicip"),
+VirtualNetworkConfiguration = new VirtualNetworkConfiguration
+{
+SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/apimaeavnet/subnets/default"),
+},
+}},
+                VirtualNetworkType = VirtualNetworkType.External,
+            };
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
+            ApiManagementServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApisByTags_ApiManagementListApisByTags()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListApisByTags.json
@@ -44,12 +283,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HTTP Connectivity Check
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_HTTPConnectivityCheck()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPerformConnectivityCheckHttpConnect.json
@@ -72,17 +310,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("https://microsoft.com", 3306L))
             {
                 Protocol = ConnectivityCheckProtocol.Https,
-                ProtocolHttpConfiguration = new ConnectivityCheckRequestHttpConfiguration()
+                ProtocolHttpConfiguration = new ConnectivityCheckRequestHttpConfiguration
                 {
                     Method = HttpMethodConfiguration.Get,
-                    ValidStatusCodes =
-{
-200L,204L
-},
-                    Headers =
-{
-new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
-},
+                    ValidStatusCodes = { 200L, 204L },
+                    Headers = { new HttpHeaderConfiguration("Authorization", "Bearer myPreciousToken") },
                 },
             };
             ArmOperation<ConnectivityCheckResult> lro = await apiManagementService.PerformConnectivityCheckAsyncAsync(WaitUntil.Completed, content);
@@ -91,9 +323,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // TCP Connectivity Check
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformConnectivityCheckAsync_TCPConnectivityCheck()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPerformConnectivityCheck.json
@@ -123,9 +354,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListContentTypes
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentTypes_ApiManagementListContentTypes()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListContentTypes.json
@@ -150,12 +380,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentType_ApiManagementGetContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetContentType.json
@@ -181,9 +410,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentType_ApiManagementCreateContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateContentType.json
@@ -209,9 +437,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteContentType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentType_ApiManagementDeleteContentType()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteContentType.json
@@ -233,14 +460,13 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             // invoke the operation
             string contentTypeId = "page";
             ETag ifMatch = new ETag("*");
-            await apiManagementService.DeleteContentTypeAsync(contentTypeId, ifMatch);
+            await apiManagementService.DeleteContentTypeAsync(contentTypeId, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListContentTypeContentItems
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItems_ApiManagementListContentTypeContentItems()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListContentTypeContentItems.json
@@ -266,12 +492,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItemEntityTag_ApiManagementHeadContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadContentTypeContentItem.json
@@ -298,9 +523,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementGetContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentItem_ApiManagementGetContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetContentTypeContentItem.json
@@ -327,9 +551,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateContentItem_ApiManagementCreateContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateContentTypeContentItem.json
@@ -356,9 +579,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementDeleteContentTypeContentItem
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteContentItem_ApiManagementDeleteContentTypeContentItem()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteContentTypeContentItem.json
@@ -381,14 +603,13 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             string contentTypeId = "page";
             string contentItemId = "4e3cf6a5-574a-ba08-1f23-2e7a38faa6d8";
             ETag ifMatch = new ETag("*");
-            await apiManagementService.DeleteContentItemAsync(contentTypeId, contentItemId, ifMatch);
+            await apiManagementService.DeleteContentItemAsync(contentTypeId, contentItemId, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListSKUs-Consumption
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsConsumption()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListSKUs-Consumption.json
@@ -413,12 +634,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListSKUs-Dedicated
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableApiManagementServiceSkus_ApiManagementListSKUsDedicated()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListSKUs-Dedicated.json
@@ -443,12 +663,11 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementRestoreService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restore_ApiManagementRestoreService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementRestoreWithAccessKey.json
@@ -483,9 +702,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithAccessKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithAccessKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithAccessKey.json
@@ -520,9 +738,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithSystemManagedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithSystemManagedIdentity()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithSystemManagedIdentity.json
@@ -556,9 +773,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementBackupWithUserAssignedManagedIdentity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_ApiManagementBackupWithUserAssignedManagedIdentity()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementBackupWithUserAssignedManagedIdentity.json
@@ -593,266 +809,8 @@ new HttpHeaderConfiguration("Authorization","Bearer myPreciousToken")
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateServiceDisableTls10
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateServiceDisableTls10()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceDisableTls10.json
-            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServicePatch patch = new ApiManagementServicePatch()
-            {
-                CustomProperties =
-{
-["Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10"] = "false",
-},
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementUpdateServicePublisherDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateServicePublisherDetails()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServicePublisherDetails.json
-            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServicePatch patch = new ApiManagementServicePatch()
-            {
-                PublisherEmail = "foobar@live.com",
-                PublisherName = "Contoso Vnext",
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementUpdateServiceToNewVnetAndAvailabilityZones
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateServiceToNewVnetAndAvailabilityZones()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateServiceToNewVnetAndAZs.json
-            // this example is just showing the usage of "ApiManagementService_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServicePatch patch = new ApiManagementServicePatch()
-            {
-                Sku = new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 3),
-                Zones =
-{
-"1","2","3"
-},
-                PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/publicip-apim-japan-east"),
-                VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
-                {
-                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-apim-japaneast/subnets/apim2"),
-                },
-                AdditionalLocations =
-{
-new AdditionalLocation(new AzureLocation("Australia East"),new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium,3))
-{
-Zones =
-{
-"1","2","3"
-},
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/apim-australia-east-publicip"),
-VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
-{
-SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/apimaeavnet/subnets/default"),
-},
-}
-},
-                VirtualNetworkType = VirtualNetworkType.External,
-            };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
-            ApiManagementServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementServiceGetMultiRegionInternalVnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ApiManagementServiceGetMultiRegionInternalVnet()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceResource result = await apiManagementService.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementServiceGetService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ApiManagementServiceGetService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetService.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceResource result = await apiManagementService.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementServiceGetServiceHavingMsi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ApiManagementServiceGetServiceHavingMsi()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetServiceHavingMsi.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            ApiManagementServiceResource result = await apiManagementService.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementServiceDeleteService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ApiManagementServiceDeleteService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceDeleteService.json
-            // this example is just showing the usage of "ApiManagementService_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementServiceResource created on azure
-            // for more information of creating ApiManagementServiceResource, please refer to the document of ApiManagementServiceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
-
-            // invoke the operation
-            await apiManagementService.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ApiManagementMigrateService
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateToStv2_ApiManagementMigrateService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceMigrateToStv2.json
@@ -872,11 +830,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            MigrateToStv2Contract migrateToStv2Contract = new MigrateToStv2Contract()
+            MigrateToStv2Contract migrateToStv2Contract = new MigrateToStv2Contract
             {
                 Mode = MigrateToStv2Mode.PreserveIP,
             };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.MigrateToStv2Async(WaitUntil.Completed, migrateToStv2Contract: migrateToStv2Contract);
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.MigrateToStv2Async(WaitUntil.Completed, migrateToStv2Contract);
             ApiManagementServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -886,41 +844,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementListServiceBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetApiManagementServices_ApiManagementListServiceBySubscription()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListServiceBySubscription.json
-            // this example is just showing the usage of "ApiManagementService_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ApiManagementServiceResource item in subscriptionResource.GetApiManagementServicesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApiManagementServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ApiManagementServiceGetSsoToken
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSsoToken_ApiManagementServiceGetSsoToken()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetSsoToken.json
@@ -945,60 +870,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementServiceCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckApiManagementServiceNameAvailability_ApiManagementServiceCheckNameAvailability()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceCheckNameAvailability.json
-            // this example is just showing the usage of "ApiManagementService_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            ApiManagementServiceNameAvailabilityContent content = new ApiManagementServiceNameAvailabilityContent("apimService1");
-            ApiManagementServiceNameAvailabilityResult result = await subscriptionResource.CheckApiManagementServiceNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementServiceGetDomainOwnershipIdentifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetApiManagementServiceDomainOwnershipIdentifier_ApiManagementServiceGetDomainOwnershipIdentifier()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetDomainOwnershipIdentifier.json
-            // this example is just showing the usage of "ApiManagementService_GetDomainOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            ApiManagementServiceGetDomainOwnershipIdentifierResult result = await subscriptionResource.GetApiManagementServiceDomainOwnershipIdentifierAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementApplyNetworkConfigurationUpdates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplyNetworkConfigurationUpdates_ApiManagementApplyNetworkConfigurationUpdates()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementApplyNetworkConfigurationUpdates.json
@@ -1018,11 +891,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ApiManagementServiceApplyNetworkConfigurationContent content = new ApiManagementServiceApplyNetworkConfigurationContent()
+            ApiManagementServiceApplyNetworkConfigurationContent content = new ApiManagementServiceApplyNetworkConfigurationContent
             {
                 Location = new AzureLocation("west us"),
             };
-            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<ApiManagementServiceResource> lro = await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, content);
             ApiManagementServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -1032,9 +905,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementServiceGetNetworkStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkStatuses_ApiManagementServiceGetNetworkStatus()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetNetworkStatus.json
@@ -1059,12 +931,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementServiceGetNetworkStatusByLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkStatusByLocation_ApiManagementServiceGetNetworkStatusByLocation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetNetworkStatusByLocation.json
@@ -1090,9 +961,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementServiceGetOutboundNetworkDependenciesEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ApiManagementServiceGetOutboundNetworkDependenciesEndpoints()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementServiceGetOutboundNetworkDependenciesEndpoints.json
@@ -1117,12 +987,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListPolicyDescriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPolicyDescriptions_ApiManagementListPolicyDescriptions()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListPolicyDescriptions.json
@@ -1143,17 +1012,16 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             PolicyScopeContract? scope = PolicyScopeContract.Api;
-            await foreach (PolicyDescriptionContractData item in apiManagementService.GetPolicyDescriptionsAsync(scope: scope))
+            await foreach (PolicyDescriptionContractData item in apiManagementService.GetPolicyDescriptionsAsync(scope))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListPortalSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPortalSettings_ApiManagementListPortalSettings()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListPortalSettings.json
@@ -1178,12 +1046,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListProductsByTags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductsByTags_ApiManagementListProductsByTags()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListProductsByTags.json
@@ -1208,12 +1075,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetQuotaCounterKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByCounterKeys_ApiManagementGetQuotaCounterKeys()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetQuotaCounterKeys.json
@@ -1239,12 +1105,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementUpdateQuotaCounterKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByCounterKeys_ApiManagementUpdateQuotaCounterKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateQuotaCounterKey.json
@@ -1265,7 +1130,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             string quotaCounterKey = "ba";
-            QuotaCounterValueUpdateContent content = new QuotaCounterValueUpdateContent()
+            QuotaCounterValueUpdateContent content = new QuotaCounterValueUpdateContent
             {
                 CallsCount = 0,
                 KbTransferred = 2.5630078125,
@@ -1275,12 +1140,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetQuotaCounterKeysByQuotaPeriod
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaByPeriodKey_ApiManagementGetQuotaCounterKeysByQuotaPeriod()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetQuotaCounterKeysByQuotaPeriod.json
@@ -1307,9 +1171,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementUpdateQuotaCounterKeyByQuotaPeriod
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateQuotaByPeriodKey_ApiManagementUpdateQuotaCounterKeyByQuotaPeriod()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateQuotaCounterKeyByQuotaPeriod.json
@@ -1331,7 +1194,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             // invoke the operation
             string quotaCounterKey = "ba";
             string quotaPeriodKey = "0_P3Y6M4DT12H30M5S";
-            QuotaCounterValueUpdateContent content = new QuotaCounterValueUpdateContent()
+            QuotaCounterValueUpdateContent content = new QuotaCounterValueUpdateContent
             {
                 CallsCount = 0,
                 KbTransferred = 0,
@@ -1341,9 +1204,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementListRegions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRegions_ApiManagementListRegions()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListRegions.json
@@ -1368,12 +1230,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByApi
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByApi_ApiManagementGetReportsByApi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByApi.json
@@ -1399,12 +1260,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByUser_ApiManagementGetReportsByUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByUser.json
@@ -1430,12 +1290,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByOperation_ApiManagementGetReportsByOperation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByOperation.json
@@ -1461,12 +1320,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByProduct
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByProduct_ApiManagementGetReportsByProduct()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByProduct.json
@@ -1492,12 +1350,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByGeo
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByGeo_ApiManagementGetReportsByGeo()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByGeo.json
@@ -1523,12 +1380,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsBySubscription_ApiManagementGetReportsBySubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsBySubscription.json
@@ -1554,12 +1410,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByTime_ApiManagementGetReportsByTime()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByTime.json
@@ -1580,18 +1435,17 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation and iterate over the result
             string filter = "timestamp ge datetime'2017-06-01T00:00:00' and timestamp le datetime'2017-06-04T00:00:00'";
-            TimeSpan interval = XmlConvert.ToTimeSpan("PT15M");
+            TimeSpan interval = default;
             await foreach (ReportRecordContract item in apiManagementService.GetReportsByTimeAsync(filter, interval))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementGetReportsByRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReportsByRequest_ApiManagementGetReportsByRequest()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetReportsByRequest.json
@@ -1617,12 +1471,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListTagResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTagResources_ApiManagementListTagResources()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListTagResources.json
@@ -1647,12 +1500,11 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementTenantConfigurationDeploy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployTenantConfiguration_ApiManagementTenantConfigurationDeploy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationDeploy.json
@@ -1673,7 +1525,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation
             ConfigurationName configurationName = ConfigurationName.Configuration;
-            ConfigurationDeployContent content = new ConfigurationDeployContent()
+            ConfigurationDeployContent content = new ConfigurationDeployContent
             {
                 Branch = "master",
             };
@@ -1683,9 +1535,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantConfigurationSave
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SaveTenantConfiguration_ApiManagementTenantConfigurationSave()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationSave.json
@@ -1706,7 +1557,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation
             ConfigurationName configurationName = ConfigurationName.Configuration;
-            ConfigurationSaveContent content = new ConfigurationSaveContent()
+            ConfigurationSaveContent content = new ConfigurationSaveContent
             {
                 Branch = "master",
             };
@@ -1716,9 +1567,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantConfigurationValidate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateTenantConfiguration_ApiManagementTenantConfigurationValidate()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantConfigurationValidate.json
@@ -1739,7 +1589,7 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation
             ConfigurationName configurationName = ConfigurationName.Configuration;
-            ConfigurationDeployContent content = new ConfigurationDeployContent()
+            ConfigurationDeployContent content = new ConfigurationDeployContent
             {
                 Branch = "master",
             };
@@ -1749,9 +1599,8 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementTenantAccessSyncState
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTenantConfigurationSyncState_ApiManagementTenantAccessSyncState()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementTenantAccessSyncState.json

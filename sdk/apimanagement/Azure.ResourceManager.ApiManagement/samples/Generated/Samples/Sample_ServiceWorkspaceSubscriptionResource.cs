@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ServiceWorkspaceSubscriptionResource
     {
-        // ApiManagementHeadWorkspaceSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspaceSubscription()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceSubscription.json
-            // this example is just showing the usage of "WorkspaceSubscription_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceSubscriptionResource created on azure
-            // for more information of creating ServiceWorkspaceSubscriptionResource, please refer to the document of ServiceWorkspaceSubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string sid = "5931a769d8d14f0ad8ce13b8";
-            ResourceIdentifier serviceWorkspaceSubscriptionResourceId = ServiceWorkspaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, sid);
-            ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspaceSubscription.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetWorkspaceSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceSubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceSubscription.json
@@ -77,47 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateWorkspaceSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateWorkspaceSubscription()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceSubscription.json
-            // this example is just showing the usage of "WorkspaceSubscription_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceSubscriptionResource created on azure
-            // for more information of creating ServiceWorkspaceSubscriptionResource, please refer to the document of ServiceWorkspaceSubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string sid = "testsub";
-            ResourceIdentifier serviceWorkspaceSubscriptionResourceId = ServiceWorkspaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, sid);
-            ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementSubscriptionPatch patch = new ApiManagementSubscriptionPatch()
-            {
-                DisplayName = "testsub",
-            };
-            ServiceWorkspaceSubscriptionResource result = await serviceWorkspaceSubscription.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SubscriptionContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteWorkspaceSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspaceSubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspaceSubscription.json
@@ -140,14 +72,50 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceWorkspaceSubscription.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await serviceWorkspaceSubscription.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementWorkspaceSubscriptionRegeneratePrimaryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateWorkspaceSubscription()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceSubscription.json
+            // this example is just showing the usage of "WorkspaceSubscription_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceSubscriptionResource created on azure
+            // for more information of creating ServiceWorkspaceSubscriptionResource, please refer to the document of ServiceWorkspaceSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string sid = "testsub";
+            ResourceIdentifier serviceWorkspaceSubscriptionResourceId = ServiceWorkspaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, sid);
+            ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementSubscriptionPatch patch = new ApiManagementSubscriptionPatch
+            {
+                DisplayName = "testsub",
+            };
+            ServiceWorkspaceSubscriptionResource result = await serviceWorkspaceSubscription.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SubscriptionContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegeneratePrimaryKey_ApiManagementWorkspaceSubscriptionRegeneratePrimaryKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementWorkspaceSubscriptionRegeneratePrimaryKey.json
@@ -169,14 +137,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
 
             // invoke the operation
-            await serviceWorkspaceSubscription.RegeneratePrimaryKeyAsync();
+            await serviceWorkspaceSubscription.RegeneratePrimaryKeyAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementWorkspaceSubscriptionRegenerateSecondaryKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateSecondaryKey_ApiManagementWorkspaceSubscriptionRegenerateSecondaryKey()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementWorkspaceSubscriptionRegenerateSecondaryKey.json
@@ -198,14 +165,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
 
             // invoke the operation
-            await serviceWorkspaceSubscription.RegenerateSecondaryKeyAsync();
+            await serviceWorkspaceSubscription.RegenerateSecondaryKeyAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementWorkspaceSubscriptionListSecrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecrets_ApiManagementWorkspaceSubscriptionListSecrets()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementWorkspaceSubscriptionListSecrets.json
@@ -228,6 +194,34 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             SubscriptionKeysContract result = await serviceWorkspaceSubscription.GetSecretsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadWorkspaceSubscription()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceSubscription.json
+            // this example is just showing the usage of "WorkspaceSubscription_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceSubscriptionResource created on azure
+            // for more information of creating ServiceWorkspaceSubscriptionResource, please refer to the document of ServiceWorkspaceSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string sid = "5931a769d8d14f0ad8ce13b8";
+            ResourceIdentifier serviceWorkspaceSubscriptionResourceId = ServiceWorkspaceSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, sid);
+            ServiceWorkspaceSubscriptionResource serviceWorkspaceSubscription = client.GetServiceWorkspaceSubscriptionResource(serviceWorkspaceSubscriptionResourceId);
+
+            // invoke the operation
+            bool result = await serviceWorkspaceSubscription.GetEntityTagAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_IscsiPathResource
     {
-        // IscsiPaths_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IscsiPathsGet()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_Get.json
@@ -45,45 +45,8 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IscsiPaths_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_IscsiPathsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_CreateOrUpdate.json
-            // this example is just showing the usage of "IscsiPaths_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IscsiPathResource created on azure
-            // for more information of creating IscsiPathResource, please refer to the document of IscsiPathResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            ResourceIdentifier iscsiPathResourceId = IscsiPathResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            IscsiPathResource iscsiPath = client.GetIscsiPathResource(iscsiPathResourceId);
-
-            // invoke the operation
-            IscsiPathData data = new IscsiPathData()
-            {
-                NetworkBlock = "192.168.0.0/24",
-            };
-            ArmOperation<IscsiPathResource> lro = await iscsiPath.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            IscsiPathResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IscsiPathData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // IscsiPaths_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IscsiPathsDelete()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_Delete.json
@@ -103,9 +66,44 @@ namespace Azure.ResourceManager.Avs.Samples
             IscsiPathResource iscsiPath = client.GetIscsiPathResource(iscsiPathResourceId);
 
             // invoke the operation
-            await iscsiPath.DeleteAsync(WaitUntil.Completed);
+            await iscsiPath.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_IscsiPathsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_CreateOrUpdate.json
+            // this example is just showing the usage of "IscsiPaths_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IscsiPathResource created on azure
+            // for more information of creating IscsiPathResource, please refer to the document of IscsiPathResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            ResourceIdentifier iscsiPathResourceId = IscsiPathResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            IscsiPathResource iscsiPath = client.GetIscsiPathResource(iscsiPathResourceId);
+
+            // invoke the operation
+            IscsiPathData data = new IscsiPathData
+            {
+                NetworkBlock = "192.168.0.0/24",
+            };
+            ArmOperation<IscsiPathResource> lro = await iscsiPath.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            IscsiPathResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IscsiPathData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

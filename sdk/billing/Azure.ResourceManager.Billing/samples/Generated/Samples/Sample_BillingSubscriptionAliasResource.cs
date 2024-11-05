@@ -7,17 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingSubscriptionAliasResource
     {
-        // BillingSubscriptionAliasGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingSubscriptionAliasGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionAliasGet.json
@@ -45,9 +44,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingSubscriptionAliasCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingSubscriptionAliasCreateOrUpdate()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionAliasCreateOrUpdate.json
@@ -66,13 +64,13 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionAliasResource billingSubscriptionAlias = client.GetBillingSubscriptionAliasResource(billingSubscriptionAliasResourceId);
 
             // invoke the operation
-            BillingSubscriptionAliasData data = new BillingSubscriptionAliasData()
+            BillingSubscriptionAliasData data = new BillingSubscriptionAliasData
             {
                 BillingFrequency = "P1M",
                 DisplayName = "Subscription 3",
                 Quantity = 1L,
                 SkuId = "0001",
-                TermDuration = XmlConvert.ToTimeSpan("P1M"),
+                TermDuration = default,
             };
             ArmOperation<BillingSubscriptionAliasResource> lro = await billingSubscriptionAlias.UpdateAsync(WaitUntil.Completed, data);
             BillingSubscriptionAliasResource result = lro.Value;

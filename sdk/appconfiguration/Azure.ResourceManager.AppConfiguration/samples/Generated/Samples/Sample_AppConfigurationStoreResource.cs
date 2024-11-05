@@ -11,47 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
     public partial class Sample_AppConfigurationStoreResource
     {
-        // ConfigurationStores_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAppConfigurationStores_ConfigurationStoresList()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresList.json
-            // this example is just showing the usage of "ConfigurationStores_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AppConfigurationStoreResource item in subscriptionResource.GetAppConfigurationStoresAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppConfigurationStoreData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ConfigurationStores_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationStoresGet()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
@@ -80,9 +47,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationStoresDelete()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresDelete.json
@@ -102,14 +68,13 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // invoke the operation
-            await appConfigurationStore.DeleteAsync(WaitUntil.Completed);
+            await appConfigurationStore.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ConfigurationStores_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdate()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresUpdate.json
@@ -129,12 +94,12 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // invoke the operation
-            AppConfigurationStorePatch patch = new AppConfigurationStorePatch()
+            AppConfigurationStorePatch patch = new AppConfigurationStorePatch
             {
                 SkuName = "Standard",
                 Tags =
 {
-["Category"] = "Marketing",
+["Category"] = "Marketing"
 },
             };
             ArmOperation<AppConfigurationStoreResource> lro = await appConfigurationStore.UpdateAsync(WaitUntil.Completed, patch);
@@ -147,9 +112,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_Update_Disable_Local_Auth
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdateDisableLocalAuth()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresUpdateDisableLocalAuth.json
@@ -169,7 +133,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // invoke the operation
-            AppConfigurationStorePatch patch = new AppConfigurationStorePatch()
+            AppConfigurationStorePatch patch = new AppConfigurationStorePatch
             {
                 SkuName = "Standard",
                 DisableLocalAuth = true,
@@ -184,9 +148,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_Update_With_Identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationStoresUpdateWithIdentity()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresUpdateWithIdentity.json
@@ -206,19 +169,19 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // invoke the operation
-            AppConfigurationStorePatch patch = new AppConfigurationStorePatch()
+            AppConfigurationStorePatch patch = new AppConfigurationStorePatch
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2")] = null
 },
                 },
                 SkuName = "Standard",
                 Tags =
 {
-["Category"] = "Marketing",
+["Category"] = "Marketing"
 },
             };
             ArmOperation<AppConfigurationStoreResource> lro = await appConfigurationStore.UpdateAsync(WaitUntil.Completed, patch);
@@ -231,9 +194,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_ListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ConfigurationStoresListKeys()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresListKeys.json
@@ -258,12 +220,11 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ConfigurationStores_RegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_ConfigurationStoresRegenerateKey()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresRegenerateKey.json
@@ -283,7 +244,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // invoke the operation
-            AppConfigurationRegenerateKeyContent content = new AppConfigurationRegenerateKeyContent()
+            AppConfigurationRegenerateKeyContent content = new AppConfigurationRegenerateKeyContent
             {
                 Id = "439AD01B4BE67DB1",
             };

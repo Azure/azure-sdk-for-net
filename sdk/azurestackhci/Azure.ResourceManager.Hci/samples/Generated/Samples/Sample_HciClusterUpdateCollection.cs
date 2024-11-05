@@ -10,51 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_HciClusterUpdateCollection
     {
-        // List available updates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAvailableUpdates()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListUpdates.json
-            // this example is just showing the usage of "Updates_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HciClusterResource created on azure
-            // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
-            string resourceGroupName = "testrg";
-            string clusterName = "testcluster";
-            ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
-
-            // get the collection of this HciClusterUpdateResource
-            HciClusterUpdateCollection collection = hciCluster.GetHciClusterUpdates();
-
-            // invoke the operation and iterate over the result
-            await foreach (HciClusterUpdateResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HciClusterUpdateData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Put a specific update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutASpecificUpdate()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PutUpdates.json
@@ -78,20 +41,17 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             string updateName = "Microsoft4.2203.2.32";
-            HciClusterUpdateData data = new HciClusterUpdateData()
+            HciClusterUpdateData data = new HciClusterUpdateData
             {
-                InstalledOn = DateTimeOffset.Parse("2022-04-06T14:08:18.254Z"),
+                InstalledOn = default,
                 Description = "AzS Update 4.2203.2.32",
                 State = HciUpdateState.Installed,
-                Prerequisites =
-{
-new HciClusterUpdatePrerequisite()
+                Prerequisites = {new HciClusterUpdatePrerequisite
 {
 UpdateType = "update type",
 Version = "prerequisite version",
 PackageName = "update package name",
-}
-},
+}},
                 PackagePath = "\\\\SU1FileServer\\SU1_Infrastructure_2\\Updates\\Packages\\Microsoft4.2203.2.32",
                 PackageSizeInMb = 18858,
                 DisplayName = "AzS Update - 4.2203.2.32",
@@ -114,9 +74,8 @@ PackageName = "update package name",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a specific update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASpecificUpdate()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetUpdates.json
@@ -149,9 +108,44 @@ PackageName = "update package name",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a specific update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAvailableUpdates()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListUpdates.json
+            // this example is just showing the usage of "Updates_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HciClusterResource created on azure
+            // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
+            string subscriptionId = "b8d594e5-51f3-4c11-9c54-a7771b81c712";
+            string resourceGroupName = "testrg";
+            string clusterName = "testcluster";
+            ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
+
+            // get the collection of this HciClusterUpdateResource
+            HciClusterUpdateCollection collection = hciCluster.GetHciClusterUpdates();
+
+            // invoke the operation and iterate over the result
+            await foreach (HciClusterUpdateResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                HciClusterUpdateData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetASpecificUpdate()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetUpdates.json
@@ -180,9 +174,8 @@ PackageName = "update package name",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a specific update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetASpecificUpdate()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetUpdates.json
@@ -211,7 +204,7 @@ PackageName = "update package name",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformAppResource
     {
-        // Apps_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AppsGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_Get_VNetInjection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AppsGetVNetInjection()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_Get_VNetInjection.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AppsDelete()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_Delete.json
@@ -103,14 +101,13 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            await appPlatformApp.DeleteAsync(WaitUntil.Completed);
+            await appPlatformApp.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Apps_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AppsUpdate()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_Update.json
@@ -131,42 +128,37 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            AppPlatformAppData data = new AppPlatformAppData()
+            AppPlatformAppData data = new AppPlatformAppData
             {
-                Properties = new AppPlatformAppProperties()
+                Properties = new AppPlatformAppProperties
                 {
                     IsPublic = true,
                     IsHttpsOnly = false,
-                    TemporaryDisk = new AppTemporaryDisk()
+                    TemporaryDisk = new AppTemporaryDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mytemporarydisk",
                     },
-                    PersistentDisk = new AppPersistentDisk()
+                    PersistentDisk = new AppPersistentDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mypersistentdisk",
                     },
-                    CustomPersistentDisks =
+                    CustomPersistentDisks = {new AppCustomPersistentDisk("myASCStorageID")
 {
-new AppCustomPersistentDisk("myASCStorageID")
+CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2", "myFileShare")
 {
-CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2","myFileShare")
-{
-MountOptions =
-{
+MountOptions = {},
 },
-},
-}
-},
+}},
                     IsEndToEndTlsEnabled = false,
                 },
-                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = null,
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = null
 },
                 },
                 Location = new AzureLocation("eastus"),
@@ -181,9 +173,8 @@ MountOptions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_Update_VNetInjection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AppsUpdateVNetInjection()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_Update_VNetInjection.json
@@ -204,46 +195,41 @@ MountOptions =
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            AppPlatformAppData data = new AppPlatformAppData()
+            AppPlatformAppData data = new AppPlatformAppData
             {
-                Properties = new AppPlatformAppProperties()
+                Properties = new AppPlatformAppProperties
                 {
                     IsPublic = true,
                     IsHttpsOnly = false,
-                    TemporaryDisk = new AppTemporaryDisk()
+                    TemporaryDisk = new AppTemporaryDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mytemporarydisk",
                     },
-                    PersistentDisk = new AppPersistentDisk()
+                    PersistentDisk = new AppPersistentDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mypersistentdisk",
                     },
-                    CustomPersistentDisks =
+                    CustomPersistentDisks = {new AppCustomPersistentDisk("myASCStorageID")
 {
-new AppCustomPersistentDisk("myASCStorageID")
+CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2", "myFileShare")
 {
-CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2","myFileShare")
-{
-MountOptions =
-{
+MountOptions = {},
 },
-},
-}
-},
+}},
                     IsEndToEndTlsEnabled = false,
-                    VnetAddons = new AppVnetAddons()
+                    VnetAddons = new AppVnetAddons
                     {
                         IsPublicEndpoint = true,
                     },
                 },
-                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = null,
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = null
 },
                 },
                 Location = new AzureLocation("eastus"),
@@ -258,9 +244,8 @@ MountOptions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_GetResourceUploadUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceUploadUri_AppsGetResourceUploadUrl()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_GetResourceUploadUrl.json
@@ -286,9 +271,8 @@ MountOptions =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Apps_SetActiveDeployments
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ActivateDeployments_AppsSetActiveDeployments()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_SetActiveDeployments.json
@@ -309,12 +293,9 @@ MountOptions =
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            ActiveAppPlatformDeploymentsContent content = new ActiveAppPlatformDeploymentsContent()
+            ActiveAppPlatformDeploymentsContent content = new ActiveAppPlatformDeploymentsContent
             {
-                ActiveDeploymentNames =
-{
-"default"
-},
+                ActiveDeploymentNames = { "default" },
             };
             ArmOperation<AppPlatformAppResource> lro = await appPlatformApp.ActivateDeploymentsAsync(WaitUntil.Completed, content);
             AppPlatformAppResource result = lro.Value;
@@ -326,9 +307,8 @@ MountOptions =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Apps_ValidateDomain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDomain_AppsValidateDomain()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Apps_ValidateDomain.json

@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ServiceWorkspaceApiVersionSetResource
     {
-        // ApiManagementHeadWorkspaceApiVersionSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspaceApiVersionSet()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceApiVersionSet.json
-            // this example is just showing the usage of "WorkspaceApiVersionSet_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceApiVersionSetResource created on azure
-            // for more information of creating ServiceWorkspaceApiVersionSetResource, please refer to the document of ServiceWorkspaceApiVersionSetResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string versionSetId = "vs1";
-            ResourceIdentifier serviceWorkspaceApiVersionSetResourceId = ServiceWorkspaceApiVersionSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId);
-            ServiceWorkspaceApiVersionSetResource serviceWorkspaceApiVersionSet = client.GetServiceWorkspaceApiVersionSetResource(serviceWorkspaceApiVersionSetResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspaceApiVersionSet.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetWorkspaceApiVersionSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceApiVersionSet()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceApiVersionSet.json
@@ -77,49 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateWorkspaceApiVersionSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateWorkspaceApiVersionSet()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceApiVersionSet.json
-            // this example is just showing the usage of "WorkspaceApiVersionSet_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceApiVersionSetResource created on azure
-            // for more information of creating ServiceWorkspaceApiVersionSetResource, please refer to the document of ServiceWorkspaceApiVersionSetResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string versionSetId = "vs1";
-            ResourceIdentifier serviceWorkspaceApiVersionSetResourceId = ServiceWorkspaceApiVersionSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId);
-            ServiceWorkspaceApiVersionSetResource serviceWorkspaceApiVersionSet = client.GetServiceWorkspaceApiVersionSetResource(serviceWorkspaceApiVersionSetResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiVersionSetPatch patch = new ApiVersionSetPatch()
-            {
-                Description = "Version configuration",
-                DisplayName = "api set 1",
-                VersioningScheme = VersioningScheme.Segment,
-            };
-            ServiceWorkspaceApiVersionSetResource result = await serviceWorkspaceApiVersionSet.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiVersionSetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteWorkspaceApiVersionSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspaceApiVersionSet()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspaceApiVersionSet.json
@@ -142,9 +72,76 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceWorkspaceApiVersionSet.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await serviceWorkspaceApiVersionSet.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateWorkspaceApiVersionSet()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceApiVersionSet.json
+            // this example is just showing the usage of "WorkspaceApiVersionSet_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceApiVersionSetResource created on azure
+            // for more information of creating ServiceWorkspaceApiVersionSetResource, please refer to the document of ServiceWorkspaceApiVersionSetResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string versionSetId = "vs1";
+            ResourceIdentifier serviceWorkspaceApiVersionSetResourceId = ServiceWorkspaceApiVersionSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId);
+            ServiceWorkspaceApiVersionSetResource serviceWorkspaceApiVersionSet = client.GetServiceWorkspaceApiVersionSetResource(serviceWorkspaceApiVersionSetResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiVersionSetPatch patch = new ApiVersionSetPatch
+            {
+                Description = "Version configuration",
+                DisplayName = "api set 1",
+                VersioningScheme = VersioningScheme.Segment,
+            };
+            ServiceWorkspaceApiVersionSetResource result = await serviceWorkspaceApiVersionSet.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiVersionSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadWorkspaceApiVersionSet()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceApiVersionSet.json
+            // this example is just showing the usage of "WorkspaceApiVersionSet_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceApiVersionSetResource created on azure
+            // for more information of creating ServiceWorkspaceApiVersionSetResource, please refer to the document of ServiceWorkspaceApiVersionSetResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string versionSetId = "vs1";
+            ResourceIdentifier serviceWorkspaceApiVersionSetResourceId = ServiceWorkspaceApiVersionSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId);
+            ServiceWorkspaceApiVersionSetResource serviceWorkspaceApiVersionSet = client.GetServiceWorkspaceApiVersionSetResource(serviceWorkspaceApiVersionSetResourceId);
+
+            // invoke the operation
+            bool result = await serviceWorkspaceApiVersionSet.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

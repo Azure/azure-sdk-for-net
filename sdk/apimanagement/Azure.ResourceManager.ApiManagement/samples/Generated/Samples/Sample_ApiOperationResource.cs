@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiOperationResource
     {
-        // ApiManagementHeadApiOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadApiOperation()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiOperation.json
-            // this example is just showing the usage of "ApiOperation_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiOperationResource created on azure
-            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string apiId = "57d2ef278aa04f0888cba3f3";
-            string operationId = "57d2ef278aa04f0ad01d6cdc";
-            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
-
-            // invoke the operation
-            bool result = await apiOperation.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetApiOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiOperation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiOperation.json
@@ -77,9 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetApiOperationPetStore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiOperationPetStore()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiOperationPetStore.json
@@ -110,90 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateApiOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateApiOperation()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateApiOperation.json
-            // this example is just showing the usage of "ApiOperation_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiOperationResource created on azure
-            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string apiId = "echo-api";
-            string operationId = "operationId";
-            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiOperationPatch patch = new ApiOperationPatch()
-            {
-                TemplateParameters =
-{
-},
-                Request = new RequestContract()
-                {
-                    QueryParameters =
-{
-new ParameterContract("param1","string")
-{
-Description = "A sample parameter that is required and has a default value of \"sample\".",
-DefaultValue = "sample",
-IsRequired = true,
-Values =
-{
-"sample"
-},
-}
-},
-                },
-                Responses =
-{
-new ResponseContract(200)
-{
-Description = "Returned in all cases.",
-Representations =
-{
-},
-Headers =
-{
-},
-},new ResponseContract(500)
-{
-Description = "Server Error.",
-Representations =
-{
-},
-Headers =
-{
-},
-}
-},
-                DisplayName = "Retrieve resource",
-                Method = "GET",
-                UriTemplate = "/resource",
-            };
-            ApiOperationResource result = await apiOperation.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiOperationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteApiOperation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteApiOperation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiOperation.json
@@ -216,9 +104,98 @@ Headers =
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await apiOperation.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await apiOperation.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateApiOperation()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateApiOperation.json
+            // this example is just showing the usage of "ApiOperation_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string apiId = "echo-api";
+            string operationId = "operationId";
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiOperationPatch patch = new ApiOperationPatch
+            {
+                TemplateParameters = { },
+                Request = new RequestContract
+                {
+                    QueryParameters = {new ParameterContract("param1", "string")
+{
+Description = "A sample parameter that is required and has a default value of \"sample\".",
+DefaultValue = "sample",
+IsRequired = true,
+Values = {"sample"},
+}},
+                },
+                Responses = {new ResponseContract(200)
+{
+Description = "Returned in all cases.",
+Representations = {},
+Headers = {},
+}, new ResponseContract(500)
+{
+Description = "Server Error.",
+Representations = {},
+Headers = {},
+}},
+                DisplayName = "Retrieve resource",
+                Method = "GET",
+                UriTemplate = "/resource",
+            };
+            ApiOperationResource result = await apiOperation.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiOperationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadApiOperation()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiOperation.json
+            // this example is just showing the usage of "ApiOperation_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string apiId = "57d2ef278aa04f0888cba3f3";
+            string operationId = "57d2ef278aa04f0ad01d6cdc";
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
+
+            // invoke the operation
+            bool result = await apiOperation.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

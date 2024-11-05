@@ -10,126 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationJobResource
     {
-        // Get Job Output
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOutput_GetJobOutput()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJobOutput.json
-            // this example is just showing the usage of "Job_GetOutput" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationJobResource created on azure
-            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "ContoseAutomationAccount";
-            string jobName = "foo";
-            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
-            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
-
-            // invoke the operation
-            string result = await automationJob.GetOutputAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get Job Runbook Content
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRunbookContent_GetJobRunbookContent()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJobRunbookContent.json
-            // this example is just showing the usage of "Job_GetRunbookContent" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationJobResource created on azure
-            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "ContoseAutomationAccount";
-            string jobName = "foo";
-            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
-            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
-
-            // invoke the operation
-            string result = await automationJob.GetRunbookContentAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Suspend job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Suspend_SuspendJob()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/suspendJob.json
-            // this example is just showing the usage of "Job_Suspend" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationJobResource created on azure
-            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "ContoseAutomationAccount";
-            string jobName = "foo";
-            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
-            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
-
-            // invoke the operation
-            await automationJob.SuspendAsync();
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Stop job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Stop_StopJob()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/stopJob.json
-            // this example is just showing the usage of "Job_Stop" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationJobResource created on azure
-            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
-            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
-            string resourceGroupName = "mygroup";
-            string automationAccountName = "ContoseAutomationAccount";
-            string jobName = "foo";
-            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
-            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
-
-            // invoke the operation
-            await automationJob.StopAsync();
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetJob()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJob.json
@@ -159,9 +47,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateJob()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/createJob.json
@@ -182,13 +69,13 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
 
             // invoke the operation
-            AutomationJobCreateOrUpdateContent content = new AutomationJobCreateOrUpdateContent()
+            AutomationJobCreateOrUpdateContent content = new AutomationJobCreateOrUpdateContent
             {
                 RunbookName = "TestRunbook",
                 Parameters =
 {
 ["key01"] = "value01",
-["key02"] = "value02",
+["key02"] = "value02"
 },
                 RunOn = "",
             };
@@ -202,9 +89,116 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resume job
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetOutput_GetJobOutput()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJobOutput.json
+            // this example is just showing the usage of "Job_GetOutput" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationJobResource created on azure
+            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            string jobName = "foo";
+            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
+            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
+
+            // invoke the operation
+            string result = await automationJob.GetOutputAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRunbookContent_GetJobRunbookContent()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJobRunbookContent.json
+            // this example is just showing the usage of "Job_GetRunbookContent" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationJobResource created on azure
+            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            string jobName = "foo";
+            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
+            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
+
+            // invoke the operation
+            string result = await automationJob.GetRunbookContentAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Suspend_SuspendJob()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/suspendJob.json
+            // this example is just showing the usage of "Job_Suspend" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationJobResource created on azure
+            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            string jobName = "foo";
+            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
+            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
+
+            // invoke the operation
+            await automationJob.SuspendAsync().ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Stop_StopJob()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/stopJob.json
+            // this example is just showing the usage of "Job_Stop" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationJobResource created on azure
+            // for more information of creating AutomationJobResource, please refer to the document of AutomationJobResource
+            string subscriptionId = "51766542-3ed7-4a72-a187-0c8ab644ddab";
+            string resourceGroupName = "mygroup";
+            string automationAccountName = "ContoseAutomationAccount";
+            string jobName = "foo";
+            ResourceIdentifier automationJobResourceId = AutomationJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, jobName);
+            AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
+
+            // invoke the operation
+            await automationJob.StopAsync().ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resume_ResumeJob()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/resumeJob.json
@@ -225,14 +219,13 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationJobResource automationJob = client.GetAutomationJobResource(automationJobResourceId);
 
             // invoke the operation
-            await automationJob.ResumeAsync();
+            await automationJob.ResumeAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get job stream
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobStream_GetJobStream()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/getJobStream.json
@@ -259,9 +252,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List job streams by job name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobStreams_ListJobStreamsByJobName()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/job/listJobStreamsByJob.json
@@ -287,7 +279,7 @@ namespace Azure.ResourceManager.Automation.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

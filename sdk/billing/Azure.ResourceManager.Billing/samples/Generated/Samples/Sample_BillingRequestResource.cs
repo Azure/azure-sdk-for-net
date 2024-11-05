@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingRequestResource
     {
-        // BillingRequestsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingRequestsGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsGet.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingRequestsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingRequestsCreateOrUpdate()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsCreateOrUpdate.json
@@ -64,13 +63,13 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingRequestResource billingRequest = client.GetBillingRequestResource(billingRequestResourceId);
 
             // invoke the operation
-            BillingRequestData data = new BillingRequestData()
+            BillingRequestData data = new BillingRequestData
             {
-                Properties = new BillingRequestProperties()
+                Properties = new BillingRequestProperties
                 {
                     AdditionalInformation =
 {
-["RoleId"] = "40000000-aaaa-bbbb-cccc-200000000006",
+["RoleId"] = "40000000-aaaa-bbbb-cccc-200000000006"
 },
                     DecisionReason = "New team member",
                     RequestScope = "/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31/billingProfiles/xxxx-xxxx-xxx-xxx",

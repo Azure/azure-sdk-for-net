@@ -7,18 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Authorization.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Samples
 {
     public partial class Sample_RoleManagementPolicyResource
     {
-        // GetRoleManagementPolicyByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleManagementPolicyByName()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleManagementPolicyByName.json
@@ -46,9 +45,8 @@ namespace Azure.ResourceManager.Authorization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PatchPartialRoleManagementPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchPartialRoleManagementPolicy()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/PatchPartialRoleManagementPolicy.json
@@ -67,64 +65,40 @@ namespace Azure.ResourceManager.Authorization.Samples
             RoleManagementPolicyResource roleManagementPolicy = client.GetRoleManagementPolicyResource(roleManagementPolicyResourceId);
 
             // invoke the operation
-            RoleManagementPolicyData data = new RoleManagementPolicyData()
+            RoleManagementPolicyData data = new RoleManagementPolicyData
             {
-                Rules =
-{
-new RoleManagementPolicyExpirationRule()
+                Rules = {new RoleManagementPolicyExpirationRule
 {
 IsExpirationRequired = false,
-MaximumDuration = XmlConvert.ToTimeSpan("P180D"),
+MaximumDuration = default,
 Id = "Expiration_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
-NotificationRecipients =
-{
-"admin_admin_eligible@test.com"
-},
+NotificationRecipients = {"admin_admin_eligible@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Admin_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-}
-},
+}},
             };
             RoleManagementPolicyResource result = await roleManagementPolicy.UpdateAsync(data);
 
@@ -135,9 +109,8 @@ EnforcedSettings =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PatchRoleManagementPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchRoleManagementPolicy()
         {
             // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/PatchRoleManagementPolicy.json
@@ -156,495 +129,297 @@ EnforcedSettings =
             RoleManagementPolicyResource roleManagementPolicy = client.GetRoleManagementPolicyResource(roleManagementPolicyResourceId);
 
             // invoke the operation
-            RoleManagementPolicyData data = new RoleManagementPolicyData()
+            RoleManagementPolicyData data = new RoleManagementPolicyData
             {
-                Rules =
-{
-new RoleManagementPolicyExpirationRule()
+                Rules = {new RoleManagementPolicyExpirationRule
 {
 IsExpirationRequired = false,
-MaximumDuration = XmlConvert.ToTimeSpan("P180D"),
+MaximumDuration = default,
 Id = "Expiration_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
-NotificationRecipients =
-{
-"admin_admin_eligible@test.com"
-},
+NotificationRecipients = {"admin_admin_eligible@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Admin_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
-NotificationRecipients =
-{
-"requestor_admin_eligible@test.com"
-},
+NotificationRecipients = {"requestor_admin_eligible@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Requestor_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
-NotificationRecipients =
-{
-"approver_admin_eligible@test.com"
-},
+NotificationRecipients = {"approver_admin_eligible@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Approver_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
+}, new RoleManagementPolicyEnablementRule
 {
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyEnablementRule()
-{
-EnablementRules =
-{
-},
+EnablementRules = {},
 Id = "Enablement_Admin_Eligibility",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Eligibility,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyExpirationRule()
+}, new RoleManagementPolicyExpirationRule
 {
 IsExpirationRequired = false,
-MaximumDuration = XmlConvert.ToTimeSpan("P90D"),
+MaximumDuration = default,
 Id = "Expiration_Admin_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
+}, new RoleManagementPolicyEnablementRule
 {
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyEnablementRule()
-{
-EnablementRules =
-{
-RoleAssignmentEnablementRuleType.Justification,RoleAssignmentEnablementRuleType.MultiFactorAuthentication
-},
+EnablementRules = {RoleAssignmentEnablementRuleType.Justification, RoleAssignmentEnablementRuleType.MultiFactorAuthentication},
 Id = "Enablement_Admin_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
-NotificationRecipients =
-{
-"admin_admin_member@test.com"
-},
+NotificationRecipients = {"admin_admin_member@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Admin_Admin_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
-NotificationRecipients =
-{
-"requestor_admin_member@test.com"
-},
+NotificationRecipients = {"requestor_admin_member@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Requestor_Admin_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
-NotificationRecipients =
-{
-"approver_admin_member@test.com"
-},
+NotificationRecipients = {"approver_admin_member@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Approver_Admin_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "Admin",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyExpirationRule()
+}, new RoleManagementPolicyExpirationRule
 {
 IsExpirationRequired = true,
-MaximumDuration = XmlConvert.ToTimeSpan("PT7H"),
+MaximumDuration = default,
 Id = "Expiration_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
+}, new RoleManagementPolicyEnablementRule
 {
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyEnablementRule()
-{
-EnablementRules =
-{
-RoleAssignmentEnablementRuleType.Justification,RoleAssignmentEnablementRuleType.MultiFactorAuthentication,RoleAssignmentEnablementRuleType.Ticketing
-},
+EnablementRules = {RoleAssignmentEnablementRuleType.Justification, RoleAssignmentEnablementRuleType.MultiFactorAuthentication, RoleAssignmentEnablementRuleType.Ticketing},
 Id = "Enablement_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
+}, new RoleManagementPolicyApprovalRule
 {
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyApprovalRule()
-{
-Settings = new RoleManagementApprovalSettings()
+Settings = new RoleManagementApprovalSettings
 {
 IsApprovalRequired = true,
 IsApprovalRequiredForExtension = false,
 IsRequestorJustificationRequired = true,
 ApprovalMode = RoleManagementApprovalMode.SingleStage,
-ApprovalStages =
-{
-new RoleManagementApprovalStage()
+ApprovalStages = {new RoleManagementApprovalStage
 {
 ApprovalStageTimeOutInDays = 1,
 IsApproverJustificationRequired = true,
 EscalationTimeInMinutes = 0,
-PrimaryApprovers =
-{
-new RoleManagementUserInfo()
+PrimaryApprovers = {new RoleManagementUserInfo
 {
 UserType = RoleManagementUserType.Group,
 IsBackup = false,
 Id = "2385b0f3-5fa9-43cf-8ca4-b01dc97298cd",
 Description = "amansw_new_group",
-},new RoleManagementUserInfo()
+}, new RoleManagementUserInfo
 {
 UserType = RoleManagementUserType.Group,
 IsBackup = false,
 Id = "2f4913c9-d15b-406a-9946-1d66a28f2690",
 Description = "amansw_group",
-}
-},
+}},
 IsEscalationEnabled = false,
-EscalationApprovers =
-{
-},
-}
-},
+EscalationApprovers = {},
+}},
 },
 Id = "Approval_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyAuthenticationContextRule()
+}, new RoleManagementPolicyAuthenticationContextRule
 {
 IsEnabled = false,
 ClaimValue = "",
 Id = "AuthenticationContext_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Admin,
-NotificationRecipients =
-{
-"admin_enduser_member@test.com"
-},
+NotificationRecipients = {"admin_enduser_member@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Admin_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Requestor,
-NotificationRecipients =
-{
-"requestor_enduser_member@test.com"
-},
+NotificationRecipients = {"requestor_enduser_member@test.com"},
 AreDefaultRecipientsEnabled = false,
 Id = "Notification_Requestor_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-},new RoleManagementPolicyNotificationRule()
+}, new RoleManagementPolicyNotificationRule
 {
 NotificationDeliveryType = NotificationDeliveryType.Email,
 NotificationLevel = RoleManagementPolicyNotificationLevel.Critical,
 RecipientType = RoleManagementPolicyRecipientType.Approver,
-NotificationRecipients =
-{
-},
+NotificationRecipients = {},
 AreDefaultRecipientsEnabled = true,
 Id = "Notification_Approver_EndUser_Assignment",
-Target = new RoleManagementPolicyRuleTarget()
+Target = new RoleManagementPolicyRuleTarget
 {
 Caller = "EndUser",
-Operations =
-{
-"All"
-},
+Operations = {"All"},
 Level = RoleManagementAssignmentLevel.Assignment,
-TargetObjects =
-{
+TargetObjects = {},
+InheritableSettings = {},
+EnforcedSettings = {},
 },
-InheritableSettings =
-{
-},
-EnforcedSettings =
-{
-},
-},
-}
-},
+}},
             };
             RoleManagementPolicyResource result = await roleManagementPolicy.UpdateAsync(data);
 

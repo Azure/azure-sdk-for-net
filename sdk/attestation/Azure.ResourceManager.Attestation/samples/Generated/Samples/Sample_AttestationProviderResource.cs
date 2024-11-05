@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Attestation.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Attestation.Samples
 {
     public partial class Sample_AttestationProviderResource
     {
-        // AttestationProviders_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AttestationProvidersGet()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvider.json
@@ -47,50 +46,8 @@ namespace Azure.ResourceManager.Attestation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttestationProviders_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_AttestationProvidersUpdate()
-        {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Update_AttestationProvider.json
-            // this example is just showing the usage of "AttestationProviders_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AttestationProviderResource created on azure
-            // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "MyResourceGroup";
-            string providerName = "myattestationprovider";
-            ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
-            AttestationProviderResource attestationProvider = client.GetAttestationProviderResource(attestationProviderResourceId);
-
-            // invoke the operation
-            AttestationProviderPatch patch = new AttestationProviderPatch()
-            {
-                Tags =
-{
-["Property1"] = "Value1",
-["Property2"] = "Value2",
-["Property3"] = "Value3",
-},
-                AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled,
-            };
-            AttestationProviderResource result = await attestationProvider.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AttestationProviderData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // AttestationProviders_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AttestationProvidersDelete()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Delete_AttestationProvider.json
@@ -110,97 +67,43 @@ namespace Azure.ResourceManager.Attestation.Samples
             AttestationProviderResource attestationProvider = client.GetAttestationProviderResource(attestationProviderResourceId);
 
             // invoke the operation
-            await attestationProvider.DeleteAsync(WaitUntil.Completed);
+            await attestationProvider.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AttestationProviders_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAttestationProviders_AttestationProvidersList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AttestationProvidersUpdate()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvidersList.json
-            // this example is just showing the usage of "AttestationProviders_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Update_AttestationProvider.json
+            // this example is just showing the usage of "AttestationProviders_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this AttestationProviderResource created on azure
+            // for more information of creating AttestationProviderResource, please refer to the document of AttestationProviderResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AttestationProviderResource item in subscriptionResource.GetAttestationProvidersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AttestationProviderData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AttestationProviders_GetDefault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAttestationProvidersByDefaultProvider_AttestationProvidersGetDefault()
-        {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_DefaultProviders.json
-            // this example is just showing the usage of "AttestationProviders_ListDefault" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "6c96b33e-f5b8-40a6-9011-5cb1c58b0915";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AttestationProviderResource item in subscriptionResource.GetAttestationProvidersByDefaultProviderAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AttestationProviderData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AttestationProviders_GetDefaultWithLocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetDefaultByLocationAttestationProvider_AttestationProvidersGetDefaultWithLocation()
-        {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_DefaultProviderByLocation.json
-            // this example is just showing the usage of "AttestationProviders_GetDefaultByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "6c96b33e-f5b8-40a6-9011-5cb1c58b0915";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "MyResourceGroup";
+            string providerName = "myattestationprovider";
+            ResourceIdentifier attestationProviderResourceId = AttestationProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, providerName);
+            AttestationProviderResource attestationProvider = client.GetAttestationProviderResource(attestationProviderResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("Central US");
-            AttestationProviderResource result = await subscriptionResource.GetDefaultByLocationAttestationProviderAsync(location);
+            AttestationProviderPatch patch = new AttestationProviderPatch
+            {
+                Tags =
+{
+["Property1"] = "Value1",
+["Property2"] = "Value2",
+["Property3"] = "Value3"
+},
+                AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled,
+            };
+            AttestationProviderResource result = await attestationProvider.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -209,9 +112,8 @@ namespace Azure.ResourceManager.Attestation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AttestationProviderListPrivateLinkResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResourcesByProvider_AttestationProviderListPrivateLinkResources()
         {
             // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderListPrivateLinkResources.json
@@ -236,7 +138,7 @@ namespace Azure.ResourceManager.Attestation.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

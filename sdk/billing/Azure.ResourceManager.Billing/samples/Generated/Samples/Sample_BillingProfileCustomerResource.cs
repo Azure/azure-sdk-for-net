@@ -10,14 +10,44 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingProfileCustomerResource
     {
-        // BillingPermissionsListByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_CustomersGet()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/customersGet.json
+            // this example is just showing the usage of "Customers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string customerName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
+
+            // invoke the operation
+            BillingProfileCustomerResource result = await billingProfileCustomer.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingCustomerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingPermissions_BillingPermissionsListByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByCustomer.json
@@ -42,12 +72,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CheckAccessByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAccessBillingPermissions_CheckAccessByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/checkAccessByCustomer.json
@@ -67,24 +96,20 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // invoke the operation and iterate over the result
-            BillingCheckAccessContent content = new BillingCheckAccessContent()
+            BillingCheckAccessContent content = new BillingCheckAccessContent
             {
-                Actions =
-{
-"Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
-},
+                Actions = { "Microsoft.Billing/billingAccounts/read", "Microsoft.Subscription/subscriptions/write" },
             };
             await foreach (BillingCheckAccessResult item in billingProfileCustomer.CheckAccessBillingPermissionsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRequestsListByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingRequests_BillingRequestsListByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsListByCustomer.json
@@ -104,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileCustomerResourceGetBillingRequestsOptions options = new BillingProfileCustomerResourceGetBillingRequestsOptions() { };
+            BillingProfileCustomerResourceGetBillingRequestsOptions options = new BillingProfileCustomerResourceGetBillingRequestsOptions();
             await foreach (BillingRequestResource item in billingProfileCustomer.GetBillingRequestsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -114,12 +139,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRoleAssignmentCreateByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateByCustomerBillingRoleAssignment_BillingRoleAssignmentCreateByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentCreateByCustomer.json
@@ -152,9 +176,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // ResolveBillingRoleAssignmentByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveByCustomerBillingRoleAssignment_ResolveBillingRoleAssignmentByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/resolveBillingRoleAssignmentByCustomer.json
@@ -180,9 +203,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingSubscriptionsListByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingSubscriptions_BillingSubscriptionsListByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsListByCustomer.json
@@ -202,50 +224,18 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileCustomerResourceGetBillingSubscriptionsOptions options = new BillingProfileCustomerResourceGetBillingSubscriptionsOptions() { };
+            BillingProfileCustomerResourceGetBillingSubscriptionsOptions options = new BillingProfileCustomerResourceGetBillingSubscriptionsOptions();
             await foreach (BillingSubscriptionData item in billingProfileCustomer.GetBillingSubscriptionsAsync(options))
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CustomersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_CustomersGet()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/customersGet.json
-            // this example is just showing the usage of "Customers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileCustomerResource created on azure
-            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
-
-            // invoke the operation
-            BillingProfileCustomerResource result = await billingProfileCustomer.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingCustomerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // PoliciesPutByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateByCustomerPolicy_PoliciesPutByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/policiesPutByCustomer.json
@@ -265,7 +255,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // invoke the operation
-            BillingCustomerPolicyData data = new BillingCustomerPolicyData()
+            BillingCustomerPolicyData data = new BillingCustomerPolicyData
             {
                 Properties = new BillingCustomerPolicyProperties(ViewChargesPolicy.Allowed),
             };
@@ -276,9 +266,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // TransactionsListByCustomer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTransactions_TransactionsListByCustomer()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/transactionsListByCustomer.json
@@ -298,13 +287,16 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileCustomerResourceGetTransactionsOptions options = new BillingProfileCustomerResourceGetTransactionsOptions(periodStartDate: DateTimeOffset.Parse("2024-04-01"), periodEndDate: DateTimeOffset.Parse("2023-05-30"), type: TransactionType.Billed) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
+            DateTimeOffset periodStartDate = default;
+            DateTimeOffset periodEndDate = default;
+            TransactionType type = TransactionType.Billed;
+            BillingProfileCustomerResourceGetTransactionsOptions options = new BillingProfileCustomerResourceGetTransactionsOptions(periodStartDate, periodEndDate, type) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
             await foreach (BillingTransactionData item in billingProfileCustomer.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

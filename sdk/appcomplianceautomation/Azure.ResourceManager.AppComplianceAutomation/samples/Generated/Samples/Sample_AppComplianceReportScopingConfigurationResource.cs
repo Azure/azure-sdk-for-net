@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_AppComplianceReportScopingConfigurationResource
     {
-        // ScopingConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ScopingConfiguration()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/ScopingConfiguration_Get.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScopingConfiguration_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ScopingConfigurationDelete()
         {
             // Generated from example definition: specification/appcomplianceautomation/resource-manager/Microsoft.AppComplianceAutomation/stable/2024-06-27/examples/ScopingConfiguration_Delete.json
@@ -65,9 +64,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             AppComplianceReportScopingConfigurationResource appComplianceReportScopingConfiguration = client.GetAppComplianceReportScopingConfigurationResource(appComplianceReportScopingConfigurationResourceId);
 
             // invoke the operation
-            await appComplianceReportScopingConfiguration.DeleteAsync(WaitUntil.Completed);
+            await appComplianceReportScopingConfiguration.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,56 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingAssociatedTenantCollection
     {
-        // AssociatedTenantsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_AssociatedTenantsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsCreateOrUpdate.json
+            // this example is just showing the usage of "AssociatedTenants_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingAssociatedTenantResource
+            BillingAssociatedTenantCollection collection = billingAccount.GetBillingAssociatedTenants();
+
+            // invoke the operation
+            string associatedTenantName = "11111111-1111-1111-1111-111111111111";
+            BillingAssociatedTenantData data = new BillingAssociatedTenantData
+            {
+                Properties = new BillingAssociatedTenantProperties
+                {
+                    DisplayName = "Contoso Finance",
+                    BillingManagementState = BillingManagementTenantState.Active,
+                    ProvisioningManagementState = BillingProvisioningTenantState.Pending,
+                },
+            };
+            ArmOperation<BillingAssociatedTenantResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associatedTenantName, data);
+            BillingAssociatedTenantResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingAssociatedTenantData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssociatedTenantsGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsGet.json
@@ -48,9 +90,43 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AssociatedTenantsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_AssociatedTenantsListByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsListByBillingAccount.json
+            // this example is just showing the usage of "AssociatedTenants_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingAssociatedTenantResource
+            BillingAssociatedTenantCollection collection = billingAccount.GetBillingAssociatedTenants();
+
+            // invoke the operation and iterate over the result
+            BillingAssociatedTenantCollectionGetAllOptions options = new BillingAssociatedTenantCollectionGetAllOptions();
+            await foreach (BillingAssociatedTenantResource item in collection.GetAllAsync(options))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BillingAssociatedTenantData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AssociatedTenantsGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsGet.json
@@ -77,9 +153,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AssociatedTenantsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AssociatedTenantsGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsGet.json
@@ -106,7 +181,7 @@ namespace Azure.ResourceManager.Billing.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -116,85 +191,6 @@ namespace Azure.ResourceManager.Billing.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // AssociatedTenantsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_AssociatedTenantsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsCreateOrUpdate.json
-            // this example is just showing the usage of "AssociatedTenants_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // get the collection of this BillingAssociatedTenantResource
-            BillingAssociatedTenantCollection collection = billingAccount.GetBillingAssociatedTenants();
-
-            // invoke the operation
-            string associatedTenantName = "11111111-1111-1111-1111-111111111111";
-            BillingAssociatedTenantData data = new BillingAssociatedTenantData()
-            {
-                Properties = new BillingAssociatedTenantProperties()
-                {
-                    DisplayName = "Contoso Finance",
-                    BillingManagementState = BillingManagementTenantState.Active,
-                    ProvisioningManagementState = BillingProvisioningTenantState.Pending,
-                },
-            };
-            ArmOperation<BillingAssociatedTenantResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associatedTenantName, data);
-            BillingAssociatedTenantResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingAssociatedTenantData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // AssociatedTenantsListByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_AssociatedTenantsListByBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/associatedTenantsListByBillingAccount.json
-            // this example is just showing the usage of "AssociatedTenants_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // get the collection of this BillingAssociatedTenantResource
-            BillingAssociatedTenantCollection collection = billingAccount.GetBillingAssociatedTenants();
-
-            // invoke the operation and iterate over the result
-            BillingAssociatedTenantCollectionGetAllOptions options = new BillingAssociatedTenantCollectionGetAllOptions() { };
-            await foreach (BillingAssociatedTenantResource item in collection.GetAllAsync(options))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BillingAssociatedTenantData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

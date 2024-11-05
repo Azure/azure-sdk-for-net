@@ -10,14 +10,113 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingInvoiceSectionResource
     {
-        // BillingPermissionsListByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_InvoiceSectionsGet()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsGet.json
+            // this example is just showing the usage of "InvoiceSections_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingInvoiceSectionResource created on azure
+            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string invoiceSectionName = "yyyy-yyyy-yyy-yyy";
+            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
+            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
+
+            // invoke the operation
+            BillingInvoiceSectionResource result = await billingInvoiceSection.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingInvoiceSectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_InvoiceSectionsDelete()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsDelete.json
+            // this example is just showing the usage of "InvoiceSections_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingInvoiceSectionResource created on azure
+            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string invoiceSectionName = "yyyy-yyyy-yyy-yyy";
+            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
+            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
+
+            // invoke the operation
+            await billingInvoiceSection.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_InvoiceSectionsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsCreateOrUpdate.json
+            // this example is just showing the usage of "InvoiceSections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingInvoiceSectionResource created on azure
+            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string invoiceSectionName = "invoice-section-1";
+            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
+            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
+
+            // invoke the operation
+            BillingInvoiceSectionData data = new BillingInvoiceSectionData
+            {
+                Properties = new BillingInvoiceSectionProperties
+                {
+                    DisplayName = "Invoice Section 1",
+                    Tags =
+{
+["costCategory"] = "Support",
+["pcCode"] = "A123456"
+},
+                },
+            };
+            ArmOperation<BillingInvoiceSectionResource> lro = await billingInvoiceSection.UpdateAsync(WaitUntil.Completed, data);
+            BillingInvoiceSectionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingInvoiceSectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingPermissions_BillingPermissionsListByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPermissionsListByInvoiceSection.json
@@ -42,12 +141,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CheckAccessByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckAccessBillingPermissions_CheckAccessByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/checkAccessByInvoiceSection.json
@@ -67,24 +165,20 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
 
             // invoke the operation and iterate over the result
-            BillingCheckAccessContent content = new BillingCheckAccessContent()
+            BillingCheckAccessContent content = new BillingCheckAccessContent
             {
-                Actions =
-{
-"Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
-},
+                Actions = { "Microsoft.Billing/billingAccounts/read", "Microsoft.Subscription/subscriptions/write" },
             };
             await foreach (BillingCheckAccessResult item in billingInvoiceSection.CheckAccessBillingPermissionsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRequestsListByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingRequests_BillingRequestsListByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsListByInvoiceSection.json
@@ -104,7 +198,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
 
             // invoke the operation and iterate over the result
-            BillingInvoiceSectionResourceGetBillingRequestsOptions options = new BillingInvoiceSectionResourceGetBillingRequestsOptions() { };
+            BillingInvoiceSectionResourceGetBillingRequestsOptions options = new BillingInvoiceSectionResourceGetBillingRequestsOptions();
             await foreach (BillingRequestResource item in billingInvoiceSection.GetBillingRequestsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -114,12 +208,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BillingRoleAssignmentCreateByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateByInvoiceSectionBillingRoleAssignment_BillingRoleAssignmentCreateByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRoleAssignmentCreateByInvoiceSection.json
@@ -152,9 +245,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // ResolveBillingRoleAssignmentByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResolveByInvoiceSectionBillingRoleAssignment_ResolveBillingRoleAssignmentByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/resolveBillingRoleAssignmentByInvoiceSection.json
@@ -180,9 +272,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingSubscriptionsListByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingSubscriptions_BillingSubscriptionsListByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsListByInvoiceSection.json
@@ -202,19 +293,18 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
 
             // invoke the operation and iterate over the result
-            BillingInvoiceSectionResourceGetBillingSubscriptionsOptions options = new BillingInvoiceSectionResourceGetBillingSubscriptionsOptions() { };
+            BillingInvoiceSectionResourceGetBillingSubscriptionsOptions options = new BillingInvoiceSectionResourceGetBillingSubscriptionsOptions();
             await foreach (BillingSubscriptionData item in billingInvoiceSection.GetBillingSubscriptionsAsync(options))
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // InvoiceSectionsValidateDeleteEligibilityFailure
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDeleteEligibility_InvoiceSectionsValidateDeleteEligibilityFailure()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsValidateDeleteEligibilityFailure.json
@@ -239,9 +329,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // InvoiceSectionsValidateDeleteEligibilitySuccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateDeleteEligibility_InvoiceSectionsValidateDeleteEligibilitySuccess()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsValidateDeleteEligibilitySuccess.json
@@ -266,111 +355,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // InvoiceSectionsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_InvoiceSectionsDelete()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsDelete.json
-            // this example is just showing the usage of "InvoiceSections_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingInvoiceSectionResource created on azure
-            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string invoiceSectionName = "yyyy-yyyy-yyy-yyy";
-            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
-            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
-
-            // invoke the operation
-            await billingInvoiceSection.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // InvoiceSectionsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_InvoiceSectionsGet()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsGet.json
-            // this example is just showing the usage of "InvoiceSections_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingInvoiceSectionResource created on azure
-            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string invoiceSectionName = "yyyy-yyyy-yyy-yyy";
-            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
-            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
-
-            // invoke the operation
-            BillingInvoiceSectionResource result = await billingInvoiceSection.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingInvoiceSectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // InvoiceSectionsCreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_InvoiceSectionsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsCreateOrUpdate.json
-            // this example is just showing the usage of "InvoiceSections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingInvoiceSectionResource created on azure
-            // for more information of creating BillingInvoiceSectionResource, please refer to the document of BillingInvoiceSectionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string invoiceSectionName = "invoice-section-1";
-            ResourceIdentifier billingInvoiceSectionResourceId = BillingInvoiceSectionResource.CreateResourceIdentifier(billingAccountName, billingProfileName, invoiceSectionName);
-            BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
-
-            // invoke the operation
-            BillingInvoiceSectionData data = new BillingInvoiceSectionData()
-            {
-                Properties = new BillingInvoiceSectionProperties()
-                {
-                    DisplayName = "Invoice Section 1",
-                    Tags =
-{
-["costCategory"] = "Support",
-["pcCode"] = "A123456",
-},
-                },
-            };
-            ArmOperation<BillingInvoiceSectionResource> lro = await billingInvoiceSection.UpdateAsync(WaitUntil.Completed, data);
-            BillingInvoiceSectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingInvoiceSectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ProductsListByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProducts_ProductsListByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/productsListByInvoiceSection.json
@@ -390,7 +376,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
 
             // invoke the operation and iterate over the result
-            BillingInvoiceSectionResourceGetProductsOptions options = new BillingInvoiceSectionResourceGetProductsOptions() { };
+            BillingInvoiceSectionResourceGetProductsOptions options = new BillingInvoiceSectionResourceGetProductsOptions();
             await foreach (BillingProductResource item in billingInvoiceSection.GetProductsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -400,12 +386,11 @@ namespace Azure.ResourceManager.Billing.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TransactionsListByInvoiceSection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTransactions_TransactionsListByInvoiceSection()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/transactionsListByInvoiceSection.json
@@ -425,13 +410,16 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceSectionResource billingInvoiceSection = client.GetBillingInvoiceSectionResource(billingInvoiceSectionResourceId);
 
             // invoke the operation and iterate over the result
-            BillingInvoiceSectionResourceGetTransactionsOptions options = new BillingInvoiceSectionResourceGetTransactionsOptions(periodStartDate: DateTimeOffset.Parse("2024-04-01"), periodEndDate: DateTimeOffset.Parse("2023-05-30"), type: TransactionType.Billed) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
+            DateTimeOffset periodStartDate = default;
+            DateTimeOffset periodEndDate = default;
+            TransactionType type = TransactionType.Billed;
+            BillingInvoiceSectionResourceGetTransactionsOptions options = new BillingInvoiceSectionResourceGetTransactionsOptions(periodStartDate, periodEndDate, type) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
             await foreach (BillingTransactionData item in billingInvoiceSection.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

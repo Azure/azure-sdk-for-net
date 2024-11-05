@@ -9,43 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiTagResource
     {
-        // ApiManagementHeadApiTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityStateByApi_ApiManagementHeadApiTag()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiTag.json
-            // this example is just showing the usage of "Tag_GetEntityStateByApi" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiTagResource created on azure
-            // for more information of creating ApiTagResource, please refer to the document of ApiTagResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string apiId = "59d6bb8f1f7fab13dc67ec9b";
-            string tagId = "59306a29e4bbd510dc24e5f9";
-            ResourceIdentifier apiTagResourceId = ApiTagResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, tagId);
-            ApiTagResource apiTag = client.GetApiTagResource(apiTagResourceId);
-
-            // invoke the operation
-            bool result = await apiTag.GetEntityStateByApiAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetApiTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiTag()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiTag.json
@@ -76,9 +47,36 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateApiTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteApiTag()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiTag.json
+            // this example is just showing the usage of "Tag_DetachFromApi" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiTagResource created on azure
+            // for more information of creating ApiTagResource, please refer to the document of ApiTagResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string apiId = "59d5b28d1f7fab116c282650";
+            string tagId = "59d5b28e1f7fab116402044e";
+            ResourceIdentifier apiTagResourceId = ApiTagResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, tagId);
+            ApiTagResource apiTag = client.GetApiTagResource(apiTagResourceId);
+
+            // invoke the operation
+            await apiTag.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateApiTag()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiTag.json
@@ -110,13 +108,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteApiTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ApiManagementDeleteApiTag()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityStateByApi_ApiManagementHeadApiTag()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiTag.json
-            // this example is just showing the usage of "Tag_DetachFromApi" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiTag.json
+            // this example is just showing the usage of "Tag_GetEntityStateByApi" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,15 +125,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
-            string apiId = "59d5b28d1f7fab116c282650";
-            string tagId = "59d5b28e1f7fab116402044e";
+            string apiId = "59d6bb8f1f7fab13dc67ec9b";
+            string tagId = "59306a29e4bbd510dc24e5f9";
             ResourceIdentifier apiTagResourceId = ApiTagResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, tagId);
             ApiTagResource apiTag = client.GetApiTagResource(apiTagResourceId);
 
             // invoke the operation
-            await apiTag.DeleteAsync(WaitUntil.Completed);
+            bool result = await apiTag.GetEntityStateByApiAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

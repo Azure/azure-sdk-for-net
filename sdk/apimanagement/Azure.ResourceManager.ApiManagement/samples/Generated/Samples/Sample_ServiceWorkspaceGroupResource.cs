@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ServiceWorkspaceGroupResource
     {
-        // ApiManagementHeadWorkspaceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspaceGroup()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceGroup.json
-            // this example is just showing the usage of "WorkspaceGroup_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
-            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string groupId = "59306a29e4bbd510dc24e5f9";
-            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
-            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspaceGroup.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetWorkspaceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspaceGroup.json
@@ -77,47 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdateWorkspaceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementUpdateWorkspaceGroup()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceGroup.json
-            // this example is just showing the usage of "WorkspaceGroup_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
-            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string groupId = "tempgroup";
-            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
-            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementGroupPatch patch = new ApiManagementGroupPatch()
-            {
-                DisplayName = "temp group",
-            };
-            ServiceWorkspaceGroupResource result = await serviceWorkspaceGroup.UpdateAsync(ifMatch, patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteWorkspaceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspaceGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspaceGroup.json
@@ -140,14 +72,50 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceWorkspaceGroup.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await serviceWorkspaceGroup.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListWorkspaceGroupUsers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateWorkspaceGroup()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdateWorkspaceGroup.json
+            // this example is just showing the usage of "WorkspaceGroup_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
+            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string groupId = "tempgroup";
+            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
+            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementGroupPatch patch = new ApiManagementGroupPatch
+            {
+                DisplayName = "temp group",
+            };
+            ServiceWorkspaceGroupResource result = await serviceWorkspaceGroup.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkspaceGroupUsers_ApiManagementListWorkspaceGroupUsers()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListWorkspaceGroupUsers.json
@@ -178,12 +146,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementHeadWorkspaceGroupUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckEntityExistsWorkspaceGroupUser_ApiManagementHeadWorkspaceGroupUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceGroupUser.json
@@ -211,9 +178,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ApiManagementCreateWorkspaceGroupUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateWorkspaceGroupUser_ApiManagementCreateWorkspaceGroupUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateWorkspaceGroupUser.json
@@ -245,9 +211,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementDeleteWorkspaceGroupUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteWorkspaceGroupUser_ApiManagementDeleteWorkspaceGroupUser()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspaceGroupUser.json
@@ -270,9 +235,37 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string userId = "59307d350af58404d8a26300";
-            await serviceWorkspaceGroup.DeleteWorkspaceGroupUserAsync(userId);
+            await serviceWorkspaceGroup.DeleteWorkspaceGroupUserAsync(userId).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadWorkspaceGroup()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspaceGroup.json
+            // this example is just showing the usage of "WorkspaceGroup_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceGroupResource created on azure
+            // for more information of creating ServiceWorkspaceGroupResource, please refer to the document of ServiceWorkspaceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string groupId = "59306a29e4bbd510dc24e5f9";
+            ResourceIdentifier serviceWorkspaceGroupResourceId = ServiceWorkspaceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, groupId);
+            ServiceWorkspaceGroupResource serviceWorkspaceGroup = client.GetServiceWorkspaceGroupResource(serviceWorkspaceGroupResourceId);
+
+            // invoke the operation
+            bool result = await serviceWorkspaceGroup.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -9,42 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchApplicationResource
     {
-        // ApplicationDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ApplicationDelete()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationDelete.json
-            // this example is just showing the usage of "Application_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchApplicationResource created on azure
-            // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            string applicationName = "app1";
-            ResourceIdentifier batchApplicationResourceId = BatchApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, applicationName);
-            BatchApplicationResource batchApplication = client.GetBatchApplicationResource(batchApplicationResourceId);
-
-            // invoke the operation
-            await batchApplication.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ApplicationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApplicationGet()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationGet.json
@@ -74,9 +46,35 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApplicationUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApplicationDelete()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationDelete.json
+            // this example is just showing the usage of "Application_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchApplicationResource created on azure
+            // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            string applicationName = "app1";
+            ResourceIdentifier batchApplicationResourceId = BatchApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, applicationName);
+            BatchApplicationResource batchApplication = client.GetBatchApplicationResource(batchApplicationResourceId);
+
+            // invoke the operation
+            await batchApplication.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApplicationUpdate()
         {
             // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationUpdate.json
@@ -97,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchApplicationResource batchApplication = client.GetBatchApplicationResource(batchApplicationResourceId);
 
             // invoke the operation
-            BatchApplicationData data = new BatchApplicationData()
+            BatchApplicationData data = new BatchApplicationData
             {
                 DisplayName = "myAppName",
                 AllowUpdates = true,

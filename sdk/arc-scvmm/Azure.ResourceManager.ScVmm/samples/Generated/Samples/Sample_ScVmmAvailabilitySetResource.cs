@@ -9,16 +9,15 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ScVmm.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ScVmm.Samples
 {
     public partial class Sample_ScVmmAvailabilitySetResource
     {
-        // GetAvailabilitySet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAvailabilitySet()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetAvailabilitySet.json
@@ -47,9 +46,8 @@ namespace Azure.ResourceManager.ScVmm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteAvailabilitySet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAvailabilitySet()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteAvailabilitySet.json
@@ -69,14 +67,13 @@ namespace Azure.ResourceManager.ScVmm.Samples
             ScVmmAvailabilitySetResource scVmmAvailabilitySet = client.GetScVmmAvailabilitySetResource(scVmmAvailabilitySetResourceId);
 
             // invoke the operation
-            await scVmmAvailabilitySet.DeleteAsync(WaitUntil.Completed);
+            await scVmmAvailabilitySet.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpdateAvailabilitySet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAvailabilitySet()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/UpdateAvailabilitySet.json
@@ -96,12 +93,12 @@ namespace Azure.ResourceManager.ScVmm.Samples
             ScVmmAvailabilitySetResource scVmmAvailabilitySet = client.GetScVmmAvailabilitySetResource(scVmmAvailabilitySetResourceId);
 
             // invoke the operation
-            ScVmmResourcePatch patch = new ScVmmResourcePatch()
+            ScVmmResourcePatch patch = new ScVmmResourcePatch
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<ScVmmAvailabilitySetResource> lro = await scVmmAvailabilitySet.UpdateAsync(WaitUntil.Completed, patch);
@@ -112,38 +109,6 @@ namespace Azure.ResourceManager.ScVmm.Samples
             ScVmmAvailabilitySetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ListAvailabilitySetsBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetScVmmAvailabilitySets_ListAvailabilitySetsBySubscription()
-        {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/ListAvailabilitySetsBySubscription.json
-            // this example is just showing the usage of "AvailabilitySets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ScVmmAvailabilitySetResource item in subscriptionResource.GetScVmmAvailabilitySetsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ScVmmAvailabilitySetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

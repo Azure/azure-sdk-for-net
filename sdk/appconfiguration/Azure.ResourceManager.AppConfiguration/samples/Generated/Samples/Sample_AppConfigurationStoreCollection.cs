@@ -12,156 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
     public partial class Sample_AppConfigurationStoreCollection
     {
-        // ConfigurationStores_ListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ConfigurationStoresListByResourceGroup()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresListByResourceGroup.json
-            // this example is just showing the usage of "ConfigurationStores_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this AppConfigurationStoreResource
-            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
-
-            // invoke the operation and iterate over the result
-            await foreach (AppConfigurationStoreResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppConfigurationStoreData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ConfigurationStores_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ConfigurationStoresGet()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
-            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this AppConfigurationStoreResource
-            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
-
-            // invoke the operation
-            string configStoreName = "contoso";
-            AppConfigurationStoreResource result = await collection.GetAsync(configStoreName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AppConfigurationStoreData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ConfigurationStores_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_ConfigurationStoresGet()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
-            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this AppConfigurationStoreResource
-            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
-
-            // invoke the operation
-            string configStoreName = "contoso";
-            bool result = await collection.ExistsAsync(configStoreName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ConfigurationStores_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_ConfigurationStoresGet()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
-            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this AppConfigurationStoreResource
-            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
-
-            // invoke the operation
-            string configStoreName = "contoso";
-            NullableResponse<AppConfigurationStoreResource> response = await collection.GetIfExistsAsync(configStoreName);
-            AppConfigurationStoreResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppConfigurationStoreData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ConfigurationStores_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationStoresCreate()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresCreate.json
@@ -188,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             {
                 Tags =
 {
-["myTag"] = "myTagValue",
+["myTag"] = "myTagValue"
 },
             };
             ArmOperation<AppConfigurationStoreResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configStoreName, data);
@@ -201,9 +59,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_Create_With_Identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationStoresCreateWithIdentity()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresCreateWithIdentity.json
@@ -228,16 +85,16 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             string configStoreName = "contoso";
             AppConfigurationStoreData data = new AppConfigurationStoreData(new AzureLocation("westus"), new AppConfigurationSku("Standard"))
             {
-                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/c80fb759-c965-4c6a-9110-9b2b2d038882/resourcegroups/myResourceGroup1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity2")] = null
 },
                 },
                 Tags =
 {
-["myTag"] = "myTagValue",
+["myTag"] = "myTagValue"
 },
             };
             ArmOperation<AppConfigurationStoreResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configStoreName, data);
@@ -250,9 +107,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConfigurationStores_Create_With_Local_Auth_Disabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationStoresCreateWithLocalAuthDisabled()
         {
             // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresCreateWithLocalAuthDisabled.json
@@ -287,6 +143,144 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ConfigurationStoresGet()
+        {
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
+            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AppConfigurationStoreResource
+            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
+
+            // invoke the operation
+            string configStoreName = "contoso";
+            AppConfigurationStoreResource result = await collection.GetAsync(configStoreName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AppConfigurationStoreData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ConfigurationStoresListByResourceGroup()
+        {
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresListByResourceGroup.json
+            // this example is just showing the usage of "ConfigurationStores_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AppConfigurationStoreResource
+            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
+
+            // invoke the operation and iterate over the result
+            await foreach (AppConfigurationStoreResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppConfigurationStoreData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ConfigurationStoresGet()
+        {
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
+            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AppConfigurationStoreResource
+            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
+
+            // invoke the operation
+            string configStoreName = "contoso";
+            bool result = await collection.ExistsAsync(configStoreName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ConfigurationStoresGet()
+        {
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGet.json
+            // this example is just showing the usage of "ConfigurationStores_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AppConfigurationStoreResource
+            AppConfigurationStoreCollection collection = resourceGroupResource.GetAppConfigurationStores();
+
+            // invoke the operation
+            string configStoreName = "contoso";
+            NullableResponse<AppConfigurationStoreResource> response = await collection.GetIfExistsAsync(configStoreName);
+            AppConfigurationStoreResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppConfigurationStoreData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

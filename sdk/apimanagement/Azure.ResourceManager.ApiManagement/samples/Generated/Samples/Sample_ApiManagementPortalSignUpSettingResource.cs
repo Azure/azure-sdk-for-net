@@ -10,41 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ApiManagementPortalSignUpSettingResource
     {
-        // ApiManagementHeadSignUpSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadSignUpSettings()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadSignUpSettings.json
-            // this example is just showing the usage of "SignUpSettings_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementPortalSignUpSettingResource created on azure
-            // for more information of creating ApiManagementPortalSignUpSettingResource, please refer to the document of ApiManagementPortalSignUpSettingResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementPortalSignUpSettingResourceId = ApiManagementPortalSignUpSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementPortalSignUpSettingResource apiManagementPortalSignUpSetting = client.GetApiManagementPortalSignUpSettingResource(apiManagementPortalSignUpSettingResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementPortalSignUpSetting.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementPortalSettingsGetSignUp
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementPortalSettingsGetSignUp()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPortalSettingsGetSignUp.json
@@ -73,9 +46,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementPortalSettingsUpdateSignUp
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementPortalSettingsUpdateSignUp()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPortalSettingsUpdateSignUp.json
@@ -96,24 +68,23 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            ApiManagementPortalSignUpSettingData data = new ApiManagementPortalSignUpSettingData()
+            ApiManagementPortalSignUpSettingData data = new ApiManagementPortalSignUpSettingData
             {
                 IsSignUpDeveloperPortalEnabled = true,
-                TermsOfService = new TermsOfServiceProperties()
+                TermsOfService = new TermsOfServiceProperties
                 {
                     Text = "Terms of service text.",
                     IsDisplayEnabled = true,
                     IsConsentRequired = true,
                 },
             };
-            await apiManagementPortalSignUpSetting.UpdateAsync(ifMatch, data);
+            await apiManagementPortalSignUpSetting.UpdateAsync(ifMatch, data).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementPortalSettingsUpdateSignUp
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApiManagementPortalSettingsUpdateSignUp()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPortalSettingsPutSignUp.json
@@ -133,10 +104,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalSignUpSettingResource apiManagementPortalSignUpSetting = client.GetApiManagementPortalSignUpSettingResource(apiManagementPortalSignUpSettingResourceId);
 
             // invoke the operation
-            ApiManagementPortalSignUpSettingData data = new ApiManagementPortalSignUpSettingData()
+            ApiManagementPortalSignUpSettingData data = new ApiManagementPortalSignUpSettingData
             {
                 IsSignUpDeveloperPortalEnabled = true,
-                TermsOfService = new TermsOfServiceProperties()
+                TermsOfService = new TermsOfServiceProperties
                 {
                     Text = "Terms of service text.",
                     IsDisplayEnabled = true,
@@ -144,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 },
             };
             ETag? ifMatch = new ETag("*");
-            ArmOperation<ApiManagementPortalSignUpSettingResource> lro = await apiManagementPortalSignUpSetting.CreateOrUpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch);
+            ArmOperation<ApiManagementPortalSignUpSettingResource> lro = await apiManagementPortalSignUpSetting.CreateOrUpdateAsync(WaitUntil.Completed, data, ifMatch);
             ApiManagementPortalSignUpSettingResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -152,6 +123,32 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalSignUpSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadSignUpSettings()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadSignUpSettings.json
+            // this example is just showing the usage of "SignUpSettings_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementPortalSignUpSettingResource created on azure
+            // for more information of creating ApiManagementPortalSignUpSettingResource, please refer to the document of ApiManagementPortalSignUpSettingResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementPortalSignUpSettingResourceId = ApiManagementPortalSignUpSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementPortalSignUpSettingResource apiManagementPortalSignUpSetting = client.GetApiManagementPortalSignUpSettingResource(apiManagementPortalSignUpSettingResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementPortalSignUpSetting.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

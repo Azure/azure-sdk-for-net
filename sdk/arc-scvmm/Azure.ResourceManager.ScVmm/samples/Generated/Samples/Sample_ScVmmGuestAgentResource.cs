@@ -10,50 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ScVmm.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ScVmm.Samples
 {
     public partial class Sample_ScVmmGuestAgentResource
     {
-        // CreateGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateGuestAgent()
-        {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/CreateVMInstanceGuestAgent.json
-            // this example is just showing the usage of "VMInstanceGuestAgents_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScVmmGuestAgentResource created on azure
-            // for more information of creating ScVmmGuestAgentResource, please refer to the document of ScVmmGuestAgentResource
-            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.HybridCompute/machines/DemoVM";
-            ResourceIdentifier scVmmGuestAgentResourceId = ScVmmGuestAgentResource.CreateResourceIdentifier(resourceUri);
-            ScVmmGuestAgentResource scVmmGuestAgent = client.GetScVmmGuestAgentResource(scVmmGuestAgentResourceId);
-
-            // invoke the operation
-            ScVmmGuestAgentData data = new ScVmmGuestAgentData()
-            {
-                Credentials = new ScVmmGuestCredential("tempuser", "<password>"),
-                HttpsProxy = "http://192.1.2.3:8080",
-                ProvisioningAction = ScVmmProvisioningAction.Install,
-            };
-            ArmOperation<ScVmmGuestAgentResource> lro = await scVmmGuestAgent.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            ScVmmGuestAgentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ScVmmGuestAgentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetGuestAgent()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetVMInstanceGuestAgent.json
@@ -80,9 +44,8 @@ namespace Azure.ResourceManager.ScVmm.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteGuestAgent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteGuestAgent()
         {
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteVMInstanceGuestAgent.json
@@ -100,9 +63,44 @@ namespace Azure.ResourceManager.ScVmm.Samples
             ScVmmGuestAgentResource scVmmGuestAgent = client.GetScVmmGuestAgentResource(scVmmGuestAgentResourceId);
 
             // invoke the operation
-            await scVmmGuestAgent.DeleteAsync(WaitUntil.Completed);
+            await scVmmGuestAgent.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateGuestAgent()
+        {
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/CreateVMInstanceGuestAgent.json
+            // this example is just showing the usage of "VMInstanceGuestAgents_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScVmmGuestAgentResource created on azure
+            // for more information of creating ScVmmGuestAgentResource, please refer to the document of ScVmmGuestAgentResource
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.HybridCompute/machines/DemoVM";
+            ResourceIdentifier scVmmGuestAgentResourceId = ScVmmGuestAgentResource.CreateResourceIdentifier(resourceUri);
+            ScVmmGuestAgentResource scVmmGuestAgent = client.GetScVmmGuestAgentResource(scVmmGuestAgentResourceId);
+
+            // invoke the operation
+            ScVmmGuestAgentData data = new ScVmmGuestAgentData
+            {
+                Credentials = new ScVmmGuestCredential("tempuser", "<password>"),
+                HttpsProxy = "http://192.1.2.3:8080",
+                ProvisioningAction = ScVmmProvisioningAction.Install,
+            };
+            ArmOperation<ScVmmGuestAgentResource> lro = await scVmmGuestAgent.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ScVmmGuestAgentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScVmmGuestAgentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

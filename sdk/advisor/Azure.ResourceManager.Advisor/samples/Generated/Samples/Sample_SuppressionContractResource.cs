@@ -9,15 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_SuppressionContractResource
     {
-        // GetSuppressionDetail
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSuppressionDetail()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetSuppressionDetail.json
@@ -46,45 +45,8 @@ namespace Azure.ResourceManager.Advisor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CreateSuppression
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateSuppression()
-        {
-            // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/CreateSuppression.json
-            // this example is just showing the usage of "Suppressions_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SuppressionContractResource created on azure
-            // for more information of creating SuppressionContractResource, please refer to the document of SuppressionContractResource
-            string resourceUri = "resourceUri";
-            string recommendationId = "recommendationId";
-            string name = "suppressionName1";
-            ResourceIdentifier suppressionContractResourceId = SuppressionContractResource.CreateResourceIdentifier(resourceUri, recommendationId, name);
-            SuppressionContractResource suppressionContract = client.GetSuppressionContractResource(suppressionContractResourceId);
-
-            // invoke the operation
-            SuppressionContractData data = new SuppressionContractData()
-            {
-                Ttl = "07:00:00:00",
-            };
-            ArmOperation<SuppressionContractResource> lro = await suppressionContract.UpdateAsync(WaitUntil.Completed, data);
-            SuppressionContractResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SuppressionContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeleteSuppression
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSuppression()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/DeleteSuppression.json
@@ -104,41 +66,44 @@ namespace Azure.ResourceManager.Advisor.Samples
             SuppressionContractResource suppressionContract = client.GetSuppressionContractResource(suppressionContractResourceId);
 
             // invoke the operation
-            await suppressionContract.DeleteAsync(WaitUntil.Completed);
+            await suppressionContract.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListSuppressions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSuppressionContracts_ListSuppressions()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateSuppression()
         {
-            // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/ListSuppressions.json
-            // this example is just showing the usage of "Suppressions_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/CreateSuppression.json
+            // this example is just showing the usage of "Suppressions_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId1";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            // this example assumes you already have this SuppressionContractResource created on azure
+            // for more information of creating SuppressionContractResource, please refer to the document of SuppressionContractResource
+            string resourceUri = "resourceUri";
+            string recommendationId = "recommendationId";
+            string name = "suppressionName1";
+            ResourceIdentifier suppressionContractResourceId = SuppressionContractResource.CreateResourceIdentifier(resourceUri, recommendationId, name);
+            SuppressionContractResource suppressionContract = client.GetSuppressionContractResource(suppressionContractResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (SuppressionContractResource item in subscriptionResource.GetSuppressionContractsAsync())
+            // invoke the operation
+            SuppressionContractData data = new SuppressionContractData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SuppressionContractData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Ttl = "07:00:00:00",
+            };
+            ArmOperation<SuppressionContractResource> lro = await suppressionContract.UpdateAsync(WaitUntil.Completed, data);
+            SuppressionContractResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SuppressionContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

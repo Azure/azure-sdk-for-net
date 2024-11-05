@@ -10,43 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_ServiceWorkspacePolicyFragmentResource
     {
-        // ApiManagementHeadWorkspacePolicyFragment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspacePolicyFragment()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspacePolicyFragment.json
-            // this example is just showing the usage of "WorkspacePolicyFragment_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspacePolicyFragmentResource created on azure
-            // for more information of creating ServiceWorkspacePolicyFragmentResource, please refer to the document of ServiceWorkspacePolicyFragmentResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string id = "policyFragment1";
-            ResourceIdentifier serviceWorkspacePolicyFragmentResourceId = ServiceWorkspacePolicyFragmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, id);
-            ServiceWorkspacePolicyFragmentResource serviceWorkspacePolicyFragment = client.GetServiceWorkspacePolicyFragmentResource(serviceWorkspacePolicyFragmentResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspacePolicyFragment.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementGetWorkspacePolicyFragment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspacePolicyFragment()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspacePolicyFragment.json
@@ -77,9 +48,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementGetWorkspacePolicyFragmentFormat
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspacePolicyFragmentFormat()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetWorkspacePolicyFragmentFormat.json
@@ -102,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             PolicyFragmentContentFormat? format = PolicyFragmentContentFormat.Rawxml;
-            ServiceWorkspacePolicyFragmentResource result = await serviceWorkspacePolicyFragment.GetAsync(format: format);
+            ServiceWorkspacePolicyFragmentResource result = await serviceWorkspacePolicyFragment.GetAsync(format);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -111,49 +81,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementCreateWorkspacePolicyFragment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ApiManagementCreateWorkspacePolicyFragment()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateWorkspacePolicyFragment.json
-            // this example is just showing the usage of "WorkspacePolicyFragment_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspacePolicyFragmentResource created on azure
-            // for more information of creating ServiceWorkspacePolicyFragmentResource, please refer to the document of ServiceWorkspacePolicyFragmentResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string id = "policyFragment1";
-            ResourceIdentifier serviceWorkspacePolicyFragmentResourceId = ServiceWorkspacePolicyFragmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, id);
-            ServiceWorkspacePolicyFragmentResource serviceWorkspacePolicyFragment = client.GetServiceWorkspacePolicyFragmentResource(serviceWorkspacePolicyFragmentResourceId);
-
-            // invoke the operation
-            PolicyFragmentContractData data = new PolicyFragmentContractData()
-            {
-                Value = "<fragment><json-to-xml apply=\"always\" consider-accept-header=\"false\" /></fragment>",
-                Description = "A policy fragment example",
-                Format = PolicyFragmentContentFormat.Xml,
-            };
-            ArmOperation<ServiceWorkspacePolicyFragmentResource> lro = await serviceWorkspacePolicyFragment.UpdateAsync(WaitUntil.Completed, data);
-            ServiceWorkspacePolicyFragmentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyFragmentContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ApiManagementDeleteWorkspacePolicyFragment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ApiManagementDeleteWorkspacePolicyFragment()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteWorkspacePolicyFragment.json
@@ -176,14 +105,52 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            await serviceWorkspacePolicyFragment.DeleteAsync(WaitUntil.Completed, ifMatch);
+            await serviceWorkspacePolicyFragment.DeleteAsync(WaitUntil.Completed, ifMatch).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ApiManagementListWorkspacePolicyFragmentReferences
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementCreateWorkspacePolicyFragment()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateWorkspacePolicyFragment.json
+            // this example is just showing the usage of "WorkspacePolicyFragment_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspacePolicyFragmentResource created on azure
+            // for more information of creating ServiceWorkspacePolicyFragmentResource, please refer to the document of ServiceWorkspacePolicyFragmentResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string id = "policyFragment1";
+            ResourceIdentifier serviceWorkspacePolicyFragmentResourceId = ServiceWorkspacePolicyFragmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, id);
+            ServiceWorkspacePolicyFragmentResource serviceWorkspacePolicyFragment = client.GetServiceWorkspacePolicyFragmentResource(serviceWorkspacePolicyFragmentResourceId);
+
+            // invoke the operation
+            PolicyFragmentContractData data = new PolicyFragmentContractData
+            {
+                Value = "<fragment><json-to-xml apply=\"always\" consider-accept-header=\"false\" /></fragment>",
+                Description = "A policy fragment example",
+                Format = PolicyFragmentContentFormat.Xml,
+            };
+            ArmOperation<ServiceWorkspacePolicyFragmentResource> lro = await serviceWorkspacePolicyFragment.UpdateAsync(WaitUntil.Completed, data);
+            ServiceWorkspacePolicyFragmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyFragmentContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReferences_ApiManagementListWorkspacePolicyFragmentReferences()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListWorkspacePolicyFragmentReferences.json
@@ -210,7 +177,35 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadWorkspacePolicyFragment()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadWorkspacePolicyFragment.json
+            // this example is just showing the usage of "WorkspacePolicyFragment_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspacePolicyFragmentResource created on azure
+            // for more information of creating ServiceWorkspacePolicyFragmentResource, please refer to the document of ServiceWorkspacePolicyFragmentResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string id = "policyFragment1";
+            ResourceIdentifier serviceWorkspacePolicyFragmentResourceId = ServiceWorkspacePolicyFragmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, id);
+            ServiceWorkspacePolicyFragmentResource serviceWorkspacePolicyFragment = client.GetServiceWorkspacePolicyFragmentResource(serviceWorkspacePolicyFragmentResourceId);
+
+            // invoke the operation
+            bool result = await serviceWorkspacePolicyFragment.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
