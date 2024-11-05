@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_RecoverableDatabaseResource
     {
-        // Get a recoverable database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARecoverableDatabase()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/RecoverableDatabaseGet.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a recoverable database with expand equals keys.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsARecoverableDatabaseWithExpandEqualsKeys()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/RecoverableDatabaseGetWithExpandEqualsKeys.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             string expand = "keys";
-            RecoverableDatabaseResource result = await recoverableDatabase.GetAsync(expand: expand);
+            RecoverableDatabaseResource result = await recoverableDatabase.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

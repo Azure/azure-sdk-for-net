@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceLinker.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceLinker.Samples
 {
     public partial class Sample_LinkerResource
     {
-        // Link
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_Link()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/Link.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteLink
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteLink()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/DeleteLink.json
@@ -66,14 +65,13 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            await linkerResource.DeleteAsync(WaitUntil.Completed);
+            await linkerResource.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PatchLink
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchLink()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/PatchLink.json
@@ -92,9 +90,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            LinkerResourcePatch patch = new LinkerResourcePatch()
+            LinkerResourcePatch patch = new LinkerResourcePatch
             {
-                TargetService = new AzureResourceInfo()
+                TargetService = new AzureResourceInfo
                 {
                     Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.DocumentDb/databaseAccounts/test-acc/mongodbDatabases/test-db"),
                 },
@@ -110,9 +108,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ValidateLinkSuccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Validate_ValidateLinkSuccess()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/ValidateLinkSuccess.json
@@ -137,9 +134,8 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetConfiguration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConfigurations_GetConfiguration()
         {
             // Generated from example definition: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/GetConfigurations.json

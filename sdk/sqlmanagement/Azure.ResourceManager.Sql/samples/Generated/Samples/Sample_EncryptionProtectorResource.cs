@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_EncryptionProtectorResource
     {
-        // Get the encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheEncryptionProtector()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to key vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToKeyVault()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = SqlServerKeyType.AzureKeyVault,
@@ -86,9 +85,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to service managed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToServiceManaged()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType = SqlServerKeyType.ServiceManaged,
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Revalidates the encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revalidate_RevalidatesTheEncryptionProtector()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorRevalidate.json
@@ -147,9 +144,9 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            await encryptionProtector.RevalidateAsync(WaitUntil.Completed);
+            await encryptionProtector.RevalidateAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

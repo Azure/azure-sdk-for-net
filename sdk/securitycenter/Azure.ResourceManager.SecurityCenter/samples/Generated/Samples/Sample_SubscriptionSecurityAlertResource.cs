@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SubscriptionSecurityAlertResource
     {
-        // Get security alert on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityAlertOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/GetAlertSubscriptionLocation_example.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update security alert state on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Dismiss_UpdateSecurityAlertStateOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/UpdateAlertSubscriptionLocation_dismiss_example.json
@@ -67,14 +66,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionSecurityAlertResource subscriptionSecurityAlert = client.GetSubscriptionSecurityAlertResource(subscriptionSecurityAlertResourceId);
 
             // invoke the operation
-            await subscriptionSecurityAlert.DismissAsync();
+            await subscriptionSecurityAlert.DismissAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update security alert state on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resolve_UpdateSecurityAlertStateOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/UpdateAlertSubscriptionLocation_resolve_example.json
@@ -94,14 +92,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionSecurityAlertResource subscriptionSecurityAlert = client.GetSubscriptionSecurityAlertResource(subscriptionSecurityAlertResourceId);
 
             // invoke the operation
-            await subscriptionSecurityAlert.ResolveAsync();
+            await subscriptionSecurityAlert.ResolveAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update security alert state on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Activate_UpdateSecurityAlertStateOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/UpdateAlertSubscriptionLocation_activate_example.json
@@ -121,14 +118,13 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionSecurityAlertResource subscriptionSecurityAlert = client.GetSubscriptionSecurityAlertResource(subscriptionSecurityAlertResourceId);
 
             // invoke the operation
-            await subscriptionSecurityAlert.ActivateAsync();
+            await subscriptionSecurityAlert.ActivateAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update security alert state on a subscription from a security data location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateSatateToInProgress_UpdateSecurityAlertStateOnASubscriptionFromASecurityDataLocation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2022-01-01/examples/Alerts/UpdateAlertSubscriptionLocation_inProgress_example.json
@@ -148,9 +144,9 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionSecurityAlertResource subscriptionSecurityAlert = client.GetSubscriptionSecurityAlertResource(subscriptionSecurityAlertResourceId);
 
             // invoke the operation
-            await subscriptionSecurityAlert.UpdateSatateToInProgressAsync();
+            await subscriptionSecurityAlert.UpdateSatateToInProgressAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

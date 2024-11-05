@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_DefenderForStorageSettingResource
     {
-        // Gets the Defender for Storage settings for the specified resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheDefenderForStorageSettingsForTheSpecifiedResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-12-01-preview/examples/DefenderForStorage/GetDefenderForStorageSettings_example.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates the Defender for Storage settings on a specified resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesTheDefenderForStorageSettingsOnASpecifiedResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-12-01-preview/examples/DefenderForStorage/PutDefenderForStorageSettings_example.json
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation
             DefenderForStorageSettingName settingName0 = DefenderForStorageSettingName.Current;
-            DefenderForStorageSettingData data = new DefenderForStorageSettingData()
+            DefenderForStorageSettingData data = new DefenderForStorageSettingData
             {
                 IsEnabled = true,
                 IsOverrideSubscriptionLevelSettingsEnabled = true,

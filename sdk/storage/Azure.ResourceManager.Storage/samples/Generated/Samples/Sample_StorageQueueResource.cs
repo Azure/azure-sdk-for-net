@@ -9,47 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageQueueResource
     {
-        // QueueOperationPatch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_QueueOperationPatch()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPatch.json
-            // this example is just showing the usage of "Queue_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageQueueResource created on azure
-            // for more information of creating StorageQueueResource, please refer to the document of StorageQueueResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res3376";
-            string accountName = "sto328";
-            string queueName = "queue6185";
-            ResourceIdentifier storageQueueResourceId = StorageQueueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, queueName);
-            StorageQueueResource storageQueue = client.GetStorageQueueResource(storageQueueResourceId);
-
-            // invoke the operation
-            StorageQueueData data = new StorageQueueData();
-            StorageQueueResource result = await storageQueue.UpdateAsync(data);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageQueueData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // QueueOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QueueOperationGet()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueOperationDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_QueueOperationDelete()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationDelete.json
@@ -102,9 +68,41 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageQueueResource storageQueue = client.GetStorageQueueResource(storageQueueResourceId);
 
             // invoke the operation
-            await storageQueue.DeleteAsync(WaitUntil.Completed);
+            await storageQueue.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_QueueOperationPatch()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPatch.json
+            // this example is just showing the usage of "Queue_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageQueueResource created on azure
+            // for more information of creating StorageQueueResource, please refer to the document of StorageQueueResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            string queueName = "queue6185";
+            ResourceIdentifier storageQueueResourceId = StorageQueueResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, queueName);
+            StorageQueueResource storageQueue = client.GetStorageQueueResource(storageQueueResourceId);
+
+            // invoke the operation
+            StorageQueueData data = new StorageQueueData();
+            StorageQueueResource result = await storageQueue.UpdateAsync(data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageQueueData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

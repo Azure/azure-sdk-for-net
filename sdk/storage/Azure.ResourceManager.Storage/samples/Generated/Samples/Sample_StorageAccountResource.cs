@@ -10,69 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageAccountResource
     {
-        // StorageAccountCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckStorageAccountNameAvailability_StorageAccountCheckNameAvailability()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCheckNameAvailability.json
-            // this example is just showing the usage of "StorageAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            StorageAccountNameAvailabilityContent content = new StorageAccountNameAvailabilityContent("sto3363");
-            StorageAccountNameAvailabilityResult result = await subscriptionResource.CheckStorageAccountNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // StorageAccountDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_StorageAccountDelete()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDelete.json
-            // this example is just showing the usage of "StorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res4228";
-            string accountName = "sto2434";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            await storageAccount.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // StorageAccountGetAsyncSkuConversionStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetAsyncSkuConversionStatus()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
@@ -101,9 +47,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetProperties()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
@@ -132,9 +77,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesCMKEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesCMKEnabled()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
@@ -163,9 +107,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesCMKVersionExpirationTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
@@ -194,9 +137,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
@@ -217,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            StorageAccountResource result = await storageAccount.GetAsync(expand: expand);
+            StorageAccountResource result = await storageAccount.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -226,9 +168,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
@@ -249,7 +190,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            StorageAccountResource result = await storageAccount.GetAsync(expand: expand);
+            StorageAccountResource result = await storageAccount.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -258,9 +199,34 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountEnableAD
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_StorageAccountDelete()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDelete.json
+            // this example is just showing the usage of "StorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res4228";
+            string accountName = "sto2434";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            await storageAccount.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountEnableAD()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountEnableAD.json
@@ -280,7 +246,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AD)
                 {
@@ -304,9 +270,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountEnableCMK
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountEnableCMK()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountEnableCMK.json
@@ -326,25 +291,25 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
@@ -361,9 +326,8 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdate()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdate.json
@@ -383,18 +347,18 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -409,16 +373,13 @@ namespace Azure.ResourceManager.Storage.Samples
                 IsExtendedGroupEnabled = true,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -438,9 +399,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateAllowedCopyScopeToAAD
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateAllowedCopyScopeToAAD()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdateAllowedCopyScopeToAAD.json
@@ -460,18 +420,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -483,16 +443,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -512,9 +469,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateDisablePublicNetworkAccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateDisablePublicNetworkAccess()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdateDisablePublicNetworkAccess.json
@@ -534,18 +490,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -557,16 +513,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -586,9 +539,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdateUserAssignedEncryptionIdentityWithCMK.json
@@ -608,40 +560,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = null
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                     },
@@ -656,9 +608,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdateUserAssignedIdentityWithFederatedIdentityClientId.json
@@ -678,40 +629,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity(default)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = null
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                         EncryptionFederatedIdentityClientId = "3109d1c4-a5de-4d84-8832-feabb916a4b6",
@@ -727,9 +678,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountUpdateWithImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountUpdateWithImmutabilityPolicy()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountUpdateWithImmutabilityPolicy.json
@@ -749,12 +699,12 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount()
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount
                 {
                     IsEnabled = true,
-                    ImmutabilityPolicy = new AccountImmutabilityPolicy()
+                    ImmutabilityPolicy = new AccountImmutabilityPolicy
                     {
                         ImmutabilityPeriodSinceCreationInDays = 15,
                         State = AccountImmutabilityPolicyState.Locked,
@@ -771,41 +721,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStorageAccounts_StorageAccountList()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountList.json
-            // this example is just showing the usage of "StorageAccounts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (StorageAccountResource item in subscriptionResource.GetStorageAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // StorageAccountListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_StorageAccountListKeys()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListKeys.json
@@ -830,12 +747,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountRegenerateKerbKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_StorageAccountRegenerateKerbKey()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountRegenerateKerbKey.json
@@ -861,12 +777,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_StorageAccountRegenerateKey()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountRegenerateKey.json
@@ -892,12 +807,11 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountListAccountSAS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAccountSas_StorageAccountListAccountSAS()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListAccountSAS.json
@@ -917,10 +831,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            AccountSasContent content = new AccountSasContent(StorageAccountSasSignedService.B, StorageAccountSasSignedResourceType.S, StorageAccountSasPermission.R, DateTimeOffset.Parse("2017-05-24T11:42:03.1567373Z"))
+            AccountSasContent content = new AccountSasContent(StorageAccountSasSignedService.B, StorageAccountSasSignedResourceType.S, StorageAccountSasPermission.R, default)
             {
                 Protocols = StorageAccountHttpProtocol.HttpsHttp,
-                SharedAccessStartOn = DateTimeOffset.Parse("2017-05-24T10:42:03.1567373Z"),
+                SharedAccessStartOn = default,
                 KeyToSign = "key1",
             };
             GetAccountSasResult result = await storageAccount.GetAccountSasAsync(content);
@@ -928,9 +842,8 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountListServiceSAS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServiceSas_StorageAccountListServiceSAS()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListServiceSAS.json
@@ -954,16 +867,15 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             {
                 Resource = ServiceSasSignedResourceType.Container,
                 Permissions = StorageAccountSasPermission.L,
-                SharedAccessExpiryOn = DateTimeOffset.Parse("2017-05-24T11:32:48.8457197Z"),
+                SharedAccessExpiryOn = default,
             };
             GetServiceSasResult result = await storageAccount.GetServiceSasAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountFailover
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_StorageAccountFailover()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountFailover.json
@@ -983,14 +895,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            await storageAccount.FailoverAsync(WaitUntil.Completed);
+            await storageAccount.FailoverAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountFailoverPlanned
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_StorageAccountFailoverPlanned()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountFailoverPlanned.json
@@ -1011,14 +922,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // invoke the operation
             StorageAccountFailoverType? failoverType = StorageAccountFailoverType.Planned;
-            await storageAccount.FailoverAsync(WaitUntil.Completed, failoverType: failoverType);
+            await storageAccount.FailoverAsync(WaitUntil.Completed, failoverType).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountHierarchicalNamespaceMigration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableHierarchicalNamespace_StorageAccountHierarchicalNamespaceMigration()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountHierarchicalNamespaceMigration.json
@@ -1039,14 +949,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // invoke the operation
             string requestType = "HnsOnValidationRequest";
-            await storageAccount.EnableHierarchicalNamespaceAsync(WaitUntil.Completed, requestType);
+            await storageAccount.EnableHierarchicalNamespaceAsync(WaitUntil.Completed, requestType).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountAbortHierarchicalNamespaceMigration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AbortHierarchicalNamespaceMigration_StorageAccountAbortHierarchicalNamespaceMigration()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountAbortHierarchicalNamespaceMigration.json
@@ -1066,14 +975,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            await storageAccount.AbortHierarchicalNamespaceMigrationAsync(WaitUntil.Completed);
+            await storageAccount.AbortHierarchicalNamespaceMigrationAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountPostMigration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CustomerInitiatedMigration_StorageAccountPostMigration()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountPostMigration.json
@@ -1094,14 +1002,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
 
             // invoke the operation
             StorageAccountMigrationData data = new StorageAccountMigrationData(StorageSkuName.StandardZrs);
-            await storageAccount.CustomerInitiatedMigrationAsync(WaitUntil.Completed, data);
+            await storageAccount.CustomerInitiatedMigrationAsync(WaitUntil.Completed, data).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // BlobRangesRestore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestoreBlobRanges_BlobRangesRestore()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobRangesRestore.json
@@ -1121,9 +1028,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            BlobRestoreContent content = new BlobRestoreContent(DateTimeOffset.Parse("placeholder"), new BlobRestoreRange[]
+            BlobRestoreContent content = new BlobRestoreContent(default, new BlobRestoreRange[]
             {
-new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
+new BlobRestoreRange("container/blobpath1", "container/blobpath2"),
+new BlobRestoreRange("container2/blobpath3", "")
             });
             ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
             BlobRestoreStatus result = lro.Value;
@@ -1131,9 +1039,8 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountRevokeUserDelegationKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeUserDelegationKeys_StorageAccountRevokeUserDelegationKeys()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountRevokeUserDelegationKeys.json
@@ -1153,14 +1060,13 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            await storageAccount.RevokeUserDelegationKeysAsync();
+            await storageAccount.RevokeUserDelegationKeysAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageAccountListPrivateLinkResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_StorageAccountListPrivateLinkResources()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListPrivateLinkResources.json
@@ -1185,12 +1091,11 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListStorageTaskAssignmentsInstancesReportSummary
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStorageTaskAssignmentsInstancesReports_ListStorageTaskAssignmentsInstancesReportSummary()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/storageTaskAssignmentsList/ListStorageTaskAssignmentsInstancesReportSummary.json
@@ -1215,7 +1120,7 @@ new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestor
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

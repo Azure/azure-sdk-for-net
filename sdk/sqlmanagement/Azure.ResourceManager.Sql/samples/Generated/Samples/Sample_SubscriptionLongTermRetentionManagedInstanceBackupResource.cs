@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SubscriptionLongTermRetentionManagedInstanceBackupResource
     {
-        // Get the long term retention backup of a managed database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackupOfAManagedDatabase()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupDelete.json
@@ -71,9 +70,9 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionManagedInstanceBackupResource subscriptionLongTermRetentionManagedInstanceBackup = client.GetSubscriptionLongTermRetentionManagedInstanceBackupResource(subscriptionLongTermRetentionManagedInstanceBackupResourceId);
 
             // invoke the operation
-            await subscriptionLongTermRetentionManagedInstanceBackup.DeleteAsync(WaitUntil.Completed);
+            await subscriptionLongTermRetentionManagedInstanceBackup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

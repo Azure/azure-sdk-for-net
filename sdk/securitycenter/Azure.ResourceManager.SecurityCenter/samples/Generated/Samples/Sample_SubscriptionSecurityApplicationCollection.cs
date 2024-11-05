@@ -12,18 +12,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SubscriptionSecurityApplicationCollection
     {
-        // List applications security by subscription level scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListApplicationsSecurityBySubscriptionLevelScope()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateApplication()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/ListBySubscriptionApplications_example.json
-            // this example is just showing the usage of "Applications_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/PutApplication_example.json
+            // this example is just showing the usage of "Application_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,22 +39,38 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // get the collection of this SubscriptionSecurityApplicationResource
             SubscriptionSecurityApplicationCollection collection = subscriptionResource.GetSubscriptionSecurityApplications();
 
-            // invoke the operation and iterate over the result
-            await foreach (SubscriptionSecurityApplicationResource item in collection.GetAllAsync())
+            // invoke the operation
+            string applicationId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
+            SecurityApplicationData data = new SecurityApplicationData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SecurityApplicationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                DisplayName = "Admin's application",
+                Description = "An application on critical recommendations",
+                SourceResourceType = ApplicationSourceResourceType.Assessments,
+                ConditionSets = {BinaryData.FromObjectAsJson(new
+{
+conditions = new object[]
+{
+new Dictionary<string, object>
+{
+["operator"] = "contains",
+["property"] = "$.Id",
+["value"] = "-bil-"
+}
+},
+})},
+            };
+            ArmOperation<SubscriptionSecurityApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationId, data);
+            SubscriptionSecurityApplicationResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityApplicationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get security application by specific applicationId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityApplicationBySpecificApplicationId()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/GetApplication_example.json
@@ -85,9 +101,42 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get security application by specific applicationId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListApplicationsSecurityBySubscriptionLevelScope()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/ListBySubscriptionApplications_example.json
+            // this example is just showing the usage of "Applications_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionSecurityApplicationResource
+            SubscriptionSecurityApplicationCollection collection = subscriptionResource.GetSubscriptionSecurityApplications();
+
+            // invoke the operation and iterate over the result
+            await foreach (SubscriptionSecurityApplicationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityApplicationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSecurityApplicationBySpecificApplicationId()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/GetApplication_example.json
@@ -114,9 +163,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get security application by specific applicationId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSecurityApplicationBySpecificApplicationId()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/GetApplication_example.json
@@ -143,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -153,56 +201,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create application
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateApplication()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-07-01-preview/examples/Applications/PutApplication_example.json
-            // this example is just showing the usage of "Application_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SubscriptionSecurityApplicationResource
-            SubscriptionSecurityApplicationCollection collection = subscriptionResource.GetSubscriptionSecurityApplications();
-
-            // invoke the operation
-            string applicationId = "ad9a8e26-29d9-4829-bb30-e597a58cdbb8";
-            SecurityApplicationData data = new SecurityApplicationData()
-            {
-                DisplayName = "Admin's application",
-                Description = "An application on critical recommendations",
-                SourceResourceType = ApplicationSourceResourceType.Assessments,
-                ConditionSets =
-{
-BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["conditions"] = new object[] { new Dictionary<string, object>()
-{
-["operator"] = "contains",
-["property"] = "$.Id",
-["value"] = "-bil-"} }})
-},
-            };
-            ArmOperation<SubscriptionSecurityApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationId, data);
-            SubscriptionSecurityApplicationResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityApplicationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

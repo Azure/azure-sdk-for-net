@@ -9,179 +9,15 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedInstanceResource
     {
-        // Upload a TDE certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateManagedInstanceTdeCertificate_UploadATDECertificate()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceTdeCertificate.json
-            // this example is just showing the usage of "ManagedInstanceTdeCertificates_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceResource created on azure
-            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000001";
-            string resourceGroupName = "testtdecert";
-            string managedInstanceName = "testtdecert";
-            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
-            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
-
-            // invoke the operation
-            TdeCertificate tdeCertificate = new TdeCertificate()
-            {
-                PrivateBlob = "MIIXXXXXXXX",
-            };
-            await managedInstance.CreateManagedInstanceTdeCertificateAsync(WaitUntil.Completed, tdeCertificate);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List server trust groups by managed instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSqlServerTrustGroups_ListServerTrustGroupsByManagedInstance()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerTrustGroupListByManagedInstance.json
-            // this example is just showing the usage of "ServerTrustGroups_ListByInstance" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceResource created on azure
-            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string managedInstanceName = "managedInstance-1";
-            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
-            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SqlServerTrustGroupResource item in managedInstance.GetSqlServerTrustGroupsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SqlServerTrustGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List inaccessible managed databases by managed instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInaccessibleManagedDatabases_ListInaccessibleManagedDatabasesByManagedInstances()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/InaccessibleManagedDatabaseListByManagedInstance.json
-            // this example is just showing the usage of "ManagedDatabases_ListInaccessibleByInstance" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceResource created on azure
-            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            string managedInstanceName = "testcl";
-            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
-            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedDatabaseResource item in managedInstance.GetInaccessibleManagedDatabasesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedDatabaseData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List managed instances
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetManagedInstances_ListManagedInstances()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceList.json
-            // this example is just showing the usage of "ManagedInstances_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedInstanceResource item in subscriptionResource.GetManagedInstancesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedInstanceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List managed instances with $expand=administrators/activedirectory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetManagedInstances_ListManagedInstancesWithExpandAdministratorsActivedirectory()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceListWithExpandEqualsAdministrators.json
-            // this example is just showing the usage of "ManagedInstances_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20D7082A-0FC7-4468-82BD-542694D5042B";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedInstanceResource item in subscriptionResource.GetManagedInstancesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedInstanceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get managed instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceGet.json
@@ -210,9 +46,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get managed instance with $expand=administrators/activedirectory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedInstanceWithExpandAdministratorsActivedirectory()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceGetWithExpandEqualsAdministrators.json
@@ -241,9 +76,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete managed instance
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceDelete.json
@@ -263,14 +97,13 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            await managedInstance.DeleteAsync(WaitUntil.Completed);
+            await managedInstance.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Remove maintenance policy from managed instance (select default maintenance policy)
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RemoveMaintenancePolicyFromManagedInstanceSelectDefaultMaintenancePolicy()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceRemoveMaintenanceConfiguration.json
@@ -290,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            ManagedInstancePatch patch = new ManagedInstancePatch()
+            ManagedInstancePatch patch = new ManagedInstancePatch
             {
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/20d7082a-0fc7-4468-82bd-542694d5042b/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
             };
@@ -304,9 +137,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update managed instance with all properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateManagedInstanceWithAllProperties()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceUpdateMax.json
@@ -326,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            ManagedInstancePatch patch = new ManagedInstancePatch()
+            ManagedInstancePatch patch = new ManagedInstancePatch
             {
                 Sku = new SqlSku("GP_Gen4")
                 {
@@ -335,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 },
                 Tags =
 {
-["tagKey1"] = "TagValue1",
+["tagKey1"] = "TagValue1"
 },
                 AdministratorLogin = "dummylogin",
                 AdministratorLoginPassword = "PLACEHOLDER",
@@ -359,9 +191,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update managed instance with minimal properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateManagedInstanceWithMinimalProperties()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceUpdateMin.json
@@ -381,11 +212,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            ManagedInstancePatch patch = new ManagedInstancePatch()
+            ManagedInstancePatch patch = new ManagedInstancePatch
             {
                 Tags =
 {
-["tagKey1"] = "TagValue1",
+["tagKey1"] = "TagValue1"
 },
             };
             ArmOperation<ManagedInstanceResource> lro = await managedInstance.UpdateAsync(WaitUntil.Completed, patch);
@@ -398,9 +229,104 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Failover a managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateManagedInstanceTdeCertificate_UploadATDECertificate()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceTdeCertificate.json
+            // this example is just showing the usage of "ManagedInstanceTdeCertificates_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceResource created on azure
+            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000001";
+            string resourceGroupName = "testtdecert";
+            string managedInstanceName = "testtdecert";
+            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
+            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
+
+            // invoke the operation
+            TdeCertificate tdeCertificate = new TdeCertificate
+            {
+                PrivateBlob = "MIIXXXXXXXX",
+            };
+            await managedInstance.CreateManagedInstanceTdeCertificateAsync(WaitUntil.Completed, tdeCertificate).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSqlServerTrustGroups_ListServerTrustGroupsByManagedInstance()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerTrustGroupListByManagedInstance.json
+            // this example is just showing the usage of "ServerTrustGroups_ListByInstance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceResource created on azure
+            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string managedInstanceName = "managedInstance-1";
+            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
+            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SqlServerTrustGroupResource item in managedInstance.GetSqlServerTrustGroupsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SqlServerTrustGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetInaccessibleManagedDatabases_ListInaccessibleManagedDatabasesByManagedInstances()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/InaccessibleManagedDatabaseListByManagedInstance.json
+            // this example is just showing the usage of "ManagedDatabases_ListInaccessibleByInstance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceResource created on azure
+            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            string managedInstanceName = "testcl";
+            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
+            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedDatabaseResource item in managedInstance.GetInaccessibleManagedDatabasesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedDatabaseData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Failover_FailoverAManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/FailoverManagedInstance.json
@@ -421,14 +347,13 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             ReplicaType? replicaType = ReplicaType.Primary;
-            await managedInstance.FailoverAsync(WaitUntil.Completed, replicaType: replicaType);
+            await managedInstance.FailoverAsync(WaitUntil.Completed, replicaType).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the collection of outbound network dependencies for the given managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependencies_GetsTheCollectionOfOutboundNetworkDependenciesForTheGivenManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ListOutboundNetworkDependenciesByManagedInstance.json
@@ -453,12 +378,11 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Starts the managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_StartsTheManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartManagedInstance.json
@@ -478,14 +402,13 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            await managedInstance.StartAsync(WaitUntil.Completed);
+            await managedInstance.StartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Stops the managed instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_StopsTheManagedInstance()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StopManagedInstance.json
@@ -505,14 +428,13 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation
-            await managedInstance.StopAsync(WaitUntil.Completed);
+            await managedInstance.StopAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Obtain list of instance's top resource consuming queries.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTopQueries_ObtainListOfInstanceSTopResourceConsumingQueries()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceTopQueriesList.json
@@ -532,18 +454,17 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions() { Interval = QueryTimeGrainType.PT1H, ObservationMetric = SqlMetricType.Duration };
+            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions { Interval = QueryTimeGrainType.PT1H, ObservationMetric = SqlMetricType.Duration };
             await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Obtain list of instance's top resource consuming queries. Full-blown request and response.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTopQueries_ObtainListOfInstanceSTopResourceConsumingQueriesFullBlownRequestAndResponse()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceTopQueriesListMax.json
@@ -563,18 +484,17 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions() { Databases = "db1,db2", StartTime = "2020-03-10T12:00:00Z", EndTime = "2020-03-12T12:00:00Z", Interval = QueryTimeGrainType.P1D, ObservationMetric = SqlMetricType.Cpu };
+            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions { Databases = "db1,db2", StartTime = "2020-03-10T12:00:00Z", EndTime = "2020-03-12T12:00:00Z", Interval = QueryTimeGrainType.P1D, ObservationMetric = SqlMetricType.Cpu };
             await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Obtain list of instance's top resource consuming queries. Minimal request and response.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTopQueries_ObtainListOfInstanceSTopResourceConsumingQueriesMinimalRequestAndResponse()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedInstanceTopQueriesListMin.json
@@ -594,13 +514,13 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions() { };
+            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions();
             await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

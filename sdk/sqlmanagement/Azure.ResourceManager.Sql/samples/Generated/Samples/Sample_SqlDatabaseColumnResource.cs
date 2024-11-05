@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlDatabaseColumnResource
     {
-        // Get database column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDatabaseColumn()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseColumnGet.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Enables sensitivity recommendations on a given column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableRecommendationSensitivityLabel_EnablesSensitivityRecommendationsOnAGivenColumn()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/RecommendedColumnSensitivityLabelEnable.json
@@ -75,14 +74,13 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseColumnResource sqlDatabaseColumn = client.GetSqlDatabaseColumnResource(sqlDatabaseColumnResourceId);
 
             // invoke the operation
-            await sqlDatabaseColumn.EnableRecommendationSensitivityLabelAsync();
+            await sqlDatabaseColumn.EnableRecommendationSensitivityLabelAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Disables sensitivity recommendations on a given column
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DisableRecommendationSensitivityLabel_DisablesSensitivityRecommendationsOnAGivenColumn()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/RecommendedColumnSensitivityLabelDisable.json
@@ -106,9 +104,9 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseColumnResource sqlDatabaseColumn = client.GetSqlDatabaseColumnResource(sqlDatabaseColumnResourceId);
 
             // invoke the operation
-            await sqlDatabaseColumn.DisableRecommendationSensitivityLabelAsync();
+            await sqlDatabaseColumn.DisableRecommendationSensitivityLabelAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SelfHelp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Discovery Solutions using issue summary and service id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DiscoverSolutionsNlp_DiscoverySolutionsUsingIssueSummaryAndServiceId()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/DiscoverSolutionsAtSubscriptionScope.json
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.SelfHelp.Samples
                 ResourceId = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read",
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadata item in subscriptionResource.DiscoverSolutionsNlpAsync(content: content))
+            await foreach (SolutionNlpMetadata item in subscriptionResource.DiscoverSolutionsNlpAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

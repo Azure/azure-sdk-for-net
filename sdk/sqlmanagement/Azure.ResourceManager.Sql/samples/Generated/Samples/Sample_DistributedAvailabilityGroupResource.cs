@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_DistributedAvailabilityGroupResource
     {
-        // Gets the distributed availability group info.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheDistributedAvailabilityGroupInfo()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DistributedAvailabilityGroupsGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Initiate a distributed availability group drop.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_InitiateADistributedAvailabilityGroupDrop()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DistributedAvailabilityGroupsDelete.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Sql.Samples
             DistributedAvailabilityGroupResource distributedAvailabilityGroup = client.GetDistributedAvailabilityGroupResource(distributedAvailabilityGroupResourceId);
 
             // invoke the operation
-            await distributedAvailabilityGroup.DeleteAsync(WaitUntil.Completed);
+            await distributedAvailabilityGroup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update the distributed availability group replication mode before deleting it.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheDistributedAvailabilityGroupReplicationModeBeforeDeletingIt()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DistributedAvailabilityGroupsUpdate.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Samples
             DistributedAvailabilityGroupResource distributedAvailabilityGroup = client.GetDistributedAvailabilityGroupResource(distributedAvailabilityGroupResourceId);
 
             // invoke the operation
-            DistributedAvailabilityGroupData data = new DistributedAvailabilityGroupData()
+            DistributedAvailabilityGroupData data = new DistributedAvailabilityGroupData
             {
                 ReplicationMode = DistributedAvailabilityGroupReplicationMode.Sync,
             };

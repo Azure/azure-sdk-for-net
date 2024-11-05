@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ResourceGroupLongTermRetentionBackupResource
     {
-        // Get the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupGet.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupDelete.json
@@ -74,14 +73,13 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
 
             // invoke the operation
-            await resourceGroupLongTermRetentionBackup.DeleteAsync(WaitUntil.Completed);
+            await resourceGroupLongTermRetentionBackup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Change the long term retention backup storage access tier for a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ChangeAccessTierByResourceGroup_ChangeTheLongTermRetentionBackupStorageAccessTierForAResourceGroup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedChangeLongTermRetentionBackupAccessTier.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Copy the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CopyByResourceGroup_CopyTheLongTermRetentionBackup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupCopy.json
@@ -140,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
 
             // invoke the operation
-            CopyLongTermRetentionBackupContent content = new CopyLongTermRetentionBackupContent()
+            CopyLongTermRetentionBackupContent content = new CopyLongTermRetentionBackupContent
             {
                 TargetServerResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Sql/resourceGroups/resourceGroup/servers/testserver2"),
                 TargetDatabaseName = "testDatabase2",
@@ -152,9 +149,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateByResourceGroup_UpdateTheLongTermRetentionBackup()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ResourceGroupBasedLongTermRetentionBackupUpdate.json
@@ -177,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ResourceGroupLongTermRetentionBackupResource resourceGroupLongTermRetentionBackup = client.GetResourceGroupLongTermRetentionBackupResource(resourceGroupLongTermRetentionBackupResourceId);
 
             // invoke the operation
-            UpdateLongTermRetentionBackupContent content = new UpdateLongTermRetentionBackupContent()
+            UpdateLongTermRetentionBackupContent content = new UpdateLongTermRetentionBackupContent
             {
                 RequestedBackupStorageRedundancy = SqlBackupStorageRedundancy.Geo,
             };

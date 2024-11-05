@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceNetworking.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
     public partial class Sample_FrontendResource
     {
-        // Get Frontend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFrontend()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/FrontendGet.json
@@ -47,9 +47,35 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Frontend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteFrontend()
+        {
+            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/FrontendDelete.json
+            // this example is just showing the usage of "FrontendsInterface_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FrontendResource created on azure
+            // for more information of creating FrontendResource, please refer to the document of FrontendResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string trafficControllerName = "tc1";
+            string frontendName = "fe1";
+            ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
+
+            // invoke the operation
+            await frontend.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateFrontend()
         {
             // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/FrontendPatch.json
@@ -78,34 +104,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             FrontendData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete Frontend
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteFrontend()
-        {
-            // Generated from example definition: specification/servicenetworking/resource-manager/Microsoft.ServiceNetworking/stable/2023-11-01/examples/FrontendDelete.json
-            // this example is just showing the usage of "FrontendsInterface_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FrontendResource created on azure
-            // for more information of creating FrontendResource, please refer to the document of FrontendResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string trafficControllerName = "tc1";
-            string frontendName = "fe1";
-            ResourceIdentifier frontendResourceId = FrontendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
-            FrontendResource frontend = client.GetFrontendResource(frontendResourceId);
-
-            // invoke the operation
-            await frontend.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

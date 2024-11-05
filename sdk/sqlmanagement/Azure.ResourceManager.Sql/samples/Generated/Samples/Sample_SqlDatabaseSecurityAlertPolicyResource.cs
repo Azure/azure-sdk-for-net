@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlDatabaseSecurityAlertPolicyResource
     {
-        // Get a database's threat detection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabaseSThreatDetectionPolicy()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseSecurityAlertGet.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a database's threat detection policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSThreatDetectionPolicyWithAllParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseSecurityAlertCreateMax.json
@@ -72,17 +71,11 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyResource sqlDatabaseSecurityAlertPolicy = client.GetSqlDatabaseSecurityAlertPolicyResource(sqlDatabaseSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData()
+            SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Sql_Injection","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"test@microsoft.com","user@microsoft.com"
-},
+                DisabledAlerts = { "Sql_Injection", "Usage_Anomaly" },
+                EmailAddresses = { "test@microsoft.com", "user@microsoft.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -98,9 +91,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a database's threat detection policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSThreatDetectionPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseSecurityAlertCreateMin.json
@@ -122,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSecurityAlertPolicyResource sqlDatabaseSecurityAlertPolicy = client.GetSqlDatabaseSecurityAlertPolicyResource(sqlDatabaseSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData()
+            SqlDatabaseSecurityAlertPolicyData data = new SqlDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
             };

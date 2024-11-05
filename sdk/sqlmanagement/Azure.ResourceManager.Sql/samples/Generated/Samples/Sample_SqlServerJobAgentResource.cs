@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerJobAgentResource
     {
-        // Get a job agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAJobAgent()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/GetJobAgent.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a job agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAJobAgent()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DeleteJobAgent.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation
-            await sqlServerJobAgent.DeleteAsync(WaitUntil.Completed);
+            await sqlServerJobAgent.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a job agent's tags.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAJobAgentSTags()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/UpdateJobAgent.json
@@ -98,11 +96,11 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation
-            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch()
+            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch
             {
                 Tags =
 {
-["mytag1"] = "myvalue1",
+["mytag1"] = "myvalue1"
 },
             };
             ArmOperation<SqlServerJobAgentResource> lro = await sqlServerJobAgent.UpdateAsync(WaitUntil.Completed, patch);
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all job executions in a job agent with filtering.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobExecutionsByAgent_ListAllJobExecutionsInAJobAgentWithFiltering()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ListJobExecutionsByAgentWithFilter.json
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { CreateTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z"), CreateTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z"), EndTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z"), EndTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z"), IsActive = false };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions { CreateTimeMin = default, CreateTimeMax = default, EndTimeMin = default, EndTimeMax = default, IsActive = false };
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -148,12 +145,11 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all job executions in a job agent.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobExecutionsByAgent_ListAllJobExecutionsInAJobAgent()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ListJobExecutionsByAgent.json
@@ -174,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -184,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
