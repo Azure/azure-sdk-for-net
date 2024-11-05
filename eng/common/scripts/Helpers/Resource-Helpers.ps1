@@ -123,8 +123,8 @@ filter Remove-PurgeableResources {
     switch ($r.AzsdkResourceType) {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
-          # We will try anyway but will ignore errors.
           Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          continue
         }
 
         # Use `-AsJob` to start a lightweight, cancellable job and pass to `Wait-PurgeableResoruceJob` for consistent behavior.
@@ -134,8 +134,8 @@ filter Remove-PurgeableResources {
 
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
-          # We will try anyway but will ignore errors.
           Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
+          continue
         }
 
         # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
