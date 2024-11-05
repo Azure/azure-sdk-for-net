@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageAccountCollection
     {
-        // NfsV3AccountCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NfsV3AccountCreate()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/NfsV3AccountCreate.json
@@ -71,9 +71,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreate()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreate.json
@@ -150,9 +149,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateAllowedCopyScopeToAAD
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateAllowedCopyScopeToAAD()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateAllowedCopyScopeToAAD.json
@@ -224,9 +222,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateAllowedCopyScopeToPrivateLink
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateAllowedCopyScopeToPrivateLink()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateAllowedCopyScopeToPrivateLink.json
@@ -298,9 +295,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateDisallowPublicNetworkAccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateDisallowPublicNetworkAccess()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateDisallowPublicNetworkAccess.json
@@ -376,9 +372,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateDnsEndpointTypeToAzureDnsZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateDnsEndpointTypeToAzureDnsZone()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateDnsEndpointTypeToAzureDnsZone.json
@@ -456,9 +451,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateDnsEndpointTypeToStandard
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateDnsEndpointTypeToStandard()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateDnsEndpointTypeToStandard.json
@@ -536,9 +530,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateEnablePublicNetworkAccess
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateEnablePublicNetworkAccess()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateEnablePublicNetworkAccess.json
@@ -614,9 +607,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreatePremiumBlockBlobStorage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreatePremiumBlockBlobStorage()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreatePremiumBlockBlobStorage.json
@@ -677,9 +669,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateUserAssignedEncryptionIdentityWithCMK
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateUserAssignedEncryptionIdentityWithCMK()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateUserAssignedEncryptionIdentityWithCMK.json
@@ -749,9 +740,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateUserAssignedIdentityWithFederatedIdentityClientId.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateUserAssignedIdentityWithFederatedIdentityClientId()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateUserAssignedIdentityWithFederatedIdentityClientId.json
@@ -822,9 +812,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountCreateWithImmutabilityPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageAccountCreateWithImmutabilityPolicy()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCreateWithImmutabilityPolicy.json
@@ -874,9 +863,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetAsyncSkuConversionStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetAsyncSkuConversionStatus()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
@@ -908,9 +896,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetAsyncSkuConversionStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetAsyncSkuConversionStatus()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
@@ -938,9 +925,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetAsyncSkuConversionStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetAsyncSkuConversionStatus()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
@@ -968,7 +954,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -980,9 +966,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountGetProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetProperties()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
@@ -1014,9 +999,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetProperties()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
@@ -1044,9 +1028,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetProperties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetProperties()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
@@ -1074,7 +1057,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1086,9 +1069,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountGetPropertiesCMKEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesCMKEnabled()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
@@ -1120,9 +1102,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesCMKEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetPropertiesCMKEnabled()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
@@ -1150,9 +1131,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetPropertiesCMKEnabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesCMKEnabled()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
@@ -1180,7 +1160,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1192,9 +1172,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountGetPropertiesCMKVersionExpirationTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
@@ -1226,9 +1205,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesCMKVersionExpirationTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetPropertiesCMKVersionExpirationTime()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
@@ -1256,9 +1234,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetPropertiesCMKVersionExpirationTime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesCMKVersionExpirationTime()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
@@ -1286,7 +1263,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1298,9 +1275,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
@@ -1333,9 +1309,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
@@ -1364,9 +1339,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
@@ -1395,7 +1369,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1407,9 +1381,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
@@ -1442,9 +1415,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
@@ -1473,9 +1445,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
@@ -1504,7 +1475,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -1516,9 +1487,8 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             }
         }
 
-        // StorageAccountListByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StorageAccountListByResourceGroup()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListByResourceGroup.json
@@ -1549,7 +1519,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
