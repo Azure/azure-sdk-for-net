@@ -34,12 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (await DatabaseAccountCollection.ExistsAsync(_databaseAccountName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = DatabaseAccountCollection.Id;
-                id = CosmosDBAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
-                CosmosDBAccountResource account = this.ArmClient.GetCosmosDBAccountResource(id);
-                await account.DeleteAsync(WaitUntil.Completed);
+                if (await DatabaseAccountCollection.ExistsAsync(_databaseAccountName))
+                {
+                    var id = DatabaseAccountCollection.Id;
+                    id = CosmosDBAccountResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, _databaseAccountName);
+                    CosmosDBAccountResource account = this.ArmClient.GetCosmosDBAccountResource(id);
+                    await account.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

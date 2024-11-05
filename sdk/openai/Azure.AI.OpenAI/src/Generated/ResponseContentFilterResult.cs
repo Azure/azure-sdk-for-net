@@ -75,8 +75,9 @@ namespace Azure.AI.OpenAI
         /// <param name="error"> If present, details about an error that prevented content filtering from completing its evaluation. </param>
         /// <param name="protectedMaterialText"> A detection result that describes a match against text protected under copyright or other status. </param>
         /// <param name="protectedMaterialCode"> A detection result that describes a match against licensed code or other protected source material. </param>
+        /// <param name="ungroundedMaterial"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForPromptContentFilterResultsError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForPromptContentFilterResultsError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, ContentFilterTextSpanResult ungroundedMaterial, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Hate = hate;
@@ -87,6 +88,7 @@ namespace Azure.AI.OpenAI
             Error = error;
             ProtectedMaterialText = protectedMaterialText;
             ProtectedMaterialCode = protectedMaterialCode;
+            UngroundedMaterial = ungroundedMaterial;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -125,5 +127,7 @@ namespace Azure.AI.OpenAI
         public ContentFilterDetectionResult ProtectedMaterialText { get; }
         /// <summary> A detection result that describes a match against licensed code or other protected source material. </summary>
         public ContentFilterProtectedMaterialResult ProtectedMaterialCode { get; }
+        /// <summary> Gets the ungrounded material. </summary>
+        public ContentFilterTextSpanResult UngroundedMaterial { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Port Mirroring Status. </summary>
+    /// <summary> Port Mirroring status. </summary>
     public readonly partial struct PortMirroringProfileStatus : IEquatable<PortMirroringProfileStatus>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SuccessValue = "SUCCESS";
         private const string FailureValue = "FAILURE";
 
-        /// <summary> SUCCESS. </summary>
+        /// <summary> is success. </summary>
         public static PortMirroringProfileStatus Success { get; } = new PortMirroringProfileStatus(SuccessValue);
-        /// <summary> FAILURE. </summary>
+        /// <summary> is failure. </summary>
         public static PortMirroringProfileStatus Failure { get; } = new PortMirroringProfileStatus(FailureValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileStatus"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileStatus left, PortMirroringProfileStatus right) => left.Equals(right);

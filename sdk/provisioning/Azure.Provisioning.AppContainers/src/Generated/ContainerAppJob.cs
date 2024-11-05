@@ -21,81 +21,128 @@ public partial class ContainerAppJob : ProvisionableResource
     /// <summary>
     /// Job Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Container Apps Job configuration properties.
     /// </summary>
-    public BicepValue<ContainerAppJobConfiguration> Configuration { get => _configuration; set => _configuration.Assign(value); }
-    private readonly BicepValue<ContainerAppJobConfiguration> _configuration;
+    public ContainerAppJobConfiguration Configuration 
+    {
+        get { Initialize(); return _configuration!; }
+        set { Initialize(); AssignOrReplace(ref _configuration, value); }
+    }
+    private ContainerAppJobConfiguration? _configuration;
 
     /// <summary>
     /// Resource ID of environment.
     /// </summary>
-    public BicepValue<string> EnvironmentId { get => _environmentId; set => _environmentId.Assign(value); }
-    private readonly BicepValue<string> _environmentId;
+    public BicepValue<string> EnvironmentId 
+    {
+        get { Initialize(); return _environmentId!; }
+        set { Initialize(); _environmentId!.Assign(value); }
+    }
+    private BicepValue<string>? _environmentId;
 
     /// <summary>
     /// Managed identities needed by a container app job to interact with other
     /// Azure services to not maintain any secrets or credentials in code.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Container Apps job definition.
     /// </summary>
-    public BicepValue<ContainerAppJobTemplate> Template { get => _template; set => _template.Assign(value); }
-    private readonly BicepValue<ContainerAppJobTemplate> _template;
+    public ContainerAppJobTemplate Template 
+    {
+        get { Initialize(); return _template!; }
+        set { Initialize(); AssignOrReplace(ref _template, value); }
+    }
+    private ContainerAppJobTemplate? _template;
 
     /// <summary>
     /// Workload profile name to pin for container apps job execution.
     /// </summary>
-    public BicepValue<string> WorkloadProfileName { get => _workloadProfileName; set => _workloadProfileName.Assign(value); }
-    private readonly BicepValue<string> _workloadProfileName;
+    public BicepValue<string> WorkloadProfileName 
+    {
+        get { Initialize(); return _workloadProfileName!; }
+        set { Initialize(); _workloadProfileName!.Assign(value); }
+    }
+    private BicepValue<string>? _workloadProfileName;
 
     /// <summary>
     /// The endpoint of the eventstream of the container apps job.
     /// </summary>
-    public BicepValue<string> EventStreamEndpoint { get => _eventStreamEndpoint; }
-    private readonly BicepValue<string> _eventStreamEndpoint;
+    public BicepValue<string> EventStreamEndpoint 
+    {
+        get { Initialize(); return _eventStreamEndpoint!; }
+    }
+    private BicepValue<string>? _eventStreamEndpoint;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Outbound IP Addresses of a container apps job.
     /// </summary>
-    public BicepList<string> OutboundIPAddresses { get => _outboundIPAddresses; }
-    private readonly BicepList<string> _outboundIPAddresses;
+    public BicepList<string> OutboundIPAddresses 
+    {
+        get { Initialize(); return _outboundIPAddresses!; }
+    }
+    private BicepList<string>? _outboundIPAddresses;
 
     /// <summary>
     /// Provisioning state of the Container Apps Job.
     /// </summary>
-    public BicepValue<ContainerAppJobProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ContainerAppJobProvisioningState> _provisioningState;
+    public BicepValue<ContainerAppJobProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ContainerAppJobProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ContainerAppJob.
@@ -110,19 +157,26 @@ public partial class ContainerAppJob : ProvisionableResource
     public ContainerAppJob(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.App/jobs", resourceVersion ?? "2024-03-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _configuration = BicepValue<ContainerAppJobConfiguration>.DefineProperty(this, "Configuration", ["properties", "configuration"]);
-        _environmentId = BicepValue<string>.DefineProperty(this, "EnvironmentId", ["properties", "environmentId"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _template = BicepValue<ContainerAppJobTemplate>.DefineProperty(this, "Template", ["properties", "template"]);
-        _workloadProfileName = BicepValue<string>.DefineProperty(this, "WorkloadProfileName", ["properties", "workloadProfileName"]);
-        _eventStreamEndpoint = BicepValue<string>.DefineProperty(this, "EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _outboundIPAddresses = BicepList<string>.DefineProperty(this, "OutboundIPAddresses", ["properties", "outboundIpAddresses"], isOutput: true);
-        _provisioningState = BicepValue<ContainerAppJobProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ContainerAppJob.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _configuration = DefineModelProperty<ContainerAppJobConfiguration>("Configuration", ["properties", "configuration"]);
+        _environmentId = DefineProperty<string>("EnvironmentId", ["properties", "environmentId"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _template = DefineModelProperty<ContainerAppJobTemplate>("Template", ["properties", "template"]);
+        _workloadProfileName = DefineProperty<string>("WorkloadProfileName", ["properties", "workloadProfileName"]);
+        _eventStreamEndpoint = DefineProperty<string>("EventStreamEndpoint", ["properties", "eventStreamEndpoint"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _outboundIPAddresses = DefineListProperty<string>("OutboundIPAddresses", ["properties", "outboundIpAddresses"], isOutput: true);
+        _provisioningState = DefineProperty<ContainerAppJobProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

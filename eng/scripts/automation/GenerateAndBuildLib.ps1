@@ -747,6 +747,7 @@ function GeneratePackage()
     $artifacts = @()
     $apiViewArtifact = ""
     $hasBreakingChange = $false
+    $breakingChangeItems = @()
     $content = ""
     $result = "succeeded"
     $isGenerateSuccess = $true
@@ -771,6 +772,10 @@ function GeneratePackage()
     }
 
     if ($isGenerateSuccess) {
+        # update resourcemanager ci.mgmt.yml for mgmt sdk
+        if ($serviceType -eq "resource-manager") {
+            & $sdkRootPath/eng/scripts/Update-Mgmt-CI.ps1
+        }
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -856,8 +861,15 @@ function GeneratePackage()
                 $hasBreakingChange = $false
             }
             else {
-                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-                $breakingChanges = $logFile -join ",`n"
+                Write-Host "Breaking changes detected in the build log."
+                $logFile = Get-Content -Path $logFilePath | select-object -SkipLast 1
+                $regex = "error( ?):( ?)(?<breakingChange>.*) .*\["
+                foreach ($line in $logFile) {
+                    if ($line -match $regex) {
+                        $breakingChangeItems += $matches["breakingChange"]
+                    }
+                }
+                $breakingChanges = $breakingChangeItems -join ",`n"
                 $content = "Breaking Changes: $breakingChanges"
                 $hasBreakingChange = $true
             }
@@ -871,6 +883,7 @@ function GeneratePackage()
     $changelog = [PSCustomObject]@{
         content           = $content
         hasBreakingChange = $hasBreakingChange
+        breakingChangeItems = $breakingChangeItems
     }
 
     $ciFilePath = "sdk/$service/ci.yml"
