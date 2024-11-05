@@ -26,11 +26,8 @@ namespace Azure.Health.Deidentification
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("input"u8);
             writer.WriteObjectValue(Input, options);
             if (Optional.IsDefined(Output))

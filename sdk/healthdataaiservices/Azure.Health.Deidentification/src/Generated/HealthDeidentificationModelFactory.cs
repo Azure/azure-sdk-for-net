@@ -68,6 +68,17 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Deidentification.PagedDocumentDetails"/>. </summary>
+        /// <param name="value"> List of documents. </param>
+        /// <param name="nextLink"> Token to continue a previous query. </param>
+        /// <returns> A new <see cref="Deidentification.PagedDocumentDetails"/> instance for mocking. </returns>
+        public static PagedDocumentDetails PagedDocumentDetails(IEnumerable<DocumentDetails> value = null, string nextLink = null)
+        {
+            value ??= new List<DocumentDetails>();
+
+            return new PagedDocumentDetails(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetails"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="input"> Location for the input. </param>
@@ -97,11 +108,12 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
+        /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, CustomizationOptions customizations = null)
+        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationOptions customizations = null)
         {
-            return new DeidentificationContent(inputText, customizations, serializedAdditionalRawData: null);
+            return new DeidentificationContent(inputText, operation, customizations, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationResult"/>. </summary>

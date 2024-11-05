@@ -326,7 +326,7 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob()
+        public void Example_PagedDocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -335,16 +335,17 @@ namespace Azure.Health.Deidentification.Samples
             foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("nextLink").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Async()
+        public async Task Example_PagedDocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -353,35 +354,36 @@ namespace Azure.Health.Deidentification.Samples
             await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("nextLink").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience()
+        public void Example_PagedDocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (DocumentDetails item in client.GetJobDocuments("documents_smith_1"))
+            foreach (PagedDocumentDetails item in client.GetJobDocuments("documents_smith_1"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience_Async()
+        public async Task Example_PagedDocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
+            await foreach (PagedDocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
             {
             }
         }
