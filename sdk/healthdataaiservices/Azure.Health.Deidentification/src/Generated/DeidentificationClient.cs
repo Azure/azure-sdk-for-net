@@ -572,14 +572,14 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Resource list operation template. </remarks>
         /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocumentsAsync(string,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<PagedDocumentDetails> GetJobDocumentsAsync(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentDetails> GetJobDocumentsAsync(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PagedDocumentDetails.DeserializePagedDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
         /// <summary> List processed documents within a job. </summary>
@@ -591,14 +591,14 @@ namespace Azure.Health.Deidentification
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Resource list operation template. </remarks>
         /// <include file="Docs/DeidentificationClient.xml" path="doc/members/member[@name='GetJobDocuments(string,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<PagedDocumentDetails> GetJobDocuments(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentDetails> GetJobDocuments(string name, int? maxpagesize = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobDocumentsRequest(name, maxpagesize, continuationToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobDocumentsNextPageRequest(nextLink, name, maxpagesize, continuationToken, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PagedDocumentDetails.DeserializePagedDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentDetails.DeserializeDocumentDetails(e), ClientDiagnostics, _pipeline, "DeidentificationClient.GetJobDocuments", "value", "nextLink", context);
         }
 
         /// <summary>
