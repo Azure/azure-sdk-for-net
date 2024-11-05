@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Locations_CheckNameAvailability_AlreadyExists
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNameAvailabilityLocation_LocationsCheckNameAvailabilityAlreadyExists()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_AlreadyExists.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Locations_CheckNameAvailability_Available
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNameAvailabilityLocation_LocationsCheckNameAvailabilityAvailable()
         {
             // Generated from example definition: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/Locations_CheckNameAvailability_Available.json

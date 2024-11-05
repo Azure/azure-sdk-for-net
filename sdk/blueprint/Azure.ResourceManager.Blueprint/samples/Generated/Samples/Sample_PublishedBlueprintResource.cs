@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_PublishedBlueprintResource
     {
-        // PublishedManagementGroupBlueprint_Publish
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PublishedManagementGroupBlueprintPublish()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedBlueprint_Publish.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublishedSubscriptionBlueprint_Publish
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PublishedSubscriptionBlueprintPublish()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedBlueprint_Publish.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublishedManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PublishedManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedBlueprint_Get.json
@@ -111,9 +109,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublishedSubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PublishedSubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedBlueprint_Get.json
@@ -142,9 +139,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublishedManagementGroupBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PublishedManagementGroupBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPDef/SealedBlueprint_Delete.json
@@ -174,9 +170,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PublishedSubscriptionBlueprint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PublishedSubscriptionBlueprint()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPDef/SealedBlueprint_Delete.json
