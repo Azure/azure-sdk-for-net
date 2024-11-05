@@ -120,6 +120,81 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 activity: activity);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task VerifyQueryStringRedaction(bool redactionEnabled)
+        {
+            using var testHttpServer = TestHttpServer.RunServer(
+                action: (ctx) =>
+                {
+                    ctx.Response.StatusCode = 200;
+                    ctx.Response.OutputStream.Close();
+                },
+                host: out var host,
+                port: out var port);
+
+            var baseAddress = $"http://{host}:{port}";
+
+            // SETUP MOCK TRANSMITTER TO CAPTURE AZURE MONITOR TELEMETRY
+            var testConnectionString = $"InstrumentationKey=unitTest-{nameof(HttpRequestsAreCapturedCorrectly)}";
+            var telemetryItems = new List<TelemetryItem>();
+            var mockTransmitter = new Exporter.Tests.CommonTestFramework.MockTransmitter(telemetryItems);
+            // The TransmitterFactory is invoked by the Exporter during initialization to ensure that there's only one instance of a transmitter/connectionString shared by all Exporters.
+            // Here we're setting that instance to use the MockTransmitter so this test can capture telemetry before it's sent to Azure Monitor.
+            Exporter.Internals.TransmitterFactory.Instance.Set(connectionString: testConnectionString, transmitter: mockTransmitter);
+
+            // SETUP OPENTELEMETRY WITH AZURE MONITOR DISTRO
+            var activities = new List<Activity>();
+            var serviceCollection = new ServiceCollection();
+
+            // This shouldn't be needed but Http Instrumentation library was performing redaction without it.
+            serviceCollection.AddEnvironmentVariables(new Dictionary<string, string?> { { "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION", (!redactionEnabled).ToString() } });
+
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
+                .WithTracing(x => x.AddInMemoryExporter(activities))
+                // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
+                .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // We must resolve the TracerProvider here to ensure that it is initialized.
+            // In a normal app, the OpenTelemetry.Extensions.Hosting package would handle this.
+            var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+
+            // ACT
+            string url = "/custom-endpoint?key=value";
+            var httpclient = new HttpClient();
+
+            try
+            {
+                await httpclient.GetAsync(baseAddress + url);
+            }
+            catch
+            {
+                // Do nothing
+            }
+
+            // SHUTDOWN
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown();
+
+            // ASSERT
+            WaitForActivityExport(telemetryItems, x => x.Name == "RemoteDependency");
+            var activity = activities.Single();
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            var telemetryItem = telemetryItems.Where(x => x.Name == "RemoteDependency").Single();
+
+            if (redactionEnabled)
+            {
+                Assert.EndsWith("key=Redacted", ((RemoteDependencyData)telemetryItem.Data.BaseData).Data);
+            }
+            else
+            {
+                Assert.EndsWith("key=value", ((RemoteDependencyData)telemetryItem.Data.BaseData).Data);
+            }
+        }
+
         private void WaitForActivityExport<T>(List<T> traceTelemetryItems, Func<T, bool>? predicate = null)
         {
             var result = SpinWait.SpinUntil(
