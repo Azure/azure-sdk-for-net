@@ -92,6 +92,19 @@ namespace Azure.CloudMachine.OpenAI.Chat
         protected virtual string GetMethodInfoToName(System.Reflection.MethodInfo function) { throw null; }
         protected virtual string GetParameterInfoToDescription(System.Reflection.ParameterInfo parameter) { throw null; }
     }
+    public partial class OpenAIConversation
+    {
+        public OpenAIConversation(Azure.CloudMachine.OpenAI.Embeddings.EmbeddingsVectorbase vectors, OpenAI.Chat.ChatClient chat, OpenAI.Chat.ChatCompletionOptions options) { }
+        public System.Collections.Generic.List<OpenAI.Chat.ChatMessage> Prompt { get { throw null; } }
+        public virtual void AddFact(string fact) { }
+        public virtual bool OnContentFilter(OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public virtual bool OnConversationStopped(OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public virtual bool OnTokenLimitReached(OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public virtual bool OnToolCall(OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public virtual bool OnUnknownFinishReason(OpenAI.Chat.ChatCompletion completion) { throw null; }
+        public virtual void Say(OpenAI.Chat.UserChatMessage message) { }
+        public virtual void Say(string message) { }
+    }
 }
 namespace Azure.CloudMachine.OpenAI.Embeddings
 {

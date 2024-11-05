@@ -186,61 +186,21 @@ public class CloudMachineTests
         // helpers
         ChatTools tools = new(typeof(MyFunctions));
         EmbeddingsVectorbase vectors = new(embeddings, null, 1000);
-        vectors.Add("I love Seattle.");
-        vectors.Add(File.ReadAllText(@"C:\Users\chriss\Desktop\Identity-README.md"));
-
         ChatCompletionOptions options = new();
         foreach (var definition in tools.Definitions)
         {
             options.Tools.Add(definition);
         }
-        options.ToolChoice = ChatToolChoice.CreateAutoChoice();
-
-        List<ChatMessage> prompt = new();
+        var conversation = new OpenAIConversation(vectors, chat, options);
+        conversation.AddFact("I love Seattle. Seattle is my favorite city. If I could live anywhere, I would live in Seattle.");
+        conversation.AddFact(File.ReadAllText(@"C:\Users\chriss\Desktop\Identity-README.md"));
 
         foreach (var testMessage in testMessages)
         {
             Console.WriteLine($"u: {testMessage}");
-            IEnumerable<VectorbaseEntry> relatedItems = vectors.Find(testMessage);
-            foreach (VectorbaseEntry relatedItem in relatedItems)
-            {
-                prompt.Add(ChatMessage.CreateSystemMessage(relatedItem.Data.ToString()));
-            }
-
-            prompt.Add(ChatMessage.CreateUserMessage(testMessage));
-            CallOpenAI();
+            conversation.Say(testMessage);
             // filter the prompt to only include the user message
-            var responses = prompt.Where(message => message is AssistantChatMessage).Select(m => m.Content[0].Text).ToList();
-        }
-        void CallOpenAI()
-        {
-            bool requiresAction;
-            do
-            {
-                requiresAction = false;
-                var completion = chat.CompleteChat(prompt, options).Value;
-                switch (completion.FinishReason)
-                {
-                    case ChatFinishReason.ToolCalls:
-                        // TODO: figure out why the model is returning bogus tool call results.
-                        // prompt.Add(new AssistantChatMessage(completion));
-                        // IEnumerable<ToolChatMessage> callResults = tools.CallAll(completion.ToolCalls);
-                        // prompt.AddRange(callResults);
-                        requiresAction = true;
-                        break;
-                    case ChatFinishReason.Length:
-                        Console.WriteLine("Incomplete model output due to MaxTokens parameter or token limit exceeded.");
-                        break;
-                    case ChatFinishReason.ContentFilter:
-                        Console.WriteLine("Omitted content due to a content filter flag.");
-                        break;
-                    case ChatFinishReason.Stop:
-                        prompt.Add(new AssistantChatMessage(completion));
-                        break;
-                    default:
-                        throw new NotImplementedException("Unknown finish reason.");
-                }
-            } while (requiresAction);
+            var responses = conversation.Prompt.Where(message => message is AssistantChatMessage).Select(m => m.Content[0].Text).ToList();
         }
     }
 
