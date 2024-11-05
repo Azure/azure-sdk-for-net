@@ -8,7 +8,6 @@ using System.ClientModel.TypeSpec;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
@@ -63,3 +62,6 @@ internal interface IAssistantService
     Task UploadAsync(HttpRequest document);
     Task<string> SendAsync([FromQuery] string message);
 }
+
+internal class FromQueryAttribute : Attribute { }
+internal class HttpPutAttribute : Attribute { }
