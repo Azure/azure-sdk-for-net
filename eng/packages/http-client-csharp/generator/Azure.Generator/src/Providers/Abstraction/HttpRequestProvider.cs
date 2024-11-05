@@ -28,7 +28,7 @@ namespace Azure.Generator.Providers
             => new HttpRequestProvider(original);
 
         public override MethodBodyStatement SetHeaders(IReadOnlyList<ValueExpression> arguments)
-            => Original.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments).Terminate();
+            => Original.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.Add), arguments).Terminate();
 
         public override MethodBodyStatement SetMethod(string httpMethod)
             => Original.Property(nameof(PipelineRequest.Method)).Assign(CreateRequestMethod(httpMethod)).Terminate();
