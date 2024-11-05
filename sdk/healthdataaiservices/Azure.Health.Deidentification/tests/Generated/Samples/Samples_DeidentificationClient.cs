@@ -181,6 +181,7 @@ namespace Azure.Health.Deidentification.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 inputText = "Hello my name is John Smith.",
+                operation = "Redact",
                 customizations = new
                 {
                     redactionFormat = "[{type}]",
@@ -204,6 +205,7 @@ namespace Azure.Health.Deidentification.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 inputText = "Hello my name is John Smith.",
+                operation = "Redact",
                 customizations = new
                 {
                     redactionFormat = "[{type}]",
@@ -226,6 +228,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
+                Operation = OperationType.Redact,
                 Customizations = new CustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
@@ -245,6 +248,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
+                Operation = OperationType.Redact,
                 Customizations = new CustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
@@ -332,7 +336,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobDocuments(null, 10, null))
+            foreach (BinaryData item in client.GetJobDocuments("xafoosjabeidsrojt", 10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -350,7 +354,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobDocumentsAsync(null, 10, null))
+            await foreach (BinaryData item in client.GetJobDocumentsAsync("xafoosjabeidsrojt", 10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -368,7 +372,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (DocumentDetails item in client.GetJobDocuments(null))
+            foreach (DocumentDetails item in client.GetJobDocuments("xafoosjabeidsrojt"))
             {
             }
         }
@@ -381,7 +385,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync(null))
+            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("xafoosjabeidsrojt"))
             {
             }
         }
