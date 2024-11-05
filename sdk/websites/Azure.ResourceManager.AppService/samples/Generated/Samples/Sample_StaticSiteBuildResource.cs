@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteBuildResource
     {
-        // Get a static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBuild.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteStaticSiteBuild.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            await staticSiteBuild.DeleteAsync(WaitUntil.Completed);
+            await staticSiteBuild.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Creates or updates the function app settings of a static site build.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateAppSettings_CreatesOrUpdatesTheFunctionAppSettingsOfAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteBuildAppSettings.json
@@ -98,12 +96,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSiteBuild.CreateOrUpdateAppSettingsAsync(appSettings);
@@ -111,9 +109,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Creates or updates the function app settings of a static site build.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateFunctionAppSettings_CreatesOrUpdatesTheFunctionAppSettingsOfAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteBuildFunctionAppSettings.json
@@ -134,12 +131,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSiteBuild.CreateOrUpdateFunctionAppSettingsAsync(appSettings);
@@ -147,9 +144,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets the functions of a particular static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFunctions_GetsTheFunctionsOfAParticularStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListStaticSiteBuildFunctions.json
@@ -175,12 +171,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get app settings of a static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStaticSiteBuildAppSettings_GetAppSettingsOfAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListStaticSiteBuildAppSettings.json
@@ -206,9 +201,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get function app settings of a static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFunctionAppSettings_GetFunctionAppSettingsOfAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListStaticSiteBuildFunctionAppSettings.json
@@ -234,9 +228,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List full details of database connections for the static site build.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBuildDatabaseConnectionsWithDetails_ListFullDetailsOfDatabaseConnectionsForTheStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBuildDatabaseConnectionsWithDetails.json
@@ -263,12 +256,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deploy a site from a zipped package to a particular static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateZipDeployment_DeployASiteFromAZippedPackageToAParticularStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StaticSiteBuildZipDeploy.json
@@ -289,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment()
+            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment
             {
                 AppZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/app-zipdeploy.zip"),
                 ApiZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/api-zipdeploy.zip"),
@@ -297,9 +289,9 @@ namespace Azure.ResourceManager.AppService.Samples
                 Provider = "testProvider",
                 FunctionLanguage = "testFunctionLanguage",
             };
-            await staticSiteBuild.CreateZipDeploymentAsync(WaitUntil.Completed, staticSiteZipDeploymentEnvelope);
+            await staticSiteBuild.CreateZipDeploymentAsync(WaitUntil.Completed, staticSiteZipDeploymentEnvelope).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

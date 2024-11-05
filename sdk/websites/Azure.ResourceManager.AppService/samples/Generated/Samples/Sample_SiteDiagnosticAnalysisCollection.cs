@@ -9,90 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_SiteDiagnosticAnalysisCollection
     {
-        // List App Analyses
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAppAnalyses()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_ListSiteAnalyses.json
-            // this example is just showing the usage of "Diagnostics_ListSiteAnalyses" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteDiagnosticResource created on azure
-            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "Sample-WestUSResourceGroup";
-            string siteName = "SampleApp";
-            string diagnosticCategory = "availability";
-            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
-            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
-
-            // get the collection of this SiteDiagnosticAnalysisResource
-            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
-
-            // invoke the operation and iterate over the result
-            await foreach (SiteDiagnosticAnalysisResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                WebSiteAnalysisDefinitionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List App Slot Analyses
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAppSlotAnalyses()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_ListSiteAnalysesSlot.json
-            // this example is just showing the usage of "Diagnostics_ListSiteAnalyses" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteDiagnosticResource created on azure
-            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "Sample-WestUSResourceGroup";
-            string siteName = "SampleApp";
-            string diagnosticCategory = "availability";
-            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
-            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
-
-            // get the collection of this SiteDiagnosticAnalysisResource
-            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
-
-            // invoke the operation and iterate over the result
-            await foreach (SiteDiagnosticAnalysisResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                WebSiteAnalysisDefinitionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get App Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppAnalysis()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysis.json
@@ -126,85 +50,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get App Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAppAnalysis()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysis.json
-            // this example is just showing the usage of "Diagnostics_GetSiteAnalysis" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteDiagnosticResource created on azure
-            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "Sample-WestUSResourceGroup";
-            string siteName = "SampleApp";
-            string diagnosticCategory = "availability";
-            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
-            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
-
-            // get the collection of this SiteDiagnosticAnalysisResource
-            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
-
-            // invoke the operation
-            string analysisName = "appanalysis";
-            bool result = await collection.ExistsAsync(analysisName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get App Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAppAnalysis()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysis.json
-            // this example is just showing the usage of "Diagnostics_GetSiteAnalysis" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteDiagnosticResource created on azure
-            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "Sample-WestUSResourceGroup";
-            string siteName = "SampleApp";
-            string diagnosticCategory = "availability";
-            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
-            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
-
-            // get the collection of this SiteDiagnosticAnalysisResource
-            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
-
-            // invoke the operation
-            string analysisName = "appanalysis";
-            NullableResponse<SiteDiagnosticAnalysisResource> response = await collection.GetIfExistsAsync(analysisName);
-            SiteDiagnosticAnalysisResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                WebSiteAnalysisDefinitionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get App Slot Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppSlotAnalysis()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysisSlot.json
@@ -238,9 +85,113 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get App Slot Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAppAnalyses()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_ListSiteAnalyses.json
+            // this example is just showing the usage of "Diagnostics_ListSiteAnalyses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SiteDiagnosticResource created on azure
+            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "Sample-WestUSResourceGroup";
+            string siteName = "SampleApp";
+            string diagnosticCategory = "availability";
+            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
+            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
+
+            // get the collection of this SiteDiagnosticAnalysisResource
+            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
+
+            // invoke the operation and iterate over the result
+            await foreach (SiteDiagnosticAnalysisResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                WebSiteAnalysisDefinitionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAppSlotAnalyses()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_ListSiteAnalysesSlot.json
+            // this example is just showing the usage of "Diagnostics_ListSiteAnalyses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SiteDiagnosticResource created on azure
+            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "Sample-WestUSResourceGroup";
+            string siteName = "SampleApp";
+            string diagnosticCategory = "availability";
+            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
+            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
+
+            // get the collection of this SiteDiagnosticAnalysisResource
+            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
+
+            // invoke the operation and iterate over the result
+            await foreach (SiteDiagnosticAnalysisResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                WebSiteAnalysisDefinitionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAppAnalysis()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysis.json
+            // this example is just showing the usage of "Diagnostics_GetSiteAnalysis" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SiteDiagnosticResource created on azure
+            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "Sample-WestUSResourceGroup";
+            string siteName = "SampleApp";
+            string diagnosticCategory = "availability";
+            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
+            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
+
+            // get the collection of this SiteDiagnosticAnalysisResource
+            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
+
+            // invoke the operation
+            string analysisName = "appanalysis";
+            bool result = await collection.ExistsAsync(analysisName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAppSlotAnalysis()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysisSlot.json
@@ -270,9 +221,51 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get App Slot Analysis
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAppAnalysis()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysis.json
+            // this example is just showing the usage of "Diagnostics_GetSiteAnalysis" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SiteDiagnosticResource created on azure
+            // for more information of creating SiteDiagnosticResource, please refer to the document of SiteDiagnosticResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "Sample-WestUSResourceGroup";
+            string siteName = "SampleApp";
+            string diagnosticCategory = "availability";
+            ResourceIdentifier siteDiagnosticResourceId = SiteDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, diagnosticCategory);
+            SiteDiagnosticResource siteDiagnostic = client.GetSiteDiagnosticResource(siteDiagnosticResourceId);
+
+            // get the collection of this SiteDiagnosticAnalysisResource
+            SiteDiagnosticAnalysisCollection collection = siteDiagnostic.GetSiteDiagnosticAnalyses();
+
+            // invoke the operation
+            string analysisName = "appanalysis";
+            NullableResponse<SiteDiagnosticAnalysisResource> response = await collection.GetIfExistsAsync(analysisName);
+            SiteDiagnosticAnalysisResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                WebSiteAnalysisDefinitionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAppSlotAnalysis()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Diagnostics_GetSiteAnalysisSlot.json
@@ -302,7 +295,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteBasicAuthPropertyResource
     {
-        // Gets the basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheBasicAuthPropertiesForAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBasicAuth.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesBasicAuthPropertiesForAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteBasicAuth.json
@@ -70,14 +69,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBasicAuthPropertyResource staticSiteBasicAuthProperty = client.GetStaticSiteBasicAuthPropertyResource(staticSiteBasicAuthPropertyResourceId);
 
             // invoke the operation
-            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData()
+            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData
             {
                 Password = "**********************",
                 SecretUri = null,
                 ApplicableEnvironmentsMode = "AllEnvironments",
-                Environments =
-{
-},
+                Environments = { },
             };
             ArmOperation<StaticSiteBasicAuthPropertyResource> lro = await staticSiteBasicAuthProperty.UpdateAsync(WaitUntil.Completed, data);
             StaticSiteBasicAuthPropertyResource result = lro.Value;

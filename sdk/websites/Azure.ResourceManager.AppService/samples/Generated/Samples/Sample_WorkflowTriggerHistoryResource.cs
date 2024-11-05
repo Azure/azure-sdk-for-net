@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WorkflowTriggerHistoryResource
     {
-        // Get a workflow trigger history
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAWorkflowTriggerHistory()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/WorkflowTriggerHistories_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Resubmit a workflow run based on the trigger history
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resubmit_ResubmitAWorkflowRunBasedOnTheTriggerHistory()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/WorkflowTriggerHistories_Resubmit.json
@@ -73,9 +72,9 @@ namespace Azure.ResourceManager.AppService.Samples
             WorkflowTriggerHistoryResource workflowTriggerHistory = client.GetWorkflowTriggerHistoryResource(workflowTriggerHistoryResourceId);
 
             // invoke the operation
-            await workflowTriggerHistory.ResubmitAsync(WaitUntil.Completed);
+            await workflowTriggerHistory.ResubmitAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

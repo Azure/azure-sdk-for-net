@@ -7,18 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseMaintenanceWindowResource
     {
-        // Gets maintenance window settings for a selected SQL Analytics pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsMaintenanceWindowSettingsForASelectedSQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetMaintenanceWindows.json
@@ -49,9 +48,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Sets maintenance window settings for a selected SQL Analytics Pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SetsMaintenanceWindowSettingsForASelectedSQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateMaintenanceWindows.json
@@ -73,21 +71,18 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // invoke the operation
             string maintenanceWindowName = "current";
-            SynapseMaintenanceWindowData data = new SynapseMaintenanceWindowData()
+            SynapseMaintenanceWindowData data = new SynapseMaintenanceWindowData
             {
-                TimeRanges =
-{
-new SynapseMaintenanceWindowTimeRange()
+                TimeRanges = {new SynapseMaintenanceWindowTimeRange
 {
 DayOfWeek = SynapseDayOfWeek.Saturday,
-StartOn = TimeSpan.Parse("00:00:00"),
-Duration = XmlConvert.ToTimeSpan("PT60M"),
-}
-},
+StartOn = default,
+Duration = default,
+}},
             };
-            await synapseMaintenanceWindow.CreateOrUpdateAsync(WaitUntil.Completed, maintenanceWindowName, data);
+            await synapseMaintenanceWindow.CreateOrUpdateAsync(WaitUntil.Completed, maintenanceWindowName, data).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

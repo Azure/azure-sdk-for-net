@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadMonitor.Samples
 {
     public partial class Sample_HealthMonitorStateChangeResource
     {
-        // Get monitor state change with default values
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMonitorStateChangeWithDefaultValues()
         {
             // Generated from example definition: specification/workloadmonitor/resource-manager/Microsoft.WorkloadMonitor/preview/2020-01-13-preview/examples/MonitorStateChange_GetDefault.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get monitor state change with expanded values
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMonitorStateChangeWithExpandedValues()
         {
             // Generated from example definition: specification/workloadmonitor/resource-manager/Microsoft.WorkloadMonitor/preview/2020-01-13-preview/examples/MonitorStateChange_GetExpanded.json
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // invoke the operation
             string expand = "evidence";
-            HealthMonitorStateChangeResource result = await healthMonitorStateChange.GetAsync(expand: expand);
+            HealthMonitorStateChangeResource result = await healthMonitorStateChange.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

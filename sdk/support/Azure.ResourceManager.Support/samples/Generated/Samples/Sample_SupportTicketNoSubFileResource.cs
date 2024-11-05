@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Support.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketNoSubFileResource
     {
-        // Get details of a subscription file
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfASubscriptionFile()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetFileDetails.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a file workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAFileWorkspace()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/CreateFile.json
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Support.Samples
             SupportTicketNoSubFileResource supportTicketNoSubFile = client.GetSupportTicketNoSubFileResource(supportTicketNoSubFileResourceId);
 
             // invoke the operation
-            SupportFileDetailData data = new SupportFileDetailData()
+            SupportFileDetailData data = new SupportFileDetailData
             {
                 ChunkSize = 41423,
                 FileSize = 41423,
@@ -82,9 +81,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UploadFile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upload_UploadFile()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/UploadFile.json
@@ -103,14 +101,14 @@ namespace Azure.ResourceManager.Support.Samples
             SupportTicketNoSubFileResource supportTicketNoSubFile = client.GetSupportTicketNoSubFileResource(supportTicketNoSubFileResourceId);
 
             // invoke the operation
-            UploadFileContent content = new UploadFileContent()
+            UploadFileContent content = new UploadFileContent
             {
                 Content = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABd",
                 ChunkIndex = 0,
             };
-            await supportTicketNoSubFile.UploadAsync(content);
+            await supportTicketNoSubFile.UploadAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

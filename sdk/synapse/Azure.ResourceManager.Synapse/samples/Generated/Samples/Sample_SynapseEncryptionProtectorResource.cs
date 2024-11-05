@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseEncryptionProtectorResource
     {
-        // Get workspace managed sql Server's encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceManagedSqlServerSEncryptionProtector()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspaceManagedSqlServerEncryptionProtector.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to key vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToKeyVault()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/WorkspaceManagedSqlServerEncryptionProtectorCreateOrUpdateKeyVault.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseEncryptionProtectorResource synapseEncryptionProtector = client.GetSynapseEncryptionProtectorResource(synapseEncryptionProtectorResourceId);
 
             // invoke the operation
-            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData()
+            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = SynapseServerKeyType.AzureKeyVault,
@@ -85,9 +84,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to service managed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToServiceManaged()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/WorkspaceManagedSqlServerEncryptionProtectorCreateOrUpdateServiceManaged.json
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseEncryptionProtectorResource synapseEncryptionProtector = client.GetSynapseEncryptionProtectorResource(synapseEncryptionProtectorResourceId);
 
             // invoke the operation
-            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData()
+            SynapseEncryptionProtectorData data = new SynapseEncryptionProtectorData
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType = SynapseServerKeyType.ServiceManaged,
@@ -123,9 +121,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Revalidates the encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revalidate_RevalidatesTheEncryptionProtector()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/WorkspaceManagedSqlServerEncryptionProtectorRevalidate.json
@@ -146,9 +143,9 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseEncryptionProtectorResource synapseEncryptionProtector = client.GetSynapseEncryptionProtectorResource(synapseEncryptionProtectorResourceId);
 
             // invoke the operation
-            await synapseEncryptionProtector.RevalidateAsync(WaitUntil.Completed);
+            await synapseEncryptionProtector.RevalidateAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -9,47 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteLinkedBackendResource
     {
-        // Validate if backend can be linked to static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ValidateBackend_ValidateIfBackendCanBeLinkedToStaticSite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ValidateLinkedBackendForStaticSite.json
-            // this example is just showing the usage of "StaticSites_ValidateBackend" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StaticSiteLinkedBackendResource created on azure
-            // for more information of creating StaticSiteLinkedBackendResource, please refer to the document of StaticSiteLinkedBackendResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testStaticSite0";
-            string linkedBackendName = "testBackend";
-            ResourceIdentifier staticSiteLinkedBackendResourceId = StaticSiteLinkedBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, linkedBackendName);
-            StaticSiteLinkedBackendResource staticSiteLinkedBackend = client.GetStaticSiteLinkedBackendResource(staticSiteLinkedBackendResourceId);
-
-            // invoke the operation
-            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData()
-            {
-                BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
-                Region = "West US 2",
-            };
-            await staticSiteLinkedBackend.ValidateBackendAsync(WaitUntil.Completed, data);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get details of the linked backend registered with a static site by name.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfTheLinkedBackendRegisteredWithAStaticSiteByName()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetLinkedBackendForStaticSite.json
@@ -79,47 +46,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Link a backend to a static site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_LinkABackendToAStaticSite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/LinkBackendToStaticSite.json
-            // this example is just showing the usage of "StaticSites_LinkBackend" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StaticSiteLinkedBackendResource created on azure
-            // for more information of creating StaticSiteLinkedBackendResource, please refer to the document of StaticSiteLinkedBackendResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testStaticSite0";
-            string linkedBackendName = "testBackend";
-            ResourceIdentifier staticSiteLinkedBackendResourceId = StaticSiteLinkedBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, linkedBackendName);
-            StaticSiteLinkedBackendResource staticSiteLinkedBackend = client.GetStaticSiteLinkedBackendResource(staticSiteLinkedBackendResourceId);
-
-            // invoke the operation
-            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData()
-            {
-                BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
-                Region = "West US 2",
-            };
-            ArmOperation<StaticSiteLinkedBackendResource> lro = await staticSiteLinkedBackend.UpdateAsync(WaitUntil.Completed, data);
-            StaticSiteLinkedBackendResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StaticSiteLinkedBackendData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Unlink a backend from a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_UnlinkABackendFromAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UnlinkBackendFromStaticSite.json
@@ -140,9 +68,78 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteLinkedBackendResource staticSiteLinkedBackend = client.GetStaticSiteLinkedBackendResource(staticSiteLinkedBackendResourceId);
 
             // invoke the operation
-            await staticSiteLinkedBackend.DeleteAsync(WaitUntil.Completed);
+            await staticSiteLinkedBackend.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_LinkABackendToAStaticSite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/LinkBackendToStaticSite.json
+            // this example is just showing the usage of "StaticSites_LinkBackend" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StaticSiteLinkedBackendResource created on azure
+            // for more information of creating StaticSiteLinkedBackendResource, please refer to the document of StaticSiteLinkedBackendResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testStaticSite0";
+            string linkedBackendName = "testBackend";
+            ResourceIdentifier staticSiteLinkedBackendResourceId = StaticSiteLinkedBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, linkedBackendName);
+            StaticSiteLinkedBackendResource staticSiteLinkedBackend = client.GetStaticSiteLinkedBackendResource(staticSiteLinkedBackendResourceId);
+
+            // invoke the operation
+            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData
+            {
+                BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
+                Region = "West US 2",
+            };
+            ArmOperation<StaticSiteLinkedBackendResource> lro = await staticSiteLinkedBackend.UpdateAsync(WaitUntil.Completed, data);
+            StaticSiteLinkedBackendResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StaticSiteLinkedBackendData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ValidateBackend_ValidateIfBackendCanBeLinkedToStaticSite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ValidateLinkedBackendForStaticSite.json
+            // this example is just showing the usage of "StaticSites_ValidateBackend" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StaticSiteLinkedBackendResource created on azure
+            // for more information of creating StaticSiteLinkedBackendResource, please refer to the document of StaticSiteLinkedBackendResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testStaticSite0";
+            string linkedBackendName = "testBackend";
+            ResourceIdentifier staticSiteLinkedBackendResourceId = StaticSiteLinkedBackendResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, linkedBackendName);
+            StaticSiteLinkedBackendResource staticSiteLinkedBackend = client.GetStaticSiteLinkedBackendResource(staticSiteLinkedBackendResourceId);
+
+            // invoke the operation
+            StaticSiteLinkedBackendData data = new StaticSiteLinkedBackendData
+            {
+                BackendResourceId = new ResourceIdentifier("/subscription/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/backendRg/providers/Microsoft.Web/sites/testBackend"),
+                Region = "West US 2",
+            };
+            await staticSiteLinkedBackend.ValidateBackendAsync(WaitUntil.Completed, data).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

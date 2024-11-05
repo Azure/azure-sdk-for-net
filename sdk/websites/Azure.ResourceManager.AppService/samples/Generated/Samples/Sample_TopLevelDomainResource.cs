@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_TopLevelDomainResource
     {
-        // Get Top Level Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTopLevelDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetTopLevelDomain.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List Top Level Domain Agreements
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAgreements_ListTopLevelDomainAgreements()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/ListTopLevelDomainAgreements.json
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Samples
             TopLevelDomainResource topLevelDomain = client.GetTopLevelDomainResource(topLevelDomainResourceId);
 
             // invoke the operation and iterate over the result
-            TopLevelDomainAgreementOption agreementOption = new TopLevelDomainAgreementOption()
+            TopLevelDomainAgreementOption agreementOption = new TopLevelDomainAgreementOption
             {
                 IncludePrivacy = true,
                 IsForTransfer = false,
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

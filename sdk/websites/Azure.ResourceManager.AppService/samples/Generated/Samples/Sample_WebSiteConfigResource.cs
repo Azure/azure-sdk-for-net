@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteConfigResource
     {
-        // Get Site Config
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSiteConfig()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteConfig.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Site Config
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateSiteConfig()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateSiteConfig.json
@@ -68,13 +67,10 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteConfigResource webSiteConfig = client.GetWebSiteConfigResource(webSiteConfigResourceId);
 
             // invoke the operation
-            SiteConfigData data = new SiteConfigData()
+            SiteConfigData data = new SiteConfigData
             {
                 NumberOfWorkers = 1,
-                DefaultDocuments =
-{
-"Default.htm","Default.html","Default.asp","index.htm","index.html","iisstart.htm","default.aspx","index.php","hostingstart.html"
-},
+                DefaultDocuments = { "Default.htm", "Default.html", "Default.asp", "index.htm", "index.html", "iisstart.htm", "default.aspx", "index.php", "hostingstart.html" },
                 NetFrameworkVersion = "v4.0",
                 PhpVersion = "5.6",
                 PythonVersion = "",
@@ -92,15 +88,12 @@ namespace Azure.ResourceManager.AppService.Samples
                 IsAlwaysOn = false,
                 AppCommandLine = "",
                 ManagedPipelineMode = ManagedPipelineMode.Integrated,
-                VirtualApplications =
-{
-new VirtualApplication()
+                VirtualApplications = {new VirtualApplication
 {
 VirtualPath = "/",
 PhysicalPath = "site\\wwwroot",
 IsPreloadEnabled = false,
-}
-},
+}},
                 LoadBalancing = SiteLoadBalancing.LeastRequests,
                 IsAutoHealEnabled = false,
                 VnetName = "",
@@ -113,9 +106,7 @@ IsPreloadEnabled = false,
                 FunctionAppScaleLimit = 0,
                 IsFunctionsRuntimeScaleMonitoringEnabled = false,
                 MinimumElasticInstanceCount = 0,
-                AzureStorageAccounts =
-{
-},
+                AzureStorageAccounts = { },
             };
             ArmOperation<WebSiteConfigResource> lro = await webSiteConfig.CreateOrUpdateAsync(WaitUntil.Completed, data);
             WebSiteConfigResource result = lro.Value;

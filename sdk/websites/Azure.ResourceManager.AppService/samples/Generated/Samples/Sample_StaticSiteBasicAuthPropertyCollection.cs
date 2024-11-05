@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteBasicAuthPropertyCollection
     {
-        // Lists the basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListsTheBasicAuthPropertiesForAStaticSite()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatesOrUpdatesBasicAuthPropertiesForAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListStaticSiteBasicAuth.json
-            // this example is just showing the usage of "StaticSites_ListBasicAuth" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteBasicAuth.json
+            // this example is just showing the usage of "StaticSites_CreateOrUpdateBasicAuth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,22 +39,27 @@ namespace Azure.ResourceManager.AppService.Samples
             // get the collection of this StaticSiteBasicAuthPropertyResource
             StaticSiteBasicAuthPropertyCollection collection = staticSite.GetStaticSiteBasicAuthProperties();
 
-            // invoke the operation and iterate over the result
-            await foreach (StaticSiteBasicAuthPropertyResource item in collection.GetAllAsync())
+            // invoke the operation
+            StaticSiteBasicAuthName basicAuthName = StaticSiteBasicAuthName.Default;
+            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StaticSiteBasicAuthPropertyData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Password = "**********************",
+                SecretUri = null,
+                ApplicableEnvironmentsMode = "AllEnvironments",
+                Environments = { },
+            };
+            ArmOperation<StaticSiteBasicAuthPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, basicAuthName, data);
+            StaticSiteBasicAuthPropertyResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StaticSiteBasicAuthPropertyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheBasicAuthPropertiesForAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBasicAuth.json
@@ -87,9 +92,44 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListsTheBasicAuthPropertiesForAStaticSite()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListStaticSiteBasicAuth.json
+            // this example is just showing the usage of "StaticSites_ListBasicAuth" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StaticSiteResource created on azure
+            // for more information of creating StaticSiteResource, please refer to the document of StaticSiteResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testStaticSite0";
+            ResourceIdentifier staticSiteResourceId = StaticSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
+
+            // get the collection of this StaticSiteBasicAuthPropertyResource
+            StaticSiteBasicAuthPropertyCollection collection = staticSite.GetStaticSiteBasicAuthProperties();
+
+            // invoke the operation and iterate over the result
+            await foreach (StaticSiteBasicAuthPropertyResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StaticSiteBasicAuthPropertyData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsTheBasicAuthPropertiesForAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBasicAuth.json
@@ -118,9 +158,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets the basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsTheBasicAuthPropertiesForAStaticSite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetStaticSiteBasicAuth.json
@@ -149,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,51 +198,6 @@ namespace Azure.ResourceManager.AppService.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Creates or updates basic auth properties for a static site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreatesOrUpdatesBasicAuthPropertiesForAStaticSite()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/CreateOrUpdateStaticSiteBasicAuth.json
-            // this example is just showing the usage of "StaticSites_CreateOrUpdateBasicAuth" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StaticSiteResource created on azure
-            // for more information of creating StaticSiteResource, please refer to the document of StaticSiteResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "rg";
-            string name = "testStaticSite0";
-            ResourceIdentifier staticSiteResourceId = StaticSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
-
-            // get the collection of this StaticSiteBasicAuthPropertyResource
-            StaticSiteBasicAuthPropertyCollection collection = staticSite.GetStaticSiteBasicAuthProperties();
-
-            // invoke the operation
-            StaticSiteBasicAuthName basicAuthName = StaticSiteBasicAuthName.Default;
-            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData()
-            {
-                Password = "**********************",
-                SecretUri = null,
-                ApplicableEnvironmentsMode = "AllEnvironments",
-                Environments =
-{
-},
-            };
-            ArmOperation<StaticSiteBasicAuthPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, basicAuthName, data);
-            StaticSiteBasicAuthPropertyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StaticSiteBasicAuthPropertyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

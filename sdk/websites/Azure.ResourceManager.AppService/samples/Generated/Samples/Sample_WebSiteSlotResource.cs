@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteSlotResource
     {
-        // Get Web App Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebAppSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebAppSlot.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Web App Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebAppSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteWebAppSlot.json
@@ -71,14 +70,13 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            await webSiteSlot.DeleteAsync(WaitUntil.Completed);
+            await webSiteSlot.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Web App Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateWebAppSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateWebAppSlot.json
@@ -99,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            SitePatchInfo info = new SitePatchInfo()
+            SitePatchInfo info = new SitePatchInfo
             {
                 ServerFarmId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
             };
@@ -112,9 +110,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Analyze custom hostname for slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AnalyzeCustomHostnameSlot_AnalyzeCustomHostnameForSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AnalyzeCustomHostNameSlot.json
@@ -140,9 +137,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Deployment Status Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSlotSiteDeploymentStatusesSlot_ListDeploymentStatusSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatusSlot.json
@@ -168,12 +164,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Deployment Status Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSlotSiteDeploymentStatusSlot_GetDeploymentStatusSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatusSlot.json
@@ -201,9 +196,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List backups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllSiteBackupSlotData_ListBackups()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSlotBackups.json
@@ -230,12 +224,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperationSlot_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -262,12 +255,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartWebSiteNetworkTraceOperationSlot_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -289,15 +281,14 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // invoke the operation
             int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil.Completed, durationInSeconds);
             IList<WebAppNetworkTrace> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopWebSiteNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -318,14 +309,13 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            await webSiteSlot.StopWebSiteNetworkTraceSlotAsync();
+            await webSiteSlot.StopWebSiteNetworkTraceSlotAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTracesSlot_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -352,12 +342,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperationSlotV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -384,12 +373,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTracesSlotV2_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -416,12 +404,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get private link resources of a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResourcesSlot_GetPrivateLinkResourcesOfASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateLinkResourcesSlot.json
@@ -447,12 +434,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartNetworkTraceSlot_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -474,15 +460,14 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // invoke the operation
             int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartNetworkTraceSlotAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSiteSlot.StartNetworkTraceSlotAsync(WaitUntil.Completed, durationInSeconds);
             IList<WebAppNetworkTrace> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopNetworkTraceSlot_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -503,14 +488,13 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            await webSiteSlot.StopNetworkTraceSlotAsync();
+            await webSiteSlot.StopNetworkTraceSlotAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deploys workflow artifacts slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifactsSlot_DeploysWorkflowArtifactsSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/PostDeployWorkflowArtifactsSlot.json
@@ -531,69 +515,74 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts()
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
             {
-                AppSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                AppSettings = BinaryData.FromObjectAsJson(new
                 {
-                    ["eventHub_connectionString"] = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE="
+                    eventHub_connectionString = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE=",
                 }),
                 Files =
 {
-["connections.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["connections.json"] = BinaryData.FromObjectAsJson(new
 {
-["managedApiConnections"] = new Dictionary<string, object>()
+managedApiConnections = new object(),
+serviceProviderConnections = new
 {
+eventHub = new
+{
+displayName = "example1",
+parameterValues = new
+{
+connectionString = "@appsetting('eventHub_connectionString')",
 },
-["serviceProviderConnections"] = new Dictionary<string, object>()
+serviceProvider = new
 {
-["eventHub"] = new Dictionary<string, object>()
+id = "/serviceProviders/eventHub",
+},
+},
+},
+}),
+["test1/workflow.json"] = BinaryData.FromObjectAsJson(new
 {
-["displayName"] = "example1",
-["parameterValues"] = new Dictionary<string, object>()
-{
-["connectionString"] = "@appsetting('eventHub_connectionString')"},
-["serviceProvider"] = new Dictionary<string, object>()
-{
-["id"] = "/serviceProviders/eventHub"}}}}),
-["test1/workflow.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["definition"] = new Dictionary<string, object>()
+definition = new Dictionary<string, object>
 {
 ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-["actions"] = new Dictionary<string, object>()
-{
-},
+["actions"] = new object(),
 ["contentVersion"] = "1.0.0.0",
-["outputs"] = new Dictionary<string, object>()
+["outputs"] = new object(),
+["triggers"] = new
 {
+When_events_are_available_in_Event_hub = new
+{
+type = "ServiceProvider",
+inputs = new
+{
+parameters = new
+{
+eventHubName = "test123",
 },
-["triggers"] = new Dictionary<string, object>()
+serviceProviderConfiguration = new
 {
-["When_events_are_available_in_Event_hub"] = new Dictionary<string, object>()
-{
-["type"] = "ServiceProvider",
-["inputs"] = new Dictionary<string, object>()
-{
-["parameters"] = new Dictionary<string, object>()
-{
-["eventHubName"] = "test123"},
-["serviceProviderConfiguration"] = new Dictionary<string, object>()
-{
-["operationId"] = "receiveEvents",
-["connectionName"] = "eventHub",
-["serviceProviderId"] = "/serviceProviders/eventHub"}},
-["splitOn"] = "@triggerOutputs()?['body']"}}},
-["kind"] = "Stateful"}),
+operationId = "receiveEvents",
+connectionName = "eventHub",
+serviceProviderId = "/serviceProviders/eventHub",
+},
+},
+splitOn = "@triggerOutputs()?['body']",
+},
+}
+},
+kind = "Stateful",
+})
 },
             };
-            await webSiteSlot.DeployWorkflowArtifactsSlotAsync(workflowArtifacts: workflowArtifacts);
+            await webSiteSlot.DeployWorkflowArtifactsSlotAsync(workflowArtifacts).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the Instance Workflows Configuration Connections Slot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnectionsSlot_ListTheInstanceWorkflowsConfigurationConnectionsSlot()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWorkflowsConfigurationConnections.json

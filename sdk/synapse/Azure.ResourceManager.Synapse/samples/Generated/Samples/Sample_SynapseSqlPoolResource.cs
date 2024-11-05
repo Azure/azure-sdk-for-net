@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseSqlPoolResource
     {
-        // Get a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetSqlPool.json
@@ -47,57 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateASQLAnalyticsPool()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/UpdateSqlPool.json
-            // this example is just showing the usage of "SqlPools_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SynapseSqlPoolResource created on azure
-            // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
-            string resourceGroupName = "ExampleResourceGroup";
-            string workspaceName = "ExampleWorkspace";
-            string sqlPoolName = "ExampleSqlPool";
-            ResourceIdentifier synapseSqlPoolResourceId = SynapseSqlPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, sqlPoolName);
-            SynapseSqlPoolResource synapseSqlPool = client.GetSynapseSqlPoolResource(synapseSqlPoolResourceId);
-
-            // invoke the operation
-            SynapseSqlPoolPatch patch = new SynapseSqlPoolPatch()
-            {
-                Tags =
-{
-},
-                Location = new AzureLocation("West US 2"),
-                Sku = new SynapseSku()
-                {
-                    Tier = "",
-                    Name = "",
-                },
-                MaxSizeBytes = 0L,
-                Collation = "",
-                RestorePointInTime = DateTimeOffset.Parse("1970-01-01T00:00:00.000Z"),
-            };
-            ArmOperation<SynapseSqlPoolResource> lro = await synapseSqlPool.UpdateAsync(WaitUntil.Completed, patch);
-            SynapseSqlPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SynapseSqlPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/DeleteSqlPool.json
@@ -124,9 +75,53 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Pause a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateASQLAnalyticsPool()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/UpdateSqlPool.json
+            // this example is just showing the usage of "SqlPools_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseSqlPoolResource created on azure
+            // for more information of creating SynapseSqlPoolResource, please refer to the document of SynapseSqlPoolResource
+            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string resourceGroupName = "ExampleResourceGroup";
+            string workspaceName = "ExampleWorkspace";
+            string sqlPoolName = "ExampleSqlPool";
+            ResourceIdentifier synapseSqlPoolResourceId = SynapseSqlPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, sqlPoolName);
+            SynapseSqlPoolResource synapseSqlPool = client.GetSynapseSqlPoolResource(synapseSqlPoolResourceId);
+
+            // invoke the operation
+            SynapseSqlPoolPatch patch = new SynapseSqlPoolPatch
+            {
+                Tags = { },
+                Location = new AzureLocation("West US 2"),
+                Sku = new SynapseSku
+                {
+                    Tier = "",
+                    Name = "",
+                },
+                MaxSizeBytes = 0L,
+                Collation = "",
+                RestorePointInTime = default,
+            };
+            ArmOperation<SynapseSqlPoolResource> lro = await synapseSqlPool.UpdateAsync(WaitUntil.Completed, patch);
+            SynapseSqlPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapseSqlPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Pause_PauseASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/PauseSqlPool.json
@@ -153,9 +148,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Resume a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resume_ResumeASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ResumeSqlPool.json
@@ -182,9 +176,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Rename a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Rename_RenameASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/RenameSqlPool.json
@@ -206,14 +199,13 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // invoke the operation
             SynapseResourceMoveDefinition synapseResourceMoveDefinition = new SynapseResourceMoveDefinition(new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-SouthEastAsia/providers/Microsoft.Synapse/workspaces/testsvr/sqlPools/newtestdb"));
-            await synapseSqlPool.RenameAsync(synapseResourceMoveDefinition);
+            await synapseSqlPool.RenameAsync(synapseResourceMoveDefinition).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Creates Sql pool restore point.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateSqlPoolRestorePoint_CreatesSqlPoolRestorePoint()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateSqlPoolRestorePoints.json
@@ -245,9 +237,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List the usages of a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSqlPoolUsages_ListTheUsagesOfASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/SqlPoolUsageMetricsList.json
@@ -273,12 +264,11 @@ namespace Azure.ResourceManager.Synapse.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the current sensitivity labels of a given SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCurrentSqlPoolSensitivityLabels_GetsTheCurrentSensitivityLabelsOfAGivenSQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ListSqlPoolsSensitivityLabelsWithSourceCurrent.json
@@ -308,12 +298,11 @@ namespace Azure.ResourceManager.Synapse.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update sensitivity labels of a given database using an operations batch.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateSqlPoolSensitivityLabel_UpdateSensitivityLabelsOfAGivenDatabaseUsingAnOperationsBatch()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/SensitivityLabelsCurrentUpdate.json
@@ -334,17 +323,15 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseSqlPoolResource synapseSqlPool = client.GetSynapseSqlPoolResource(synapseSqlPoolResourceId);
 
             // invoke the operation
-            SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult = new SynapseSensitivityLabelUpdateListResult()
+            SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult = new SynapseSensitivityLabelUpdateListResult
             {
-                Operations =
-{
-new SynapseSensitivityLabelUpdate()
+                Operations = {new SynapseSensitivityLabelUpdate
 {
 Op = SynapseSensitivityLabelUpdateKind.Set,
 Schema = "dbo",
 Table = "table1",
 Column = "column1",
-SensitivityLabel = new SynapseSensitivityLabelData()
+SensitivityLabel = new SynapseSensitivityLabelData
 {
 LabelName = "Highly Confidential",
 LabelId = Guid.Parse("3A477B16-9423-432B-AA97-6069B481CEC3"),
@@ -352,13 +339,13 @@ InformationType = "Financial",
 InformationTypeId = Guid.Parse("1D3652D6-422C-4115-82F1-65DAEBC665C8"),
 Rank = SynapseSensitivityLabelRank.Low,
 },
-},new SynapseSensitivityLabelUpdate()
+}, new SynapseSensitivityLabelUpdate
 {
 Op = SynapseSensitivityLabelUpdateKind.Set,
 Schema = "dbo",
 Table = "table2",
 Column = "column2",
-SensitivityLabel = new SynapseSensitivityLabelData()
+SensitivityLabel = new SynapseSensitivityLabelData
 {
 LabelName = "PII",
 LabelId = Guid.Parse("bf91e08c-f4f0-478a-b016-25164b2a65ff"),
@@ -366,23 +353,21 @@ InformationType = "PhoneNumber",
 InformationTypeId = Guid.Parse("d22fa6e9-5ee4-3bde-4c2b-a409604c4646"),
 Rank = SynapseSensitivityLabelRank.Critical,
 },
-},new SynapseSensitivityLabelUpdate()
+}, new SynapseSensitivityLabelUpdate
 {
 Op = SynapseSensitivityLabelUpdateKind.Remove,
 Schema = "dbo",
 Table = "Table1",
 Column = "Column3",
-}
-},
+}},
             };
-            await synapseSqlPool.UpdateSqlPoolSensitivityLabelAsync(synapseSensitivityLabelUpdateListResult);
+            await synapseSqlPool.UpdateSqlPoolSensitivityLabelAsync(synapseSensitivityLabelUpdateListResult).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the recommended sensitivity labels of a given SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRecommendedSqlPoolSensitivityLabels_GetsTheRecommendedSensitivityLabelsOfAGivenSQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ListSqlPoolSensitivityLabelsWithSourceRecommended.json
@@ -412,12 +397,11 @@ Column = "Column3",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update recommended sensitivity labels of a given SQL Pool using an operations batch.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateSqlPoolRecommendedSensitivityLabel_UpdateRecommendedSensitivityLabelsOfAGivenSQLPoolUsingAnOperationsBatch()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/SensitivityLabelsRecommendedUpdate.json
@@ -438,34 +422,31 @@ Column = "Column3",
             SynapseSqlPoolResource synapseSqlPool = client.GetSynapseSqlPoolResource(synapseSqlPoolResourceId);
 
             // invoke the operation
-            SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult = new SynapseRecommendedSensitivityLabelUpdateOperationListResult()
+            SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult = new SynapseRecommendedSensitivityLabelUpdateOperationListResult
             {
-                Operations =
-{
-new SynapseRecommendedSensitivityLabelUpdate()
+                Operations = {new SynapseRecommendedSensitivityLabelUpdate
 {
 Op = SynapseRecommendedSensitivityLabelUpdateKind.Enable,
 Schema = "dbo",
 Table = "table1",
 Column = "column1",
-},new SynapseRecommendedSensitivityLabelUpdate()
+}, new SynapseRecommendedSensitivityLabelUpdate
 {
 Op = SynapseRecommendedSensitivityLabelUpdateKind.Enable,
 Schema = "dbo",
 Table = "table2",
 Column = "column2",
-},new SynapseRecommendedSensitivityLabelUpdate()
+}, new SynapseRecommendedSensitivityLabelUpdate
 {
 Op = SynapseRecommendedSensitivityLabelUpdateKind.Disable,
 Schema = "dbo",
 Table = "table1",
 Column = "column3",
-}
-},
+}},
             };
-            await synapseSqlPool.UpdateSqlPoolRecommendedSensitivityLabelAsync(synapseRecommendedSensitivityLabelUpdateOperationListResult);
+            await synapseSqlPool.UpdateSqlPoolRecommendedSensitivityLabelAsync(synapseRecommendedSensitivityLabelUpdateOperationListResult).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

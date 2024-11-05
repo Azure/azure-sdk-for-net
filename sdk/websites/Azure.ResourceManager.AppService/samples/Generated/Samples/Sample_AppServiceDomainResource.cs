@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_AppServiceDomainResource
     {
-        // List domains by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAppServiceDomains_ListDomainsBySubscription()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/ListDomainsBySubscription.json
-            // this example is just showing the usage of "Domains_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AppServiceDomainResource item in subscriptionResource.GetAppServiceDomainsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppServiceDomainData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomain.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/DeleteAppServiceDomain.json
@@ -102,14 +68,13 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // invoke the operation
             bool? forceHardDeleteDomain = true;
-            await appServiceDomain.DeleteAsync(WaitUntil.Completed, forceHardDeleteDomain: forceHardDeleteDomain);
+            await appServiceDomain.DeleteAsync(WaitUntil.Completed, forceHardDeleteDomain).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update App Service Domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAppServiceDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/UpdateAppServiceDomain.json
@@ -129,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Samples
             AppServiceDomainResource appServiceDomain = client.GetAppServiceDomainResource(appServiceDomainResourceId);
 
             // invoke the operation
-            AppServiceDomainPatch patch = new AppServiceDomainPatch()
+            AppServiceDomainPatch patch = new AppServiceDomainPatch
             {
                 ContactAdmin = new RegistrationContactInfo("admin@email.com", "John", "Doe", "1-245-534-2242")
                 {
@@ -165,14 +130,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 },
                 IsDomainPrivacyEnabled = false,
                 IsAutoRenew = true,
-                Consent = new DomainPurchaseConsent()
+                Consent = new DomainPurchaseConsent
                 {
-                    AgreementKeys =
-{
-"agreementKey1"
-},
+                    AgreementKeys = { "agreementKey1" },
                     AgreedBy = "192.0.2.1",
-                    AgreedOn = DateTimeOffset.Parse("2021-09-10T19:30:53Z"),
+                    AgreedOn = default,
                 },
                 DnsType = AppServiceDnsType.DefaultDomainRegistrarDns,
                 AuthCode = "exampleAuthCode",
@@ -186,9 +148,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Renew an existing domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Renew_RenewAnExistingDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/RenewDomain.json
@@ -208,14 +169,13 @@ namespace Azure.ResourceManager.AppService.Samples
             AppServiceDomainResource appServiceDomain = client.GetAppServiceDomainResource(appServiceDomainResourceId);
 
             // invoke the operation
-            await appServiceDomain.RenewAsync();
+            await appServiceDomain.RenewAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Transfer out domain
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TransferOut_TransferOutDomain()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/TransferOutDomain.json

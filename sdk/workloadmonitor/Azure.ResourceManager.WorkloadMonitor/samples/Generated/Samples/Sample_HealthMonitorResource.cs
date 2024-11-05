@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadMonitor.Samples
 {
     public partial class Sample_HealthMonitorResource
     {
-        // Get monitor with default values
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMonitorWithDefaultValues()
         {
             // Generated from example definition: specification/workloadmonitor/resource-manager/Microsoft.WorkloadMonitor/preview/2020-01-13-preview/examples/Monitor_GetDefault.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get monitor with expanded values
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMonitorWithExpandedValues()
         {
             // Generated from example definition: specification/workloadmonitor/resource-manager/Microsoft.WorkloadMonitor/preview/2020-01-13-preview/examples/Monitor_GetExpanded.json
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Samples
 
             // invoke the operation
             string expand = "evidence";
-            HealthMonitorResource result = await healthMonitor.GetAsync(expand: expand);
+            HealthMonitorResource result = await healthMonitor.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

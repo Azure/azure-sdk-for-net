@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_AppServiceCertificateResource
     {
-        // Get App Service Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServiceCertificate()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/GetAppServiceCertificate.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceCertificate()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/DeleteAppServiceCertificate.json
@@ -70,14 +69,13 @@ namespace Azure.ResourceManager.AppService.Samples
             AppServiceCertificateResource appServiceCertificate = client.GetAppServiceCertificateResource(appServiceCertificateResourceId);
 
             // invoke the operation
-            await appServiceCertificate.DeleteAsync(WaitUntil.Completed);
+            await appServiceCertificate.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCertificate()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/UpdateAppServiceCertificate.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Samples
             AppServiceCertificateResource appServiceCertificate = client.GetAppServiceCertificateResource(appServiceCertificateResourceId);
 
             // invoke the operation
-            AppServiceCertificatePatch patch = new AppServiceCertificatePatch()
+            AppServiceCertificatePatch patch = new AppServiceCertificatePatch
             {
                 KeyVaultId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/microsoft.keyvault/vaults/SamplevaultName"),
                 KeyVaultSecretName = "SampleSecretName1",

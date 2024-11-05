@@ -11,47 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteResource
     {
-        // List Web apps for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetWebSites_ListWebAppsForSubscription()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWebApps.json
-            // this example is just showing the usage of "WebApps_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (WebSiteResource item in subscriptionResource.GetWebSitesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                WebSiteData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Web App
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebApp.json
@@ -80,9 +47,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteWebApp.json
@@ -102,14 +68,13 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            await webSite.DeleteAsync(WaitUntil.Completed);
+            await webSite.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateWebApp.json
@@ -129,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SitePatchInfo info = new SitePatchInfo()
+            SitePatchInfo info = new SitePatchInfo
             {
                 ServerFarmId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
             };
@@ -142,9 +107,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Analyze custom hostname for webapp.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AnalyzeCustomHostname_AnalyzeCustomHostnameForWebapp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AnalyzeCustomHostName.json
@@ -169,9 +133,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Apply web app slot config
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplySlotConfigToProduction_ApplyWebAppSlotConfig()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ApplySlotConfig.json
@@ -192,14 +155,13 @@ namespace Azure.ResourceManager.AppService.Samples
 
             // invoke the operation
             CsmSlotEntity slotSwapEntity = new CsmSlotEntity("staging", true);
-            await webSite.ApplySlotConfigToProductionAsync(slotSwapEntity);
+            await webSite.ApplySlotConfigToProductionAsync(slotSwapEntity).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Backup web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_BackupWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/BackupWebApp.json
@@ -219,29 +181,26 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            WebAppBackupInfo info = new WebAppBackupInfo()
+            WebAppBackupInfo info = new WebAppBackupInfo
             {
                 BackupName = "abcdwe",
                 IsEnabled = true,
                 StorageAccountUri = new Uri("DefaultEndpointsProtocol=https;AccountName=storagesample;AccountKey=<account-key>"),
                 BackupSchedule = new WebAppBackupSchedule(7, BackupFrequencyUnit.Day, true, 30)
                 {
-                    StartOn = DateTimeOffset.Parse("2022-09-02T17:33:11.641Z"),
+                    StartOn = default,
                 },
-                Databases =
-{
-new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+                Databases = {new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "backenddb",
 ConnectionStringName = "backend",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-},new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+}, new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "statsdb",
 ConnectionStringName = "stats",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-}
-},
+}},
             };
             WebAppBackupData result = await webSite.BackupAsync(info);
 
@@ -249,9 +208,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // List web app configurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllConfigurationData_ListWebAppConfigurations()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWebAppConfigurations.json
@@ -277,12 +235,11 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update App Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateApplicationSettings_UpdateAppSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAppSettings.json
@@ -302,12 +259,12 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["Setting1"] = "Value1",
-["Setting2"] = "Value2",
+["Setting2"] = "Value2"
 },
             };
             AppServiceConfigurationDictionary result = await webSite.UpdateApplicationSettingsAsync(appSettings);
@@ -315,9 +272,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List App Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationSettings_ListAppSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAppSettings.json
@@ -342,9 +298,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Auth Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettings_UpdateAuthSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAuthSettings.json
@@ -364,16 +319,13 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SiteAuthSettings siteAuthSettings = new SiteAuthSettings()
+            SiteAuthSettings siteAuthSettings = new SiteAuthSettings
             {
                 IsEnabled = true,
                 RuntimeVersion = "~1",
                 UnauthenticatedClientAction = UnauthenticatedClientAction.RedirectToLoginPage,
                 IsTokenStoreEnabled = true,
-                AllowedExternalRedirectUrls =
-{
-"sitef6141.customdomain.net","sitef6141.customdomain.info"
-},
+                AllowedExternalRedirectUrls = { "sitef6141.customdomain.net", "sitef6141.customdomain.info" },
                 DefaultProvider = BuiltInAuthenticationProvider.Google,
                 TokenRefreshExtensionHours = 120,
                 ClientId = "42d795a9-8abb-4d06-8534-39528af40f8e.apps.googleusercontent.com",
@@ -383,9 +335,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettings_ListAuthSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAuthSettings.json
@@ -410,9 +361,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings without Secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2WithoutSecrets_ListAuthSettingsWithoutSecrets()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetAuthSettingsV2WithoutSecrets.json
@@ -437,9 +387,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Auth Settings V2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettingsV2_UpdateAuthSettingsV2()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAuthSettingsV2.json
@@ -459,72 +408,60 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SiteAuthSettingsV2 siteAuthSettingsV2 = new SiteAuthSettingsV2()
+            SiteAuthSettingsV2 siteAuthSettingsV2 = new SiteAuthSettingsV2
             {
-                Platform = new AuthPlatform()
+                Platform = new AuthPlatform
                 {
                     IsEnabled = true,
                     RuntimeVersion = "~1",
                     ConfigFilePath = "/auth/config.json",
                 },
-                GlobalValidation = new GlobalValidation()
+                GlobalValidation = new GlobalValidation
                 {
                     IsAuthenticationRequired = true,
                     UnauthenticatedClientAction = UnauthenticatedClientActionV2.Return403,
-                    ExcludedPaths =
-{
-"/nosecrets/Path"
-},
+                    ExcludedPaths = { "/nosecrets/Path" },
                 },
-                IdentityProviders = new AppServiceIdentityProviders()
+                IdentityProviders = new AppServiceIdentityProviders
                 {
-                    Google = new AppServiceGoogleProvider()
+                    Google = new AppServiceGoogleProvider
                     {
                         IsEnabled = true,
-                        Registration = new ClientRegistration()
+                        Registration = new ClientRegistration
                         {
                             ClientId = "42d795a9-8abb-4d06-8534-39528af40f8e.apps.googleusercontent.com",
                             ClientSecretSettingName = "ClientSecret",
                         },
-                        LoginScopes =
-{
-"admin"
-},
-                        ValidationAllowedAudiences =
-{
-"https://example.com"
-},
+                        LoginScopes = { "admin" },
+                        ValidationAllowedAudiences = { "https://example.com" },
                     },
                 },
-                Login = new WebAppLoginInfo()
+                Login = new WebAppLoginInfo
                 {
                     RoutesLogoutEndpoint = "https://app.com/logout",
-                    TokenStore = new AppServiceTokenStore()
+                    TokenStore = new AppServiceTokenStore
                     {
                         IsEnabled = true,
                         TokenRefreshExtensionHours = 96,
                         FileSystemDirectory = "/wwwroot/sites/example",
                     },
                     PreserveUrlFragmentsForLogins = true,
-                    AllowedExternalRedirectUrls =
-{
-"https://someurl.com"
-},
-                    CookieExpiration = new WebAppCookieExpiration()
+                    AllowedExternalRedirectUrls = { "https://someurl.com" },
+                    CookieExpiration = new WebAppCookieExpiration
                     {
                         Convention = CookieExpirationConvention.IdentityProviderDerived,
                         TimeToExpiration = "2022:09-01T00:00Z",
                     },
-                    Nonce = new LoginFlowNonceSettings()
+                    Nonce = new LoginFlowNonceSettings
                     {
                         ValidateNonce = true,
                     },
                 },
-                HttpSettings = new AppServiceHttpSettings()
+                HttpSettings = new AppServiceHttpSettings
                 {
                     IsHttpsRequired = true,
                     RoutesApiPrefix = "/authv2/",
-                    ForwardProxy = new AppServiceForwardProxy()
+                    ForwardProxy = new AppServiceForwardProxy
                     {
                         Convention = ForwardProxyConvention.Standard,
                         CustomHostHeaderName = "authHeader",
@@ -537,9 +474,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings V2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2_ListAuthSettingsV2()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAuthSettingsV2.json
@@ -564,9 +500,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Azure Storage Accounts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAzureStorageAccounts_UpdateAzureStorageAccounts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAzureStorageAccounts.json
@@ -586,18 +521,18 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            AzureStoragePropertyDictionary azureStorageAccounts = new AzureStoragePropertyDictionary()
+            AzureStoragePropertyDictionary azureStorageAccounts = new AzureStoragePropertyDictionary
             {
                 Properties =
 {
-["account1"] = new AppServiceStorageAccessInfo()
+["account1"] = new AppServiceStorageAccessInfo
 {
 StorageType = AppServiceStorageType.AzureFiles,
 AccountName = "testsa",
 ShareName = "web",
 AccessKey = "26515^%@#*",
 MountPath = "/mounts/a/files",
-},
+}
 },
             };
             AzureStoragePropertyDictionary result = await webSite.UpdateAzureStorageAccountsAsync(azureStorageAccounts);
@@ -605,9 +540,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Deployment Status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatuses_ListDeploymentStatus()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatus.json
@@ -632,12 +566,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Deployment Status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatus_GetDeploymentStatus()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatus.json
@@ -664,9 +597,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List backups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllSiteBackupData_ListBackups()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSlotBackups.json
@@ -692,12 +624,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperation_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -723,12 +654,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartWebSiteNetworkTraceOperation_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -749,15 +679,14 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSite.StartWebSiteNetworkTraceOperationAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSite.StartWebSiteNetworkTraceOperationAsync(WaitUntil.Completed, durationInSeconds);
             IList<WebAppNetworkTrace> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopWebSiteNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -777,14 +706,13 @@ MountPath = "/mounts/a/files",
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            await webSite.StopWebSiteNetworkTraceAsync();
+            await webSite.StopWebSiteNetworkTraceAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraces_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -810,12 +738,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperationV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -841,12 +768,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTracesV2_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -872,12 +798,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get private link resources of a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_GetPrivateLinkResourcesOfASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateLinkResources.json
@@ -902,12 +827,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartNetworkTrace_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -928,15 +852,14 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             int? durationInSeconds = 60;
-            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSite.StartNetworkTraceAsync(WaitUntil.Completed, durationInSeconds: durationInSeconds);
+            ArmOperation<IList<WebAppNetworkTrace>> lro = await webSite.StartNetworkTraceAsync(WaitUntil.Completed, durationInSeconds);
             IList<WebAppNetworkTrace> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -956,14 +879,13 @@ MountPath = "/mounts/a/files",
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            await webSite.StopNetworkTraceAsync();
+            await webSite.StopNetworkTraceAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete workflow artifacts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeleteWorkflowArtifacts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteDeployWorkflowArtifacts.json
@@ -983,21 +905,17 @@ MountPath = "/mounts/a/files",
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts()
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
             {
-                FilesToDelete =
-{
-"test/workflow.json","test/"
-},
+                FilesToDelete = { "test/workflow.json", "test/" },
             };
-            await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
+            await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deploys workflow artifacts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeploysWorkflowArtifacts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/PostDeployWorkflowArtifacts.json
@@ -1017,69 +935,74 @@ MountPath = "/mounts/a/files",
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts()
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
             {
-                AppSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                AppSettings = BinaryData.FromObjectAsJson(new
                 {
-                    ["eventHub_connectionString"] = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE="
+                    eventHub_connectionString = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE=",
                 }),
                 Files =
 {
-["connections.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["connections.json"] = BinaryData.FromObjectAsJson(new
 {
-["managedApiConnections"] = new Dictionary<string, object>()
+managedApiConnections = new object(),
+serviceProviderConnections = new
 {
+eventHub = new
+{
+displayName = "example1",
+parameterValues = new
+{
+connectionString = "@appsetting('eventHub_connectionString')",
 },
-["serviceProviderConnections"] = new Dictionary<string, object>()
+serviceProvider = new
 {
-["eventHub"] = new Dictionary<string, object>()
+id = "/serviceProviders/eventHub",
+},
+},
+},
+}),
+["test1/workflow.json"] = BinaryData.FromObjectAsJson(new
 {
-["displayName"] = "example1",
-["parameterValues"] = new Dictionary<string, object>()
-{
-["connectionString"] = "@appsetting('eventHub_connectionString')"},
-["serviceProvider"] = new Dictionary<string, object>()
-{
-["id"] = "/serviceProviders/eventHub"}}}}),
-["test1/workflow.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["definition"] = new Dictionary<string, object>()
+definition = new Dictionary<string, object>
 {
 ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-["actions"] = new Dictionary<string, object>()
-{
-},
+["actions"] = new object(),
 ["contentVersion"] = "1.0.0.0",
-["outputs"] = new Dictionary<string, object>()
+["outputs"] = new object(),
+["triggers"] = new
 {
+When_events_are_available_in_Event_hub = new
+{
+type = "ServiceProvider",
+inputs = new
+{
+parameters = new
+{
+eventHubName = "test123",
 },
-["triggers"] = new Dictionary<string, object>()
+serviceProviderConfiguration = new
 {
-["When_events_are_available_in_Event_hub"] = new Dictionary<string, object>()
-{
-["type"] = "ServiceProvider",
-["inputs"] = new Dictionary<string, object>()
-{
-["parameters"] = new Dictionary<string, object>()
-{
-["eventHubName"] = "test123"},
-["serviceProviderConfiguration"] = new Dictionary<string, object>()
-{
-["operationId"] = "receiveEvents",
-["connectionName"] = "eventHub",
-["serviceProviderId"] = "/serviceProviders/eventHub"}},
-["splitOn"] = "@triggerOutputs()?['body']"}}},
-["kind"] = "Stateful"}),
+operationId = "receiveEvents",
+connectionName = "eventHub",
+serviceProviderId = "/serviceProviders/eventHub",
+},
+},
+splitOn = "@triggerOutputs()?['body']",
+},
+}
+},
+kind = "Stateful",
+})
 },
             };
-            await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
+            await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the Instance Workflows Configuration Connections
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnections_ListTheInstanceWorkflowsConfigurationConnections()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWorkflowsConfigurationConnections.json
@@ -1105,9 +1028,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // Regenerate the callback URL access key for request triggers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAccessKeyWorkflow_RegenerateTheCallbackURLAccessKeyForRequestTriggers()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Workflows_RegenerateAccessKey.json
@@ -1128,18 +1050,17 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             string workflowName = "testWorkflowName";
-            WorkflowRegenerateActionContent content = new WorkflowRegenerateActionContent()
+            WorkflowRegenerateActionContent content = new WorkflowRegenerateActionContent
             {
                 KeyType = WebAppKeyType.Primary,
             };
-            await webSite.RegenerateAccessKeyWorkflowAsync(workflowName, content);
+            await webSite.RegenerateAccessKeyWorkflowAsync(workflowName, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateWorkflow_ValidateAWorkflow()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Workflows_Validate.json
@@ -1160,30 +1081,22 @@ MountPath = "/mounts/a/files",
 
             // invoke the operation
             string workflowName = "test-workflow";
-            WorkflowData data = new WorkflowData(new AzureLocation("placeholder"))
+            WorkflowData data = new WorkflowData(default)
             {
-                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Definition = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    ["actions"] = new Dictionary<string, object>()
-                    {
-                    },
+                    ["actions"] = new object(),
                     ["contentVersion"] = "1.0.0.0",
-                    ["outputs"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["parameters"] = new Dictionary<string, object>()
-                    {
-                    },
-                    ["triggers"] = new Dictionary<string, object>()
-                    {
-                    }
+                    ["outputs"] = new object(),
+                    ["parameters"] = new object(),
+                    ["triggers"] = new object()
                 }),
                 Kind = AppServiceKind.Stateful,
             };
-            await webSite.ValidateWorkflowAsync(workflowName, data);
+            await webSite.ValidateWorkflowAsync(workflowName, data).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

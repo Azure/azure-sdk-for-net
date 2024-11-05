@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseMetadataSyncConfigurationResource
     {
-        // Get metadata sync config for a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMetadataSyncConfigForASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetSqlPoolMetadataSyncConfig.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Set metadata sync config for a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SetMetadataSyncConfigForASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateSqlPoolMetadataSyncConfig.json
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseMetadataSyncConfigurationResource synapseMetadataSyncConfiguration = client.GetSynapseMetadataSyncConfigurationResource(synapseMetadataSyncConfigurationResourceId);
 
             // invoke the operation
-            SynapseMetadataSyncConfigurationData data = new SynapseMetadataSyncConfigurationData()
+            SynapseMetadataSyncConfigurationData data = new SynapseMetadataSyncConfigurationData
             {
                 IsEnabled = true,
             };

@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_DomainOwnershipIdentifierResource
     {
-        // Get Domain Ownership Identifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomainOwnershipIdentifier()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainOwnershipIdentifier.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service Domain Ownership Identifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceDomainOwnershipIdentifier()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/DeleteAppServiceDomainOwnershipIdentifier.json
@@ -69,14 +68,13 @@ namespace Azure.ResourceManager.AppService.Samples
             DomainOwnershipIdentifierResource domainOwnershipIdentifier = client.GetDomainOwnershipIdentifierResource(domainOwnershipIdentifierResourceId);
 
             // invoke the operation
-            await domainOwnershipIdentifier.DeleteAsync(WaitUntil.Completed);
+            await domainOwnershipIdentifier.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update App Service Domain OwnershipIdentifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAppServiceDomainOwnershipIdentifier()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/UpdateAppServiceDomainOwnershipIdentifier.json
@@ -97,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Samples
             DomainOwnershipIdentifierResource domainOwnershipIdentifier = client.GetDomainOwnershipIdentifierResource(domainOwnershipIdentifierResourceId);
 
             // invoke the operation
-            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData()
+            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData
             {
                 OwnershipId = "SampleOwnershipId",
             };
