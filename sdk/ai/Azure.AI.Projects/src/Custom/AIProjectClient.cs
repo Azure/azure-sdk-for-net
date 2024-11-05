@@ -38,17 +38,20 @@ namespace Azure.AI.Projects
         {
         }
 
+        private ChatCompletionsClient _chatCompletionsClient;
+        private EmbeddingsClient _embeddingsClient;
+
         /// <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
         public virtual ChatCompletionsClient GetChatCompletionsClient()
         {
-            return InitializeInferenceClient((endpoint, credential) =>
+            return _chatCompletionsClient ??= InitializeInferenceClient((endpoint, credential) =>
                 new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
         }
 
         /// <summary> Initializes a new instance of Inference's EmbeddingsClient. </summary>
         public virtual EmbeddingsClient GetEmbeddingsClient()
         {
-            return InitializeInferenceClient((endpoint, credential) =>
+            return _embeddingsClient ??= InitializeInferenceClient((endpoint, credential) =>
                 new EmbeddingsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
         }
 
