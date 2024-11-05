@@ -142,7 +142,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
             catch (Exception ex)
             {
-                StringAssert.Contains("cluster conditions do not pass validation", ex.Message);
+                // special case: if the cluster was never deployed, version update (CUVA) is not allowed
+                // once the API bug is resolved this can be used. Until then, will compare 2 strings instead
+                // StringAssert.Contains($"cluster conditions do not pass validation for cluster {clusterName}: ClusterDeployedCondition is not True", ex.Message);
+                StringAssert.Contains("cluster conditions do not pass validation for cluster", ex.Message);
+                StringAssert.Contains("ClusterDeployedCondition is not True", ex.Message);
             }
 
             // Delete
