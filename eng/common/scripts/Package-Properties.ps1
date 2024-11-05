@@ -106,7 +106,7 @@ class PackageProps {
     }
 
     [void]InitializeCIArtifacts() {
-        if ($env:SYSTEM_TEAMPROJECTID  -or $env:GITHUB_ACTIONS) {
+        if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
             return
         }
 
