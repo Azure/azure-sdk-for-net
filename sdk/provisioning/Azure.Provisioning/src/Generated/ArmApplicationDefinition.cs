@@ -20,34 +20,54 @@ public partial class ArmApplicationDefinition : ProvisionableResource
     /// <summary>
     /// The name of the managed application definition.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The managed application lock level.
     /// </summary>
-    public BicepValue<ArmApplicationLockLevel> LockLevel { get => _lockLevel; set => _lockLevel.Assign(value); }
-    private readonly BicepValue<ArmApplicationLockLevel> _lockLevel;
+    public BicepValue<ArmApplicationLockLevel> LockLevel 
+    {
+        get { Initialize(); return _lockLevel!; }
+        set { Initialize(); _lockLevel!.Assign(value); }
+    }
+    private BicepValue<ArmApplicationLockLevel>? _lockLevel;
 
     /// <summary>
     /// The collection of managed application artifacts. The portal will use
     /// the files specified as artifacts to construct the user experience of
     /// creating a managed application from a managed application definition.
     /// </summary>
-    public BicepList<ArmApplicationDefinitionArtifact> Artifacts { get => _artifacts; set => _artifacts.Assign(value); }
-    private readonly BicepList<ArmApplicationDefinitionArtifact> _artifacts;
+    public BicepList<ArmApplicationDefinitionArtifact> Artifacts 
+    {
+        get { Initialize(); return _artifacts!; }
+        set { Initialize(); _artifacts!.Assign(value); }
+    }
+    private BicepList<ArmApplicationDefinitionArtifact>? _artifacts;
 
     /// <summary>
     /// The managed application provider authorizations.
     /// </summary>
-    public BicepList<ArmApplicationAuthorization> Authorizations { get => _authorizations; set => _authorizations.Assign(value); }
-    private readonly BicepList<ArmApplicationAuthorization> _authorizations;
+    public BicepList<ArmApplicationAuthorization> Authorizations 
+    {
+        get { Initialize(); return _authorizations!; }
+        set { Initialize(); _authorizations!.Assign(value); }
+    }
+    private BicepList<ArmApplicationAuthorization>? _authorizations;
 
     /// <summary>
     /// The createUiDefinition json for the backing template with
@@ -67,32 +87,52 @@ public partial class ArmApplicationDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> CreateUiDefinition { get => _createUiDefinition; set => _createUiDefinition.Assign(value); }
-    private readonly BicepValue<BinaryData> _createUiDefinition;
+    public BicepValue<BinaryData> CreateUiDefinition 
+    {
+        get { Initialize(); return _createUiDefinition!; }
+        set { Initialize(); _createUiDefinition!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _createUiDefinition;
 
     /// <summary>
     /// The managed application definition description.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The managed application definition display name.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// A value indicating whether the package is enabled or not.
     /// </summary>
-    public BicepValue<bool> IsEnabled { get => _isEnabled; set => _isEnabled.Assign(value); }
-    private readonly BicepValue<bool> _isEnabled;
+    public BicepValue<bool> IsEnabled 
+    {
+        get { Initialize(); return _isEnabled!; }
+        set { Initialize(); _isEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isEnabled;
 
     /// <summary>
     /// The managed application locking policy.
     /// </summary>
-    public BicepValue<ArmApplicationPackageLockingPolicy> LockingPolicy { get => _lockingPolicy; set => _lockingPolicy.Assign(value); }
-    private readonly BicepValue<ArmApplicationPackageLockingPolicy> _lockingPolicy;
+    public ArmApplicationPackageLockingPolicy LockingPolicy 
+    {
+        get { Initialize(); return _lockingPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _lockingPolicy, value); }
+    }
+    private ArmApplicationPackageLockingPolicy? _lockingPolicy;
 
     /// <summary>
     /// The inline main template json which has resources to be provisioned. It
@@ -111,62 +151,100 @@ public partial class ArmApplicationDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> MainTemplate { get => _mainTemplate; set => _mainTemplate.Assign(value); }
-    private readonly BicepValue<BinaryData> _mainTemplate;
+    public BicepValue<BinaryData> MainTemplate 
+    {
+        get { Initialize(); return _mainTemplate!; }
+        set { Initialize(); _mainTemplate!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _mainTemplate;
 
     /// <summary>
     /// ID of the resource that manages this resource.
     /// </summary>
-    public BicepValue<string> ManagedBy { get => _managedBy; set => _managedBy.Assign(value); }
-    private readonly BicepValue<string> _managedBy;
+    public BicepValue<string> ManagedBy 
+    {
+        get { Initialize(); return _managedBy!; }
+        set { Initialize(); _managedBy!.Assign(value); }
+    }
+    private BicepValue<string>? _managedBy;
 
     /// <summary>
     /// The managed application management mode.
     /// </summary>
-    public BicepValue<ArmApplicationManagementMode> ManagementMode { get => _managementMode; set => _managementMode.Assign(value); }
-    private readonly BicepValue<ArmApplicationManagementMode> _managementMode;
+    public BicepValue<ArmApplicationManagementMode> ManagementMode 
+    {
+        get { Initialize(); return _managementMode!; }
+        set { Initialize(); _managementMode!.Assign(value); }
+    }
+    private BicepValue<ArmApplicationManagementMode>? _managementMode;
 
     /// <summary>
     /// The managed application notification endpoint.
     /// </summary>
-    public BicepList<ArmApplicationNotificationEndpoint> NotificationEndpoints { get => _notificationEndpoints; set => _notificationEndpoints.Assign(value); }
-    private readonly BicepList<ArmApplicationNotificationEndpoint> _notificationEndpoints;
+    public BicepList<ArmApplicationNotificationEndpoint> NotificationEndpoints 
+    {
+        get { Initialize(); return _notificationEndpoints!; }
+        set { Initialize(); _notificationEndpoints!.Assign(value); }
+    }
+    private BicepList<ArmApplicationNotificationEndpoint>? _notificationEndpoints;
 
     /// <summary>
     /// The managed application definition package file Uri. Use this element.
     /// </summary>
-    public BicepValue<Uri> PackageFileUri { get => _packageFileUri; set => _packageFileUri.Assign(value); }
-    private readonly BicepValue<Uri> _packageFileUri;
+    public BicepValue<Uri> PackageFileUri 
+    {
+        get { Initialize(); return _packageFileUri!; }
+        set { Initialize(); _packageFileUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _packageFileUri;
 
     /// <summary>
     /// The managed application provider policies.
     /// </summary>
-    public BicepList<ArmApplicationPolicy> Policies { get => _policies; set => _policies.Assign(value); }
-    private readonly BicepList<ArmApplicationPolicy> _policies;
+    public BicepList<ArmApplicationPolicy> Policies 
+    {
+        get { Initialize(); return _policies!; }
+        set { Initialize(); _policies!.Assign(value); }
+    }
+    private BicepList<ArmApplicationPolicy>? _policies;
 
     /// <summary>
     /// The SKU of the resource.
     /// </summary>
-    public BicepValue<ArmApplicationSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<ArmApplicationSku> _sku;
+    public ArmApplicationSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private ArmApplicationSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ArmApplicationDefinition.
@@ -181,26 +259,33 @@ public partial class ArmApplicationDefinition : ProvisionableResource
     public ArmApplicationDefinition(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Solutions/applicationDefinitions", resourceVersion ?? "2021-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _lockLevel = BicepValue<ArmApplicationLockLevel>.DefineProperty(this, "LockLevel", ["properties", "lockLevel"], isRequired: true);
-        _artifacts = BicepList<ArmApplicationDefinitionArtifact>.DefineProperty(this, "Artifacts", ["properties", "artifacts"]);
-        _authorizations = BicepList<ArmApplicationAuthorization>.DefineProperty(this, "Authorizations", ["properties", "authorizations"]);
-        _createUiDefinition = BicepValue<BinaryData>.DefineProperty(this, "CreateUiDefinition", ["properties", "createUiDefinition"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _isEnabled = BicepValue<bool>.DefineProperty(this, "IsEnabled", ["properties", "isEnabled"]);
-        _lockingPolicy = BicepValue<ArmApplicationPackageLockingPolicy>.DefineProperty(this, "LockingPolicy", ["properties", "lockingPolicy"]);
-        _mainTemplate = BicepValue<BinaryData>.DefineProperty(this, "MainTemplate", ["properties", "mainTemplate"]);
-        _managedBy = BicepValue<string>.DefineProperty(this, "ManagedBy", ["managedBy"]);
-        _managementMode = BicepValue<ArmApplicationManagementMode>.DefineProperty(this, "ManagementMode", ["properties", "managementPolicy", "mode"]);
-        _notificationEndpoints = BicepList<ArmApplicationNotificationEndpoint>.DefineProperty(this, "NotificationEndpoints", ["properties", "notificationPolicy", "notificationEndpoints"]);
-        _packageFileUri = BicepValue<Uri>.DefineProperty(this, "PackageFileUri", ["properties", "packageFileUri"]);
-        _policies = BicepList<ArmApplicationPolicy>.DefineProperty(this, "Policies", ["properties", "policies"]);
-        _sku = BicepValue<ArmApplicationSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ArmApplicationDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _lockLevel = DefineProperty<ArmApplicationLockLevel>("LockLevel", ["properties", "lockLevel"], isRequired: true);
+        _artifacts = DefineListProperty<ArmApplicationDefinitionArtifact>("Artifacts", ["properties", "artifacts"]);
+        _authorizations = DefineListProperty<ArmApplicationAuthorization>("Authorizations", ["properties", "authorizations"]);
+        _createUiDefinition = DefineProperty<BinaryData>("CreateUiDefinition", ["properties", "createUiDefinition"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "isEnabled"]);
+        _lockingPolicy = DefineModelProperty<ArmApplicationPackageLockingPolicy>("LockingPolicy", ["properties", "lockingPolicy"]);
+        _mainTemplate = DefineProperty<BinaryData>("MainTemplate", ["properties", "mainTemplate"]);
+        _managedBy = DefineProperty<string>("ManagedBy", ["managedBy"]);
+        _managementMode = DefineProperty<ArmApplicationManagementMode>("ManagementMode", ["properties", "managementPolicy", "mode"]);
+        _notificationEndpoints = DefineListProperty<ArmApplicationNotificationEndpoint>("NotificationEndpoints", ["properties", "notificationPolicy", "notificationEndpoints"]);
+        _packageFileUri = DefineProperty<Uri>("PackageFileUri", ["properties", "packageFileUri"]);
+        _policies = DefineListProperty<ArmApplicationPolicy>("Policies", ["properties", "policies"]);
+        _sku = DefineModelProperty<ArmApplicationSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

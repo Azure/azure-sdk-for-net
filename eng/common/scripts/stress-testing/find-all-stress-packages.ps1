@@ -48,11 +48,21 @@ function FindStressPackages(
 
         VerifyAddonsVersion $chart $chartFile
 
+        # Default to "sparse" matrix selection type, unless a default is specified
+        # in Chart.yaml annotations, or an override is passed in from the command line
+        $selection = if ($MatrixSelection) {
+            $MatrixSelection
+        } elseif ($chart['annotations'] -and $chart['annotations']['matrixSelection']) {
+            $chart['annotations']['matrixSelection']
+        } else {
+            "sparse"
+        }
+
         $matrixFilePath = (Join-Path $chartFile.Directory.FullName $MatrixFileName)
         if (Test-Path $matrixFilePath) {
             GenerateScenarioMatrix `
                 -matrixFilePath $matrixFilePath `
-                -Selection $MatrixSelection `
+                -Selection $selection `
                 -DisplayNameFilter $MatrixDisplayNameFilter `
                 -Filters $MatrixFilters `
                 -Replace $MatrixReplace `

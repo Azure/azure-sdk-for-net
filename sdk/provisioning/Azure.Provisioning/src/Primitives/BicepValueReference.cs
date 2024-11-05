@@ -7,25 +7,35 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Primitives;
 
-// Work in progress to to help track the flow of values through the computation
-// graph so we can intelligently and automatically split expressions across
-// module boundaries.
-
 public class BicepValueReference(ProvisionableConstruct construct, string propertyName, params string[]? path)
 {
     public ProvisionableConstruct Construct { get; } = construct;
     public string PropertyName { get; } = propertyName;
     public IReadOnlyList<string>? BicepPath { get; } = path;
 
-    internal BicepExpression GetReference()
+    internal BicepExpression GetReference(bool throwIfNoRoot = true)
     {
-        // We'll relax this soon
-        if (Construct is not NamedProvisionableConstruct named)
+        // Get the root
+        BicepExpression? target = ((IBicepValue)Construct).Self?.GetReference();
+        if (target is null)
         {
-            throw new NotImplementedException("Cannot reference a construct without a name yet.");
+            if (Construct is NamedProvisionableConstruct named)
+            {
+                target = BicepSyntax.Var(named.BicepIdentifier);
+            }
+            else if (throwIfNoRoot)
+            {
+                throw new NotImplementedException("Cannot reference a construct without a name.");
+            }
+            else
+            {
+                // This will render unrooted ToStrings as MISSING_RESOURCE.foo.bar
+                // which is obviously invalid, but potentially helpful for debugging.
+                target = BicepSyntax.Var("MISSING_RESOURCE");
+            }
         }
 
-        BicepExpression target = BicepSyntax.Var(named.BicepIdentifier);
+        // Finish getting to this resource
         if (BicepPath is not null)
         {
             foreach (string segment in BicepPath)
@@ -36,6 +46,5 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
         return target;
     }
 
-    public override string ToString() =>
-        $"<{GetReference()} from {Construct.GetType().Name}.{PropertyName}>";
+    public override string ToString() => GetReference(throwIfNoRoot: false).ToString();
 }

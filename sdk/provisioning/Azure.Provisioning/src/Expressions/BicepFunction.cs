@@ -163,8 +163,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.comazure/azure-resource-manager/bicep/bicep-functions-deployment#deployment">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static ArmDeployment GetDeployment() =>
-        ArmDeployment.FromExpression(BicepSyntax.Call("deployment"));
+    public static ArmDeployment GetDeployment()
+    {
+        ArmDeployment deployment = new("deployment");
+        ((IBicepValue)deployment).Expression = BicepSyntax.Call("deployment");
+        return deployment;
+    }
 
     /// <summary>
     /// Returns details about the subscription for the current deployment.  This
@@ -178,8 +182,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#subscription">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static Subscription GetSubscription() =>
-        Subscription.FromExpression(BicepSyntax.Call("subscription"));
+    public static Subscription GetSubscription()
+    {
+        Subscription subscription = new("subscription");
+        ((IBicepValue)subscription).Expression = BicepSyntax.Call("subscription");
+        return subscription;
+    }
 
     /// <summary>
     /// Returns the tenant of the user.  This represents the <c>tenant</c>
@@ -191,8 +199,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#tenant">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static Tenant GetTenant() =>
-        Tenant.FromExpression(BicepSyntax.Call("tenant"));
+    public static Tenant GetTenant()
+    {
+        Tenant tenant = new("tenant");
+        ((IBicepValue)tenant).Expression = BicepSyntax.Call("tenant");
+        return tenant;
+    }
 
     /// <summary>
     /// Returns an object that represents the current resource group.  This
@@ -204,8 +216,12 @@ public static class BicepFunction
     /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-scope#resourcegroup">
     /// Bicep Functions Reference</see> for more.
     /// </remarks>
-    public static ResourceGroup GetResourceGroup() =>
-        ResourceGroup.FromExpression(BicepSyntax.Call("resourceGroup"));
+    public static ResourceGroup GetResourceGroup()
+    {
+        ResourceGroup rg = new("resourceGroup");
+        ((IBicepValue)rg).Expression = BicepSyntax.Call("resourceGroup");
+        return rg;
+    }
 
     /// <summary>
     /// Converts a valid JSON string into a JSON data type.  This represents

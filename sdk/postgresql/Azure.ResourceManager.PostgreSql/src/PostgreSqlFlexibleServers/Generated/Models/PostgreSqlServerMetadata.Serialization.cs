@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             AzureLocation? location = default;
             string version = default;
             int? storageMb = default;
-            ServerSku sku = default;
+            PostgreSqlFlexibleServersServerSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = ServerSku.DeserializeServerSku(property.Value, options);
+                    sku = PostgreSqlFlexibleServersServerSku.DeserializePostgreSqlFlexibleServersServerSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

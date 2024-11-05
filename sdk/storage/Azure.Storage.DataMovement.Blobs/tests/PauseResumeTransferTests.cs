@@ -1255,7 +1255,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     unpausable.Add(transfer);
                 }
-                manager._dataTransfers.Add(Guid.NewGuid().ToString(), transfer.Object);
+                manager._dataTransfers.TryAdd(Guid.NewGuid().ToString(), transfer.Object);
             }
 
             await manager.PauseAllRunningTransfersAsync(_mockingToken);

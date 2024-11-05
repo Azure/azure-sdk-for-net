@@ -110,7 +110,7 @@ public abstract class ResourceNamePropertyResolver : InfrastructureResolver
         if (construct is not ProvisionableResource resource) { return; }
 
         // We only need to create a name if one doesn't already exist
-        if (resource.ProvisioningProperties.TryGetValue("Name", out BicepValue? name) &&
+        if (resource.ProvisionableProperties.TryGetValue("Name", out IBicepValue? name) &&
             name.Kind == BicepValueKind.Unset &&
             !name.IsOutput)
         {

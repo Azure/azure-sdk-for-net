@@ -185,6 +185,12 @@
       ]
     },
     {
+      "filename": "**/sdk/ai/**/*.cs",
+      "words": [
+        "Ubinary"
+      ]
+    },
+    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "Dmts"
@@ -241,7 +247,8 @@
         "nsxt",
         "vcenter",
         "vcsa",
-        "vmotion"
+        "vmotion",
+        "Iscsi"
       ]
     },
     {
@@ -1096,6 +1103,7 @@
     {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
+        "awsec",
         "byok",
         "vcore",
         "vcores"
