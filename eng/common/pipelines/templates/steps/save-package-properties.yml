@@ -45,10 +45,6 @@ steps:
           }
         displayName: Upload tags.json with changed services
 
-      - pwsh: |
-          Remove-Item -Force $(System.DefaultWorkingDirectory)/tags.json
-        displayName: Clean up tags.json
-
       - task: Powershell@2
         displayName: Save package properties filtered for PR
         inputs:
