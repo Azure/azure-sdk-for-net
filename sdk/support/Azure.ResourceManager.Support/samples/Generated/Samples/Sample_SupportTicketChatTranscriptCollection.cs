@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketChatTranscriptCollection
     {
-        // List chat transcripts for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListChatTranscriptsForASubscriptionSupportTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/ListChatTranscriptsForSubscriptionSupportTicket.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Support.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSubscriptionSupportTicket.json
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSubscriptionSupportTicket.json
@@ -114,9 +112,8 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get chat transcript details for a subscription support ticket
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2024-04-01/examples/GetchatTranscriptDetailsForSubscriptionSupportTicket.json
@@ -144,7 +141,7 @@ namespace Azure.ResourceManager.Support.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

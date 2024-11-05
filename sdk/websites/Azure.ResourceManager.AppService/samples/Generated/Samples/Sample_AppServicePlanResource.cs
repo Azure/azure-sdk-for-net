@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_AppServicePlanResource
     {
-        // List App Service plans
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServicePlans_ListAppServicePlans()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAppServicePlans.json
@@ -45,12 +45,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get App Service plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServicePlan()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetAppServicePlan.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServicePlan()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteAppServicePlan.json
@@ -103,12 +101,11 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await appServicePlan.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Patch Service plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchServicePlan()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/PatchAppServicePlan.json

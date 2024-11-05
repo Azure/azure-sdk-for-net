@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_SiteSlotPrivateEndpointConnectionCollection
     {
-        // Get a private endpoint connection for a site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPrivateEndpointConnectionForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateEndpointConnectionSlot.json
@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a private endpoint connection for a site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPrivateEndpointConnectionForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateEndpointConnectionSlot.json
@@ -83,9 +82,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a private endpoint connection for a site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPrivateEndpointConnectionForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateEndpointConnectionSlot.json
@@ -115,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -127,9 +125,8 @@ namespace Azure.ResourceManager.AppService.Samples
             }
         }
 
-        // Approves or rejects a private endpoint connection for a site.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ApprovesOrRejectsAPrivateEndpointConnectionForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ApproveRejectSitePrivateEndpointConnectionSlot.json

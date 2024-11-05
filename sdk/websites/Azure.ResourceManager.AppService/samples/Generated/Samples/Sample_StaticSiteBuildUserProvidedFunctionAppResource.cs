@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteBuildUserProvidedFunctionAppResource
     {
-        // Get details of the user provided function app registered with a static site build.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetUserProvidedFunctionAppForStaticSiteBuild.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Register a user provided function app with a static site build
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RegisterAUserProvidedFunctionAppWithAStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/RegisterUserProvidedFunctionAppWithStaticSiteBuild.json
@@ -87,9 +86,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Detach the user provided function app from the static site build.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DetachTheUserProvidedFunctionAppFromTheStaticSiteBuild()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DetachUserProvidedFunctionAppFromStaticSiteBuild.json
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await staticSiteBuildUserProvidedFunctionApp.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

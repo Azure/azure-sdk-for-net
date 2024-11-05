@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_WebSiteResource
     {
-        // List Web apps for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWebSites_ListWebAppsForSubscription()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWebApps.json
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.AppService.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Web App
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebApp.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteWebApp.json
@@ -104,12 +102,11 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await webSite.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateWebApp.json
@@ -142,9 +139,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Analyze custom hostname for webapp.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AnalyzeCustomHostname_AnalyzeCustomHostnameForWebapp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/AnalyzeCustomHostName.json
@@ -169,9 +165,8 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Apply web app slot config
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ApplySlotConfigToProduction_ApplyWebAppSlotConfig()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ApplySlotConfig.json
@@ -194,12 +189,11 @@ namespace Azure.ResourceManager.AppService.Samples
             CsmSlotEntity slotSwapEntity = new CsmSlotEntity("staging", true);
             await webSite.ApplySlotConfigToProductionAsync(slotSwapEntity);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Backup web app
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Backup_BackupWebApp()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/BackupWebApp.json
@@ -249,9 +243,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // List web app configurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllConfigurationData_ListWebAppConfigurations()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWebAppConfigurations.json
@@ -277,12 +270,11 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update App Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateApplicationSettings_UpdateAppSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAppSettings.json
@@ -315,9 +307,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List App Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationSettings_ListAppSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAppSettings.json
@@ -342,9 +333,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Auth Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettings_UpdateAuthSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAuthSettings.json
@@ -383,9 +373,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettings_ListAuthSettings()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAuthSettings.json
@@ -410,9 +399,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings without Secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2WithoutSecrets_ListAuthSettingsWithoutSecrets()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetAuthSettingsV2WithoutSecrets.json
@@ -437,9 +425,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Auth Settings V2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettingsV2_UpdateAuthSettingsV2()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAuthSettingsV2.json
@@ -537,9 +524,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Auth Settings V2
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2_ListAuthSettingsV2()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAuthSettingsV2.json
@@ -564,9 +550,8 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update Azure Storage Accounts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAzureStorageAccounts_UpdateAzureStorageAccounts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/UpdateAzureStorageAccounts.json
@@ -605,9 +590,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List Deployment Status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatuses_ListDeploymentStatus()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatus.json
@@ -632,12 +616,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Deployment Status
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatus_GetDeploymentStatus()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatus.json
@@ -664,9 +647,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List backups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllSiteBackupData_ListBackups()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSlotBackups.json
@@ -692,12 +674,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded on id: {item.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperation_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -723,12 +704,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartWebSiteNetworkTraceOperation_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -755,9 +735,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopWebSiteNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -779,12 +758,11 @@ MountPath = "/mounts/a/files",
             // invoke the operation
             await webSite.StopWebSiteNetworkTraceAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraces_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -810,12 +788,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the current status of a network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperationV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraceOperation.json
@@ -841,12 +818,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get NetworkTraces for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTracesV2_GetNetworkTracesForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebSiteNetworkTraces.json
@@ -872,12 +848,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get private link resources of a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_GetPrivateLinkResourcesOfASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSitePrivateLinkResources.json
@@ -902,12 +877,11 @@ MountPath = "/mounts/a/files",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Start a new network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartNetworkTrace_StartANewNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StartWebSiteNetworkTraceOperation.json
@@ -934,9 +908,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Stop a currently running network trace operation for a site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/StopWebSiteNetworkTrace.json
@@ -958,12 +931,11 @@ MountPath = "/mounts/a/files",
             // invoke the operation
             await webSite.StopNetworkTraceAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete workflow artifacts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeleteWorkflowArtifacts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteDeployWorkflowArtifacts.json
@@ -992,12 +964,11 @@ MountPath = "/mounts/a/files",
             };
             await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deploys workflow artifacts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeploysWorkflowArtifacts()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/PostDeployWorkflowArtifacts.json
@@ -1074,12 +1045,11 @@ MountPath = "/mounts/a/files",
             };
             await webSite.DeployWorkflowArtifactsAsync(workflowArtifacts: workflowArtifacts);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the Instance Workflows Configuration Connections
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnections_ListTheInstanceWorkflowsConfigurationConnections()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListWorkflowsConfigurationConnections.json
@@ -1105,9 +1075,8 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded on id: {result.Id}");
         }
 
-        // Regenerate the callback URL access key for request triggers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAccessKeyWorkflow_RegenerateTheCallbackURLAccessKeyForRequestTriggers()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Workflows_RegenerateAccessKey.json
@@ -1134,12 +1103,11 @@ MountPath = "/mounts/a/files",
             };
             await webSite.RegenerateAccessKeyWorkflowAsync(workflowName, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Validate a workflow
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateWorkflow_ValidateAWorkflow()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/Workflows_Validate.json
@@ -1183,7 +1151,7 @@ MountPath = "/mounts/a/files",
             };
             await webSite.ValidateWorkflowAsync(workflowName, data);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
