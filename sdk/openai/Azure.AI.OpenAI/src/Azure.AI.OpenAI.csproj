@@ -6,6 +6,8 @@
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
+    <Version>2.1.0-beta.2</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
@@ -25,16 +27,8 @@
     <When Condition="'$(GAServiceVersionLabel)' != ''">
       <PropertyGroup>
         <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
-        <VersionPrefix>2.0.0</VersionPrefix>
-        <VersionSuffix />
       </PropertyGroup>
     </When>
-    <Otherwise>
-      <PropertyGroup>
-        <VersionPrefix>2.1.0</VersionPrefix>
-        <VersionSuffix>beta.2</VersionSuffix>
-      </PropertyGroup>
-    </Otherwise>
   </Choose>
 
   <!-- Which Azure.Core library/code should we use? -->
