@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationServiceResource
     {
-        // Check name availability available
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityAvailable()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityAvailable.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Check name availability unavailable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityUnavailable()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityUnavailable.json
@@ -77,9 +76,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Link notification hub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task LinkNotificationHub_LinkNotificationHub()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/linkNotificationHub.json
@@ -105,9 +103,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCommunicationServiceResources_ListBySubscription()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listBySubscription.json
@@ -134,12 +131,11 @@ namespace Azure.ResourceManager.Communication.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/update.json
@@ -175,9 +171,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update resource to add System and User managed identities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceToAddSystemAndUserManagedIdentities()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAndUserIdentity.json
@@ -220,9 +215,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update resource to add a System Assigned managed identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceToAddASystemAssignedManagedIdentity()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAssignedIdentity.json
@@ -259,9 +253,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update resource to add a User Assigned managed identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceToAddAUserAssignedManagedIdentity()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithUserAssignedIdentity.json
@@ -304,9 +297,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update resource to remove identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateResourceToRemoveIdentity()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateRemoveSystemIdentity.json
@@ -343,9 +335,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/get.json
@@ -374,9 +365,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/delete.json
@@ -398,12 +388,11 @@ namespace Azure.ResourceManager.Communication.Samples
             // invoke the operation
             await communicationServiceResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List keys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeys()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listKeys.json
@@ -428,9 +417,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Regenerate key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_RegenerateKey()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/regenerateKey.json

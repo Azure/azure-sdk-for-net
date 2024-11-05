@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_AvailabilitySetResource
     {
-        // AvailabilitySet_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AvailabilitySetUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Update_MaximumSet_Gen.json
@@ -71,9 +71,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvailabilitySet_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AvailabilitySetUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Update_MinimumSet_Gen.json
@@ -103,9 +102,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvailabilitySet_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AvailabilitySetDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MaximumSet_Gen.json
@@ -127,12 +125,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             // invoke the operation
             await availabilitySet.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AvailabilitySet_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AvailabilitySetDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Delete_MinimumSet_Gen.json
@@ -154,12 +151,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             // invoke the operation
             await availabilitySet.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AvailabilitySet_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AvailabilitySetGetMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
@@ -188,9 +184,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvailabilitySet_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AvailabilitySetGetMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
@@ -219,9 +214,8 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List availability sets in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailabilitySets_ListAvailabilitySetsInASubscription()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListBySubscription.json
@@ -249,12 +243,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AvailabilitySet_ListAvailableSizes_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_AvailabilitySetListAvailableSizesMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListAvailableSizes_MaximumSet_Gen.json
@@ -279,12 +272,11 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AvailabilitySet_ListAvailableSizes_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSizes_AvailabilitySetListAvailableSizesMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/availabilitySetExamples/AvailabilitySet_ListAvailableSizes_MinimumSet_Gen.json
@@ -309,7 +301,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_EmailServiceResourceCollection
     {
-        // Get EmailService resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetEmailServiceResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/get.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get EmailService resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetEmailServiceResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/get.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get EmailService resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetEmailServiceResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/get.json
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -121,9 +119,8 @@ namespace Azure.ResourceManager.Communication.Samples
             }
         }
 
-        // Create or update EmailService resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateEmailServiceResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/createOrUpdate.json
@@ -160,9 +157,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List EmailService resources by resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEmailServiceResourcesByResourceGroup()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/listByResourceGroup.json
@@ -193,7 +189,7 @@ namespace Azure.ResourceManager.Communication.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

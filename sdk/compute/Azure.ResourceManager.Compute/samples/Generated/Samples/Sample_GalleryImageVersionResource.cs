@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_GalleryImageVersionResource
     {
-        // Update a simple Gallery Image Version (Managed Image as source).
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateASimpleGalleryImageVersionManagedImageAsSource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Update.json
@@ -73,9 +73,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a simple Gallery Image Version without source id.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateASimpleGalleryImageVersionWithoutSourceId()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Update_WithoutSourceId.json
@@ -125,9 +124,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a gallery image version with replication status.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryImageVersionWithReplicationStatus()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
@@ -159,9 +157,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a gallery image version with snapshots as a source.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryImageVersionWithSnapshotsAsASource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
@@ -192,9 +189,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a gallery image version with vhd as a source.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryImageVersionWithVhdAsASource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
@@ -225,9 +221,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a gallery image version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGalleryImageVersion()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
@@ -258,9 +253,8 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a gallery image version.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAGalleryImageVersion()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Delete.json
@@ -284,7 +278,7 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
             // invoke the operation
             await galleryImageVersion.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

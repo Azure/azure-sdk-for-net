@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_DiskImageCollection
     {
-        // Create a virtual machine image from a blob with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromABlobWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromABlobWithDiskEncryptionSet.json
@@ -62,9 +62,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a blob.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromABlob()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromABlob.json
@@ -108,9 +107,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a managed disk with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAManagedDiskWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAManagedDiskWithDiskEncryptionSet.json
@@ -154,9 +152,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a managed disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAManagedDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAManagedDisk.json
@@ -200,9 +197,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a snapshot with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromASnapshotWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromASnapshotWithDiskEncryptionSet.json
@@ -246,9 +242,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromASnapshot.json
@@ -292,9 +287,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from an existing virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAnExistingVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAVM.json
@@ -331,9 +325,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a blob.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromABlob()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromABlobIncluded.json
@@ -384,9 +377,8 @@ BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dat
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a managed disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromAManagedDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromAManagedDiskIncluded.json
@@ -437,9 +429,8 @@ ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceG
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromASnapshotIncluded.json
@@ -490,9 +481,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutAVirtualMachineImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
@@ -524,9 +514,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetInformationAboutAVirtualMachineImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
@@ -554,9 +543,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetInformationAboutAVirtualMachineImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
@@ -584,7 +572,7 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -596,9 +584,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             }
         }
 
-        // List all virtual machine images in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllVirtualMachineImagesInAResourceGroup()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_ListByResourceGroup.json
@@ -629,7 +616,7 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

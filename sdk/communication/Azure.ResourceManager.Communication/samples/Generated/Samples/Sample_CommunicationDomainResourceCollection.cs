@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationDomainResourceCollection
     {
-        // Get Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/get.json
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/get.json
@@ -81,9 +80,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/get.json
@@ -112,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.Communication.Samples
             }
         }
 
-        // Create or update Domains resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDomainsResource()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/createOrUpdate.json
@@ -164,9 +161,8 @@ namespace Azure.ResourceManager.Communication.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List Domains resources by EmailServiceName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDomainsResourcesByEmailServiceName()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/domains/listByEmailService.json
@@ -198,7 +194,7 @@ namespace Azure.ResourceManager.Communication.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
