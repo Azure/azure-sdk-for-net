@@ -123,7 +123,10 @@ namespace Azure.Storage.DataMovement
             // Add the job part into the current state
             if (_transferStates.ContainsKey(transferId))
             {
-                _transferStates[transferId].JobParts.Add(partNumber, mappedFile);
+                if (!_transferStates[transferId].JobParts.TryAdd(partNumber, mappedFile))
+                {
+                    throw Errors.CollisionJobPart(transferId, partNumber);
+                }
             }
             else
             {
@@ -415,7 +418,7 @@ namespace Azure.Storage.DataMovement
                     // Job plan file should already exist since we already iterated job plan files
                     if (_transferStates.TryGetValue(partPlanFileName.Id, out JobPlanFile jobPlanFile))
                     {
-                        jobPlanFile.JobParts.Add(
+                        jobPlanFile.JobParts.TryAdd(
                             partPlanFileName.JobPartNumber,
                             JobPartPlanFile.CreateExistingPartPlanFile(partPlanFileName));
                     }

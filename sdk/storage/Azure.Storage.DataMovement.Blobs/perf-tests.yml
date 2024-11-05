@@ -14,7 +14,7 @@ Tests:
   - --size 1073741824 --count 5 --duration 120 --concurrency 64
 
 - Test: upload
-  Class: UploadDireactory
+  Class: UploadDirectory
   Arguments: *sizes
 
 - Test: copy
