@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string subscriptionId = TestEnvironment.SubscriptionId;
-            ResourceIdentifier l3NetworkId = new ResourceIdentifier(TestEnvironment.L3IsolationDomainId);
+            ResourceIdentifier l3NetworkId = new ResourceIdentifier(TestEnvironment.L3NAttachmentId);
             ResourceIdentifier cloudServicesNetworkId = new ResourceIdentifier(TestEnvironment.CloudServicesNetworkId);
 
             string kubernetesClusterName = Recording.GenerateAssetName("kubernetesCluster");
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update KubernetesCluster
             NetworkCloudKubernetesClusterPatch updateData = new NetworkCloudKubernetesClusterPatch()
             {
-                ControlPlaneNodeCount = 3,
-                KubernetesVersion = TestEnvironment.KubernetesVersion,
+                ControlPlaneNodeCount = 1,
+                KubernetesVersion = TestEnvironment.KubernetesVersionUpdate,
                 Tags = { { "test", "patch" } },
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
