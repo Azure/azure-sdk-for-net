@@ -184,7 +184,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.1.0-beta.1" />
+    <PackageReference Update="OpenAI" Version="2.1.0-beta.2" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.MicrosoftPlaywrightTesting'))">
@@ -407,7 +407,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20240919.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20241101.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>
