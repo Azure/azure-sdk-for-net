@@ -37,6 +37,25 @@ public static partial class AzureChatExtensions
     }
 
     [Experimental("AOAI001")]
+    public static void SetNewMaxCompletionTokensPropertyEnabled(this ChatCompletionOptions options, bool newPropertyEnabled = true)
+    {
+        if (newPropertyEnabled)
+        {
+            // Blocking serialization of max_tokens via dictionary acts as a signal to skip pre-serialization fixup
+            AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
+        }
+        else
+        {
+            // In the absence of a dictionary serialization block to max_tokens, the newer property name will
+            // automatically be blocked and the older property name will be used via dictionary override
+            if (options?.SerializedAdditionalRawData?.ContainsKey("max_tokens") == true)
+            {
+                options?.SerializedAdditionalRawData?.Remove("max_tokens");
+            }
+        }
+    }
+
+    [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this ChatCompletion chatCompletion)
     {
         return AdditionalPropertyHelpers.GetAdditionalListProperty<RequestContentFilterResult>(
