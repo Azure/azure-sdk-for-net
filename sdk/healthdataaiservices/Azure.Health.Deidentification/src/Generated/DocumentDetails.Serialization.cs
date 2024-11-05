@@ -28,16 +28,23 @@ namespace Azure.Health.Deidentification
             writer.WriteStartObject();
             if (options.Format != "W")
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("nextLink"u8);
-            writer.WriteStringValue(NextLink);
+            writer.WritePropertyName("input"u8);
+            writer.WriteObjectValue(Input, options);
+            if (Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output, options);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,25 +83,46 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            IReadOnlyList<DocumentDetail> value = default;
-            string nextLink = default;
+            string id = default;
+            DocumentLocation input = default;
+            DocumentLocation output = default;
+            OperationState status = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    List<DocumentDetail> array = new List<DocumentDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(DocumentDetail.DeserializeDocumentDetail(item, options));
-                    }
-                    value = array;
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
+                if (property.NameEquals("input"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    input = DocumentLocation.DeserializeDocumentLocation(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("output"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    output = DocumentLocation.DeserializeDocumentLocation(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = new OperationState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,7 +131,13 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentDetails(value, nextLink, serializedAdditionalRawData);
+            return new DocumentDetails(
+                id,
+                input,
+                output,
+                status,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentDetails>.Write(ModelReaderWriterOptions options)

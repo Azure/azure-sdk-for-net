@@ -226,7 +226,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
-                Customizations = new CustomizationOptions
+                Customizations = new CustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -245,7 +245,7 @@ namespace Azure.Health.Deidentification.Samples
 
             DeidentificationContent body = new DeidentificationContent("Hello my name is John Smith.")
             {
-                Customizations = new CustomizationOptions
+                Customizations = new CustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -262,7 +262,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobs(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+            foreach (BinaryData item in client.GetJobs(10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -284,7 +284,7 @@ namespace Azure.Health.Deidentification.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobsAsync(10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+            await foreach (BinaryData item in client.GetJobsAsync(10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -326,64 +326,62 @@ namespace Azure.Health.Deidentification.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob()
+        public void Example_DeidServices_GetJobDocuments_ListProcessedDocumentsWithinAJob()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetJobDocuments("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+            foreach (BinaryData item in client.GetJobDocuments(null, 10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("nextLink").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Async()
+        public async Task Example_DeidServices_GetJobDocuments_ListProcessedDocumentsWithinAJob_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetJobDocumentsAsync("documents_smith_1", 10, "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ==", null))
+            await foreach (BinaryData item in client.GetJobDocumentsAsync(null, 10, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("location").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("input").GetProperty("etag").ToString());
-                Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("nextLink").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("input").GetProperty("location").ToString());
+                Console.WriteLine(result.GetProperty("input").GetProperty("etag").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience()
+        public void Example_DeidServices_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            foreach (DocumentDetails item in client.GetJobDocuments("documents_smith_1"))
+            foreach (DocumentDetails item in client.GetJobDocuments(null))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentDetails_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience_Async()
+        public async Task Example_DeidServices_GetJobDocuments_ListProcessedDocumentsWithinAJob_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
-            await foreach (DocumentDetails item in client.GetJobDocumentsAsync("documents_smith_1"))
+            await foreach (DocumentDetails item in client.GetJobDocumentsAsync(null))
             {
             }
         }
@@ -529,7 +527,7 @@ namespace Azure.Health.Deidentification.Samples
             })
             {
                 Operation = OperationType.Redact,
-                Customizations = new JobCustomizationOptions
+                Customizations = new JobCustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",
@@ -556,7 +554,7 @@ namespace Azure.Health.Deidentification.Samples
             })
             {
                 Operation = OperationType.Redact,
-                Customizations = new JobCustomizationOptions
+                Customizations = new JobCustomizationConfig
                 {
                     RedactionFormat = "[{type}]",
                     SurrogateLocale = "en-US",

@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, OperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationOptions customizations = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, OperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, JobCustomizationConfig customizations = null, JobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, JobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
@@ -69,26 +69,15 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetails"/>. </summary>
-        /// <param name="value"> List of documents. </param>
-        /// <param name="nextLink"> Token to continue a previous query. </param>
-        /// <returns> A new <see cref="Deidentification.DocumentDetails"/> instance for mocking. </returns>
-        public static DocumentDetails DocumentDetails(IEnumerable<DocumentDetail> value = null, string nextLink = null)
-        {
-            value ??= new List<DocumentDetail>();
-
-            return new DocumentDetails(value?.ToList(), nextLink, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DocumentDetail"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="input"> Location for the input. </param>
         /// <param name="output"> Location for the output. </param>
         /// <param name="status"> Status of the document. </param>
         /// <param name="error"> Error when document fails. </param>
-        /// <returns> A new <see cref="Deidentification.DocumentDetail"/> instance for mocking. </returns>
-        public static DocumentDetail DocumentDetail(string id = null, DocumentLocation input = null, DocumentLocation output = null, OperationState status = default, ResponseError error = null)
+        /// <returns> A new <see cref="Deidentification.DocumentDetails"/> instance for mocking. </returns>
+        public static DocumentDetails DocumentDetails(string id = null, DocumentLocation input = null, DocumentLocation output = null, OperationState status = default, ResponseError error = null)
         {
-            return new DocumentDetail(
+            return new DocumentDetails(
                 id,
                 input,
                 output,
@@ -111,7 +100,7 @@ namespace Azure.Health.Deidentification
         /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationOptions customizations = null)
+        public static DeidentificationContent DeidentificationContent(string inputText = null, OperationType? operation = null, CustomizationConfig customizations = null)
         {
             return new DeidentificationContent(inputText, operation, customizations, serializedAdditionalRawData: null);
         }
