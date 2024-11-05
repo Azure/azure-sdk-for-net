@@ -345,10 +345,9 @@ function RemoveStorageAccount($Account) {
     if ($container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
       try {
         # Use AzRm cmdlet as deletion will only work through ARM with the immutability policies defined on the blobs
-        # If blob deletion takes longer then the container delete
-        # will fail, so retry a couple times
-        Retry -Action { Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force } -Attempts 2
-        #$container | Remove-AzStorageContainer
+        # Add a retry in case blob deletion has not finished in time for container deletion, but not too many that we end up
+        # getting throttled by ARM/SRP if things are actually in a stuck state
+        Retry -Attempts 1 -Action { Remove-AzRmStorageContainer -Name $container.Name -StorageAccountName $Account.StorageAccountName -ResourceGroupName $Account.ResourceGroupName -Force }
       } catch {
         Write-Host "Container removal failed: $($container.Name), account: $($Account.storageAccountName), group: $($Account.ResourceGroupName)"
         Write-Warning "Ignoring the error and trying to delete the storage account"
@@ -362,7 +361,7 @@ function RemoveStorageAccount($Account) {
   }
 }
 
-function EnableBlobDeletion($Blob, $StorageAccountName, $ResourceGroupName) {
+function EnableBlobDeletion($Blob, $Container, $StorageAccountName, $ResourceGroupName) {
   # Some properties like immutability policies require the blob to be
   # deleted before the container can be deleted
   $forceBlobDeletion = $false
@@ -394,6 +393,10 @@ function EnableBlobDeletion($Blob, $StorageAccountName, $ResourceGroupName) {
   if ($Blob.BlobProperties.LeaseState -eq 'Leased') {
     Write-Host "Breaking blob lease: $($Blob.Name), account: $StorageAccountName, group: $ResourceGroupName"
     $Blob.ICloudBlob.BreakLease()
+  }
+
+  if ($container.BlobContainerProperties.HasImmutableStorageWithVersioning) {
+    $forceBlobDeletion = $true
   }
 
   return $forceBlobDeletion
