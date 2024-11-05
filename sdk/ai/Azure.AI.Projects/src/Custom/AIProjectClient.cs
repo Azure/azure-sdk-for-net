@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.Inference;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.AI.Projects
 {
@@ -38,25 +38,45 @@ namespace Azure.AI.Projects
         {
         }
 
-        internal AIProjectClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
+        /// <summary> Initializes a new instance of Inference's ChatCompletionsClient. </summary>
+        public virtual ChatCompletionsClient GetChatCompletionsClient()
         {
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
-            _endpoint = endpoint;
-            _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
-            _projectName = projectName;
+            return InitializeInferenceClient((endpoint, credential) =>
+                new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
         }
 
-        /// <summary> Initializes a new instance of EvaluationsClient. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual InferenceClient GetInferenceClient(string apiVersion = "2024-07-01-preview")
+        /// <summary> Initializes a new instance of Inference's EmbeddingsClient. </summary>
+        public virtual EmbeddingsClient GetEmbeddingsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            return InitializeInferenceClient((endpoint, credential) =>
+                new EmbeddingsClient(endpoint, credential, new AzureAIInferenceClientOptions()));
+        }
 
-            return new InferenceClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+        /// <summary> Initializes a new instance of Inference client. </summary>
+        private T InitializeInferenceClient<T>(Func<Uri, AzureKeyCredential, T> clientFactory)
+        {
+            var connectionsClient = GetConnectionsClient();
+            ConnectionsListSecretsResponse connectionSecret = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
+
+            if (connectionSecret.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            {
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
+                }
+
+                if (!Uri.TryCreate(apiKeyAuthProperties.Target, UriKind.Absolute, out var endpoint))
+                {
+                    throw new UriFormatException("Invalid URI format in API key authentication target.");
+                }
+
+                var credential = new AzureKeyCredential(apiKeyAuthProperties.Credentials.Key);
+                return clientFactory(endpoint, credential);
+            }
+            else
+            {
+                throw new ArgumentException("Cannot connect with Inference! Ensure valid ConnectionPropertiesApiKeyAuth.");
+            }
         }
     }
 }

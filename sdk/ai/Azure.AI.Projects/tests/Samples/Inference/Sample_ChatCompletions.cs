@@ -6,19 +6,17 @@
 using System;
 using Azure.AI.Inference;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
+
 public class Sample_ChatCompletions : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     public void ChatCompletions()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        InferenceClient client = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetInferenceClient();
-
-        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        ChatCompletionsClient chatClient = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
         {

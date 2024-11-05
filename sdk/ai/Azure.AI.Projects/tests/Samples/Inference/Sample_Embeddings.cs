@@ -7,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.Inference;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
+
 public class Sample_Embeddings : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
@@ -18,9 +18,7 @@ public class Sample_Embeddings : SamplesBase<AIProjectsTestEnvironment>
     public void BasicEmbedding()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        InferenceClient client = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetInferenceClient();
-
-        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+        EmbeddingsClient embeddingsClient = new AIProjectClient(connectionString, new DefaultAzureCredential()).GetEmbeddingsClient();
 
         var input = new List<string> { "King", "Queen", "Jack", "Page" };
         var requestOptions = new EmbeddingsOptions(input);

@@ -1,4 +1,4 @@
-# Azure.AI.Client client library for .NET
+# Azure AI Projects client library for .NET
 
 The Azure AI Assistants client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
 and rich integration with the rest of the Azure SDK ecosystem. It will connect to Azure AI resources endpoint.
@@ -20,7 +20,7 @@ To use Assistants capabilities, you'll need to use an Azure AI resource, you mus
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Project --prerelease
+dotnet add package Azure.AI.Projects --prerelease
 ```
 
 ### Authenticate the client
