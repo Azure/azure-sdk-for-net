@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
             };
             var strategyResult = await clusterResource.UpdateAsync(WaitUntil.Completed, patch2);
-            Assert.IsNotEmpty(strategyResult);
+            Assert.IsNotNull(strategyResult.Value);
 
             // Cluster Update Version
             try
