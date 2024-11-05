@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryChangeDataCaptureResource
     {
-        // ChangeDataCapture_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ChangeDataCaptureGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ChangeDataCapture_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ChangeDataCaptureDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Delete.json
@@ -69,14 +68,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryChangeDataCaptureResource dataFactoryChangeDataCapture = client.GetDataFactoryChangeDataCaptureResource(dataFactoryChangeDataCaptureResourceId);
 
             // invoke the operation
-            await dataFactoryChangeDataCapture.DeleteAsync(WaitUntil.Completed);
+            await dataFactoryChangeDataCapture.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ChangeDataCapture_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_ChangeDataCaptureStart()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Start.json
@@ -97,14 +95,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryChangeDataCaptureResource dataFactoryChangeDataCapture = client.GetDataFactoryChangeDataCaptureResource(dataFactoryChangeDataCaptureResourceId);
 
             // invoke the operation
-            await dataFactoryChangeDataCapture.StartAsync();
+            await dataFactoryChangeDataCapture.StartAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ChangeDataCapture_Stop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_ChangeDataCaptureStop()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Stop.json
@@ -125,14 +122,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryChangeDataCaptureResource dataFactoryChangeDataCapture = client.GetDataFactoryChangeDataCaptureResource(dataFactoryChangeDataCaptureResourceId);
 
             // invoke the operation
-            await dataFactoryChangeDataCapture.StopAsync();
+            await dataFactoryChangeDataCapture.StopAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ChangeDataCapture_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Status_ChangeDataCaptureStart()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Status.json

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataMigration.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_DatabaseMigrationSqlVmResource
     {
-        // Get Sql VM database Migration with the expand parameter.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // invoke the operation
             string expand = "MigrationStatusDetails";
-            DatabaseMigrationSqlVmResource result = await databaseMigrationSqlVm.GetAsync(expand: expand);
+            DatabaseMigrationSqlVmResource result = await databaseMigrationSqlVm.GetAsync(expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Sql VM database Migration without the expand parameter.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
@@ -80,9 +79,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Database Migration resource with Maximum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
@@ -103,34 +101,34 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlVmResource databaseMigrationSqlVm = client.GetDatabaseMigrationSqlVmResource(databaseMigrationSqlVmResourceId);
 
             // invoke the operation
-            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData()
+            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
             {
-                Properties = new DatabaseMigrationSqlVmProperties()
+                Properties = new DatabaseMigrationSqlVmProperties
                 {
-                    BackupConfiguration = new BackupConfiguration()
+                    BackupConfiguration = new BackupConfiguration
                     {
-                        SourceLocation = new SourceLocation()
+                        SourceLocation = new SourceLocation
                         {
-                            FileShare = new SqlFileShare()
+                            FileShare = new SqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation()
+                        TargetLocation = new TargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
-                    OfflineConfiguration = new OfflineConfiguration()
+                    OfflineConfiguration = new OfflineConfiguration
                     {
                         Offline = true,
                         LastBackupName = "last_backup_file_name",
                     },
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
-                    SourceSqlConnection = new SqlConnectionInformation()
+                    SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -153,9 +151,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Database Migration resource with Minimum parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
@@ -176,29 +173,29 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlVmResource databaseMigrationSqlVm = client.GetDatabaseMigrationSqlVmResource(databaseMigrationSqlVmResourceId);
 
             // invoke the operation
-            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData()
+            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
             {
-                Properties = new DatabaseMigrationSqlVmProperties()
+                Properties = new DatabaseMigrationSqlVmProperties
                 {
-                    BackupConfiguration = new BackupConfiguration()
+                    BackupConfiguration = new BackupConfiguration
                     {
-                        SourceLocation = new SourceLocation()
+                        SourceLocation = new SourceLocation
                         {
-                            FileShare = new SqlFileShare()
+                            FileShare = new SqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation()
+                        TargetLocation = new TargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
-                    SourceSqlConnection = new SqlConnectionInformation()
+                    SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -221,9 +218,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Stop ongoing migration for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_StopOngoingMigrationForTheDatabase()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCancelDatabaseMigration.json
@@ -244,18 +240,17 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlVmResource databaseMigrationSqlVm = client.GetDatabaseMigrationSqlVmResource(databaseMigrationSqlVmResourceId);
 
             // invoke the operation
-            MigrationOperationInput input = new MigrationOperationInput()
+            MigrationOperationInput input = new MigrationOperationInput
             {
                 MigrationOperationId = Guid.Parse("4124fe90-d1b6-4b50-b4d9-46d02381f59a"),
             };
-            await databaseMigrationSqlVm.CancelAsync(WaitUntil.Completed, input);
+            await databaseMigrationSqlVm.CancelAsync(WaitUntil.Completed, input).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Cutover online migration operation for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cutover_CutoverOnlineMigrationOperationForTheDatabase()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCutoverDatabaseMigration.json
@@ -276,13 +271,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlVmResource databaseMigrationSqlVm = client.GetDatabaseMigrationSqlVmResource(databaseMigrationSqlVmResourceId);
 
             // invoke the operation
-            MigrationOperationInput input = new MigrationOperationInput()
+            MigrationOperationInput input = new MigrationOperationInput
             {
                 MigrationOperationId = Guid.Parse("4124fe90-d1b6-4b50-b4d9-46d02381f59a"),
             };
-            await databaseMigrationSqlVm.CutoverAsync(WaitUntil.Completed, input);
+            await databaseMigrationSqlVm.CutoverAsync(WaitUntil.Completed, input).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

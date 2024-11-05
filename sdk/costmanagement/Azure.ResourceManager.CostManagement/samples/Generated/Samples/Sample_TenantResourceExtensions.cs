@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CostManagement.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // SavingsPlanUtilizationSummaries-BillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesByBillingAccountId_SavingsPlanUtilizationSummariesBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingAccount.json
@@ -29,24 +30,21 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
             string billingAccountId = "12345";
             string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, filter: filter))
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummaries-BillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesByBillingProfileId_SavingsPlanUtilizationSummariesBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-BillingProfile.json
@@ -57,25 +55,22 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
             string billingAccountId = "c0a00000-0e04-5ee3-000e-f0c6e00000ec:c0a00000-0e04-5ee3-000e-f0c6e00000ec";
             string billingProfileId = "200e5e90-000e-4960-8dcd-8d00a02db000";
             string filter = "properties/usageDate ge 2022-10-15 and properties/usageDate le 2022-10-18";
-            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, filter: filter))
+            await foreach (BenefitUtilizationSummary item in tenantResource.GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, filter))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummariesDaily
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesBySavingsPlanOrder_SavingsPlanUtilizationSummariesDaily()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanOrderId-Daily.json
@@ -86,9 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
             string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
@@ -97,12 +90,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBenefitUtilizationSummariesBySavingsPlanId_SavingsPlanUtilizationSummariesMonthlyWithSavingsPlanId()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/SavingsPlan-SavingsPlanId-Monthly.json
@@ -113,9 +105,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
             string savingsPlanOrderId = "66cccc66-6ccc-6c66-666c-66cc6c6c66c6";
@@ -125,12 +115,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GenerateUtilizationSummariesReportByBillingAccount
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportBillingAccountScope_GenerateUtilizationSummariesReportByBillingAccount()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingAccount.json
@@ -141,13 +130,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountId = "8099099";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default)
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
@@ -157,9 +144,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportBillingProfileScope_GenerateUtilizationSummariesReportByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByBillingProfile.json
@@ -170,14 +156,12 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountId = "00000000-0000-0000-0000-000000000000";
             string billingProfileId = "CZSFR-SDFXC-DSDF";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default)
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
@@ -187,9 +171,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByReservationOrder
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportReservationOrderScope_GenerateUtilizationSummariesReportByReservationOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservationOrder.json
@@ -200,22 +183,19 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default);
             ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportByReservation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportReservationScope_GenerateUtilizationSummariesReportByReservation()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportByReservation.json
@@ -226,23 +206,20 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
             string reservationId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default);
             ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportBySavingsPlanOrder
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope_GenerateUtilizationSummariesReportBySavingsPlanOrder()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlanOrder.json
@@ -253,22 +230,19 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default);
             ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GenerateUtilizationSummariesReportBySavingsPlan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope_GenerateUtilizationSummariesReportBySavingsPlan()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BenefitUtilizationSummaries/Async/GenerateBenefitUtilizationSummariesReportBySavingsPlan.json
@@ -279,23 +253,78 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
             string savingsPlanId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, default, default);
             ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalBillingAccountForecast
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCostManagementAlerts_ExternalBillingAccountAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountAlerts.json
+            // this example is just showing the usage of "Alerts_ListExternal" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
+            string externalCloudProviderId = "100";
+            await foreach (CostManagementAlertResource item in tenantResource.GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetCostManagementAlerts_ExternalSubscriptionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionAlerts.json
+            // this example is just showing the usage of "Alerts_ListExternal" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
+            string externalCloudProviderId = "100";
+            await foreach (CostManagementAlertResource item in tenantResource.GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalBillingAccountForecast()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountForecast.json
@@ -306,62 +335,44 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
             string externalCloudProviderId = "100";
-            ForecastDefinition forecastDefinition = new ForecastDefinition(ForecastType.Usage, ForecastTimeframe.Custom, new ForecastDataset(new Dictionary<string, ForecastAggregation>()
+            ForecastDefinition forecastDefinition = new ForecastDefinition(ForecastType.Usage, ForecastTimeframe.Custom, new ForecastDataset(new Dictionary<string, ForecastAggregation>
             {
-                ["totalCost"] = new ForecastAggregation(FunctionName.Cost, FunctionType.Sum),
+                ["totalCost"] = new ForecastAggregation(FunctionName.Cost, FunctionType.Sum)
             })
             {
                 Granularity = GranularityType.Daily,
-                Filter = new ForecastFilter()
+                Filter = new ForecastFilter
                 {
-                    And =
+                    And = {new ForecastFilter
 {
-new ForecastFilter()
+Or = {new ForecastFilter
 {
-Or =
+Dimensions = new ForecastComparisonExpression("ResourceLocation", ForecastOperatorType.In, new string[]{"East US", "West Europe"}),
+}, new ForecastFilter
 {
-new ForecastFilter()
+Tags = new ForecastComparisonExpression("Environment", ForecastOperatorType.In, new string[]{"UAT", "Prod"}),
+}},
+}, new ForecastFilter
 {
-Dimensions = new ForecastComparisonExpression("ResourceLocation",ForecastOperatorType.In,new string[]
-{
-"East US","West Europe"
-}),
-},new ForecastFilter()
-{
-Tags = new ForecastComparisonExpression("Environment",ForecastOperatorType.In,new string[]
-{
-"UAT","Prod"
-}),
-}
-},
-},new ForecastFilter()
-{
-Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorType.In,new string[]
-{
-"API"
-}),
-}
-},
+Dimensions = new ForecastComparisonExpression("ResourceGroup", ForecastOperatorType.In, new string[]{"API"}),
+}},
                 },
             })
             {
-                TimePeriod = new ForecastTimePeriod(DateTimeOffset.Parse("2022-08-01T00:00:00+00:00"), DateTimeOffset.Parse("2022-08-31T23:59:59+00:00")),
+                TimePeriod = new ForecastTimePeriod(default, default),
             };
             ForecastResult result = await tenantResource.ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalSubscriptionForecast
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExternalCloudProviderUsageForecast_ExternalSubscriptionForecast()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionForecast.json
@@ -372,62 +383,44 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
             string externalCloudProviderId = "100";
-            ForecastDefinition forecastDefinition = new ForecastDefinition(ForecastType.Usage, ForecastTimeframe.Custom, new ForecastDataset(new Dictionary<string, ForecastAggregation>()
+            ForecastDefinition forecastDefinition = new ForecastDefinition(ForecastType.Usage, ForecastTimeframe.Custom, new ForecastDataset(new Dictionary<string, ForecastAggregation>
             {
-                ["totalCost"] = new ForecastAggregation(FunctionName.Cost, FunctionType.Sum),
+                ["totalCost"] = new ForecastAggregation(FunctionName.Cost, FunctionType.Sum)
             })
             {
                 Granularity = GranularityType.Daily,
-                Filter = new ForecastFilter()
+                Filter = new ForecastFilter
                 {
-                    And =
+                    And = {new ForecastFilter
 {
-new ForecastFilter()
+Or = {new ForecastFilter
 {
-Or =
+Dimensions = new ForecastComparisonExpression("ResourceLocation", ForecastOperatorType.In, new string[]{"East US", "West Europe"}),
+}, new ForecastFilter
 {
-new ForecastFilter()
+Tags = new ForecastComparisonExpression("Environment", ForecastOperatorType.In, new string[]{"UAT", "Prod"}),
+}},
+}, new ForecastFilter
 {
-Dimensions = new ForecastComparisonExpression("ResourceLocation",ForecastOperatorType.In,new string[]
-{
-"East US","West Europe"
-}),
-},new ForecastFilter()
-{
-Tags = new ForecastComparisonExpression("Environment",ForecastOperatorType.In,new string[]
-{
-"UAT","Prod"
-}),
-}
-},
-},new ForecastFilter()
-{
-Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorType.In,new string[]
-{
-"API"
-}),
-}
-},
+Dimensions = new ForecastComparisonExpression("ResourceGroup", ForecastOperatorType.In, new string[]{"API"}),
+}},
                 },
             })
             {
-                TimePeriod = new ForecastTimePeriod(DateTimeOffset.Parse("2022-08-01T00:00:00+00:00"), DateTimeOffset.Parse("2022-08-31T23:59:59+00:00")),
+                TimePeriod = new ForecastTimePeriod(default, default),
             };
             ForecastResult result = await tenantResource.ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalBillingAccountDimensionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByExternalCloudProviderTypeDimensions_ExternalBillingAccountDimensionList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsDimensions.json
@@ -438,23 +431,22 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType: ExternalCloudProviderType.ExternalBillingAccounts, externalCloudProviderId: "100") { };
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
+            string externalCloudProviderId = "100";
+            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
             await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExternalSubscriptionDimensionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByExternalCloudProviderTypeDimensions_ExternalSubscriptionDimensionList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsDimensions.json
@@ -465,23 +457,22 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType: ExternalCloudProviderType.ExternalSubscriptions, externalCloudProviderId: "100") { };
+            ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
+            string externalCloudProviderId = "100";
+            TenantResourceByExternalCloudProviderTypeDimensionsOptions options = new TenantResourceByExternalCloudProviderTypeDimensionsOptions(externalCloudProviderType, externalCloudProviderId);
             await foreach (CostManagementDimension item in tenantResource.ByExternalCloudProviderTypeDimensionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ExternalBillingAccountQueryList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalBillingAccountQueryList()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalBillingAccountsQuery.json
@@ -492,46 +483,29 @@ Dimensions = new ForecastComparisonExpression("ResourceGroup",ForecastOperatorTy
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalBillingAccounts;
             string externalCloudProviderId = "100";
-            QueryDefinition queryDefinition = new QueryDefinition(ExportType.Usage, TimeframeType.MonthToDate, new QueryDataset()
+            QueryDefinition queryDefinition = new QueryDefinition(ExportType.Usage, TimeframeType.MonthToDate, new QueryDataset
             {
                 Granularity = GranularityType.Daily,
-                Filter = new QueryFilter()
+                Filter = new QueryFilter
                 {
-                    And =
+                    And = {new QueryFilter
 {
-new QueryFilter()
+Or = {new QueryFilter
 {
-Or =
+Dimensions = new QueryComparisonExpression("ResourceLocation", QueryOperatorType.In, new string[]{"East US", "West Europe"}),
+}, new QueryFilter
 {
-new QueryFilter()
+Tags = new QueryComparisonExpression("Environment", QueryOperatorType.In, new string[]{"UAT", "Prod"}),
+}},
+}, new QueryFilter
 {
-Dimensions = new QueryComparisonExpression("ResourceLocation",QueryOperatorType.In,new string[]
-{
-"East US","West Europe"
-}),
-},new QueryFilter()
-{
-Tags = new QueryComparisonExpression("Environment",QueryOperatorType.In,new string[]
-{
-"UAT","Prod"
-}),
-}
-},
-},new QueryFilter()
-{
-Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,new string[]
-{
-"API"
-}),
-}
-},
+Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In, new string[]{"API"}),
+}},
                 },
             });
             QueryResult result = await tenantResource.UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition);
@@ -539,9 +513,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalSubscriptionsQuery
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UsageByExternalCloudProviderTypeQuery_ExternalSubscriptionsQuery()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ExternalSubscriptionsQuery.json
@@ -552,46 +525,29 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ExternalCloudProviderType externalCloudProviderType = ExternalCloudProviderType.ExternalSubscriptions;
             string externalCloudProviderId = "100";
-            QueryDefinition queryDefinition = new QueryDefinition(ExportType.Usage, TimeframeType.MonthToDate, new QueryDataset()
+            QueryDefinition queryDefinition = new QueryDefinition(ExportType.Usage, TimeframeType.MonthToDate, new QueryDataset
             {
                 Granularity = GranularityType.Daily,
-                Filter = new QueryFilter()
+                Filter = new QueryFilter
                 {
-                    And =
+                    And = {new QueryFilter
 {
-new QueryFilter()
+Or = {new QueryFilter
 {
-Or =
+Dimensions = new QueryComparisonExpression("ResourceLocation", QueryOperatorType.In, new string[]{"East US", "West Europe"}),
+}, new QueryFilter
 {
-new QueryFilter()
+Tags = new QueryComparisonExpression("Environment", QueryOperatorType.In, new string[]{"UAT", "Prod"}),
+}},
+}, new QueryFilter
 {
-Dimensions = new QueryComparisonExpression("ResourceLocation",QueryOperatorType.In,new string[]
-{
-"East US","West Europe"
-}),
-},new QueryFilter()
-{
-Tags = new QueryComparisonExpression("Environment",QueryOperatorType.In,new string[]
-{
-"UAT","Prod"
-}),
-}
-},
-},new QueryFilter()
-{
-Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,new string[]
-{
-"API"
-}),
-}
-},
+Dimensions = new QueryComparisonExpression("ResourceGroup", QueryOperatorType.In, new string[]{"API"}),
+}},
                 },
             });
             QueryResult result = await tenantResource.UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition);
@@ -599,9 +555,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ReservationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByBillingAccountIdGenerateReservationDetailsReport_ReservationDetails()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingAccount.json
@@ -612,9 +567,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountId = "9845612";
@@ -626,9 +579,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ReservationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ByBillingProfileIdGenerateReservationDetailsReport_ReservationDetails()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/GenerateReservationDetailsReportByBillingProfile.json
@@ -639,9 +591,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountId = "00000000-0000-0000-0000-000000000000";
@@ -654,9 +604,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PricesheetDownload
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadPriceSheet_PricesheetDownload()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownload.json
@@ -667,9 +616,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
@@ -681,9 +628,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PricesheetDownloadByBillingProfile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadByBillingProfilePriceSheet_PricesheetDownloadByBillingProfile()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PricesheetDownloadByBillingProfile.json
@@ -694,9 +640,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string billingAccountName = "7c05a543-80ff-571e-9f98-1063b3b53cf2:99ad03ad-2d1b-4889-a452-090ad407d25f_2019-05-31";
@@ -707,9 +651,8 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ScheduledActionCheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json
@@ -720,12 +663,10 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CostManagementNameAvailabilityContent content = new CostManagementNameAvailabilityContent()
+            CostManagementNameAvailabilityContent content = new CostManagementNameAvailabilityContent
             {
                 Name = "testName",
                 ResourceType = "Microsoft.CostManagement/ScheduledActions",

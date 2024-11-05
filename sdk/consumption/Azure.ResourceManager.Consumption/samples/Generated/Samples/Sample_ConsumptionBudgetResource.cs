@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Consumption.Samples
 {
     public partial class Sample_ConsumptionBudgetResource
     {
-        // Budget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_Budget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.Consumption.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteBudget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteBudget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/DeleteBudget.json
@@ -65,9 +64,9 @@ namespace Azure.ResourceManager.Consumption.Samples
             ConsumptionBudgetResource consumptionBudget = client.GetConsumptionBudgetResource(consumptionBudgetResourceId);
 
             // invoke the operation
-            await consumptionBudget.DeleteAsync(WaitUntil.Completed);
+            await consumptionBudget.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DiagnosticRemoteSupportSettingResource
     {
-        // GetDiagnosticRemoteSupportSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDiagnosticRemoteSupportSettings()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GetDiagnosticRemoteSupportSettings.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateDiagnosticRemoteSupportSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateDiagnosticRemoteSupportSettings()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/UpdateDiagnosticRemoteSupportSettings.json
@@ -68,17 +67,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             DiagnosticRemoteSupportSettingResource diagnosticRemoteSupportSetting = client.GetDiagnosticRemoteSupportSettingResource(diagnosticRemoteSupportSettingResourceId);
 
             // invoke the operation
-            DiagnosticRemoteSupportSettingData data = new DiagnosticRemoteSupportSettingData()
+            DiagnosticRemoteSupportSettingData data = new DiagnosticRemoteSupportSettingData
             {
-                RemoteSupportSettingsList =
-{
-new EdgeRemoteSupportSettings()
+                RemoteSupportSettingsList = {new EdgeRemoteSupportSettings
 {
 RemoteApplicationType = EdgeRemoteApplicationType.Powershell,
 AccessLevel = EdgeRemoteApplicationAccessLevel.ReadWrite,
-ExpireOn = DateTimeOffset.Parse("2021-07-07T00:00:00+00:00"),
-}
-},
+ExpireOn = default,
+}},
             };
             ArmOperation<DiagnosticRemoteSupportSettingResource> lro = await diagnosticRemoteSupportSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             DiagnosticRemoteSupportSettingResource result = lro.Value;

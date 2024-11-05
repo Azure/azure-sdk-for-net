@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_RestorableCosmosDBAccountResource
     {
-        // CosmosDBRestorableDatabaseAccountNoLocationList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRestorableCosmosDBAccounts_CosmosDBRestorableDatabaseAccountNoLocationList()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableDatabaseAccountNoLocationList.json
-            // this example is just showing the usage of "RestorableDatabaseAccounts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (RestorableCosmosDBAccountResource item in subscriptionResource.GetRestorableCosmosDBAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RestorableCosmosDBAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // CosmosDBRestorableDatabaseAccountGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBRestorableDatabaseAccountGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableDatabaseAccountGet.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBRestorableSqlDatabaseList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableSqlDatabases_CosmosDBRestorableSqlDatabaseList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableSqlDatabaseList.json
@@ -106,12 +72,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableSqlContainerList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableSqlContainers_CosmosDBRestorableSqlContainerList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableSqlContainerList.json
@@ -132,17 +97,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation and iterate over the result
             string restorableSqlDatabaseRid = "3fu-hg==";
-            await foreach (RestorableSqlContainer item in restorableCosmosDBAccount.GetRestorableSqlContainersAsync(restorableSqlDatabaseRid: restorableSqlDatabaseRid))
+            await foreach (RestorableSqlContainer item in restorableCosmosDBAccount.GetRestorableSqlContainersAsync(restorableSqlDatabaseRid))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableSqlResourceList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllRestorableSqlResourceData_CosmosDBRestorableSqlResourceList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableSqlResourceList.json
@@ -164,17 +128,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation and iterate over the result
             AzureLocation? restoreLocation = new AzureLocation("WestUS");
             string restoreTimestampInUtc = "06/01/2022 4:56";
-            await foreach (RestorableSqlResourceData item in restorableCosmosDBAccount.GetAllRestorableSqlResourceDataAsync(restoreLocation: restoreLocation, restoreTimestampInUtc: restoreTimestampInUtc))
+            await foreach (RestorableSqlResourceData item in restorableCosmosDBAccount.GetAllRestorableSqlResourceDataAsync(restoreLocation, restoreTimestampInUtc))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableMongodbDatabaseList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableMongoDBDatabases_CosmosDBRestorableMongodbDatabaseList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableMongodbDatabaseList.json
@@ -199,12 +162,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableMongodbCollectionList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableMongoDBCollections_CosmosDBRestorableMongodbCollectionList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableMongodbCollectionList.json
@@ -225,17 +187,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation and iterate over the result
             string restorableMongoDBDatabaseRid = "PD5DALigDgw=";
-            await foreach (RestorableMongoDBCollection item in restorableCosmosDBAccount.GetRestorableMongoDBCollectionsAsync(restorableMongoDBDatabaseRid: restorableMongoDBDatabaseRid))
+            await foreach (RestorableMongoDBCollection item in restorableCosmosDBAccount.GetRestorableMongoDBCollectionsAsync(restorableMongoDBDatabaseRid))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableMongodbResourceList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllRestorableMongoDBResourceData_CosmosDBRestorableMongodbResourceList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableMongodbResourceList.json
@@ -257,17 +218,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation and iterate over the result
             AzureLocation? restoreLocation = new AzureLocation("WestUS");
             string restoreTimestampInUtc = "06/01/2022 4:56";
-            await foreach (RestorableMongoDBResourceData item in restorableCosmosDBAccount.GetAllRestorableMongoDBResourceDataAsync(restoreLocation: restoreLocation, restoreTimestampInUtc: restoreTimestampInUtc))
+            await foreach (RestorableMongoDBResourceData item in restorableCosmosDBAccount.GetAllRestorableMongoDBResourceDataAsync(restoreLocation, restoreTimestampInUtc))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableGremlinDatabaseList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableGremlinDatabases_CosmosDBRestorableGremlinDatabaseList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableGremlinDatabaseList.json
@@ -292,12 +252,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableGremlinGraphList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableGremlinGraphs_CosmosDBRestorableGremlinGraphList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableGremlinGraphList.json
@@ -318,17 +277,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation and iterate over the result
             string restorableGremlinDatabaseRid = "PD5DALigDgw=";
-            await foreach (RestorableGremlinGraph item in restorableCosmosDBAccount.GetRestorableGremlinGraphsAsync(restorableGremlinDatabaseRid: restorableGremlinDatabaseRid))
+            await foreach (RestorableGremlinGraph item in restorableCosmosDBAccount.GetRestorableGremlinGraphsAsync(restorableGremlinDatabaseRid))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableGremlinResourceList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableGremlinResources_CosmosDBRestorableGremlinResourceList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableGremlinResourceList.json
@@ -350,17 +308,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation and iterate over the result
             AzureLocation? restoreLocation = new AzureLocation("WestUS");
             string restoreTimestampInUtc = "06/01/2022 4:56";
-            await foreach (RestorableGremlinResourceData item in restorableCosmosDBAccount.GetRestorableGremlinResourcesAsync(restoreLocation: restoreLocation, restoreTimestampInUtc: restoreTimestampInUtc))
+            await foreach (RestorableGremlinResourceData item in restorableCosmosDBAccount.GetRestorableGremlinResourcesAsync(restoreLocation, restoreTimestampInUtc))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableTableList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableTables_CosmosDBRestorableTableList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableTableList.json
@@ -385,12 +342,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBRestorableTableResourceList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRestorableTableResources_CosmosDBRestorableTableResourceList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBRestorableTableResourceList.json
@@ -412,12 +368,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation and iterate over the result
             AzureLocation? restoreLocation = new AzureLocation("WestUS");
             string restoreTimestampInUtc = "06/01/2022 4:56";
-            await foreach (RestorableTableResourceData item in restorableCosmosDBAccount.GetRestorableTableResourcesAsync(restoreLocation: restoreLocation, restoreTimestampInUtc: restoreTimestampInUtc))
+            await foreach (RestorableTableResourceData item in restorableCosmosDBAccount.GetRestorableTableResourcesAsync(restoreLocation, restoreTimestampInUtc))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

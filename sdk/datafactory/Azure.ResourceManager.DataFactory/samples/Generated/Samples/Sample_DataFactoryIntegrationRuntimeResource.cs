@@ -7,18 +7,17 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataFactory.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryIntegrationRuntimeResource
     {
-        // IntegrationRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_IntegrationRuntimesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Get.json
@@ -48,46 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // IntegrationRuntimes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_IntegrationRuntimesUpdate()
-        {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Update.json
-            // this example is just showing the usage of "IntegrationRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
-            // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
-            string resourceGroupName = "exampleResourceGroup";
-            string factoryName = "exampleFactoryName";
-            string integrationRuntimeName = "exampleIntegrationRuntime";
-            ResourceIdentifier dataFactoryIntegrationRuntimeResourceId = DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName);
-            DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
-
-            // invoke the operation
-            DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch()
-            {
-                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
-                UpdateDelayOffset = XmlConvert.ToTimeSpan("\"PT3H\""),
-            };
-            DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DataFactoryIntegrationRuntimeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // IntegrationRuntimes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IntegrationRuntimesDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Delete.json
@@ -108,14 +69,49 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            await dataFactoryIntegrationRuntime.DeleteAsync(WaitUntil.Completed);
+            await dataFactoryIntegrationRuntime.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_GetStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_IntegrationRuntimesUpdate()
+        {
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Update.json
+            // this example is just showing the usage of "IntegrationRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
+            // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
+            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string resourceGroupName = "exampleResourceGroup";
+            string factoryName = "exampleFactoryName";
+            string integrationRuntimeName = "exampleIntegrationRuntime";
+            ResourceIdentifier dataFactoryIntegrationRuntimeResourceId = DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName);
+            DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
+
+            // invoke the operation
+            DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch
+            {
+                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
+                UpdateDelayOffset = default,
+            };
+            DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DataFactoryIntegrationRuntimeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStatus_IntegrationRuntimesGetStatus()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_GetStatus.json
@@ -141,9 +137,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_OutboundNetworkDependenciesEndpoints
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependencies_IntegrationRuntimesOutboundNetworkDependenciesEndpoints()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints.json
@@ -169,12 +164,11 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_GetConnectionInfo
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectionInfo_IntegrationRuntimesGetConnectionInfo()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_GetConnectionInfo.json
@@ -200,9 +194,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_RegenerateAuthKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAuthKey_IntegrationRuntimesRegenerateAuthKey()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_RegenerateAuthKey.json
@@ -223,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            IntegrationRuntimeRegenerateKeyContent content = new IntegrationRuntimeRegenerateKeyContent()
+            IntegrationRuntimeRegenerateKeyContent content = new IntegrationRuntimeRegenerateKeyContent
             {
                 KeyName = IntegrationRuntimeAuthKeyName.AuthKey2,
             };
@@ -232,9 +225,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_ListAuthKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAuthKeys_IntegrationRuntimesListAuthKeys()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_ListAuthKeys.json
@@ -260,9 +252,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_Start
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_IntegrationRuntimesStart()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Start.json
@@ -289,9 +280,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_Stop
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Stop_IntegrationRuntimesStop()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Stop.json
@@ -312,14 +302,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            await dataFactoryIntegrationRuntime.StopAsync(WaitUntil.Completed);
+            await dataFactoryIntegrationRuntime.StopAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_SyncCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SyncCredentials_IntegrationRuntimesSyncCredentials()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_SyncCredentials.json
@@ -340,14 +329,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            await dataFactoryIntegrationRuntime.SyncCredentialsAsync();
+            await dataFactoryIntegrationRuntime.SyncCredentialsAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_GetMonitoringData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoringData_IntegrationRuntimesGetMonitoringData()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_GetMonitoringData.json
@@ -373,9 +361,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimes_Upgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_IntegrationRuntimesUpgrade()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Upgrade.json
@@ -396,14 +383,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            await dataFactoryIntegrationRuntime.UpgradeAsync();
+            await dataFactoryIntegrationRuntime.UpgradeAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_Upgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemoveLinks_IntegrationRuntimesUpgrade()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_RemoveLinks.json
@@ -425,14 +411,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             LinkedIntegrationRuntimeContent content = new LinkedIntegrationRuntimeContent("exampleFactoryName-linked");
-            await dataFactoryIntegrationRuntime.RemoveLinksAsync(content);
+            await dataFactoryIntegrationRuntime.RemoveLinksAsync(content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimes_CreateLinkedIntegrationRuntime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateLinkedIntegrationRuntime_IntegrationRuntimesCreateLinkedIntegrationRuntime()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_CreateLinkedIntegrationRuntime.json
@@ -453,7 +438,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            CreateLinkedIntegrationRuntimeContent content = new CreateLinkedIntegrationRuntimeContent()
+            CreateLinkedIntegrationRuntimeContent content = new CreateLinkedIntegrationRuntimeContent
             {
                 Name = "bfa92911-9fb6-4fbe-8f23-beae87bc1c83",
                 SubscriptionId = "061774c7-4b5a-4159-a55b-365581830283",
@@ -465,9 +450,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimeObjectMetadata_Refresh
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RefreshIntegrationRuntimeObjectMetadata_IntegrationRuntimeObjectMetadataRefresh()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeObjectMetadata_Refresh.json
@@ -494,9 +478,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimeObjectMetadata_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllIntegrationRuntimeObjectMetadata_IntegrationRuntimeObjectMetadataGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeObjectMetadata_Get.json
@@ -517,21 +500,20 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation and iterate over the result
-            GetSsisObjectMetadataContent content = new GetSsisObjectMetadataContent()
+            GetSsisObjectMetadataContent content = new GetSsisObjectMetadataContent
             {
                 MetadataPath = "ssisFolders",
             };
-            await foreach (SsisObjectMetadata item in dataFactoryIntegrationRuntime.GetAllIntegrationRuntimeObjectMetadataAsync(content: content))
+            await foreach (SsisObjectMetadata item in dataFactoryIntegrationRuntime.GetAllIntegrationRuntimeObjectMetadataAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimeNodes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIntegrationRuntimeNode_IntegrationRuntimeNodesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Get.json
@@ -558,9 +540,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimesNodes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteIntegrationRuntimeNode_IntegrationRuntimesNodesDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Delete.json
@@ -582,14 +563,13 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string nodeName = "Node_1";
-            await dataFactoryIntegrationRuntime.DeleteIntegrationRuntimeNodeAsync(nodeName);
+            await dataFactoryIntegrationRuntime.DeleteIntegrationRuntimeNodeAsync(nodeName).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // IntegrationRuntimeNodes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateIntegrationRuntimeNode_IntegrationRuntimeNodesUpdate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_Update.json
@@ -611,7 +591,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string nodeName = "Node_1";
-            UpdateIntegrationRuntimeNodeContent content = new UpdateIntegrationRuntimeNodeContent()
+            UpdateIntegrationRuntimeNodeContent content = new UpdateIntegrationRuntimeNodeContent
             {
                 ConcurrentJobsLimit = 2,
             };
@@ -620,9 +600,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // IntegrationRuntimeNodes_GetIpAddress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIPAddressIntegrationRuntimeNode_IntegrationRuntimeNodesGetIpAddress()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimeNodes_GetIpAddress.json

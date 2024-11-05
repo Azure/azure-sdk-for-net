@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CassandraKeyspaceResource
     {
-        // CosmosDBCassandraKeyspaceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBCassandraKeyspaceGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceGet.json
@@ -47,9 +47,35 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraKeyspaceCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CosmosDBCassandraKeyspaceDelete()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceDelete.json
+            // this example is just showing the usage of "CassandraResources_DeleteCassandraKeyspace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CassandraKeyspaceResource created on azure
+            // for more information of creating CassandraKeyspaceResource, please refer to the document of CassandraKeyspaceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            string keyspaceName = "keyspaceName";
+            ResourceIdentifier cassandraKeyspaceResourceId = CassandraKeyspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, keyspaceName);
+            CassandraKeyspaceResource cassandraKeyspace = client.GetCassandraKeyspaceResource(cassandraKeyspaceResourceId);
+
+            // invoke the operation
+            await cassandraKeyspace.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBCassandraKeyspaceCreateUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceCreateUpdate.json
@@ -73,9 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraKeyspaceCreateOrUpdateContent content = new CassandraKeyspaceCreateOrUpdateContent(new AzureLocation("West US"), new CassandraKeyspaceResourceInfo("keyspaceName"))
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CassandraKeyspaceResource> lro = await cassandraKeyspace.UpdateAsync(WaitUntil.Completed, content);
             CassandraKeyspaceResource result = lro.Value;
@@ -85,34 +109,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraKeyspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CosmosDBCassandraKeyspaceDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CosmosDBCassandraKeyspaceDelete()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceDelete.json
-            // this example is just showing the usage of "CassandraResources_DeleteCassandraKeyspace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CassandraKeyspaceResource created on azure
-            // for more information of creating CassandraKeyspaceResource, please refer to the document of CassandraKeyspaceResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string keyspaceName = "keyspaceName";
-            ResourceIdentifier cassandraKeyspaceResourceId = CassandraKeyspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, keyspaceName);
-            CassandraKeyspaceResource cassandraKeyspace = client.GetCassandraKeyspaceResource(cassandraKeyspaceResourceId);
-
-            // invoke the operation
-            await cassandraKeyspace.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

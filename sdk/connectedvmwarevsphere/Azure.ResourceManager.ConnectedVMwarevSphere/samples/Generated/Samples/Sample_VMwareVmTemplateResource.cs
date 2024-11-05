@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_VMwareVmTemplateResource
     {
-        // GetVirtualMachineTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualMachineTemplate()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/GetVirtualMachineTemplate.json
@@ -47,48 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateVirtualMachineTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateVirtualMachineTemplate()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateVirtualMachineTemplate.json
-            // this example is just showing the usage of "VirtualMachineTemplates_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VMwareVmTemplateResource created on azure
-            // for more information of creating VMwareVmTemplateResource, please refer to the document of VMwareVmTemplateResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string virtualMachineTemplateName = "WebFrontEndTemplate";
-            ResourceIdentifier vMwareVmTemplateResourceId = VMwareVmTemplateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineTemplateName);
-            VMwareVmTemplateResource vMwareVmTemplate = client.GetVMwareVmTemplateResource(vMwareVmTemplateResourceId);
-
-            // invoke the operation
-            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
-            VMwareVmTemplateResource result = await vMwareVmTemplate.UpdateAsync(content);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VMwareVmTemplateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeleteVirtualMachineTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualMachineTemplate()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/DeleteVirtualMachineTemplate.json
@@ -108,41 +67,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareVmTemplateResource vMwareVmTemplate = client.GetVMwareVmTemplateResource(vMwareVmTemplateResourceId);
 
             // invoke the operation
-            await vMwareVmTemplate.DeleteAsync(WaitUntil.Completed);
+            await vMwareVmTemplate.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListVirtualMachineTemplates
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVMwareVmTemplates_ListVirtualMachineTemplates()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateVirtualMachineTemplate()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/ListVirtualMachineTemplates.json
-            // this example is just showing the usage of "VirtualMachineTemplates_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateVirtualMachineTemplate.json
+            // this example is just showing the usage of "VirtualMachineTemplates_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VMwareVmTemplateResource created on azure
+            // for more information of creating VMwareVmTemplateResource, please refer to the document of VMwareVmTemplateResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "testrg";
+            string virtualMachineTemplateName = "WebFrontEndTemplate";
+            ResourceIdentifier vMwareVmTemplateResourceId = VMwareVmTemplateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineTemplateName);
+            VMwareVmTemplateResource vMwareVmTemplate = client.GetVMwareVmTemplateResource(vMwareVmTemplateResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (VMwareVmTemplateResource item in subscriptionResource.GetVMwareVmTemplatesAsync())
+            // invoke the operation
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VMwareVmTemplateData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+            };
+            VMwareVmTemplateResource result = await vMwareVmTemplate.UpdateAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VMwareVmTemplateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

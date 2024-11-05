@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
     public partial class Sample_ContainerAppRevisionResource
     {
-        // Get Container App's revision
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerAppSRevision()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Revisions_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.AppContainers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Activate Container App's revision
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ActivateRevision_ActivateContainerAppSRevision()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Revisions_Activate.json
@@ -69,14 +68,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await containerAppRevision.ActivateRevisionAsync();
+            await containerAppRevision.ActivateRevisionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Deactivate Container App's revision
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeactivateRevision_DeactivateContainerAppSRevision()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Revisions_Deactivate.json
@@ -97,14 +95,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await containerAppRevision.DeactivateRevisionAsync();
+            await containerAppRevision.DeactivateRevisionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restart Container App's revision
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RestartRevision_RestartContainerAppSRevision()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/Revisions_Restart.json
@@ -125,9 +122,9 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppRevisionResource containerAppRevision = client.GetContainerAppRevisionResource(containerAppRevisionResourceId);
 
             // invoke the operation
-            await containerAppRevision.RestartRevisionAsync();
+            await containerAppRevision.RestartRevisionAsync().ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

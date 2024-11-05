@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_BandwidthScheduleResource
     {
-        // BandwidthScheduleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BandwidthScheduleGet()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/BandwidthScheduleGet.json
@@ -47,46 +47,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BandwidthSchedulePut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_BandwidthSchedulePut()
-        {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/BandwidthSchedulePut.json
-            // this example is just showing the usage of "BandwidthSchedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BandwidthScheduleResource created on azure
-            // for more information of creating BandwidthScheduleResource, please refer to the document of BandwidthScheduleResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
-            string resourceGroupName = "GroupForEdgeAutomation";
-            string deviceName = "testedgedevice";
-            string name = "bandwidth-1";
-            ResourceIdentifier bandwidthScheduleResourceId = BandwidthScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deviceName, name);
-            BandwidthScheduleResource bandwidthSchedule = client.GetBandwidthScheduleResource(bandwidthScheduleResourceId);
-
-            // invoke the operation
-            BandwidthScheduleData data = new BandwidthScheduleData(TimeSpan.Parse("0:0:0"), TimeSpan.Parse("13:59:0"), 100, new DataBoxEdgeDayOfWeek[]
-            {
-DataBoxEdgeDayOfWeek.Sunday,DataBoxEdgeDayOfWeek.Monday
-            });
-            ArmOperation<BandwidthScheduleResource> lro = await bandwidthSchedule.UpdateAsync(WaitUntil.Completed, data);
-            BandwidthScheduleResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BandwidthScheduleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // BandwidthScheduleDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_BandwidthScheduleDelete()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/BandwidthScheduleDelete.json
@@ -107,9 +69,42 @@ DataBoxEdgeDayOfWeek.Sunday,DataBoxEdgeDayOfWeek.Monday
             BandwidthScheduleResource bandwidthSchedule = client.GetBandwidthScheduleResource(bandwidthScheduleResourceId);
 
             // invoke the operation
-            await bandwidthSchedule.DeleteAsync(WaitUntil.Completed);
+            await bandwidthSchedule.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_BandwidthSchedulePut()
+        {
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/BandwidthSchedulePut.json
+            // this example is just showing the usage of "BandwidthSchedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BandwidthScheduleResource created on azure
+            // for more information of creating BandwidthScheduleResource, please refer to the document of BandwidthScheduleResource
+            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string resourceGroupName = "GroupForEdgeAutomation";
+            string deviceName = "testedgedevice";
+            string name = "bandwidth-1";
+            ResourceIdentifier bandwidthScheduleResourceId = BandwidthScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deviceName, name);
+            BandwidthScheduleResource bandwidthSchedule = client.GetBandwidthScheduleResource(bandwidthScheduleResourceId);
+
+            // invoke the operation
+            BandwidthScheduleData data = new BandwidthScheduleData(default, default, 100, new DataBoxEdgeDayOfWeek[] { DataBoxEdgeDayOfWeek.Sunday, DataBoxEdgeDayOfWeek.Monday });
+            ArmOperation<BandwidthScheduleResource> lro = await bandwidthSchedule.UpdateAsync(WaitUntil.Completed, data);
+            BandwidthScheduleResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BandwidthScheduleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeStorageAccountCredentialResource
     {
-        // SACGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SACGet()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACGet.json
@@ -47,9 +47,35 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SACPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_SACDelete()
+        {
+            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACDelete.json
+            // this example is just showing the usage of "StorageAccountCredentials_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataBoxEdgeStorageAccountCredentialResource created on azure
+            // for more information of creating DataBoxEdgeStorageAccountCredentialResource, please refer to the document of DataBoxEdgeStorageAccountCredentialResource
+            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
+            string resourceGroupName = "GroupForEdgeAutomation";
+            string deviceName = "testedgedevice";
+            string name = "sac1";
+            ResourceIdentifier dataBoxEdgeStorageAccountCredentialResourceId = DataBoxEdgeStorageAccountCredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deviceName, name);
+            DataBoxEdgeStorageAccountCredentialResource dataBoxEdgeStorageAccountCredential = client.GetDataBoxEdgeStorageAccountCredentialResource(dataBoxEdgeStorageAccountCredentialResourceId);
+
+            // invoke the operation
+            await dataBoxEdgeStorageAccountCredential.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SACPut()
         {
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACPut.json
@@ -86,34 +112,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             DataBoxEdgeStorageAccountCredentialData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // SACDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_SACDelete()
-        {
-            // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/SACDelete.json
-            // this example is just showing the usage of "StorageAccountCredentials_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataBoxEdgeStorageAccountCredentialResource created on azure
-            // for more information of creating DataBoxEdgeStorageAccountCredentialResource, please refer to the document of DataBoxEdgeStorageAccountCredentialResource
-            string subscriptionId = "4385cf00-2d3a-425a-832f-f4285b1c9dce";
-            string resourceGroupName = "GroupForEdgeAutomation";
-            string deviceName = "testedgedevice";
-            string name = "sac1";
-            ResourceIdentifier dataBoxEdgeStorageAccountCredentialResourceId = DataBoxEdgeStorageAccountCredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deviceName, name);
-            DataBoxEdgeStorageAccountCredentialResource dataBoxEdgeStorageAccountCredential = client.GetDataBoxEdgeStorageAccountCredentialResource(dataBoxEdgeStorageAccountCredentialResourceId);
-
-            // invoke the operation
-            await dataBoxEdgeStorageAccountCredential.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DesktopVirtualization.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_SessionHostResource
     {
-        // SessionHost_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SessionHostGet()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/SessionHost_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SessionHost_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SessionHostDelete()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/SessionHost_Delete.json
@@ -71,14 +70,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
 
             // invoke the operation
             bool? force = true;
-            await sessionHost.DeleteAsync(WaitUntil.Completed, force: force);
+            await sessionHost.DeleteAsync(WaitUntil.Completed, force).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SessionHost_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SessionHostUpdate()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/SessionHost_Update.json
@@ -99,14 +97,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             SessionHostResource sessionHost = client.GetSessionHostResource(sessionHostResourceId);
 
             // invoke the operation
-            SessionHostPatch patch = new SessionHostPatch()
+            SessionHostPatch patch = new SessionHostPatch
             {
                 AllowNewSession = true,
                 AssignedUser = "user1@microsoft.com",
                 FriendlyName = "friendly",
             };
             bool? force = true;
-            SessionHostResource result = await sessionHost.UpdateAsync(patch, force: force);
+            SessionHostResource result = await sessionHost.UpdateAsync(patch, force);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

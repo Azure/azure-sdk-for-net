@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataMigration.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataMigration.Samples
 {
     public partial class Sample_ServiceProjectTaskResource
     {
-        // Tasks_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TasksGet()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Tasks_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TasksDelete()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Tasks_Delete.json
@@ -72,14 +71,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceProjectTaskResource serviceProjectTask = client.GetServiceProjectTaskResource(serviceProjectTaskResourceId);
 
             // invoke the operation
-            await serviceProjectTask.DeleteAsync(WaitUntil.Completed);
+            await serviceProjectTask.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Tasks_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TasksUpdate()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Tasks_Update.json
@@ -101,9 +99,9 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceProjectTaskResource serviceProjectTask = client.GetServiceProjectTaskResource(serviceProjectTaskResourceId);
 
             // invoke the operation
-            ProjectTaskData data = new ProjectTaskData()
+            ProjectTaskData data = new ProjectTaskData
             {
-                Properties = new ConnectToTargetSqlDBTaskProperties()
+                Properties = new ConnectToTargetSqlDBTaskProperties
                 {
                     Input = new ConnectToTargetSqlDBTaskInput(new SqlConnectionInfo("ssma-test-server.database.windows.net")
                     {
@@ -124,9 +122,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Cancel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_TasksCancel()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Tasks_Cancel.json
@@ -157,9 +154,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Tasks_Command
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Command_TasksCommand()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/Tasks_Command.json
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceProjectTaskResource serviceProjectTask = client.GetServiceProjectTaskResource(serviceProjectTaskResourceId);
 
             // invoke the operation
-            CommandProperties commandProperties = new MigrateSyncCompleteCommandProperties()
+            CommandProperties commandProperties = new MigrateSyncCompleteCommandProperties
             {
                 Input = new MigrateSyncCompleteCommandInput("TestDatabase"),
             };

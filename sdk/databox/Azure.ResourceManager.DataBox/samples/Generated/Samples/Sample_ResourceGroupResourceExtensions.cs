@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataBox.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // AvailableSkusPost
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableSkus_AvailableSkusPost()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/AvailableSkusPost.json
@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.DataBox.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ValidateInputsByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateInputs_ValidateInputsByResourceGroup()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/ValidateInputsByResourceGroup.json
@@ -71,25 +70,27 @@ namespace Azure.ResourceManager.DataBox.Samples
             AzureLocation location = new AzureLocation("westus");
             DataBoxValidationContent content = new CreateJobValidationContent(new DataBoxValidationInputContent[]
             {
-new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure)
+new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure)
 {
-DataImportDetails =
-{
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
+DataImportDetails = {new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))},
 },
-},new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX","XX","00000")
+new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
 {
 StreetAddress2 = "XXXX XXXX",
 City = "XXXX XXXX",
 StateOrProvince = "XX",
 CompanyName = "XXXX XXXX",
 AddressType = DataBoxShippingAddressType.Commercial,
-},DataBoxSkuName.DataBox)
+}, DataBoxSkuName.DataBox)
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
-},new SubscriptionIsAllowedToCreateJobValidationContent(),new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure,"XX",new AzureLocation("westus")),new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),new PreferencesValidationContent(DataBoxSkuName.DataBox)
+},
+new SubscriptionIsAllowedToCreateJobValidationContent(),
+new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure, "XX", new AzureLocation("westus")),
+new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),
+new PreferencesValidationContent(DataBoxSkuName.DataBox)
 {
-Preference = new DataBoxOrderPreferences()
+Preference = new DataBoxOrderPreferences
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
 },
@@ -100,9 +101,8 @@ TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftM
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegionConfigurationByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRegionConfiguration_RegionConfigurationByResourceGroup()
         {
             // Generated from example definition: specification/databox/resource-manager/Microsoft.DataBox/stable/2022-12-01/examples/RegionConfigurationByResourceGroup.json
@@ -122,7 +122,7 @@ TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftM
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            RegionConfigurationContent content = new RegionConfigurationContent()
+            RegionConfigurationContent content = new RegionConfigurationContent
             {
                 ScheduleAvailabilityRequest = new DataBoxScheduleAvailabilityContent(new AzureLocation("westus")),
             };

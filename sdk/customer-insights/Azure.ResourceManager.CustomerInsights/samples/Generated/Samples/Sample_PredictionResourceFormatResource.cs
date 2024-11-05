@@ -10,78 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_PredictionResourceFormatResource
     {
-        // Predictions_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PredictionsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsCreateOrUpdate.json
-            // this example is just showing the usage of "Predictions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PredictionResourceFormatResource created on azure
-            // for more information of creating PredictionResourceFormatResource, please refer to the document of PredictionResourceFormatResource
-            string subscriptionId = "c909e979-ef71-4def-a970-bc7c154db8c5";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            string predictionName = "sdktest";
-            ResourceIdentifier predictionResourceFormatResourceId = PredictionResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, predictionName);
-            PredictionResourceFormatResource predictionResourceFormat = client.GetPredictionResourceFormatResource(predictionResourceFormatResourceId);
-
-            // invoke the operation
-            PredictionResourceFormatData data = new PredictionResourceFormatData()
-            {
-                Description =
-{
-["en-us"] = "sdktest",
-},
-                DisplayName =
-{
-["en-us"] = "sdktest",
-},
-                InvolvedInteractionTypes =
-{
-},
-                InvolvedKpiTypes =
-{
-},
-                InvolvedRelationships =
-{
-},
-                NegativeOutcomeExpression = "Customers.FirstName = 'Mike'",
-                PositiveOutcomeExpression = "Customers.FirstName = 'David'",
-                PrimaryProfileType = "Customers",
-                PredictionName = "sdktest",
-                ScopeExpression = "*",
-                AutoAnalyze = true,
-                Mappings = new PredictionMappings("sdktest_Score", "sdktest_Grade", "sdktest_Reason"),
-                ScoreLabel = "score label",
-                Grades =
-{
-},
-            };
-            ArmOperation<PredictionResourceFormatResource> lro = await predictionResourceFormat.UpdateAsync(WaitUntil.Completed, data);
-            PredictionResourceFormatResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PredictionResourceFormatData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Predictions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PredictionsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsGet.json
@@ -111,9 +47,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Predictions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PredictionsDelete()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsDelete.json
@@ -134,14 +69,68 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             PredictionResourceFormatResource predictionResourceFormat = client.GetPredictionResourceFormatResource(predictionResourceFormatResourceId);
 
             // invoke the operation
-            await predictionResourceFormat.DeleteAsync(WaitUntil.Completed);
+            await predictionResourceFormat.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Predictions_GetTrainingResults
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PredictionsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsCreateOrUpdate.json
+            // this example is just showing the usage of "Predictions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PredictionResourceFormatResource created on azure
+            // for more information of creating PredictionResourceFormatResource, please refer to the document of PredictionResourceFormatResource
+            string subscriptionId = "c909e979-ef71-4def-a970-bc7c154db8c5";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            string predictionName = "sdktest";
+            ResourceIdentifier predictionResourceFormatResourceId = PredictionResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, predictionName);
+            PredictionResourceFormatResource predictionResourceFormat = client.GetPredictionResourceFormatResource(predictionResourceFormatResourceId);
+
+            // invoke the operation
+            PredictionResourceFormatData data = new PredictionResourceFormatData
+            {
+                Description =
+{
+["en-us"] = "sdktest"
+},
+                DisplayName =
+{
+["en-us"] = "sdktest"
+},
+                InvolvedInteractionTypes = { },
+                InvolvedKpiTypes = { },
+                InvolvedRelationships = { },
+                NegativeOutcomeExpression = "Customers.FirstName = 'Mike'",
+                PositiveOutcomeExpression = "Customers.FirstName = 'David'",
+                PrimaryProfileType = "Customers",
+                PredictionName = "sdktest",
+                ScopeExpression = "*",
+                AutoAnalyze = true,
+                Mappings = new PredictionMappings("sdktest_Score", "sdktest_Grade", "sdktest_Reason"),
+                ScoreLabel = "score label",
+                Grades = { },
+            };
+            ArmOperation<PredictionResourceFormatResource> lro = await predictionResourceFormat.UpdateAsync(WaitUntil.Completed, data);
+            PredictionResourceFormatResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PredictionResourceFormatData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetTrainingResults_PredictionsGetTrainingResults()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsGetTrainingResults.json
@@ -167,9 +156,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Predictions_GetModelStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetModelStatus_PredictionsGetModelStatus()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsGetModelStatus.json
@@ -195,9 +183,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Predictions_ModelStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ModelStatus_PredictionsModelStatus()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsModelStatus.json
@@ -219,9 +206,9 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // invoke the operation
             PredictionModelStatus predictionModelStatus = new PredictionModelStatus(PredictionModelLifeCycle.Training);
-            await predictionResourceFormat.ModelStatusAsync(predictionModelStatus);
+            await predictionResourceFormat.ModelStatusAsync(predictionModelStatus).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

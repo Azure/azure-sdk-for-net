@@ -10,46 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeStoreAccountInformationResource
     {
-        // Adds a Data Lake Store account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_AddsADataLakeStoreAccount()
-        {
-            // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Add.json
-            // this example is just showing the usage of "DataLakeStoreAccounts_Add" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataLakeStoreAccountInformationResource created on azure
-            // for more information of creating DataLakeStoreAccountInformationResource, please refer to the document of DataLakeStoreAccountInformationResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "contosorg";
-            string accountName = "contosoadla";
-            string dataLakeStoreAccountName = "test_adls_account";
-            ResourceIdentifier dataLakeStoreAccountInformationResourceId = DataLakeStoreAccountInformationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, dataLakeStoreAccountName);
-            DataLakeStoreAccountInformationResource dataLakeStoreAccountInformation = client.GetDataLakeStoreAccountInformationResource(dataLakeStoreAccountInformationResourceId);
-
-            // invoke the operation
-            DataLakeStoreAccountInformationCreateOrUpdateContent content = new DataLakeStoreAccountInformationCreateOrUpdateContent()
-            {
-                Suffix = "test_suffix",
-            };
-            await dataLakeStoreAccountInformation.UpdateAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Gets the specified Data Lake Store account details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheSpecifiedDataLakeStoreAccountDetails()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Get.json
@@ -79,9 +47,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Removes the specified Data Lake Store account
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RemovesTheSpecifiedDataLakeStoreAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Delete.json
@@ -102,9 +69,40 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             DataLakeStoreAccountInformationResource dataLakeStoreAccountInformation = client.GetDataLakeStoreAccountInformationResource(dataLakeStoreAccountInformationResourceId);
 
             // invoke the operation
-            await dataLakeStoreAccountInformation.DeleteAsync(WaitUntil.Completed);
+            await dataLakeStoreAccountInformation.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AddsADataLakeStoreAccount()
+        {
+            // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/DataLakeStoreAccounts_Add.json
+            // this example is just showing the usage of "DataLakeStoreAccounts_Add" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataLakeStoreAccountInformationResource created on azure
+            // for more information of creating DataLakeStoreAccountInformationResource, please refer to the document of DataLakeStoreAccountInformationResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "contosorg";
+            string accountName = "contosoadla";
+            string dataLakeStoreAccountName = "test_adls_account";
+            ResourceIdentifier dataLakeStoreAccountInformationResourceId = DataLakeStoreAccountInformationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, dataLakeStoreAccountName);
+            DataLakeStoreAccountInformationResource dataLakeStoreAccountInformation = client.GetDataLakeStoreAccountInformationResource(dataLakeStoreAccountInformationResourceId);
+
+            // invoke the operation
+            DataLakeStoreAccountInformationCreateOrUpdateContent content = new DataLakeStoreAccountInformationCreateOrUpdateContent
+            {
+                Suffix = "test_suffix",
+            };
+            await dataLakeStoreAccountInformation.UpdateAsync(WaitUntil.Completed, content).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_VMwareDatastoreResource
     {
-        // GetDatastore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDatastore()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/GetDatastore.json
@@ -47,48 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateDatastore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateDatastore()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateDatastore.json
-            // this example is just showing the usage of "Datastores_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VMwareDatastoreResource created on azure
-            // for more information of creating VMwareDatastoreResource, please refer to the document of VMwareDatastoreResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string datastoreName = "HRDatastore";
-            ResourceIdentifier vMwareDatastoreResourceId = VMwareDatastoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, datastoreName);
-            VMwareDatastoreResource vMwareDatastore = client.GetVMwareDatastoreResource(vMwareDatastoreResourceId);
-
-            // invoke the operation
-            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
-            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(content);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VMwareDatastoreData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeleteDatastore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDatastore()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/DeleteDatastore.json
@@ -108,41 +67,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareDatastoreResource vMwareDatastore = client.GetVMwareDatastoreResource(vMwareDatastoreResourceId);
 
             // invoke the operation
-            await vMwareDatastore.DeleteAsync(WaitUntil.Completed);
+            await vMwareDatastore.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListDatastores
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVMwareDatastores_ListDatastores()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateDatastore()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/ListDatastores.json
-            // this example is just showing the usage of "Datastores_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateDatastore.json
+            // this example is just showing the usage of "Datastores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VMwareDatastoreResource created on azure
+            // for more information of creating VMwareDatastoreResource, please refer to the document of VMwareDatastoreResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "testrg";
+            string datastoreName = "HRDatastore";
+            ResourceIdentifier vMwareDatastoreResourceId = VMwareDatastoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, datastoreName);
+            VMwareDatastoreResource vMwareDatastore = client.GetVMwareDatastoreResource(vMwareDatastoreResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (VMwareDatastoreResource item in subscriptionResource.GetVMwareDatastoresAsync())
+            // invoke the operation
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VMwareDatastoreData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+            };
+            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VMwareDatastoreData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_ContainerServiceAgentPoolResource
     {
-        // Abort operation on agent pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AbortLatestOperation_AbortOperationOnAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsAbortOperation.json
-            // this example is just showing the usage of "AgentPools_AbortLatestOperation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceAgentPoolResource created on azure
-            // for more information of creating ContainerServiceAgentPoolResource, please refer to the document of ContainerServiceAgentPoolResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            string agentPoolName = "agentpool1";
-            ResourceIdentifier containerServiceAgentPoolResourceId = ContainerServiceAgentPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, agentPoolName);
-            ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
-
-            // invoke the operation
-            await containerServiceAgentPool.AbortLatestOperationAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsGet.json
@@ -75,9 +47,35 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool using an agent pool snapshot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsDelete.json
+            // this example is just showing the usage of "AgentPools_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceAgentPoolResource created on azure
+            // for more information of creating ContainerServiceAgentPoolResource, please refer to the document of ContainerServiceAgentPoolResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            string agentPoolName = "agentpool1";
+            ResourceIdentifier containerServiceAgentPoolResourceId = ContainerServiceAgentPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, agentPoolName);
+            ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
+
+            // invoke the operation
+            await containerServiceAgentPool.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolUsingAnAgentPoolSnapshot()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Snapshot.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with Capacity Reservation Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithCapacityReservationGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CRG.json
@@ -140,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -158,9 +155,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with Dedicated Host Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithDedicatedHostGroup()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_DedicatedHostGroup.json
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -199,9 +195,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with EncryptionAtHost enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithEncryptionAtHostEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableEncryptionAtHost.json
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -240,9 +235,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with Ephemeral OS Disk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithEphemeralOSDisk()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Ephemeral.json
@@ -263,7 +257,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -282,9 +276,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with FIPS enabled OS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithFIPSEnabledOS()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableFIPS.json
@@ -305,7 +298,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -323,9 +316,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with GPUMIG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithGPUMIG()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_GPUMIG.json
@@ -346,13 +338,13 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_ND96asr_v4",
                 OSType = ContainerServiceOSType.Linux,
                 OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
+                KubeletConfig = new KubeletConfig
                 {
                     CpuManagerPolicy = "static",
                     IsCpuCfsQuotaEnabled = true,
@@ -360,15 +352,12 @@ namespace Azure.ResourceManager.ContainerService.Samples
                     ImageGcHighThreshold = 90,
                     ImageGcLowThreshold = 70,
                     TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
                     FailStartWithSwapOn = false,
                 },
-                LinuxOSConfig = new LinuxOSConfig()
+                LinuxOSConfig = new LinuxOSConfig
                 {
-                    Sysctls = new SysctlConfig()
+                    Sysctls = new SysctlConfig
                     {
                         NetCoreWmemDefault = 12345,
                         NetIPv4TcpTwReuse = true,
@@ -391,9 +380,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with Krustlet and the WASI runtime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithKrustletAndTheWASIRuntime()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WasmWasi.json
@@ -414,7 +402,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -434,9 +422,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with KubeletConfig and LinuxOSConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithKubeletConfigAndLinuxOSConfig()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CustomNodeConfig.json
@@ -457,13 +444,13 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
                 OSType = ContainerServiceOSType.Linux,
                 OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
+                KubeletConfig = new KubeletConfig
                 {
                     CpuManagerPolicy = "static",
                     IsCpuCfsQuotaEnabled = true,
@@ -471,15 +458,12 @@ namespace Azure.ResourceManager.ContainerService.Samples
                     ImageGcHighThreshold = 90,
                     ImageGcLowThreshold = 70,
                     TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
                     FailStartWithSwapOn = false,
                 },
-                LinuxOSConfig = new LinuxOSConfig()
+                LinuxOSConfig = new LinuxOSConfig
                 {
-                    Sysctls = new SysctlConfig()
+                    Sysctls = new SysctlConfig
                     {
                         NetCoreWmemDefault = 12345,
                         NetIPv4TcpTwReuse = true,
@@ -501,9 +485,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with OSSKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithOSSKU()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_OSSKU.json
@@ -524,14 +507,14 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
                 OSType = ContainerServiceOSType.Linux,
                 OSSku = ContainerServiceOSSku.AzureLinux,
                 OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
+                KubeletConfig = new KubeletConfig
                 {
                     CpuManagerPolicy = "static",
                     IsCpuCfsQuotaEnabled = true,
@@ -539,15 +522,12 @@ namespace Azure.ResourceManager.ContainerService.Samples
                     ImageGcHighThreshold = 90,
                     ImageGcLowThreshold = 70,
                     TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
                     FailStartWithSwapOn = false,
                 },
-                LinuxOSConfig = new LinuxOSConfig()
+                LinuxOSConfig = new LinuxOSConfig
                 {
-                    Sysctls = new SysctlConfig()
+                    Sysctls = new SysctlConfig
                     {
                         NetCoreWmemDefault = 12345,
                         NetIPv4TcpTwReuse = true,
@@ -569,9 +549,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with PPG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithPPG()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_PPG.json
@@ -592,7 +571,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -610,9 +589,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with UltraSSD enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithUltraSSDEnabled()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableUltraSSD.json
@@ -633,7 +611,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS2_v2",
@@ -651,9 +629,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Agent Pool with Windows OSSKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAgentPoolWithWindowsOSSKU()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WindowsOSSKU.json
@@ -674,7 +651,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_D4s_v3",
@@ -692,9 +669,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Spot Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSpotAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Spot.json
@@ -715,7 +691,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS1_v2",
@@ -725,16 +701,13 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
                 Tags =
 {
-["name1"] = "val1",
+["name1"] = "val1"
 },
                 NodeLabels =
 {
-["key1"] = "val1",
+["key1"] = "val1"
 },
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
+                NodeTaints = { "Key1=Value1:NoSchedule" },
             };
             ArmOperation<ContainerServiceAgentPoolResource> lro = await containerServiceAgentPool.UpdateAsync(WaitUntil.Completed, data);
             ContainerServiceAgentPoolResource result = lro.Value;
@@ -746,9 +719,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Update.json
@@ -769,7 +741,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS1_v2",
@@ -780,16 +752,13 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
                 Tags =
 {
-["name1"] = "val1",
+["name1"] = "val1"
 },
                 NodeLabels =
 {
-["key1"] = "val1",
+["key1"] = "val1"
 },
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
+                NodeTaints = { "Key1=Value1:NoSchedule" },
             };
             ArmOperation<ContainerServiceAgentPoolResource> lro = await containerServiceAgentPool.UpdateAsync(WaitUntil.Completed, data);
             ContainerServiceAgentPoolResource result = lro.Value;
@@ -801,9 +770,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Start Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StartAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Start.json
@@ -824,7 +792,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 PowerStateCode = ContainerServiceStateCode.Running,
             };
@@ -838,9 +806,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Stop Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StopAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Stop.json
@@ -861,7 +828,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 PowerStateCode = ContainerServiceStateCode.Stopped,
             };
@@ -875,9 +842,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Update.json
@@ -898,7 +864,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
                 Count = 3,
                 VmSize = "Standard_DS1_v2",
@@ -909,10 +875,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 OrchestratorVersion = "",
                 ScaleSetPriority = ScaleSetPriority.Spot,
                 ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
+                NodeTaints = { "Key1=Value1:NoSchedule" },
             };
             ArmOperation<ContainerServiceAgentPoolResource> lro = await containerServiceAgentPool.UpdateAsync(WaitUntil.Completed, data);
             ContainerServiceAgentPoolResource result = lro.Value;
@@ -924,13 +887,12 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAgentPool()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AbortLatestOperation_AbortOperationOnAgentPool()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsDelete.json
-            // this example is just showing the usage of "AgentPools_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsAbortOperation.json
+            // this example is just showing the usage of "AgentPools_AbortLatestOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -947,14 +909,13 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            await containerServiceAgentPool.DeleteAsync(WaitUntil.Completed);
+            await containerServiceAgentPool.AbortLatestOperationAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Upgrade Agent Pool Node Image Version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeNodeImageVersion_UpgradeAgentPoolNodeImageVersion()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsUpgradeNodeImageVersion.json
@@ -975,9 +936,9 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServiceAgentPoolResource containerServiceAgentPool = client.GetContainerServiceAgentPoolResource(containerServiceAgentPoolResourceId);
 
             // invoke the operation
-            await containerServiceAgentPool.UpgradeNodeImageVersionAsync(WaitUntil.Completed);
+            await containerServiceAgentPool.UpgradeNodeImageVersionAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

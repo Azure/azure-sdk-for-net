@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CassandraClusterResource
     {
-        // CosmosDBManagedCassandraClusterListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCassandraClusters_CosmosDBManagedCassandraClusterListBySubscription()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterListBySubscription.json
-            // this example is just showing the usage of "CassandraClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CassandraClusterResource item in subscriptionResource.GetCassandraClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CassandraClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // CosmosDBManagedCassandraClusterGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBManagedCassandraClusterGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterGet.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBManagedCassandraClusterDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CosmosDBManagedCassandraClusterDelete()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterDelete.json
@@ -101,14 +67,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation
-            await cassandraCluster.DeleteAsync(WaitUntil.Completed);
+            await cassandraCluster.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraClusterPatch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBManagedCassandraClusterPatch()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterPatch.json
@@ -128,36 +93,30 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation
-            CassandraClusterData data = new CassandraClusterData(new AzureLocation("placeholder"))
+            CassandraClusterData data = new CassandraClusterData(default)
             {
-                Properties = new CassandraClusterProperties()
+                Properties = new CassandraClusterProperties
                 {
                     AuthenticationMethod = CassandraAuthenticationMethod.None,
-                    ExternalGossipCertificates =
-{
-new CassandraCertificate()
+                    ExternalGossipCertificates = {new CassandraCertificate
 {
 Pem = "-----BEGIN CERTIFICATE-----\n...Base64 encoded certificate...\n-----END CERTIFICATE-----",
-}
-},
-                    ExternalSeedNodes =
-{
-new CassandraDataCenterSeedNode()
+}},
+                    ExternalSeedNodes = {new CassandraDataCenterSeedNode
 {
 IPAddress = "10.52.221.2",
-},new CassandraDataCenterSeedNode()
+}, new CassandraDataCenterSeedNode
 {
 IPAddress = "10.52.221.3",
-},new CassandraDataCenterSeedNode()
+}, new CassandraDataCenterSeedNode
 {
 IPAddress = "10.52.221.4",
-}
-},
+}},
                     HoursBetweenBackups = 12,
                 },
                 Tags =
 {
-["owner"] = "mike",
+["owner"] = "mike"
 },
             };
             ArmOperation<CassandraClusterResource> lro = await cassandraCluster.UpdateAsync(WaitUntil.Completed, data);
@@ -170,9 +129,8 @@ IPAddress = "10.52.221.4",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBManagedCassandraCommand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task InvokeCommand_CosmosDBManagedCassandraCommand()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraCommand.json
@@ -196,7 +154,7 @@ IPAddress = "10.52.221.4",
             {
                 Arguments =
 {
-["status"] = "",
+["status"] = ""
 },
             };
             ArmOperation<CassandraCommandOutput> lro = await cassandraCluster.InvokeCommandAsync(WaitUntil.Completed, body);
@@ -205,9 +163,8 @@ IPAddress = "10.52.221.4",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBManagedCassandraListCommand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCommand_CosmosDBManagedCassandraListCommand()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraListCommand.json
@@ -232,12 +189,11 @@ IPAddress = "10.52.221.4",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraCommandResult
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCommandAsync_CosmosDBManagedCassandraCommandResult()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraCommandResult.json
@@ -263,12 +219,11 @@ IPAddress = "10.52.221.4",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraBackupsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackups_CosmosDBManagedCassandraBackupsList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraBackupsList.json
@@ -293,12 +248,11 @@ IPAddress = "10.52.221.4",
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraBackup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackup_CosmosDBManagedCassandraBackup()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraBackup.json
@@ -324,9 +278,8 @@ IPAddress = "10.52.221.4",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBManagedCassandraClusterDeallocate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_CosmosDBManagedCassandraClusterDeallocate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterDeallocate.json
@@ -346,14 +299,13 @@ IPAddress = "10.52.221.4",
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation
-            await cassandraCluster.DeallocateAsync(WaitUntil.Completed);
+            await cassandraCluster.DeallocateAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraClusterStart
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Start_CosmosDBManagedCassandraClusterStart()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterStart.json
@@ -373,14 +325,13 @@ IPAddress = "10.52.221.4",
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation
-            await cassandraCluster.StartAsync(WaitUntil.Completed);
+            await cassandraCluster.StartAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // CosmosDBManagedCassandraStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Status_CosmosDBManagedCassandraStatus()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraStatus.json

@@ -10,82 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_HubResource
     {
-        // Hubs_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_HubsUpdate()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsUpdate.json
-            // this example is just showing the usage of "Hubs_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HubResource created on azure
-            // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
-            HubResource hub = client.GetHubResource(hubResourceId);
-
-            // invoke the operation
-            HubData data = new HubData(new AzureLocation("West US"))
-            {
-                HubBillingInfo = new HubBillingInfoFormat()
-                {
-                    SkuName = "B0",
-                    MinUnits = 1,
-                    MaxUnits = 5,
-                },
-            };
-            HubResource result = await hub.UpdateAsync(data);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HubData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Hubs_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_HubsDelete()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsDelete.json
-            // this example is just showing the usage of "Hubs_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HubResource created on azure
-            // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
-            HubResource hub = client.GetHubResource(hubResourceId);
-
-            // invoke the operation
-            await hub.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Hubs_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_HubsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsGet.json
@@ -114,41 +46,73 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Hubs_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetHubs_HubsList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_HubsDelete()
         {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsList.json
-            // this example is just showing the usage of "Hubs_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsDelete.json
+            // this example is just showing the usage of "Hubs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this HubResource created on azure
+            // for more information of creating HubResource, please refer to the document of HubResource
             string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
+            HubResource hub = client.GetHubResource(hubResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (HubResource item in subscriptionResource.GetHubsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HubData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            await hub.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Roles_ListByHub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_HubsUpdate()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/HubsUpdate.json
+            // this example is just showing the usage of "Hubs_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HubResource created on azure
+            // for more information of creating HubResource, please refer to the document of HubResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
+            HubResource hub = client.GetHubResource(hubResourceId);
+
+            // invoke the operation
+            HubData data = new HubData(new AzureLocation("West US"))
+            {
+                HubBillingInfo = new HubBillingInfoFormat
+                {
+                    SkuName = "B0",
+                    MinUnits = 1,
+                    MaxUnits = 5,
+                },
+            };
+            HubResource result = await hub.UpdateAsync(data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HubData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetRoles_RolesListByHub()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RolesListByHub.json
@@ -173,12 +137,11 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Images_GetUploadUrlForEntityType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUploadUrlForEntityTypeImage_ImagesGetUploadUrlForEntityType()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ImagesGetUploadUrlForEntityType.json
@@ -198,7 +161,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             HubResource hub = client.GetHubResource(hubResourceId);
 
             // invoke the operation
-            GetImageUploadUrlInput input = new GetImageUploadUrlInput()
+            GetImageUploadUrlInput input = new GetImageUploadUrlInput
             {
                 EntityType = "Profile",
                 EntityTypeName = "Contact",
@@ -209,9 +172,8 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Images_GetUploadUrlForData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUploadUrlForDataImage_ImagesGetUploadUrlForData()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ImagesGetUploadUrlForData.json
@@ -231,7 +193,7 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             HubResource hub = client.GetHubResource(hubResourceId);
 
             // invoke the operation
-            GetImageUploadUrlInput input = new GetImageUploadUrlInput()
+            GetImageUploadUrlInput input = new GetImageUploadUrlInput
             {
                 EntityType = "Profile",
                 EntityTypeName = "Contact",

@@ -10,51 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_RoleAssignmentResourceFormatCollection
     {
-        // RoleAssignments_ListByHub
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_RoleAssignmentsListByHub()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsListByHub.json
-            // this example is just showing the usage of "RoleAssignments_ListByHub" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HubResource created on azure
-            // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
-            HubResource hub = client.GetHubResource(hubResourceId);
-
-            // get the collection of this RoleAssignmentResourceFormatResource
-            RoleAssignmentResourceFormatCollection collection = hub.GetRoleAssignmentResourceFormats();
-
-            // invoke the operation and iterate over the result
-            await foreach (RoleAssignmentResourceFormatResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RoleAssignmentResourceFormatData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RoleAssignments_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RoleAssignmentsCreateOrUpdate()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsCreateOrUpdate.json
@@ -78,13 +41,10 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // invoke the operation
             string assignmentName = "assignmentName8976";
-            RoleAssignmentResourceFormatData data = new RoleAssignmentResourceFormatData()
+            RoleAssignmentResourceFormatData data = new RoleAssignmentResourceFormatData
             {
                 Role = RoleType.Admin,
-                Principals =
-{
-new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new AssignmentPrincipal("93061d15a5054f2b9948ae25724cf9d5","User")
-},
+                Principals = { new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e", "User"), new AssignmentPrincipal("93061d15a5054f2b9948ae25724cf9d5", "User") },
             };
             ArmOperation<RoleAssignmentResourceFormatResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assignmentName, data);
             RoleAssignmentResourceFormatResource result = lro.Value;
@@ -96,9 +56,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -131,9 +90,44 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_RoleAssignmentsListByHub()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsListByHub.json
+            // this example is just showing the usage of "RoleAssignments_ListByHub" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HubResource created on azure
+            // for more information of creating HubResource, please refer to the document of HubResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
+            HubResource hub = client.GetHubResource(hubResourceId);
+
+            // get the collection of this RoleAssignmentResourceFormatResource
+            RoleAssignmentResourceFormatCollection collection = hub.GetRoleAssignmentResourceFormats();
+
+            // invoke the operation and iterate over the result
+            await foreach (RoleAssignmentResourceFormatResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RoleAssignmentResourceFormatData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -162,9 +156,8 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RoleAssignments_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RoleAssignmentsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
@@ -193,7 +186,7 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

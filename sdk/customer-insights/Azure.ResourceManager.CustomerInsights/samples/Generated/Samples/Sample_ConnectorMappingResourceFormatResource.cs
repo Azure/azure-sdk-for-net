@@ -10,83 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CustomerInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_ConnectorMappingResourceFormatResource
     {
-        // ConnectorMappings_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_ConnectorMappingsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ConnectorMappingsCreateOrUpdate.json
-            // this example is just showing the usage of "ConnectorMappings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ConnectorMappingResourceFormatResource created on azure
-            // for more information of creating ConnectorMappingResourceFormatResource, please refer to the document of ConnectorMappingResourceFormatResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            string connectorName = "testConnector8858";
-            string mappingName = "testMapping12491";
-            ResourceIdentifier connectorMappingResourceFormatResourceId = ConnectorMappingResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
-            ConnectorMappingResourceFormatResource connectorMappingResourceFormat = client.GetConnectorMappingResourceFormatResource(connectorMappingResourceFormatResourceId);
-
-            // invoke the operation
-            ConnectorMappingResourceFormatData data = new ConnectorMappingResourceFormatData()
-            {
-                EntityType = EntityType.Interaction,
-                EntityTypeName = "TestInteractionType2967",
-                DisplayName = "testMapping12491",
-                Description = "Test mapping",
-                MappingProperties = new ConnectorMappingProperties(new ConnectorMappingErrorManagement(ErrorManagementType.StopImport)
-                {
-                    ErrorLimit = 10,
-                }, new ConnectorMappingFormat()
-                {
-                    ColumnDelimiter = "|",
-                }, new ConnectorMappingAvailability(5)
-                {
-                    Frequency = FrequencyType.Hour,
-                }, new ConnectorMappingStructure[]
-            {
-new ConnectorMappingStructure("unknwon1","unknown1")
-{
-IsEncrypted = false,
-},new ConnectorMappingStructure("unknwon2","unknown2")
-{
-IsEncrypted = true,
-}
-            }, new ConnectorMappingCompleteOperation()
-            {
-                CompletionOperationType = CompletionOperationType.DeleteFile,
-                DestinationFolder = "fakePath",
-            })
-                {
-                    FolderPath = "http://sample.dne/file",
-                    FileFilter = "unknown",
-                    HasHeader = false,
-                },
-            };
-            ArmOperation<ConnectorMappingResourceFormatResource> lro = await connectorMappingResourceFormat.UpdateAsync(WaitUntil.Completed, data);
-            ConnectorMappingResourceFormatResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConnectorMappingResourceFormatData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ConnectorMappings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConnectorMappingsGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ConnectorMappingsGet.json
@@ -117,9 +48,8 @@ IsEncrypted = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ConnectorMappings_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConnectorMappingsDelete()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ConnectorMappingsDelete.json
@@ -141,9 +71,78 @@ IsEncrypted = true,
             ConnectorMappingResourceFormatResource connectorMappingResourceFormat = client.GetConnectorMappingResourceFormatResource(connectorMappingResourceFormatResourceId);
 
             // invoke the operation
-            await connectorMappingResourceFormat.DeleteAsync(WaitUntil.Completed);
+            await connectorMappingResourceFormat.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ConnectorMappingsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ConnectorMappingsCreateOrUpdate.json
+            // this example is just showing the usage of "ConnectorMappings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConnectorMappingResourceFormatResource created on azure
+            // for more information of creating ConnectorMappingResourceFormatResource, please refer to the document of ConnectorMappingResourceFormatResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            string connectorName = "testConnector8858";
+            string mappingName = "testMapping12491";
+            ResourceIdentifier connectorMappingResourceFormatResourceId = ConnectorMappingResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
+            ConnectorMappingResourceFormatResource connectorMappingResourceFormat = client.GetConnectorMappingResourceFormatResource(connectorMappingResourceFormatResourceId);
+
+            // invoke the operation
+            ConnectorMappingResourceFormatData data = new ConnectorMappingResourceFormatData
+            {
+                EntityType = EntityType.Interaction,
+                EntityTypeName = "TestInteractionType2967",
+                DisplayName = "testMapping12491",
+                Description = "Test mapping",
+                MappingProperties = new ConnectorMappingProperties(new ConnectorMappingErrorManagement(ErrorManagementType.StopImport)
+                {
+                    ErrorLimit = 10,
+                }, new ConnectorMappingFormat
+                {
+                    ColumnDelimiter = "|",
+                }, new ConnectorMappingAvailability(5)
+                {
+                    Frequency = FrequencyType.Hour,
+                }, new ConnectorMappingStructure[]
+            {
+new ConnectorMappingStructure("unknwon1", "unknown1")
+{
+IsEncrypted = false,
+},
+new ConnectorMappingStructure("unknwon2", "unknown2")
+{
+IsEncrypted = true,
+}
+            }, new ConnectorMappingCompleteOperation
+            {
+                CompletionOperationType = CompletionOperationType.DeleteFile,
+                DestinationFolder = "fakePath",
+            })
+                {
+                    FolderPath = "http://sample.dne/file",
+                    FileFilter = "unknown",
+                    HasHeader = false,
+                },
+            };
+            ArmOperation<ConnectorMappingResourceFormatResource> lro = await connectorMappingResourceFormat.UpdateAsync(WaitUntil.Completed, data);
+            ConnectorMappingResourceFormatResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConnectorMappingResourceFormatData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

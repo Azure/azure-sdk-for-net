@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_VMwareVirtualNetworkResource
     {
-        // GetVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetwork()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/GetVirtualNetwork.json
@@ -47,48 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UpdateVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateVirtualNetwork()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateVirtualNetwork.json
-            // this example is just showing the usage of "VirtualNetworks_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VMwareVirtualNetworkResource created on azure
-            // for more information of creating VMwareVirtualNetworkResource, please refer to the document of VMwareVirtualNetworkResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string virtualNetworkName = "ProdNetwork";
-            ResourceIdentifier vMwareVirtualNetworkResourceId = VMwareVirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VMwareVirtualNetworkResource vMwareVirtualNetwork = client.GetVMwareVirtualNetworkResource(vMwareVirtualNetworkResourceId);
-
-            // invoke the operation
-            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
-            VMwareVirtualNetworkResource result = await vMwareVirtualNetwork.UpdateAsync(content);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VMwareVirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DeleteVirtualNetwork
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetwork()
         {
             // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/DeleteVirtualNetwork.json
@@ -108,41 +67,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareVirtualNetworkResource vMwareVirtualNetwork = client.GetVMwareVirtualNetworkResource(vMwareVirtualNetworkResourceId);
 
             // invoke the operation
-            await vMwareVirtualNetwork.DeleteAsync(WaitUntil.Completed);
+            await vMwareVirtualNetwork.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListVirtualNetworks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVMwareVirtualNetworks_ListVirtualNetworks()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateVirtualNetwork()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/ListVirtualNetworks.json
-            // this example is just showing the usage of "VirtualNetworks_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-12-01/examples/UpdateVirtualNetwork.json
+            // this example is just showing the usage of "VirtualNetworks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this VMwareVirtualNetworkResource created on azure
+            // for more information of creating VMwareVirtualNetworkResource, please refer to the document of VMwareVirtualNetworkResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "testrg";
+            string virtualNetworkName = "ProdNetwork";
+            ResourceIdentifier vMwareVirtualNetworkResourceId = VMwareVirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VMwareVirtualNetworkResource vMwareVirtualNetwork = client.GetVMwareVirtualNetworkResource(vMwareVirtualNetworkResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (VMwareVirtualNetworkResource item in subscriptionResource.GetVMwareVirtualNetworksAsync())
+            // invoke the operation
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VMwareVirtualNetworkData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+            };
+            VMwareVirtualNetworkResource result = await vMwareVirtualNetwork.UpdateAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VMwareVirtualNetworkData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
