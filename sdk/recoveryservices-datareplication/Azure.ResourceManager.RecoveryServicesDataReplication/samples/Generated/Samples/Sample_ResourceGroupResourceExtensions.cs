@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // DeploymentPreflight
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeploymentPreflight_DeploymentPreflight()
         {
             // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/DeploymentPreflight.json
@@ -38,20 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string deploymentId = "kjoiahxljomjcmvabaobumg";
-            DeploymentPreflightModel body = new DeploymentPreflightModel()
+            DeploymentPreflightModel body = new DeploymentPreflightModel
             {
-                Resources =
-{
-new DeploymentPreflightResourceInfo()
+                Resources = {new DeploymentPreflightResourceInfo
 {
 Name = "xtgugoflfc",
 DeploymentPreflightResourceType = new ResourceType("nsnaptduolqcxsikrewvgjbxqpt"),
 Location = new AzureLocation("cbsgtxkjdzwbyp"),
 ApiVersion = "otihymhvzblycdoxo",
-}
-},
+}},
             };
-            DeploymentPreflightModel result = await resourceGroupResource.DeploymentPreflightAsync(deploymentId, body: body);
+            DeploymentPreflightModel result = await resourceGroupResource.DeploymentPreflightAsync(deploymentId, body);
 
             Console.WriteLine($"Succeeded: {result}");
         }

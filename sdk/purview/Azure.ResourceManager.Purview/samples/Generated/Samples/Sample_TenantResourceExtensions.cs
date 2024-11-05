@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Purview.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // DefaultAccounts_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDefaultAccount_DefaultAccountsGet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/DefaultAccounts_Get.json
@@ -28,22 +29,19 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             Guid scopeTenantId = Guid.Parse("ee85a74c-405e-4adc-bb47-ffa8ca0c9f31");
             PurviewAccountScopeType scopeType = PurviewAccountScopeType.Tenant;
             string scope = "12345678-1234-1234-1234-12345678abcd";
-            DefaultPurviewAccountPayload result = await tenantResource.GetDefaultAccountAsync(scopeTenantId, scopeType, scope: scope);
+            DefaultPurviewAccountPayload result = await tenantResource.GetDefaultAccountAsync(scopeTenantId, scopeType, scope);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // DefaultAccounts_Remove
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RemoveDefaultAccount_DefaultAccountsRemove()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/DefaultAccounts_Remove.json
@@ -54,22 +52,19 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             Guid scopeTenantId = Guid.Parse("ee85a74c-405e-4adc-bb47-ffa8ca0c9f31");
             PurviewAccountScopeType scopeType = PurviewAccountScopeType.Tenant;
             string scope = "12345678-1234-1234-1234-12345678abcd";
-            await tenantResource.RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope: scope);
+            await tenantResource.RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DefaultAccounts_Set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SetDefaultAccount_DefaultAccountsSet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/DefaultAccounts_Set.json
@@ -80,12 +75,10 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            DefaultPurviewAccountPayload defaultAccountPayload = new DefaultPurviewAccountPayload()
+            DefaultPurviewAccountPayload defaultAccountPayload = new DefaultPurviewAccountPayload
             {
                 AccountName = "myDefaultAccount",
                 ResourceGroupName = "rg-1",

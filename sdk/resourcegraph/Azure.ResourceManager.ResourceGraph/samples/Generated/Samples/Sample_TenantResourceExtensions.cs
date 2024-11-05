@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ResourceGraph.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceGraph.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // Access a properties field
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_AccessAPropertiesField()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesPropertiesQuery.json
@@ -28,26 +29,20 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | where type =~ 'Microsoft.Compute/virtualMachines' | summarize count() by tostring(properties.storageProfile.osDisk.osType)")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic management group query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicManagementGroupQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesMgBasicQuery.json
@@ -58,26 +53,20 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location, tags | limit 3")
             {
-                ManagementGroups =
-{
-"e927f598-c1d4-4f72-8541-95d83a6a4ac8","ProductionMG"
-},
+                ManagementGroups = { "e927f598-c1d4-4f72-8541-95d83a6a4ac8", "ProductionMG" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesBasicQuery.json
@@ -88,26 +77,20 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location, tags | limit 3")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Basic tenant query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_BasicTenantQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesTenantBasicQuery.json
@@ -118,9 +101,7 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location, tags | limit 3");
@@ -129,9 +110,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Complex query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_ComplexQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesComplexQuery.json
@@ -142,26 +122,20 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location | where type =~ 'Microsoft.Compute/virtualMachines' | summarize count() by location | top 3 by count_")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Filter resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FilterResources()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFilterQuery.json
@@ -172,26 +146,20 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location | where type =~ 'Microsoft.Compute/virtualMachines' | limit 3")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // First page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_FirstPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFirstPageQuery.json
@@ -202,18 +170,13 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | where name contains 'test' | project id, name, type, location")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
-                Options = new ResourceQueryRequestOptions()
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
+                Options = new ResourceQueryRequestOptions
                 {
                     Top = 3,
                     Skip = 0,
@@ -224,9 +187,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Next page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_NextPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesNextPageQuery.json
@@ -237,18 +199,13 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | where name contains 'test' | project id, name, type, location")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
-                Options = new ResourceQueryRequestOptions()
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
+                Options = new ResourceQueryRequestOptions
                 {
                     SkipToken = "eyAibm8iOiAibHVjayIsICJidXQiOiAibmljZSIsICJ0cnkiOiAiISIgfQ==",
                 },
@@ -258,9 +215,8 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Query with a facet request
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_QueryWithAFacetRequest()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesFacetQuery.json
@@ -271,66 +227,57 @@ namespace Azure.ResourceManager.ResourceGraph.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | where type =~ 'Microsoft.Compute/virtualMachines' | project id, name, location, resourceGroup, properties.storageProfile.osDisk.osType | limit 5")
             {
-                Subscriptions =
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
+                Facets = {new FacetRequest("location")
 {
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
-                Facets =
-{
-new FacetRequest("location")
-{
-Options = new FacetRequestOptions()
+Options = new FacetRequestOptions
 {
 SortOrder = FacetSortOrder.Desc,
 Top = 3,
 },
-},new FacetRequest("properties.storageProfile.osDisk.osType")
+}, new FacetRequest("properties.storageProfile.osDisk.osType")
 {
-Options = new FacetRequestOptions()
-{
-SortOrder = FacetSortOrder.Desc,
-Top = 3,
-},
-},new FacetRequest("nonExistingColumn")
-{
-Options = new FacetRequestOptions()
+Options = new FacetRequestOptions
 {
 SortOrder = FacetSortOrder.Desc,
 Top = 3,
 },
-},new FacetRequest("resourceGroup")
+}, new FacetRequest("nonExistingColumn")
 {
-Options = new FacetRequestOptions()
+Options = new FacetRequestOptions
+{
+SortOrder = FacetSortOrder.Desc,
+Top = 3,
+},
+}, new FacetRequest("resourceGroup")
+{
+Options = new FacetRequestOptions
 {
 SortBy = "tolower(resourceGroup)",
 SortOrder = FacetSortOrder.Asc,
 Top = 3,
 },
-},new FacetRequest("resourceGroup")
+}, new FacetRequest("resourceGroup")
 {
-Options = new FacetRequestOptions()
+Options = new FacetRequestOptions
 {
 Filter = "resourceGroup contains 'test'",
 Top = 3,
 },
-}
-},
+}},
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Random page query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_RandomPageQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesRandomPageQuery.json
@@ -341,18 +288,13 @@ Top = 3,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | where name contains 'test' | project id, name, type, location")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
-                Options = new ResourceQueryRequestOptions()
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
+                Options = new ResourceQueryRequestOptions
                 {
                     Top = 2,
                     Skip = 10,
@@ -363,9 +305,8 @@ Top = 3,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Summarize resources by location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResources_SummarizeResourcesByLocation()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesSummarizeQuery.json
@@ -376,26 +317,20 @@ Top = 3,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             ResourceQueryContent content = new ResourceQueryContent("Resources | project id, name, type, location | summarize by location")
             {
-                Subscriptions =
-{
-"cfbbd179-59d2-4052-aa06-9270a38aa9d6"
-},
+                Subscriptions = { "cfbbd179-59d2-4052-aa06-9270a38aa9d6" },
             };
             ResourceQueryResult result = await tenantResource.GetResourcesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Resource History Management Group scope Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceHistory_ResourceHistoryManagementGroupScopeQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryMgsGet.json
@@ -406,31 +341,25 @@ Top = 3,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            ResourcesHistoryContent content = new ResourcesHistoryContent()
+            ResourcesHistoryContent content = new ResourcesHistoryContent
             {
                 Query = "where name =~ 'cpu-utilization' | project id, name, properties",
-                Options = new ResourcesHistoryRequestOptions()
+                Options = new ResourcesHistoryRequestOptions
                 {
-                    Interval = new DateTimeInterval(DateTimeOffset.Parse("2020-11-12T01:00:00.0000000Z"), DateTimeOffset.Parse("2020-11-12T01:25:00.0000000Z")),
+                    Interval = new DateTimeInterval(default, default),
                 },
-                ManagementGroups =
-{
-"e927f598-c1d4-4f72-8541-95d83a6a4ac8","ProductionMG"
-},
+                ManagementGroups = { "e927f598-c1d4-4f72-8541-95d83a6a4ac8", "ProductionMG" },
             };
             BinaryData result = await tenantResource.GetResourceHistoryAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Resource History Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceHistory_ResourceHistoryQuery()
         {
             // Generated from example definition: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/preview/2021-06-01-preview/examples/ResourcesHistoryGet.json
@@ -441,21 +370,16 @@ Top = 3,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            ResourcesHistoryContent content = new ResourcesHistoryContent()
+            ResourcesHistoryContent content = new ResourcesHistoryContent
             {
-                Subscriptions =
-{
-"a7f33fdb-e646-4f15-89aa-3a360210861e"
-},
+                Subscriptions = { "a7f33fdb-e646-4f15-89aa-3a360210861e" },
                 Query = "where name =~ 'cpu-utilization' | project id, name, properties",
-                Options = new ResourcesHistoryRequestOptions()
+                Options = new ResourcesHistoryRequestOptions
                 {
-                    Interval = new DateTimeInterval(DateTimeOffset.Parse("2020-11-12T01:00:00.0000000Z"), DateTimeOffset.Parse("2020-11-12T01:25:00.0000000Z")),
+                    Interval = new DateTimeInterval(default, default),
                 },
             };
             BinaryData result = await tenantResource.GetResourceHistoryAsync(content);

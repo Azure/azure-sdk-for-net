@@ -10,58 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RedisEnterprise.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_RedisEnterpriseDatabaseResource
     {
-        // RedisEnterpriseDatabasesUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_RedisEnterpriseDatabasesUpdate()
-        {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesUpdate.json
-            // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
-            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
-            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
-            string resourceGroupName = "rg1";
-            string clusterName = "cache1";
-            string databaseName = "default";
-            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
-            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
-
-            // invoke the operation
-            RedisEnterpriseDatabasePatch patch = new RedisEnterpriseDatabasePatch()
-            {
-                ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
-                EvictionPolicy = RedisEnterpriseEvictionPolicy.AllKeysLru,
-                Persistence = new RedisPersistenceSettings()
-                {
-                    IsRdbEnabled = true,
-                    RdbFrequency = PersistenceSettingRdbFrequency.TwelveHours,
-                },
-                AccessKeysAuthentication = AccessKeysAuthentication.Enabled,
-            };
-            ArmOperation<RedisEnterpriseDatabaseResource> lro = await redisEnterpriseDatabase.UpdateAsync(WaitUntil.Completed, patch);
-            RedisEnterpriseDatabaseResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RedisEnterpriseDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // RedisEnterpriseDatabasesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseDatabasesGet()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesGet.json
@@ -91,9 +47,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisEnterpriseDatabasesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisEnterpriseDatabasesDelete()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesDelete.json
@@ -114,14 +69,56 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            await redisEnterpriseDatabase.DeleteAsync(WaitUntil.Completed);
+            await redisEnterpriseDatabase.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseDatabasesListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_RedisEnterpriseDatabasesUpdate()
+        {
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesUpdate.json
+            // this example is just showing the usage of "Databases_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RedisEnterpriseDatabaseResource created on azure
+            // for more information of creating RedisEnterpriseDatabaseResource, please refer to the document of RedisEnterpriseDatabaseResource
+            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
+            string resourceGroupName = "rg1";
+            string clusterName = "cache1";
+            string databaseName = "default";
+            ResourceIdentifier redisEnterpriseDatabaseResourceId = RedisEnterpriseDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, databaseName);
+            RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
+
+            // invoke the operation
+            RedisEnterpriseDatabasePatch patch = new RedisEnterpriseDatabasePatch
+            {
+                ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
+                EvictionPolicy = RedisEnterpriseEvictionPolicy.AllKeysLru,
+                Persistence = new RedisPersistenceSettings
+                {
+                    IsRdbEnabled = true,
+                    RdbFrequency = PersistenceSettingRdbFrequency.TwelveHours,
+                },
+                AccessKeysAuthentication = AccessKeysAuthentication.Enabled,
+            };
+            ArmOperation<RedisEnterpriseDatabaseResource> lro = await redisEnterpriseDatabase.UpdateAsync(WaitUntil.Completed, patch);
+            RedisEnterpriseDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RedisEnterpriseDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_RedisEnterpriseDatabasesListKeys()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesListKeys.json
@@ -147,9 +144,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RedisEnterpriseDatabasesRegenerateKey
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_RedisEnterpriseDatabasesRegenerateKey()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesRegenerateKey.json
@@ -177,9 +173,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RedisEnterpriseDatabasesImport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Import_RedisEnterpriseDatabasesImport()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesImport.json
@@ -200,18 +195,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            ImportRedisEnterpriseDatabaseContent content = new ImportRedisEnterpriseDatabaseContent(new Uri[]
-            {
-new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParameters"),new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile2?sasKeyParameters")
-            });
-            await redisEnterpriseDatabase.ImportAsync(WaitUntil.Completed, content);
+            ImportRedisEnterpriseDatabaseContent content = new ImportRedisEnterpriseDatabaseContent(new Uri[] { new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParameters"), new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile2?sasKeyParameters") });
+            await redisEnterpriseDatabase.ImportAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisEnterpriseDatabasesExport
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Export_RedisEnterpriseDatabasesExport()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesExport.json
@@ -233,14 +224,13 @@ new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParame
 
             // invoke the operation
             ExportRedisEnterpriseDatabaseContent content = new ExportRedisEnterpriseDatabaseContent(new Uri("https://contosostorage.blob.core.window.net/urlToBlobContainer?sasKeyParameters"));
-            await redisEnterpriseDatabase.ExportAsync(WaitUntil.Completed, content);
+            await redisEnterpriseDatabase.ExportAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // How to unlink a database during a regional outage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ForceUnlink_HowToUnlinkADatabaseDuringARegionalOutage()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesForceUnlink.json
@@ -261,18 +251,14 @@ new Uri("https://contosostorage.blob.core.window.net/urltoBlobFile1?sasKeyParame
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            ForceUnlinkRedisEnterpriseDatabaseContent content = new ForceUnlinkRedisEnterpriseDatabaseContent(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default")
-            });
-            await redisEnterpriseDatabase.ForceUnlinkAsync(WaitUntil.Completed, content);
+            ForceUnlinkRedisEnterpriseDatabaseContent content = new ForceUnlinkRedisEnterpriseDatabaseContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") });
+            await redisEnterpriseDatabase.ForceUnlinkAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // How to relink a database after a regional outage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ForceLinkToReplicationGroup_HowToRelinkADatabaseAfterARegionalOutage()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesForceLink.json
@@ -295,22 +281,22 @@ new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/res
             // invoke the operation
             ForceLinkContent content = new ForceLinkContent("groupName", new RedisEnterpriseLinkedDatabase[]
             {
-new RedisEnterpriseLinkedDatabase()
+new RedisEnterpriseLinkedDatabase
 {
 Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Cache/redisEnterprise/cache1/databases/default"),
-},new RedisEnterpriseLinkedDatabase()
+},
+new RedisEnterpriseLinkedDatabase
 {
 Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default"),
 }
             });
-            await redisEnterpriseDatabase.ForceLinkToReplicationGroupAsync(WaitUntil.Completed, content);
+            await redisEnterpriseDatabase.ForceLinkToReplicationGroupAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // How to flush all the keys in the database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Flush_HowToFlushAllTheKeysInTheDatabase()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesFlush.json
@@ -331,21 +317,17 @@ Id = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            FlushRedisEnterpriseDatabaseContent content = new FlushRedisEnterpriseDatabaseContent()
+            FlushRedisEnterpriseDatabaseContent content = new FlushRedisEnterpriseDatabaseContent
             {
-                Ids =
-{
-new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default")
-},
+                Ids = { new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default") },
             };
-            await redisEnterpriseDatabase.FlushAsync(WaitUntil.Completed, content);
+            await redisEnterpriseDatabase.FlushAsync(WaitUntil.Completed, content).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // How to upgrade your database Redis version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeDBRedisVersion_HowToUpgradeYourDatabaseRedisVersion()
         {
             // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseDatabasesUpgradeDBRedisVersion.json
@@ -366,9 +348,9 @@ new ResourceIdentifier("/subscriptions/e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f2/res
             RedisEnterpriseDatabaseResource redisEnterpriseDatabase = client.GetRedisEnterpriseDatabaseResource(redisEnterpriseDatabaseResourceId);
 
             // invoke the operation
-            await redisEnterpriseDatabase.UpgradeDBRedisVersionAsync(WaitUntil.Completed);
+            await redisEnterpriseDatabase.UpgradeDBRedisVersionAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
